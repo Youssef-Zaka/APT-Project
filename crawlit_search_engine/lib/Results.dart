@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Results extends StatelessWidget {
   const Results({Key? key, required this.result}) : super(key: key);
@@ -30,14 +31,24 @@ class Results extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  maxLines: 3,
-                  overflow: TextOverflow.fade,
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                GestureDetector(
+                  onTap: () async {
+                    final url = Uri.parse(result);
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  child: Text(
+                    title,
+                    maxLines: 3,
+                    overflow: TextOverflow.fade,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
                 Text(
