@@ -10,6 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -41,6 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
+                  controller: textController,
+                  onEditingComplete: () {
+                    textController.text.isEmpty
+                        ? null
+                        : Navigator.pushNamed(context, '/search',
+                            arguments: textController.text);
+                  },
                   cursorColor: Colors.red,
                   cursorHeight: 20,
                   decoration: InputDecoration(

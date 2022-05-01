@@ -67,42 +67,48 @@ class Recents extends StatelessWidget {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Icon(
-                                  Icons.search,
-                                  color: Colors.red,
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    Strings.mockRecents(index + 1),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.fade,
-                                    softWrap: false,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/search',
+                                    arguments: 'Mock Recents $index');
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  const Icon(
+                                    Icons.search,
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      Strings.mockRecents(index + 1),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.fade,
+                                      softWrap: false,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Icon(
-                                  Icons.chevron_right,
-                                  color: Colors.red,
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                              ],
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  const Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
