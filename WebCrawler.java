@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class WebCrawler {
@@ -45,18 +46,24 @@ public class WebCrawler {
         while (true) {
             if (URLIterator == 5000)
                 break;
-            System.out.println(URLIterator + ":");
+            System.out.println("\nFetching documents from URL #" + URLIterator + ":");
             String documentName = "Documents\\" + URLIterator++ + ".html";
             File input = new File(documentName);
             Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
 
             Elements links = doc.select("a[href]");
 
-            for (Element e : links) {
-                String currentHyperlink = e.attr("href");
+            int documentsFetched = 0;
 
-                if (addIndex(currentHyperlink, documentCount))
+            for (Element link : links) {
+                if (documentsFetched == 5)      //Fetch a maximum of 5 documents per document
+                    break;
+                String currentHyperlink = link.attr("href");
+
+                if (addIndex(currentHyperlink, documentCount)) {
                     documentCount++;
+                    documentsFetched++;
+                }
             }
         }
     }
@@ -79,10 +86,7 @@ public class WebCrawler {
             if (taken) return false;
             boolean oldContent = URLMap.containsValue(content);
             if (oldContent) return false;
-            URLMap.putIfAbsent(currentURL, content);
-            System.out.println(content.length());
 
-            URLs.add(currentURL);
             String documentName = "Documents\\" + documentCount + ".html";
             try {
                 File index = new File(documentName);
@@ -91,13 +95,21 @@ public class WebCrawler {
                     FileWriter myWriter = new FileWriter(documentName);
                     myWriter.write(content);
                     myWriter.close();
-                    System.out.println("Successfully created document.");
                 } catch (IOException e) {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
-                URLContents.add(content);
 
+                Document doc = Jsoup.parse(index, "UTF-8", "http://example.com/");
+                String docLanguage =Objects.requireNonNull(doc.select("html").first()).attr("lang");
+                if (docLanguage.contains("en")) {
+                    URLs.add(currentURL);
+                    URLMap.putIfAbsent(currentURL, content);
+                    System.out.println("Successfully added document #" + documentCount + " with length " + content.length());
+                    URLContents.add(content);
+                }
+                else
+                    return false;
             } catch (Exception e) {
                 return false;
             }
