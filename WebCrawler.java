@@ -32,6 +32,7 @@ public class WebCrawler {
         Scanner URLScanner;
         int documentCount = loadCrawlerState();
         if (documentCount == 0) {
+            URLIterator = 0;
             try {
                 URLScanner = new Scanner(seedFile);
                 while (URLScanner.hasNextLine()) {
@@ -49,7 +50,7 @@ public class WebCrawler {
 
         while (documentCount < 5000) {
             System.out.println("\nFetching documents from URL #" + URLIterator + ":");
-            String documentName = "Documents\\" + URLIterator++ + ".html";
+            String documentName = "Documents\\" + URLIterator + ".html";
             File input = new File(documentName);
             Document doc = null;
             try {
@@ -80,6 +81,7 @@ public class WebCrawler {
             if (documentsFetched == 0) System.out.println("No new useful documents found...");
             else
                 System.out.println("Fetched " + documentsFetched + " documents, and failed to fetch " + documentsNotFetched + " documents...");
+            URLIterator++;
         }
     }
 
@@ -232,7 +234,6 @@ public class WebCrawler {
         try {
             // Create new BufferedWriter for each output file
             bfU = new BufferedWriter(new FileWriter(urlFile));
-            bfU.write(Integer.valueOf(URLIterator).toString() + "\n");
             // Iterate over the Map Entries
             for (Map.Entry<String, Integer> entry : URLMap.entrySet())
                 bfU.write(entry.getKey() + "}" + entry.getValue() + "\n");
@@ -240,9 +241,10 @@ public class WebCrawler {
 
             bfC = new BufferedWriter(new FileWriter(checkerFile));
             // Iterate over the Checker Entries
+            bfC.write(Integer.valueOf(URLIterator).toString() + "\n");
             String line;
             for (Map.Entry<String, Integer> entry : checkerMap.entrySet()) {
-                line = entry.getKey() + "teezak" + entry.getValue();
+                line = entry.getKey() + "khalooda" + entry.getValue();
                 line.replace("\n","");
                 bfC.write(line + "\n");
             }
@@ -269,18 +271,13 @@ public class WebCrawler {
 
         int doc1 = 0, doc2 = 0;
         try {
-
             File file = new File(URLFilePath);
-
             br = new BufferedReader(new FileReader(file));
 
-            String line = br.readLine();
-
-            URLIterator = Integer.parseInt(line);
-
+            String line;
             while ((line = br.readLine()) != null) {
 
-                // split the line by :
+                // split the line by }
                 String[] parts = line.split("}");
 
                 String name = parts[0].trim();
@@ -306,9 +303,12 @@ public class WebCrawler {
 
             File file = new File(checkerFilePath);
             br = new BufferedReader(new FileReader(file));
-            String line = null;
+
+            String line = br.readLine();
+            URLIterator = Integer.parseInt(line);
+
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split("teezak");
+                String[] parts = line.split("khalooda");
 
                 String name = parts[0].trim();
                 String number = parts[1].trim();
