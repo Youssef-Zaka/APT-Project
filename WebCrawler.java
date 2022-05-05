@@ -7,7 +7,9 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WebCrawler {
 
@@ -51,7 +53,7 @@ public class WebCrawler {
         }
 
         while (documentCount < 5000) {
-            System.out.println("\nFetching documents from URL #" + URLIterator + ":");
+            System.out.print("\nFetching documents from URL #" + URLIterator + ":");
             String documentName = "Documents\\" + URLIterator + ".html";
             File input = new File(documentName);
             Document doc = null;
@@ -67,7 +69,12 @@ public class WebCrawler {
             int documentsFetched = 0;
             int documentsNotFetched = 0;
 
+            long start = System.currentTimeMillis();
+
             for (Element link : links) {
+                long end = System.currentTimeMillis();
+                if ((end - start) / 1000 > 60)  //Some documents take a lot of time to be fetched, (skip those docs for this URL)
+                    break;
                 if (documentsFetched == 20 || documentsNotFetched == 20)      //Fetch a maximum of 20 documents per document
                     break;
                 //The second condition causes the crawler to continue searching through other documents
@@ -83,7 +90,7 @@ public class WebCrawler {
                     documentsNotFetched++;
                 }
             }
-            if (documentsFetched == 0) System.out.println("No new useful documents found...");
+            if (documentsFetched == 0) System.out.println("\nNo new useful documents found...");
             else
                 System.out.println("\nFetched " + documentsFetched + " documents, and failed to fetch " + documentsNotFetched + " documents...");
             URLIterator++;
@@ -100,7 +107,9 @@ public class WebCrawler {
     }
 
     public static boolean addIndex(String currentURL, int documentCount) {
-        URLConnection connection;
+        URLConnection connection = null;
+        System.setProperty("sun.net.client.defaultConnectTimeout", "4000");
+        System.setProperty("sun.net.client.defaultReadTimeout", "4000");
         try {
             if (!robotSafe(new URL(currentURL))) {
                 System.out.println("A URL has been refused by Robot");
@@ -112,10 +121,18 @@ public class WebCrawler {
         try {
             connection = new URL(currentURL).openConnection();
 
-            Scanner documentScanner = new Scanner(connection.getInputStream()).useDelimiter("\\A");
+            ByteArrayOutputStream result = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            long start = System.currentTimeMillis();
+            long end;
+            for (int length; (length = connection.getInputStream().read(buffer)) != -1; ) {
+                result.write(buffer, 0, length);
 
-            content = documentScanner.hasNext()? documentScanner.next() : "";
-            documentScanner.close();
+                end = System.currentTimeMillis();
+                if ((end - start) > 20000)  //Skip this document as it took a lot of time
+                    return false;
+            }
+            content = result.toString(StandardCharsets.UTF_8);
         } catch (Exception ex) {
             return false;
         }
@@ -149,7 +166,7 @@ public class WebCrawler {
                 //This condition prevents the crawler (crawler thread) from generating html documents
                 URLMap.putIfAbsent(currentURL, documentCount);
                 checkerMap.putIfAbsent(checker, documentCount);
-                System.out.println("Successfully added document #" + documentCount + " with length " + content.length());
+                System.out.print("\nSuccessfully added document #" + documentCount + " with length " + content.length());
             } else return false;
         } catch (Exception e) {
             return false;
