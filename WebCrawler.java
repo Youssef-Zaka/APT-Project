@@ -43,7 +43,7 @@ public class WebCrawler {
 
                     String currentURL = URLScanner.nextLine();
 
-                    if (addIndex(currentURL, documentCount)) documentCount++;
+                    if (addIndex(currentURL)) documentCount++;
 
                 }
             } catch (FileNotFoundException e) {
@@ -53,13 +53,13 @@ public class WebCrawler {
         }
 
         while (documentCount < 5000) {
-            System.out.print("\nFetching documents from URL #" + URLIterator + ":");
+            System.out.println("\nFetching documents from URL #" + URLIterator + ":");
             String documentName = "Documents\\" + URLIterator + ".html";
             File input = new File(documentName);
             Document doc = null;
             try {
                 doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
-            } catch (Exception ig) {
+            } catch (Exception ignore) {
                 System.out.println("Nothing more to fetch! Number of documents fetched: " + (documentCount + 1));
                 return;
             }
@@ -80,7 +80,7 @@ public class WebCrawler {
                 //The second condition causes the crawler to continue searching through other documents
                 String currentHyperlink = link.attr("href");
 
-                if (addIndex(currentHyperlink, documentCount)) {
+                if (addIndex(currentHyperlink)) {
                     documentCount++;
                     documentsFetched++;
                     if (documentCount % 20 == 0)
@@ -106,13 +106,13 @@ public class WebCrawler {
         fileClearer.close();
     }
 
-    public static boolean addIndex(String currentURL, int documentCount) {
+    public static boolean addIndex(String currentURL) {
         URLConnection connection = null;
         System.setProperty("sun.net.client.defaultConnectTimeout", "4000");
         System.setProperty("sun.net.client.defaultReadTimeout", "4000");
         try {
             if (!robotSafe(new URL(currentURL))) {
-                System.out.println("A URL has been refused by Robot");
+                System.out.print("\nA URL has been refused by Robot");
                 return false;
             }
         } catch (MalformedURLException ignored) {
