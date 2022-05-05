@@ -17,10 +17,12 @@ public class WebCrawler {
 
     final static String URLFilePath = "URLs.txt";
     final static String checkerFilePath = "URLChecker.txt";
+    final static String documentNumber = "documentCount.txt";
 
     static int THREAD_NUMBER;
 
     static int URLIterator = 0;
+    static int documentCount = 0;
 
     public static void main(String[] args) throws IOException {
 
@@ -30,7 +32,7 @@ public class WebCrawler {
 
         File seedFile = new File("SeedSet.txt");
         Scanner URLScanner;
-        int documentCount = loadCrawlerState();
+        documentCount = loadCrawlerState();
         if (documentCount == 0) {
             URLIterator = 0;
             try {
@@ -76,20 +78,32 @@ public class WebCrawler {
                     documentsFetched++;
                     if (documentCount % 20 == 0)
                         saveCrawlerState();
-                } else documentsNotFetched++;
+                } else {
+                    System.out.print(".");  //This is just an indicator that shows whether the crawler is fetching documents or not
+                    documentsNotFetched++;
+                }
             }
             if (documentsFetched == 0) System.out.println("No new useful documents found...");
             else
-                System.out.println("Fetched " + documentsFetched + " documents, and failed to fetch " + documentsNotFetched + " documents...");
+                System.out.println("\nFetched " + documentsFetched + " documents, and failed to fetch " + documentsNotFetched + " documents...");
             URLIterator++;
         }
+        PrintWriter fileClearer = new PrintWriter(checkerFilePath);
+        fileClearer.print("");
+        fileClearer.close();
+        fileClearer = new PrintWriter(URLFilePath);
+        fileClearer.print("");
+        fileClearer.close();
+        fileClearer = new PrintWriter(documentNumber);
+        fileClearer.print("");
+        fileClearer.close();
     }
 
     public static boolean addIndex(String currentURL, int documentCount) {
         URLConnection connection;
         try {
             if (!robotSafe(new URL(currentURL))) {
-                System.out.println("\nA URL has been refused by Robot");
+                System.out.println("A URL has been refused by Robot");
                 return false;
             }
         } catch (MalformedURLException ignored) {
@@ -98,20 +112,23 @@ public class WebCrawler {
         try {
             connection = new URL(currentURL).openConnection();
 
-            Scanner documentScanner = new Scanner(connection.getInputStream());
-            documentScanner.useDelimiter("\\Z");
+            Scanner documentScanner = new Scanner(connection.getInputStream()).useDelimiter("\\A");
 
-            content = documentScanner.next();
+            content = documentScanner.hasNext()? documentScanner.next() : "";
             documentScanner.close();
         } catch (Exception ex) {
             return false;
         }
         boolean taken = URLMap.containsKey(currentURL);
         if (taken) return false;
-        String checker = (content.length() + content.substring(content.length() / 4, content.length() / 4 + 20)).replace("\n", "");
-        boolean oldContent = checkerMap.containsKey(checker);
-        if (oldContent && Objects.equals(checkerMap.get(checker), URLMap.get(currentURL))) return false;
-
+        String checker;
+        try {
+            checker = (content.length() + content.substring(content.length() / 4, content.length() / 4 + 20)).replace("\n", "");
+            boolean oldContent = checkerMap.containsKey(checker);
+            if (oldContent && Objects.equals(checkerMap.get(checker), URLMap.get(currentURL))) return false;
+        } catch (Exception ignored) {
+            return false;
+        }
         String documentName = "Documents\\" + documentCount + ".html";
         try {
             File index = new File(documentName);
@@ -227,9 +244,11 @@ public class WebCrawler {
         // File Objects
         File urlFile = new File(URLFilePath);
         File checkerFile = new File(checkerFilePath);
+        File documentFile = new File(documentNumber);
 
         BufferedWriter bfU = null;
         BufferedWriter bfC = null;
+        BufferedWriter bfD = null;
 
         try {
             // Create new BufferedWriter for each output file
@@ -245,10 +264,13 @@ public class WebCrawler {
             String line;
             for (Map.Entry<String, Integer> entry : checkerMap.entrySet()) {
                 line = entry.getKey() + "khalooda" + entry.getValue();
-                line.replace("\n","");
+                line.replace("\n", "");
                 bfC.write(line + "\n");
             }
             bfC.flush();
+
+            bfD = new BufferedWriter(new FileWriter(documentFile));
+            bfD.write(Integer.valueOf(documentCount).toString());
 
         } catch (IOException e) {
             return false;
@@ -259,17 +281,20 @@ public class WebCrawler {
                 bfU.close();
                 assert bfC != null;
                 bfC.close();
+                assert bfD != null;
+                bfD.close();
             } catch (Exception ignored) {
 
             }
         }
+        System.out.println("\nSaved State Successfully\n");
         return true;
     }
 
     public static int loadCrawlerState() {
         BufferedReader br = null;
 
-        int doc1 = 0, doc2 = 0;
+        int docCount = 0;
         try {
             File file = new File(URLFilePath);
             br = new BufferedReader(new FileReader(file));
@@ -283,14 +308,11 @@ public class WebCrawler {
                 String name = parts[0].trim();
                 String number = parts[1].trim();
 
-                if (!name.equals("") && !number.equals("")) {
+                if (!name.equals("") && !number.equals(""))
                     URLMap.put(name, Integer.valueOf(number));
-                    doc1++;
-                }
             }
         } catch (Exception ignored) {
-        }
-        finally {
+        } finally {
             // Always close the BufferedReader
             if (br != null) {
                 try {
@@ -312,17 +334,11 @@ public class WebCrawler {
 
                 String name = parts[0].trim();
                 String number = parts[1].trim();
-                if (!name.equals("") && !number.equals("")) {
+                if (!name.equals("") && !number.equals(""))
                     checkerMap.put(name, Integer.valueOf(number));
-                    doc2++;
-                }
             }
-        }catch (Exception ignored) {
-            if (Math.min(doc1, doc2) == 5000)
-                return 0;
-            return Math.min(doc1, doc2);
-        }
-        finally {
+        } catch (Exception ignored) {
+        } finally {
             // Always close the BufferedReader
             if (br != null) {
                 try {
@@ -331,8 +347,15 @@ public class WebCrawler {
                 }
             }
         }
-        if (Math.min(doc1, doc2) == 5000)
+        File file = new File(documentNumber);
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String line = br.readLine();
+            docCount = Integer.parseInt(line);
+        } catch (Exception ignored) {
+        }
+        if (URLMap.isEmpty())
             return 0;
-        return Math.min(doc1, doc2);
+        return docCount;
     }
 }
