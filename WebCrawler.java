@@ -7,19 +7,20 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class WebCrawler {
 
     //All the URLs that will be downloaded after crawler fills the HashMap
-    static ArrayList<String> URLs = new ArrayList<>(5000);
-    static HashMap<String, String> URLMap = new HashMap<>(5000);
-    static ArrayList<String> URLContents = new ArrayList<>(5000);
+    static HashMap<String, Integer> URLMap = new HashMap<>(5000);
+    static HashMap<String, Integer> checkerMap = new HashMap<>(5000);
+
+    final static String URLFilePath = "URLs.txt";
+    final static String checkerFilePath = "URLChecker.txt";
 
     static int THREAD_NUMBER;
+
+    static int URLIterator = 0;
 
     public static void main(String[] args) throws IOException {
 
@@ -29,54 +30,67 @@ public class WebCrawler {
 
         File seedFile = new File("SeedSet.txt");
         Scanner URLScanner;
-        int documentCount = 0;
-        try {
-            URLScanner = new Scanner(seedFile);
-            while (URLScanner.hasNextLine()) {
+        int documentCount = loadCrawlerState();
+        if (documentCount == 0) {
+            try {
+                URLScanner = new Scanner(seedFile);
+                while (URLScanner.hasNextLine()) {
 
-                String currentURL = URLScanner.nextLine();
+                    String currentURL = URLScanner.nextLine();
 
-                if (addIndex(currentURL, documentCount))
-                    documentCount++;
+                    if (addIndex(currentURL, documentCount)) documentCount++;
 
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Could not open SeedSet.txt");
+                return;
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("No could not open SeedSet.txt");
-            return;
         }
-
-        int URLIterator = 0;
 
         while (documentCount < 5000) {
             System.out.println("\nFetching documents from URL #" + URLIterator + ":");
             String documentName = "Documents\\" + URLIterator++ + ".html";
             File input = new File(documentName);
-            Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
+            Document doc = null;
+            try {
+                doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
+            } catch (Exception ig) {
+                System.out.println("Nothing more to fetch! Number of documents fetched: " + (documentCount + 1));
+                return;
+            }
 
             Elements links = doc.select("a[href]");
 
             int documentsFetched = 0;
+            int documentsNotFetched = 0;
 
             for (Element link : links) {
-                if (documentsFetched == 10)      //Fetch a maximum of 10 documents per document
+                if (documentsFetched == 20 || documentsNotFetched == 20)      //Fetch a maximum of 20 documents per document
                     break;
+                //The second condition causes the crawler to continue searching through other documents
                 String currentHyperlink = link.attr("href");
 
                 if (addIndex(currentHyperlink, documentCount)) {
                     documentCount++;
                     documentsFetched++;
-                }
+                    if (documentCount % 20 == 0)
+                        saveCrawlerState();
+                } else documentsNotFetched++;
             }
+            if (documentsFetched == 0) System.out.println("No new useful documents found...");
+            else
+                System.out.println("Fetched " + documentsFetched + " documents, and failed to fetch " + documentsNotFetched + " documents...");
         }
     }
 
     public static boolean addIndex(String currentURL, int documentCount) {
         URLConnection connection;
         try {
-            if (!robotSafe(new URL(currentURL)))
+            if (!robotSafe(new URL(currentURL))) {
+                System.out.println("\nA URL has been refused by Robot");
                 return false;
-        } catch (MalformedURLException e) {
-            return false;
+            }
+        } catch (MalformedURLException ignored) {
         }
         String content;
         try {
@@ -92,8 +106,9 @@ public class WebCrawler {
         }
         boolean taken = URLMap.containsKey(currentURL);
         if (taken) return false;
-        boolean oldContent = URLMap.containsValue(content);
-        if (oldContent) return false;
+        String checker = (content.length() + content.substring(content.length() / 4, content.length() / 4 + 20)).replace("\n", "");
+        boolean oldContent = checkerMap.containsKey(checker);
+        if (oldContent && Objects.equals(checkerMap.get(checker), URLMap.get(currentURL))) return false;
 
         String documentName = "Documents\\" + documentCount + ".html";
         try {
@@ -113,12 +128,10 @@ public class WebCrawler {
 
             if (docLanguage.contains("en")) {
                 //This condition prevents the crawler (crawler thread) from generating html documents
-                URLs.add(currentURL);
-                URLMap.putIfAbsent(currentURL, content);
+                URLMap.putIfAbsent(currentURL, documentCount);
+                checkerMap.putIfAbsent(checker, documentCount);
                 System.out.println("Successfully added document #" + documentCount + " with length " + content.length());
-                URLContents.add(content);
-            } else
-                return false;
+            } else return false;
         } catch (Exception e) {
             return false;
         }
@@ -164,9 +177,7 @@ public class WebCrawler {
                 if (numRead != -1) {
                     String newCommands = new String(b, 0, numRead);
                     strCommands.append(newCommands);
-                }
-                else
-                    break;
+                } else break;
             }
             urlRobotStream.close();
         } catch (IOException e) {
@@ -208,5 +219,120 @@ public class WebCrawler {
             }
         }
         return true;
+    }
+
+    public static boolean saveCrawlerState() {
+        // File Objects
+        File urlFile = new File(URLFilePath);
+        File checkerFile = new File(checkerFilePath);
+
+        BufferedWriter bfU = null;
+        BufferedWriter bfC = null;
+
+        try {
+            // Create new BufferedWriter for each output file
+            bfU = new BufferedWriter(new FileWriter(urlFile));
+            bfU.write(Integer.valueOf(URLIterator).toString() + "\n");
+            // Iterate over the Map Entries
+            for (Map.Entry<String, Integer> entry : URLMap.entrySet())
+                bfU.write(entry.getKey() + "}" + entry.getValue() + "\n");
+            bfU.flush();
+
+            bfC = new BufferedWriter(new FileWriter(checkerFile));
+            // Iterate over the Checker Entries
+            String line;
+            for (Map.Entry<String, Integer> entry : checkerMap.entrySet()) {
+                line = entry.getKey() + "teezak" + entry.getValue();
+                line.replace("\n","");
+                bfC.write(line + "\n");
+            }
+            bfC.flush();
+
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {
+                // Close Writers
+                assert bfU != null;
+                bfU.close();
+                assert bfC != null;
+                bfC.close();
+            } catch (Exception ignored) {
+
+            }
+        }
+        return true;
+    }
+
+    public static int loadCrawlerState() {
+        BufferedReader br = null;
+
+        int doc1 = 0, doc2 = 0;
+        try {
+
+            File file = new File(URLFilePath);
+
+            br = new BufferedReader(new FileReader(file));
+
+            String line = br.readLine();
+
+            URLIterator = Integer.parseInt(line);
+
+            while ((line = br.readLine()) != null) {
+
+                // split the line by :
+                String[] parts = line.split("}");
+
+                String name = parts[0].trim();
+                String number = parts[1].trim();
+
+                if (!name.equals("") && !number.equals("")) {
+                    URLMap.put(name, Integer.valueOf(number));
+                    doc1++;
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        finally {
+            // Always close the BufferedReader
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        try {
+
+            File file = new File(checkerFilePath);
+            br = new BufferedReader(new FileReader(file));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("teezak");
+
+                String name = parts[0].trim();
+                String number = parts[1].trim();
+                if (!name.equals("") && !number.equals("")) {
+                    checkerMap.put(name, Integer.valueOf(number));
+                    doc2++;
+                }
+            }
+        }catch (Exception ignored) {
+            if (Math.min(doc1, doc2) == 5000)
+                return 0;
+            return Math.min(doc1, doc2);
+        }
+        finally {
+            // Always close the BufferedReader
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        if (Math.min(doc1, doc2) == 5000)
+            return 0;
+        return Math.min(doc1, doc2);
     }
 }
