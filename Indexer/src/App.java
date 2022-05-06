@@ -16,7 +16,6 @@ import org.jsoup.select.Elements;
 
 import org.tartarus.snowball.ext.englishStemmer;
 
-import com.google.common.base.Joiner;
 
 
 public class App {
@@ -30,74 +29,72 @@ public class App {
         }
         myReader.close();
     	
-        
-        File dir = new File("Documents");
-        File[] directoryListing = dir.listFiles();
+        String [] files = {"1","2","3","4","5","6"}; 
         HashMap<String, HashMap<String, DocInfo>> wordsMap = new HashMap<String, HashMap<String, DocInfo>>();
-        if (directoryListing != null) {
-          for (File input : directoryListing) { //read all the HTMLs in the directory
-        	System.out.println(input.getName());
-        	String fileName = input.getName();
-			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
-			
-			Elements bodyElements = doc.body().select("*"); //Get all the elements of the HTML
-			
-			englishStemmer stemmer = new englishStemmer();
+        for (int i = 0; i < files.length; i++) {			
 		
+	        File dir = new File("Documents/" + files[i]);
+	        File[] directoryListing = dir.listFiles();
+	        if (directoryListing != null) {
+	          for (File input : directoryListing) { //read all the HTMLs in the directory
+	        	System.out.println(input.getName());
+	        	String fileName = input.getName();
+				Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
+				
+				Elements bodyElements = doc.body().select("*"); //Get all the elements of the HTML
+				
+				englishStemmer stemmer = new englishStemmer();
 			
-			for (Element element : bodyElements) {	//loop on all elements
-				String tag = element.tagName(); //tag (a, div, p ,...)
 				
-				//Transform the text inside the tag to a List
-				List<String> textList = new ArrayList<String>(Arrays.asList(element.ownText().toLowerCase().split("\\W+"))); 
-				textList.removeAll(stopWordsList);
-				
-				for(int i = 0; i < textList.size();i++) {
-					stemmer.setCurrent(textList.get(i));
-					if(stemmer.stem()) { //If the word has been Stemmed update the list
-						textList.set(i, stemmer.getCurrent());
-					}
-					String word = textList.get(i);
-					if(word.matches("[a-zA-Z]+")) {//word has to have Alphabet characters only
-						if(wordsMap.containsKey(word)) { //If there already exist a list
-							if(wordsMap.get(word).containsKey(fileName)) {//If the current HTML already exists in the list just update it
-								wordsMap.get(word).put(fileName, wordsMap.get(word).get(fileName).incrementTF(tag));
-							}
-							else {//If the current HTML doesn't exist in the list create one and insert it
-								wordsMap.get(word).put(fileName, new DocInfo(fileName, tag));
-							}
-							
+				for (Element element : bodyElements) {	//loop on all elements
+					String tag = element.tagName(); //tag (a, div, p ,...)
+					
+					//Transform the text inside the tag to a List
+					List<String> textList = new ArrayList<String>(Arrays.asList(element.ownText().toLowerCase().split("\\W+"))); 
+					textList.removeAll(stopWordsList);
+					
+					for(int j = 0; j < textList.size();j++) {
+						stemmer.setCurrent(textList.get(j));
+						if(stemmer.stem()) { //If the word has been Stemmed update the list
+							textList.set(j, stemmer.getCurrent());
 						}
-						else { //If a list of HTMLs doesn't already exist Initialize one
-							HashMap<String, DocInfo> docInfo = new HashMap<String, DocInfo>();
-							docInfo.put(fileName, new DocInfo(fileName, tag));
-							wordsMap.put(word, docInfo);
+						String word = textList.get(j);
+						if(word.matches("[a-zA-Z]+")) {//word has to have Alphabet characters only
+							if(wordsMap.containsKey(word)) { //If there already exist a list
+								if(wordsMap.get(word).containsKey(fileName)) {//If the current HTML already exists in the list just update it
+									wordsMap.get(word).put(fileName, wordsMap.get(word).get(fileName).incrementTF(tag));
+								}
+								else {//If the current HTML doesn't exist in the list create one and insert it
+									wordsMap.get(word).put(fileName, new DocInfo(fileName, tag));
+								}
+								
+							}
+							else { //If a list of HTMLs doesn't already exist Initialize one
+								HashMap<String, DocInfo> docInfo = new HashMap<String, DocInfo>();
+								docInfo.put(fileName, new DocInfo(fileName, tag));
+								wordsMap.put(word, docInfo);
+							}
 						}
 					}
+					String text = String.join(" ", textList);
+					element.text(text);
 				}
-				String text = String.join(" ", textList);
-				element.text(text);
-			}
-	      }
-          
-//          for (Map.Entry<String, HashMap<String, DocInfo>> entry : wordsMap.entrySet()) {
-//        	  System.out.println(entry.getKey() + ": " + entry.getValue());
-//          }
-          
-          String eol = System.getProperty("line.separator");
+		      }
+		    }
+       }
+        String eol = System.getProperty("line.separator");
+    	
+        try (Writer writer = new FileWriter("map.csv")) {
+          for (Map.Entry<String, HashMap<String, DocInfo>> entry : wordsMap.entrySet()) {
 
-          try (Writer writer = new FileWriter("map.csv")) {
-            for (Map.Entry<String, HashMap<String, DocInfo>> entry : wordsMap.entrySet()) {
-
-              writer.append(entry.getKey())
-                    .append(',')
-                    .append(entry.getValue().toString())
-                    .append(eol);
-            }
-          } catch (IOException ex) {
-            ex.printStackTrace(System.err);
+            writer.append(entry.getKey())
+                  .append(',')
+                  .append(entry.getValue().toString())
+                  .append(eol);
           }
-          System.out.println("Done");
-	    }
+        } catch (IOException ex) {
+          ex.printStackTrace(System.err);
+        }
+        System.out.println("Done");
     }
 }
