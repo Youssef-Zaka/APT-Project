@@ -1,686 +1,760 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
 <head>
-  <title>[2109.00835] WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
-</script>
-  <meta name="citation_title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"/>
-  <meta name="citation_author" content="Trokhymovych, Mykola"/>
-  <meta name="citation_author" content="Saez-Trumper, Diego"/>
-  <meta name="citation_date" content="2021/09/02"/>
-  <meta name="citation_online_date" content="2021/09/02"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2109.00835"/>
-  <meta name="citation_arxiv_id" content="2109.00835"/>
-  <meta name="citation_abstract" content=" With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model&#39;s performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2109.00835"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API..."/>
-    <meta name="twitter:description" content="With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2109.00835v1"/>
-    <meta property="og:description" content="With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model&#39;s performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances."/>
+<meta charset="UTF-8"/>
+<title>Wikimedia Foundation Report, January 2012 - Meta</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"44ae741e-190c-4be3-a639-9393f4419ad9","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Wikimedia_Foundation_Report,_January_2012","wgTitle":"Wikimedia Foundation Report, January 2012","wgCurRevisionId":5390953,"wgRevisionId":5390953,"wgArticleId":936036,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Wikimedia Foundation reports, 2012"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Wikimedia_Foundation_Report,_January_2012","wgRelevantArticleId":936036,"wgIsProbablyEditable":true,
+"wgRelevantPageIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","pageVariantFallbacks":"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"nearby":true,"watchlist":true,"tagline":false},"wgWMESchemaEditAttemptStepOversample":false,"wgWMEPageLength":40000,"wgNoticeProject":"meta","wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgULSCurrentAutonym":"English","wgEditSubmitButtonLabelPublish":true,"wgCentralAuthMobileDomain":false,"wgDiscussionToolsFeaturesEnabled":{"replytool":true,"newtopictool":false,"sourcemodetoolbar":true,"topicsubscription":false,"autotopicsub":false},"wgDiscussionToolsFallbackEditMode":"source","wgULSPosition":"personal","wgULSisCompactLinksEnabled":true};RLSTATE={"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","ext.tmh.player.styles":"ready",
+"ext.discussionTools.init.styles":"ready","skins.vector.styles.legacy":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.wikimediaBadges":"ready","ext.uls.pt":"ready","wikibase.client.init":"ready"};RLPAGEMODULES=["ext.tmh.player","site","mediawiki.page.ready","mediawiki.toc","skins.vector.legacy.js","mmv.head","mmv.bootstrap.autostart","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.centralNotice.geoIP","ext.centralNotice.startUp","ext.gadget.CentralAuthInterlinkFixer","ext.gadget.wm-portal-preview","ext.gadget.AddTopic","ext.gadget.addMe","ext.gadget.formWizard","ext.gadget.susaresources","ext.gadget.aaq","ext.gadget.wrcEditor","ext.gadget.wrcCollapsible","ext.gadget.ReferenceTooltips","ext.gadget.wrcAddNewIndividual","ext.gadget.wrcAddNewGroup","ext.gadget.wadpGadgetsLoader","ext.centralauth.centralautologin","ext.discussionTools.init","ext.uls.compactlinks",
+"ext.uls.interface"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1i9g4",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.discussionTools.init.styles%7Cext.tmh.player.styles%7Cext.uls.pt%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cskins.vector.styles.legacy%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<meta name="generator" content="MediaWiki 1.39.0-wmf.10"/>
+<meta name="referrer" content="origin"/>
+<meta name="referrer" content="origin-when-crossorigin"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/1200px--Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="675"/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/800px--Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.jpg"/>
+<meta property="og:image:width" content="800"/>
+<meta property="og:image:height" content="450"/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/640px--Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.jpg"/>
+<meta property="og:image:width" content="640"/>
+<meta property="og:image:height" content="360"/>
+<meta property="og:title" content="Wikimedia Foundation Report, January 2012 - Meta"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="//upload.wikimedia.org"/>
+<link rel="alternate" media="only screen and (max-width: 720px)" href="//meta.m.wikimedia.org/wiki/Wikimedia_Foundation_Report,_January_2012"/>
+<link rel="alternate" type="application/x-wiki" title="Edit" href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit"/>
+<link rel="shortcut icon" href="/static/favicon/community.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Meta (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//meta.wikimedia.org/w/api.php?action=rsd"/>
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://meta.wikimedia.org/wiki/Wikimedia_Foundation_Report,_January_2012"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
 </head>
+<body class="ext-discussiontools-replytool-enabled ext-discussiontools-sourcemodetoolbar-enabled mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject mw-editable page-Wikimedia_Foundation_Report_January_2012 rootpage-Wikimedia_Foundation_Report_January_2012 skin-vector action-view skin-vector-legacy"><div id="mw-page-base" class="noprint"></div>
+<div id="mw-head-base" class="noprint"></div>
+<div id="content" class="mw-body" role="main">
+	<a id="top"></a>
+	<div id="siteNotice"><!-- CentralNotice --></div>
+	<div class="mw-indicators">
+	</div>
+	<h1 id="firstHeading" class="firstHeading mw-first-heading">Wikimedia Foundation Report, January 2012</h1>
+	<div id="bodyContent" class="vector-body">
+		<div id="siteSub" class="noprint">From Meta, a Wikimedia project coordination wiki</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><table class="plainlinks ombox ombox-notice" role="presentation"><tbody><tr><td class="mbox-image"><img alt="Information" src="//upload.wikimedia.org/wikipedia/commons/thumb/3/35/Information_icon.svg/32px-Information_icon.svg.png" decoding="async" title="Information" width="32" height="32" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/3/35/Information_icon.svg/48px-Information_icon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/3/35/Information_icon.svg/64px-Information_icon.svg.png 2x" data-file-width="620" data-file-height="620"/></td><td class="mbox-text">You are more than welcome to edit this report for the purposes of usefulness, presentation, etc., and to <a href="/wiki/Wikimedia_Highlights,_January_2012" title="Wikimedia Highlights, January 2012">add translations</a> of the "Highlights" excerpt.</td></tr></tbody></table>
+<div class="center"><div class="thumb tnone"><div class="thumbinner" style="width:402px;"><video id="mwe_player_0" poster="//upload.wikimedia.org/wikipedia/commons/thumb/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/400px-seek%3D82-Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.jpg" controls="" preload="none" class="thumbimage" width="400" height="225" data-durationhint="5569" data-mwtitle="Monthly_Metrics_Meeting_February_2,_2012.theora.ogv" data-mwprovider="wikimediacommons"><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.480p.vp9.webm" type="video/webm; codecs=&quot;vp9, opus&quot;" data-title="SD VP9 (480P)" data-shorttitle="VP9 480P" data-transcodekey="480p.vp9.webm" data-width="854" data-height="480" data-bandwidth="367048" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.720p.vp9.webm" type="video/webm; codecs=&quot;vp9, opus&quot;" data-title="HD VP9 (720P)" data-shorttitle="VP9 720P" data-transcodekey="720p.vp9.webm" data-width="1280" data-height="720" data-bandwidth="652744" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.720p.webm" type="video/webm; codecs=&quot;vp8, vorbis&quot;" data-title="HD WebM (720P)" data-shorttitle="WebM 720P" data-transcodekey="720p.webm" data-width="1280" data-height="720" data-bandwidth="703552" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.480p.webm" type="video/webm; codecs=&quot;vp8, vorbis&quot;" data-title="SD WebM (480P)" data-shorttitle="WebM 480P" data-transcodekey="480p.webm" data-width="854" data-height="480" data-bandwidth="1113616" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.1080p.vp9.webm" type="video/webm; codecs=&quot;vp9, opus&quot;" data-title="Full HD VP9 (1080P)" data-shorttitle="VP9 1080P" data-transcodekey="1080p.vp9.webm" data-width="1920" data-height="1080" data-bandwidth="1446152" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;" data-title="Original Ogg file, 1,920 × 1,080 (2.75 Mbps)" data-shorttitle="Ogg source" data-width="1920" data-height="1080" data-bandwidth="2747950" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.1080p.webm" type="video/webm; codecs=&quot;vp8, vorbis&quot;" data-title="Full HD WebM (1080P)" data-shorttitle="WebM 1080P" data-transcodekey="1080p.webm" data-width="1920" data-height="1080" data-bandwidth="4213072" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.120p.vp9.webm" type="video/webm; codecs=&quot;vp9, opus&quot;" data-title="Lowest bandwidth VP9 (120P)" data-shorttitle="VP9 120P" data-transcodekey="120p.vp9.webm" data-width="214" data-height="120" data-bandwidth="141696" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.160p.webm" type="video/webm; codecs=&quot;vp8, vorbis&quot;" data-title="Low bandwidth WebM (160P)" data-shorttitle="WebM 160P" data-transcodekey="160p.webm" data-width="284" data-height="160" data-bandwidth="244184" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.180p.vp9.webm" type="video/webm; codecs=&quot;vp9, opus&quot;" data-title="Low bandwidth VP9 (180P)" data-shorttitle="VP9 180P" data-transcodekey="180p.vp9.webm" data-width="320" data-height="180" data-bandwidth="164536" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.240p.vp9.webm" type="video/webm; codecs=&quot;vp9, opus&quot;" data-title="Small VP9 (240P)" data-shorttitle="VP9 240P" data-transcodekey="240p.vp9.webm" data-width="426" data-height="240" data-bandwidth="187248" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.240p.webm" type="video/webm; codecs=&quot;vp8, vorbis&quot;" data-title="Small WebM (240P)" data-shorttitle="WebM 240P" data-transcodekey="240p.webm" data-width="426" data-height="240" data-bandwidth="334384" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.360p.vp9.webm" type="video/webm; codecs=&quot;vp9, opus&quot;" data-title="VP9 (360P)" data-shorttitle="VP9 360P" data-transcodekey="360p.vp9.webm" data-width="640" data-height="360" data-bandwidth="245896" data-framerate="29.97002997003"/><source src="//upload.wikimedia.org/wikipedia/commons/transcoded/4/48/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv/Monthly_Metrics_Meeting_February_2%2C_2012.theora.ogv.360p.webm" type="video/webm; codecs=&quot;vp8, vorbis&quot;" data-title="WebM (360P)" data-shorttitle="WebM 360P" data-transcodekey="360p.webm" data-width="640" data-height="360" data-bandwidth="589728" data-framerate="29.97002997003"/></video>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Monthly_Metrics_Meeting_February_2,_2012.theora.ogv" class="internal" title="Enlarge"></a></div>Video of the monthly Wikimedia Foundation metrics and activities meeting covering the month of January (February 2, 2012)</div></div></div></div>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Data_and_Trends"><span class="tocnumber">1</span> <span class="toctext">Data and Trends</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Financials"><span class="tocnumber">2</span> <span class="toctext">Financials</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Highlights"><span class="tocnumber">3</span> <span class="toctext">Highlights</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Foundation_supports_historic_anti-SOPA_Wikipedia_blackout"><span class="tocnumber">3.1</span> <span class="toctext">Foundation supports historic anti-SOPA Wikipedia blackout</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#San_Francisco_Hackathon"><span class="tocnumber">3.2</span> <span class="toctext">San Francisco Hackathon</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Mobile_announcements:_Official_Android_app,_and_Orange_partnership_for_free_Wikipedia_access_in_Africa/Middle_East"><span class="tocnumber">3.3</span> <span class="toctext">Mobile announcements: Official Android app, and Orange partnership for free Wikipedia access in Africa/Middle East</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#Technology"><span class="tocnumber">4</span> <span class="toctext">Technology</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="#Events"><span class="tocnumber">4.1</span> <span class="toctext">Events</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Operations"><span class="tocnumber">4.2</span> <span class="toctext">Operations</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#Features_Engineering"><span class="tocnumber">4.3</span> <span class="toctext">Features Engineering</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Mobile"><span class="tocnumber">4.4</span> <span class="toctext">Mobile</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Platform_Engineering"><span class="tocnumber">4.5</span> <span class="toctext">Platform Engineering</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-13"><a href="#Research"><span class="tocnumber">5</span> <span class="toctext">Research</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="#Community"><span class="tocnumber">6</span> <span class="toctext">Community</span></a>
+<ul>
+<li class="toclevel-2 tocsection-15"><a href="#Projects"><span class="tocnumber">6.1</span> <span class="toctext">Projects</span></a>
+<ul>
+<li class="toclevel-3 tocsection-16"><a href="#Editor_Retention"><span class="tocnumber">6.1.1</span> <span class="toctext">Editor Retention</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-17"><a href="#Fundraising"><span class="tocnumber">6.2</span> <span class="toctext">Fundraising</span></a>
+<ul>
+<li class="toclevel-3 tocsection-18"><a href="#Fundraiser"><span class="tocnumber">6.2.1</span> <span class="toctext">Fundraiser</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#Major_Gifts_and_Foundations"><span class="tocnumber">6.2.2</span> <span class="toctext">Major Gifts and Foundations</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-20"><a href="#Fellowship_Program"><span class="tocnumber">6.3</span> <span class="toctext">Fellowship Program</span></a>
+<ul>
+<li class="toclevel-3 tocsection-21"><a href="#Program_Activities"><span class="tocnumber">6.3.1</span> <span class="toctext">Program Activities</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Fellowship_Projects"><span class="tocnumber">6.3.2</span> <span class="toctext">Fellowship Projects</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-23"><a href="#Community_relations"><span class="tocnumber">6.4</span> <span class="toctext">Community relations</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-24"><a href="#Global_Development"><span class="tocnumber">7</span> <span class="toctext">Global Development</span></a>
+<ul>
+<li class="toclevel-2 tocsection-25"><a href="#Announcements"><span class="tocnumber">7.1</span> <span class="toctext">Announcements</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#Grants"><span class="tocnumber">7.2</span> <span class="toctext">Grants</span></a>
+<ul>
+<li class="toclevel-3 tocsection-27"><a href="#Policy_Discussions"><span class="tocnumber">7.2.1</span> <span class="toctext">Policy Discussions</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#Wikimedia_Grants_Approved"><span class="tocnumber">7.2.2</span> <span class="toctext">Wikimedia Grants Approved</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#Participation_Grants_Approved"><span class="tocnumber">7.2.3</span> <span class="toctext">Participation Grants Approved</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-30"><a href="#US_Cultural_Partnerships"><span class="tocnumber">7.3</span> <span class="toctext">US Cultural Partnerships</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="#Research_2"><span class="tocnumber">7.4</span> <span class="toctext">Research</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#India_Programs"><span class="tocnumber">7.5</span> <span class="toctext">India Programs</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#Brazil_Catalyst"><span class="tocnumber">7.6</span> <span class="toctext">Brazil Catalyst</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Arabic_Language_Initiative"><span class="tocnumber">7.7</span> <span class="toctext">Arabic Language Initiative</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#Global_Education_Program"><span class="tocnumber">7.8</span> <span class="toctext">Global Education Program</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#Mobile_2"><span class="tocnumber">7.9</span> <span class="toctext">Mobile</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#Communications"><span class="tocnumber">7.10</span> <span class="toctext">Communications</span></a>
+<ul>
+<li class="toclevel-3 tocsection-38"><a href="#Major_news"><span class="tocnumber">7.10.1</span> <span class="toctext">Major news</span></a></li>
+<li class="toclevel-3 tocsection-39"><a href="#Press_releases"><span class="tocnumber">7.10.2</span> <span class="toctext">Press releases</span></a></li>
+<li class="toclevel-3 tocsection-40"><a href="#Blog_posts"><span class="tocnumber">7.10.3</span> <span class="toctext">Blog posts</span></a></li>
+<li class="toclevel-3 tocsection-41"><a href="#Wikipedia_Signpost"><span class="tocnumber">7.10.4</span> <span class="toctext">Wikipedia Signpost</span></a></li>
+<li class="toclevel-3 tocsection-42"><a href="#Media_contact"><span class="tocnumber">7.10.5</span> <span class="toctext">Media contact</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-43"><a href="#Human_Resources"><span class="tocnumber">8</span> <span class="toctext">Human Resources</span></a>
+<ul>
+<li class="toclevel-2 tocsection-44"><a href="#Staff_Changes"><span class="tocnumber">8.1</span> <span class="toctext">Staff Changes</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#Statistics"><span class="tocnumber">8.2</span> <span class="toctext">Statistics</span></a></li>
+<li class="toclevel-2 tocsection-46"><a href="#Department_Updates"><span class="tocnumber">8.3</span> <span class="toctext">Department Updates</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-47"><a href="#Finance_and_Administration"><span class="tocnumber">9</span> <span class="toctext">Finance and Administration</span></a></li>
+<li class="toclevel-1 tocsection-48"><a href="#Legal"><span class="tocnumber">10</span> <span class="toctext">Legal</span></a></li>
+<li class="toclevel-1 tocsection-49"><a href="#Visitors_and_Guests"><span class="tocnumber">11</span> <span class="toctext">Visitors and Guests</span></a></li>
+</ul>
+</div>
 
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
-  </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
-      </div>
-    </div>
-  </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+<h2><span class="mw-headline" id="Data_and_Trends" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Data_and_Trends&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Data_and_Trends"></span>Data and Trends<span data-mw-comment-end="h-Data_and_Trends"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=1" title="Edit section: Data and Trends">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Global unique visitors for December:
+</p>
+<dl><dd>457 million (-3.7% compared with November; +15.6% compared with the previous year)</dd>
+<dd>(comScore data for all Wikimedia Foundation projects;  comScore will release January data later in February)</dd></dl>
+<p>Page requests for January:
+</p>
+<dl><dd>18.0 billion (+10.4% compared with December; + 16.4% compared with the previous year)</dd>
+<dd>(Server log data, all Wikimedia Foundation projects including mobile access)</dd></dl>
+<p>Active Registered Editors for December 2011 (>= 5 edits/month):
+</p>
+<dl><dd>83,293 (+0.1% compared with November / +1.6% compared with the previous year)</dd></dl>
+<p>(Database data, all Wikimedia Foundation projects except for Wikimedia Commons)
+Report Card for December 2011: <a class="external free" href="https://stats.wikimedia.org/reportcard/RC_2011_12_detailed.html">http://stats.wikimedia.org/reportcard/RC_2011_12_detailed.html</a>
+</p>
+<dl><dd>The report card is currently undergoing a redesign as a more fully-featured dashboard (integrating various statistical data and trends about WMF projects).</dd></dl>
+<h2><span class="mw-headline" id="Financials" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Financials&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Financials"></span>Financials<span data-mw-comment-end="h-Financials"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=2" title="Edit section: Financials">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>(Financial information is only available for December 2011 at the time of this report.)
+</p><p>All financial information presented is for the period of July 1, 2011 - December 31, 2011
+</p><p>Revenue: $25.6 million
+</p><p>Expenses:
+</p>
+<ul><li>Technology Group:                    $4,801,082</li>
+<li>Community/Fundraiser Group:    $2,501,444</li>
+<li>Global Development Group:        $2,154,912</li>
+<li>Governance Group:                       $464,533</li>
+<li>Finance/Legal/HR/Admin Group: $2,916,686</li></ul>
+<p>Total Expenses: $12,838,657
+</p><p>Total surplus/(loss): $12,784,247
+</p><p>Revenue was ahead of plan due to grants of $2.8 million and additional donations ahead of plan of $2 million.
+</p><p>Expenses for the month is $2.9MM vs plan of $2.6MM, approximately 11% higher than plan.  Year-to-date is $12.8MM vs plan of $14.2MM, approximately 10% lower than plan.  
+</p><p>Underspending YTD is due to timing of capital expenditures ($989K - budget was spread evenly over 12 months),  internet hosting ($64K), volunteer development ($142K), travel and conference expenses ($233K), personnel expenses ($584K), recruiting expenses ($124K), and IT desk equipment ($77K) offset by higher awards and grants ($261K) budget was spread evenly over 12 months), legal and accounting fees ($81K), professional services ($293K), and bank fees ($248K).
+</p><p>Cash of $30.6 million, which is thirteen months of cash reserves at current spending levels and fourteen months of cash per the annual plan.
+</p>
+<h2><span class="mw-headline" id="Highlights" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Highlights&quot;,&quot;replies&quot;:[&quot;h-Foundation_supports_historic_anti-SOPA_Wikipedia_blackout-Highlights&quot;,&quot;h-San_Francisco_Hackathon-Highlights&quot;,&quot;h-Mobile_announcements:_Official_Android_app,_and_Orange_partnership_for_free_Wiki-Highlights&quot;],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Highlights"></span>Highlights<span data-mw-comment-end="h-Highlights"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=3" title="Edit section: Highlights">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="thumb tright"><div class="thumbinner" style="width:222px;"><a href="/wiki/File:Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/6/65/Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg/220px-Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg" decoding="async" width="220" height="119" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/65/Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg/330px-Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/65/Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg/440px-Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg 2x" data-file-width="5184" data-file-height="2802"/></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Wikimedia_Foundation_SOPA_War_Room_Meeting_1-17-2012-1-9.jpg" class="internal" title="Enlarge"></a></div>WMF staff preparing for the anti-SOPA blackout</div></div></div>
+<h3><span class="mw-headline" id="Foundation_supports_historic_anti-SOPA_Wikipedia_blackout" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Foundation_supports_historic_anti-SOPA_Wikipedia_blackout-Highlights&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Foundation_supports_historic_anti-SOPA_Wikipedia_blackout-Highlights"></span>Foundation supports historic anti-SOPA Wikipedia blackout<span data-mw-comment-end="h-Foundation_supports_historic_anti-SOPA_Wikipedia_blackout-Highlights"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=4" title="Edit section: Foundation supports historic anti-SOPA Wikipedia blackout">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>On January 18, the community of the English Wikipedia <a class="external text" href="https://blog.wikimedia.org/2012/01/20/the-message-from-the-wikipedia-blackout-please-leave-the-internet-alone/">made history</a> with its <a class="external text" href="https://blog.wikimedia.org/2012/01/16/wikipedias-community-calls-for-anti-sopa-blackout-january-18/">decision</a> to black out its entire project for 24 hours in protest of two proposed US laws — SOPA and PIPA — that would have seriously damaged the free and open Internet, including Wikipedia. The communities of over 30 other Wikimedia projects <a href="https://en.wikipedia.org/wiki/Wikipedia:SOPA_initiative/Actions_by_other_communities" class="extiw" title="en:Wikipedia:SOPA initiative/Actions by other communities">supported the protest</a>. Many Foundation staff assisted in the effort, handling the technical side of the blackout as requested by the community, providing code and design, facilitating discussions, contributing legal analysis and handling an unprecedented amount of press coverage. 
+</p><p>During the blackout, more than eight million US-based readers used the CongressLookup tool to find their political representatives. A blog post by Sue Gardner received more than 13,000 comments, with the overwhelming majority supporting the blackout. Google News listed over 11,000 media stories about the Wikipedia blackout and the other Internet protests of January 18, and #wikipediablackout was tweeted almost 1 million times. Support for both SOPA and PIPA has since dwindled. Observers expect that they will not become law in their proposed form.
+</p>
+<div class="thumb tright"><div class="thumbinner" style="width:222px;"><a href="/wiki/File:San_Francisco_Hackathon_2012-1-16.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/6/64/San_Francisco_Hackathon_2012-1-16.jpg/220px-San_Francisco_Hackathon_2012-1-16.jpg" decoding="async" width="220" height="147" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/64/San_Francisco_Hackathon_2012-1-16.jpg/330px-San_Francisco_Hackathon_2012-1-16.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/64/San_Francisco_Hackathon_2012-1-16.jpg/440px-San_Francisco_Hackathon_2012-1-16.jpg 2x" data-file-width="5184" data-file-height="3456"/></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:San_Francisco_Hackathon_2012-1-16.jpg" class="internal" title="Enlarge"></a></div>Participants at the San Francisco Hackathon</div></div></div>
+<h3><span class="mw-headline" id="San_Francisco_Hackathon" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-San_Francisco_Hackathon-Highlights&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-San_Francisco_Hackathon-Highlights"></span>San Francisco Hackathon<span data-mw-comment-end="h-San_Francisco_Hackathon-Highlights"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=5" title="Edit section: San Francisco Hackathon">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>The first San Francisco Hackathon was attended by 92 participants, many of them complete newcomers. They attended training sessions about Wikimedia technology, followed by team work on demo projects which were then presented in a showcase session and judged by a jury. The first prize went to "SMSpedia", which allows the user to text a page title to a phone number, who is then called back by the service and can listen to the Wikipedia entry read aloud.
+</p>
+<h3><span id="Mobile_announcements:_Official_Android_app.2C_and_Orange_partnership_for_free_Wikipedia_access_in_Africa.2FMiddle_East"></span><span class="mw-headline" id="Mobile_announcements:_Official_Android_app,_and_Orange_partnership_for_free_Wikipedia_access_in_Africa/Middle_East" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Mobile_announcements:_Official_Android_app,_and_Orange_partnership_for_free_Wiki-Highlights&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Mobile_announcements:_Official_Android_app,_and_Orange_partnership_for_free_Wiki-Highlights"></span>Mobile announcements: Official Android app, and Orange partnership for free Wikipedia access in Africa/Middle East<span data-mw-comment-end="h-Mobile_announcements:_Official_Android_app,_and_Orange_partnership_for_free_Wiki-Highlights"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=6" title="Edit section: Mobile announcements: Official Android app, and Orange partnership for free Wikipedia access in Africa/Middle East">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>In the first partnership of its kind, mobile operator Orange and the Wikimedia Foundation will provide more than 70 million Orange customers from 20 countries in Africa and the Middle East (AMEA) with <a class="external text" href="https://blog.wikimedia.org/2012/01/24/free-mobile-for-wikipedia-starts-with-orange/">mobile access to Wikipedia</a> — without incurring data usage charges. Also in January, the official Wikipedia Android app was <a class="external text" href="https://blog.wikimedia.org/2012/01/26/announcing-the-official-wikipedia-android-app/">announced</a>. It was installed more than half a million times within the first two weeks.
+</p>
+<h2><span class="mw-headline" id="Technology" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Technology&quot;,&quot;replies&quot;:[&quot;h-Events-Technology&quot;,&quot;h-Operations-Technology&quot;,&quot;h-Features_Engineering-Technology&quot;,&quot;h-Mobile-Technology&quot;,&quot;h-Platform_Engineering-Technology&quot;],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Technology"></span>Technology<span data-mw-comment-end="h-Technology"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=7" title="Edit section: Technology">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>A detailed report of the Tech Department's activities for January 2012 can be found at:
+</p>
+<dl><dd><a class="external free" href="https://www.mediawiki.org/wiki/Wikimedia_engineering_report/2012/January">https://www.mediawiki.org/wiki/Wikimedia_engineering_report/2012/January</a></dd>
+<dt>Department Highlights</dt></dl>
+<p>Major news in January include:
+</p>
+<ul><li>Tech support for the <a class="external text" href="https://blog.wikimedia.org/2012/01/16/wikipedias-community-calls-for-anti-sopa-blackout-january-18/">black-out protesting SOPA &amp; PIPA</a>;</li>
+<li>The release of the <a class="external text" href="https://blog.wikimedia.org/2012/01/26/announcing-the-official-wikipedia-android-app/">official Wikipedia Android app</a>;</li>
+<li>A new <a class="external text" href="https://blog.wikimedia.org/2012/01/28/beta-cluster-test-software-before-deployment/">beta cluster</a> for Wikimedians to test upcoming software before it's deployed to production.</li></ul>
+<h3><span class="mw-headline" id="Events" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Events-Technology&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Events-Technology"></span>Events<span data-mw-comment-end="h-Events-Technology"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=8" title="Edit section: Events">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li><b><a href="/wiki/English_Wikipedia_anti-SOPA_blackout" title="English Wikipedia anti-SOPA blackout">English Wikipedia anti-SOPA blackout</a></b>  — The engineering team supported this online protest by developing and deploying the blackout code and design, including the CongressLookup extension for helping people find and contact their representative. The Operations team disabled editing during the 24 hour time period, and helped keep other systems up and running, including the temporarily overloaded Wikimedia blog.</li></ul>
+<ul><li><b><a href="https://www.mediawiki.org/wiki/January_2012_San_Francisco_Hackathon" class="extiw" title="mw:January 2012 San Francisco Hackathon">San Francisco hackathon</a></b> — More than 90 participants learned and hacked during this outreach-focused developers week-end. The teams of participants demonstrated more than a dozen projects.</li></ul>
+<ul><li><b><a href="https://www.mediawiki.org/wiki/October_2011_Coding_Challenge" class="extiw" title="mw:October 2011 Coding Challenge">October 2011 Coding Challenge</a></b> — The <a class="external text" href="https://blog.wikimedia.org/2012/01/30/october-2011-coding-challenge-winners/">winners of the coding challenge</a> were announced. They include an <a rel="nofollow" class="external text" href="https://market.android.com/details?id=nl.michiel1972.main">Android app</a> for uploading to Wikimedia Commons, a <a href="https://www.mediawiki.org/wiki/User:Schnark/mostEdited" class="extiw" title="mw:User:Schnark/mostEdited">user script</a> for surfacing pages with a lot of recent editing activity, and a <a href="https://www.mediawiki.org/wiki/User:Phiarc/October2011/" class="extiw" title="mw:User:Phiarc/October2011/">user script</a> for displaying relevant images in an article as a lightbox slideshow.</li></ul>
+<h3><span class="mw-headline" id="Operations" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Operations-Technology&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Operations-Technology"></span>Operations<span data-mw-comment-end="h-Operations-Technology"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=9" title="Edit section: Operations">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li><b>Data Centers</b> — Work continued on building up the EQIAD datacenter in Virginia. We added new servers and upgraded the database servers with a new chained replication topology and a heartbeat-based replication monitoring. We have also successfully tested the new thumbnail system and the text squid implementation, that we'll start rolling out fully in February. At the same time, we have retired 40 old servers from our Tampa datacenter, which will be available for donation soon.</li></ul>
+<ul><li><b>Wikimedia Labs</b> — To keep up with project growth, we doubled the filesystem storage available and allowed Labs to grow by up to another 30 instances. A number of projects were added or moved to Labs, including incubator, ganglia, deployment-prep, globaleducation, a number of mobile projects, and a bunch more. A number of projects were also created, implemented, and demoed using Labs during the San Francisco hackathon.</li></ul>
+<h3><span class="mw-headline" id="Features_Engineering" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Features_Engineering-Technology&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Features_Engineering-Technology"></span>Features Engineering<span data-mw-comment-end="h-Features_Engineering-Technology"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=10" title="Edit section: Features Engineering">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li><b>Visual editor</b>  — Plans for the second phase of the editor project were formulated. The team investigated a possible use of contenteditable to help with input methods and text selections on mobile devices. The parser was also extended with the ability to fetch and expand templates in a parallel and asynchronous fashion. The parser now supports most parts of the English Wikipedia Main Page.</li></ul>
+<ul><li><b>Article feedback</b> — The next round of Article Feedback Tool v5 features was developed, including a new feedback page. The teal continued to collect valuable data from the community about the usefulness of comments coming in from each of the three forms launched in December. A survey to get comments from readers about the effectiveness and attractiveness of each design was also launched. The target date for the full feedback page is Feb. 15 for pre-deployment testing on en-labs, then full deployment on Feb. 22.</li></ul>
+<ul><li><b>Feedback Dashboard</b> — We implemented a leaderboard of recent top responders on the feedback dashboard. New editor feedback is now added to a dedicated log. When feedback is marked as helpful, that fact is displayed on the feedback dashboard itself. Other than a few other smaller changes, we're now moving the project into maintenance mode to focus on <a href="https://www.mediawiki.org/wiki/Article_creation_workflow" class="extiw" title="mw:Article creation workflow">article creation workflow</a> and <a href="https://www.mediawiki.org/wiki/New_Page_Triage" class="extiw" title="mw:New Page Triage">mw:New Page Triage</a>.</li></ul>
+<h3><span class="mw-headline" id="Mobile" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Mobile-Technology&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Mobile-Technology"></span>Mobile<span data-mw-comment-end="h-Mobile-Technology"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=11" title="Edit section: Mobile">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li><b>Android Wikipedia App</b> — The Mobile team released the first version of the <a rel="nofollow" class="external text" href="https://market.android.com/details?id=org.wikipedia">Wikipedia Android application</a> into the Android Market. In just over three weeks, we've had over 900,000 downloads, became the #1 search result for "Wikipedia", became the #1 trending app, and received a consistent 4/5 stars in the Android Market. We released two minor updates to fix bugs, and are processing user feedback to guide our next version.</li></ul>
+<ul><li><b>FeaturedFeeds</b> — We deployed the first version of <a class="external text" href="https://blog.wikimedia.org/2012/01/26/featuredfeeds-brings-syndication-feeds-of-featured-wikimedia-content/">FeaturedFeeds</a> to production. Wikimedia communities can now make use of these RSS feeds to better surface their content to other applications.</li></ul>
+<h3><span class="mw-headline" id="Platform_Engineering" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Platform_Engineering-Technology&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Platform_Engineering-Technology"></span>Platform Engineering<span data-mw-comment-end="h-Platform_Engineering-Technology"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=12" title="Edit section: Platform Engineering">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li><b>MediaWiki 1.19</b> — A new Beta cluster, replicating the production environment, was set up to allow Wikimedians to test upcoming software (including MediaWiki 1.19) on Wikimedia Labs before deployment. A preliminary schedule was drafted, according to which deployment of MediaWiki 1.19 will start on February 13th and complete on March 1st.</li></ul>
+<ul><li><b>Volunteer coordination and outreach</b> — In preparation for the San Francisco hackathon, the team prepared training materials and documentation on gadgets and the MediaWiki API. Nine developers got commit access in January, among which seven volunteers.</li></ul>
+<ul><li><b>Wikimedia blog maintenance</b> — The new WMBlog plugin (which brings functionality specific to the Wikimedia blog independently of the theme) was deployed in January, as well as tweaks to the theme. Due to the SOPA/PIPA blackout-related traffic, the Operations team moved the blog to a newer, more powerful server and added caching layers (Varnish &amp; Memcached).</li></ul>
+<h2><span class="mw-headline" id="Research" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Research&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Research"></span>Research<span data-mw-comment-end="h-Research"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=13" title="Edit section: Research">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul><li>Daniel Mietchen lead the drafting and submission of a <a href="https://meta.wikimedia.org/wiki/Research:Committee/Areas_of_interest/Open-access_policy/Request_for_Information_on_Public_Access_to_Peer-Reviewed_Scholarly_Publications_Resulting_From_Federally_Funded_Research" class="extiw" title="m:Research:Committee/Areas of interest/Open-access policy/Request for Information on Public Access to Peer-Reviewed Scholarly Publications Resulting From Federally Funded Research">response</a> to the White House RFI on Public Access to Scholarly Publications.</li>
+<li>The <a rel="nofollow" class="external text" href="https://docs.google.com/spreadsheet/viewform?hl=en_US&amp;formkey=dGNBSGFUcTdJLUxLcGpoWUNoQXM0SGc6MQ">open data consultation</a> we launched in December closed with 100 responses. The results will be published this month.</li>
+<li>Several Research Committee and community members worked on the English Wikipedia article for the <a href="https://en.wikipedia.org/wiki/Research_Works_Act" class="extiw" title="en:Research Works Act">Research Works Act</a>, a proposed bill that would undermine open access mandates for publicly funded research in the US. The bill would affect our research policy as it would make it hard for RCom to enforce any OA and open data requirements for research collaborations. The article made it to DYK on January 15, 2012.</li>
+<li>Dario Taraborelli gave a <a rel="nofollow" class="external text" href="http://futurejournalismproject.org/post/16028914688/wikimedia-data-and-peer-production-with-dario-taraborell">podcast interview</a> with Michael Cervieri for the Future Journalism Project, discussing what Wikipedia can do to support data journalism.</li>
+<li>Dario Taraborelli co-hosted with APS cognitive psychology professor Greta Munger a session on <a rel="nofollow" class="external text" href="http://scienceonline2012.sched.org/event/db96864b9ce76d4792a7f0f21f7611aa">Scientists and Wikipedia</a> at <a rel="nofollow" class="external text" href="http://scienceonline2012.com/">Science Online 2012</a> in Raleigh, NC (<a href="/wiki/File:Venues_for_expert_participation_in_Wikipedia.pdf" title="File:Venues for expert participation in Wikipedia.pdf">slides</a>).</li>
+<li>We set up a <a rel="nofollow" class="external text" href="http://thedatahub.org/group/wikimedia">Wikimedia group</a> on the <i>DataHub</i>, an open data repository powered by <a rel="nofollow" class="external text" href="http://ckan.net">CKAN</a>. The repository is for testing purposes but all data deposited will be preserved and migrated once we've finalized the configuration of the repository.</li>
+<li>Mayo Fuster Morell circulated a <a rel="nofollow" class="external text" href="http://www.onlinecreation.info/?p=474">call for papers</a> calling for contributions on "Academic research into Wikipedia: Beyond English Wikipedia and towards comparative perspectives". The submission deadline is March 1, 2012.</li>
+<li>Tilman Bayer led the publication of the <a href="https://meta.wikimedia.org/wiki/Research:Newsletter/2012-01-30" class="extiw" title="m:Research:Newsletter/2012-01-30">first 2012 issue</a> of the Wikimedia Research Newsletter.</li></ul>
+<h2><span class="mw-headline" id="Community" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Community&quot;,&quot;replies&quot;:[&quot;h-Projects-Community&quot;,&quot;h-Fundraising-Community&quot;,&quot;h-Fellowship_Program-Community&quot;,&quot;h-Community_relations-Community&quot;],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Community"></span>Community<span data-mw-comment-end="h-Community"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=14" title="Edit section: Community">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<dl><dt>Department Highlights</dt></dl>
+<ul><li>Lots of clean up/ wrap up work from the fundraiser; Lots of planning work already done for the 2012 fundraiser</li>
+<li>23 fellowship project proposals and suggestions received for the Fellowship program.</li>
+<li>Community &amp; reader relations team supported SOPA work and fundraising and funds dissemination discussion.</li>
+<li>Wrapping up template testing pilot project, beginning analysis of results</li></ul>
+<h3><span class="mw-headline" id="Projects" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Projects-Community&quot;,&quot;replies&quot;:[&quot;h-Editor_Retention-Projects&quot;],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Projects-Community"></span>Projects<span data-mw-comment-end="h-Projects-Community"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=15" title="Edit section: Projects">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<h4><span class="mw-headline" id="Editor_Retention" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Editor_Retention-Projects&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Editor_Retention-Projects"></span>Editor Retention<span data-mw-comment-end="h-Editor_Retention-Projects"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=16" title="Edit section: Editor Retention">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li>Other than new community requests to test on the Wikimedia Incubator and Commons, the majority of template A/B tests have been wrapped up. Ryan Faulkner, formerly part of the fundraising team, has joined our group as the Community Research Analyst to further understand template testing results, and the group is now publishing test results on Meta as they come in.[1]</li>
+<li>The Community Dept. is hosting the first 2012 meet-up of California Wikipedians at the Foundation offices on Saturday, Feb 4 — coinciding with the Board of Trustees meeting. [2]</li>
+<li>We are planning a series of meet-ups with Brazilian editors in early March to better understand their community and its dynamics, and give those authors a place to voice issues that the Foundation may be able to assist with. [3]</li>
+<li>Collecting resumes and scheduling preliminary screenings of candidates for the 2012 Community Summer Analysts, whose work will focus on providing working data and actionable recommendations for community change programs. [4]</li>
+<li>Wrapping up a proof-of-concept analytic project with Odiago, who has provided some insight into authorship questions with big data analysis of our diff data.</li></ul>
+<p>1. <a class="external free" href="https://meta.wikimedia.org/wiki/Template_A/B_testing">https://meta.wikimedia.org/wiki/Template_A/B_testing</a>
+</p><p>2. <a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Meetup/San_Francisco_17">https://en.wikipedia.org/wiki/Wikipedia:Meetup/San_Francisco_17</a>
+</p><p>3. <a class="external free" href="https://office.wikimedia.org/wiki/Community_Convenings/Portuguese_Wikipedia">https://office.wikimedia.org/wiki/Community_Convenings/Portuguese_Wikipedia</a>
+</p><p>4. <a rel="nofollow" class="external free" href="https://wikimediafoundation.org/wiki/Job_openings/Summer_Community_Analytics">https://wikimediafoundation.org/wiki/Job_openings/Summer_Community_Analytics</a>
+</p>
+<h3><span class="mw-headline" id="Fundraising" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Fundraising-Community&quot;,&quot;replies&quot;:[&quot;h-Fundraiser-Fundraising&quot;,&quot;h-Major_Gifts_and_Foundations-Fundraising&quot;],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Fundraising-Community"></span>Fundraising<span data-mw-comment-end="h-Fundraising-Community"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=17" title="Edit section: Fundraising">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<h4><span class="mw-headline" id="Fundraiser" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Fundraiser-Fundraising&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Fundraiser-Fundraising"></span>Fundraiser<span data-mw-comment-end="h-Fundraiser-Fundraising"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=18" title="Edit section: Fundraiser">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li>Gathered all fundraising staff and contractors in San Francisco for the 2011 Fundraiser Retrospective. We recapped accomplishments, and identified pain points and successes in communications and process so that the next fundraiser can be run more smoothly with a leaner team.</li>
+<li>Began writing the 2011 Fundraiser Report which will be publicly posted in 2012.</li>
+<li>Held a planning session for the 2012 Fundraiser. Over two days, the team set priorities for this year and focused on mapping out a division of responsibility, communication and tracking processes, ways to improve localization, testing, donor experience, and analytics systems.</li>
+<li>In conjunction with the Brazilian author meet-ups, we are planning focus groups and storyteller interviews in both Brazil and Argentina.</li>
+<li>Created a testing calendar to plan out regional tests throughout the year. These tests will focus on the localization of our forms and appeals in different countries.</li>
+<li>Started our global research on currencies, payment methods and personal information fields to integrate to the regional tests.</li>
+<li>Began researching new payment methods requested by Wikipedia users during the 2011 fundraiser.</li></ul>
+<h4><span class="mw-headline" id="Major_Gifts_and_Foundations" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Major_Gifts_and_Foundations-Fundraising&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Major_Gifts_and_Foundations-Fundraising"></span>Major Gifts and Foundations<span data-mw-comment-end="h-Major_Gifts_and_Foundations-Fundraising"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=19" title="Edit section: Major Gifts and Foundations">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li>Received a 3-year grant from the Teterev Foundation</li>
+<li>Completed a new grant proposal for our mobile work</li></ul>
+<h3><span class="mw-headline" id="Fellowship_Program" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Fellowship_Program-Community&quot;,&quot;replies&quot;:[&quot;h-Program_Activities-Fellowship_Program&quot;,&quot;h-Fellowship_Projects-Fellowship_Program&quot;],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Fellowship_Program-Community"></span>Fellowship Program<span data-mw-comment-end="h-Fellowship_Program-Community"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=20" title="Edit section: Fellowship Program">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<h4><span class="mw-headline" id="Program_Activities" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Program_Activities-Fellowship_Program&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Program_Activities-Fellowship_Program"></span>Program Activities<span data-mw-comment-end="h-Program_Activities-Fellowship_Program"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=21" title="Edit section: Program Activities">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li>Fellowship recruiting continues - the community generated 23 fellowship project ideas [1] in January and applications have been submitted by candidates from 18 countries.  The deadline to apply for this round of fellowships has been extended until February 15th, and review of existing applications is underway.</li></ul>
+<h4><span class="mw-headline" id="Fellowship_Projects" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Fellowship_Projects-Fellowship_Program&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Fellowship_Projects-Fellowship_Program"></span>Fellowship Projects<span data-mw-comment-end="h-Fellowship_Projects-Fellowship_Program"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=22" title="Edit section: Fellowship Projects">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li>The fundraising translation project report is complete,[2]  and Jon Harald Søby hosted a brown bag presentation at WMF to discuss lessons learned.  A survey of the fundraiser translators is also in progress, with nearly 300 responses so far. Feedback will be incorporated into future fundraisers as well as an upcoming project to improve the meta translation request process, which is in the planning stages.</li>
+<li>The Teahouse project has recruited 23 Wikipedians to serve as Teahouse hosts - they'll be inviting new editors to the space, answering questions, and facilitating discussions during the pilot.[3]  Design of the space is in progress.</li></ul>
+<p>1. <a class="external free" href="https://meta.wikimedia.org/wiki/Wikimedia_Fellowships/Process#Open_project_ideas">https://meta.wikimedia.org/wiki/Wikimedia_Fellowships/Process#Open_project_ideas</a>
+</p><p>2. <a class="external free" href="https://meta.wikimedia.org/wiki/Fundraising_2011/Translation/Project_Report">https://meta.wikimedia.org/wiki/Fundraising_2011/Translation/Project_Report</a>
+</p><p>3. <a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Teahouse/Hosts">https://en.wikipedia.org/wiki/Wikipedia:Teahouse/Hosts</a>
+</p>
+<h3><span class="mw-headline" id="Community_relations" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Community_relations-Community&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Community_relations-Community"></span>Community relations<span data-mw-comment-end="h-Community_relations-Community"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=23" title="Edit section: Community relations">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>Supported the Fundraising/Funds Dissemination discussions on meta [1].</li>
+<li>Actively supported SOPA, and all the madness that came with it (see also <a href="#Highlights">general "Highlights" section</a>. More SOPA pictures: <a class="external free" href="https://en.wikipedia.org/wiki/User:Victorgrigas#SOPA">https://en.wikipedia.org/wiki/User:Victorgrigas#SOPA</a> )</li>
+<li>Developed job descriptions for new hires (new "Maggies") from around the world to support our global capacity.</li></ul>
+<p>1.  <a class="external free" href="https://meta.wikimedia.org/wiki/Fundraising_and_Funds_Dissemination/Recommendations">https://meta.wikimedia.org/wiki/Fundraising_and_Funds_Dissemination/Recommendations</a>
+</p><p><br/> 
+</p>
+<h2><span class="mw-headline" id="Global_Development" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Global_Development&quot;,&quot;replies&quot;:[&quot;h-Announcements-Global_Development&quot;,&quot;h-Grants-Global_Development&quot;,&quot;h-US_Cultural_Partnerships-Global_Development&quot;,&quot;h-Research_2-Global_Development&quot;,&quot;h-India_Programs-Global_Development&quot;,&quot;h-Brazil_Catalyst-Global_Development&quot;,&quot;h-Arabic_Language_Initiative-Global_Development&quot;,&quot;h-Global_Education_Program-Global_Development&quot;,&quot;h-Mobile_2-Global_Development&quot;,&quot;h-Communications-Global_Development&quot;],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Global_Development"></span>Global Development<span data-mw-comment-end="h-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=24" title="Edit section: Global Development">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<dl><dt>Department highlights</dt></dl>
+<ul><li>Communications supports WMF's blackout on 18 January (see also <a href="#Highlights">general "Highlights" section</a>)</li>
+<li>Mobile: Partnership with Orange was announced on 24 January to supply free access to Wikipedia to more than 70 million customers across 20 countries in the middle east and Africa.</li>
+<li>Arabic-speaking Initaitive: Arabic-speaking Wikipedians met in Tunisia this month beginning a regional outreach effort to create new connections in the Arabic Wikimedia community..</li>
+<li>India program: Six outreach workshops in January in partnership with the community as part of an effort to increase outreach and improve conversion to editing</li>
+<li>Education Program: Published program plan for Cairo pilot and new standards for participation in the global education program are put in place</li>
+<li>The Global Development team midyear report is now available: <a class="external free" href="https://meta.wikimedia.org/wiki/WMF_Global_Development_Midyear_report_2011-12">https://meta.wikimedia.org/wiki/WMF_Global_Development_Midyear_report_2011-12</a></li></ul>
+<h3><span class="mw-headline" id="Announcements" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Announcements-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Announcements-Global_Development"></span>Announcements<span data-mw-comment-end="h-Announcements-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=25" title="Edit section: Announcements">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>Wikimania Scholarships are open! <b>Encourage your networks to apply!</b> <a class="external free" href="https://wikimania2012.wikimedia.org/wiki/Scholarships">https://wikimania2012.wikimedia.org/wiki/Scholarships</a></li></ul>
+<h3><span class="mw-headline" id="Grants" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Grants-Global_Development&quot;,&quot;replies&quot;:[&quot;h-Policy_Discussions-Grants&quot;,&quot;h-Wikimedia_Grants_Approved-Grants&quot;,&quot;h-Participation_Grants_Approved-Grants&quot;],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Grants-Global_Development"></span>Grants<span data-mw-comment-end="h-Grants-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=26" title="Edit section: Grants">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<h4><span class="mw-headline" id="Policy_Discussions" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Policy_Discussions-Grants&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Policy_Discussions-Grants"></span>Policy Discussions<span data-mw-comment-end="h-Policy_Discussions-Grants"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=27" title="Edit section: Policy Discussions">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li>Ongoing discussion of proposed procedure and criteria for <a href="/wiki/Grants:Annual/Draft" title="Grants:Annual/Draft">unrestricted operating grants based on annual plans</a>.</li>
+<li><a href="/wiki/Talk:Grant_Advisory_Committee" class="mw-redirect" title="Talk:Grant Advisory Committee">Ongoing discussion of Grant Advisory Committee's membership terms, appointment procedures, and form of review</a>.</li></ul>
+<h4><span class="mw-headline" id="Wikimedia_Grants_Approved" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Wikimedia_Grants_Approved-Grants&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Wikimedia_Grants_Approved-Grants"></span>Wikimedia Grants Approved<span data-mw-comment-end="h-Wikimedia_Grants_Approved-Grants"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=28" title="Edit section: Wikimedia Grants Approved">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li><a href="/wiki/Grants:WM_PH/Open_Web_Day" class="mw-redirect" title="Grants:WM PH/Open Web Day">Grants:WM_PH/Open_Web_Day</a></li>
+<li>Additional $1000 for scholarships for <a href="/wiki/Grants:WM_RS/Open_Wiki_GLAM_of_Serbia#Scholarship" class="mw-redirect" title="Grants:WM RS/Open Wiki GLAM of Serbia">Grants:WM_RS/Open_Wiki_GLAM_of_Serbia#Scholarship</a></li>
+<li><a href="/wiki/Grants:WM_CL/Start-up" class="mw-redirect" title="Grants:WM CL/Start-up">Grants:WM_CL/Start-up</a></li></ul>
+<h4><span class="mw-headline" id="Participation_Grants_Approved" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Participation_Grants_Approved-Grants&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Participation_Grants_Approved-Grants"></span>Participation Grants Approved<span data-mw-comment-end="h-Participation_Grants_Approved-Grants"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=29" title="Edit section: Participation Grants Approved">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li><a href="/wiki/Grants:Jonas_Xavier/Campus_Party_2012" class="mw-redirect" title="Grants:Jonas Xavier/Campus Party 2012">Grants:Jonas_Xavier/Campus_Party_2012</a></li>
+<li><a href="/wiki/Grants:Varnent/CreatingChange2012" class="mw-redirect" title="Grants:Varnent/CreatingChange2012">Grants:Varnent/CreatingChange2012</a></li></ul>
+<h3><span class="mw-headline" id="US_Cultural_Partnerships" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-US_Cultural_Partnerships-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-US_Cultural_Partnerships-Global_Development"></span>US Cultural Partnerships<span data-mw-comment-end="h-US_Cultural_Partnerships-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=30" title="Edit section: US Cultural Partnerships">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>US Cultural Partnerships Coordinator begins work</li>
+<li>Preparation has continued for the Wikipedia session and table at the <b><a rel="nofollow" class="external text" href="http://www.aam-us.org/am12/">American Association of Museums conference</a></b> in April. The Wikipedia session will now also be part of the exclusive online conference as well.</li>
+<li><b><a href="/wiki/GLAMcamp_DC" title="GLAMcamp DC">GLAMcamp DC</a></b>, which will take place in early February, is in its final stages of preparation.  This has included establishing a proposed framework for GLAM:US collaboration, which will be presented at GLAMcamp and finalized as a goal of the event alongside other documentation and tool development.</li>
+<li>Initial coordination talks have begun with Europeana and others who will be collaborating on GLAM tools over the coming year.</li>
+<li>There has been ongoing follow-up on leads and expressions of interest from GLAM institutions, as well as consolidation of interested parties and contacts into a single, master list. This streamlining of information will continue at GLAMcamp DC.</li>
+<li>In February, the US Cultural Partnerships Coordinator will be publishing a number of GLAM-related  blog posts for various organizations , including the <a rel="nofollow" class="external text" href="http://www.futureofmuseums.org/">Center for the Future of Museums</a>, the <a rel="nofollow" class="external text" href="http://okfn.org/">Open Knowledge Foundation</a>, and the <a rel="nofollow" class="external text" href="http://www.nmc.org/">New Media Consortium</a>.</li></ul>
+<h3><span class="mw-headline" id="Research_2" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Research_2-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Research_2-Global_Development"></span>Research<span data-mw-comment-end="h-Research_2-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=31" title="Edit section: Research">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>Kicked off work on the outreach tool. Further details can be found at: <a class="external free" href="https://meta.wikimedia.org/wiki/Research:Outreach_evaluation">https://meta.wikimedia.org/wiki/Research:Outreach_evaluation</a> (early-stage UI mockups will be added soon)</li>
+<li>Read more about the mobile readers survey analysis here: <a rel="nofollow" class="external free" href="http://prezi.com/foyok1qpfxqa/wikipedia-mobile-readers-survey-2011/">http://prezi.com/foyok1qpfxqa/wikipedia-mobile-readers-survey-2011/</a></li>
+<li>Successfully completed the second editor survey, data cleaning to start soon.<div class="thumb tright"><div class="thumbinner" style="width:222px;"><a href="/wiki/File:WMFMobilePageviewsApril2011ToNovember2011.png" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/d/da/WMFMobilePageviewsApril2011ToNovember2011.png/220px-WMFMobilePageviewsApril2011ToNovember2011.png" decoding="async" width="220" height="128" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/da/WMFMobilePageviewsApril2011ToNovember2011.png/330px-WMFMobilePageviewsApril2011ToNovember2011.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/da/WMFMobilePageviewsApril2011ToNovember2011.png/440px-WMFMobilePageviewsApril2011ToNovember2011.png 2x" data-file-width="988" data-file-height="575"/></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:WMFMobilePageviewsApril2011ToNovember2011.png" class="internal" title="Enlarge"></a></div>Mobile page views across the last few months</div></div></div></li>
+<li>Completed work on getting a more reliable estimate of mobile page views. Work to get reliable estimates of mobile page views by geography is continuing.</li>
+<li>Continued blogging about the readers survey: <a class="external free" href="https://blog.wikimedia.org/tag/readers-survey/">http://blog.wikimedia.org/tag/readers-survey/</a></li>
+<li>Find the wiki version of the India-Brazil user experience research here:  <a class="external free" href="https://meta.wikimedia.org/wiki/Research:Wikipedia_Mobile_User_Research">https://meta.wikimedia.org/wiki/Research:Wikipedia_Mobile_User_Research</a></li>
+<li>Read about India Education Program quantitative analysis here: <a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:India_Education_Program/Analysis/Quantitative_Analysis">https://en.wikipedia.org/wiki/Wikipedia:India_Education_Program/Analysis/Quantitative_Analysis</a></li></ul>
+<h3><span class="mw-headline" id="India_Programs" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-India_Programs-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-India_Programs-Global_Development"></span>India Programs<span data-mw-comment-end="h-India_Programs-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=32" title="Edit section: India Programs">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>We concluded an exercise on distilling lessons from all Indic communities and started the process of seeding ideas with communities.  All ideas are centred around community building (and not content creation or improvement), the rationale being that content will follow community.  <a class="external free" href="https://meta.wikimedia.org/wiki/India_Program/Indic_Languages">https://meta.wikimedia.org/wiki/India_Program/Indic_Languages</a>
+<ul><li>Ideas have been customised by the community and are a combination of what individual volunteers or volunteer groups can do independently, as well as potential pilots that the India Program team can build and run collaboratively with local communities.</li>
+<li>There appears to be interesting progress in at least six languages: Hindi, Odia, Assamese, Kannada, Tamil &amp; Malayalam.</li></ul></li>
+<li>The India team is supporting outreach by sharing best practises as well as making a central repository of outreach material.  In addition, the team is personally taking part in outreach sessions to provide additional momentum to existing community efforts. <a class="external free" href="https://meta.wikimedia.org/wiki/India_Program/Outreach_Programs">http://meta.wikimedia.org/wiki/India_Program/Outreach_Programs</a></li>
+<li>The team is analyzing the findings of the study and quantitative analysis of the India Education Program and listening to additional feedback from the community. <a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:India_Education_Program/Analysis/Independent_Report_from_Tory_Read">https://en.wikipedia.org/wiki/Wikipedia:India_Education_Program/Analysis/Independent_Report_from_Tory_Read</a> , <a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:India_Education_Program/Analysis/Quantitative_Analysis">https://en.wikipedia.org/wiki/Wikipedia:India_Education_Program/Analysis/Quantitative_Analysis</a></li>
+<li>We are finalizing a contract for Communications consultancy, which closes the loop on the India consultancy team.</li></ul>
+<h3><span class="mw-headline" id="Brazil_Catalyst" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Brazil_Catalyst-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Brazil_Catalyst-Global_Development"></span>Brazil Catalyst<span data-mw-comment-end="h-Brazil_Catalyst-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=33" title="Edit section: Brazil Catalyst">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<div class="thumb tright"><div class="thumbinner" style="width:222px;"><a href="/wiki/File:WikiSampa11_-_4.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/52/WikiSampa11_-_4.jpg/220px-WikiSampa11_-_4.jpg" decoding="async" width="220" height="165" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/52/WikiSampa11_-_4.jpg/330px-WikiSampa11_-_4.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/52/WikiSampa11_-_4.jpg/440px-WikiSampa11_-_4.jpg 2x" data-file-width="2048" data-file-height="1536"/></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:WikiSampa11_-_4.jpg" class="internal" title="Enlarge"></a></div>"Wikisampa 11" meetup in  São Paulo</div></div></div>
+<ul><li>We have been working hand in hand with the community to hire the Brazil National Program Director. The recruiting process has been innovative in that we have engaged with an unprecedented level of community involvement. <a class="external free" href="https://blog.wikimedia.org/2012/01/11/brazil-recruiting-and-partnership-with-the-community-moves-forward/">http://blog.wikimedia.org/2012/01/11/brazil-recruiting-and-partnership-with-the-community-moves-forward/</a>
+<ol><li>We posted the role in November, and in parallel with an executive search firm which was screening applicants, we asked the Brazilian community to nominate two community members to participate in the interviews with us. They selected two great folks - Everton and Castelo - to interview 10 finalists on a panel with Barry in Sao Paulo.</li>
+<li>The next phase for the top 4 finalists was a unique assignment to be done on the br.wikimedia.org wiki: <i>engage the Brazilian community and your fellow candidates on the wiki to address the question of how to grow the PT:WP community</i>? The assignment went well and was a great learning experience for the candidates and for us.</li>
+<li>Following the assignment skype and interviews with Jessie, we brought in a top candidate to SF at the end of the month and are in the final stages of of the process.</li></ol></li>
+<li>We are also starting a small <b>Brazil Education Pilot</b> (<a class="external free" href="https://meta.wikimedia.org/wiki/Wikimedia_Foundation_-_Brazil_programs/Education_program">https://meta.wikimedia.org/wiki/Wikimedia_Foundation_-_Brazil_programs/Education_program</a>) in March 2012. We are targeting  about 5 professors (one of whom - Juliana - pioneered this program in Brazil in 2011). Contractor Everton Zanella Alvarenga is leading this effort from Sao Paulo.</li></ul>
+<h3><span class="mw-headline" id="Arabic_Language_Initiative" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Arabic_Language_Initiative-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Arabic_Language_Initiative-Global_Development"></span>Arabic Language Initiative<span data-mw-comment-end="h-Arabic_Language_Initiative-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=34" title="Edit section: Arabic Language Initiative">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>Visited Tunisia as part of our outreach regional program, more details are found here: <a class="external autonumber" href="https://blog.wikimedia.org/2012/02/01/wikimedia-in-tunisia/">[1]</a></li>
+<li>Updated and localized some of our bookshelf material. (Printing is currently in process.)</li>
+<li>Preparing for upcoming events in Egypt and Jordan</li>
+<li>Helped develop the Cairo education pilot - see Global Education Program section</li></ul>
+<h3><span class="mw-headline" id="Global_Education_Program" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Global_Education_Program-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Global_Education_Program-Global_Development"></span>Global Education Program<span data-mw-comment-end="h-Global_Education_Program-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=35" title="Edit section: Global Education Program">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>Frank Schulenburg published the program plan for the Cairo pilot to start in spring 2012. The document outlines the core design elements as well as the success criteria and the questions the pilot project is supposed to answer: <a class="external free" href="https://outreach.wikimedia.org/wiki/Cairo_Pilot_program_plan">https://outreach.wikimedia.org/wiki/Cairo_Pilot_program_plan</a></li>
+<li>Frank Schulenburg and Annie Lin documented the measures put in place based on the lessons from the pilot project in Pune, India. (More than 10 different actions have been taken in order to immediately apply the learning points to the Cairo pilot. Among others, these include a longer preparation phase, a heavy involvement of the local community of Wikipedians, a strict limit on the number of participating students, and mandatory professor orientations. More differences on <a class="external free" href="https://outreach.wikimedia.org/wiki/Comparing_the_Pune_and_the_Cairo_Pilot_%E2%80%93_what_we_are_doing_differently">https://outreach.wikimedia.org/wiki/Comparing_the_Pune_and_the_Cairo_Pilot_%E2%80%93_what_we_are_doing_differently</a> )</li>
+<li>Professors joining the Wikipedia Education Program in the spring 2012 term are finding a new set of participation requirements in place, designed to ensure that all participating professors and students receive adequate support on Wikipedia.
+<ul><li>These new participation requirements are largely based on the feedback given by members of the English Wikipedia community.</li>
+<li>The requirements set standards for the maximum number of students per Wikipedia Ambassador and the number of Wikipedians involved in the program, and they require instructors to go through a faculty orientation.</li>
+<li>Currently, the requirements affect the programs in the U.S., in Canada, and in Egypt during spring 2012, although individual programs may enact stricter requirements as well (for example, the Cairo Pilot will have an even smaller ambassador to student ratio).</li>
+<li>So far, community reactions to these new requirements have been very positive. More information: <a class="external free" href="https://outreach.wikimedia.org/wiki/Wikipedia_Education_Program/Participation_Requirements">https://outreach.wikimedia.org/wiki/Wikipedia_Education_Program/Participation_Requirements</a></li></ul></li></ul>
+<div class="thumb tright"><div class="thumbinner" style="width:222px;"><a href="/wiki/File:Cairo_faculty_workshop6.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Cairo_faculty_workshop6.jpg/220px-Cairo_faculty_workshop6.jpg" decoding="async" width="220" height="146" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Cairo_faculty_workshop6.jpg/330px-Cairo_faculty_workshop6.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Cairo_faculty_workshop6.jpg/440px-Cairo_faculty_workshop6.jpg 2x" data-file-width="3008" data-file-height="2000"/></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Cairo_faculty_workshop6.jpg" class="internal" title="Enlarge"></a></div>Faculty workshop for the Cairo pilot (<a href="https://commons.wikimedia.org/wiki/Category:Wikipedia_Education_Program_%E2%80%93_Cairo_Pilot" class="extiw" title="commons:Category:Wikipedia Education Program – Cairo Pilot">more photos on Wikimedia Commons</a>)</div></div></div>
+<ul><li>Volunteers from the Arabic Wikipedia - supported by Education team members Frank Schulenburg, Annie Lin and Georgetown University professor Rochelle Davis - kicked off the Cairo pilot with workshops for faculty members and Campus Ambassadors. These workshops were almost 100% in Arabic.</li>
+<li>In late January, seven community members of the Arabic Wikipedia completed an Online Ambassador orientation organized by other Arabic-speaking Wikipedians and supported by Annie Lin.</li>
+<li>LiAnna Davis worked with Leigh Thelmadatter, who is an English as a foreign language teacher in central Mexico, to document what she learned working with advanced English students who edited Wikipedia as part of their class. Read more: <a class="external free" href="https://blog.wikimedia.org/2012/01/27/wikipedia-as-a-foreign-culture/">https://blog.wikimedia.org/2012/01/27/wikipedia-as-a-foreign-culture/</a></li>
+<li>Rod Dunican published three online training modules for instructors who are planning to  participate in the Wikipedia Education Program:
+<ul><li>(1) Global Education Program Overview: <a class="external free" href="https://outreach.wikimedia.org/wiki/Wikipedia_Professor_Orientation/Module_One">https://outreach.wikimedia.org/wiki/Wikipedia_Professor_Orientation/Module_One</a></li>
+<li>(2) About Wikipedia: <a class="external free" href="https://outreach.wikimedia.org/wiki/Wikipedia_Professor_Orientation/Module_Two">https://outreach.wikimedia.org/wiki/Wikipedia_Professor_Orientation/Module_Two</a></li>
+<li>(3) Syllabus and Assignment Design: <a class="external free" href="https://outreach.wikimedia.org/wiki/Wikipedia_Professor_Orientation/Module_Three">https://outreach.wikimedia.org/wiki/Wikipedia_Professor_Orientation/Module_Three</a></li></ul></li></ul>
+<h3><span class="mw-headline" id="Mobile_2" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Mobile_2-Global_Development&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Mobile_2-Global_Development"></span>Mobile<span data-mw-comment-end="h-Mobile_2-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=36" title="Edit section: Mobile">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul><li>We announced a partnership with Orange on January 24 — free Wikipedia access (i.e. no mobile data fees) for 70+ million customers across 20 countries in the Middle East and Africa <a class="external free" href="https://blog.wikimedia.org/2012/01/24/free-mobile-for-wikipedia-starts-with-orange/">https://blog.wikimedia.org/2012/01/24/free-mobile-for-wikipedia-starts-with-orange/</a>
+<ul><li>The announcement of the partnership got a lot of positive press attention: 50+ articles including Mashable, GigaOM, Wired UK, and Guardian</li>
+<li>There is much work ahead to implement these partnerships from a technical and marketing standpoint:  helping define how the service is marketed by operators and how we measure it.</li></ul></li>
+<li>"Selling in" free Wikipedia continues to be the main objective, and we plan to announce another big partner — and new countries — in Feburary.</li>
+<li>Project planning on further USSD/SMS testing in Africa with the Praekelt Foundation began.</li></ul>
+<p><br/>
+</p>
+<h3><span class="mw-headline" id="Communications" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Communications-Global_Development&quot;,&quot;replies&quot;:[&quot;h-Major_news-Communications&quot;,&quot;h-Press_releases-Communications&quot;,&quot;h-Blog_posts-Communications&quot;,&quot;h-Wikipedia_Signpost-Communications&quot;,&quot;h-Media_contact-Communications&quot;],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Communications-Global_Development"></span>Communications<span data-mw-comment-end="h-Communications-Global_Development"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=37" title="Edit section: Communications">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>The Wikipedia blackout is January 2012's standout story, possibly the story of the year for WMF and Wikipedia, and maybe the most important story in our history. The days before and after January 18, 2012 were almost exclusively focussed on supporting WMF's work around the community mandate to bring about a blackout, including consulting on messaging, design, implementation, community outreach and media relations.  January also saw the cap-off of our most successful fundraising campaign ever, and saw the introduction of Matthew Roth to the Communications team as Manager, Global Communications.
+</p>
+<h4><span class="mw-headline" id="Major_news" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Major_news-Communications&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Major_news-Communications"></span>Major news<span data-mw-comment-end="h-Major_news-Communications"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=38" title="Edit section: Major news">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div class="thumb tright"><div class="thumbinner" style="width:222px;"><a href="/wiki/File:History_Wikipedia_English_SOPA_2012_Blackout2.jpg" class="image"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/a/a1/History_Wikipedia_English_SOPA_2012_Blackout2.jpg/220px-History_Wikipedia_English_SOPA_2012_Blackout2.jpg" decoding="async" width="220" height="107" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/a/a1/History_Wikipedia_English_SOPA_2012_Blackout2.jpg/330px-History_Wikipedia_English_SOPA_2012_Blackout2.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/a1/History_Wikipedia_English_SOPA_2012_Blackout2.jpg/440px-History_Wikipedia_English_SOPA_2012_Blackout2.jpg 2x" data-file-width="1580" data-file-height="770"/></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:History_Wikipedia_English_SOPA_2012_Blackout2.jpg" class="internal" title="Enlarge"></a></div>The English Wikipedia as seen by readers during the blackout</div></div></div>
+<dl><dt>Wikipedia blackout (January 18)</dt></dl>
+<p>Undoubtedly one of the biggest stories in the US and the world in January 2012 was the Internet protests on January 18, which largely centered around the Wikipedia community decision to blackout English Wikipedia internationally for one day. Aside from publishing three separate press releases leading up to and after the blackout, the Communications team worked closely with Jimmy Wales on both advance press interviews and a deluge of interview requests the week of January 16.
+</p><p>In total, WMF responded to over <b>260 separate media inquiries</b> from around the world.  News.google.com reports over <b>11,000 media stories</b> on the topic of our blackout and the Internet protests, many of which focussed primarily on Wikipedia.  Jimmy Wales had over a dozen television appearances, effectively positioning the blackout story as the leading story around the world on January 18. Major newswire stories were syndicated interntaionally and in dozens of languages.
+</p><p><b>Social media</b> activity around the blackout was extraordinary. Users followed the CongressLookup system and tweeted their Representatives to urge action around SOPA/PIPA. #WikipediaBlackout and #SOPA were trending topics for the day. #wikipediablackout was tweeted almost 1 million times, and SOPA was mentioned 2.3 million times.
+</p><p>Media interest continued well after the week of January 16 and Communications continues to support inquiries.  We're also working on a series of feature stories about the blackout in major magazines and placed OpEd stories in either the NY Times or Washington Post.
+</p><p>Wikimedia's global network of chapters also fielded dozens of requests in their own regions and languages, further augmenting the world-wide footprint of the blackout.  Media coverage was largely positive and supportive of the efforts of Wikipedia's community. The bill supporters have since withdrawn both SOPA and PIPA, shelving them indefinitely, based largely on a historic level of constituent reaction and Congressional contact in the US.
+</p><p>Meta-wiki consolidation of the major coverage:
+</p>
+<dl><dd><a class="external free" href="https://meta.wikimedia.org/wiki/English_Wikipedia_anti-SOPA_blackout/Media">https://meta.wikimedia.org/wiki/English_Wikipedia_anti-SOPA_blackout/Media</a></dd></dl>
+<p>(and great quotes about the blackout)
+</p>
+<dl><dd><a class="external free" href="https://meta.wikimedia.org/wiki/English_Wikipedia_anti-SOPA_blackout/Quotes">https://meta.wikimedia.org/wiki/English_Wikipedia_anti-SOPA_blackout/Quotes</a></dd></dl>
+<p>Social media stats:
+</p>
+<dl><dd><a class="external free" href="https://meta.wikimedia.org/wiki/SOPA_social_media">https://meta.wikimedia.org/wiki/SOPA_social_media</a></dd></dl>
+<p>Wikipedia Signpost:
+</p>
+<dl><dd><a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/2012-01-23/In_the_news">https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/2012-01-23/In_the_news</a></dd>
+<dd><a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/2012-01-23/News_and_notes">https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/2012-01-23/News_and_notes</a></dd></dl>
+<dl><dt>Orange/WMF partnership for free Wikipedia mobile (January 24)</dt></dl>
+<p>WMF returned to one of its early business partners in January, announcing a major partnership to make Wikipedia available at no charge to mobile subscribers in dozens of their territories throughout Africa and the Middle East. This was the first major partnership announced regarding WMF's efforts to dramatically increase access to Wikipedia through mobile channels around the world. Coverage was largely positive and supportive of the effort.
+</p>
+<dl><dd><a rel="nofollow" class="external free" href="http://www.guardian.co.uk/technology/2012/jan/24/orange-wikipedia-mobile-devices-free">http://www.guardian.co.uk/technology/2012/jan/24/orange-wikipedia-mobile-devices-free</a></dd>
+<dd><a rel="nofollow" class="external free" href="http://www.itnewsafrica.com/2012/01/orange-to-provide-free-access-to-mobile-wikipedia/">http://www.itnewsafrica.com/2012/01/orange-to-provide-free-access-to-mobile-wikipedia/</a></dd>
+<dd><a rel="nofollow" class="external free" href="http://www.readwriteweb.com/enterprise/2012/01/how-will-free-wikipedia-access.php">http://www.readwriteweb.com/enterprise/2012/01/how-will-free-wikipedia-access.php</a></dd></dl>
+<h4><span class="mw-headline" id="Press_releases" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Press_releases-Communications&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Press_releases-Communications"></span>Press releases<span data-mw-comment-end="h-Press_releases-Communications"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=39" title="Edit section: Press releases">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<dl><dt>Orange and the Wikimedia Foundation partner to offer Wikipedia in Africa and the Middle East at no extra cost, 24 January 2012</dt></dl>
+<p><a rel="nofollow" class="external free" href="https://wikimediafoundation.org/wiki/Press_releases/Orange_and_WMF_partner_on_Wikipedia_mobile">https://wikimediafoundation.org/wiki/Press_releases/Orange_and_WMF_partner_on_Wikipedia_mobile</a>
+</p>
+<dl><dt>Statement from the Wikimedia Foundation regarding developments in Washington on SOPA and PIPA, 20 January 2012</dt></dl>
+<p><a rel="nofollow" class="external free" href="https://wikimediafoundation.org/wiki/Press_releases/Statement_on_Jan_20_events_in_Washington">https://wikimediafoundation.org/wiki/Press_releases/Statement_on_Jan_20_events_in_Washington</a>
+</p>
+<dl><dt>Wikipedia blackout affirms overwhelming support for free and open Internet, 18 January 2012</dt></dl>
+<p><a rel="nofollow" class="external free" href="https://wikimediafoundation.org/wiki/Press_releases/Wikipedia_blackout_supports_free_and_open_internet">https://wikimediafoundation.org/wiki/Press_releases/Wikipedia_blackout_supports_free_and_open_internet</a>
+</p>
+<dl><dt>English Wikipedia to go dark January 18 in opposition to SOPA/PIPA, 16 January 2012</dt></dl>
+<p><a rel="nofollow" class="external free" href="https://wikimediafoundation.org/wiki/Press_releases/English_Wikipedia_to_go_dark">https://wikimediafoundation.org/wiki/Press_releases/English_Wikipedia_to_go_dark</a>
+</p>
+<dl><dt>Wikimedia Foundation Rings In New Year With Record-breaking Fundraiser, 2 January 2012</dt></dl>
+<p><a rel="nofollow" class="external free" href="https://wikimediafoundation.org/wiki/Press_releases/Wikimedia_Foundation_Rings_In_New_Year_With_Record-breaking_Fundraiser">https://wikimediafoundation.org/wiki/Press_releases/Wikimedia_Foundation_Rings_In_New_Year_With_Record-breaking_Fundraiser</a>
+</p>
+<h4><span class="mw-headline" id="Blog_posts" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Blog_posts-Communications&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Blog_posts-Communications"></span>Blog posts<span data-mw-comment-end="h-Blog_posts-Communications"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=40" title="Edit section: Blog posts">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p><a class="external free" href="https://blog.wikimedia.org/2012/01/">https://blog.wikimedia.org/2012/01/</a>
+</p>
+<h4><span class="mw-headline" id="Wikipedia_Signpost" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Wikipedia_Signpost-Communications&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Wikipedia_Signpost-Communications"></span>Wikipedia Signpost<span data-mw-comment-end="h-Wikipedia_Signpost-Communications"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=41" title="Edit section: Wikipedia Signpost">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul><li><a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-02">https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-02</a></li>
+<li><a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-09">https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-09</a></li>
+<li><a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-16">https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-16</a></li>
+<li><a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-23">https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-23</a></li>
+<li><a class="external free" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-30">https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/Archives/2012-01-30</a></li></ul>
+<h4><span class="mw-headline" id="Media_contact" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Media_contact-Communications&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:4,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Media_contact-Communications"></span>Media contact<span data-mw-comment-end="h-Media_contact-Communications"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=42" title="Edit section: Media contact">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p><a rel="nofollow" class="external free" href="https://wikimediafoundation.org/wiki/Press_room/Media_Contact#January_2012">https://wikimediafoundation.org/wiki/Press_room/Media_Contact#January_2012</a>
+</p>
+<h2><span class="mw-headline" id="Human_Resources" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Human_Resources&quot;,&quot;replies&quot;:[&quot;h-Staff_Changes-Human_Resources&quot;,&quot;h-Statistics-Human_Resources&quot;,&quot;h-Department_Updates-Human_Resources&quot;],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Human_Resources"></span>Human Resources<span data-mw-comment-end="h-Human_Resources"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=43" title="Edit section: Human Resources">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Staff_Changes" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Staff_Changes-Human_Resources&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Staff_Changes-Human_Resources"></span>Staff Changes<span data-mw-comment-end="h-Staff_Changes-Human_Resources"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=44" title="Edit section: Staff Changes">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<dl><dt>New Hires</dt></dl>
+<ul><li>Fabrice Florin, Product Manager – New Editor Engagement (VP of Engineering &amp; Prod Development)</li>
+<li>Joady Lohr, Director of Human Resources (Human Resources)</li>
+<li>Christopher McMahon, Quality Assurance Lead Engineer (Engineering)</li>
+<li>Gayle Karen Young, Chief Talent and Culture Officer (Human Resources)</li></ul>
+<dl><dt>New Other Roles Filled/Conversion</dt></dl>
+<ul><li>Subhashish Panigrahi, Consultant Community &amp; Program Support (India)</li>
+<li>Jon Robson, Contractor Software Developer-Mobile (Engineering)</li>
+<li>Matthew Roth, Global Communications Manager (Global Development)</li></ul>
+<dl><dt>New Contractors</dt></dl>
+<ul><li>Christian Aistleitner</li>
+<li>Andreas Engels</li>
+<li>Andrew Otto</li>
+<li>Lori Phillips</li>
+<li>Sarah Stierch</li></ul>
+<dl><dt>Contract Extended</dt></dl>
+<ul><li>Pavel Andreev</li>
+<li>Jeroen de Dauw</li>
+<li>Erek Dyskant</li>
+<li>Roan Kattouw</li>
+<li>Niklas Laxstrom</li>
+<li>Yusuke Matsubara</li>
+<li>Diederik Van Liere</li>
+<li>Susan Walling</li></ul>
+<dl><dt>Departed</dt></dl>
+<ul><li>Neil Kandalgoankar</li>
+<li>Cyn Skyberg</li></ul>
+<dl><dt>Contract Ended</dt></dl>
+<ul><li>Farhan Chaudhary</li>
+<li>Aislinn Dewey</li>
+<li>Tracey Fleming</li>
+<li>Stacey Merrick</li>
+<li>Heather O'Malley</li>
+<li>Neel Punatar</li></ul>
+<dl><dt>New Postings</dt></dl>
+<ul><li>Senior Software Engineer Frontend</li>
+<li>Operations Engineer (Labs)</li></ul>
+<dl><dt>RFP</dt></dl>
+<ul><li>Recruiting Engineer</li>
+<li>Mobile QA</li></ul>
+<h3><span class="mw-headline" id="Statistics" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Statistics-Human_Resources&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Statistics-Human_Resources"></span>Statistics<span data-mw-comment-end="h-Statistics-Human_Resources"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=45" title="Edit section: Statistics">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Total Employee Count
+</p>
+<dl><dd>Actual: 95</dd>
+<dd>January Plan: 110, January Filled: 7, January Attrition: 2</dd>
+<dd>YTD Filled: 32, YTD Attrition: 11</dd></dl>
+<p>Remaining Open positions to fiscal year end: 22
+</p>
+<h3><span class="mw-headline" id="Department_Updates" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Department_Updates-Human_Resources&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:3,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Department_Updates-Human_Resources"></span>Department Updates<span data-mw-comment-end="h-Department_Updates-Human_Resources"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=46" title="Edit section: Department Updates">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Joady Lohr has joined us as the new Director of Human Resources.  Joady handles aspects of human resources as related to compensation, benefits, policies, etc. and is already an indispensible part of our team. She comes to us with years of experience at IDEO and Business for Social Responsibility (BSR), both of which speak to her experiences working in HR with global organizations.
+</p><p>In recruiting, we are iterating changes to <a class="external free" href="https://jobs.wikimedia.org">http://jobs.wikimedia.org</a> , and hosting a focus group with community members to ensure that the page communicates that we welcome community members applying for roles with the Foundation.  Feedback on the page is welcome. We are also rolling out Jobvite as our recruitment and applicant tracking software to streamline our recruiting process.
+</p><p>We have also begun redesigning some of our internal processes, such as onboarding and hiring, including a revision of our hiring contracts and agreements with heavy and wonderful support from Legal.
+</p><p>Real-time feed for HR updates: 
+<a rel="nofollow" class="external free" href="http://identi.ca/wikimediaatwork">http://identi.ca/wikimediaatwork</a> or <a rel="nofollow" class="external free" href="https://twitter.com/wikimediaatwork">http://twitter.com/wikimediaatwork</a>
+</p>
+<h2><span class="mw-headline" id="Finance_and_Administration" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Finance_and_Administration&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Finance_and_Administration"></span>Finance and Administration<span data-mw-comment-end="h-Finance_and_Administration"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=47" title="Edit section: Finance and Administration">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Chip Deubner joined our Office IT team and Nathan D’Annibale joined our accounting team. 
+</p><p>We are continuing our search for a Head of Office Administration and will begin interviews next week.
+</p><p>Work was completed on an update to conference room R 33 to improve its usability for the Tech team. Our thanks to Leslie for facilitating this project.
+</p>
+<h2><span class="mw-headline" id="Legal" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Legal&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Legal"></span>Legal<span data-mw-comment-end="h-Legal"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=48" title="Edit section: Legal">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul><li>New proposed terms of use have been sent to the Board for review and potential approval.  <a class="external free" href="https://meta.wikimedia.org/wiki/Talk:Terms_of_use#The_terms_of_use_are_now_before_the_WMF_Board_of_Trustees_for_consideration">https://meta.wikimedia.org/wiki/Talk:Terms_of_use#The_terms_of_use_are_now_before_the_WMF_Board_of_Trustees_for_consideration</a></li></ul>
+<ul><li>Like the rest of the WMF office and community, Legal provided strong support to the SOPA/PIPA blackout strategy, including advising the community on the SOPA Initiative page, helping coordinate cross-functional issues, and reviewing various legal issues associated with the blackout.  We are now engaged in post-blackout strategy with other departments.  Our present thinking is to leverage the positive response following the blackout to support messages that explain and advocate the open and free knowledge movement as it applies to Wikimedia values.</li></ul>
+<ul><li>White paper on ACTA ( <a class="external free" href="https://meta.wikimedia.org/wiki/Legal/ACTA">https://meta.wikimedia.org/wiki/Legal/ACTA</a> ) and OPEN ( <a class="external free" href="https://meta.wikimedia.org/wiki/Legal/OPEN_Act">https://meta.wikimedia.org/wiki/Legal/OPEN_Act</a> )</li></ul>
+<ul><li>Filed challenge against German Loriot injunction, which we will post shortly.  <a class="external free" href="https://commons.wikimedia.org/wiki/Commons:Loriot_Signature_Background#Conclusion">https://commons.wikimedia.org/wiki/Commons:Loriot_Signature_Background#Conclusion</a></li></ul>
+<ul><li>Reviewing present privacy policy for possible revision and review with community.</li></ul>
+<ul><li>Strong support of global development: India and Brazil.</li></ul>
+<ul><li>Strong daily contract, trademark, community, governance, international, and content-defense support.</li></ul>
+<ul><li>Stats
+<ul><li># contracts signed  - 10</li>
+<li># trademark requests - 11
+<ul><li>approved - 4</li>
+<li>denied - 2</li>
+<li>approval not needed - 1</li>
+<li>pending - 4</li></ul></li></ul></li></ul>
+<h2><span class="mw-headline" id="Visitors_and_Guests" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Visitors_and_Guests&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Visitors_and_Guests"></span>Visitors and Guests<span data-mw-comment-end="h-Visitors_and_Guests"></span></span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;section=49" title="Edit section: Visitors and Guests">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ol><li>Daniel Long (Community member)</li>
+<li>Wendy Hanamura, Cassie Gruenstein, Merin Mathew, Taylor Hadfield, Andrea Jones, Lili Polastri (Link TV)</li>
+<li>Philip Neustrom (LocalWiki)</li>
+<li>Julian Nachtigal (pariSoma)</li>
+<li>Victor Lobo and two colleagues (ADP)</li>
+<li>30 Harvard/Stanford students for cross dept talk</li>
+<li>Steve Devetter (KPMG)</li>
+<li>Daniel Kinzler (Wikimedia Germany)</li>
+<li>MetaMarkets CEO Mike Driscoll and team, for a brown bag presentation on analytics</li>
+<li>Product Design Guild (hosted meet-up)</li>
+<li>Derk-Jan Hartman</li>
+<li>Various visiting engineering contractors</li></ol>
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
-
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
-
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2109.00835
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2109.00835"
-        dc:identifier="/abs/2109.00835"
-        dc:title="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"
-        trackback:ping="/trackback/2109.00835" />
-    </rdf:RDF>
+<!-- 
+NewPP limit report
+Parsed by mw1397
+Cached time: 20220504010718
+Cache expiry: 1814400
+Reduced expiry: false
+Complications: []
+DiscussionTools time usage: 0.036 seconds
+CPU time usage: 0.146 seconds
+Real time usage: 0.281 seconds
+Preprocessor visited node count: 196/1000000
+Post‐expand include size: 1137/2097152 bytes
+Template argument size: 189/2097152 bytes
+Highest expansion depth: 5/100
+Expensive parser function count: 0/500
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+Lua time usage: 0.010/10.000 seconds
+Lua memory usage: 759055/52428800 bytes
+Number of Wikibase entities loaded: 0/400
 -->
-<div id="abs-outer">
-  
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   34.997      1 -total
+100.00%   34.997      1 Template:Info
+ 82.94%   29.028      1 Template:Ombox
+-->
 
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computers and Society</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2109.00835</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 2 Sep 2021]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Trokhymovych%2C+M">Mykola Trokhymovych</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Saez-Trumper%2C+D">Diego Saez-Trumper</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2109.00835">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model's performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata"><tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computers and Society (cs.CY)</span></td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2109.00835">arXiv:2109.00835</a> [cs.CY]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2109.00835v1">arXiv:2109.00835v1</a> [cs.CY]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2109.00835">https://doi.org/10.48550/arXiv.2109.00835</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
-</div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Diego Saez-Trumper [<a href="/show-email/12a895fd/2109.00835">view email</a>]
-      <br/><strong>[v1]</strong>
-Thu, 2 Sep 2021 10:45:07 UTC (5,621 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2109.00835" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2109.00835" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CY</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2109.00835&amp;function=prev&amp;context=cs.CY"
-         accesskey="p" title="previous in cs.CY (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2109.00835&amp;function=next&amp;context=cs.CY" accesskey="n"
-         title="next in cs.CY (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CY/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CY/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CY/2109">2109</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2109.00835?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2109.00835">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2109.00835" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2109.00835" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2109.html#abs-2109-00835" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2109-00835" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Diego%20S%C3%A1ez-Trumper" title="DBLP author search">Diego Sáez-Trumper</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
+<!-- Saved in parser cache with key metawiki:pcache:idhash:936036-0!canonical and timestamp 20220504010717 and revision id 5390953. Serialized with JSON.
+ -->
+</div><noscript><img src="//meta.wikimedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript>
+<div class="printfooter">Retrieved from "<a dir="ltr" href="https://meta.wikimedia.org/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;oldid=5390953">https://meta.wikimedia.org/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;oldid=5390953</a>"</div></div>
+		<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Wikimedia_Foundation_reports,_2012" title="Category:Wikimedia Foundation reports, 2012">Wikimedia Foundation reports, 2012</a></li></ul></div></div>
+	</div>
 </div>
 
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835%26description%3DWikiCheck%3A+An+end-to-end+open+source+Automatic+Fact-Checking+API+based+on+Wikipedia&amp;v=d13a24f6"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835&amp;v=d98a6ef1"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835%26title%3DWikiCheck%3A+An+end-to-end+open+source+Automatic+Fact-Checking+API+based+on+Wikipedia&amp;v=b90eb72e"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835&amp;v=065950b4"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
+<div id="mw-navigation">
+	<h2>Navigation menu</h2>
+	<div id="mw-head">
+		
+<nav id="p-personal" class="mw-portlet mw-portlet-personal vector-user-menu-legacy vector-menu" aria-labelledby="p-personal-label" role="navigation" 
+	 >
+	<label id="p-personal-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Personal tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="pt-uls" class="mw-list-item active"><a class="uls-trigger" href="#"><span>English</span></a></li><li id="pt-anonuserpage" class="mw-list-item"><span title="The user page for the IP address you are editing as">Not logged in</span></li><li id="pt-anontalk" class="mw-list-item"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n"><span>Talk</span></a></li><li id="pt-anoncontribs" class="mw-list-item"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y"><span>Contributions</span></a></li><li id="pt-createaccount" class="mw-list-item"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Wikimedia+Foundation+Report%2C+January+2012" title="You are encouraged to create an account and log in; however, it is not mandatory"><span>Create account</span></a></li><li id="pt-login" class="mw-list-item"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Wikimedia+Foundation+Report%2C+January+2012" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o"><span>Log in</span></a></li></ul>
+		
+	</div>
+</nav>
 
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
+		<div id="left-navigation">
+			
+<nav id="p-namespaces" class="mw-portlet mw-portlet-namespaces vector-menu vector-menu-tabs" aria-labelledby="p-namespaces-label" role="navigation" 
+	 >
+	<label id="p-namespaces-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Namespaces</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Wikimedia_Foundation_Report,_January_2012" title="View the content page [c]" accesskey="c"><span>Content page</span></a></li><li id="ca-talk" class="new mw-list-item"><a href="/w/index.php?title=Talk:Wikimedia_Foundation_Report,_January_2012&amp;action=edit&amp;redlink=1" rel="discussion" title="Discussion about the content page (page does not exist) [t]" accesskey="t"><span>Discussion</span></a></li></ul>
+		
+	</div>
+</nav>
 
+			
+<nav id="p-variants" class="mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-variants-label" role="navigation" 
+	 >
+	<input type="checkbox"
+		id="p-variants-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-variants"
+		class="vector-menu-checkbox" aria-labelledby="p-variants-label" />
+	<label id="p-variants-label" aria-label="Change language variant" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">English</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
+		</div>
+		<div id="right-navigation">
+			
+<nav id="p-views" class="mw-portlet mw-portlet-views vector-menu vector-menu-tabs" aria-labelledby="p-views-label" role="navigation" 
+	 >
+	<label id="p-views-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Views</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Wikimedia_Foundation_Report,_January_2012"><span>Read</span></a></li><li id="ca-edit" class="mw-list-item"><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=edit" title="Edit this page [e]" accesskey="e"><span>Edit</span></a></li><li id="ca-history" class="mw-list-item"><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=history" title="Past revisions of this page [h]" accesskey="h"><span>View history</span></a></li></ul>
+		
+	</div>
+</nav>
 
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
+			
+<nav id="p-cactions" class="mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-cactions-label" role="navigation"  title="More options"
+	 >
+	<input type="checkbox"
+		id="p-cactions-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-cactions"
+		class="vector-menu-checkbox" aria-labelledby="p-cactions-label" />
+	<label id="p-cactions-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">More</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2109.00835" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
+			
+<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+	<div>
+			<h3 >
+				<label for="searchInput">Search</label>
+			</h3>
+		<form action="/w/index.php" id="searchform"
+			class="vector-search-box-form">
+			<div id="simpleSearch"
+				class="vector-search-box-inner"
+				 data-search-loc="header-navigation">
+				<input class="vector-search-box-input"
+					 type="search" name="search" placeholder="Search Meta" aria-label="Search Meta" autocapitalize="sentences" title="Search Meta [f]" accesskey="f" id="searchInput"
+				/>
+				<input type="hidden" name="title" value="Special:Search"/>
+				<input id="mw-searchButton"
+					 class="searchButton mw-fallbackSearchButton" type="submit" name="fulltext" title="Search the pages for this text" value="Search" />
+				<input id="searchButton"
+					 class="searchButton" type="submit" name="go" title="Go to a page with this exact name if it exists" value="Go" />
+			</div>
+		</form>
+	</div>
 </div>
 
-      </div>
-    </main>
+		</div>
+	</div>
+	
 
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
+<div id="mw-panel">
+	<div id="p-logo" role="banner">
+		<a class="mw-wiki-logo" href="/wiki/Special:MyLanguage/Main_Page"
+			title="Visit the main page"></a>
+	</div>
+	
+<nav id="p-navigation" class="mw-portlet mw-portlet-navigation vector-menu vector-menu-portal portal" aria-labelledby="p-navigation-label" role="navigation" 
+	 >
+	<label id="p-navigation-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Navigation</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-mainpage-description" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Main_Page" icon="home" title="Visit the main page [z]" accesskey="z"><span>Main page</span></a></li><li id="n-currentevents" class="mw-list-item"><a href="/wiki/Wikimedia_News" title="Find background information on current events"><span>Wikimedia News</span></a></li><li id="n-translations" class="mw-list-item"><a href="/wiki/Special:LanguageStats" title="Help with translations"><span>Translations</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" icon="recentChanges" title="A list of recent changes in the wiki [r]" accesskey="r"><span>Recent changes</span></a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" icon="die" title="Load a random page [x]" accesskey="x"><span>Random page</span></a></li><li id="n-help" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Help:Help" icon="help" title="The place to find out"><span>Help</span></a></li><li id="n-Babel-text" class="mw-list-item"><a href="/wiki/Meta:Babel"><span>Babel</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-community" class="mw-portlet mw-portlet-community vector-menu vector-menu-portal portal" aria-labelledby="p-community-label" role="navigation" 
+	 >
+	<label id="p-community-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Community</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-WikimediaResourceCenter-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Wikimedia_Resource_Center"><span>Wikimedia Resource Center</span></a></li><li id="n-WikimediaForum-text" class="mw-list-item"><a href="/wiki/Wikimedia_Forum"><span>Wikimedia Forum</span></a></li><li id="n-mailinglists-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Mailing_lists/Overview"><span>Mailing lists</span></a></li><li id="n-Requests-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Meta:Requests_and_proposals"><span>Requests</span></a></li><li id="n-Babylon-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Meta:Babylon"><span>Babylon</span></a></li><li id="n-Reports-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Wikimedia_Affiliates_Data_Portal"><span>Reports</span></a></li><li id="n-Research-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Research:Index"><span>Research</span></a></li><li id="n-planet" class="mw-list-item"><a href="//en.planet.wikimedia.org/" title="Weblog aggregator of Wikimedia-related posts"><span>Planet Wikimedia</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-beyond_the_web" class="mw-portlet mw-portlet-beyond_the_web vector-menu vector-menu-portal portal" aria-labelledby="p-beyond_the_web-label" role="navigation" 
+	 >
+	<label id="p-beyond_the_web-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Beyond the Web</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-Meetup-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Meetup"><span>Meet Wikimedians</span></a></li><li id="n-Events-text" class="mw-list-item"><a href="/wiki/Events"><span>Events</span></a></li><li id="n-Affiliates-text" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Wikimedia_movement_affiliates"><span>Movement affiliates</span></a></li><li id="n-sitesupport" class="mw-list-item"><a href="//donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_meta.wikimedia.org&amp;uselang=en" title="Support us"><span>Donate</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-tb" class="mw-portlet mw-portlet-tb vector-menu vector-menu-portal portal" aria-labelledby="p-tb-label" role="navigation" 
+	 >
+	<label id="p-tb-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Wikimedia_Foundation_Report,_January_2012" title="A list of all wiki pages that link here [j]" accesskey="j"><span>What links here</span></a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Wikimedia_Foundation_Report,_January_2012" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k"><span>Related changes</span></a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li><li id="t-permalink" class="mw-list-item"><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;oldid=5390953" title="Permanent link to this revision of the page"><span>Permanent link</span></a></li><li id="t-info" class="mw-list-item"><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;action=info" title="More information about this page"><span>Page information</span></a></li><li id="t-cite" class="mw-list-item"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Wikimedia_Foundation_Report%2C_January_2012&amp;id=5390953&amp;wpFormIdentifier=titleform" title="Information on how to cite this page"><span>Cite this page</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-coll-print_export" class="mw-portlet mw-portlet-coll-print_export vector-menu vector-menu-portal portal" aria-labelledby="p-coll-print_export-label" role="navigation" 
+	 >
+	<label id="p-coll-print_export-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Print/export</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="coll-create_a_book" class="mw-list-item"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Wikimedia+Foundation+Report%2C+January+2012"><span>Create a book</span></a></li><li id="coll-download-as-rl" class="mw-list-item"><a href="/w/index.php?title=Special:DownloadAsPdf&amp;page=Wikimedia_Foundation_Report%2C_January_2012&amp;action=show-download-screen"><span>Download as PDF</span></a></li><li id="t-print" class="mw-list-item"><a href="/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;printable=yes" title="Printable version of this page [p]" accesskey="p"><span>Printable version</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-lang" class="mw-portlet mw-portlet-lang vector-menu vector-menu-portal portal" aria-labelledby="p-lang-label" role="navigation" 
+	 >
+	<label id="p-lang-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">In other languages</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-add wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Special:NewItem?site=metawiki&amp;page=Wikimedia+Foundation+Report%2C+January+2012" title="Add interlanguage links" class="wbc-editpage">Add links</a></span></div>
+	</div>
+</nav>
+
+</div>
+
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" >
+	<ul id="footer-info">
+	<li id="footer-info-lastmod"> This page was last edited on 13 April 2013, at 10:45.</li>
+	<li id="footer-info-copyright">Text is available under the <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>;
+additional terms may apply.
+See <a href="https://foundation.wikimedia.org/wiki/Terms_of_Use">Terms of Use</a> for details.</li>
+</ul>
+
+	<ul id="footer-places">
+	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+	<li id="footer-places-about"><a href="/wiki/Meta:About" title="Meta:About">About Meta</a></li>
+	<li id="footer-places-disclaimer"><a href="https://foundation.wikimedia.org/wiki/Wikimedia:General_disclaimer" class="extiw" title="wmf:Wikimedia:General disclaimer">Disclaimers</a></li>
+	<li id="footer-places-mobileview"><a href="//meta.m.wikimedia.org/w/index.php?title=Wikimedia_Foundation_Report,_January_2012&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+	<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/meta.wikimedia.org">Statistics</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Cookie_statement">Cookie statement</a></li>
+</ul>
+
+	<ul id="footer-icons" class="noprint">
+	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/"><img src="/static/images/footer/wikimedia-button.png" srcset="/static/images/footer/wikimedia-button-1.5x.png 1.5x, /static/images/footer/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation" loading="lazy" /></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/"><img src="/static/images/footer/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/footer/poweredby_mediawiki_132x47.png 1.5x, /static/images/footer/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a></li>
+</ul>
+
+</footer>
+
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"discussiontools":{"limitreport-timeusage":"0.036"},"limitreport":{"cputime":"0.146","walltime":"0.281","ppvisitednodes":{"value":196,"limit":1000000},"postexpandincludesize":{"value":1137,"limit":2097152},"templateargumentsize":{"value":189,"limit":2097152},"expansiondepth":{"value":5,"limit":100},"expensivefunctioncount":{"value":0,"limit":500},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"entityaccesscount":{"value":0,"limit":400},"timingprofile":["100.00%   34.997      1 -total","100.00%   34.997      1 Template:Info"," 82.94%   29.028      1 Template:Ombox"]},"scribunto":{"limitreport-timeusage":{"value":"0.010","limit":"10.000"},"limitreport-memusage":{"value":759055,"limit":52428800}},"cachereport":{"origin":"mw1397","timestamp":"20220504010718","ttl":1814400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":204,"wgHostname":"mw1456"});});</script>
 </body>
-
 </html>

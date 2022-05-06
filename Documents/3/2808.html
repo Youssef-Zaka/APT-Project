@@ -1,146 +1,1267 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!doctype html>
+<html lang="en">
 <head>
-<title>Format selector for 2110.02065</title>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" type="text/css" media="screen" href="//static.arxiv.org/static/browse/0.3.2.8/css/arXiv.css?v=20220215" />
-<link rel="stylesheet" type="text/css" media="screen" href="/bibex/bibex.css?20181009">
-<link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.8/css/browse_search.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
 
+	<title>FAQ &#8211; WordAds</title>
+<meta name='robots' content='max-image-preview:large' />
 
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=39'
+					+ '&is_singular=';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly93b3JkYWRzLmNv"
+		+ "&wpcomid=31994648"
+		+ "&time=1651851003";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//wordadstest.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel="alternate" type="application/rss+xml" title="WordAds &raquo; Feed" href="https://wordads.co/feed/" />
+<link rel="alternate" type="application/rss+xml" title="WordAds &raquo; Comments Feed" href="https://wordads.co/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+	<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s1.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=6.0-alpha-53047"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJyNj+1OAyEQRV9ImNLG2j/GZ2FhQqYdPsJAG97edaObtWrqz5O553KBW1Eup4apQeyqcA+UBG7F5agkEuO4I+1EnuB3jemCAmdsxbqLWuhH/Csb+owT1jBfKsLVHLTRO5g6sYeJ81IwVVsHSBuMaxElx91/vCMQ0ZNFxrgM2UBhO7AqxmDd0JHSY32+bfmb9Pf4Zenmz3bk3lSo5O9m/7ui2kYpyAPd5U9tr81JGyUUC6OqeNUGPElbE2oteouv5vhszMvutD+e3wERKr0P?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s2.wp.com/_static/??-eJyNjl1OAzEMhC9EmgWqihfEWbyJSQ12EsWOFm6PoQIEVBUvln/m80zcekitGlaLMkPnWahqTG2g76WDRVcIZgJkFJftkupVPI9tlAua4/rZB8OXy0h3m7CufaBq8Co0JdjRvfQPd1pHuEtxayND1qj2yvglpJp4ZjwlyKBHclR3QvU/sXH6tT0TBoYtGkpnMPztceZBwRa4JTBq9ccQHhloXEIHrtyKt+Uj8/f4Dj3I/fVhf7M/3C7L8vQG5NagXw==?cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-4-1' href='https://s1.wp.com/_static/??-eJxti0EKgCAQAD+UbVFGHaK3mJgaqyut0vejQ4eo0zAwA2cSmmI2MUMoImGxPjIk4iw2VP4Adurw0T6sNXMF/xeT9goFkqW3fKbsTDAMrgeLtCq8gyXM7dCNUjZy6vcLZTc31Q==?cssminify=yes' type='text/css' media='all' />
+<script id='media-video-widget-extensions-js-extra'>
+var videopressAjax = {"ajaxUrl":"https:\/\/wordadstest.wordpress.com\/wp-admin\/admin-ajax.php","bridgeUrl":"https:\/\/s2.wp.com\/wp-content\/mu-plugins\/videopress\/js\/videopress-token-bridge.js"};
+</script>
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"31994648","siteURL":"https:\/\/wordads.co","xhrURL":"https:\/\/wordads.co\/wp-admin\/admin-ajax.php","nonce":"21ef6c862d","isLoggedIn":"","statusMessage":"","subsEmailDefault":"instantly","proxyScriptUrl":"https:\/\/s0.wp.com\/wp-content\/js\/wpcom-proxy-request.js?ver=20211021","shortlink":"https:\/\/wp.me\/P2afgI-D","i18n":{"followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/_static/??-eJyFjcEKwjAQRH/IbSgWqQfxW9pmDRuT3bhJqv17i1ToQfA0zMwbxjwTTMIFuZhYIYXqiLOZyaIkxZyN3zsockeGUck6bHw+mN1+JaOMFBBqRh3cmgHxTX5wGgokldfy7YinUC1+7vyjoi6bNJH4LwSRnA4FN/gaL+2pOx+7ru9b/wZWKlQk'></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://wordadstest.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://wordads.co/faq/" />
+<link rel='shortlink' href='https://wp.me/P2afgI-D' />
+	<style>
+		@font-face {
+			font-family: Recoleta;
+			font-display: swap;
+			src: url('https://s1.wp.com/i/fonts/recoleta/400.woff2')
+		}
+	</style>
+	<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fwordads.co%2Ffaq%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fwordads.co%2Ffaq%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="FAQ" />
+<meta property="og:url" content="https://wordads.co/faq/" />
+<meta property="og:description" content="About WordAds Q: What are WordAds?&nbsp; A: WordAds is an opt-in program that allows you to make money by running ads on your WordPress sites.&nbsp; Q: What are the benefits of using WordAds? A: Wo…" />
+<meta property="article:published_time" content="2012-05-18T09:49:49+00:00" />
+<meta property="article:modified_time" content="2022-04-22T00:02:32+00:00" />
+<meta property="og:site_name" content="WordAds" />
+<meta property="og:image" content="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png" />
+<meta property="og:image:width" content="1600" />
+<meta property="og:image:height" content="912" />
+<meta property="og:image:alt" content="" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+<meta name="twitter:creator" content="@wordads" />
+<meta name="twitter:site" content="@wordads" />
+<meta name="twitter:text:title" content="FAQ" />
+<meta name="twitter:image" content="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:app:name:iphone" content="WordPress" />
+<meta name="twitter:app:id:iphone" content="335703880" />
+<meta name="twitter:app:name:ipad" content="WordPress" />
+<meta name="twitter:app:id:ipad" content="335703880" />
+<meta name="twitter:app:name:googleplay" content="WordPress" />
+<meta name="twitter:app:id:googleplay" content="org.wordpress.android" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/0551c30af4acd91f6e8a322770e1108b?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/0551c30af4acd91f6e8a322770e1108b?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/0551c30af4acd91f6e8a322770e1108b?s=114" />
+<link rel='openid.server' href='https://wordads.co/?openidserver=1' />
+<link rel='openid.delegate' href='https://wordads.co/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://wordads.co/osd.xml" title="WordAds" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="WordAds" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="High quality ads for WordPress" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://wordads.co/feed/;icon-uri=https://secure.gravatar.com/blavatar/0551c30af4acd91f6e8a322770e1108b?s=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><!-- There is no amphtml version available for this URL. -->
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-10673494-26', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- END Google Analytics -->
 </head>
-<body class="with-cu-identity">
 
-<div id="cu-identity">
-<div id="cu-logo">
-<a href="https://www.cornell.edu/"><img src="//static.arxiv.org/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" width="200" border="0" /></a>
+<body class="page-template page-template-template-FAQ page-template-template-FAQ-php page page-id-39 customizer-styles-applied highlander-enabled highlander-light">
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	<header id="masthead" class="site-header">
+		<div class="header-wrap">
+			<div class="site-branding">
+									<div class="site-title"><a href="https://wordads.co/" rel="home">WordAds</a></div>
+							</div><!-- .site-branding -->
+
+			<nav id="site-navigation" class="main-navigation">
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">Menu</button>
+				<div class="menu-main-container"><ul id="primary-menu" class="menu"><li id="menu-item-33" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-33"><a href="https://wordads.co/benefits/">Benefits</a></li>
+<li id="menu-item-41" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-39 current_page_item menu-item-41"><a href="https://wordads.co/faq/" aria-current="page">FAQ</a></li>
+<li id="menu-item-44" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-44"><a href="https://wordads.co/blog/">News</a></li>
+<li id="menu-item-7232" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7232"><a target="_blank" rel="noopener" href="https://wordpress.com/help/contact">Contact</a></li>
+<li id="menu-item-13419" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13419"><a href="https://wordads.co/signup/">Sign Up</a></li>
+</ul></div>			</nav><!-- #site-navigation -->
+		</div><!-- .header-wrap -->
+	</header><!-- #masthead -->
+
+			<div id="content" class="benefits-content">
+			<div class="lp-content">
+			<div id="hero" class="feature">
+				<div class="inner">
+					<div>
+						<h1>Frequently Asked Questions</h1>
+						We are here to help you make the most of WordAds.
+					</div>
+				</div>
+			</div>
+			<div class="inner">
+				
+<article id="post-39" class="post-39 page type-page status-publish hentry">
+	
+	<div class="entry-content">
+		
+<h2 id="about-wordads">About WordAds</h2>
+
+
+
+<p><strong>Q: What are WordAds?&nbsp;</strong></p>
+
+
+
+<p>A: WordAds is an opt-in program that allows you to make money by running ads on your WordPress sites.&nbsp;</p>
+
+
+
+<p><strong>Q: What are the benefits of using WordAds?</strong></p>
+
+
+
+<p>A: WordAds is easy to install on your site. You only have to sign up with WordAds and it takes care of the rest. See the <a href="https://wordads.co/benefits/">Benefits</a> page for more information about the benefits of using WordAds.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity" />
+
+
+
+<h2 id="ads-on-your-wordpress-sites">Ads on your WordPress sites</h2>
+
+
+
+<p><strong>Q: What are my options for running advertisements on my WordPress.com sites?&nbsp;</strong></p>
+
+
+
+<p>A: With WordPress.com Pro, you can insert WordAds ads on your site to make money from your WordPress.com site. </p>
+
+
+
+<p>With <a href="https://wpvip.com/">WordPress.com VIP</a> (aimed at enterprise websites) or WordPress.com Pro plan, you can also run third-party ads by using plugins.</p>
+
+
+
+<p><strong>Q: Can I run WordAds on my self-hosted WordPress.org site?&nbsp;</strong></p>
+
+
+
+<p>A: Absolutely! WordAds is available for all Jetpack users on the Security or Complete plan. <a href="https://jetpack.com/features/traffic/ads/">Head to Jetpack.com to learn more or to get started</a>.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity" />
+
+
+
+<h2 id="eligibility-for-wordads">Eligibility for WordAds</h2>
+
+
+
+<p><strong>Q: What do I need to run WordAds?&nbsp;</strong></p>
+
+
+
+<p>A: For WordPress.com sites, your site must be on the WordPress.com Pro plan. For self-hosted WordPress.org sites, the Jetpack Security or Complete plan is required. Learn more about using <a href="https://jetpack.com/support/ads/">WordAds on WordPress.org sites</a>.</p>
+
+
+
+<p><strong>Q: What are the other requirements for running WordAds?</strong></p>
+
+
+
+<ul><li>You must be the <strong>site owner</strong> in order to enable WordAds for the first time.&nbsp;</li><li>The site must be<strong> publicly visible</strong>.</li><li>A <strong>custom domain</strong> must be set as primary on the site.</li><li>A <strong>PayPal account</strong> is required to receive WordAds earnings. Currently, there are no other ways for you to receive your WordAds earnings.</li></ul>
+
+
+
+<hr class="wp-block-separator has-css-opacity" />
+
+
+
+<h2 id="ad-creative-and-placement">Ad creative and placement</h2>
+
+
+
+<p><strong>Q: What do WordAds ads look like?&nbsp;</strong></p>
+
+
+
+<p>A: WordAds offers a variety of ad placement options, including display, video, native, sticky, etc. We occasionally test other types of ads for brief periods. We continuously optimize ads for performance and placements are subject to change.&nbsp;</p>
+
+
+
+<p><strong>Q: Where will the ads display on my site?</strong></p>
+
+
+
+<p>A: Generally speaking, ads can be configured to display below posts on the <em>front page, posts, pages, </em>and <em>archives</em>. Additionally, you can display ads on <em>top of each page </em>and on the <em>sidebar.</em></p>
+
+
+
+<p>To show/hide ads on any of the locations mentioned above, you can click <strong><em>My Site → Tools → Earn → View ad dashboard → Settings</em></strong>. On WordPress.org sites, you can find them on <strong><em>WP Admin → Jetpack → Settings → Traffic</em></strong><strong>.</strong></p>
+
+
+
+<p>Note: Ad placements can vary by theme. Not all themes support ad placements in all locations.</p>
+
+
+
+<p><strong>Q: Can I manually insert ads somewhere on my site?&nbsp;</strong></p>
+
+
+
+<p>A: If your site is on the WordPress.com Pro plan and you use the block editor, you can manually insert an <a href="https://jetpack.com/support/jetpack-blocks/ad-block/"><em>Ad block</em></a> which will let you insert an ad placement manually on your pages and posts. You can <a href="https://jetpack.com/support/jetpack-blocks/ad-block/">follow the instructions from Jetpack.com for the<em> Ad block</em></a> (this applies to WordPress.org sites with Jetpack Complete or Security plan as well).</p>
+
+
+
+<p><strong>Q: Can I select/choose which ads will run on my site?&nbsp;</strong></p>
+
+
+
+<p>A: Picking certain advertisers is currently not an option.&nbsp;</p>
+
+
+
+<p>We do our best to maintain the highest standards for ads we display through WordAds. We have the ability to block specific ads network-wide, so if you see an ad featuring inappropriate content (like sex, drugs, or violence), here’s what you can do:&nbsp;</p>
+
+
+
+<ol><li>Click where it says “Report this Ad” near the bottom of the ad to report this directly.</li><li>Optionally, <a href="https://wordpress.com/support/make-a-screenshot/">take a screenshot</a> and right-click the ad to copy the URL it’s linked to. Don’t click the ad directly, as it will probably redirect to a different URL. Once you have this information, please feel free to <a href="https://wordads.co/contact/">contact us</a> and we’ll investigate the issue.</li></ol>
+
+
+
+<p><strong>Q: Can the ads contextually match the content on my site?</strong></p>
+
+
+
+<p>A: Advertisers may choose to target certain content categories based on their campaign&#8217;s goals, but the ads tend to be broad national campaigns, rather than targeted local or topical campaigns.</p>
+
+
+
+<p><strong>Q: What do the ads look like in other countries?</strong></p>
+
+
+
+<p>A: While the ad placements and layouts are the same globally, most countries have their own advertisers. This means that only the advertisers and their creatives themselves differ.</p>
+
+
+
+<p><strong>Q: Ads are not showing up on my site</strong></p>
+
+
+
+<p>A: There can be various reasons for ads not showing up on your site. Some common reasons are:&nbsp;</p>
+
+
+
+<ul><li>Your site is brand new or you’ve recently enabled WordAds for the first time.&nbsp;</li><li>Your site doesn’t have a lot of content.&nbsp;</li><li>Ads are turned off in your Ads dashboard.&nbsp;</li><li>Ads are turned on but the ad placements are turned off/unchecked.&nbsp;</li><li>Your browser has ad blocker extensions enabled.&nbsp;</li><li>Your site’s ads.txt file is not up to date (or is missing).</li><li>Your site doesn’t have a <a href="https://wordpress.com/support/wordads-and-earn/#consent-management">consent management provider</a>.&nbsp;</li><li>Your site does not adhere to our brand safety guidelines. Find out more about <a href="https://wordpress.com/automattic-ads-tos/">here</a>.</li></ul>
+
+
+
+<p>If none of the conditions above apply to you and you still don’t see ads on your site, please <a href="https://wordads.co/contact/">contact us</a> and we’ll be happy to take a look.&nbsp;</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity" />
+
+
+
+<h2 id="turning-wordads-on-and-off">Turning WordAds on and off</h2>
+
+
+
+<p><strong>Q: How can I enable WordAds for the first time?&nbsp;</strong></p>
+
+
+
+<p>A: If you meet the requirements mentioned above, you can click <strong><em>My Site → Tools → Earn → Earn ad revenue → Join WordAds</em></strong> to fill up the required information and get started.&nbsp;</p>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png"><img data-attachment-id="16661" data-permalink="https://wordads.co/join-wordads/" data-orig-file="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png" data-orig-size="1600,912" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="join-wordads" data-image-description="" data-image-caption="" data-medium-file="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=300" data-large-file="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=640" src="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=1024" alt="Screenshot showing the Join WordAds screen." class="wp-image-16661" srcset="https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=1024 1024w, https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=150 150w, https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=300 300w, https://wordadstest.files.wordpress.com/2021/10/join-wordads.png?w=768 768w, https://wordadstest.files.wordpress.com/2021/10/join-wordads.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<p><strong>Q: How can I pause WordAds temporarily?</strong></p>
+
+
+
+<p>A: If you want to pause or temporarily turn off ads on your site, you can go to&nbsp; <strong><em>My Site → Tools → Earn → View ad dashboard → Settings</em></strong> and choose <strong><em>Pause ads</em></strong>. On WordPress.org sites, you can find them on <strong><em>WP Admin → Jetpack → Settings → Traffic</em></strong><strong> </strong>→ <strong><em>Enable ads and display an ad below each post.</em></strong></p>
+
+
+
+<p><strong>Q: Can I withdraw from WordAds?</strong></p>
+
+
+
+<p>A: If you no longer want to continue with the WordAds program and you decide to withdraw from WordAds permanently, you can <a href="https://wordads.co/contact">contact us</a> and we’ll be happy to help you with this.&nbsp;</p>
+
+
+
+<p>Please note that you won’t be able to reactivate WordAds on the same site again once you withdraw. If you are taking a break, we suggest “pausing” ads instead by following the steps mentioned in the previous section.&nbsp;</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity" />
+
+
+
+<h2 id="earnings-payments">Earnings &amp; payments</h2>
+
+
+
+<p><strong>Q: When are earnings posted?</strong></p>
+
+
+
+<p>A: We update the estimated revenue daily. Finalized earnings are posted on your ads dashboard 15 days after the end of the month.</p>
+
+
+
+<p><strong>Q: Where can I see my earnings?</strong></p>
+
+
+
+<p>A: Once your earnings have been posted, you’ll be able to see them via the <strong><em>Earnings</em></strong> tab at <strong><em>My Sites → Tools → Earn → View ad dashboard</em></strong>.</p>
+
+
+
+<p><strong>Q: Can I have more information about my earnings?</strong></p>
+
+
+
+<p>A: Generally, you’re paid per impression (when the ad is seen by a visitor), not by click. That means the more visits you get, and the more each visitor uses your site, the more you’ll earn.</p>
+
+
+
+<p>Advertising rates fluctuate constantly. The online ads system is similar to the stock market where advertisers bid in real time. Unless you have the same exact number of visitors from the same countries every single month and advertisers are valuing those visitors equally every month, you’ll never be able to calculate a consistent rate just by earnings vs. impression totals. What you earn can vary greatly per site, depending on the following factors:</p>
+
+
+
+<ul><li>The amount of traffic.</li><li>Where the majority of the traffic is coming from. (North American ad placements currently pay out at a much greater level than ads from other regions.)</li><li>How much advertisers value your users based on their cookies.</li><li>How many visitors are using ad blockers.</li><li>The actual ads that are displayed.</li></ul>
+
+
+
+<p><strong>Q: Do you have guidance for how I can earn more?</strong></p>
+
+
+
+<p>A: There are a few things you can do to increase your earnings. Here’s a non-exhaustive list:</p>
+
+
+
+<ol><li>Ensure that the ads.txt file is up to date. (If you aren’t using a plugin that touches the ads.txt file, you’re probably all good there.)</li><li>Ensure that you have a Consent Management Provider (CMP) for collecting consent to display personalized ads to visitors from the European region. Learn more <a href="https://wordpress.com/support/wordads-and-earn/#consent-management">here</a>.</li><li>Advertisers generally pay a higher rate for North American traffic, so you can focus on getting more traffic from that region.</li><li>Stick to using the default ad placements. Inserting too many ads on your site can negatively impact your earning.</li><li>Focus on quality over quantity. At the same time, publish often. We have some tips on <a href="https://wordpress.com/support/getting-more-views-and-traffic/">getting more traffic to your site here</a>.&nbsp;</li><li>Do not publish content that does not adhere to our brand safety guidelines. Check out the Ads terms of service <a href="https://wordpress.com/automattic-ads-tos/">here</a>.</li></ol>
+
+
+
+<p><strong>Q: What should I write about to increase my earnings?</strong></p>
+
+
+
+<p>A: Generally speaking, genre doesn’t have a major impact on earnings so focus on whatever topic you think will drive more visits.</p>
+
+
+
+<p>Advertisers are primarily focused on who is your audience, not what they are reading. So a knitting site can earn as much as a site about software.</p>
+
+
+
+<p><strong>Q: Do ads run in emails or mobile phones?</strong></p>
+
+
+
+<p>A: We recently introduced a partner to provide <a href="https://wordads.co/2018/11/01/wordads-now-with-ads-in-email-subscriptions/">email ads</a> for our users. We also display ads on the mobile web so visitors viewing your site from mobile and tablet devices see ads as well.&nbsp;</p>
+
+
+
+<p><strong>Q: Why do you need my Social Security number?</strong></p>
+
+
+
+<p>A: The IRS requires that we collect it if you are a US citizen.</p>
+
+
+
+<p><strong>Q: How and when do I get paid?</strong></p>
+
+
+
+<p>A: WordAds pays monthly via PayPal. The outstanding amount will be paid approximately 45 days following the end of the month in which it was earned. If you earned less than $100 in a given month, your earnings will carry over to the next month instead.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity" />
+
+
+
+<h2 id="new-features">New features</h2>
+
+
+
+<p><strong>Q: What are your plans for the future of WordAds?</strong></p>
+
+
+
+<p>A: Much of the work we do remains behind the scenes, like negotiating deals with ad partners around the world. Our primary goal today is to increase the payments per page for all our sites. We’re also investing energy in customizing new themes for WordAds.</p>
+
+
+
+<p>We think of WordAds as a trusted advertising advisor, not an open marketplace for advertising products. We’ve tested and continue to test dozens of ad partners and products so that our users don’t have to spend their time on that. Some sites have asked if they can add a specific ad network or sell ads themselves. WordAds is not a good fit for sites that look for the total freedom to run whatever ads program they choose.</p>
+
+
+
+<p>If you have more questions about WordAds or need further help with your WordAds account, please <a href="https://wordpress.com/help/contact">contact us</a>.</p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-39" class="share-twitter sd-button share-icon" href="https://wordads.co/faq/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-39" class="share-facebook sd-button share-icon" href="https://wordads.co/faq/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon" href="https://wordads.co/faq/?share=pocket" target="_blank" title="Click to share on Pocket"><span>Pocket</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://wordads.co/faq/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li><a href="#" class="sharing-anchor sd-button share-more"><span>More</span></a></li><li class="share-end"></li></ul><div class="sharing-hidden"><div class="inner" style="display: none;"><ul><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button share-icon" href="https://wordads.co/faq/#print" target="_blank" title="Click to print"><span>Print</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://wordads.co/faq/?share=tumblr" target="_blank" title="Click to share on Tumblr"><span>Tumblr</span></a></li><li class="share-end"></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://wordads.co/faq/?share=reddit" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-39" class="share-pinterest sd-button share-icon" href="https://wordads.co/faq/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-39" class="share-linkedin sd-button share-icon" href="https://wordads.co/faq/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-end"></li></ul></div></div></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-31994648-39-62753efbc9c84' data-src='//widgets.wp.com/likes/index.html?ver=20220105#blog_id=31994648&amp;post_id=39&amp;origin=wordadstest.wordpress.com&amp;obj_id=31994648-39-62753efbc9c84&amp;domain=wordads.co' data-name='like-post-frame-31994648-39-62753efbc9c84' data-title='Like or Reblog'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div></div>	</div><!-- .entry-content -->
+
+	</article><!-- #post-39 -->
+			</div>
+		</div>
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer">
+		<div class="footer-wrap">
+			<div class="site-info">
+				<span class="copyright-notice">&copy; 2012-2022			</div><!-- .site-info -->
+			<nav class="footer-navigation">
+				<div class="menu-footer-menu-container"><ul id="footer" class="menu"><li id="menu-item-16533" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16533"><a href="https://wordpress.com/automattic-ads-tos/">Automattic Ads Terms of Service</a></li>
+<li id="menu-item-16647" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16647"><a href="https://wordads.co/privacy-info/">Privacy</a></li>
+<li id="menu-item-16534" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16534"><a href="https://wordpress.com/help/contact">Contact</a></li>
+</ul></div>			</nav><!-- #footer-navigation -->
+		</div>
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202218z' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	</div>
+	<div id="actionbar" style="display: none;"
+			class="actnbr-a8c-wordads actnbr-has-follow">
+		<ul>
+								<li class="actnbr-btn actnbr-hidden">
+								<a class="actnbr-action actnbr-actn-follow " href="">
+			<svg class="gridicon gridicons-reader-follow" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"/></g></svg><span>Follow</span>
+		</a>
+		<a class="actnbr-action actnbr-actn-following  no-display" href="">
+			<svg class="gridicon gridicons-reader-following" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"/></g></svg><span>Following</span>
+		</a>
+							<div class="actnbr-popover tip tip-top-left actnbr-notice" id="follow-bubble">
+							<div class="tip-arrow"></div>
+							<div class="tip-inner actnbr-follow-bubble">
+															<ul>
+											<li class="actnbr-sitename">
+			<a href="https://wordads.co">
+				<img alt='' src='https://secure.gravatar.com/blavatar/0551c30af4acd91f6e8a322770e1108b?s=50&#038;d=https%3A%2F%2Fs2.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' />				WordAds			</a>
+		</li>
+										<form method="post" action="https://subscribe.wordpress.com" accept-charset="utf-8" style="display: none;">
+																						<div class="actnbr-follow-count">Join 16,332 other followers</div>
+																					<div>
+										<input type="email" name="email" placeholder="Enter your email address" class="actnbr-email-field" aria-label="Enter your email address" />
+										</div>
+										<input type="hidden" name="action" value="subscribe" />
+										<input type="hidden" name="blog_id" value="31994648" />
+										<input type="hidden" name="source" value="https://wordads.co/faq/" />
+										<input type="hidden" name="sub-type" value="actionbar-follow" />
+										<input type="hidden" id="_wpnonce" name="_wpnonce" value="16a9a21af9" />										<div class="actnbr-button-wrap">
+											<button type="submit" value="Sign me up">
+												Sign me up											</button>
+										</div>
+									</form>
+									<li class="actnbr-login-nudge">
+										<div>
+											Already have a WordPress.com account? <a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fwordads.co%252Ffaq%252F">Log in now.</a>										</div>
+									</li>
+								</ul>
+															</div>
+						</div>
+					</li>
+							<li class="actnbr-ellipsis actnbr-hidden">
+				<svg class="gridicon gridicons-ellipsis" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M7 12c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm12-2c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-7 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2z"/></g></svg>				<div class="actnbr-popover tip tip-top-left actnbr-more">
+					<div class="tip-arrow"></div>
+					<div class="tip-inner">
+						<ul>
+									<li class="actnbr-sitename">
+			<a href="https://wordads.co">
+				<img alt='' src='https://secure.gravatar.com/blavatar/0551c30af4acd91f6e8a322770e1108b?s=50&#038;d=https%3A%2F%2Fs2.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' />				WordAds			</a>
+		</li>
+								<li class="actnbr-folded-customize">
+								<a href="https://wordadstest.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fwordadstest.wordpress.com%2Ffaq%2F">
+									<svg class="gridicon gridicons-customize" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z"/></g></svg>									<span>Customize</span>
+								</a>
+							</li>
+																<li class="actnbr-folded-follow">
+												<a class="actnbr-action actnbr-actn-follow " href="">
+			<svg class="gridicon gridicons-reader-follow" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"/></g></svg><span>Follow</span>
+		</a>
+		<a class="actnbr-action actnbr-actn-following  no-display" href="">
+			<svg class="gridicon gridicons-reader-following" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"/></g></svg><span>Following</span>
+		</a>
+										</li>
+																	<li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li>
+									<li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fwordads.co%252Ffaq%252F">Log in</a></li>
+																	<li class="actnbr-shortlink"><a href="https://wp.me/P2afgI-D">Copy shortlink</a></li>
+																	<li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li>
+																	<li class="actnbr-reader">
+										<a href="https://wordpress.com/read/blogs/31994648/posts/39">
+											View post in Reader										</a>
+									</li>
+																	<li class="actnbr-subs">
+										<a href="https://subscribe.wordpress.com/">Manage subscriptions</a>
+									</li>
+																		<li class="actnbr-fold"><a href="">Collapse this bar</a></li>
+															</ul>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20210915";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20220329";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+			<div id="jp-carousel-loading-overlay">
+			<div id="jp-carousel-loading-wrapper">
+				<span id="jp-carousel-library-loading">&nbsp;</span>
+			</div>
+		</div>
+		<div class="jp-carousel-overlay" style="display: none;">
+
+		<div class="jp-carousel-container">
+			<!-- The Carousel Swiper -->
+			<div
+				class="jp-carousel-wrap swiper-container jp-carousel-swiper-container jp-carousel-transitions"
+				itemscope
+				itemtype="https://schema.org/ImageGallery">
+				<div class="jp-carousel swiper-wrapper"></div>
+				<div class="jp-swiper-button-prev swiper-button-prev">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskPrev" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="9" height="12">
+							<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskPrev)">
+							<rect x="0.579102" width="23.8823" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+				<div class="jp-swiper-button-next swiper-button-next">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskNext" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="8" height="12">
+							<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskNext)">
+							<rect x="0.34375" width="23.8822" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<!-- The main close buton -->
+			<div class="jp-carousel-close-hint">
+				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<mask id="maskClose" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="14">
+						<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"/>
+					</mask>
+					<g mask="url(#maskClose)">
+						<rect x="0.409668" width="23.8823" height="24" fill="#FFFFFF"/>
+					</g>
+				</svg>
+			</div>
+			<!-- Image info, comments and meta -->
+			<div class="jp-carousel-info">
+				<div class="jp-carousel-info-footer">
+					<div class="jp-carousel-pagination-container">
+						<div class="jp-swiper-pagination swiper-pagination"></div>
+						<div class="jp-carousel-pagination"></div>
+					</div>
+					<div class="jp-carousel-photo-title-container">
+						<h2 class="jp-carousel-photo-caption"></h2>
+					</div>
+					<div class="jp-carousel-photo-icons-container">
+						<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-info" aria-label="Toggle photo metadata visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskInfo" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskInfo)">
+										<rect x="0.8125" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+							</span>
+						</a>
+												<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-comments" aria-label="Toggle photo comments visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskComments" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M4.3271 2H20.2486C21.3432 2 22.2388 2.9 22.2388 4V16C22.2388 17.1 21.3432 18 20.2486 18H6.31729L2.33691 22V4C2.33691 2.9 3.2325 2 4.3271 2ZM6.31729 16H20.2486V4H4.3271V18L6.31729 16Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskComments)">
+										<rect x="0.34668" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+
+								<span class="jp-carousel-has-comments-indicator" aria-label="This image has comments."></span>
+							</span>
+						</a>
+											</div>
+				</div>
+				<div class="jp-carousel-info-extra">
+					<div class="jp-carousel-info-content-wrapper">
+						<div class="jp-carousel-photo-title-container">
+							<h2 class="jp-carousel-photo-title"></h2>
+						</div>
+						<div class="jp-carousel-comments-wrapper">
+															<div id="jp-carousel-comments-loading">
+									<span>Loading Comments...</span>
+								</div>
+								<div class="jp-carousel-comments"></div>
+								<div id="jp-carousel-comment-form-container">
+									<span id="jp-carousel-comment-form-spinner">&nbsp;</span>
+									<div id="jp-carousel-comment-post-results"></div>
+																														<form id="jp-carousel-comment-form">
+												<label for="jp-carousel-comment-form-comment-field" class="screen-reader-text">Write a Comment...</label>
+												<textarea
+													name="comment"
+													class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea"
+													id="jp-carousel-comment-form-comment-field"
+													placeholder="Write a Comment..."
+												></textarea>
+												<div id="jp-carousel-comment-form-submit-and-info-wrapper">
+													<div id="jp-carousel-comment-form-commenting-as">
+																													<fieldset>
+																<label for="jp-carousel-comment-form-email-field">Email (Required)</label>
+																<input type="text" name="email" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-email-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-author-field">Name (Required)</label>
+																<input type="text" name="author" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-author-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-url-field">Website</label>
+																<input type="text" name="url" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-url-field" />
+															</fieldset>
+																											</div>
+													<input
+														type="submit"
+														name="submit"
+														class="jp-carousel-comment-form-button"
+														id="jp-carousel-comment-form-button-submit"
+														value="Post Comment" />
+												</div>
+											</form>
+																											</div>
+													</div>
+						<div class="jp-carousel-image-meta">
+							<div class="jp-carousel-title-and-caption">
+								<div class="jp-carousel-photo-info">
+									<h3 class="jp-carousel-caption" itemprop="caption description"></h3>
+								</div>
+
+								<div class="jp-carousel-photo-description"></div>
+							</div>
+							<ul class="jp-carousel-image-exif" style="display: none;"></ul>
+							<a class="jp-carousel-image-download" target="_blank" style="display: none;">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="19" height="18">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white"/>
+									</mask>
+									<g mask="url(#mask0)">
+										<rect x="0.870605" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+								<span class="jp-carousel-download-text"></span>
+							</a>
+							<div class="jp-carousel-image-map" style="display: none;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/wordads.co\/faq\/":39};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/faq/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"
+				data-lazy="true"
+				data-url="https://www.google.com/recaptcha/api.js?hl=en"></div>
+			
+			<img style="float: right; display: none" class="loading" src="https://s2.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<div class="widget widget_eu_cookie_law_widget">
+<div
+	class="hide-on-button"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+	style="display: none"
+>
+	<form method="post">
+		<input type="submit" value="Close and accept" class="accept" />
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br />
+To find out more, including how to control cookies, see here:
+				<a href="https://automattic.com/cookies/" rel="nofollow">
+			Cookie Policy		</a>
+ </form>
 </div>
-<div id="support-ack">
-<a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br /> the Simons Foundation and member institutions.</a>
-</div>
-</div>
-<div id="header">
-<h1 class="header-breadcrumbs"><a href="/"><img src="//static.arxiv.org/images/arxiv-logo-one-color-white.svg" aria-label="logo" alt="arxiv logo" width="85" style="width:85px;margin-right:8px;"></a></h1>
-<div class="search-block level-right">
-<form class="level-item mini-search" method="GET" action="https://arxiv.org/search" _lpchecked="1">
-<div class="field has-addons">
-<div class="control">
-<input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" data-com.agilebits.onepassword.user-edited="yes">
-<p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-</div>
-<div class="control">
-<div class="select is-small">
-<select name="searchtype" aria-label="Field to search">
-<option value="all" selected="selected">All fields</option>
-<option value="title">Title</option>
-<option value="author">Author</option>
-<option value="abstract">Abstract</option>
-<option value="comments">Comments</option>
-<option value="journal_ref">Journal reference</option>
-<option value="acm_class">ACM classification</option>
-<option value="msc_class">MSC classification</option>
-<option value="report_num">Report number</option>
-<option value="paper_id">arXiv identifier</option>
-<option value="doi">DOI</option>
-<option value="orcid">ORCID</option>
-<option value="author_id">arXiv author ID</option>
-<option value="help">Help pages</option>
-<option value="full_text">Full text</option>
-</select>
-</div>
-</div>
-<button class="button is-small is-cul-darker">Search</button>
-</div>
-</form>
-</div>
-</div>
-<div id="content">
-<h1>Format selector for <a href="/abs/2110.02065">arXiv:2110.02065v1</a></h1>
-<p><b>Set cookies</b>: if your browser supports cookies you can 
-<a href="/cookies">configure your default format</a>.</p>
-<dl>
-<dt><font size="+1"><b>PDF</b></font></dt>
-<dd>
-<form action="/pdf/2110.02065" method="get">
-Now includes fonts, see our <a href="/help/pdf">PDF help</a>.
-<input type="submit" value="Download PDF" />
-</form>
-<br />
-</dd> 
-<dt><font size="+1"><b>Source</b></font></dt>
-<dd>
-Delivered as a <b>gzipped tar</b> (.tar.gz) file if there are multiple files, 
-otherwise as a <b>PDF</b> file, or a <b>gzipped TeX, DVI, PostScript or HTML</b> 
-(.gz, .dvi.gz, .ps.gz or .html.gz) file depending on submission format.
-[ <a href="/e-print/2110.02065">Download source</a> ]
-<br />
-</dd>
-</dl>
-<hr />
-<p>For more information consult the
-<a href="/help/view">viewing help</a>.</p>
-<p><b>Note:</b> Many of the formats above are served gzipped
-(<code>Content-Encoding: x-gzip</code>). Your browser may 
-silently uncompress after downloading so the files you see saved
-may appear uncompressed.</p>
-<p>Please report any problems to <a href="/help/contact">arXiv admins</a>,
-being certain to state the paper identifier, explicit options
-you've selected and that you're using arxiv.org.</p>
-<hr />
-</div>
- <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
+</div><link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/swiper-bundle.css,/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1630955947j&cssminify=yes' type='text/css' media='all' />
+<script id='coblocks-lightbox-js-extra'>
+var coblocksLigthboxData = {"closeLabel":"Close Gallery","leftLabel":"Previous","rightLabel":"Next"};
+</script>
+<script id='jetpack-carousel-js-extra'>
+var jetpackSwiperLibraryPath = {"url":"\/wp-content\/mu-plugins\/carousel\/swiper-bundle.js"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/wordads.co\/wp-admin\/admin-ajax.php","nonce":"3bcaac14ec","display_exif":"1","display_comments":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/wordadstest.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fwordads.co%2Ffaq%2F","blog_id":"31994648","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"stats_query_args":"blog=31994648&v=wpcom&tz=-7&user_id=0&subd=wordadstest","is_public":"1"};
+</script>
+<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJyNj91OwzAMRl8I13RMMC4Qz+Ilbus2f4uTlccnIFVCRap2lcQ+x1+MawITQ+FQcFa0fBfD6aub9Qn/tHyF5OooQdHJwoq3ypUnCtZx3sMbaeLVRbMonrr+0vWg4pNjyHzverSiv4kbBE7GqVzjv+gysW+BdDG4xmzJ6o8W6C4jFYnhMV4XSS0iLDBEUxUGOdpxFTtyUeTaunERBkcrFm7/p8K7+sEcsl4CXCmjJy2c2w1KprbugWQox6rscOaSGgtb4QEH1mSi3z0PvBS1wOBIMupEWcK4nU369B/96/n9/Hw6vb3M34lqzdI='></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-pocket' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-pocket' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-tumblr' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-tumblr' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-linkedin' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-linkedin' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<iframe src='https://widgets.wp.com/likes/master.html?ver=20220105#ver=20220105&amp;origin=https://wordads.co' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+	<div id='likes-other-gravatars'>
+		<div class="likes-text">
+			<span>%d</span> bloggers like this:		</div>
+		<ul class="wpl-avatars sd-like-gravatars"></ul>
+	</div>
+
+		<script src="//stats.wp.com/w.js?63" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'31994648','blog_tz':'-7','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'31994648','v':'wpcom','tz':'-7','user_id':'0','post':'39','subd':'wordadstest'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1lSiYrZXhzUkM5fD1uTDNLUGt6QzVbd3FKb3Q4aVlJPzFyPVJZKy9zL2d+YysyY1czVzdWVGVTPyVrPUk1JUtVRVJJZ0R3cHRBanRBbGtrTkRwc34xS3IsM2RNakgsdF0mZTB4Vz0zaEQmSn51MnBkUkFPRjFoK1ExaXpFZUMlTTN3aWtfMHZUUnMzLF1CUHIySV89T0lpflZ2c11qSGgxTD93UT9rcUpILStaY0hDNWF3PStMdzdrW29Bb0M4bS92ZHVfRz9DMWtzV3dlalhwOU1sMTl8bnZXZkQyVU05SCxFWSZvOTZ2QnxfYXEmcHI1MDlHOSY4U0Fba3JpV2FhdzJhfEZaTUpZRUV4a0d3NSt+'}]);
+_stq.push([ 'clickTrackerInit', '31994648', '39' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
 </body>
 </html>

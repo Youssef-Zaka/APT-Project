@@ -1,702 +1,411 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
 <head>
-  <title>[2109.10896v1] Updating Embeddings for Dynamic Knowledge Graphs</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
-</script>
-  <meta name="citation_title" content="Updating Embeddings for Dynamic Knowledge Graphs"/>
-  <meta name="citation_author" content="Wewer, Christopher"/>
-  <meta name="citation_author" content="Lemmerich, Florian"/>
-  <meta name="citation_author" content="Cochez, Michael"/>
-  <meta name="citation_date" content="2021/09/22"/>
-  <meta name="citation_online_date" content="2021/09/22"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2109.10896"/>
-  <meta name="citation_arxiv_id" content="2109.10896"/>
-  <meta name="citation_abstract" content=" Data in Knowledge Graphs often represents part of the current state of the
-real world. Thus, to stay up-to-date the graph data needs to be updated
-frequently. To utilize information from Knowledge Graphs, many state-of-the-art
-machine learning approaches use embedding techniques. These techniques
-typically compute an embedding, i.e., vector representations of the nodes as
-input for the main machine learning algorithm. If a graph update occurs later
-on -- specifically when nodes are added or removed -- the training has to be
-done all over again. This is undesirable, because of the time it takes and also
-because downstream models which were trained with these embeddings have to be
-retrained if they change significantly. In this paper, we investigate embedding
-updates that do not require full retraining and evaluate them in combination
-with various embedding models on real dynamic Knowledge Graphs covering
-multiple use cases. We study approaches that place newly appearing nodes
-optimally according to local information, but notice that this does not work
-well. However, we find that if we continue the training of the old embedding,
-interleaved with epochs during which we only optimize for the added and removed
-parts, we obtain good results in terms of typical metrics used in link
-prediction. This performance is obtained much faster than with a complete
-retraining and hence makes it possible to maintain embeddings for dynamic
-Knowledge Graphs.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2109.10896"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Updating Embeddings for Dynamic Knowledge Graphs"/>
-    <meta name="twitter:description" content="Data in Knowledge Graphs often represents part of the current state of the
-real world. Thus, to stay up-to-date the graph data needs to be updated
-frequently. To utilize information from Knowledge..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="Updating Embeddings for Dynamic Knowledge Graphs"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2109.10896v1"/>
-    <meta property="og:description" content="Data in Knowledge Graphs often represents part of the current state of the
-real world. Thus, to stay up-to-date the graph data needs to be updated
-frequently. To utilize information from Knowledge Graphs, many state-of-the-art
-machine learning approaches use embedding techniques. These techniques
-typically compute an embedding, i.e., vector representations of the nodes as
-input for the main machine learning algorithm. If a graph update occurs later
-on -- specifically when nodes are added or removed -- the training has to be
-done all over again. This is undesirable, because of the time it takes and also
-because downstream models which were trained with these embeddings have to be
-retrained if they change significantly. In this paper, we investigate embedding
-updates that do not require full retraining and evaluate them in combination
-with various embedding models on real dynamic Knowledge Graphs covering
-multiple use cases. We study approaches that place newly appearing nodes
-optimally according to local information, but notice that this does not work
-well. However, we find that if we continue the training of the old embedding,
-interleaved with epochs during which we only optimize for the added and removed
-parts, we obtain good results in terms of typical metrics used in link
-prediction. This performance is obtained much faster than with a complete
-retraining and hence makes it possible to maintain embeddings for dynamic
-Knowledge Graphs."/>
+<meta charset="UTF-8"/>
+<title>State Register of Immovable Landmarks of Ukraine - Wikipedia</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"ddec05f4-5087-4941-af23-8517434baf71","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"State_Register_of_Immovable_Landmarks_of_Ukraine","wgTitle":"State Register of Immovable Landmarks of Ukraine","wgCurRevisionId":1078034552,"wgRevisionId":1078034552,"wgArticleId":42323899,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Articles containing Ukrainian-language text","All stub articles","Heritage registers in Ukraine","Ukraine stubs"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":
+"State_Register_of_Immovable_Landmarks_of_Ukraine","wgRelevantArticleId":42323899,"wgIsProbablyEditable":true,"wgRelevantPageIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgRedirectedFrom":"National_Heritage_Site_(Ukraine)","wgFlaggedRevsParams":{"tags":{"status":{"levels":1}}},"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","pageVariantFallbacks":"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"nearby":true,"watchlist":true,"tagline":false},"wgWMESchemaEditAttemptStepOversample":false,"wgWMEPageLength":2000,"wgNoticeProject":"wikipedia","wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgPopupsFlags":10,"wgULSCurrentAutonym":"English","wgInternalRedirectTargetUrl":"/wiki/State_Register_of_Immovable_Landmarks_of_Ukraine","wgEditSubmitButtonLabelPublish":true,"wgCentralAuthMobileDomain":false,"wgULSPosition":"interlanguage","wgULSisCompactLinksEnabled":true,"wgWikibaseItemId":"Q16155011"};RLSTATE={
+"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","skins.vector.styles.legacy":"ready","jquery.makeCollapsible.styles":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.wikimediaBadges":"ready","ext.uls.interlanguage":"ready","wikibase.client.init":"ready"};RLPAGEMODULES=["mediawiki.action.view.redirect","site","mediawiki.page.ready","jquery.makeCollapsible","skins.vector.legacy.js","mmv.head","mmv.bootstrap.autostart","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.cx.eventlogging.campaigns","ext.centralNotice.geoIP","ext.centralNotice.startUp","ext.gadget.ReferenceTooltips","ext.gadget.charinsert","ext.gadget.extra-toolbar-buttons","ext.gadget.refToolbar","ext.gadget.switcher","ext.centralauth.centralautologin","ext.popups","ext.uls.compactlinks","ext.uls.interface",
+"ext.growthExperiments.SuggestedEditSession"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1i9g4",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cjquery.makeCollapsible.styles%7Cskins.vector.styles.legacy%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<meta name="generator" content="MediaWiki 1.39.0-wmf.10"/>
+<meta name="referrer" content="origin"/>
+<meta name="referrer" content="origin-when-crossorigin"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG/1200px-%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="1805"/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG/800px-%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG"/>
+<meta property="og:image:width" content="800"/>
+<meta property="og:image:height" content="1203"/>
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG/640px-%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG"/>
+<meta property="og:image:width" content="640"/>
+<meta property="og:image:height" content="963"/>
+<meta property="og:title" content="State Register of Immovable Landmarks of Ukraine - Wikipedia"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="//upload.wikimedia.org"/>
+<link rel="alternate" media="only screen and (max-width: 720px)" href="//en.m.wikipedia.org/wiki/State_Register_of_Immovable_Landmarks_of_Ukraine"/>
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=edit"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/wiki/State_Register_of_Immovable_Landmarks_of_Ukraine"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
 </head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject mw-editable page-State_Register_of_Immovable_Landmarks_of_Ukraine rootpage-State_Register_of_Immovable_Landmarks_of_Ukraine skin-vector action-view skin-vector-legacy"><div id="mw-page-base" class="noprint"></div>
+<div id="mw-head-base" class="noprint"></div>
+<div id="content" class="mw-body" role="main">
+	<a id="top"></a>
+	<div id="siteNotice"><!-- CentralNotice --></div>
+	<div class="mw-indicators">
+	</div>
+	<h1 id="firstHeading" class="firstHeading mw-first-heading">State Register of Immovable Landmarks of Ukraine</h1>
+	<div id="bodyContent" class="vector-body">
+		<div id="siteSub" class="noprint">From Wikipedia, the free encyclopedia</div>
+		<div id="contentSub"><span class="mw-redirectedfrom">&#160;&#160;(Redirected from <a href="/w/index.php?title=National_Heritage_Site_(Ukraine)&amp;redirect=no" class="mw-redirect" title="National Heritage Site (Ukraine)">National Heritage Site (Ukraine)</a>)</span></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-parser-output"><p>The <b>State Register of Immovable (Tangible) Monuments of Ukraine</b> (<a href="/wiki/Ukrainian_language" title="Ukrainian language">Ukrainian</a>: <span lang="uk">Державний реєстр нерухомих пам'яток України</span>) is a register of some 3,300 objects of <a href="/wiki/Cultural_heritage" title="Cultural heritage">cultural heritage</a> in Ukraine. An object of cultural heritage added to the register is known as a landmark.
+</p><p>The registry was established as early as 1960s. It was established according to article 5 of the second protocol to the <a href="/wiki/Hague_Convention_for_the_Protection_of_Cultural_Property_in_the_Event_of_Armed_Conflict" title="Hague Convention for the Protection of Cultural Property in the Event of Armed Conflict">Hague Convention for the Protection of Cultural Property in the Event of Armed Conflict</a>, which provides for the establishment of national registers of cultural property.
+</p>
+<style data-mw-deduplicate="TemplateStyles:r978413945/mw-parser-output/.tmulti">.mw-parser-output .tmulti .thumbinner{display:flex;flex-direction:column}.mw-parser-output .tmulti .trow{display:flex;flex-direction:row;clear:left;flex-wrap:wrap;width:100%;box-sizing:border-box}.mw-parser-output .tmulti .tsingle{margin:1px;float:left}.mw-parser-output .tmulti .theader{clear:both;font-weight:bold;text-align:center;align-self:center;background-color:transparent;width:100%}.mw-parser-output .tmulti .thumbcaption{background-color:transparent}.mw-parser-output .tmulti .text-align-left{text-align:left}.mw-parser-output .tmulti .text-align-right{text-align:right}.mw-parser-output .tmulti .text-align-center{text-align:center}@media all and (max-width:720px){.mw-parser-output .tmulti .thumbinner{width:100%!important;box-sizing:border-box;max-width:none!important;align-items:center}.mw-parser-output .tmulti .trow{justify-content:center}.mw-parser-output .tmulti .tsingle{float:none!important;max-width:100%!important;box-sizing:border-box;text-align:center}.mw-parser-output .tmulti .tsingle .thumbcaption{text-align:left}.mw-parser-output .tmulti .trow>.thumbcaption{text-align:center}}</style><div class="thumb tmulti tright"><div class="thumbinner" style="width:301px;max-width:301px"><div class="trow"><div class="tsingle" style="width:145px;max-width:145px"><div class="thumbimage"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/14/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG/143px-%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG" decoding="async" width="143" height="215" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/14/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG/215px-%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/14/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG/286px-%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG 2x" data-file-width="2000" data-file-height="3008" /></div><div class="thumbcaption"><a href="/wiki/Ukrainian_SSR" class="mw-redirect" title="Ukrainian SSR">Ukrainian SSR</a></div></div><div class="tsingle" style="width:152px;max-width:152px"><div class="thumbimage"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/51/35_Market_Square%2C_Lviv_%282%29.jpg/150px-35_Market_Square%2C_Lviv_%282%29.jpg" decoding="async" width="150" height="200" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/51/35_Market_Square%2C_Lviv_%282%29.jpg/225px-35_Market_Square%2C_Lviv_%282%29.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/51/35_Market_Square%2C_Lviv_%282%29.jpg/300px-35_Market_Square%2C_Lviv_%282%29.jpg 2x" data-file-width="1439" data-file-height="1920" /></div><div class="thumbcaption"><a href="/wiki/Ukraine" title="Ukraine">Ukraine</a></div></div></div><div class="trow" style="display:flex"><div class="thumbcaption">Register sign placards (example).</div></div></div></div>
+<p>The list is split by regions including cities with special status. There are two types of lists for immobile landmarks of national significance and of local significance. The landmarks are being classified as archaeological, historical, monumental art, architecture and urban planning, garden-park artistry, historical landscape, science and technology.
+</p>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=edit&amp;section=1" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul><li><a href="/wiki/List_of_historic_reserves_in_Ukraine" title="List of historic reserves in Ukraine">List of historic reserves in Ukraine</a></li></ul>
+<h2><span class="mw-headline" id="External_links">External links</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=edit&amp;section=2" title="Edit section: External links">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul><li><a rel="nofollow" class="external text" href="http://mincult.kmu.gov.ua/control/uk/publish/officialcategory?cat_id=244910406">List of Immobile Landmarks</a> at the Ministry of Culture website</li>
+<li><a rel="nofollow" class="external text" href="http://zakon1.rada.gov.ua/laws/show/928-2009-%D0%BF/page">List of object of cultural heritage</a> (official document)</li>
+<li><a rel="nofollow" class="external text" href="http://zakon1.rada.gov.ua/laws/show/1805-14">Law of Ukraine "About Protection of the Cultural Heritage"</a> (official document)</li></ul>
+<div class="navbox-styles nomobile"><style data-mw-deduplicate="TemplateStyles:r1061467846">.mw-parser-output .navbox{box-sizing:border-box;border:1px solid #a2a9b1;width:100%;clear:both;font-size:88%;text-align:center;padding:1px;margin:1em auto 0}.mw-parser-output .navbox .navbox{margin-top:0}.mw-parser-output .navbox+.navbox,.mw-parser-output .navbox+.navbox-styles+.navbox{margin-top:-1px}.mw-parser-output .navbox-inner,.mw-parser-output .navbox-subgroup{width:100%}.mw-parser-output .navbox-group,.mw-parser-output .navbox-title,.mw-parser-output .navbox-abovebelow{padding:0.25em 1em;line-height:1.5em;text-align:center}.mw-parser-output .navbox-group{white-space:nowrap;text-align:right}.mw-parser-output .navbox,.mw-parser-output .navbox-subgroup{background-color:#fdfdfd}.mw-parser-output .navbox-list{line-height:1.5em;border-color:#fdfdfd}.mw-parser-output .navbox-list-with-group{text-align:left;border-left-width:2px;border-left-style:solid}.mw-parser-output tr+tr>.navbox-abovebelow,.mw-parser-output tr+tr>.navbox-group,.mw-parser-output tr+tr>.navbox-image,.mw-parser-output tr+tr>.navbox-list{border-top:2px solid #fdfdfd}.mw-parser-output .navbox-title{background-color:#ccf}.mw-parser-output .navbox-abovebelow,.mw-parser-output .navbox-group,.mw-parser-output .navbox-subgroup .navbox-title{background-color:#ddf}.mw-parser-output .navbox-subgroup .navbox-group,.mw-parser-output .navbox-subgroup .navbox-abovebelow{background-color:#e6e6ff}.mw-parser-output .navbox-even{background-color:#f7f7f7}.mw-parser-output .navbox-odd{background-color:transparent}.mw-parser-output .navbox .hlist td dl,.mw-parser-output .navbox .hlist td ol,.mw-parser-output .navbox .hlist td ul,.mw-parser-output .navbox td.hlist dl,.mw-parser-output .navbox td.hlist ol,.mw-parser-output .navbox td.hlist ul{padding:0.125em 0}.mw-parser-output .navbox .navbar{display:block;font-size:100%}.mw-parser-output .navbox-title .navbar{float:left;text-align:left;margin-right:0.5em}</style></div><div role="navigation" class="navbox" aria-labelledby="Lists_of_national_landmarks_of_cultural_heritage_in_Ukraine_by_region" style="padding:3px"><table class="nowraplinks mw-collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit"><tbody><tr><th scope="col" class="navbox-title" colspan="2"><style data-mw-deduplicate="TemplateStyles:r1063604349">.mw-parser-output .navbar{display:inline;font-size:88%;font-weight:normal}.mw-parser-output .navbar-collapse{float:left;text-align:left}.mw-parser-output .navbar-boxtext{word-spacing:0}.mw-parser-output .navbar ul{display:inline-block;white-space:nowrap;line-height:inherit}.mw-parser-output .navbar-brackets::before{margin-right:-0.125em;content:"[ "}.mw-parser-output .navbar-brackets::after{margin-left:-0.125em;content:" ]"}.mw-parser-output .navbar li{word-spacing:-0.125em}.mw-parser-output .navbar a>span,.mw-parser-output .navbar a>abbr{text-decoration:inherit}.mw-parser-output .navbar-mini abbr{font-variant:small-caps;border-bottom:none;text-decoration:none;cursor:inherit}.mw-parser-output .navbar-ct-full{font-size:114%;margin:0 7em}.mw-parser-output .navbar-ct-mini{font-size:114%;margin:0 4em}</style><div class="navbar plainlinks hlist navbar-mini"><ul><li class="nv-view"><a href="/wiki/Template:Lists_of_national_landmarks_of_cultural_heritage_in_Ukraine_by_region" title="Template:Lists of national landmarks of cultural heritage in Ukraine by region"><abbr title="View this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">v</abbr></a></li><li class="nv-talk"><a href="/wiki/Template_talk:Lists_of_national_landmarks_of_cultural_heritage_in_Ukraine_by_region" title="Template talk:Lists of national landmarks of cultural heritage in Ukraine by region"><abbr title="Discuss this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">t</abbr></a></li><li class="nv-edit"><a class="external text" href="https://en.wikipedia.org/w/index.php?title=Template:Lists_of_national_landmarks_of_cultural_heritage_in_Ukraine_by_region&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">e</abbr></a></li></ul></div><div id="Lists_of_national_landmarks_of_cultural_heritage_in_Ukraine_by_region" style="font-size:114%;margin:0 4em">Lists of national landmarks of cultural heritage in Ukraine by region</div></th></tr><tr><td class="navbox-abovebelow" colspan="2"><div id="State_Register_of_Immovable_Landmarks_of_Ukraine"><i><a class="mw-selflink selflink">State Register of Immovable Landmarks of Ukraine</a></i></div></td></tr><tr><th scope="row" class="navbox-group" style="width:1%">Autonomous Republic</th><td class="navbox-list-with-group navbox-list navbox-odd hlist" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Crimea&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Crimea (page does not exist)">Crimea</a></li></ul>
+</div></td></tr><tr><th scope="row" class="navbox-group" style="width:1%"><a href="/wiki/Oblasts_of_Ukraine" title="Oblasts of Ukraine">Oblasts</a></th><td class="navbox-list-with-group navbox-list navbox-even hlist" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Cherkasy_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Cherkasy Oblast (page does not exist)">Cherkasy</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Chernihiv_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Chernihiv Oblast (page does not exist)">Chernihiv</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Chernivtsi_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Chernivtsi Oblast (page does not exist)">Chernivtsi</a></li>
+<li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Dnipropetrovsk_Oblast" title="List of national landmarks of cultural heritage in Dnipropetrovsk Oblast">Dnipropetrovsk</a></li>
+<li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Donetsk_Oblast" title="List of national landmarks of cultural heritage in Donetsk Oblast">Donetsk</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Ivano-Frankivsk_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Ivano-Frankivsk Oblast (page does not exist)">Ivano-Frankivsk</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Kharkiv_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Kharkiv Oblast (page does not exist)">Kharkiv</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Kherson_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Kherson Oblast (page does not exist)">Kherson</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Khmelnytskyi_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Khmelnytskyi Oblast (page does not exist)">Khmelnytskyi</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Kyiv_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Kyiv Oblast (page does not exist)">Kyiv</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Kirovohrad_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Kirovohrad Oblast (page does not exist)">Kirovohrad</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Luhansk_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Luhansk Oblast (page does not exist)">Luhansk</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Lviv_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Lviv Oblast (page does not exist)">Lviv</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Mykolaiv_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Mykolaiv Oblast (page does not exist)">Mykolaiv</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Odessa_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Odessa Oblast (page does not exist)">Odessa</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Poltava_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Poltava Oblast (page does not exist)">Poltava</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Rivne_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Rivne Oblast (page does not exist)">Rivne</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Sumy_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Sumy Oblast (page does not exist)">Sumy</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Ternopil_Oblast&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Ternopil Oblast (page does not exist)">Ternopil</a></li>
+<li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Vinnytsia_Oblast" title="List of national landmarks of cultural heritage in Vinnytsia Oblast">Vinnytsia</a></li>
+<li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Volyn_Oblast" title="List of national landmarks of cultural heritage in Volyn Oblast">Volyn</a></li>
+<li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Zakarpattia_Oblast" title="List of national landmarks of cultural heritage in Zakarpattia Oblast">Zakarpattia</a></li>
+<li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Zaporizhzhia_Oblast" title="List of national landmarks of cultural heritage in Zaporizhzhia Oblast">Zaporizhzhia</a></li>
+<li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Zhytomyr_Oblast" title="List of national landmarks of cultural heritage in Zhytomyr Oblast">Zhytomyr</a></li></ul>
+</div></td></tr><tr><th scope="row" class="navbox-group" style="width:1%">Cities with special status</th><td class="navbox-list-with-group navbox-list navbox-odd hlist" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/wiki/List_of_national_landmarks_of_cultural_heritage_in_Kyiv" title="List of national landmarks of cultural heritage in Kyiv">Kyiv</a></li>
+<li><a href="/w/index.php?title=List_of_national_landmarks_of_cultural_heritage_in_Sevastopol&amp;action=edit&amp;redlink=1" class="new" title="List of national landmarks of cultural heritage in Sevastopol (page does not exist)">Sevastopol</a></li></ul>
+</div></td></tr></tbody></table></div>
+<div class="navbox-styles nomobile"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1061467846"/></div><div role="navigation" class="navbox" aria-labelledby="Seven_Wonders_of_Ukraine" style="padding:3px"><table class="nowraplinks mw-collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit"><tbody><tr><th scope="col" class="navbox-title" colspan="2"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1063604349"/><div class="navbar plainlinks hlist navbar-mini"><ul><li class="nv-view"><a href="/wiki/Template:Seven_Wonders_of_Ukraine" title="Template:Seven Wonders of Ukraine"><abbr title="View this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">v</abbr></a></li><li class="nv-talk"><a href="/wiki/Template_talk:Seven_Wonders_of_Ukraine" title="Template talk:Seven Wonders of Ukraine"><abbr title="Discuss this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">t</abbr></a></li><li class="nv-edit"><a class="external text" href="https://en.wikipedia.org/w/index.php?title=Template:Seven_Wonders_of_Ukraine&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">e</abbr></a></li></ul></div><div id="Seven_Wonders_of_Ukraine" style="font-size:114%;margin:0 4em"><a href="/wiki/Seven_Wonders_of_Ukraine" title="Seven Wonders of Ukraine">Seven Wonders of</a> <a href="/wiki/Ukraine" title="Ukraine">Ukraine</a></div></th></tr><tr><th scope="row" class="navbox-group" style="width:1%"><a href="/wiki/Seven_Wonders_of_Ukraine" title="Seven Wonders of Ukraine">Historical</a></th><td class="navbox-list-with-group navbox-list navbox-odd hlist" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/wiki/Sofiyivka_Park" title="Sofiyivka Park">Sofiyivka Park</a></li>
+<li><a href="/wiki/Kyiv_Pechersk_Lavra" title="Kyiv Pechersk Lavra">Kyiv Pechersk Lavra</a></li>
+<li><a href="/wiki/Kamianets-Podilskyi_Castle" title="Kamianets-Podilskyi Castle">Kamianets-Podilskyi Complex</a></li>
+<li><a href="/wiki/Khortytsia" title="Khortytsia">Khortytsia</a></li>
+<li><a href="/wiki/Chersonesus" title="Chersonesus">Chersonesus</a></li>
+<li><a href="/wiki/Saint_Sophia_Cathedral,_Kyiv" title="Saint Sophia Cathedral, Kyiv">Saint Sophia Cathedral</a></li>
+<li><a href="/wiki/Khotyn_Fortress" title="Khotyn Fortress">Khotyn Fortress</a></li></ul>
+</div></td></tr><tr><th scope="row" class="navbox-group" style="width:1%"><a href="/wiki/Seven_Natural_Wonders_of_Ukraine" title="Seven Natural Wonders of Ukraine">Natural</a></th><td class="navbox-list-with-group navbox-list navbox-even hlist" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/wiki/Askania-Nova" title="Askania-Nova">Askania-Nova</a></li>
+<li><a href="/wiki/Granite-steppe_lands_of_Buh" title="Granite-steppe lands of Buh">Granite-steppe lands of Buh</a></li>
+<li><a href="/wiki/Dniester_Canyon" title="Dniester Canyon">Dniester Canyon</a></li>
+<li><a href="/wiki/Marble_Cave_(Crimea)" title="Marble Cave (Crimea)">Marble Caves</a></li>
+<li><a href="/wiki/Podilski_Tovtry_National_Nature_Park" title="Podilski Tovtry National Nature Park">Podillian Tovtry</a></li>
+<li><a href="/wiki/Shatsk_National_Natural_Park" title="Shatsk National Natural Park">Shatsk National Natural Park</a></li>
+<li><a href="/wiki/Synevyr" title="Synevyr">Lake Synevyr</a></li></ul>
+</div></td></tr><tr><th scope="row" class="navbox-group" style="width:1%"><a href="/wiki/Seven_Wondrous_Castles_and_Palaces_of_Ukraine" title="Seven Wondrous Castles and Palaces of Ukraine">Architectural</a></th><td class="navbox-list-with-group navbox-list navbox-odd hlist" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/wiki/Lubart%27s_Castle" title="Lubart&#39;s Castle">Lutsk Upper Castle</a></li>
+<li><a href="/wiki/Kamianets-Podilskyi_Castle" title="Kamianets-Podilskyi Castle">Kamianets-Podilskyi Castle</a></li>
+<li><a href="/wiki/Bilhorod-Dnistrovskyi" title="Bilhorod-Dnistrovskyi">Akkerman Castle</a></li>
+<li><a href="/wiki/Residence_of_Bukovinian_and_Dalmatian_Metropolitans" title="Residence of Bukovinian and Dalmatian Metropolitans">Metropolitan Palace</a></li>
+<li><a href="/wiki/Khotyn_Fortress" title="Khotyn Fortress">Khotyn Fortress</a></li>
+<li><a href="/wiki/Kachanivka" title="Kachanivka">Kachanivka Palace</a></li>
+<li><a href="/wiki/Vorontsov_Palace_(Alupka)" title="Vorontsov Palace (Alupka)">Vorontsov Palace</a></li></ul>
+</div></td></tr><tr><th scope="row" class="navbox-group" style="width:1%"><a href="/wiki/Kyiv" title="Kyiv">Kyiv</a></th><td class="navbox-list-with-group navbox-list navbox-even hlist" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/wiki/St_Andrew%27s_Church,_Kyiv" title="St Andrew&#39;s Church, Kyiv">St Andrew's Church</a>
+<ul><li><a href="/wiki/Andriyivskyy_Descent" title="Andriyivskyy Descent">and descent</a></li></ul></li>
+<li><a href="/wiki/House_with_Chimaeras" title="House with Chimaeras">House with Chimaeras</a></li>
+<li><a href="/wiki/Vydubychi_Monastery" title="Vydubychi Monastery">Vydubychi Monastery</a></li>
+<li><a href="/wiki/St_Volodymyr%27s_Cathedral" title="St Volodymyr&#39;s Cathedral">St Volodymyr's Cathedral</a></li>
+<li><a href="/wiki/National_University_of_Kyiv-Mohyla_Academy" title="National University of Kyiv-Mohyla Academy">Kyiv-Mohyla Academy (Old Podil)</a></li>
+<li><a href="/wiki/Kyiv_Pechersk_Lavra" title="Kyiv Pechersk Lavra">Kyiv Pechersk Lavra</a></li>
+<li><a href="/wiki/Saint_Sophia%27s_Cathedral,_Kyiv" class="mw-redirect" title="Saint Sophia&#39;s Cathedral, Kyiv">Saint Sophia's Cathedral</a></li></ul>
+</div></td></tr></tbody></table></div>
+<div class="navbox-styles nomobile"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1061467846"/></div><div role="navigation" class="navbox" aria-labelledby="World_Heritage_Sites_in_Ukraine" style="padding:3px"><table class="nowraplinks hlist mw-collapsible autocollapse navbox-inner" style="border-spacing:0;background:transparent;color:inherit"><tbody><tr><th scope="col" class="navbox-title" colspan="3"><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1063604349"/><div class="navbar plainlinks hlist navbar-mini"><ul><li class="nv-view"><a href="/wiki/Template:World_Heritage_Sites_in_Ukraine" title="Template:World Heritage Sites in Ukraine"><abbr title="View this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">v</abbr></a></li><li class="nv-talk"><a href="/wiki/Template_talk:World_Heritage_Sites_in_Ukraine" title="Template talk:World Heritage Sites in Ukraine"><abbr title="Discuss this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">t</abbr></a></li><li class="nv-edit"><a class="external text" href="https://en.wikipedia.org/w/index.php?title=Template:World_Heritage_Sites_in_Ukraine&amp;action=edit"><abbr title="Edit this template" style=";;background:none transparent;border:none;box-shadow:none;padding:0;">e</abbr></a></li></ul></div><div id="World_Heritage_Sites_in_Ukraine" style="font-size:114%;margin:0 4em"><a href="/wiki/List_of_World_Heritage_Sites_in_Ukraine" title="List of World Heritage Sites in Ukraine">World Heritage Sites in Ukraine</a></div></th></tr><tr><th scope="row" class="navbox-group" style="width:1%">Cultural</th><td class="navbox-list-with-group navbox-list navbox-odd" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/wiki/Kyiv" title="Kyiv">Kyiv</a> (<a href="/wiki/Saint_Sophia_Cathedral,_Kyiv" title="Saint Sophia Cathedral, Kyiv">Saint-Sophia Cathedral</a> and Related Monastic Buildings, <a href="/wiki/Kyiv_Pechersk_Lavra" title="Kyiv Pechersk Lavra">Kyiv Pechersk Lavra</a>)</li>
+<li><a href="/wiki/Old_Town_(Lviv)" title="Old Town (Lviv)">Lviv - Ensemble of the Historic Centre</a></li>
+<li><a href="/wiki/Residence_of_Bukovinian_and_Dalmatian_Metropolitans" title="Residence of Bukovinian and Dalmatian Metropolitans">Residence of Bukovinian and Dalmatian Metropolitans</a></li>
+<li><a href="/wiki/Struve_Geodetic_Arc" title="Struve Geodetic Arc">Struve Geodetic Arc</a><sup><small>1</small></sup></li>
+<li><a href="/wiki/Chersonesus" title="Chersonesus">Ancient City of Tauric Chersonese and its Chora</a></li>
+<li><a href="/wiki/Wooden_tserkvas_of_the_Carpathian_region_in_Poland_and_Ukraine" class="mw-redirect" title="Wooden tserkvas of the Carpathian region in Poland and Ukraine">Wooden tserkvas of the Carpathian region</a><sup><small>2</small></sup></li></ul>
+</div></td><td class="noviewer navbox-image" rowspan="2" style="width:1px;padding:0 0 0 2px"><div><div class="floatright"><a href="/wiki/File:Lesser_Coat_of_Arms_of_Ukraine.svg" class="image" title="Lesser Coat of Arms of Ukraine"><img alt="Lesser Coat of Arms of Ukraine" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/40px-Lesser_Coat_of_Arms_of_Ukraine.svg.png" decoding="async" width="40" height="56" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/60px-Lesser_Coat_of_Arms_of_Ukraine.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/80px-Lesser_Coat_of_Arms_of_Ukraine.svg.png 2x" data-file-width="330" data-file-height="461" /></a></div></div></td></tr><tr><th scope="row" class="navbox-group" style="width:1%">Natural</th><td class="navbox-list-with-group navbox-list navbox-even" style="width:100%;padding:0"><div style="padding:0 0.25em">
+<ul><li><a href="/wiki/Ancient_and_Primeval_Beech_Forests_of_the_Carpathians_and_Other_Regions_of_Europe" title="Ancient and Primeval Beech Forests of the Carpathians and Other Regions of Europe">Ancient and Primeval Beech Forests of the Carpathians and Other Regions of Europe</a><sup><small>3</small></sup></li></ul>
+</div></td></tr><tr><td class="navbox-abovebelow" colspan="3"><div>
+<ul><li><sup><small>1</small></sup> with <a href="/wiki/Estonia" title="Estonia">Estonia</a>, <a href="/wiki/Belarus" title="Belarus">Belarus</a>, <a href="/wiki/Finland" title="Finland">Finland</a>, <a href="/wiki/Latvia" title="Latvia">Latvia</a>, <a href="/wiki/Lithuania" title="Lithuania">Lithuania</a>, <a href="/wiki/Norway" title="Norway">Norway</a>, <a href="/wiki/Moldova" title="Moldova">Moldova</a>, <a href="/wiki/Russia" title="Russia">Russia</a>, and <a href="/wiki/Sweden" title="Sweden">Sweden</a></li>
+<li><sup><small>2</small></sup> with <a href="/wiki/Poland" title="Poland">Poland</a></li>
+<li><sup><small>3</small></sup> with <a href="/wiki/Albania" title="Albania">Albania</a>, <a href="/wiki/Austria" title="Austria">Austria</a>, <a href="/wiki/Belgium" title="Belgium">Belgium</a>, <a href="/wiki/Bosnia_and_Herzegovina" title="Bosnia and Herzegovina">Bosnia and Herzegovina</a>, <a href="/wiki/Bulgaria" title="Bulgaria">Bulgaria</a>, <a href="/wiki/Croatia" title="Croatia">Croatia</a>, <a href="/wiki/Czech_Republic" title="Czech Republic">Czech Republic</a>, <a href="/wiki/France" title="France">France</a>, <a href="/wiki/Germany" title="Germany">Germany</a>, <a href="/wiki/Italy" title="Italy">Italy</a>, <a href="/wiki/North_Macedonia" title="North Macedonia">North Macedonia</a>, <a href="/wiki/Poland" title="Poland">Poland</a>, <a href="/wiki/Romania" title="Romania">Romania</a>, <a href="/wiki/Slovakia" title="Slovakia">Slovakia</a>, <a href="/wiki/Slovenia" title="Slovenia">Slovenia</a>, <a href="/wiki/Spain" title="Spain">Spain</a> and <a href="/wiki/Switzerland" title="Switzerland">Switzerland</a></li></ul>
+</div></td></tr></tbody></table></div>
+<p><br />
+</p>
+<style data-mw-deduplicate="TemplateStyles:r1012311289">.mw-parser-output .asbox{position:relative;overflow:hidden}.mw-parser-output .asbox table{background:transparent}.mw-parser-output .asbox p{margin:0}.mw-parser-output .asbox p+p{margin-top:0.25em}.mw-parser-output .asbox-body{font-style:italic}.mw-parser-output .asbox-note{font-size:smaller}.mw-parser-output .asbox .navbar{position:absolute;top:-0.75em;right:1em;display:none}</style><div role="note" class="metadata plainlinks asbox stub"><table role="presentation"><tbody><tr class="noresize"><td><a href="/wiki/File:Outline_of_Ukraine.svg" class="image"><img alt="Stub icon" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Outline_of_Ukraine.svg/30px-Outline_of_Ukraine.svg.png" decoding="async" width="30" height="20" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Outline_of_Ukraine.svg/45px-Outline_of_Ukraine.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Outline_of_Ukraine.svg/60px-Outline_of_Ukraine.svg.png 2x" data-file-width="1187" data-file-height="798" /></a></td><td><p class="asbox-body">This article relating to <a href="/wiki/Ukraine" title="Ukraine">Ukraine</a> is a <a href="/wiki/Wikipedia:Stub" title="Wikipedia:Stub">stub</a>. You can help Wikipedia by <a class="external text" href="https://en.wikipedia.org/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=edit">expanding it</a>.</p></td></tr></tbody></table><link rel="mw-deduplicated-inline-style" href="mw-data:TemplateStyles:r1063604349"/><div class="navbar plainlinks hlist navbar-mini"><ul><li class="nv-view"><a href="/wiki/Template:Ukraine-stub" title="Template:Ukraine-stub"><abbr title="View this template">v</abbr></a></li><li class="nv-talk"><a href="/wiki/Template_talk:Ukraine-stub" title="Template talk:Ukraine-stub"><abbr title="Discuss this template">t</abbr></a></li><li class="nv-edit"><a class="external text" href="https://en.wikipedia.org/w/index.php?title=Template:Ukraine-stub&amp;action=edit"><abbr title="Edit this template">e</abbr></a></li></ul></div></div>
 
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
-  </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
-      </div>
-    </div>
-  </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
-
-        <!-- timeboxed column --><!-- /end timeboxed column -->
-
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
-
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2109.10896v1
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2109.10896"
-        dc:identifier="/abs/2109.10896"
-        dc:title="Updating Embeddings for Dynamic Knowledge Graphs"
-        trackback:ping="/trackback/2109.10896" />
-    </rdf:RDF>
+<!-- 
+NewPP limit report
+Parsed by mw1370
+Cached time: 20220420094135
+Cache expiry: 1814400
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.290 seconds
+Real time usage: 0.392 seconds
+Preprocessor visited node count: 292/1000000
+Post‐expand include size: 37563/2097152 bytes
+Template argument size: 6/2097152 bytes
+Highest expansion depth: 6/100
+Expensive parser function count: 0/500
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 11351/5000000 bytes
+Lua time usage: 0.194/10.000 seconds
+Lua memory usage: 14467431/52428800 bytes
+Number of Wikibase entities loaded: 0/400
 -->
-<div id="abs-outer">
-  
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  315.790      1 -total
+ 43.33%  136.819      1 Template:Lang-uk
+ 34.62%  109.332      1 Template:Lists_of_cultural_heritage_landmarks_of_national_significance_in_Ukraine_by_region
+ 28.48%   89.940      3 Template:Navbox
+  8.12%   25.656      1 Template:Ukraine-stub
+  7.36%   23.243      1 Template:Asbox
+  6.10%   19.251      1 Template:Multiple_image
+  4.49%   14.189      1 Template:World_Heritage_Sites_in_Ukraine
+  3.08%    9.726      1 Template:Seven_Wonders_of_Ukraine
+  0.91%    2.884      6 Template:Smallsup
+-->
 
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Machine Learning</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2109.10896v1</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 22 Sep 2021]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>Updating Embeddings for Dynamic Knowledge Graphs</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Wewer%2C+C">Christopher Wewer</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Lemmerich%2C+F">Florian Lemmerich</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Cochez%2C+M">Michael Cochez</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2109.10896v1">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  Data in Knowledge Graphs often represents part of the current state of the
-real world. Thus, to stay up-to-date the graph data needs to be updated
-frequently. To utilize information from Knowledge Graphs, many state-of-the-art
-machine learning approaches use embedding techniques. These techniques
-typically compute an embedding, i.e., vector representations of the nodes as
-input for the main machine learning algorithm. If a graph update occurs later
-on -- specifically when nodes are added or removed -- the training has to be
-done all over again. This is undesirable, because of the time it takes and also
-because downstream models which were trained with these embeddings have to be
-retrained if they change significantly. In this paper, we investigate embedding
-updates that do not require full retraining and evaluate them in combination
-with various embedding models on real dynamic Knowledge Graphs covering
-multiple use cases. We study approaches that place newly appearing nodes
-optimally according to local information, but notice that this does not work
-well. However, we find that if we continue the training of the old embedding,
-interleaved with epochs during which we only optimize for the added and removed
-parts, we obtain good results in terms of typical metrics used in link
-prediction. This performance is obtained much faster than with a complete
-retraining and hence makes it possible to maintain embeddings for dynamic
-Knowledge Graphs.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata"><tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Machine Learning (cs.LG)</span></td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2109.10896">arXiv:2109.10896</a> [cs.LG]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2109.10896v1">arXiv:2109.10896v1</a> [cs.LG]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2109.10896">https://doi.org/10.48550/arXiv.2109.10896</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
+<!-- Saved in parser cache with key enwiki:pcache:idhash:42323899-0!canonical and timestamp 20220420094134 and revision id 1078034552. Serialized with JSON.
+ -->
+</div><noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript>
+<div class="printfooter">Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;oldid=1078034552">https://en.wikipedia.org/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;oldid=1078034552</a>"</div></div>
+		<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="/wiki/Category:Heritage_registers_in_Ukraine" title="Category:Heritage registers in Ukraine">Heritage registers in Ukraine</a></li><li><a href="/wiki/Category:Ukraine_stubs" title="Category:Ukraine stubs">Ukraine stubs</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Articles_containing_Ukrainian-language_text" title="Category:Articles containing Ukrainian-language text">Articles containing Ukrainian-language text</a></li><li><a href="/wiki/Category:All_stub_articles" title="Category:All stub articles">All stub articles</a></li></ul></div></div>
+	</div>
 </div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Michael Cochez [<a href="/show-email/df24c137/2109.10896">view email</a>]
-      <br/><strong>[v1]</strong>
-Wed, 22 Sep 2021 17:58:47 UTC (1,798 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2109.10896v1" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2109.10896v1" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license">(<a href="http://arxiv.org/licenses/nonexclusive-distrib/1.0/" title="Rights to this article">license</a>)</div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.LG</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2109.10896&amp;function=prev&amp;context=cs.LG"
-         accesskey="p" title="previous in cs.LG (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2109.10896&amp;function=next&amp;context=cs.LG" accesskey="n"
-         title="next in cs.LG (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.LG/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.LG/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.LG/2109">2109</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2109.10896?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2109.10896">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2109.10896" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2109.10896" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2109.html#abs-2109-10896" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2109-10896" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Florian%20Lemmerich" title="DBLP author search">Florian Lemmerich</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Michael%20Cochez" title="DBLP author search">Michael Cochez</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
+<div id='mw-data-after-content'>
+	<div class="read-more-container"></div>
 </div>
 
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.10896%26description%3DUpdating+Embeddings+for+Dynamic+Knowledge+Graphs&amp;v=cd0ba637"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.10896&amp;v=975d56ca"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.10896%26title%3DUpdating+Embeddings+for+Dynamic+Knowledge+Graphs&amp;v=05d5df40"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.10896&amp;v=cf303e46"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
+<div id="mw-navigation">
+	<h2>Navigation menu</h2>
+	<div id="mw-head">
+		
+<nav id="p-personal" class="mw-portlet mw-portlet-personal vector-user-menu-legacy vector-menu" aria-labelledby="p-personal-label" role="navigation" 
+	 >
+	<label id="p-personal-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Personal tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="pt-anonuserpage" class="mw-list-item"><span title="The user page for the IP address you are editing as">Not logged in</span></li><li id="pt-anontalk" class="mw-list-item"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n"><span>Talk</span></a></li><li id="pt-anoncontribs" class="mw-list-item"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y"><span>Contributions</span></a></li><li id="pt-createaccount" class="mw-list-item"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=State+Register+of+Immovable+Landmarks+of+Ukraine" title="You are encouraged to create an account and log in; however, it is not mandatory"><span>Create account</span></a></li><li id="pt-login" class="mw-list-item"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=State+Register+of+Immovable+Landmarks+of+Ukraine" title="You&#039;re encouraged to log in; however, it&#039;s not mandatory. [o]" accesskey="o"><span>Log in</span></a></li></ul>
+		
+	</div>
+</nav>
 
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
+		<div id="left-navigation">
+			
+<nav id="p-namespaces" class="mw-portlet mw-portlet-namespaces vector-menu vector-menu-tabs" aria-labelledby="p-namespaces-label" role="navigation" 
+	 >
+	<label id="p-namespaces-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Namespaces</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/State_Register_of_Immovable_Landmarks_of_Ukraine" title="View the content page [c]" accesskey="c"><span>Article</span></a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:State_Register_of_Immovable_Landmarks_of_Ukraine" rel="discussion" title="Discuss improvements to the content page [t]" accesskey="t"><span>Talk</span></a></li></ul>
+		
+	</div>
+</nav>
 
+			
+<nav id="p-variants" class="mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-variants-label" role="navigation" 
+	 >
+	<input type="checkbox"
+		id="p-variants-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-variants"
+		class="vector-menu-checkbox" aria-labelledby="p-variants-label" />
+	<label id="p-variants-label" aria-label="Change language variant" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">English</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
+		</div>
+		<div id="right-navigation">
+			
+<nav id="p-views" class="mw-portlet mw-portlet-views vector-menu vector-menu-tabs" aria-labelledby="p-views-label" role="navigation" 
+	 >
+	<label id="p-views-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Views</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-view" class="selected mw-list-item"><a href="/wiki/State_Register_of_Immovable_Landmarks_of_Ukraine"><span>Read</span></a></li><li id="ca-edit" class="mw-list-item"><a href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=edit" title="Edit this page [e]" accesskey="e"><span>Edit</span></a></li><li id="ca-history" class="mw-list-item"><a href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=history" title="Past revisions of this page [h]" accesskey="h"><span>View history</span></a></li></ul>
+		
+	</div>
+</nav>
 
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
+			
+<nav id="p-cactions" class="mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-cactions-label" role="navigation"  title="More options"
+	 >
+	<input type="checkbox"
+		id="p-cactions-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-cactions"
+		class="vector-menu-checkbox" aria-labelledby="p-cactions-label" />
+	<label id="p-cactions-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">More</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2109.10896" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
+			
+<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+	<div>
+			<h3 >
+				<label for="searchInput">Search</label>
+			</h3>
+		<form action="/w/index.php" id="searchform"
+			class="vector-search-box-form">
+			<div id="simpleSearch"
+				class="vector-search-box-inner"
+				 data-search-loc="header-navigation">
+				<input class="vector-search-box-input"
+					 type="search" name="search" placeholder="Search Wikipedia" aria-label="Search Wikipedia" autocapitalize="sentences" title="Search Wikipedia [f]" accesskey="f" id="searchInput"
+				/>
+				<input type="hidden" name="title" value="Special:Search"/>
+				<input id="mw-searchButton"
+					 class="searchButton mw-fallbackSearchButton" type="submit" name="fulltext" title="Search Wikipedia for this text" value="Search" />
+				<input id="searchButton"
+					 class="searchButton" type="submit" name="go" title="Go to a page with this exact name if it exists" value="Go" />
+			</div>
+		</form>
+	</div>
 </div>
 
-      </div>
-    </main>
+		</div>
+	</div>
+	
 
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
+<div id="mw-panel">
+	<div id="p-logo" role="banner">
+		<a class="mw-wiki-logo" href="/wiki/Main_Page"
+			title="Visit the main page"></a>
+	</div>
+	
+<nav id="p-navigation" class="mw-portlet mw-portlet-navigation vector-menu vector-menu-portal portal" aria-labelledby="p-navigation-label" role="navigation" 
+	 >
+	<label id="p-navigation-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Navigation</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-mainpage-description" class="mw-list-item"><a href="/wiki/Main_Page" icon="home" title="Visit the main page [z]" accesskey="z"><span>Main page</span></a></li><li id="n-contents" class="mw-list-item"><a href="/wiki/Wikipedia:Contents" title="Guides to browsing Wikipedia"><span>Contents</span></a></li><li id="n-currentevents" class="mw-list-item"><a href="/wiki/Portal:Current_events" title="Articles related to current events"><span>Current events</span></a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" icon="die" title="Visit a randomly selected article [x]" accesskey="x"><span>Random article</span></a></li><li id="n-aboutsite" class="mw-list-item"><a href="/wiki/Wikipedia:About" title="Learn about Wikipedia and how it works"><span>About Wikipedia</span></a></li><li id="n-contactpage" class="mw-list-item"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia"><span>Contact us</span></a></li><li id="n-sitesupport" class="mw-list-item"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us by donating to the Wikimedia Foundation"><span>Donate</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-interaction" class="mw-portlet mw-portlet-interaction vector-menu vector-menu-portal portal" aria-labelledby="p-interaction-label" role="navigation" 
+	 >
+	<label id="p-interaction-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Contribute</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-help" class="mw-list-item"><a href="/wiki/Help:Contents" icon="help" title="Guidance on how to use and edit Wikipedia"><span>Help</span></a></li><li id="n-introduction" class="mw-list-item"><a href="/wiki/Help:Introduction" title="Learn how to edit Wikipedia"><span>Learn to edit</span></a></li><li id="n-portal" class="mw-list-item"><a href="/wiki/Wikipedia:Community_portal" title="The hub for editors"><span>Community portal</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" icon="recentChanges" title="A list of recent changes to Wikipedia [r]" accesskey="r"><span>Recent changes</span></a></li><li id="n-upload" class="mw-list-item"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Add images or other media for use on Wikipedia"><span>Upload file</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-tb" class="mw-portlet mw-portlet-tb vector-menu vector-menu-portal portal" aria-labelledby="p-tb-label" role="navigation" 
+	 >
+	<label id="p-tb-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/State_Register_of_Immovable_Landmarks_of_Ukraine" title="List of all English Wikipedia pages containing links to this page [j]" accesskey="j"><span>What links here</span></a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/State_Register_of_Immovable_Landmarks_of_Ukraine" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k"><span>Related changes</span></a></li><li id="t-upload" class="mw-list-item"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u"><span>Upload file</span></a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li><li id="t-permalink" class="mw-list-item"><a href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;oldid=1078034552" title="Permanent link to this revision of this page"><span>Permanent link</span></a></li><li id="t-info" class="mw-list-item"><a href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=info" title="More information about this page"><span>Page information</span></a></li><li id="t-cite" class="mw-list-item"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;id=1078034552&amp;wpFormIdentifier=titleform" title="Information on how to cite this page"><span>Cite this page</span></a></li><li id="t-wikibase" class="mw-list-item"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q16155011" title="Structured data on this page hosted by Wikidata [g]" accesskey="g"><span>Wikidata item</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-coll-print_export" class="mw-portlet mw-portlet-coll-print_export vector-menu vector-menu-portal portal" aria-labelledby="p-coll-print_export-label" role="navigation" 
+	 >
+	<label id="p-coll-print_export-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Print/export</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="coll-download-as-rl" class="mw-list-item"><a href="/w/index.php?title=Special:DownloadAsPdf&amp;page=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;action=show-download-screen" title="Download this page as a PDF file"><span>Download as PDF</span></a></li><li id="t-print" class="mw-list-item"><a href="/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;printable=yes" title="Printable version of this page [p]" accesskey="p"><span>Printable version</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-lang" class="mw-portlet mw-portlet-lang vector-menu vector-menu-portal portal" aria-labelledby="p-lang-label" role="navigation" 
+	 >
+	<label id="p-lang-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Languages</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li class="interlanguage-link interwiki-fr mw-list-item"><a href="https://fr.wikipedia.org/wiki/Registre_national_des_monuments_immeubles_d%27Ukraine" title="Registre national des monuments immeubles d&#039;Ukraine – French" lang="fr" hreflang="fr" class="interlanguage-link-target"><span>Français</span></a></li><li class="interlanguage-link interwiki-ru mw-list-item"><a href="https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D1%80%D0%B5%D0%B5%D1%81%D1%82%D1%80_%D0%BD%D0%B5%D0%B4%D0%B2%D0%B8%D0%B6%D0%B8%D0%BC%D1%8B%D1%85_%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_%D0%A3%D0%BA%D1%80%D0%B0%D0%B8%D0%BD%D1%8B" title="Государственный реестр недвижимых памятников Украины – Russian" lang="ru" hreflang="ru" class="interlanguage-link-target"><span>Русский</span></a></li><li class="interlanguage-link interwiki-uk mw-list-item"><a href="https://uk.wikipedia.org/wiki/%D0%94%D0%B5%D1%80%D0%B6%D0%B0%D0%B2%D0%BD%D0%B8%D0%B9_%D1%80%D0%B5%D1%94%D1%81%D1%82%D1%80_%D0%BD%D0%B5%D1%80%D1%83%D1%85%D0%BE%D0%BC%D0%B8%D1%85_%D0%BF%D0%B0%D0%BC%27%D1%8F%D1%82%D0%BE%D0%BA_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B8" title="Державний реєстр нерухомих пам&#039;яток України – Ukrainian" lang="uk" hreflang="uk" class="interlanguage-link-target"><span>Українська</span></a></li><li class="interlanguage-link interwiki-zh mw-list-item"><a href="https://zh.wikipedia.org/wiki/%E4%B9%8C%E5%85%8B%E5%85%B0%E5%9B%BD%E5%AE%B6%E4%B8%8D%E5%8F%AF%E7%A7%BB%E5%8A%A8%E5%9C%B0%E6%A0%87%E7%99%BB%E8%AE%B0%E5%86%8C" title="乌克兰国家不可移动地标登记册 – Chinese" lang="zh" hreflang="zh" class="interlanguage-link-target"><span>中文</span></a></li></ul>
+		<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q16155011#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>
+	</div>
+</nav>
+
+</div>
+
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" >
+	<ul id="footer-info">
+	<li id="footer-info-lastmod"> This page was last edited on 19 March 2022, at 14:17<span class="anonymous-show">&#160;(UTC)</span>.</li>
+	<li id="footer-info-copyright">Text is available under the <a rel="license" href="//en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License 3.0</a><a rel="license" href="//creativecommons.org/licenses/by-sa/3.0/" style="display:none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="//foundation.wikimedia.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//foundation.wikimedia.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="//www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+</ul>
+
+	<ul id="footer-places">
+	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+	<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+	<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+	<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+	<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=State_Register_of_Immovable_Landmarks_of_Ukraine&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+	<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/en.wikipedia.org">Statistics</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Cookie_statement">Cookie statement</a></li>
+</ul>
+
+	<ul id="footer-icons" class="noprint">
+	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/"><img src="/static/images/footer/wikimedia-button.png" srcset="/static/images/footer/wikimedia-button-1.5x.png 1.5x, /static/images/footer/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation" loading="lazy" /></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/"><img src="/static/images/footer/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/footer/poweredby_mediawiki_132x47.png 1.5x, /static/images/footer/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a></li>
+</ul>
+
+</footer>
+
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.290","walltime":"0.392","ppvisitednodes":{"value":292,"limit":1000000},"postexpandincludesize":{"value":37563,"limit":2097152},"templateargumentsize":{"value":6,"limit":2097152},"expansiondepth":{"value":6,"limit":100},"expensivefunctioncount":{"value":0,"limit":500},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":11351,"limit":5000000},"entityaccesscount":{"value":0,"limit":400},"timingprofile":["100.00%  315.790      1 -total"," 43.33%  136.819      1 Template:Lang-uk"," 34.62%  109.332      1 Template:Lists_of_cultural_heritage_landmarks_of_national_significance_in_Ukraine_by_region"," 28.48%   89.940      3 Template:Navbox","  8.12%   25.656      1 Template:Ukraine-stub","  7.36%   23.243      1 Template:Asbox","  6.10%   19.251      1 Template:Multiple_image","  4.49%   14.189      1 Template:World_Heritage_Sites_in_Ukraine","  3.08%    9.726      1 Template:Seven_Wonders_of_Ukraine","  0.91%    2.884      6 Template:Smallsup"]},"scribunto":{"limitreport-timeusage":{"value":"0.194","limit":"10.000"},"limitreport-memusage":{"value":14467431,"limit":52428800}},"cachereport":{"origin":"mw1370","timestamp":"20220420094135","ttl":1814400,"transientcontent":false}}});});</script>
+<script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"State Register of Immovable Landmarks of Ukraine","url":"https:\/\/en.wikipedia.org\/wiki\/State_Register_of_Immovable_Landmarks_of_Ukraine","sameAs":"http:\/\/www.wikidata.org\/entity\/Q16155011","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q16155011","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"Wikimedia Foundation, Inc.","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2014-03-27T10:32:51Z","dateModified":"2022-03-19T14:17:15Z","image":"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/1\/14\/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG"}</script><script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"State Register of Immovable Landmarks of Ukraine","url":"https:\/\/en.wikipedia.org\/wiki\/State_Register_of_Immovable_Landmarks_of_Ukraine","sameAs":"http:\/\/www.wikidata.org\/entity\/Q16155011","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q16155011","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"Wikimedia Foundation, Inc.","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2014-03-27T10:32:51Z","dateModified":"2022-03-19T14:17:15Z","image":"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/1\/14\/%D0%A3%D0%BB%D0%B8%D1%86%D0%B0_%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%BE%D0%B2%D0%B0-%D0%9B%D0%B0%D1%81%D1%82%D0%BE%D1%87%D0%BA%D0%B8%D0%BD%D0%B0_20_%D0%A4%D1%83%D0%BD%D0%B4%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D1%85%D1%80%D0%B0%D0%BC%D0%B0_12_%D0%B2%D0%B5%D0%BA%D0%B0_%D0%9A%D0%B8%D0%B5%D0%B2_2012_02.JPG"}</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":178,"wgHostname":"mw1384"});});</script>
 </body>
-
 </html>

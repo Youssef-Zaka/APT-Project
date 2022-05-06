@@ -1,183 +1,20 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-US">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="google-site-verification" content="L3YACny-QUJMUE3SUFyTxGpBwW9Q3i267-1rE1Z9cEM" />
-	<meta name="google-site-verification" content="-VBdtW0V5Se6TA38baBjgF6rVo0jThbQNYUwLHyshIk" />
-	<link rel="profile" href="https://gmpg.org/xfn/11">
-    <script type="text/javascript">window.TRACKS_COOKIE_DOMAIN = '.crowdsignal.com';</script>
-
-    		<link rel="preload" href="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/videos/animation-hero.mp4" as="video" />
-	
-	<title>Crowdsignal | Surveys, Polls, and Quizzes | Get the responses you need, anywhere</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<title>A note on our approach to privacy &#8211; Wikimedia Foundation</title>
 <meta name='robots' content='max-image-preview:large' />
-
-<!-- Async WordPress.com Remote Login -->
-<script id="wpcom_remote_login_js">
-var wpcom_remote_login_extra_auth = '';
-function wpcom_remote_login_remove_dom_node_id( element_id ) {
-	var dom_node = document.getElementById( element_id );
-	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
-}
-function wpcom_remote_login_remove_dom_node_classes( class_name ) {
-	var dom_nodes = document.querySelectorAll( '.' + class_name );
-	for ( var i = 0; i < dom_nodes.length; i++ ) {
-		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
-	}
-}
-function wpcom_remote_login_final_cleanup() {
-	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
-}
-
-// Watch for messages back from the remote login
-window.addEventListener( "message", function( e ) {
-	if ( e.origin === "https://r-login.wordpress.com" ) {
-		var data = {};
-		try {
-			data = JSON.parse( e.data );
-		} catch( e ) {
-			wpcom_remote_login_final_cleanup();
-			return;
-		}
-
-		if ( data.msg === 'LOGIN' ) {
-			// Clean up the login check iframe
-			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
-
-			var id_regex = new RegExp( /^[0-9]+$/ );
-			var token_regex = new RegExp( /^.*|.*|.*$/ );
-			if (
-				token_regex.test( data.token )
-				&& id_regex.test( data.wpcomid )
-			) {
-				// We have everything we need to ask for a login
-				var script = document.createElement( "script" );
-				script.setAttribute( "id", "wpcom_remote_login_validate" );
-				script.src = '/remote-login.php?wpcom_remote_login=validate'
-					+ '&wpcomid=' + data.wpcomid
-					+ '&token=' + encodeURIComponent( data.token )
-					+ '&host=' + window.location.protocol
-					+ '//' + window.location.hostname
-					+ '&postid=10'
-					+ '&is_singular=';
-				document.body.appendChild( script );
-			}
-
-			return;
-		}
-
-		// Safari ITP, not logged in, so redirect
-		if ( data.msg === 'LOGIN-REDIRECT' ) {
-			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
-			return;
-		}
-
-		// Safari ITP, storage access failed, remove the request
-		if ( data.msg === 'LOGIN-REMOVE' ) {
-			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
-			var style_zap = document.createElement( 'style' );
-			style_zap.type = 'text/css';
-			style_zap.appendChild( document.createTextNode( css_zap ) );
-			document.body.appendChild( style_zap );
-
-			var e = document.getElementById( 'wpcom_request_access_iframe' );
-			e.parentNode.removeChild( e );
-
-			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
-
-			return;
-		}
-
-		// Safari ITP
-		if ( data.msg === 'REQUEST_ACCESS' ) {
-			console.log( 'request access: safari' );
-
-			// Check ITP iframe enable/disable knob
-			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
-				return;
-			}
-
-			// If we are in a "private window" there is no ITP.
-			var private_window = false;
-			try {
-				var opendb = window.openDatabase( null, null, null, null );
-			} catch( e ) {
-				private_window = true;
-			}
-
-			if ( private_window ) {
-				console.log( 'private window' );
-				return;
-			}
-
-			var iframe = document.createElement( 'iframe' );
-			iframe.id = 'wpcom_request_access_iframe';
-			iframe.setAttribute( 'scrolling', 'no' );
-			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
-			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
-
-			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
-
-			var style = document.createElement( 'style' );
-			style.type = 'text/css';
-			style.id = 'wpcom_request_access_styles';
-			style.appendChild( document.createTextNode( css ) );
-			document.body.appendChild( style );
-
-			document.body.appendChild( iframe );
-		}
-
-		if ( data.msg === 'DONE' ) {
-			wpcom_remote_login_final_cleanup();
-		}
-	}
-}, false );
-
-// Inject the remote login iframe after the page has had a chance to load
-// more critical resources
-window.addEventListener( "DOMContentLoaded", function( e ) {
-	var iframe = document.createElement( "iframe" );
-	iframe.style.display = "none";
-	iframe.setAttribute( "scrolling", "no" );
-	iframe.setAttribute( "id", "wpcom_remote_login_key" );
-	iframe.src = "https://r-login.wordpress.com/remote-login.php"
-		+ "?wpcom_remote_login=key"
-		+ "&origin=aHR0cHM6Ly9jcm93ZHNpZ25hbC5jb20%3D"
-		+ "&wpcomid=150497237"
-		+ "&time=1651784195";
-	document.body.appendChild( iframe );
-}, false );
-</script>
-<link rel='dns-prefetch' href='//s2.wp.com' />
-<link rel='dns-prefetch' href='//s0.wp.com' />
-<link rel='dns-prefetch' href='//stats.wp.com' />
-<link rel='dns-prefetch' href='//use.fontawesome.com' />
-<link rel='dns-prefetch' href='//crowdsignal.wordpress.com' />
-<link rel="alternate" type="application/rss+xml" title="Crowdsignal &raquo; Feed" href="https://crowdsignal.com/feed/" />
-<link rel="alternate" type="application/rss+xml" title="Crowdsignal &raquo; Comments Feed" href="https://crowdsignal.com/comments/feed/" />
-	<script type="text/javascript">
-		/* <![CDATA[ */
-		function addLoadEvent(func) {
-			var oldonload = window.onload;
-			if (typeof window.onload != 'function') {
-				window.onload = func;
-			} else {
-				window.onload = function () {
-					oldonload();
-					func();
-				}
-			}
-		}
-		/* ]]> */
-	</script>
-	<script type="text/javascript">
-window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s1.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=6.0-alpha-53047"}};
+<!-- Jetpack Site Verification Tags -->
+<meta name="google-site-verification" content="oDIPtXUCUV_3tXQUtjCvEuW_VcN9jm4Gs6qYtAIqofk" />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='dns-prefetch' href='//v0.wordpress.com' />
+<link rel="alternate" type="application/rss+xml" title="Wikimedia Foundation &raquo; Feed" href="https://wikimediafoundation.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Wikimedia Foundation &raquo; Comments Feed" href="https://wikimediafoundation.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Wikimedia Foundation &raquo; A note on our approach to privacy Comments Feed" href="https://wikimediafoundation.org/news/2018/05/21/wikimedia-foundation-privacy-approach/feed/" />
+<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/wikimediafoundation.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.9.3"}};
 /*! This file is auto-generated */
 !function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
 </script>
@@ -195,980 +32,591 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJyNjtsKwjAQBX/IdI1i9UX8liRdwtZNGnKx5O+tBbUWRB+HwxwGxiDM4DP6DK6IwMWSTzAGMziRHDHWFTUmpQ0stKdjy4Qao52WiHCT+0Y2W9CFuAPNg7kKJh1VrJByZXwdkTdcOkzQJ3DYkUJGNwctILCqGAWjVaY2jvxvfdqW/CF9j59LpzPMQT2SVR1KFjZSt8r++yKqTN6mt35xZ9kepDxuT7u2vwPRw5EZ?cssminify=yes' type='text/css' media='all' />
+	<link rel='stylesheet' id='all-css-0' href='https://wikimediafoundation.org/_static/??-eJyNy0EOQDAQheELqVFCYiHOUu1EhmlJpyK9PRsJO8s/731w7oqC5cOhgBUBR5Jg4s2uimmKJmaQlBlLT6G8DwW8xSLg0ZFBRo8hfWJnkzEqxtnY/I/f27sfNPpBd23V60bX9QWHdUGf' type='text/css' media='all' />
 <style id='wp-block-library-inline-css'>
-.has-text-align-justify {
-	text-align:justify;
-}
+.has-text-align-justify{text-align:justify;}
 </style>
 <style id='global-styles-inline-css'>
-body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--very-dark-desaturated-blue: #384869;--wp--preset--color--soft-red: #FB5457;--wp--preset--color--soft-yellow: #F9E74C;--wp--preset--color--dark-moderate-lime-green: #459E39;--wp--preset--color--soft-cyan: #4CCEE4;--wp--preset--color--very-light-gray: #F2F2F2;--wp--preset--color--very-dark-gray: #4A4A4A;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 18px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-size--extra-small: 14px;--wp--preset--font-size--regular: 22px;--wp--preset--font-size--extra-large: 50px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--base-0: #000000;--wp--preset--color--base-10: #202122;--wp--preset--color--base-20: #54595d;--wp--preset--color--base-30: #72777d;--wp--preset--color--base-50: #a2a9b1;--wp--preset--color--base-70: #c8ccd1;--wp--preset--color--base-80: #eaecf0;--wp--preset--color--base-90: #f8f9fa;--wp--preset--color--base-100: #ffffff;--wp--preset--color--blue-50: #3a25ff;--wp--preset--color--blue-90: #eeeaff;--wp--preset--color--red-50: #d40356;--wp--preset--color--red-90: #fbe9f1;--wp--preset--color--yellow-50: #fffd33;--wp--preset--color--yellow-90: #fef6e7;--wp--preset--color--light-blue: #effafd;--wp--preset--color--wiki-blue: #3366CC;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 14px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 24px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-size--xlarge: 32px;--wp--preset--font-size--jumbo: 40px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
 </style>
-<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJx9jdEKwjAMRX/IGGSi24P4LV0Xa6VpStMx9vdGfFGUvYR7L+cQXAp4yY1yQ56hpDnErOilku1cXEMjmKboKBEbtveqO/yvLcUcGMdSSRXscpwZ2t1E/fHeM7reo6+yTKAxZJdQ25po60sggSTetSj5q8AtuVi31EpjkmAxoFEf9SVd+XI4Hc9D33XD8HgCAhtpGg==?cssminify=yes' type='text/css' media='all' />
-<style id='jetpack-global-styles-frontend-style-inline-css'>
-:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
-</style>
-<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&cssminify=yes' type='text/css' media='all' />
-<script id='media-video-widget-extensions-js-extra'>
-var videopressAjax = {"ajaxUrl":"https:\/\/crowdsignal.wordpress.com\/wp-admin\/admin-ajax.php","bridgeUrl":"https:\/\/s2.wp.com\/wp-content\/mu-plugins\/videopress\/js\/videopress-token-bridge.js"};
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/_static/??-eJydUNtOwzAM/SFSL0yMvSA+BaWNV9wmduU4Zft7AqKoDyAkXiI552YfeFvcIGzIBrm6JdWRuMBKEWVRLAWm/eRMZmTXK8URu6ncwU7fmFl6SuhqQQ1j+3PEF/mBp8nconK9bRjxkGrEz7hIxWBFjqKg2GyamYk6rWyUscvEf8katEi6XSilPX3bYDtzrG3sUceGKMLqj53vDtBXShFeReYCxBGv//Ygf+bfLXaFT2hLGGb38bTmCrR2Yh2MhDfs5eu2UE1yMKPhWxVKQSu7TJckRNQW+Jyf/OnB+8fD+f40vQPNyLcA'></script>
-<script type='text/javascript'>
-	window.addEventListener( 'DOMContentLoaded', function() {
-		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
-	} );
-</script>
-<script type='text/javascript'>
-wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
-</script>
-<script type='text/javascript'>
-wp.jpI18nLoader.state = {"baseUrl":"https://widgets.wp.com/languages/","locale":"en_US","domainMap":{"jetpack-heartbeat":"plugins/jetpack","jetpack-post-list":"plugins/jetpack","jetpack-admin-ui":"plugins/jetpack","jetpack-connection":"plugins/jetpack","jetpack-password-checker":"plugins/jetpack","jetpack-assets":"plugins/jetpack","jetpack-idc":"plugins/jetpack","jetpack-sync":"plugins/jetpack","jetpack-plugins-installer":"plugins/jetpack","jetpack-licensing":"plugins/jetpack","jetpack-my-jetpack":"plugins/jetpack","jetpack-connection-ui":"plugins/jetpack","jetpack-config":"plugins/jetpack","jetpack-publicize-pkg":"plugins/jetpack","jetpack-backup-pkg":"plugins/jetpack","jetpack-compat":"plugins/jetpack","jetpack-google-fonts-provider":"plugins/jetpack","jetpack-jitm":"plugins/jetpack","jetpack-lazy-images":"plugins/jetpack","jetpack-search-pkg":"plugins/jetpack","jetpack-tracking":"plugins/jetpack","jetpack-wordads":"plugins/jetpack"},"domainPaths":{"jetpack-heartbeat":"jetpack_vendor/automattic/jetpack-heartbeat/","jetpack-post-list":"jetpack_vendor/automattic/jetpack-post-list/","jetpack-admin-ui":"jetpack_vendor/automattic/jetpack-admin-ui/","jetpack-connection":"jetpack_vendor/automattic/jetpack-connection/","jetpack-password-checker":"jetpack_vendor/automattic/jetpack-password-checker/","jetpack-assets":"jetpack_vendor/automattic/jetpack-assets/","jetpack-idc":"jetpack_vendor/automattic/jetpack-identity-crisis/","jetpack-sync":"jetpack_vendor/automattic/jetpack-sync/","jetpack-plugins-installer":"jetpack_vendor/automattic/jetpack-plugins-installer/","jetpack-licensing":"jetpack_vendor/automattic/jetpack-licensing/","jetpack-my-jetpack":"jetpack_vendor/automattic/jetpack-my-jetpack/","jetpack-connection-ui":"jetpack_vendor/automattic/jetpack-connection-ui/","jetpack-config":"jetpack_vendor/automattic/jetpack-config/","jetpack-publicize-pkg":"jetpack_vendor/automattic/jetpack-publicize/","jetpack-backup-pkg":"jetpack_vendor/automattic/jetpack-backup/","jetpack-compat":"jetpack_vendor/automattic/jetpack-compat/","jetpack-google-fonts-provider":"jetpack_vendor/automattic/jetpack-google-fonts-provider/","jetpack-jitm":"jetpack_vendor/automattic/jetpack-jitm/","jetpack-lazy-images":"jetpack_vendor/automattic/jetpack-lazy-images/","jetpack-search-pkg":"jetpack_vendor/automattic/jetpack-search/","jetpack-tracking":"jetpack_vendor/automattic/jetpack-tracking/","jetpack-wordads":"jetpack_vendor/automattic/jetpack-wordads/"}};
-</script>
-<script src='https://use.fontawesome.com/releases/v5.3.1/js/all.js?ver=5.3.1' id='font-awesome-all-js'></script>
-<script id='wpcom-actionbar-placeholder-js-extra'>
-var actionbardata = {"siteID":"150497237","siteURL":"https:\/\/crowdsignal.com","xhrURL":"https:\/\/crowdsignal.com\/wp-admin\/admin-ajax.php","nonce":"a8e6fa052d","isLoggedIn":"","statusMessage":"","subsEmailDefault":"instantly","proxyScriptUrl":"https:\/\/s0.wp.com\/wp-content\/js\/wpcom-proxy-request.js?ver=20211021","shortlink":"https:\/\/wp.me\/PabtcN-a","i18n":{"followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar"}};
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/_static/??-eJydjc0KwjAQhF/IZK2lPx7EZwmbtSZmNzFJLb69LXjwJCgMzGW+b2BJygmG2VIBv+Y+U36+S7MT7csOvo0UuymbSp9jjFJJKtQr8YqYEQFzXKwqbhITNseDxMYMidJ/4MWUisHhTTV6r/sfBBiZ4/Z45lPTH4bj2A1d61+Mh2BW'></script>
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://crowdsignal.wordpress.com/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress.com" />
-<link rel="canonical" href="https://crowdsignal.com/" />
-<link rel='shortlink' href='https://wp.me/PabtcN-a' />
-	<style>
-		@font-face {
-			font-family: Recoleta;
-			font-display: swap;
-			src: url('https://s1.wp.com/i/fonts/recoleta/400.woff2')
-		}
-	</style>
-	<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fcrowdsignal.com%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fcrowdsignal.com%2F&amp;for=wpcom-auto-discovery" />
+<link rel='stylesheet' id='all-css-2' href='https://wikimediafoundation.org/_static/??/wp-content/plugins/wikipedia-preview/libs/wikipedia-preview-link.css,/wp-content/themes/shiro/style.css?m=1648592691' type='text/css' media='all' />
+<script type="text/javascript" src="https://wikimediafoundation.org/_static/??-eJzTLy/QzcxLzilNSS3WzwKiwtLUokoopZebmaeXVayjj0+Rbm5melFiSSpUsX2uraGZqYGlobGhkVEWAK9PIhY=" ></script><link rel="https://api.w.org/" href="https://wikimediafoundation.org/wp-json/" /><link rel="alternate" type="application/json" href="https://wikimediafoundation.org/wp-json/wp/v2/posts/55990" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://wikimediafoundation.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://wikimediafoundation.org/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.9.3" />
+<link rel="canonical" href="https://wikimediafoundation.org/news/2018/05/21/wikimedia-foundation-privacy-approach/" />
+<link rel='shortlink' href='https://wikimediafoundation.org/?p=55990' />
+<link rel="alternate" type="application/json+oembed" href="https://wikimediafoundation.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwikimediafoundation.org%2Fnews%2F2018%2F05%2F21%2Fwikimedia-foundation-privacy-approach%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://wikimediafoundation.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwikimediafoundation.org%2Fnews%2F2018%2F05%2F21%2Fwikimedia-foundation-privacy-approach%2F&#038;format=xml" />
+<style type='text/css'>img#wpstats{display:none}</style>
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
 <!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Crowdsignal | Surveys, Polls, and Quizzes | Get the responses you need, anywhere" />
-<meta property="og:description" content="Create flexible surveys, polls, quizzes and ratings with Crowdsignal." />
-<meta property="og:url" content="https://crowdsignal.com/" />
-<meta property="og:site_name" content="Crowdsignal" />
-<meta property="og:image" content="https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=200" />
-<meta property="og:image:width" content="200" />
-<meta property="og:image:height" content="200" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="A note on our approach to privacy" />
+<meta property="og:url" content="https://wikimediafoundation.org/news/2018/05/21/wikimedia-foundation-privacy-approach/" />
+<meta property="og:description" content="We&#8217;re updating our privacy policy, and are inviting you to comment on the changes over the next thirty days." />
+<meta property="article:published_time" content="2018-05-21T19:07:51+00:00" />
+<meta property="article:modified_time" content="2018-08-17T18:23:30+00:00" />
+<meta property="og:site_name" content="Wikimedia Foundation" />
+<meta property="og:image" content="https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="683" />
 <meta property="og:image:alt" content="" />
 <meta property="og:locale" content="en_US" />
-<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
-<meta name="twitter:text:title" content="Homepage" />
-<meta name="twitter:image" content="https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=240" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:app:name:iphone" content="WordPress" />
-<meta name="twitter:app:id:iphone" content="335703880" />
-<meta name="twitter:app:name:ipad" content="WordPress" />
-<meta name="twitter:app:id:ipad" content="335703880" />
-<meta name="twitter:app:name:googleplay" content="WordPress" />
-<meta name="twitter:app:id:googleplay" content="org.wordpress.android" />
+<meta name="twitter:text:title" content="A note on our approach to privacy" />
+<meta name="twitter:image" content="https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <!-- End Jetpack Open Graph Tags -->
-<link rel="search" type="application/opensearchdescription+xml" href="https://crowdsignal.com/osd.xml" title="Crowdsignal" />
-<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
-<meta name="application-name" content="Crowdsignal" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Get the responses you need, anywhere" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://crowdsignal.com/feed/;icon-uri=https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="Create flexible surveys, polls, quizzes and ratings with Crowdsignal." />
-<!-- There is no amphtml version available for this URL. --><link rel="icon" href="https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=32" sizes="32x32" />
-<link rel="icon" href="https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=192" sizes="192x192" />
-<link rel="apple-touch-icon" href="https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=180" />
-<meta name="msapplication-TileImage" content="https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=270" />
-		<link rel="stylesheet" id="custom-css-css" type="text/css" href="https://s0.wp.com/?custom-css=1&#038;csblog=abtcN&#038;cscache=6&#038;csrev=97" />
-		<!-- Your Google Analytics Plugin is missing the tracking ID -->
-<script type="text/javascript">
-	window.a8cGAOptimizeConfig = { id: 'GTM-NZHNWK2' };
-</script>
-
-<style type="text/css">
-	.async-trans { transition: opacity .5s; }
-
-	.async-dim body {
-		opacity: .025 !important;
-		background: #fff !important;
-	}
-
-	@supports (animation: none) and (transform: none) {
-		.async-dim::before {
-			content: '';
-
-			width: 50px;
-			height: 50px;
-
-			top: 20vh;
-			z-index: 1;
-			position: absolute;
-			left: calc(50% - 25px);
-
-			border-radius: 50%;
-			border: 5px solid #f7f7f7;
-			border-left: 5px solid #e6e6e680;
-			animation: async-dim-rotate 1.1s infinite linear;
-		}
-		@keyframes async-dim-rotate {
-			0% {
-				transform: rotate(0deg);
-			}
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-	}
-</style>
-
-<script type="text/javascript">
-	( function() {
-		'use strict';
-
-		var html = document.documentElement;
-
-		var extend = function() {
-			var args = [].slice.call( arguments );
-
-			var obj0 = args.slice( 0, 1 )[0] || {};
-			obj0 = 'object' === typeof obj0 ? obj0 : {};
-
-			args.slice( 1 ).forEach( function( _obj ) {
-				_obj = 'object' === typeof _obj ? _obj : {};
-
-				for( var _prop in _obj ) {
-					if ( _obj.hasOwnProperty( _prop ) ) {
-						obj0[ _prop ] = _obj[ _prop ];
-					}
-				}
-			} );
-
-			return obj0;
-		};
-
-		window.a8cGAOptimize = window.a8cGAOptimize || {
-			config: extend( {
-				id: '',
-				enabled: true,
-				asyncDimTime: 1000,
-			}, window.a8cGAOptimizeConfig || {} ),
-
-			a8cAnalytics: {
-				cb: null,
-				kit: null,
-				config: null,
-			},
-			refs: {
-				tracked: {},
-				asyncDimEnded: false,
-				asyncDimTimeout: null,
-				asyncDimInterval: null,
-			},
-
-			dataLayer: ( window.dataLayer = window.dataLayer || [] ),
-
-			push: function() {
-				a8cGAOptimize.dataLayer.push( arguments );
-			},
-
-			isEnabled: function() {
-				return !! ( a8cGAOptimize.config.id && a8cGAOptimize.config.enabled );
-			},
-
-			startAsyncDim: function() {
-				html.className += ' async-dim';
-
-				a8cGAOptimize.dataLayer.hide = {
-					start: Date.now(),
-					end: a8cGAOptimize.endAsyncDim,
-					timeout: a8cGAOptimize.config.asyncDimTime,
-				};
-				a8cGAOptimize.dataLayer.hide[ a8cGAOptimize.config.id ] = true;
-
-				a8cGAOptimize.refs.asyncDimTimeout  = setTimeout(
-					a8cGAOptimize.endAsyncDim,
-					a8cGAOptimize.config.asyncDimTime
-				);
-				a8cGAOptimize.refs.asyncDimInterval = setInterval( function() {
-					var cookieBanner = document.querySelector( '.a8c-cookie-banner' );
-					if( cookieBanner && 'none' !== cookieBanner.style.display )
-						a8cGAOptimize.endAsyncDim();
-				}, 250 );
-			},
-
-			endAsyncDim: function() {
-				if ( a8cGAOptimize.refs.asyncDimEnded ) {
-					return; // Done.
-				}
-
-				a8cGAOptimize.refs.asyncDimEnded = true;
-				clearTimeout( a8cGAOptimize.refs.asyncDimTimeout );
-				clearInterval( a8cGAOptimize.refs.asyncDimInterval );
-
-				html.className += ' async-trans'; // Transition fx.
-				setTimeout( function() {
-					html.className = html.className.replace( /\s?async-dim/g, '' );
-				}, 0 );
-			},
-
-			a8cAnalyticsSetup: function( cb, kit, config ) {
-				if ( ! a8cGAOptimize.isEnabled() ) {
-					return; // Not enabled.
-				}
-
-				a8cGAOptimize.a8cAnalytics.cb = cb;
-				a8cGAOptimize.a8cAnalytics.kit = kit;
-				a8cGAOptimize.a8cAnalytics.config = config;
-				a8cGAOptimize.a8cAnalyticsExpStart();
-
-				a8cGAOptimize.push( 'event', 'optimize.callback', { callback: a8cGAOptimize.a8cAnalyticsExpStart } );
-				a8cGAOptimize.dataLayer.push( { event: 'optimize.activate' } );
-			},
-
-			a8cAnalyticsExpStart: function( variationId, experimentId ) {
-				if ( undefined === experimentId && undefined === variationId ) {
-					var utm = a8cGAOptimize.a8cAnalytics.kit.getQueryVar( 'utm_expid' ) || '';
-					experimentId = utm.split( '.' )[1] || '';
-					variationId = utm.split( '.' )[2] || '';
-				}
-
-				if ( ! experimentId || ! variationId ) {
-					return; // Not possible.
-				} else if ( a8cGAOptimize.refs.tracked[ experimentId ] ) {
-					return; // Done already.
-				}
-
-				var props = {
-					// Page props.
-					path: a8cGAOptimize.a8cAnalytics.config.currentPagePath,
-					name: a8cGAOptimize.a8cAnalytics.config.currentPageName,
-					locale: a8cGAOptimize.a8cAnalytics.config.currentPageLocale,
-					variation: a8cGAOptimize.a8cAnalytics.config.pageVariation,
-					personal_variation: a8cGAOptimize.a8cAnalytics.config.pagePersonalVariation,
-
-					// Back compat. LP props.
-					lp_name: a8cGAOptimize.a8cAnalytics.config.currentPageName,
-					lp_variation: a8cGAOptimize.a8cAnalytics.config.pageVariation,
-					lp_personal_variation: a8cGAOptimize.a8cAnalytics.config.pagePersonalVariation,
-
-					// Experiment props.
-					experiment_id: experimentId,
-					variation_id: variationId,
-				};
-				a8cGAOptimize.refs.tracked[ experimentId ] = variationId;
-				window._tkq.push( [ 'recordEvent', 'wpcom_gaexp_start', props ] );
-			},
-		};
-
-		if ( a8cGAOptimize.isEnabled() ) {
-			a8cGAOptimize.startAsyncDim();
-		}
-	} )();
-</script>
-
-</head>
-
-<body class="home page-template-default page page-id-10 wp-custom-logo jps-theme-a8c/crowd-signal customizer-styles-applied no-sidebar highlander-enabled highlander-light page-homepage">
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQF7499"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
-
-	<header id="masthead" class="site-header">
-		<nav id="site-navigation" class="main-navigation">
-			<div class="menu-toggle">
-				<a aria-controls="primary-menu" aria-expanded="true" href="#" title="Primary Menu">
-					<i class="fas fa-bars fa-2x"></i>
-					<i class="fas fa-times fa-2x"></i>
-				</a>
-			</div>
-			<div class="cs-menu-items">
-								<div class="menu-top-menu-container"><ul id="primary-menu" class="menu"><li id="menu-item-4387" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4387"><a href="https://crowdsignal.com/features/">Features</a></li>
-<li id="menu-item-4388" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4388"><a href="https://crowdsignal.com/pricing/">Pricing</a></li>
-<li id="menu-item-4372" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4372"><a title="Login to Crowdsignal" href="https://app.crowdsignal.com/login">Login</a></li>
-</ul></div>			</div>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
-
-	<div id="content" class="site-content">
-	<main id="main" class="site-main hero-layout page page-homepage">
-		<section class="hero">
-            <div class="hero-content">
-                <video autoplay="" loop="" muted="" playsinline="" preload="none" poster="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/video-posters/animation-noise.jpg">
-                    <source src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/videos/animation-hero.mp4">
-                </video>
-                <div class="inner">
-                    <figure class="hero-image">
-                        <img src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/logo-dots.svg" alt="Crowdsignal" />
-                    </figure>
-                    <h1 class="headline">There are signals in the noise. Find them.</h1>
-                    <h1 class="headline">Start asking, start listening, start learning.</h1>
-                    <div class="actions">
-                        <a class="btn btn-primary link-signup" href="https://app.crowdsignal.com/signup" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'hero' } ] );">Try it free</a>
-                    </div>
-                </div>
-            </div>
-		</section>
-        <section class="featurette reversed">
-            <div class="featurette-content">
-                <h2>Creating surveys and polls should be simple and fast.</h2>
-                <p>You have things to get done. You need info to do them well. Drag and drop your way to a survey or poll in minutes. A simple tool, but surprisingly powerful.</p>
-                <div class="actions">
-                    <a class="btn btn-primary link-signup" href="https://app.crowdsignal.com/signup" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'create' } ] );">Get started</a>
-                </div>
-            </div>
-            <video autoplay="" loop="" muted="" playsinline="" poster="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/video-posters/animation-create.jpg" style="max-height: 336px;">
-                <source src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/videos/animation-create.mp4" data-wf-ignore="true">
-            </video>
-        </section>
-        <section class="featurette">
-            <video autoplay="" loop="" muted="" playsinline="" poster="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/video-posters/animation-style.jpg" style="max-height: 366px;">
-                <source src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/videos/animation-style.mp4" data-wf-ignore="true">
-            </video>
-            <div class="featurette-content">
-                <h2>Surveys should look exactly how you want.</h2>
-                <p>Customize the look and feel of your surveys and polls -- match your brand, pick your favorite color. Choose one of our pre-made themes, or build one from scratch.</p>
-                <div class="actions">
-                    <a class="btn btn-primary link-signup" href="https://app.crowdsignal.com/signup" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'style' } ] );">Get started</a>
-                </div>
-            </div>
-        </section>
-        <section class="featurette reversed">
-            <div class="featurette-content">
-                <h2>Share your questions everywhere. Collect responses anywhere.</h2>
-                <p>Put your polls and surveys everywhere your audience is:  WordPress, Twitter, and Facebook. You can even share interactive polls and surveys via email.</p>
-                <div class="actions">
-                    <a class="btn btn-primary link-signup" href="https://app.crowdsignal.com/signup" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'share' } ] );">Get started</a>
-                </div>
-            </div>
-            <video autoplay="" loop="" muted="" playsinline="" poster="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/video-posters/animation-share.jpg" style="max-height: 351px;">
-                <source src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/videos/animation-share.mp4" data-wf-ignore="true">
-            </video>
-        </section>
-        <section class="featurette">
-            <img src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/screenshot-analytics.jpg" alt="Automattic brands" />
-            <div class="featurette-content">
-                <h2>Analyze your results and export them wherever you want.</h2>
-                <p>We've made it easy to export your poll and survey results to apps like Google Sheets and Excel. You have full control over your data. </p>
-                <div class="actions">
-                    <a class="btn btn-primary link-signup" href="https://app.crowdsignal.com/signup" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'export' } ] );">Get started</a>
-                </div>
-            </div>
-        </section>
-        <section class="featurette reversed">
-            <div class="featurette-content">
-                <h2>Send out interactive surveys via email and other great features...</h2>
-                <p>...like poll restrictions, data filters, multi-language support and more. We've built these to be very useful but in a way that will never hold you back. Crowdsignal is a tool that feels simple, but is surprisingly powerful.</p>
-                <div class="actions">
-                    <a class="btn btn-primary link-signup" href="https://app.crowdsignal.com/signup" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'email' } ] );">Get started</a>
-                </div>
-            </div>
-            <img src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/screenshot-email.jpg" alt="Automattic brands" />
-            </video>
-        </section>
-        <section class="good-company">
-            <h1>You're in Good Company</h1>
-            <img src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/cs-companies.png" alt="List of Companies that use Crowdsignal" />
-        </section>
-
-        <div class="cs__large-heading-area">
-            <h1 style="text-align: center;">Built by the People Behind WordPress.com</h1>
-            <section class="featurette reversed">
-                <div class="featurette-content">
-                    <h2 class="cs-established-heading">Established in 2008. Here to stay.</h2>
-                    <p>Crowdsignal is built by Automattic, the company behind WordPress.com, WooCommerce, Tumblr and more. We’re not going anywhere, so neither is your data.</p>
-                    <a class="btn btn-primary link-signup" href="https://automattic.com" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'automattic' } ] );">Learn more</a> 
-                </div>
-                <img src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/automattic-brands.png" alt="Automattic logo" />
-            </section>
-        </div>
-
-        <div class="cs__large-heading-area">
-            <h1 style="text-align: center;">We Call Them Happiness Engineers.</h1>
-            <section class="featurette">
-                <img style="min-width:40%;max-width:40%;" src="https://s2.wp.com/wp-content/themes/a8c/crowd-signal/assets/images/happiness.png" alt="Automattic brands" />
-                <div style="margin-top: 20px;" class="featurette-content">
-                    <h2>Ready to support you 24/7.</h2>
-                    <p>Automattic is a distributed team working from all around the world, so it’s always business hours for some of our more than <strong>250 Happiness Engineers</strong>. Reach out to them anytime and they'll be happy to help.</p>
-                    <a class="btn btn-primary link-signup" href="https://crowdsignal.com/support" onclick="window._tkq.push( [ 'recordEvent','crowdsignal_homepage_button_click',{ button: 'happiness' } ] );">Get support</a>
-                </div>
-            </section>
-        </div>
-
-	</main><!-- #main -->
-    <div class="crowdsignal-toaster" data-poll-id="10329844" data-show-on="hover" data-orientation="left"></div>
-    <script type="text/javascript" src="https://poll.fm/client/bottom-up-feedback?ft=c.js"></script>
-
-	</div><!-- #content -->
-</div><!-- #page -->
-
-<footer class="site-footer">
-	<section class="site-footer__section is-cs">
-		<div class="site-footer__layout-container">
-			<div class="site-footer__section-inner">
-				<div>
-					<a href="https://crowdsignal.com/features/" class="site-footer__logo" aria-label="P2 Home">
-						<img src="https://crowdsignal.wordpress.com/wp-content/themes/a8c/crowd-signal/assets/images/logo-dots.svg" width="52" />
-					</a>
-				</div>
-
-				<div class="site-footer__links">
-					<section class="site-footer__links-wrapper">
-						<h2 class="site-footer__links-heading">Product</h2>
-						<div class="menu-product-container"><ul id="footer-menu-1" class="menu"><li id="menu-item-368266" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-368266"><a href="https://app.crowdsignal.com">Dashboard</a></li>
-<li id="menu-item-368282" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-368282"><a href="https://wordpress.org/plugins/crowdsignal-forms">WordPress Plugin</a></li>
-<li id="menu-item-368263" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-368263"><a href="https://crowdsignal.com/pricing/">Pricing</a></li>
-<li id="menu-item-368264" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-368264"><a href="https://automatticstatus.com/">Status</a></li>
-</ul></div>					</section>
-
-					<section class="site-footer__links-wrapper">
-						<h2 class="site-footer__links-heading">Learn</h2>
-						<div class="menu-learn-container"><ul id="footer-menu-2" class="menu"><li id="menu-item-368269" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-368269"><a href="https://crowdsignal.com/blog/">Blog</a></li>
-<li id="menu-item-368267" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-368267"><a href="https://crowdsignal.com/category/tutorials/">Tutorials</a></li>
-<li id="menu-item-368268" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-368268"><a href="https://crowdsignalfeedback.wordpress.com/">Community</a></li>
-</ul></div>					</section>
-
-					<section class="site-footer__links-wrapper">
-						<h2 class="site-footer__links-heading">Resources</h2>
-						<div class="menu-resources-container"><ul id="footer-menu-3" class="menu"><li id="menu-item-368469" class="menu-item menu-item-type-post_type_archive menu-item-object-crowdsignal-support menu-item-368469"><a href="https://crowdsignal.com/support/">Help Center</a></li>
-<li id="menu-item-368271" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-368271"><a href="https://crowdsignal.com/faq/">FAQs</a></li>
-<li id="menu-item-368487" class="menu-item menu-item-type-post_type menu-item-object-crowdsignal-support menu-item-368487"><a href="https://crowdsignal.com/support/api/">Developers</a></li>
-</ul></div>					</section>
-
-					<section class="site-footer__links-wrapper">
-						<h2 class="site-footer__links-heading">Other</h2>
-						<div class="menu-other-container"><ul id="footer-menu-4" class="menu"><li id="menu-item-368273" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-368273"><a href="https://crowdsignal.com/contact/">Contact us</a></li>
-<li id="menu-item-368274" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-368274"><a href="https://twitter.com/Crowdsignalcom">Follow us on Twitter</a></li>
-<li id="menu-item-368275" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-368275"><a href="https://automattic.com/privacy/">Privacy Policy</a></li>
-<li id="menu-item-368276" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-368276"><a href="https://crowdsignal.com/terms/">Terms of Service</a></li>
-<li id="menu-item-368546" class="menu-item menu-item-type-post_type menu-item-object-crowdsignal-support menu-item-368546"><a href="https://crowdsignal.com/support/your-privacy/">Your Privacy</a></li>
-</ul></div>					</section>
-
-				</div>
-
-			</div>
-		</div>
-	</section>
-	<section class="site-footer__section is-wpcom">
-		<div class="site-footer__layout-container">
-			<div class="site-footer__section-inner is-compact">
-				<a href="https://wordpress.com" class="site-footer__credit-wpcom">
-					<img src="https://s0.wp.com/wp-content/themes/h4/landing/marketing/pages/wp-for-teams/media/logo-wordpress.svg" alt="" scale="0">
-					Powered by WordPress.com
-				</a>
-				<div class="site-footer__links is-single-column">
-					<a href="https://app.crowdsignal.com/signup" class="site-footer__link-item">
-						Try Crowdsignal					</a>
-				</div>
-			</div>
-		</div>
-	</section>
-	<section class="site-footer__section is-a8c">
-		<div class="site-footer__layout-container">
-			<div class="site-footer__section-inner is-compact">
-				<div class="site-footer__credit-a8c">
-					An
-					<a href="https://automattic.com">
-						<img src="https://s0.wp.com/wp-content/themes/h4/landing/marketing/pages/wp-for-teams/media/logo-automattic.svg" alt="Automattic" role="img" scale="0">
-					</a>
-					venture
-				</div>
-				<div class="site-footer__links is-single-column">
-					<a href="https://automattic.com/work-with-us/" class="site-footer__link-item">
-						Work With Us
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
-</footer>
-
-<script type="text/javascript">
-var setupDoNotSellCallback = function( ) {
-
-	window.doNotSellCallback = function( $ ) {
-		var privacyLink = jQuery( '<li><a href="https://automattic.com/privacy/#california-consumer-privacy-act-ccpa">Privacy Notice for California Users</a></li>' );
-		privacyLink.addClass( 'menu-item menu-item-type-custom menu-item-object-custom' );
-		var menuContainer = jQuery( 'ul.menu' ).last();
-
-		if ( 0 === menuContainer.length ) {
-			return false;
-		}
-
-		menuContainer.append(privacyLink);
-		return true;
-	}
-};
-
-if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-	defQueue.items.push( setupDoNotSellCallback );
-} else {
-	setupDoNotSellCallback();
+<link rel="icon" href="https://wikimediafoundation.org/wp-content/uploads/2018/05/cropped-wikimedia-logo_black-svg-2.png?w=32" sizes="32x32" />
+<link rel="icon" href="https://wikimediafoundation.org/wp-content/uploads/2018/05/cropped-wikimedia-logo_black-svg-2.png?w=192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://wikimediafoundation.org/wp-content/uploads/2018/05/cropped-wikimedia-logo_black-svg-2.png?w=180" />
+<meta name="msapplication-TileImage" content="https://wikimediafoundation.org/wp-content/uploads/2018/05/cropped-wikimedia-logo_black-svg-2.png?w=270" />
+<style type="text/css" id="wp-custom-css">.page-template-page-report-landing .header-default .ungrid .bg-img {
+	background-size: cover;
 }
-</script>
 
-		<!-- CCPA [start] -->
-		<script type="text/javascript">
-			( function () {
+/*Override for color bug in reports, e.g. transparency report*/
+.header-blue + #content .toc.header-pink .toc-link-item.active>a {
+	background-color: #eeeaff !important;
+}
 
-				var setupPrivacy = function() {
+.btn.btn-pink a, .btn-pink .btn a {
+	color: inherit;
+}
 
-					// Minimal Mozilla Cookie library
-					// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
-					var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+/* temporary fix for errant content not translated notice */
+.primary-nav + .alert-warning {
+	display: none;
+}
 
-					// Implement IAB USP API.
-					window.__uspapi = function( command, version, callback ) {
+/* temporary fix for homepage COVID box (old non-block content) */
+.home .urgent-header {
+	margin-bottom: 40px;
+}
 
-						// Validate callback.
-						if ( typeof callback !== 'function' ) {
-							return;
-						}
+/**
+ * Hide page title visually in the Wiki Unseen page.
+ * Uses the .page-{slug} body class.
+ */
+.page-unseen .header-content h1 {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}</style></head>
 
-						// Validate the given command.
-						if ( command !== 'getUSPData' || version !== 1 ) {
-							callback( null, false );
-							return;
-						}
-
-						// Check for GPC. If set, override any stored cookie.
-						if ( navigator.globalPrivacyControl ) {
-							callback( { version: 1, uspString: '1YYN' }, true );
-							return;
-						}
-
-						// Check for cookie.
-						var consent = cookieLib.getItem( 'usprivacy' );
-
-						// Invalid cookie.
-						if ( null === consent ) {
-							callback( null, false );
-							return;
-						}
-
-						// Everything checks out. Fire the provided callback with the consent data.
-						callback( { version: 1, uspString: consent }, true );
-					};
-
-					// Initialization.
-					document.addEventListener( 'DOMContentLoaded', function() {
-
-						// Internal functions.
-						var setDefaultOptInCookie = function() {
-							var value = '1YNN';
-							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
-							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
-						};
-
-						var setDefaultOptOutCookie = function() {
-							var value = '1YYN';
-							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
-							cookieLib.setItem( 'usprivacy', value, 24 * 60 * 60, '/', domain );
-						};
-
-						var setDefaultNotApplicableCookie = function() {
-							var value = '1---';
-							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
-							cookieLib.setItem( 'usprivacy', value, 24 * 60 * 60, '/', domain );
-						};
-
-						var setCcpaAppliesCookie = function( applies ) {
-							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
-							cookieLib.setItem( 'ccpa_applies', applies, 24 * 60 * 60, '/', domain );
-						}
-
-						var maybeCallDoNotSellCallback = function() {
-							if ( 'function' === typeof window.doNotSellCallback ) {
-								return window.doNotSellCallback();
-							}
-
-							return false;
-						}
-
-						// Look for usprivacy cookie first.
-						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
-
-						// Found a usprivacy cookie.
-						if ( null !== usprivacyCookie ) {
-
-							// If the cookie indicates that CCPA does not apply, then bail.
-							if ( '1---' === usprivacyCookie ) {
-								return;
-							}
-
-							// CCPA applies, so call our callback to add Do Not Sell link to the page.
-							maybeCallDoNotSellCallback();
-
-							// We're all done, no more processing needed.
-							return;
-						}
-
-						// We don't have a usprivacy cookie, so check to see if we have a CCPA applies cookie.
-						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
-
-						// No CCPA applies cookie found, so we'll need to geolocate if this visitor is from California.
-						// This needs to happen client side because we do not have region geo data in our $SERVER headers,
-						// only country data -- therefore we can't vary cache on the region.
-						if ( null === ccpaCookie ) {
-
-							var request = new XMLHttpRequest();
-							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
-
-							request.onreadystatechange = function () {
-								if ( 4 === this.readyState ) {
-									if ( 200 === this.status ) {
-
-										// Got a geo response. Parse out the region data.
-										var data = JSON.parse( this.response );
-										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
-
-										// Set CCPA applies cookie. This keeps us from having to make a geo request too frequently.
-										setCcpaAppliesCookie( ccpa_applies );
-
-										// Check if CCPA applies to set the proper usprivacy cookie.
-										if ( ccpa_applies ) {
-											if ( maybeCallDoNotSellCallback() ) {
-												// Do Not Sell link added, so set default opt-in.
-												setDefaultOptInCookie();
-											} else {
-												// Failed showing Do Not Sell link as required, so default to opt-OUT just to be safe.
-												setDefaultOptOutCookie();
-											}
-										} else {
-											// CCPA does not apply.
-											setDefaultNotApplicableCookie();
-										}
-									} else {
-										// Could not geo, so let's assume for now that CCPA applies to be safe.
-										setCcpaAppliesCookie( true );
-										if ( maybeCallDoNotSellCallback() ) {
-											// Do Not Sell link added, so set default opt-in.
-											setDefaultOptInCookie();
-										} else {
-											// Failed showing Do Not Sell link as required, so default to opt-OUT just to be safe.
-											setDefaultOptOutCookie();
-										}
-									}
-								}
-							};
-
-							// Send the geo request.
-							request.send();
-						} else {
-							// We found a CCPA applies cookie.
-							if ( ccpaCookie === 'true' ) {
-								if ( maybeCallDoNotSellCallback() ) {
-									// Do Not Sell link added, so set default opt-in.
-									setDefaultOptInCookie();
-								} else {
-									// Failed showing Do Not Sell link as required, so default to opt-OUT just to be safe.
-									setDefaultOptOutCookie();
-								}
-							} else {
-								// CCPA does not apply.
-								setDefaultNotApplicableCookie();
-							}
-						}
-					} );
-				};
-
-				// Kickoff initialization.
-				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-					defQueue.items.push( setupPrivacy );
-				} else {
-					setupPrivacy();
-				}
-
-			} )();
-		</script>
-
-		<!-- CCPA [end] -->
+<body class="post-template-default single single-post postid-55990 single-format-standard post-wikimedia-foundation-privacy-approach">
+	<div data-dropdown-backdrop></div>
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<div class="mobile-cover"></div>
+<div id="page" class="site">
+	<header class="header-default minimal--short" data-dropdown="primary-nav" data-dropdown-content=".primary-nav__drawer" data-dropdown-toggle=".primary-nav-toggle" data-dropdown-status="uninitialized" data-toggleable="yes" data-trap="inactive" data-backdrop="inactive" data-visible="false">
 		
-<!--  -->
-		<div class="jetpack-instant-search__widget-area" style="display: none">
-					</div>
-					<!-- A8C Analytics [start] -->
-			<script type="text/javascript">
-				( function() {
-					'use strict';
+<div class="site-header">
+	<div class="site-header__inner"
+		>
+		
+<button class="primary-nav-toggle"
+		hidden
+		aria-label="Toggle menu"
+		data-dropdown-toggle="primary-nav"
+		aria-expanded="false">
+	<span class="btn-label-a11y">Toggle menu</span>
+		<svg class="i icon icon-menu primary-nav-toggle__icon primary-nav-toggle__icon--closed">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#menu"></use>
+	</svg>
+			<svg class="i icon icon-close primary-nav-toggle__icon primary-nav-toggle__icon--opened">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#close"></use>
+	</svg>
+	</button>
+		
+<a href="https://wikimediafoundation.org" class="nav-logo">
+	<img class="nav-logo__image" src="https://wikimediafoundation.org/wp-content/themes/shiro/assets/src/svg/logo-horizontal.svg"
+		 alt="Wikimedia Foundation"/>
+</a>
+				
+<div class="nav-donate">
+	<a href="https://donate.wikimedia.org/?utm_medium=wmfSite&#038;utm_campaign=navButton&#038;uselang=en&utm_source=55990" class="nav-donate__link">
+			<svg class="i icon icon-lock nav-donate__icon nav-donate__icon--lock">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#lock"></use>
+	</svg>
+				<svg class="i icon icon-heart nav-donate__icon nav-donate__icon--heart">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#heart"></use>
+	</svg>
+			<span class="nav-donate__copy">
+			Donate now		</span>
+	</a>
+</div>
+	</div>
+</div>
+		<div class="header-inner mw-980">
+			<nav class="primary-nav">
+	<div class="primary-nav__drawer" data-dropdown-content="primary-nav">
+		<div class="nav-search">
+	<form role="search" method="get" class="search-form" action="https://wikimediafoundation.org/">
+	<label class="search-form__label">
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-form__field"
+			   placeholder="Search site"
+			   value="" name="s"
+			   title="Search for:" />
+	</label>
+	<button type="submit" class="search-form__button">
+		<span class="screen-reader-text">Search</span>
+			<svg class="i icon icon-search search-form__icon">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#search"></use>
+	</svg>
+		</button>
+</form>
+</div>
+<ul id="menu-header-menu" class="primary-nav__items"><li id="nav-menu-item-123" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://wikimediafoundation.org/our-work/"><span>Our Work</span></a></li>
+<li id="nav-menu-item-115" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://wikimediafoundation.org/support/"><span>Support Wikipedia</span></a></li>
+<li id="nav-menu-item-119" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://wikimediafoundation.org/research/"><span>Research</span></a></li>
+<li id="nav-menu-item-118" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://wikimediafoundation.org/advocacy/"><span>Advocacy</span></a></li>
+<li id="nav-menu-item-117" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://wikimediafoundation.org/technology/"><span>Technology</span></a></li>
+<li id="nav-menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent"><a href="https://wikimediafoundation.org/news/"><span>News</span></a></li>
+<li id="nav-menu-item-116" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://wikimediafoundation.org/participate/"><span>Participate</span></a></li>
+<li id="nav-menu-item-120" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://wikimediafoundation.org/about/"><span>About</span></a></li>
+</ul>	</div>
+</nav>
+			
 
-					var setupAnalytics = function() {
-						window.a8cAnalyticsConfig = {"cookieBanner":{"version":"1","cssZIndex":50001,"skipBanner":false,"cookieDomain":"crowdsignal.com","v1CookieName":"sensitive_pixel_option","v2CookieName":"sensitive_pixel_options","v1Text":"Our websites and dashboards use cookies. By continuing, you agree to their use. <a target=\"_blank\" href=\"https:\/\/automattic.com\/cookies\/\">Learn more<\/a>, including how to control cookies.","v2Text":"We and our partners process your personal data (such as browsing data, IP addresses, cookie information, and other unique identifiers) based on your consent and\/or our legitimate interest to optimize our website, marketing activities, and your user experience.","v2OptionsText":"Your privacy is critically important to us. We and our partners use, store, and process your personal data to optimize: our <strong>website<\/strong> such as by improving security or conducting analytics, <strong>marketing activities<\/strong> to help deliver relevant marketing or content, and your <strong>user experience<\/strong> such as by remembering your account name, language settings, or cart information, where applicable. You can customize your cookie settings below. Learn more in our <a href=\"https:\/\/automattic.com\/privacy\/\" target=\"_blank\">Privacy Policy<\/a> and <a href=\"https:\/\/automattic.com\/cookies\/\" target=\"_blank\">Cookie Policy<\/a>.","v2EssentialOptionText":"<strong>Required:<\/strong> These cookies are essential for our websites and services to perform basic functions and are necessary for us to operate certain features. These include those required to allow registered users to authenticate and perform account-related functions, store preferences set by users such as account name, language, and location, and ensure our services are operating properly.","v2AnalyticsOptionText":"<strong>Analytics:<\/strong> These cookies allow us to optimize performance by collecting information on how users interact with our websites, including which pages are visited most, as well as other analytical data. We use these details to improve how our websites function and to understand how users interact with them. You can opt-out by logging into your account and changing your privacy settings at <a target=\"_blank\" href=\"https:\/\/wordpress.com\/me\/privacy\">https:\/\/wordpress.com\/me\/privacy<\/a>.","v2AdvertisingOptionText":"<strong>Advertising:<\/strong> These cookies are set by us and our advertising partners to provide you with relevant content and to understand that content\u2019s effectiveness. They may be used to collect information about your online activities over time and across different websites to predict your preferences and to display more relevant advertisements to you. These cookies also allow a profile to be built about you and your interests, and enable personalized ads to be shown to you based on your profile.","v1ButtonText":"Got It!","v2CustomizeButtonText":"Customize","v2AcceptAllButtonText":"Accept All","v2AcceptSelectionButtonText":"Accept Selection","cookieName":"eu_cb"},"adminAnalytics":"analytics-wpcom-admin.php","fireAnalyticsOptions":[]};
-					};
-
-					if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-						defQueue.items.push( setupAnalytics );
-					} else {
-						setupAnalytics();
-					}
-				} )();
-			</script>
-
-			<div style="display: none;" id="a8c-analytics">
-	<script type="text/javascript">
-		( function () {
-			'use strict';
-
-			document.addEventListener( 'a8c-analytics:loaded', function () {
-				var cb = window.a8cAnalytics.cb;
-				var kit = window.a8cAnalytics.kit;
-
-				var gaOptimize = window.a8cGAOptimize || null;
-				gaOptimize = gaOptimize && gaOptimize.isEnabled() ? gaOptimize : null;
-
-				function fireGoogleAnalytics() {
-					kit.loadGtag( 'UA-114919094-3', {
-						anonymize_ip: true,
-						transport_type: typeof navigator.sendBeacon === 'function' ? 'beacon' : 'xhr',
-						optimize_id: gaOptimize ? gaOptimize.config.id : '',
-					} );
-
-					if ( gaOptimize ) {
-						gaOptimize.a8cAnalyticsSetup( cb, kit, {} );
-					}
-				}
-
-				// ------- Fire Normal Pixels -------
-
-				if ( kit.doNotTrack() ) {
-					if ( gaOptimize ) {
-						gaOptimize.endAsyncDim();
-					}
-					return;
-				}
-
-				fireGoogleAnalytics();
-
-				// ------- Fire Sensitive Pixels -------
-
-				document.addEventListener( 'a8c-analytics:fire-sensitive-pixels', function () {
-					kit.loadGtag( 'AW-828724892' );
-					kit.loadGoogleTagManager( 'GTM-WQF7499' );
-				} );
-			} );
-		} )();
-	</script>
+<div class="header-main">
+	<div class="header-content mar-bottom_lg header-single">
+					<h2 class="h4 eyebrow">
+								<a class="back-arrow-link" href="https://wikimediafoundation.org/news/">
+										News									</a>
+						</h2>
+		
+		<div class="mw-784">
+							<h1>A note on our approach to privacy</h1>
+			
+							<div class="post-meta h4">
+					<span>By <a href="https://wikimediafoundation.org/news/author/wikimedia-foundation/" title="Posts by Wikimedia Foundation" class="author url fn" rel="author">Wikimedia Foundation</a></span><span class="separator">&bull;</span><time datetime="2018-05-21T15:07:51+00:00">21 May 2018</time>				</div>
+			
+				<div class="share-article">
+					<a class="share-article__link" href="http://twitter.com/intent/tweet?text=%20https://wikimediafoundation.org/news/2018/05/21/wikimedia-foundation-privacy-approach/" target="_blank" rel="noreferrer noopener">
+					<svg class="i icon icon-social-twitter ">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#social-twitter"></use>
+	</svg>
+				</a>
+		
+					<a class="share-article__link" href="http://www.facebook.com/sharer/sharer.php?s=100&#038;p%5Burl%5D=https://wikimediafoundation.org/news/2018/05/21/wikimedia-foundation-privacy-approach/&#038;&#038;p%5Btitle%5D=" target="_blank" rel="noreferrer noopener">
+					<svg class="i icon icon-social-facebook ">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#social-facebook"></use>
+	</svg>
+				</a>
+			</div>
+			</div>
+	</div>
 </div>
 
-			<script type="text/javascript">
-				( function() {
-					'use strict';
-					var currentScript = document.currentScript;
+</div>
+</header>
+<main id="content">
 
-					var setupAnalytics = function() {
-						function getScript() {
-							var script = document.createElement( 'script' );
-							var prev = currentScript || document.getElementsByTagName( 'script' )[ 0 ];
-							script.setAttribute( 'src', "https:\/\/s0.wp.com\/wp-content\/mu-plugins\/a8c-analytics\/a8c-analytics.js?v=1645447154" );
-							script.setAttribute( 'async', true );
-							prev.parentNode.insertBefore( script, prev );
-						}
+<div class="article-img article-img-main mw-980">
 
-													getScript();
-											};
+<div class="">
+	<div>
+		<img width="1024" height="683" src="https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg?w=1024" class="attachment-large size-large" alt="" loading="lazy" srcset="https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg 1024w, https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg?resize=300,200 300w, https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg?resize=768,512 768w" sizes="(max-width: 1024px) 100vw, 1024px" />	</div>
+	<h1></h1>
+</div>
 
-					if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-						defQueue.items.push( setupAnalytics );
-					} else {
-						setupAnalytics();
-					}
-				} )();
-			</script>
-			<!-- A8C Analytics [end] -->
-		<script src='//0.gravatar.com/js/gprofiles.js?ver=202218z' id='grofiles-cards-js'></script>
-<script id='wpgroho-js-extra'>
-var WPGroHo = {"my_hash":""};
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
-
-	<script>
-		// Initialize and attach hovercards to all gravatars
-		( function() {
-			function init() {
-				if ( typeof Gravatar === 'undefined' ) {
-					return;
-				}
-
-				if ( typeof Gravatar.init !== 'function' ) {
-					return;
-				}
-
-				Gravatar.profile_cb = function ( hash, id ) {
-					WPGroHo.syncProfileData( hash, id );
-				};
-
-				Gravatar.my_hash = WPGroHo.my_hash;
-				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
-			}
-
-			if ( document.readyState !== 'loading' ) {
-				init();
-			} else {
-				document.addEventListener( 'DOMContentLoaded', init );
-			}
-		} )();
-	</script>
-
-		<div style="display:none">
+<div class="img-caption mw-980">
+			<span class="photo-caption"><a href="https://commons.wikimedia.org/wiki/File:Security,_Downpatrick,_May_2011.JPG">Photo</a> by Ardfern, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC BY-SA 3.0</a>.</span>
+	
 	</div>
-	<div id="actionbar" style="display: none;"
-			class="actnbr-a8c-crowd-signal actnbr-has-follow">
-		<ul>
-								<li class="actnbr-btn actnbr-hidden">
-								<a class="actnbr-action actnbr-actn-follow " href="">
-			<svg class="gridicon gridicons-reader-follow" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"/></g></svg><span>Follow</span>
-		</a>
-		<a class="actnbr-action actnbr-actn-following  no-display" href="">
-			<svg class="gridicon gridicons-reader-following" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"/></g></svg><span>Following</span>
-		</a>
-							<div class="actnbr-popover tip tip-top-left actnbr-notice" id="follow-bubble">
-							<div class="tip-arrow"></div>
-							<div class="tip-inner actnbr-follow-bubble">
-															<ul>
-											<li class="actnbr-sitename">
-			<a href="https://crowdsignal.com">
-				<img alt='' src='https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=50' class='avatar avatar-50' height='50' width='50' />				Crowdsignal			</a>
-		</li>
-										<form method="post" action="https://subscribe.wordpress.com" accept-charset="utf-8" style="display: none;">
-																						<div class="actnbr-follow-count">Join 1,030 other followers</div>
-																					<div>
-										<input type="email" name="email" placeholder="Enter your email address" class="actnbr-email-field" aria-label="Enter your email address" />
-										</div>
-										<input type="hidden" name="action" value="subscribe" />
-										<input type="hidden" name="blog_id" value="150497237" />
-										<input type="hidden" name="source" value="https://crowdsignal.com/" />
-										<input type="hidden" name="sub-type" value="actionbar-follow" />
-										<input type="hidden" id="_wpnonce" name="_wpnonce" value="1a81edbfd9" />										<div class="actnbr-button-wrap">
-											<button type="submit" value="Sign me up">
-												Sign me up											</button>
-										</div>
-									</form>
-									<li class="actnbr-login-nudge">
-										<div>
-											Already have a WordPress.com account? <a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fcrowdsignal.com%252F">Log in now.</a>										</div>
-									</li>
-								</ul>
-															</div>
-						</div>
-					</li>
-							<li class="actnbr-ellipsis actnbr-hidden">
-				<svg class="gridicon gridicons-ellipsis" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M7 12c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm12-2c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-7 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2z"/></g></svg>				<div class="actnbr-popover tip tip-top-left actnbr-more">
-					<div class="tip-arrow"></div>
-					<div class="tip-inner">
-						<ul>
-									<li class="actnbr-sitename">
-			<a href="https://crowdsignal.com">
-				<img alt='' src='https://crowdsignal.files.wordpress.com/2018/10/cropped-crowdsignal_favion-0112.png?w=50' class='avatar avatar-50' height='50' width='50' />				Crowdsignal			</a>
-		</li>
-								<li class="actnbr-folded-customize">
-								<a href="https://crowdsignal.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fcrowdsignal.wordpress.com%2F">
-									<svg class="gridicon gridicons-customize" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z"/></g></svg>									<span>Customize</span>
-								</a>
-							</li>
-																<li class="actnbr-folded-follow">
-												<a class="actnbr-action actnbr-actn-follow " href="">
-			<svg class="gridicon gridicons-reader-follow" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"/></g></svg><span>Follow</span>
-		</a>
-		<a class="actnbr-action actnbr-actn-following  no-display" href="">
-			<svg class="gridicon gridicons-reader-following" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 13.482L15.508 21 12 17.4l1.412-1.388 2.106 2.188 6.094-6.094L23 13.482zm-7.455 1.862L20 10.89V2H2v14c0 1.1.9 2 2 2h4.538l4.913-4.832 2.095 2.176zM8 13H4v-1h4v1zm3-2H4v-1h7v1zm0-2H4V8h7v1zm7-3H4V4h14v2z"/></g></svg><span>Following</span>
-		</a>
-										</li>
-																	<li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li>
-									<li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fcrowdsignal.com%252F">Log in</a></li>
-																	<li class="actnbr-shortlink"><a href="https://wp.me/PabtcN-a">Copy shortlink</a></li>
-																	<li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li>
-																	<li class="actnbr-reader">
-										<a href="https://wordpress.com/read/blogs/150497237/posts/10">
-											View post in Reader										</a>
-									</li>
-																	<li class="actnbr-subs">
-										<a href="https://subscribe.wordpress.com/">Manage subscriptions</a>
-									</li>
-																		<li class="actnbr-fold"><a href="">Collapse this bar</a></li>
-															</ul>
+
+</div>
+
+	
+	<article class="mw-784 wysiwyg">
+		<p>We at the <a href="https://wikimediafoundation.org/">Wikimedia Foundation</a> are pleased that organizations across the world are currently rethinking their privacy policies. We have always strongly valued the privacy of our volunteers, readers, and donors, but this moment has given us an opportunity to look at our own privacy policy and see how it can be strengthened.</p>
+<p>We see privacy as an important foundation for intellectual freedom, and we believe that the trust of our community is deeply linked to several practices:</p>
+<ul>
+<li>We intentionally collect very little data about readers and contributors, and provide a transparent view of the data we keep—and do not keep.</li>
+<li>We work with our communities and invite open community vetting of our privacy-related policies.</li>
+<li>We remain accountable to the community, including a volunteer ombudsman commission that responds to any reported privacy-related concerns.</li>
+<li>We support our open source platform, which among other benefits, allows anyone to examine and discover any vulnerabilities in our code.</li>
+</ul>
+<p>We do not allow third-party tracking of visitors to our sites. We have short data retention periods (see our <a href="https://meta.wikimedia.org/wiki/Data_retention_guidelines">data retention guidelines</a>). We proactively publish a <a href="https://transparency.wikimedia.org/">transparency report</a>, informing the public about requests for data about our contributors. We have a comprehensive <a href="https://meta.wikimedia.org/wiki/Privacy_policy">privacy policy</a>, developed with community input.</p>
+<p>We are always looking for ways to improve our privacy and data security practices in partnership with our community of contributors and users.</p>
+<p>As a result of our most recent review, we are updating our privacy policy, which now clarifies the definition of “personal information,” and has been reorganized to improve readability without changing the overall intentions previously set by the community. As <a href="https://wikimediafoundation.org/wiki/Privacy_policy#Changes_to_This_Privacy_Policy">promised</a> in the policy, we are providing these minor changes with three (3) calendar days’ prior notice. These changes will go into effect on May 24, 2018. As always, we want your thoughts and feedback, and invite everyone to comment on the <a href="https://wikimediafoundation.org/wiki/Talk:Privacy_policy">policy talk page</a> over the next thirty (30) calendar days. We are also grateful to our volunteer community, who are actively working on translations of this policy.</p>
+<p>We will continue looking for ways to improve and help make clearer to everyone our privacy practices and policy as technology and the world change rapidly around us.</p>
+<p>Look out for more updates, both here and on the <a href="https://lists.wikimedia.org/mailman/listinfo/wikimedia-l"><em>Wikimedia-l</em> mailing list</a>, to learn more about our approach to privacy and data security practices.</p>
+<p><em>Wikimedia Foundation</em></p>
+
+			<div class="share-article">
+					<a class="share-article__link" href="http://twitter.com/intent/tweet?text=%20https://wikimediafoundation.org/news/2018/05/21/wikimedia-foundation-privacy-approach/" target="_blank" rel="noreferrer noopener">
+					<svg class="i icon icon-social-twitter ">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#social-twitter"></use>
+	</svg>
+				</a>
+		
+					<a class="share-article__link" href="http://www.facebook.com/sharer/sharer.php?s=100&#038;p%5Burl%5D=https://wikimediafoundation.org/news/2018/05/21/wikimedia-foundation-privacy-approach/&#038;&#038;p%5Btitle%5D=" target="_blank" rel="noreferrer noopener">
+					<svg class="i icon icon-social-facebook ">
+		<use xlink:href="https://wikimediafoundation.org/wp-content/themes/shiro/assets/dist/icons-9b55af8b37.svg#social-facebook"></use>
+	</svg>
+				</a>
+			</div>
+	
+	<div class="read-more-categories">
+		<span class="read-more-categories__text">
+			Read more		</span>
+		<span class="read-more-categories__links">
+														<a href="https://wikimediafoundation.org/news/category/communications/">Communications</a>,											<a href="https://wikimediafoundation.org/news/category/foundation/">Foundation</a>,											<a href="https://wikimediafoundation.org/news/category/from-the-archives/">From the archives</a>,											<a href="https://wikimediafoundation.org/news/tag/privacy/">Privacy</a>,											<a href="https://wikimediafoundation.org/news/tag/wikimedia/">Wikimedia</a>,											<a href="https://wikimediafoundation.org/news/tag/wikimedia-foundation/">Wikimedia Foundation</a>,											<a href="https://wikimediafoundation.org/news/tag/privacy-policy/">privacy policy</a>					</span>
+	</div>
+		</article>
+
+	
+<div class="block-area">
+	<div class="wysiwyg mw-980">
+				<div class="double-heading">
+							<p class="double-heading__secondary is-style-h5">
+					<span>Related</span>
+				</p>
+						<h2 class="double-heading__primary is-style-h3">
+				Read further in the pursuit of knowledge							</h2>
+		</div>
+
+			<div class="blog-post">
+
+			<a class="blog-post__image-link" href="https://wikimediafoundation.org/news/2022/03/01/wikimedia-foundation-calls-for-continued-access-to-free-and-open-knowledge/">
+			<img width="800" height="600" src="https://wikimediafoundation.org/wp-content/uploads/2022/03/80-382-0071_Kyiv_SAM_2043-e1646160091378.jpg?w=800&amp;h=600&amp;crop=1" class="blog-post__image" alt="Kyiv&#039;s Independence Monument / victory column" loading="lazy" />		</a>
+	
+	<div class="blog-post__content">
+					<h3 class="blog-post__title">
+				<a href="https://wikimediafoundation.org/news/2022/03/01/wikimedia-foundation-calls-for-continued-access-to-free-and-open-knowledge/">
+					Wikimedia Foundation calls for continued access to free and open knowledge as Ukraine crisis continues				</a>
+			</h3>
+		
+					<div class="blog-post__categories">
+				<a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/communications/">Communications</a> <a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/foundation/">Foundation</a> 			</div>
+		
+					<div class="blog-post__excerpt">
+				<p>Цей пост також доступний українською мовою.Этот пост также доступен на русском языке. Update: As the conflict has continued, the Wikimedia Foundation received a Russian government demand to remove content from Russian Wikipedia. You can read the latest update and our response. The Wikimedia Foundation supports a global movement of volunteers and communities around the world.&hellip;.</p>
+			</div>
+		
+		<div class="blog-post__meta">
+							
+					1 March 2022				
+			
+							<span class="blog-post__authors">
+					By <a href="https://wikimediafoundation.org/news/author/wikimedia-foundation/" title="Posts by Wikimedia Foundation" class="author url fn" rel="author">Wikimedia Foundation</a>				</span>
 					</div>
-				</div>
-			</li>
-		</ul>
+
+		<a href="https://wikimediafoundation.org/news/2022/03/01/wikimedia-foundation-calls-for-continued-access-to-free-and-open-knowledge/" class="blog-post__read-more" aria-label="Read more about Wikimedia Foundation calls for continued access to free and open knowledge as Ukraine crisis continues">
+			Read more		</a>
 	</div>
+</div>
+	<div class="blog-post">
+
+			<a class="blog-post__image-link" href="https://wikimediafoundation.org/news/2019/11/19/setting-the-record-straight-wtsocial/">
+			<img width="800" height="571" src="https://wikimediafoundation.org/wp-content/uploads/2019/11/Arrows_16064489288-1.jpg?w=800&amp;h=571&amp;crop=1" class="blog-post__image" alt="Arrows on road" loading="lazy" />		</a>
 	
+	<div class="blog-post__content">
+					<h3 class="blog-post__title">
+				<a href="https://wikimediafoundation.org/news/2019/11/19/setting-the-record-straight-wtsocial/">
+					Setting the record straight—WT:Social is not affiliated with Wikipedia or the Wikimedia Foundation				</a>
+			</h3>
+		
+					<div class="blog-post__categories">
+				<a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/foundation/board/">Board</a> <a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/communications/">Communications</a> <a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/foundation/">Foundation</a> <a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/wikipedia/">Wikipedia</a> 			</div>
+		
+					<div class="blog-post__excerpt">
+				<p>As of late, we have received several questions about the Wikimedia Foundation and Wikipedia’s affiliation with WT:Social. The recently launched WT:Social is related to WikiTribune, a venture independently initiated by Wikipedia founder Jimmy Wales. Wikipedia and the Wikimedia Foundation are separate and independent from WT:Social. We have no connection to the social networking site. The&hellip;.</p>
+			</div>
+		
+		<div class="blog-post__meta">
+							
+					19 November 2019				
+			
+							<span class="blog-post__authors">
+					By <a href="https://wikimediafoundation.org/news/author/wikimedia-foundation/" title="Posts by Wikimedia Foundation" class="author url fn" rel="author">Wikimedia Foundation</a>				</span>
+					</div>
+
+		<a href="https://wikimediafoundation.org/news/2019/11/19/setting-the-record-straight-wtsocial/" class="blog-post__read-more" aria-label="Read more about Setting the record straight—WT:Social is not affiliated with Wikipedia or the Wikimedia Foundation">
+			Read more		</a>
+	</div>
+</div>
+	<div class="blog-post">
+
+			<a class="blog-post__image-link" href="https://wikimediafoundation.org/news/2019/09/24/do-europeans-have-a-right-to-be-globally-delisted-the-court-of-justice-of-the-european-union-says-no/">
+			<img width="800" height="600" src="https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?w=800&amp;h=600&amp;crop=1" class="blog-post__image" alt="" loading="lazy" />		</a>
+	
+	<div class="blog-post__content">
+					<h3 class="blog-post__title">
+				<a href="https://wikimediafoundation.org/news/2019/09/24/do-europeans-have-a-right-to-be-globally-delisted-the-court-of-justice-of-the-european-union-says-no/">
+					Do Europeans have a right to be globally delisted? The Court of Justice of the European Union says no.				</a>
+			</h3>
+		
+					<div class="blog-post__categories">
+				<a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/foundation/legal/advocacy/">Advocacy</a> <a class="blog-post__category-link" href="https://wikimediafoundation.org/news/category/foundation/legal/">Legal</a> 			</div>
+		
+					<div class="blog-post__excerpt">
+				<p>Update (May 6, 2020): In 2016, the Wikimedia Foundation intervened in support of Google’s efforts to define the scope of the “right to be forgotten” in France. Faced with an order from the French data protection authority (“CNIL”) to delist information worldwide in response to a right to be forgotten request, Google challenged the order&hellip;.</p>
+			</div>
+		
+		<div class="blog-post__meta">
+							
+					24 September 2019				
+			
+							<span class="blog-post__authors">
+					By <a href="https://wikimediafoundation.org/news/author/allison-davenport/" title="Posts by Allison Davenport" class="author url fn" rel="author">Allison Davenport</a>				</span>
+					</div>
+
+		<a href="https://wikimediafoundation.org/news/2019/09/24/do-europeans-have-a-right-to-be-globally-delisted-the-court-of-justice-of-the-european-union-says-no/" class="blog-post__read-more" aria-label="Read more about Do Europeans have a right to be globally delisted? The Court of Justice of the European Union says no.">
+			Read more		</a>
+	</div>
+</div>
+	</div>
+</div>
+		<div class="block-area">
+			<div class="wysiwyg mw-980">
+				
+<div class="wp-block-shiro-spotlight spotlight alignfull is-style-donate-red90"><div class="spotlight__inner"><div class="spotlight__content"><h2 class="spotlight__heading is-style-h1">Help us unlock the world’s knowledge.</h2><p class="spotlight__text">As a nonprofit, Wikipedia and our related free knowledge projects are powered primarily through donations.</p><a class="spotlight__cta" href="https://donate.wikimedia.org/?utm_medium=wmfSite&amp;utm_campaign=supportModule&amp;uselang=en&amp;utm_source=10">Donate now</a></div><figure class="spotlight__image-wrapper image-filter-inherit"><img loading="lazy" width="1024" height="683" class="wp-image-282 size-medium_large spotlight__image" src="https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg?w=1024" srcset="https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg 1024w, https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg?resize=300,200 300w, https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg?resize=768,512 768w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure></div></div>
+			</div>
+		</div>
+					<div class="block-area">
+			<div class="wysiwyg mw-980">
+				
+<div class="wp-container-2 wp-block-group alignwide"><div class="wp-block-group__inner-container">		<div class="double-heading is-style-align-wide-blog">
+							<p class="double-heading__secondary is-style-h5">
+					<span>Connect</span>
+											—
+						<span
+							class=""
+							lang="es"
+						>
+							Conecta						</span>
+									</p>
+										<h2 class="double-heading__primary is-style-h3">
+					Stay up-to-date on our work.				</h2>
+					</div>
+	
+
+
+<div class="wp-block-columns">
+<div class="wp-block-column"><form action="https://wikimediafoundation.us11.list-manage.com/subscribe/post?u=7e010456c3e448b30d8703345&#038;id=246cd15c56" method="POST" class="mailchimp-subscribe__form">
+<div class="wp-block-shiro-mailchimp-subscribe mailchimp-subscribe"><svg width="1em" height="1em" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="i icon icon-mail"><path fillrule="evenodd" cliprule="evenodd" d="M2 2h16a2 2 0 012 2v2l-10 4L0 6V4a2 2 0 012-2zm0 16a2 2 0 01-2-2V8l10 4 10-4v8a2 2 0 01-2 2H2z" fill="#000"></path></svg>
+<h3>Get email updates</h3>
+
+
+
+<p>Subscribe to news about ongoing projects and initiatives.</p>
+<div class="mailchimp-subscribe__input-container"><div class="mailchimp-subscribe__column-input"><input class="mailchimp-subscribe__input-field" id="wmf-subscribe-input-email" name="EMAIL" placeholder="Email address" required="" type="email" /></div><div class="mailchimp-subscribe__column-button"><button class="wp-block-shiro-button" type="submit">Subscribe</button></div></div><p class="mailchimp-subscribe__description has-base-30-color has-text-color has-small-font-size">This mailing list is powered by MailChimp. The Wikimedia Foundation will handle your personal information in accordance with this site’s privacy policy.</p></div>
+<input type="hidden" value="2" name="group[4037]" id="mce-group[4037]-4037-1">
+</form></div>
+
+
+
+<div class="wp-block-column">
+<div class="wp-block-shiro-contact contact"><svg width="1em" height="1em" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="contact__icon"><path fillrule="evenodd" cliprule="evenodd" d="M14.5 5.5a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM2 16c0-2 2.083-5 8-5s8 3 8 5v3H2v-3z" fill="#000"></path></svg><h3 class="contact__title">Contact a human</h3><div class="contact__description">Questions about the Wikimedia Foundation or our projects? Get in touch with our team.</div><a class="contact__call-to-action" href="https://wikimediafoundation.org/about/contact/">Contact</a><h4 class="contact__social-title">Follow</h4>
+<div class="wp-container-1 wp-block-buttons">
+<div class="wp-block-button is-style-as-link has-icon has-icon-social-facebook-blue"><a class="wp-block-button__link" href="https://www.facebook.com/wikimediafoundation/" target="_blank" rel="noreferrer noopener">Facebook</a></div>
+
+
+
+<div class="wp-block-button is-style-as-link has-icon has-icon-social-twitter-blue"><a class="wp-block-button__link" href="https://twitter.com/wikimedia" target="_blank" rel="noreferrer noopener">Twitter</a></div>
+
+
+
+<div class="wp-block-button is-style-as-link has-icon has-icon-social-instagram-blue"><a class="wp-block-button__link" href="https://www.instagram.com/wikimediafoundation/" target="_blank" rel="noreferrer noopener">Instagram</a></div>
+
+
+
+<div class="wp-block-button is-style-as-link has-icon has-icon-social-linkedin-blue"><a class="wp-block-button__link" href="https://www.linkedin.com/company/wikimedia-foundation" target="_blank" rel="noreferrer noopener">LinkedIn</a></div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+			</div>
+		</div>
+	
+<section class="photo-attribution">
+			<h2 class="photo-attribution__heading">Photo credits</h2>
+	
+	<div class="photo-attribution__inner">
+		
+<div class="attribution-item">
+	<div class="attribution-item__image">
+		<img width="63" height="42" src="https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg?w=63" class="attachment-63x63 size-63x63" alt="" loading="lazy" srcset="https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg 1024w, https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg?resize=300,200 300w, https://wikimediafoundation.org/wp-content/uploads/2018/05/security_downpatrick_may_20111-e1533255169610.jpg?resize=768,512 768w" sizes="(max-width: 63px) 100vw, 63px" />	</div>
+
+	<div class="attribution-item__content">
+		<p>
+			Security,_Downpatrick,_May_2011		</p>
+
+								</div>
+</div>
+
+<div class="attribution-item">
+	<div class="attribution-item__image">
+		<img width="63" height="34" src="https://wikimediafoundation.org/wp-content/uploads/2022/03/80-382-0071_Kyiv_SAM_2043-e1646160091378.jpg?w=63" class="attachment-63x63 size-63x63" alt="Kyiv&#039;s Independence Monument / victory column" loading="lazy" />	</div>
+
+	<div class="attribution-item__content">
+		<p>
+				<a href="https://commons.wikimedia.org/wiki/File:80-382-0071_Kyiv_SAM_2043.jpg" target="_blank" rel="noopener noreferrer">
+		Independence Monument, Kyiv	</a>
+			</p>
+
+									<p>Haidamac</p>
+			
+							<p>
+						<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">
+		CC BY-SA 4.0	</a>
+					</p>
+						</div>
+</div>
+
+<div class="attribution-item">
+	<div class="attribution-item__image">
+		<img width="63" height="35" src="https://wikimediafoundation.org/wp-content/uploads/2019/11/Arrows_16064489288-1.jpg?w=63" class="attachment-63x63 size-63x63" alt="Arrows on road" loading="lazy" srcset="https://wikimediafoundation.org/wp-content/uploads/2019/11/Arrows_16064489288-1.jpg 1024w, https://wikimediafoundation.org/wp-content/uploads/2019/11/Arrows_16064489288-1.jpg?resize=300,167 300w, https://wikimediafoundation.org/wp-content/uploads/2019/11/Arrows_16064489288-1.jpg?resize=768,428 768w, https://wikimediafoundation.org/wp-content/uploads/2019/11/Arrows_16064489288-1.jpg?resize=600,338 600w" sizes="(max-width: 63px) 100vw, 63px" />	</div>
+
+	<div class="attribution-item__content">
+		<p>
+				<a href="https://commons.wikimedia.org/wiki/File:Arrows_(16064489288).jpg" target="_blank" rel="noopener noreferrer">
+		Arrows (16064489288)	</a>
+			</p>
+
+									<p>Dean Hochman</p>
+			
+							<p>
+						<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">
+		CC BY 2.0	</a>
+					</p>
+						</div>
+</div>
+
+<div class="attribution-item">
+	<div class="attribution-item__image">
+		<img width="63" height="46" src="https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?w=63" class="attachment-63x63 size-63x63" alt="" loading="lazy" srcset="https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg 2048w, https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?resize=300,218 300w, https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?resize=768,558 768w, https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?resize=1024,744 1024w, https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?resize=1536,1116 1536w, https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?resize=400,300 400w, https://wikimediafoundation.org/wp-content/uploads/2019/09/Autrèche-Drapeau-Europe-cropped-e1569366341424.jpg?resize=800,600 800w" sizes="(max-width: 63px) 100vw, 63px" />	</div>
+
+	<div class="attribution-item__content">
+		<p>
+				<a href="https://commons.wikimedia.org/wiki/File:Autr%C3%A8che_-_Drapeau_Europe_(cropped).jpg" target="_blank" rel="noopener noreferrer">
+		Autrèche - Drapeau Europe (cropped)	</a>
+			</p>
+
+									<p>GrandCelinien</p>
+			
+							<p>
+						<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">
+		CC0	</a>
+					</p>
+						</div>
+</div>
+
+<div class="attribution-item">
+	<div class="attribution-item__image">
+		<img width="63" height="42" src="https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg?w=63" class="attachment-63x63 size-63x63" alt="Wikipedia edit-a-thon Art+Feminism at the Royal Armoury in Stockholm" loading="lazy" srcset="https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg 1024w, https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg?resize=300,200 300w, https://wikimediafoundation.org/wp-content/uploads/2018/06/ArtAndFeminism_2017_Livrustkammaren_06-e1533254907593.jpg?resize=768,512 768w" sizes="(max-width: 63px) 100vw, 63px" />	</div>
+
+	<div class="attribution-item__content">
+		<p>
+				<a href="https://commons.wikimedia.org/wiki/File:ArtAndFeminism_2017_Livrustkammaren_06.jpg" target="_blank" rel="noopener noreferrer">
+		Art+Feminism Wikipedia edit-a-thon	</a>
+			</p>
+
+									<p>Jens Mohr</p>
+			
+							<p>
+						<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">
+		CC BY-SA 3.0	</a>
+					</p>
+						</div>
+</div>
+	</div>
+</section>
+</main>
+
+
+
+<footer class="site-footer">
+	<div class="site-footer__inner">
+		<div class="site-footer__description">
+	<img class="site-footer__logo" src="https://wikimediafoundation.org/wp-content/uploads/2018/09/Wikimedia_Foundation_registered.png"
+		 alt="Wikimedia Foundation"/>
+			<p>The Wikimedia Foundation, Inc is a nonprofit charitable organization dedicated to encouraging the growth, development and distribution of free, multilingual content, and to providing the full content of these wiki-based projects to the public free of charge.</p>
+	</div>
+		<nav class="site-footer__callout-nav"><ul id="menu-footer-under-text" class="site-footer__callout-nav__items"><li id="menu-item-48" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-48"><a href="/about/jobs/">Careers</a></li>
+<li id="menu-item-161" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-161"><a href="https://wikimediafoundation.org/about/contact/">Contact</a></li>
+</ul></nav>		
+<div class="site-footer__navigation">
+
+				<div class="site-footer__navigation-section site-footer__navigation-section--footer-projects">
+				<h2>Projects</h2>
+				<nav class="site-footer__navmenu"><ul><li id="menu-item-29" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-29"><a href="https://www.wikipedia.org/">Wikipedia</a></li>
+<li id="menu-item-31" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-31"><a href="https://www.wikibooks.org/">Wikibooks</a></li>
+<li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-32"><a href="https://www.wikiversity.org/">Wikiversity</a></li>
+<li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a href="https://www.wikinews.org/">Wikinews</a></li>
+<li id="menu-item-38" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-38"><a href="https://www.wiktionary.org/">Wiktionary</a></li>
+<li id="menu-item-33" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-33"><a href="https://www.wikisource.org/">Wikisource</a></li>
+<li id="menu-item-35" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-35"><a href="https://www.wikiquote.org/">Wikiquote</a></li>
+<li id="menu-item-37" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-37"><a href="https://www.wikivoyage.org/">Wikivoyage</a></li>
+<li id="menu-item-30" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-30"><a href="https://commons.wikimedia.org/">Wikimedia Commons</a></li>
+<li id="menu-item-39" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39"><a href="https://www.wikidata.org/">Wikidata</a></li>
+<li id="menu-item-34" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-34"><a href="https://species.wikimedia.org/">Wikispecies</a></li>
+<li id="menu-item-40" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40"><a href="https://www.mediawiki.org/">MediaWiki</a></li>
+</ul></nav>			</div>
+						<div class="site-footer__navigation-section site-footer__navigation-section--footer-affiliates">
+				<h2>Movement Affiliates</h2>
+				<nav class="site-footer__navmenu"><ul><li id="menu-item-41" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41"><a href="https://meta.wikimedia.org/wiki/Wikimedia_chapters">Wikimedia Chapters</a></li>
+<li id="menu-item-42" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-42"><a href="https://meta.wikimedia.org/wiki/Wikimedia_thematic_organizations">Wikimedia Thematic Organizations</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-43"><a href="https://meta.wikimedia.org/wiki/Wikimedia_user_groups">Wikimedia User Groups</a></li>
+</ul></nav>			</div>
+						<div class="site-footer__navigation-section site-footer__navigation-section--footer-legal">
+				<h2>Other</h2>
+				<nav class="site-footer__navmenu"><ul><li id="menu-item-44" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-44"><a href="//foundation.wikimedia.org/wiki/Terms_of_Use">Terms of use</a></li>
+<li id="menu-item-45" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-45"><a href="/privacy-policy/">Privacy policy</a></li>
+<li id="menu-item-46" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-46"><a href="//foundation.wikimedia.org/wiki/Wikimedia:General_disclaimer">Disclaimers</a></li>
+<li id="menu-item-62000" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-62000"><a href="https://wikimediafoundation.org/accessibility-statement/">Accessibility statement</a></li>
+<li id="menu-item-47" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-47"><a href="//foundation.wikimedia.org/wiki/Cookie_statement">Cookie statement</a></li>
+</ul></nav>			</div>
+			
+</div>
+		
+<div class="site-footer__legal">
+	Except where otherwise noted, the content of this site is licensed under a <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported license</a>.<br /> Powered by WordPress.com VIP. <a href="https://automattic.com/privacy-notice/">Automattic Privacy Notice</a>.</div>
+	</div>
+</footer>
+
+	<!-- Matomo -->
 <script>
-window.addEventListener( "load", function( event ) {
-	var link = document.createElement( "link" );
-	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20210915";
-	link.type = "text/css";
-	link.rel = "stylesheet";
-	document.head.appendChild( link );
-
-	var script = document.createElement( "script" );
-	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20220329";
-	script.defer = true;
-	document.body.appendChild( script );
-} );
-</script>
-
-	<script type='text/javascript' id='jetpack-instant-search-js-translations'>
-( function( domain, translations ) {
-	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
-	localeData[""].domain = domain;
-	wp.i18n.setLocaleData( localeData, domain );
-} )( "jetpack-search-pkg", { "locale_data": { "messages": { "": {} } } } );
-</script>
-<script type='text/javascript'>
-var JetpackInstantSearchOptions=JSON.parse(decodeURIComponent("%7B%22overlayOptions%22%3A%7B%22colorTheme%22%3A%22light%22%2C%22enableInfScroll%22%3Atrue%2C%22enableSort%22%3Atrue%2C%22highlightColor%22%3A%22%23FFC%22%2C%22overlayTrigger%22%3A%22submit%22%2C%22resultFormat%22%3A%22minimal%22%2C%22showPoweredBy%22%3Atrue%2C%22defaultSort%22%3A%22relevance%22%2C%22excludedPostTypes%22%3A%5B%22post%22%2C%22page%22%2C%22attachment%22%5D%7D%2C%22homeUrl%22%3A%22https%3A%5C%2F%5C%2Fcrowdsignal.com%22%2C%22locale%22%3A%22en%22%2C%22postsPerPage%22%3A10%2C%22siteId%22%3A150497237%2C%22postTypes%22%3A%7B%22post%22%3A%7B%22singular_name%22%3A%22Post%22%2C%22name%22%3A%22Posts%22%7D%2C%22page%22%3A%7B%22singular_name%22%3A%22Page%22%2C%22name%22%3A%22Pages%22%7D%2C%22attachment%22%3A%7B%22singular_name%22%3A%22Media%22%2C%22name%22%3A%22Media%22%7D%2C%22crowdsignal-support%22%3A%7B%22singular_name%22%3A%22Support%20Doc%22%2C%22name%22%3A%22Support%20Documentation%22%7D%7D%2C%22webpackPublicPath%22%3A%22https%3A%5C%2F%5C%2Fs2.wp.com%5C%2Fwp-content%5C%2Fmu-plugins%5C%2Fjetpack-packages%5C%2Fproduction%5C%2Fjetpack_vendor%5C%2Fautomattic%5C%2Fjetpack-search%5C%2Fbuild%5C%2Finstant-search%5C%2F%22%2C%22isPhotonEnabled%22%3Atrue%2C%22apiRoot%22%3A%22https%3A%5C%2F%5C%2Fpublic-api.wordpress.com%5C%2F%22%2C%22apiNonce%22%3A%22de83e1353a%22%2C%22isPrivateSite%22%3Afalse%2C%22isWpcom%22%3Atrue%2C%22hasOverlayWidgets%22%3Afalse%2C%22widgets%22%3A%5B%5D%2C%22widgetsOutsideOverlay%22%3A%5B%5D%2C%22hasNonSearchWidgets%22%3Afalse%7D"));
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/devicepx.js,/wp-content/mu-plugins/jetpack-packages/production/jetpack_vendor/automattic/jetpack-search/build/instant-search/jp-search.js?m=1651769837j'></script>
-<script crossorigin="anonymous" src='//stats.wp.com/w.js?ver=202218' id='jp-tracks-js'></script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJyVy0sSgjAMANALGaPI+Fk4niWUUAJt2mmKeHxZu5Ld2zxcM7iklbViHTmyId0dupLWHky8UsDJ0GbJEERnGJJbDAb5HCc74H9b6S2eqiTdkXIRJ+qhJu8Dlx1zTJEzef4tcYEcFi+6tT6KQkcFI1nlsglqITfbll7xeb62j/bUNLfL9AUZJmoc'></script>
-<script type="text/javascript">
-// <![CDATA[
+var _paq = _paq || [];
+/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
 (function() {
-try{
-  if ( window.external &&'msIsSiteMode' in window.external) {
-    if (window.external.msIsSiteMode()) {
-      var jl = document.createElement('script');
-      jl.type='text/javascript';
-      jl.async=true;
-      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(jl, s);
-    }
-  }
-}catch(e){}
+var u="//piwik.wikimedia.org/";
+_paq.push(['setTrackerUrl', u+'piwik.php']);
+_paq.push(['setSiteId', '17']);
+var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
 })();
-// ]]>
-</script><script src="//stats.wp.com/w.js?63" defer></script> <script type="text/javascript">
-_tkq = window._tkq || [];
-_stq = window._stq || [];
-_tkq.push(['storeContext', {'blog_id':'150497237','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
-_stq.push(['view', {'blog':'150497237','v':'wpcom','tz':'0','user_id':'0','post':'10','subd':'crowdsignal'}]);
-_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1lSiYrZXhzUkM5fD1uTDNLUGt6QzVbd3FKb3Q4aWxFU0VMK3ppSG1wamM0bi81JStxN2lKP1pvVnxQRHk3W0d3VEh0SklpNENJfHppaiZjVlFtdzJJS0ovSDNEV0QxP3Q1ZjU3TnZHZW4sZ3YuQ1NdLDVydEJxLEdiNnItU25ta01PSlQxQmo9Q2gmSldzOW9CaiUwczR+LEF2RC9ka1pBSy5wR21TbnR4TFRyMVVNdGJQcGovQkMvRmp4UTlKdXdXLFoycW89Z2ElMXdBb0VoWWZ0QUF+aEpzMS0rc2FtJlpiMGt6N0RDdXREcUFpT0dwMDV8MT0zaFczJk5LfGI9QXR1JkZzeDZ0Ump+X28yZUYxWUdGRHJ+c292REN1MEJI'}]);
-_stq.push([ 'clickTrackerInit', '150497237', '10' ]);
-	</script>
-<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
-<script defer id="bilmur" data-customproperties="{&quot;enq_jquery&quot;:&quot;1&quot;,&quot;logged_in&quot;:&quot;0&quot;,&quot;wptheme&quot;:&quot;a8c\/crowd-signal&quot;}" data-provider="wordpress.com" data-service="simple"  src="/wp-content/js/bilmur.min.js?i=3&m=202218"></script><script>
-if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
-
-	wpcom_mobile_user_agent_info.init();
-	var mobileStatsQueryString = "";
-	
-	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
-		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
-	
-	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
-		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
-	
-	if( wpcom_mobile_user_agent_info.isIPad() )
-		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
-
-	if( "" != mobileStatsQueryString ) {
-		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
-	}
-	
-}
 </script>
+<!-- End Matomo Code -->
+	<style>.wp-container-1 {display: flex;gap: 0.5em;flex-wrap: wrap;align-items: center;align-items: center;}.wp-container-1 > * { margin: 0; }</style>
+<style>.wp-container-2 .alignleft { float: left; margin-right: 2em; }.wp-container-2 .alignright { float: right; margin-left: 2em; }</style>
+<script id='wikipedia-preview-init-js-extra'>
+var wikipediapreview_init_options = {"detectLinks":"1"};
+</script>
+<script id='shiro-script-js-extra'>
+var shiro = {"ajax_url":"https:\/\/wikimediafoundation.org\/wp-admin\/admin-ajax.php"};
+var wmfrtl = {"enable":""};
+</script>
+<script type="text/javascript" src="https://wikimediafoundation.org/_static/??-eJyVjcsOgjAQAH9IWAuVlIPxW1q6gUVom+4C4e/Rq49Er5PMDGyp6GIQDAJpWnoKDBvdKaEnW6SMK+EGE7kPuEw5+qUTiqEc+QQ/pdxCkwcKJK+ODDgjAw+UI1hmFAZPLMBrr3HFvLvo93Kmt9t3s8uUhP9znqRAc8aqxtZqpyrXGKNq/Ujc5qtqtLm0VdOq8QBrNHT2" ></script><script src='https://stats.wp.com/e-202218.js' defer></script>
+<script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:10.9',blog:'155614485',post:'55990',tz:'0',srv:'wikimediafoundation.org',hp:'vip'} ]);
+	_stq.push([ 'clickTrackerInit', '155614485', '55990' ]);
+</script>
+
+</div>
 </body>
 </html>
-<!--
-	generated 159 seconds ago
-	generated in 0.135 seconds
-	served from batcache in 0.015 seconds
-	expires in 141 seconds
--->

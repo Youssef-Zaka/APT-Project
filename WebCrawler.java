@@ -7,9 +7,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WebCrawler {
 
@@ -20,6 +18,7 @@ public class WebCrawler {
     final static String URLFilePath = "URLs.txt";
     final static String checkerFilePath = "URLChecker.txt";
     final static String documentNumber = "documentCount.txt";
+    final static String URLSources = "URLSources.txt";
 
     static int THREAD_NUMBER;
 
@@ -54,7 +53,7 @@ public class WebCrawler {
 
         while (documentCount < 5000) {
             System.out.println("\nFetching documents from URL #" + URLIterator + ":");
-            String documentName = "Documents\\" + URLIterator + ".html";
+            String documentName = "Documents\\" + (URLIterator / 1000 + 1) + "\\" + URLIterator + ".html";
             File input = new File(documentName);
             Document doc = null;
             try {
@@ -75,7 +74,7 @@ public class WebCrawler {
                 long end = System.currentTimeMillis();
                 if ((end - start) / 1000 > 60)  //Some documents take a lot of time to be fetched, (skip those docs for this URL)
                     break;
-                if (documentsFetched == 20 || documentsNotFetched == 20)      //Fetch a maximum of 20 documents per document
+                if (documentsFetched == 100 || documentsNotFetched == 100)      //Fetch a maximum of 100 documents per document
                     break;
                 //The second condition causes the crawler to continue searching through other documents
                 String currentHyperlink = link.attr("href");
@@ -85,6 +84,8 @@ public class WebCrawler {
                     documentsFetched++;
                     if (documentCount % 20 == 0)
                         saveCrawlerState();
+                    if (documentCount % 50 == 0)
+                        saveURLs();
                 } else {
                     System.out.print(".");  //This is just an indicator that shows whether the crawler is fetching documents or not
                     documentsNotFetched++;
@@ -95,6 +96,7 @@ public class WebCrawler {
                 System.out.println("\nFetched " + documentsFetched + " documents, and failed to fetch " + documentsNotFetched + " documents...");
             URLIterator++;
         }
+        saveURLs();
         PrintWriter fileClearer = new PrintWriter(checkerFilePath);
         fileClearer.print("");
         fileClearer.close();
@@ -108,8 +110,8 @@ public class WebCrawler {
 
     public static boolean addIndex(String currentURL) {
         URLConnection connection = null;
-        System.setProperty("sun.net.client.defaultConnectTimeout", "4000");
-        System.setProperty("sun.net.client.defaultReadTimeout", "4000");
+        System.setProperty("sun.net.client.defaultConnectTimeout", "2000");
+        System.setProperty("sun.net.client.defaultReadTimeout", "2000");
         try {
             if (!robotSafe(new URL(currentURL))) {
                 System.out.print("\nA URL has been refused by Robot");
@@ -121,18 +123,9 @@ public class WebCrawler {
         try {
             connection = new URL(currentURL).openConnection();
 
-            ByteArrayOutputStream result = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            long start = System.currentTimeMillis();
-            long end;
-            for (int length; (length = connection.getInputStream().read(buffer)) != -1; ) {
-                result.write(buffer, 0, length);
+            Scanner s = new Scanner(connection.getInputStream()).useDelimiter("\\A");
+            content = s.hasNext() ? s.next() : "";
 
-                end = System.currentTimeMillis();
-                if ((end - start) > 20000)  //Skip this document as it took a lot of time
-                    return false;
-            }
-            content = result.toString(StandardCharsets.UTF_8);
         } catch (Exception ex) {
             return false;
         }
@@ -140,13 +133,13 @@ public class WebCrawler {
         if (taken) return false;
         String checker;
         try {
-            checker = (content.length() + content.substring(content.length() / 4, content.length() / 4 + 20)).replace("\n", "");
+            checker = (content.length() + content.substring(content.length() / 2, content.length() / 2 + 30)).replace("\n", "");
             boolean oldContent = checkerMap.containsKey(checker);
             if (oldContent && Objects.equals(checkerMap.get(checker), URLMap.get(currentURL))) return false;
         } catch (Exception ignored) {
             return false;
         }
-        String documentName = "Documents\\" + documentCount + ".html";
+        String documentName = "Documents\\" + (documentCount / 1000 + 1) + "\\" + documentCount + ".html";
         try {
             File index = new File(documentName);
             index.createNewFile();
@@ -166,7 +159,7 @@ public class WebCrawler {
                 //This condition prevents the crawler (crawler thread) from generating html documents
                 URLMap.putIfAbsent(currentURL, documentCount);
                 checkerMap.putIfAbsent(checker, documentCount);
-                System.out.print("\nSuccessfully added document #" + documentCount + " with length " + content.length());
+                System.out.print("\nSuccessfully added document #" + documentCount + " with length " + content.length() + " ");
             } else return false;
         } catch (Exception e) {
             return false;
@@ -374,5 +367,32 @@ public class WebCrawler {
         if (URLMap.isEmpty())
             return 0;
         return docCount;
+    }
+
+    public static boolean saveURLs() {
+        // File Objects
+        File urlFile = new File(URLSources);
+
+        BufferedWriter bfU = null;
+        HashMap<Integer, String> ReverseMap = new HashMap<>(URLMap.size());
+        try {
+            for (Map.Entry<String, Integer> entry : URLMap.entrySet())
+                ReverseMap.put(entry.getValue(), entry.getKey());
+            bfU = new BufferedWriter(new FileWriter(urlFile));
+            for (Map.Entry<Integer, String> entry : ReverseMap.entrySet())
+                bfU.write(entry.getValue() + "\n");
+            bfU.flush();
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {
+                // Close Writers
+                assert bfU != null;
+                bfU.close();
+            } catch (Exception ignored) {
+            }
+        }
+        System.out.println("\nSaved URLs Successfully\n");
+        return true;
     }
 }
