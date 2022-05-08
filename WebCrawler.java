@@ -25,8 +25,6 @@ public class WebCrawler {
 
     static Integer MAX_DOC_COUNT;
 
-    static Integer URLIterator = 0;
-
     static LinkedList<Integer> documentList = new LinkedList<>();
     static LinkedList<Integer> URLList = new LinkedList<>();
 
@@ -79,7 +77,6 @@ public class WebCrawler {
             int i = 0;
             while (i < MAX_DOC_COUNT)
                 documentList.add(i++);
-            URLIterator = 0;
             try {
                 URLScanner = new Scanner(seedFile);
                 while (URLScanner.hasNextLine()) {
@@ -198,6 +195,9 @@ public class WebCrawler {
         fileClearer.print("");
         fileClearer.close();
         fileClearer = new PrintWriter(documentNumber);
+        fileClearer.print("");
+        fileClearer.close();
+        fileClearer = new PrintWriter(iteratorNumber);
         fileClearer.print("");
         fileClearer.close();
     }
@@ -459,13 +459,10 @@ public class WebCrawler {
             }
         }
         try {
-
             File file = new File(checkerFilePath);
             br = new BufferedReader(new FileReader(file));
 
-            String line = br.readLine();
-            URLIterator = Integer.parseInt(line);
-
+            String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("khalooda");
 
