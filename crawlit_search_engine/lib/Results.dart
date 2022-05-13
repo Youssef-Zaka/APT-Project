@@ -19,18 +19,27 @@ class Results extends StatelessWidget {
 
         if (snapshot.hasData) {
           var doc = parse(snapshot.data);
-          //get the title
-          var title = doc.getElementsByTagName('title')[0].text;
+          var title = '';
+
+          //make sure the website has a title
+          doc.getElementsByTagName('title').isNotEmpty
+              ? title = doc.getElementsByTagName('title')[0].text
+              : title = result;
           //get first paragraph
-          String firstParagraph;
+          String firstParagraph = '';
           if (doc.getElementsByTagName('p').isEmpty) {
             firstParagraph = 'No description';
           }
-          doc.getElementsByTagName('p').length > 1
-              ? firstParagraph = doc.getElementsByTagName('p')[0].text +
-                  ' ' +
-                  doc.getElementsByTagName('p')[1].text
-              : firstParagraph = doc.getElementsByTagName('p')[0].text;
+          //check if there is a paragraph
+          if (doc.getElementsByTagName('p').isNotEmpty) {
+            //get all paragraphs
+            var paragraphs = doc.getElementsByTagName('p');
+            firstParagraph = '';
+            //add all paragraphs to the first paragraph
+            for (var i = 0; i < paragraphs.length; i++) {
+              firstParagraph += paragraphs[i].text;
+            }
+          }
           return Padding(
             padding: const EdgeInsets.all(14.0),
             child: Column(

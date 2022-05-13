@@ -1,6 +1,7 @@
 import 'package:crawlit_search_engine/strings/string_en.dart';
 import 'package:flutter/material.dart';
 import 'package:crawlit_search_engine/Recents.dart';
+import 'package:crawlit_search_engine/util/CrawlitServer.dart' as crawlit;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +12,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var textController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    crawlit.ServerUtil();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -43,11 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
                   controller: textController,
-                  onEditingComplete: () {
-                    textController.text.isEmpty
-                        ? null
-                        : Navigator.pushNamed(context, '/search',
-                            arguments: textController.text);
+                  onEditingComplete: () async {
+                    if (textController.text.isEmpty) {
+                      return;
+                    }
+                    await crawlit.ServerUtil.query(textController.text);
+                    Navigator.pushNamed(context, '/search',
+                        arguments: textController.text);
                   },
                   cursorColor: Colors.red,
                   cursorHeight: 20,

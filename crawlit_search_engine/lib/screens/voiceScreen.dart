@@ -1,6 +1,7 @@
 import 'package:crawlit_search_engine/strings/string_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speech/flutter_speech.dart';
+import 'package:crawlit_search_engine/util/CrawlitServer.dart' as crawlit;
 
 class VoiceScreen extends StatefulWidget {
   const VoiceScreen({Key? key}) : super(key: key);
@@ -28,10 +29,14 @@ class _VoiceScreenState extends State<VoiceScreen> {
         (String text) => setState(() => transcription = text));
 
     _speech.setRecognitionCompleteHandler(
-      (_) => setState(() {
-        _isListening = false;
-        //start a new Search Screen with recovered text
-        Navigator.popAndPushNamed(context, '/search', arguments: transcription);
+      (_) => setState(() async {
+        if (transcription.isEmpty) {
+          return;
+        }
+        crawlit.ServerUtil.query(transcription).then((_) {
+          Navigator.popAndPushNamed(context, '/search',
+              arguments: transcription);
+        });
       }),
     );
 
