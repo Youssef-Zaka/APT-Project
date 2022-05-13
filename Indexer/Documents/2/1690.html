@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+	
+
+
+		<meta charset="UTF-8">
+		<meta property="og:title" content="WikiComment" />
+		<meta property="og:url" content="http://www.wikicomment.ut.ee/" />
+		<meta property="og:image:width" content="200" />
+		<meta property="og:image:height" content="200" />
+		<meta property="og:image" content="http://www.wikicomment.ut.ee/pics/logo3.jpg" />
+		
+		<meta property="og:description" content="Fast feedback system for Wikipedia." />		
+
+		<title>WikiComment</title>
+		
+		<link rel="stylesheet" href="wikicomment_css/footer_main.css" type="text/css">
+		<link rel="stylesheet" href="wikicomment_css/main_page.css" type="text/css">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+		<link rel="image_src" href="http://www.wikicomment.ut.ee/pics/logo3.jpg" />
+		<link rel="stylesheet" type="text/css" href="carousel/slick/slick.css"/>
+		<link rel="stylesheet" type="text/css" href="carousel/slick/slick-theme.css"/>
+
+		
+		<script src="editor_js/jquery-2.1.4.min.js"></script>
+		<script src="editor_js/Chart.js"></script>
+		<script type="text/javascript" src="carousel/slick/slick.min.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+			  $('.slick_container').slick({
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				draggable: false,
+				dots: true,
+			  });
+			});		
+		</script>
+		
+		<script>
+			$(document).ready(function(){
+				$('.video_1').get(0).play();
+				$('.video_1').get(1).play();
+			});
+		
+		</script>
+		
+		<script>
+			$(document).on('click', '.slick-next, .slick-prev', function(){
+
+				var video_id = $('.playing').attr('id');
+
+				if (video_id == "") {
+					video_id = 'video_6';
+				}
+				
+				var id_nr = (parseInt(video_id.split('video_')[1]));
+				var max_videos = 6;
+
+				if ($(this).hasClass('slick-next')) {				
+					if (id_nr < max_videos) {						
+						video_id = 'video_' + (parseInt(video_id.split('video_')[1]) + 1);
+					} else {
+						video_id = 'video_1';
+					}									
+				} else {
+					if (id_nr == 1) {						
+						video_id = 'video_' + max_videos;
+					} else {
+						console.log(video_id);
+						video_id = 'video_' + (parseInt(video_id.split('video_')[1]) - 1);
+					}							
+				}
+				
+				$(".video").get(0).pause();
+				$(".video").get(0).currentTime = 0;		
+
+				for (var i = 0; i < $(".video").length; i++) {
+					$(".video").get(i).pause();
+					$(".video").get(i).currentTime = 0;						
+				}
+				
+				$(".playing").removeClass('playing');
+				$('.' + video_id).addClass('playing');					
+
+				$(".playing").get(0).play();						
+
+				if ($(".playing").get(1)) {
+					$(".playing").get(1).play();	
+				}
+
+			});
+		
+		</script>
+		
+		<script>
+			$(document).ready(function(){
+				$(".video").on("ended", function() {
+					$('.slick-next').click();						
+				});
+			});
+		</script>		
+		
+
+		
+	</head>
+	
+	<body>
+		
+	
+		<div id="header">
+		
+			<div id='upper_container'>
+			
+							<ul id='login_bar'>
+					<li><a id='log_in' href='login'>log in</a></li>
+					<li><a id='sign_up' href='sign_up'>sign up</a></li>
+				</ul>			
+			
+			</div>
+		
+		</div>
+		
+		<div id='logo_cont'>
+			
+			<p id='logo'>wiki<span><b>Comment</b></span></p>
+			
+			<div id="alpha_logo_cont">
+				<p id="alpha_logo">beta</p>
+			</div>
+			
+		</div>
+		
+		<div id='introduction_cont'>
+			
+			<div id='intoduction'>
+			
+				<p id="int_text">Fast feedback system for Wikipedia.</p>
+				
+			</div>
+		</div>
+		
+		<div class="slick_container" id="manual" style ="width:65%; margin: 10px auto; text-align:center;">
+		
+			<div style="background-color:transparent;">
+				<video class="video video_1 playing" id="video_1" style="border: 2px solid black; margin: 0; background-color: transparent;" width="820" muted>
+				  <source src="pics/search_video.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+
+			<div style="background-color:transparent;">
+				<video class="video video_2" id="video_2" style=" border: 2px solid black; margin: 0; background-color: transparent;" width="820" muted>
+				  <source src="pics/tools_video.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>	
+
+			<div style="background-color:transparent;">
+				<video class="video video_3" id="video_3" style="border: 2px solid black; margin: 0; background-color: transparent;" width="820" muted>
+				  <source src="pics/act1_video.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			
+			<div style="background-color:transparent;">
+				<video class="video video_4" id="video_4" style="border: 2px solid black; margin: 0; background-color: transparent;" width="820" muted>
+				  <source src="pics/act2_video.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>			
+
+			<div style="background-color:transparent;">
+				<video class="video video_5" id="video_5" style="border: 2px solid black; margin: 0; background-color: transparent;" width="820" muted>
+				  <source src="pics/act3_video.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+
+			<div style="background-color:transparent;">
+				<video class="video video_6" id="video_6" style="border: 2px solid black; margin: 0; background-color: transparent;" width="820" muted>
+				  <source src="pics/act4_video.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			
+			<!--<div style="background-color:blue; height: 200px;">Sa</div>
+			<div style="background-color:yellow; height: 200px;">La</div>
+			<div style="background-color:grey; height: 200px;">ea</div>-->
+		
+		</div>
+		
+		<div id="aditional_cont">
+		
+			<div id='aditional'>
+				
+				<div class = "aditional_info" id="general_info">
+					<a href="#general" style="text-decoration:none;">
+						<h1>GENERAL OVERVIEW</h1>
+						<!--<p>General information about WikiComment</p>-->
+					</a>
+				</div>
+				
+				<div class = "aditional_info" id="review">
+					<a href="#statistics" style="text-decoration:none;">
+						<h1>USAGE STATISTICS</h1>
+						<!--<p>Statistics about commented articles</p>-->
+					</a>
+				</div>
+				
+				<div class = "aditional_info" id="users">
+					<a href="#authors" style="text-decoration:none;">
+						<h1>AUTHORS</h1>
+						<!--<p>Information about WikiComment autors</p>-->
+					</a>
+				</div>
+			</div>
+		</div>
+		<div name="general" id="general" class="page_info">
+		
+			<h2><span>What is it?</span></h2>
+			
+			<div class="text_cont">
+				
+					<p>WikiComment was created with a simple goal in mind: to ease the process of giving feedback to students who write wikiarticles as their coursework. 
+					Obviously WikiComment could be used in many other ways as well, but that is just how it all started.</p>
+
+					<p>In Estonia we have a course called "Estonian Composition and Conversation" in the University of Tartu, Faculty of Science and Technology, where there are on average 
+					200+ participating students per year, who write articles into Wikipedia. We are keenly interested of providing good quality feedback, but with that number of students 
+					and with the use of the usual wikisystem, that is hard to achieve. So we needed to solve that issue and so we've come up with a feedback system that would be easier to 
+					use and more efficient.</p>
+
+					<p>When using the usual method (read: "the talk page"), you need to point out where all of the mistakes are located and then express your concerns about them. With a lot of 
+					comments that might get rather messy and it's hard to understand where all of those comments are directed. So it's not a good medium for feedback for neither the students 
+					nor the person giving feedback.</p>
+
+					<p>WikiComment tries to take steps to solve this problem. First, it allows to add comments to exact sentences/paragraphs to speed up the commenting process and be easier to 
+					understand. In addition to adding comments, it also provides various highlighting options and a possibility to strike through text. Secondly, it allows for better monitoring 
+					of the articles of interest. That means the user has information about which pages have been modified and he or she can easily check if the changes have solved the marked questions.</p>	
+
+					<p>You are welcome to use that feedback platform. If you have any suggestions on how to improve it even further then just let us know.</p>
+							</diV
+		
+		</div>
+		<div name="statistics" id="statistics" class="page_info">
+		
+			<h2><span>Usage</span></h2>
+			
+			<div class='usage_container'>
+			
+
+	
+					<table id="statistics_table" border="0">
+					
+						<colgroup>		
+							<col width="50%">
+							<col width="50%">
+						</colgroup>	
+						
+						<tr style="vertical-align: top; text-align:center;">
+							<td>
+								<h3>Users</h3>
+							</td>	
+							<td>
+								<h3>Articles</h3>
+							</td>						
+						</tr>
+						<tr style="vertical-align: top; text-align:center;">
+							<td>
+								<p>Registred users in WikiComment: 1969</p>
+							</td>
+							<td>
+								<p>Pages created: 289</p>
+								<p>Pages subscribed: 8</p>
+							</td>							
+						</tr>						
+						<tr style="vertical-align: top; text-align:center;">
+							<td>
+								<h3>Most used languages</h3>
+							</td>
+							<td>
+								<h3>Used projects</h3>
+							</td>							
+						</tr>
+						<tr style="vertical-align: top; text-align:center;">
+							<td class="languages_metadata">
+
+								<table border="0" style="width: 100%;">
+									<colgroup>		
+										<col width="50%">
+										<col width="50%">
+									</colgroup>		
+									<tr>
+										<td style="text-align:center;">									
+											<canvas id="chart-languages" width="200" height="200"/>	
+										</td>
+										<td class ="languages_legend legend" id="l_legend">
+											<h4>Legend</h4>
+										
+										</td>								
+									</tr>
+								</table>
+									
+							</td>
+							<td class="source_metadata">
+
+								<table border="0" style="width: 100%;">
+									<colgroup>		
+										<col width="50%">
+										<col width="50%">
+									</colgroup>		
+									<tr>
+										<td style="text-align:center;">									
+											<canvas id="chart-source" width="200" height="200"/>	
+										</td>
+										<td class ="source_legend legend" id="s_legend">
+											<h4>Legend</h4>										
+										</td>								
+									</tr>
+								</table>									
+							</td>
+						
+						</tr>
+						<tr style="vertical-align: top; text-align:center;">
+							<td colspan="2">
+								<h3>Markings in pages</h3>
+							</td>						
+						</tr>
+						<tr style="vertical-align: top; text-align:center;">
+							<td class="highlights_metadata" colspan="2">
+
+								<table border="0" style="width: 50%; margin-left: 25%;>
+									<colgroup>		
+										<col width="50%">
+										<col width="50%">
+									</colgroup>		
+									<tr>
+										<td style="text-align:center;">							
+											<canvas id="chart-highlights" width="200" height="200"/>	
+										</td>
+										<td class ="markings_legend legend" id="m_legend">
+											<h4>Legend</h4>
+										
+										</td>								
+									</tr>
+								</table>
+									
+							</td>						
+						</tr>							
+					</table>
+			</div>
+			
+			
+		</div>
+		<div name="authors" id="authors" class="page_info">
+		
+		
+			<h2><span>Authors</span></h2>
+			
+			<div class="authors_container">
+		
+				<div class="author_cont" id="author_1">
+				
+					<div class="supporter_pict"><img src="pics/ivo_pic.JPG"></div>
+					<div class="author_name">
+					
+					<h3>Ivo Kruusamägi</h3>
+					<p>Idea and project management</p>
+					
+					</div>
+					
+				</div>
+				
+				<div class="author_cont" id="author_2">
+				
+					<div class="supporter_pict"><img src="pics/kristjan_pic.JPG"></div>
+					<div class="author_name">
+					
+					<h3>Kristjan Tappel</h3>
+					<p>Full-stack developer</p>
+					
+					</div>
+				
+				</div>
+			</div>
+		
+		</div>
+		<div name="supporters" id="supporters" class="page_info">
+		
+			<h2><span>Supporters</span></h2>
+			
+			<div class='supporters_cont'>
+			
+				<div class="supporter_cont" id="supporter_1">
+				
+					<div class="supporter_pict"><img src="pics/UT_logo.png"></div>
+					<div class="supporter_name">
+					
+					<h3>University of Tartu</h3>
+					<p><a href="http://www.ut.ee/en" target="_blank" >www.ut.ee</a></p>
+					
+					</div>
+					
+				</div>
+				
+				<div class="supporter_cont" id="supporter_2">
+				
+					<div class="supporter_pict"><img src="pics/Wikimedia_Eesti_logo.png"></div>
+					<div class="supporter_name">
+					
+					<h3>Wikimedia Eesti</h3>
+					<p><a href="https://ee.wikimedia.org/wiki/Esileht" target="_black"> et.wikimedia.org</a></p>
+					
+					</div>
+				
+				</div>
+		
+			</div>
+			
+		<div name="contact" id="contact" class="page_info" style="margin-bottom:50px;">
+		
+			<h2><span>Contact us!</span></h2>
+		
+			<p>
+					If you have any recommendations, questions or you just want to show your support to 
+					this, then please contact program authors via this <a href='contact_us'>form.</a>
+				</p>
+		
+		</div>
+		
+		<script>
+		
+			var pieData_markings = [
+
+				{
+					value: 4275,
+					color: "LightGreen",
+					highlight: "#97CA97",
+					//label: "Light highlight"
+				},
+				{
+					value: 2711,
+					color: "Yellow",
+					highlight: "#e4e600",
+					//label: "Medium highlight"
+				},
+				{
+					value: 199,
+					color: "LightSalmon",
+					highlight: "#CC8062",
+					//label: "Strong highlight"
+				},
+				{
+					value: 352,
+					color: "Red",
+					highlight: "#FF7D7D",
+					//label: "Strike"
+				}
+
+			];
+			
+			var options_markings = {
+			
+				//Boolean - Whether we should show a stroke on each segment
+				segmentShowStroke : true,
+
+				//String - The colour of each segment stroke
+				segmentStrokeColor : "white",
+
+				//Number - The width of each segment stroke
+				segmentStrokeWidth : 2,
+
+				//Number - The percentage of the chart that we cut out of the middle
+				percentageInnerCutout : 0, // This is 0 for Pie charts
+
+				//Number - Amount of animation steps
+				animationSteps : 100,
+
+				//String - Animation easing effect
+				animationEasing : "easeOutBounce",
+
+				//Boolean - Whether we animate the rotation of the Doughnut
+				animateRotate : false,
+
+				//Boolean - Whether we animate scaling the Doughnut from the centre
+				animateScale : false,
+
+				//String - A legend template
+				legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+			
+				}		
+
+				//window.onload = function(){
+					var ctx = document.getElementById("chart-highlights").getContext("2d");
+					window.myPie = new Chart(ctx).Pie(pieData_markings, options_markings);
+					//console.log(window.myPie.generateLegend());
+					//$('.chart-highlights-legend').html(window.myPie.generateLegend());
+				//};	
+
+				var markings_legend = '';
+									
+				if (4275 != 0) {
+					markings_legend += '<p><span style="background-color: LightGreen; padding-left: 12px"></span>&nbsp&nbspLight highlight (4275)</p>';
+				}
+				
+				if (2711 != 0) {
+					markings_legend += '<p><span style="background-color: Yellow; padding-left: 12px"></span>&nbsp&nbspMedium highlight (2711)</p>';
+				}
+				if (199 != 0) {
+					markings_legend += '<p><span style="background-color: LightSalmon; padding-left: 12px"></span>&nbsp&nbspStrong highlight (199)</p>';
+				}										
+				if (352 != 0) {
+					markings_legend += '<p><span style="background-color: Red; padding-left: 12px"></span>&nbsp&nbspStrike  (352)</p>';
+				}
+							
+				markings_legend += '<p></br>All markings: '+ (4275 + 2711 + 199 + 352) +'</p>'
+				markings_legend += '<p>Commented markings: 7238</p>';
+				$('#m_legend').append(markings_legend);
+				
+				if ((4275 + 2711 + 199 + 352) == 0) {
+					$('.highlights_metadata>table').addClass('hide');
+				}		
+				
+		</script>
+		
+		<script>
+		
+			var pieData_languages = [
+
+				{
+					value: 236,
+					color: "#72BCD4",
+					highlight: "#ADD8E6",					
+				},
+				{
+					value: 22,
+					color: "Yellow",
+					highlight: "#e4e600",
+				},
+				{
+					value: 2,
+					color: "LightSalmon",
+					highlight: "#CC8062",
+				},
+				{
+					value: 2,
+					color: "Red",
+					highlight: "#FF7D7D",
+				},
+				{
+					value: 2,
+					color: "LightGreen",
+					highlight: "#97CA97",
+				},
+
+				{
+					value: 23,
+					color: "#cc9900",
+					highlight: "#b38600",
+				}				
+				
+			];			
+			var options_languages = {
+			
+				//Boolean - Whether we should show a stroke on each segment
+				segmentShowStroke : true,
+
+				//String - The colour of each segment stroke
+				segmentStrokeColor : "white",
+
+				//Number - The width of each segment stroke
+				segmentStrokeWidth : 2,
+
+				//Number - The percentage of the chart that we cut out of the middle
+				percentageInnerCutout : 0, // This is 0 for Pie charts
+
+				//Number - Amount of animation steps
+				animationSteps : 100,
+
+				//String - Animation easing effect
+				animationEasing : "easeOutBounce",
+
+				//Boolean - Whether we animate the rotation of the Doughnut
+				animateRotate : false,
+
+				//Boolean - Whether we animate scaling the Doughnut from the centre
+				animateScale : false,
+
+				//String - A legend template
+				legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+			
+				}		
+
+				var c_lang = document.getElementById("chart-languages").getContext("2d");
+				window.Pie_lang = new Chart(c_lang).Pie(pieData_languages, options_languages);
+
+				var lang_legend = '';
+									
+				if (236 != 0) {
+					lang_legend += '<p><span style="background-color: #72BCD4; padding-left: 12px"></span>&nbsp&nbspEstonian (236 articles)</p>';
+				}				
+				if (22 != 0) {
+					lang_legend += '<p><span style="background-color: Yellow; padding-left: 12px"></span>&nbsp&nbspEnglish (22 articles)</p>';
+				}
+				if (2 != 0) {
+					lang_legend += '<p><span style="background-color: LightSalmon; padding-left: 12px"></span>&nbsp&nbspEsperanto (2 articles)</p>';
+				}										
+				if (2 != 0) {
+					lang_legend += '<p><span style="background-color: Red; padding-left: 12px"></span>&nbsp&nbspSpanish  (2 articles)</p>';
+				}				
+				if (2 != 0) {
+					lang_legend += '<p><span style="background-color: LightGreen; padding-left: 12px"></span>&nbsp&nbspFinnish  (2 articles)</p>';
+				}
+				if (23 != 0) {
+					lang_legend += '<p><span style="background-color: #cc9900; padding-left: 12px"></span>&nbsp&nbspOther  (23 articles)</p>';
+				}	
+
+				lang_legend += '<p></br>All used languages: 18</p>'
+				$('#l_legend').append(lang_legend);
+				
+		</script>
+		
+		<script>
+		
+			var pieData_source = [
+
+				{
+					value: 277,
+					color: "#72BCD4",
+					highlight: "#ADD8E6",					
+				},
+				{
+					value: 12,
+					color: "Yellow",
+					highlight: "#e4e600",
+				},
+				{
+					value: 2,
+					color: "LightSalmon",
+					highlight: "#CC8062",
+				},
+				{
+					value: 1,
+					color: "Red",
+					highlight: "#FF7D7D",
+				},
+				{
+					value: 0,
+					color: "LightGreen",
+					highlight: "#97CA97",
+				},
+
+				{
+					value: 0,
+					color: "#cc9900",
+					highlight: "#b38600",
+				}
+
+			];			
+			var options_source = {
+			
+				//Boolean - Whether we should show a stroke on each segment
+				segmentShowStroke : true,
+
+				//String - The colour of each segment stroke
+				segmentStrokeColor : "white",
+
+				//Number - The width of each segment stroke
+				segmentStrokeWidth : 2,
+
+				//Number - The percentage of the chart that we cut out of the middle
+				percentageInnerCutout : 0, // This is 0 for Pie charts
+
+				//Number - Amount of animation steps
+				animationSteps : 100,
+
+				//String - Animation easing effect
+				animationEasing : "easeOutBounce",
+
+				//Boolean - Whether we animate the rotation of the Doughnut
+				animateRotate : false,
+
+				//Boolean - Whether we animate scaling the Doughnut from the centre
+				animateScale : false,
+
+				//String - A legend template
+				legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+			
+				}		
+
+				var c_source = document.getElementById("chart-source").getContext("2d");
+				window.Pie_source = new Chart(c_source).Pie(pieData_source, options_source);
+
+				var source_legend = '';
+									
+				if (277 != 0) {
+					source_legend += '<p><span style="background-color: #72BCD4; padding-left: 12px"></span>&nbsp&nbspWikipedia (277 articles)</p>';
+				}				
+				if (12 != 0) {
+					source_legend += '<p><span style="background-color: Yellow; padding-left: 12px"></span>&nbsp&nbspMeta (12 articles)</p>';
+				}
+				if (2 != 0) {
+					source_legend += '<p><span style="background-color: LightSalmon; padding-left: 12px"></span>&nbsp&nbspWikiquote (2 articles)</p>';
+				}										
+				if (1 != 0) {
+					source_legend += '<p><span style="background-color: Red; padding-left: 12px"></span>&nbsp&nbspWikiversity  (1 articles)</p>';
+				}				
+				if (0 != 0) {
+					source_legend += '<p><span style="background-color: LightGreen; padding-left: 12px"></span>&nbsp&nbsp  (0 articles)</p>';
+				}
+				if (0 != 0) {
+					source_legend += '<p><span style="background-color: #cc9900; padding-left: 12px"></span>&nbsp&nbspOthers  (0 articles)</p>';
+				}					
+
+				source_legend += '<p></br>All used projects: 4</p>'
+				$('#s_legend').append(source_legend);
+				
+		</script>			
+		
+		<div class="footer">
+			<div id="wikiComment">
+				<p id="logo_w">wiki<span><b>Comment</b></span></p>
+				<p id="alpha_logo_f">beta</p>
+			</div>
+		</div>
+		<img style="display:none;" src="pics/wlogo.png">
+		
+	</body>
+
+</html>
