@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Results extends StatelessWidget {
   const Results({Key? key, required this.result}) : super(key: key);
@@ -75,8 +76,68 @@ class Results extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return Container(
-          color: Colors.amber,
+        return SizedBox(
+          width: 200.0,
+          height: 100.0,
+          child: Shimmer.fromColors(
+            baseColor: Colors.blueGrey.shade100,
+            highlightColor: const Color.fromARGB(255, 230, 218, 220),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            height: 20.0,
+                            color: Colors.red,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 6.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 8.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 8.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2.0),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 8.0,
+                            color: Colors.white,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2.0),
+                          ),
+                          Container(
+                            width: 40.0,
+                            height: 8.0,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
         );
       },
     );
