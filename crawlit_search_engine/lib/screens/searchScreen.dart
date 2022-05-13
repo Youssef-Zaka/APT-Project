@@ -62,9 +62,15 @@ class _SearchScreenState extends State<SearchScreen> {
             cursorColor: Colors.red,
             cursorHeight: 20,
             decoration: InputDecoration(
-              suffixIcon: const Icon(
-                Icons.mic,
-                color: Color.fromARGB(255, 3, 81, 197),
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  //open Voice Search
+                  Navigator.popAndPushNamed(context, '/voice');
+                },
+                child: const Icon(
+                  Icons.mic,
+                  color: Color.fromARGB(255, 3, 81, 197),
+                ),
               ),
               hintText: Strings.search,
               focusedBorder: OutlineInputBorder(

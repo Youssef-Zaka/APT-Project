@@ -1,5 +1,6 @@
 import 'package:crawlit_search_engine/screens/homeScreen.dart';
 import 'package:crawlit_search_engine/screens/searchScreen.dart';
+import 'package:crawlit_search_engine/screens/voiceScreen.dart';
 import 'package:flutter/material.dart';
 import 'strings/string_en.dart';
 
@@ -19,9 +20,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
+        // '/': (context) => const HomeScreen(),
         '/': (context) => const HomeScreen(),
-        // When navigating to the "/second" route, build the SecondScreen widget.
         '/search': (context) => const SearchScreen(),
+        '/voice': (context) => const VoiceScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
