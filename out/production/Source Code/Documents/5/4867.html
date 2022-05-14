@@ -1,321 +1,3779 @@
 <!DOCTYPE html>
-<html lang="en-US">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="pingback" href="https://turkeyblocks.org/xmlrpc.php">
-<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<html lang="en">
+	<head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-58347753-2"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());		
+		  gtag('config', 'UA-58347753-2');
+		</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- This site is optimized with the Yoast SEO plugin v18.5.1 - https://yoast.com/wordpress/plugins/seo/ -->
-	<title>Methodology for detection and verification of internet mass-censorship incidents - Turkey Blocks</title>
-	<link rel="canonical" href="https://turkeyblocks.org/methodology/" />
-	<meta property="og:locale" content="en_US" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content="Methodology for detection and verification of internet mass-censorship incidents - Turkey Blocks" />
-	<meta property="og:description" content="The Turkey Blocks project combines best practices for forensic validation internet shutdown and digital interference reports, using both digital forensic analysis of network traffic via our Raspberry Pi IoT probe ..." />
-	<meta property="og:url" content="https://turkeyblocks.org/methodology/" />
-	<meta property="og:site_name" content="Turkey Blocks" />
-	<meta property="article:publisher" content="https://www.facebook.com/TurkeyBlocks" />
-	<meta property="article:modified_time" content="2017-02-22T01:12:06+00:00" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@TurkeyBlocks" />
-	<meta name="twitter:label1" content="Est. reading time" />
-	<meta name="twitter:data1" content="3 minutes" />
-	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://turkeyblocks.org/#website","url":"https://turkeyblocks.org/","name":"Turkey Blocks","description":"Mapping Internet Freedom in Real Time","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://turkeyblocks.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://turkeyblocks.org/methodology/#webpage","url":"https://turkeyblocks.org/methodology/","name":"Methodology for detection and verification of internet mass-censorship incidents - Turkey Blocks","isPartOf":{"@id":"https://turkeyblocks.org/#website"},"datePublished":"2016-11-12T02:21:28+00:00","dateModified":"2017-02-22T01:12:06+00:00","breadcrumb":{"@id":"https://turkeyblocks.org/methodology/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://turkeyblocks.org/methodology/"]}]},{"@type":"BreadcrumbList","@id":"https://turkeyblocks.org/methodology/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://turkeyblocks.org/"},{"@type":"ListItem","position":2,"name":"Methodology for detection and verification of internet mass-censorship incidents"}]}]}</script>
-	<!-- / Yoast SEO plugin. -->
+		<meta property="og:image" content="/book/67420/og_image.jpg" />
+		
+		
+		
+		
+		<title>Project MUSE - Ambiguous Relations</title>
+		<link rel="search" type="application/opensearchdescription+xml" title="Search Project MUSE from your browser's Searchbar" href="/plugins/muse-opensearch.xml" />
+		
+		
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css"/>
+		<link href="/css/jquery.qtip2.css" rel="stylesheet" type="text/css" />
+<!-- 		foundation 6.4.1 custom float/typ/vis 250rem max width 30col float grid -->
+		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,600i,700,700i" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/css/foundation.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/style_home2.css?031820"/>
+		
+		
+			<link href="/css/print.css" rel="stylesheet" type="text/css" media="print" />
+		
+		
+		
+		
 
-
-<link rel='dns-prefetch' href='//fonts.googleapis.com' />
-<link rel="alternate" type="application/rss+xml" title="Turkey Blocks &raquo; Feed" href="https://turkeyblocks.org/feed/" />
-<link rel='stylesheet' id='wp-block-library-css'  href='https://turkeyblocks.org/wp-includes/css/dist/block-library/style.min.css?ver=5.9.3' type='text/css' media='all' />
-<style id='global-styles-inline-css' type='text/css'>
-body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
-</style>
-<link rel='stylesheet' id='mashsb-styles-css'  href='https://turkeyblocks.org/wp-content/plugins/mashsharer/assets/css/mashsb.min.css?ver=3.3.5' type='text/css' media='all' />
-<style id='mashsb-styles-inline-css' type='text/css'>
-.mashsb-count {color:#cccccc;}@media only screen and (min-width:568px){.mashsb-buttons a {min-width: 177px;}}
-</style>
-<link rel='stylesheet' id='onepress-fonts-css'  href='https://fonts.googleapis.com/css?family=Raleway%3A400%2C500%2C600%2C700%2C300%2C100%2C800%2C900%7COpen+Sans%3A400%2C300%2C300italic%2C400italic%2C600%2C600italic%2C700%2C700italic&#038;subset=latin%2Clatin-ext&#038;ver=1.2.8' type='text/css' media='all' />
-<link rel='stylesheet' id='onepress-animate-css'  href='https://turkeyblocks.org/wp-content/themes/onepress/assets/css/animate.min.css?ver=1.2.8' type='text/css' media='all' />
-<link rel='stylesheet' id='onepress-fa-css'  href='https://turkeyblocks.org/wp-content/themes/onepress/assets/css/font-awesome.min.css?ver=1.2.8' type='text/css' media='all' />
-<link rel='stylesheet' id='onepress-bootstrap-css'  href='https://turkeyblocks.org/wp-content/themes/onepress/assets/css/bootstrap.min.css?ver=1.2.8' type='text/css' media='all' />
-<link rel='stylesheet' id='onepress-style-css'  href='https://turkeyblocks.org/wp-content/themes/onepress/style.css?ver=5.9.3' type='text/css' media='all' />
-<style id='onepress-style-inline-css' type='text/css'>
-#main .video-section section.hero-slideshow-wrapper{background:transparent}.hero-slideshow-wrapper:after{position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:rgba(0,0,0,0.44);display:block;content:""}.body-desktop .parallax-hero .hero-slideshow-wrapper:after{display:none!important}.parallax-hero .parallax-mirror:after{position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:rgba(0,0,0,0.44);display:block;content:""}.body-desktop .parallax-hero .hero-slideshow-wrapper:after{display:none!important}.parallax-hero .parallax-mirror:after{position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:rgba(0,0,0,0.44);display:block;content:""}.gallery-carousel .g-item{padding:0px 10px}.gallery-carousel{margin-left:-10px;margin-right:-10px}.gallery-grid .g-item,.gallery-masonry .g-item .inner{padding:10px}.gallery-grid,.gallery-masonry{margin:-10px}
-</style>
-<link rel='stylesheet' id='onepress-gallery-lightgallery-css'  href='https://turkeyblocks.org/wp-content/themes/onepress/assets/css/lightgallery.css?ver=5.9.3' type='text/css' media='all' />
-<script type='text/javascript' id='jquery-core-js-extra'>
-/* <![CDATA[ */
-var onepress_js_settings = {"onepress_disable_animation":"","onepress_disable_sticky_header":"","onepress_vertical_align_menu":"","hero_animation":"flipInX","hero_speed":"5000","is_home":"","gallery_enable":"1"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='https://turkeyblocks.org/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
-<script type='text/javascript' src='https://turkeyblocks.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
-<script type='text/javascript' id='mashsb-js-extra'>
-/* <![CDATA[ */
-var mashsb = {"shares":"0","round_shares":"1","animate_shares":"0","dynamic_buttons":"0","share_url":"https:\/\/turkeyblocks.org\/methodology\/","title":"Methodology+for+detection+and+verification+of+internet+mass-censorship+incidents","image":null,"desc":"The Turkey Blocks project combines best practices for forensic validation internet shutdown and digital interference reports, using both digital forensic analysis of network traffic via our Raspberry Pi IoT probe network\u00a0and traditional verification techniques.\r\n\r\nNo workflow \u2026","hashtag":"TurkeyBlocks","subscribe":"content","subscribe_url":"","activestatus":"1","singular":"1","twitter_popup":"1","refresh":"1"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='https://turkeyblocks.org/wp-content/plugins/mashsharer/assets/js/mashsb.min.js?ver=3.3.5' id='mashsb-js'></script>
-<link rel="https://api.w.org/" href="https://turkeyblocks.org/wp-json/" /><link rel="alternate" type="application/json" href="https://turkeyblocks.org/wp-json/wp/v2/pages/394" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://turkeyblocks.org/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://turkeyblocks.org/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress 5.9.3" />
-<link rel='shortlink' href='https://turkeyblocks.org/?p=394' />
-<link rel="alternate" type="application/json+oembed" href="https://turkeyblocks.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fturkeyblocks.org%2Fmethodology%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://turkeyblocks.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fturkeyblocks.org%2Fmethodology%2F&#038;format=xml" />
-<!-- start Simple Custom CSS and JS -->
-<style type="text/css">
-.nx-colophon ul {
-  list-style-type: none;
-}
-
-.nx-colophon li {
-  display: inline;
-  padding: 0 1em 0 0;
-}
-</style>
-<!-- end Simple Custom CSS and JS -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href='https://fonts.googleapis.com/css2?display=swap&family=Lora' rel='stylesheet'><link rel="icon" href="https://turkeyblocks.org/wp-content/uploads/sites/3/2017/02/cropped-tb-favicon-32x32.png" sizes="32x32" />
-<link rel="icon" href="https://turkeyblocks.org/wp-content/uploads/sites/3/2017/02/cropped-tb-favicon-192x192.png" sizes="192x192" />
-<link rel="apple-touch-icon" href="https://turkeyblocks.org/wp-content/uploads/sites/3/2017/02/cropped-tb-favicon-180x180.png" />
-<meta name="msapplication-TileImage" content="https://turkeyblocks.org/wp-content/uploads/sites/3/2017/02/cropped-tb-favicon-270x270.png" />
-<style id="sccss">/*
-.site-info { display: none; }
-*/
-.hero-large-text {
-    min-height: 4em;
-}
-
-.image-grid__image img {
-	margin: 1em;
-}
-
-.su-quote-style-default {
-    font-style: inherit !important;
-/*
-    font-family: "Times New Roman", times, serif;
-*/
-    font-size: 120%;
-}
-
-
-.su-quote-style-default strong {
-    font-size: 120%;
-  font-weight: inherit;
-}
-
-.su-quote-style-default .su-quote-cite {
-  /*
-  text-transform: uppercase;
-  */
-  font-weight: bold;
-}
-.su-quote-style-default .su-quote-cite a {
-    text-decoration: none !important;
-}</style>	<style id="egf-frontend-styles" type="text/css">
-		p {color: #000000;font-family: 'Lora', sans-serif;font-size: 16px;font-style: normal;font-weight: 400;line-height: 1.6;} article>div.entry-content {color: #000000;font-family: 'Lora', sans-serif;font-size: 16px;font-style: normal;font-weight: 400;line-height: 1.6;} h1 {} h2 {} h3 {} h4 {} h5 {} h6 {} 	</style>
-	</head>
-
-<body class="page-template-default page page-id-394 sticky-header">
-<div id="page" class="hfeed site">
-	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
-            <header id="masthead" class="site-header" role="banner">
-            <div class="container">
-                <div class="site-branding">
-                <div class="site-brand-inner no-logo-img has-title has-desc"><p class="site-title"><a class="site-text-logo" href="https://turkeyblocks.org/" rel="home">Turkey Blocks</a></p><p class="site-description">Mapping Internet Freedom in Real Time</p></div>                </div>
-                <!-- .site-branding -->
-
-                <div class="header-right-wrapper">
-                    <a href="#0" id="nav-toggle">Menu<span></span></a>
-                    <nav id="site-navigation" class="main-navigation" role="navigation">
-                        <ul class="onepress-menu">
-                            <li id="menu-item-171" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-171"><a href="https://turkeyblocks.org/about/">Organization</a></li>
-<li id="menu-item-404" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-394 current_page_item menu-item-404"><a href="https://turkeyblocks.org/methodology/" aria-current="page">Methodology</a></li>
-<li id="menu-item-206" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-206"><a href="https://turkeyblocks.org/press/">Press</a></li>
-<li id="menu-item-384" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-384"><a href="https://turkeyblocks.org/contact/">Contact</a></li>
-                        </ul>
-                    </nav>
-                    <!-- #site-navigation -->
-                </div>
-            </div>
-        </header><!-- #masthead -->
-        
-	<div id="content" class="site-content">
-
-		<div class="page-header">
-			<div class="container">
-				<h1 class="entry-title">Methodology for detection and verification of internet mass-censorship incidents</h1>			</div>
-		</div>
+		<script type="text/javascript" src="/js/jquery3.js"></script>		
+		<script type="text/javascript" src="/js/pre.js"></script>
+		<script type="text/javascript" src="/js/core/head.js?new"></script>
+		
+		<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ecb5479089cb81a"></script>
 
 		
-		<div id="content-inside" class="container right-sidebar">
-			<div id="primary" class="content-area">
-				<main id="main" class="site-main" role="main">
-
-					
-						
-<article id="post-394" class="post-394 page type-page status-publish hentry">
-	<header class="entry-header">
-			</header><!-- .entry-header -->
-
-	<div class="entry-content">
-		<p>The Turkey Blocks project combines best practices for forensic validation internet shutdown and digital interference reports, using both digital forensic analysis of network traffic via our <a href="https://turkeyblocks.org/about/">Raspberry Pi IoT probe network</a> and traditional verification techniques.</p>
-<p>No workflow for validating digital censorship reports is perfect, hence we aim to draw on multiple sources to corroborate, or refute reports rapidly in the minutes and hours following alleged instances of internet mass-censorship or other forms of digital interference that may impact freedom of expression, the right to be informed, the right to a private life, or that might otherwise affect Turkey&#8217;s digital economy or international relations.</p>
-<p>Turkey Blocks aims to develop a new gold standard for network monitoring of digital interference that can be adopted in the wider region and globally in coming years.</p>
-<h2>Censorship verification methodology</h2>
-<p>Our <strong>probe network</strong> is at the core of Turkey Blocks&#8217; incident detection and monitoring methodology. A number of embedded computers (presently Raspberry Pi, for endpoint nodes and Intel NUC for control nodes) continuously monitor connectivity and report back on potential network issues. Aggregating this data gives a good idea of internet users&#8217; experience of shutdowns, particularly of network throttling that is difficult or impossible to detect via remote scanning alone. Probes are our foremost means of rapid detection of emerging incidents.</p>
-<blockquote class="twitter-tweet" data-width="550">
-<p lang="en" dir="ltr">Confirmed: Twitter, Facebook &amp; YouTube blocked in <a href="https://twitter.com/hashtag/Turkey?src=hash">#Turkey</a> at 10:50PM after apparent military uprising in <a href="https://twitter.com/hashtag/Turkey?src=hash">#Turkey</a> <a href="https://t.co/J9ER5yOGYP">pic.twitter.com/J9ER5yOGYP</a></p>
-<p>&mdash; Turkey Blocks (@TurkeyBlocks) <a href="https://twitter.com/TurkeyBlocks/status/754043966547431424">July 15, 2016</a></p></blockquote>
-<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-<p>Network probes can also securely return data dumps for <strong>network packet capture forensic analysis</strong>, which can be submitted for further analysis to validate contentious incidents and give insights into the technical implementation of blocks. Early work has been undertaken to build a publicly accessible packet capture archive for information security analysts to peruse, although the effort is on hold pending data privacy work.</p>
-<blockquote class="twitter-tweet" data-width="550">
-<p lang="en" dir="ltr">PCAP or it didn&#39;t happen? Our packet dump from Sunday shows Twitter slowdown<a href="https://t.co/dwN0pTnLJN">https://t.co/dwN0pTnLJN</a> cc <a href="https://twitter.com/ncweaver">@ncweaver</a> <a href="http://t.co/8kLp1W4NgP">pic.twitter.com/8kLp1W4NgP</a></p>
-<p>&mdash; Turkey Blocks (@TurkeyBlocks) <a href="https://twitter.com/TurkeyBlocks/status/654778003751219200">October 15, 2015</a></p></blockquote>
-<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-<p>Probe results are complemented by remote <strong>network scanning</strong>, performing reachability analysis including wide network scans and BGP route mapping. Although resource intensive, network scans can help pinpoint full internet shutdowns where probe coverage is limited. More recently, we have explored methods for deriving estimations of the impact, in terms of numbers of users disconnected during regional shutdowns.</p>
-<blockquote class="twitter-tweet" data-width="550">
-<p lang="en" dir="ltr">New internet shutdown in southeast <a href="https://twitter.com/hashtag/Turkey?src=hash">#Turkey</a>: 8% of country&#39;s IP network offline in 3rd day of <a href="https://twitter.com/hashtag/Diyarbakir?src=hash">#Diyarbakir</a> unrest<a href="https://t.co/2L2UOE3drI">https://t.co/2L2UOE3drI</a></p>
-<p>&mdash; Turkey Blocks (@TurkeyBlocks) <a href="https://twitter.com/TurkeyBlocks/status/791509138220212224">October 27, 2016</a></p></blockquote>
-<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-<p>In addition to active monitoring, Turkey Blocks has occasionally drawn on <strong>passive network log sources</strong>, namely visitor logs (hit counts) in collaboration with popular websites. This method is now less-used, as we&#8217;ve found it difficult to derive statistically significant results from this data source in contrast with other techniques.</p>
-<p>Digital monitoring is complemented with more traditional <strong>journalistic verification and fact-checking</strong> to corroborate blackouts and their impact on the ground. The Turkey Blocks response team aims to contact individuals affected by shutdowns to gain a wider perspective and to reduce confirmation bias potentially arising from purely digital network readings. Local knowledge is important in building up reliable reports and understanding how internet restrictions relate to ongoing political developments or security threats.</p>
-<blockquote class="twitter-tweet" data-width="550">
-<p lang="en" dir="ltr">In depth: pharmacies, medical supply &amp; infrastructure crippled in 6th day of southeast <a href="https://twitter.com/hashtag/Turkey?src=hash">#Turkey</a> internet shutdowns<a href="https://t.co/CKk59wCoUu">https://t.co/CKk59wCoUu</a></p>
-<p>&mdash; Turkey Blocks (@TurkeyBlocks) <a href="https://twitter.com/TurkeyBlocks/status/793071956853678080">October 31, 2016</a></p></blockquote>
-<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-<p>We also review the <strong>legal framework</strong> sometimes used to justify digital interference, studying sources like Turkey&#8217;s <a href="https://en.wikipedia.org/wiki/T.C._Resmi_Gazete">Resmi Gazete</a> to understand and report on changes to legislation and proposed constitutional amendments that might impact the lawfulness and implementation internet shutdowns in Turkey.</p>
-<blockquote class="twitter-tweet" data-width="550">
-<p lang="en" dir="ltr">Could <a href="https://twitter.com/hashtag/Turkey?src=hash">#Turkey</a>&#39;s new wartime net killswitch amendment explain mystery social media blackout?<a href="https://t.co/ZpJ6jixhsB">https://t.co/ZpJ6jixhsB</a> <a href="https://t.co/W2NcY2twlU">pic.twitter.com/W2NcY2twlU</a></p>
-<p>&mdash; Turkey Blocks (@TurkeyBlocks) <a href="https://twitter.com/TurkeyBlocks/status/769018659004149760">August 26, 2016</a></p></blockquote>
-<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-<p>Beyond verification, the Turkey Blocks project occasionally <strong>debunks misreporting of censorship incidents</strong> or false-positive reports spreading through social media, such as outages affecting wider regions or global networks, or which carry indications of network failure, overload, DDoS or cyber-attack rather than intentional interference.</p>
-<blockquote class="twitter-tweet" data-width="550">
-<p lang="en" dir="ltr">Twitter, Spotify, Netflix and others are experiencing slowdowns globally due to cyber attack; no indication of a <a href="https://twitter.com/hashtag/Turkey?src=hash">#Turkey</a>-specific block <a href="https://t.co/8KvRheNd8x">pic.twitter.com/8KvRheNd8x</a></p>
-<p>&mdash; Turkey Blocks (@TurkeyBlocks) <a href="https://twitter.com/TurkeyBlocks/status/789505642327318528">October 21, 2016</a></p></blockquote>
-<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-<p>Refinement and independent validation of our techniques will always be an ongoing process &#8211; Turkey Blocks started out as a digital journalism project focusing on social media throttling that has since grown to develop novel technical means and workflows for detection network interference affecting large numbers of internet users.</p>
-			</div><!-- .entry-content -->
-</article><!-- #post-## -->
-
-
-						
-					
-				</main><!-- #main -->
-			</div><!-- #primary -->
-
+		
+		
+		<title>Article</title>
+	</head>
+	<body>
+		
+  	
+     
+    <a id="skip_to_content" class="skip_link" href="#skip_target">[Skip to Content]</a>
+		
+		<span id="top" role="none"></span>
+		<div id="header" role="banner" aria-label="header">
+			<div class="row wrap" id="institution_banner">
+				<div class="content">
+					<div id="institution_wrap" class="columns small-15 medium-text-left">
+						<div id="institution" class="img_text_col">
+							<div class="img_contain_left"><img src="/images/institution.png" alt="institution icon" /></div>
+							<div class="text_contain_left"><span class="small"><a href='/account' class='color_white login_status'>Institutional Login</a></span></div>
+						</div>
+					</div>
+					<div id="person_wrap" class="columns small-15">
+						<div id="person" class="img_text_col">
+							<div class="img_contain_right"><img src="/images/person.png" alt="account icon" /></div>
+							<div class="text_contain_right"><span class="small"><a href="/account/" class="color_white login_status" onclick="gtag('event', 'click', {'event_category': 'Account link', 'event_label': 'account name link - header'});"><span class="login_statement_unauthenticated">LOG IN</span></a></span></div>
+						</div>
+						<div id="btn_accessibility" class="small">
+  						<a href="/account/user_settings">
+    						<img src="/images/icon_accessibility.png" alt="accessibility icon" />
+    						<span class="small">Accessibility</span>
+    				  </a>
+						</div>
+					</div>
+				</div>
+			</div>
 			
-<div id="secondary" class="widget-area sidebar" role="complementary">
-	<aside id="text-2" class="widget widget_text">			<div class="textwidget"><a class="twitter-timeline" href="https://twitter.com/TurkeyBlocks">Tweets by TurkeyBlocks</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div>
-		</aside><aside id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://turkeyblocks.org/">
-				<label>
-					<span class="screen-reader-text">Search for:</span>
-					<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
-				</label>
-				<input type="submit" class="search-submit" value="Search" />
-			</form></aside>
-		<aside id="recent-posts-2" class="widget widget_recent_entries">
-		<h2 class="widget-title">Recent Posts</h2>
-		<ul>
-											<li>
-					<a href="https://turkeyblocks.org/2019/03/18/nos-netherlands-unblocked-in-turkey/">Dutch Broadcast Foundation NOS unblocked in Turkey</a>
-									</li>
-											<li>
-					<a href="https://turkeyblocks.org/2018/08/10/periscope-blocked-in-turkey-football-streaming/">Periscope streaming service blocked in Turkey as football match gets under way</a>
-									</li>
-											<li>
-					<a href="https://turkeyblocks.org/2018/08/04/turkey-to-block-twitter-periscope-live-streaming-service-during-super-league-football-matches/">Turkey to block Twitter Periscope live streaming service during super league football matches</a>
-									</li>
-											<li>
-					<a href="https://turkeyblocks.org/2018/07/25/blogspot-blocked-in-turkey/">Blogspot blocked in Turkey</a>
-									</li>
-											<li>
-					<a href="https://turkeyblocks.org/2018/06/24/turkey-blocks-monitors-internet-for-censorship-blackouts-during-june-2018-elections/">Turkey Blocks monitors internet for censorship, blackouts during June 2018 elections</a>
-									</li>
-					</ul>
+			
+			
+			<div class="row wrap" id="search_banner">
+				<div class="content">
+					<div class="medium-4 small-4 columns" id="header_logo_wrap">
+						<div id="header_logo">
+							<a href="/"><img src="/images/muselogo.png" alt="Project MUSE" class="show-for-large"/>
+							<img src="/images/muselogo_notext.png" alt="Project MUSE" class="hide-for-large"/></a>							
+						</div>
+					</div>
+					<div class="medium-23 small-22 columns" id="search_bar_wrap">				
+						<div class="row"> 
+							<div id="browse_button_wrap">
+								<a id="browse_button" href="/browse" onclick="gtag('event', 'click', {'event_category': 'Browse link', 'event_label': 'browse button - header'});"><span class="small">Browse</span></a>
+							</div>
+							<div id="or_text_wrap" class="show-for-medium">
+								<div id="or_text">
+									<span>OR</span> 
+								</div>
+							</div>
+							<div id="search_input_wrap" class="small-30">
+								<div id="search_input">
+  								
+  								<noscript>
+										<form method="post" action="/search/">
+                    <label for="nojs_search_input_header" class="hide">Search:</label>
+										<input name="no_js_header_query" id="nojs_search_input_header">
+										<input type="hidden" name="action" value="search">
+										<input type="hidden" name="t" value="header">
+										<button id="search_button">
+										<input type="image" src="/images/search_blue.png" alt="Search icon">										
+                    </button>
+										</form>
+									</noscript>
+								
+									<script>document.write('<label for="search_input_header" class="hide">Search:</label><input placeholder="Search..." name="search_input_header" id="search_input_header" aria-label="search input"><button type="button" id="search_button"><img src="/images/search_blue.png" alt="Search icon"/></button>');</script>																		
+								</div>
+							</div>
+						</div>				
+					</div>
+				
+					<div class="medium-3 small-3 columns" id="menu_wrap">
+						<div id="menu" class="menu-btn">
+	<div class="nav-toggle">
+		<div role="button" class="nav-toggle-btn" tabindex="0" aria-expanded="false">
+			<div role="presentation" class="menu-icon-wrap">
+			  <span role="presentation" class="small">menu</span>
+				<span role="presentation" class="icon"></span>
+			</div>
+		</div>
+		<div class="nav-mobile">
+			<a href="/search">Advanced Search</a>
+			<a href="/browse">Browse</a>
+			<div>
+				<a href="/account" class="acc_trig open"><span>MyMUSE Account</span></a>
+				<div class="acc_block">
+					<a href="/account">Log In / Sign Up</a>
+					<a href="/account/change">Change My Account</a>
+					<a href="/account/user_settings">User Settings</a>
+					<a href="/account/">Access via Institution</a>
+					<a href="/account/saved_items">MyMUSE Library</a>
+					<a href="/account/search_history">Search History</a>
+					<a href="/account/view_history">View History</a>
+					<a href="/account/purchase_history">Purchase History</a>
+					<a href="/account/alerts">MyMUSE Alerts</a>
+																
+				</div>
+			</div>									
+			<div class="nav-mobile-footer">
+				<a href="/contact">Contact Support</a>
+			</div>
+		</div>
+	</div>
+</div>
+		
+ 
+					</div>
+				</div>
+			</div>
+			
+			
+			
+		</div>
 
-		</aside><aside id="archives-2" class="widget widget_archive"><h2 class="widget-title">Archives</h2>
-			<ul>
-					<li><a href='https://turkeyblocks.org/2019/03/'>March 2019</a></li>
-	<li><a href='https://turkeyblocks.org/2018/08/'>August 2018</a></li>
-	<li><a href='https://turkeyblocks.org/2018/07/'>July 2018</a></li>
-	<li><a href='https://turkeyblocks.org/2018/06/'>June 2018</a></li>
-	<li><a href='https://turkeyblocks.org/2018/05/'>May 2018</a></li>
-	<li><a href='https://turkeyblocks.org/2018/04/'>April 2018</a></li>
-	<li><a href='https://turkeyblocks.org/2017/10/'>October 2017</a></li>
-	<li><a href='https://turkeyblocks.org/2017/07/'>July 2017</a></li>
-	<li><a href='https://turkeyblocks.org/2017/06/'>June 2017</a></li>
-	<li><a href='https://turkeyblocks.org/2017/04/'>April 2017</a></li>
-	<li><a href='https://turkeyblocks.org/2017/03/'>March 2017</a></li>
-	<li><a href='https://turkeyblocks.org/2017/01/'>January 2017</a></li>
-	<li><a href='https://turkeyblocks.org/2016/12/'>December 2016</a></li>
-	<li><a href='https://turkeyblocks.org/2016/11/'>November 2016</a></li>
-	<li><a href='https://turkeyblocks.org/2016/10/'>October 2016</a></li>
-	<li><a href='https://turkeyblocks.org/2016/09/'>September 2016</a></li>
-	<li><a href='https://turkeyblocks.org/2016/08/'>August 2016</a></li>
-			</ul>
 
-			</aside><aside id="categories-2" class="widget widget_categories"><h2 class="widget-title">Categories</h2>
-			<ul>
-					<li class="cat-item cat-item-4"><a href="https://turkeyblocks.org/category/incident-report/">Incident Report</a>
-</li>
-	<li class="cat-item cat-item-9"><a href="https://turkeyblocks.org/category/industry/">Industry</a>
-</li>
-	<li class="cat-item cat-item-11"><a href="https://turkeyblocks.org/category/news/">News</a>
-</li>
-	<li class="cat-item cat-item-10"><a href="https://turkeyblocks.org/category/press-release/">Press Release</a>
-</li>
-	<li class="cat-item cat-item-8"><a href="https://turkeyblocks.org/category/technical-analysis/">Technical Analysis</a>
-</li>
-			</ul>
 
-			</aside></div><!-- #secondary -->
 
-		</div><!--#content-inside -->
-	</div><!-- #content -->
 
-    <footer id="colophon" class="site-footer" role="contentinfo">
-                    <div class="footer-connect">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-2"></div>
-                        
-                        <div class="col-sm-8">
-                                                            <div class="footer-social">
-                                    <h5 class="follow-heading">Keep Updated</h5><div class="footer-social-icons"><a target="_blank" href="https://twitter.com/TurkeyBlocks" title="Twitter"><i class="fa fa-twitter"></i></a><a target="_blank" href="https://www.facebook.com/TurkeyBlocks" title="Facebook"><i class="fa fa-facebook"></i></a></div>                                </div>
-                                                    </div>
-                        <div class="col-sm-2"></div>
-                    </div>
-                </div>
-            </div>
-        
-        <div class="site-info">
-            <div class="container">
-                                    <div class="btt">
-                        <a class="back-top-top" href="#page" title="Back To Top"><i class="fa fa-angle-double-up wow flash" data-wow-duration="2s"></i></a>
-                    </div>
-                                
 
-<div class="nx-colophon"><ul id="menu-footer" class="menu"><li id="menu-item-1350" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-1350"><a href="https://turkeyblocks.org/data-usage-policy-2/">Data Usage Policy</a></li>
-<li id="menu-item-1344" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1344"><a href="https://turkeyblocks.org/code-of-conduct/">Conduct</a></li>
-<li id="menu-item-1351" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1351"><a href="https://turkeyblocks.org/contact/">Contact</a></li>
-</ul></div>
-		Turkey Blocks is a trademark of platform founder Alp Toker. NETBLOCKS&reg; is a registered trademark of <a href="https://netblocks.org">Netblocks Ltd</a>. Copyright &copy; All rights reserved.
+  
+<script type="text/javascript">
+  $(document).ready(function() {
+    var window_w = $(window).width();
+    var img_w = "";
+    var img_h = "";
+    var opt_w = img_w;
+    var opt_h = img_h;    
+    var ratio = 1;
+    if(img_w >= window_w) { 
+      opt_w = window_w - 60; 
+      ratio = opt_w/img_w;
+    }    
+    opt_h = ratio*img_h;
+    $('#book_cover_thumb').qtip({
+      content: {
+        text: "<div class='qtip-cover'><p><a href='/book/67420/image/front_cover.jpg'>View Full Resolution</a></p><img height='"+opt_h+"' width='"+opt_w+"' src='/book/67420/image/front_cover.jpg' /> </div>",
+        title: {
+          text: 'Cover for Ambiguous Relations',
+          button: 'Close'
+        }, 
+      },
+      show: 'click',
+      hide: false,
+      position: {
+        my: 'top left',
+        at: 'top left',
+        target: $('.content')
+      },
+      style: {
+        classes: 'ui-tooltip-dark ui-tooltip-rounded ui-tooltip-shadow qtip-bookcover'
+      },
+      hide: 'unfocus'      
+    });
+  });
+</script>
+ 
+
+<div id="main">
+			
+	<div id="book_about_wrap" class="about_wrap">
+		<div id="book_banner_wrap" class="banner_wrap">
+			<div class="content" style="background-color:rgb(153,51,51);background:linear-gradient(to right, rgb(0,0,0),rgb(153,51,51) 100%); filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#000000', endColorstr='#993333');">
 	
-	            </div>
-        </div>
-        <!-- .site-info -->
+				<div id="book_banner_title_wrap" class="wrap left banner_title_wrap">
+					<div id="book_banner_title" class="banner_title">
+						<h1>Ambiguous Relations: The American Jewish Community and Germany Since 1945</h1>
+					</div>
+				</div>
+				<div id="book_banner_search_wrap" class="wrap banner_search_wrap">
+					<div id="book_banner_search" role="search" aria-label="search inside this book">
+						<div>
+							<!-- nojs variant -->
+							<noscript>
+							  <form method="post" action="/search/" aria-label="search within this book text input" title="search within this book text input">
+								<input type="text" name="no_js_header_query" aria-label="search within this book text input" placeholder="Search Within Book"/>
+								<input type="hidden" name="action" value="search" />
+								<input type="hidden" name="t" value="search_book_header" />
+								<input type="hidden" name="search_within_book_id" id="search_within_book_id" value="67420" />
+								<a id="search_within_book_button">
+								  
+									<input type="image" alt="a magnifying glass search icon" src="/images/search_blue.png" aria-label="submit search"/>
+								  
+								</a>
+							  </form>
+							</noscript>
+  
+							<!-- js variant -->
+							<script>
+							  // hook for js, book limiter
+							  document.write('<input type="hidden" name="search_within_book_id" id="search_within_book_id" value="67420" />');
+							  // text input
+							  document.write('<input type="text" name="search_within_book_input" id="search_within_book_input" title="search within book" aria-label="search within book" placeholder="Search Within Book"/>');
+							</script>
+							
+							<script>
+							  // light mode button
+							  document.write('<a id="search_within_book_button"><img src="/images/search_blue.png" alt="a magnifying glass search icon"/></a>');
+							</script>
+							
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="book_about" class="wrap about">
+		
+			<script>
+				var html = '<div id="share_block">'+
+				'<div id="share_block_text">'+
+				'<div class="social">'+
+				'<ul class="addthis_toolbox addthis_default_style rightnav_links_share" addthis:url="https://muse.jhu.edu/book/67420" addthis:title="'+
+				"Project MUSE - Ambiguous Relations: The American Jewish Community and Germany Since 1945"+
+				'">'+
+				'<li><a class="addthis_button_facebook addthis_24x24_style"></a>'+
+				'<a class="addthis_button_delicious addthis_24x24_style"></a>'+
+				'<a class="addthis_button_twitter addthis_24x24_style" tw:screen_name="ProjectMUSE"></a>'+
+				'<a class="addthis_button_google addthis_24x24_style"></a>'+
+				'<a href="http://www.addthis.com/bookmark.php?v=250&amp;pubid=xa-4ecac55a1fd58a05" tabindex="-1" class="addthis_button_compact addthis_24x24_style"></a></li>'+
+				''+
+				'</div>'+
+				'</div>'+
+				'</div>';
+				document.write(html);
+			</script>
+			<div class="title_wrap">
+				<h2>In this Book</h2>
+			</div>
+			<div id="book_about_info_wrap" class="about_info_wrap">
+				<div id="book_about_info" class="cards_wrap about_info">
+					<div class="card">
+						<div class="card_image">
+							
+							<img src="/book/67420/image/front_cover.jpg?format=180" alt="Ambiguous Relations" id="book_cover_thumb" />
+							
+							<div style="text-align: center; padding-top: 10px; font-size: 15px;">
+								<a href="#info_wrap">Additional Information</a>
+							</div>
+							
+						</div>
+						<div class="card_text ">
+							<ul>
+								<li class="title"><span>Ambiguous Relations: The American Jewish Community and Germany Since 1945</span></li>
+								
+								
+								<li class="author">
+								
+								  
+								  
+									
+									<a href="/search?action=search&query=author:%22Shlomo  Shafir%22">Shlomo  Shafir</a>
+								  
+								
+								</li>
+								
+								<li class="date">2018</li>
+								<li class="type"><span class="book">Book</span></li>
 
-    </footer><!-- #colophon -->
-</div><!-- #page -->
+								<!-- Publisher Object In Use --><li class="pub"><span>Published by: <a href="/search?action=browse&limit=publisher_id:27">Wayne State University Press</a></span></li>
 
-<script type='text/javascript' src='https://turkeyblocks.org/wp-content/themes/onepress/assets/js/plugins.js?ver=1.2.8' id='onepress-js-plugins-js'></script>
-<script type='text/javascript' src='https://turkeyblocks.org/wp-content/themes/onepress/assets/js/bootstrap.min.js?ver=1.2.8' id='onepress-js-bootstrap-js'></script>
-<script type='text/javascript' src='https://turkeyblocks.org/wp-content/themes/onepress/assets/js/lightgallery.js?ver=1.2.8' id='onepress-gallery-lightgallery-js'></script>
-<script type='text/javascript' src='https://turkeyblocks.org/wp-content/themes/onepress/assets/js/theme.js?ver=1.2.8' id='onepress-theme-js'></script>
+								
+								<li>
+								
+								
+								<div class="content_action">
 
-</body>
+<span class="content_access_icon">
+
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="">
+
+	
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="book:67420"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/book:67420/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+    <li class="view_citation">
+    <a href="/view_citations?type=book&id=67420">View Citation</a>
+    </li>
+
+
+
+
+</ul>
+  <a href="/book/067420" style="display:none" tabindex="-1">contents</a>
+</div>
+
+								
+								
+								
+								</li>
+								
+								
+								
+								
+									<li class="cc_wrap">
+
+
+
+<div class="cc-image"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
+</div>
+<div class="cc-text">
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+</div>
+
+
+</li>
+								
+								
+
+
+							</ul>
+							
+							
+							
+							
+						</div>
+						
+						<div class="card_summary_wrap">
+							<div class="card_summary_title">
+								<span class="small title">summary</span>
+							</div>
+							<div class="card_summary no_border">The reemergence of a united Germany as a dominant power in Europe has increased even more it's importance as a major political ally and trade partner of the United States, despite the misgivings of some U.S. citizens.  Ambiguous Relations addresses for the first time the complex relationships between American Jews and Germany over the fifty years following the end of World War II, and examines American Jewry's' ambiguous attitude toward Germany that continues despite sociological and generational changes within the community.Shlomo Shafir recounts attempts by American Jews to influence U.S. policy toward Germany after the ware and traces these efforts through President Reagan's infamous visit to Bitburg and beyond. He shows how Jewish demands for justice were hampered not only by America's changing attitude toward West Germany as a postwar European power but also by the distraction of anti-communist hysteria in this country.In evaluating the impact of Jewish pressure on American public opinion and on the West German government, Shafir discusses the rationales and strategies of Jewish communal and religious groups, legislators, and intellectuals, as well as the rise of Holocaust consciousness and the roles of Israel and surviving German Jewish communities.  He also describes the efforts of German diplomats to assuage American Jewish hostility and relates how the American Jewish community has been able to influence German soul-searching regarding their historical responsibility and even successfully intervened to bring war criminals to trial.Based on extensive archival research in Germany, Israel, and the Unities States, Ambiguous Relations in the first book to examine this tenuous situation in such depth.  It is a comprehensive account of recent history that comes to groups with emotional and political reality.</div>
+							
+							
+							
+							
+							
+						</div>
+						
+
+
+						
+
+						
+					</div>
+				</div>
+				
+				
+				<div class="row">
+<!-- 					<div id="available_items_list_wrap" class="columns full small-30 large-20"> -->
+					<div id="available_items_list_wrap" class="columns full small-30">
+					<div id="book_about_content_select" class="about_content_select">
+						<div class="toc_header_wrap">
+							<div class="option" id="book_available">
+								<h2>Table of Contents</h2>
+							</div>
+						</div>
+
+					<div id="available_items_list_text" class="toc">					
+						<div class="cards_wrap row vertical_list">
+            
+						
+						
+						
+
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374054">Cover</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374054">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374054/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374054"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374054/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374054" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374055">Half-Title Page</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374055">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374055/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374055"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374055/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374055" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374056">Title Page</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374056">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374056/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374056"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374056/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374056" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374057">Copyright</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374057">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374057/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374057"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374057/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374057" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374058">Dedication</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374058">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374058/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374058"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374058/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374058" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374059">Contents</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374059">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374059/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374059"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374059/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374059" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374060">Preface</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374060">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374060/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374060"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374060/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374060" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374061">Acknowledgments</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374061">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374061/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374061"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374061/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374061" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+										<li class="title"><span>PART I. Early Postwar Concerns</span></li>
+										
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374063">1. American Jews and the German Problem Until the End of the War</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374063">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374063/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374063"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374063/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374063" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374064">2. Morgenthau’s Plan, Supporters, and Opponents</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374064">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374064/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374064"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374064/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374064" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374065">3. Safeguarding the Survivors and Refugees</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374065">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374065/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374065"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374065/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374065" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374066">4. Denazification and the Major War Crimes Trials</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374066">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374066/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374066"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374066/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374066" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+										<li class="title"><span>PART II. Getting Involved or Staying Aloof</span></li>
+										
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374068">5. Advocates of Moderation</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374068">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374068/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374068"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374068/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374068" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374069">6. Critics and Opponents</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374069">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374069/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374069"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374069/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374069" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374070">7. Anti-German Protests at Home</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374070">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374070/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374070"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374070/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374070" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374071">8. Waiting in Vain for a German Change of Heart</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374071">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374071/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374071"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374071/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374071" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+										<li class="title"><span>PART III. Reparations: Their Impact and Limits</span></li>
+										
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374073">9. The Twisted Road Toward Shilumim</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374073">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374073/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374073"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374073/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374073" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374074">10. German Diplomats: The Initial Efforts to Soften American Jewish Hostility</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374074">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374074/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374074"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374074/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374074" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374075">11. Antisemitic Manifestations and Their Abatement</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374075">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374075/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374075"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374075/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374075" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+										<li class="title"><span>PART IV. Holocaust Consciousness and the Role of Israel</span></li>
+										
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374077">12. The Eichmann Trial and the Quest for Punishment of Nazi Criminals</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374077">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374077/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374077"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374077/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374077" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374078">13. Changing Circumstances and Futile Dialogues</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374078">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374078/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374078"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374078/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374078" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374079">14. Disappointment with the Social Democrats</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374079">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374079/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374079"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374079/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374079" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374080">15. The Growth of Holocaust Consciousness and Its Impact on American Jewish–German Relations</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374080">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374080/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374080"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374080/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374080" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374081">16. Bitburg and Its Repercussions</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374081">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374081/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374081"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374081/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374081" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+										<li class="title"><span>PART V. American Jews and East Germany</span></li>
+										
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374083">17. From Grotewohl to de Maizière</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374083">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374083/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374083"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374083/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374083" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+										<li class="title"><span>PART VI. Unification and Beyond</span></li>
+										
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374085">18. Expectations and Question Marks</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374085">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374085/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374085"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374085/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374085" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" style="margin-left:30px;">
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374086">19. An Ambiguous Balance</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374086">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374086/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374086"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374086/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374086" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374087">Abbreviations</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374087">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374087/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374087"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374087/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374087" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374088">Notes</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374088">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374088/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374088"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374088/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374088" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374089">Bibliography</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374089">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374089/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374089"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374089/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374089" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374090">Index</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374090">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374090/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374090"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374090/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374090" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+								
+								 
+								
+								<div class="card row small-30 no_image" >
+									<div class="card_text">
+										<ol>
+										
+											<li class="title"><span><a href="/chapter/2374091">Illustrations</a></span></li>
+																						
+											
+											
+											
+
+
+
+											<li class="interact">
+				<span>
+				
+				
+				
+				
+				<div class="content_action">
+
+<span class="content_access_icon">
+<img src="/images/access/open_access.png" alt="open access"/>
+</span>
+
+<ul class="action_btns">
+
+
+
+<li>
+<a href="/chapter/2374091">
+
+	<img src="/images/html_icon.png" class="icon" alt="View HTML">
+
+	<span class="link_text">
+	View
+	</span>
+	</a>
+</li>
+
+
+
+
+<li>
+  <a href="/chapter/2374091/pdf">
+  <img src="/images/pdf.png" alt="Download PDF" class="icon">
+  <span class="link_text">
+	  
+	</span>
+	</a>
+</li>
+
+
+
+
+	
+	<li>
+		
+			<script>
+				document.write('<span class="save_content link_text" id="chapter:2374091"><a tabindex="0">Save</a></span>');
+			</script>
+			<noscript>
+				<span class="link_text"><a class="save_content" href="/account/save/chapter:2374091/non_js">Save</a></span>
+			</noscript>
+		
+	</li>
+	
+
+
+
+
+
+
+</ul>
+  <a href="/chapter/02374091" style="display:none" tabindex="-1">contents</a>
+</div>
+
+				
+				
+				
+				
+				</span>
+				
+				</li>
+
+
+										
+										</ol>
+									</div>
+								</div>
+							
+					
+						</div>
+
+					
+					
+					
+					</div>
+				</div>
+<!-- rightnav here -->
+				</div>
+			</div>
+		
+		</div>
+	</div>
+	
+	<div id="info_wrap" class="row wrap">
+	<div class="column full">
+		<div class="title_wrap details">
+			<h3>Additional Information</h3>
+		</div>
+		<div class="details_tbl">		
+			
+			
+							
+			<div class="details_row">
+				<div class="cell label">
+					ISBN
+				</div>
+				<div class="cell">
+					9780814345078
+				</div>
+			</div>
+			
+			
+			<div class="details_row">
+				<div class="cell label">
+					Related ISBN(s)
+				</div>
+				<div class="cell">
+					9780814345085
+				</div>
+			</div>
+			
+			
+			<div class="details_row">
+				<div class="cell label">
+					DOI
+				</div>
+				<div class="cell">
+					<a href="https://doi.org/10.1353/book.67420" target="_blank">10.1353/book.67420<img src="/images/link_blue.png" alt="external link" style="vertical-align:top;"/></a>
+				</div>
+			</div>
+			
+			
+			<div class="details_row">
+				<div class="cell label">
+					MARC Record
+				</div>
+				<div class="cell">
+					<a href="https://about.muse.jhu.edu/lib/metadata?filename=muse_book_67420&no_auth=1&format=marc&content_ids=book:67420">Download</a>
+				</div>
+			</div>
+			
+            
+			
+			<div class="details_row">
+				<div class="cell label">
+					OCLC
+				</div>
+				<div class="cell">
+					1112099351
+				</div>
+			</div>
+			
+									
+			
+			<div class="details_row">
+				<div class="cell label">
+					Launched on MUSE
+				</div>
+				<div class="cell">
+					2019-08-14
+				</div>
+			</div>
+			
+			
+			
+			<div class="details_row">
+				<div class="cell label">
+					Language
+				</div>
+				<div class="cell">
+					English
+				</div>
+			</div>
+			
+			
+			<div class="details_row">
+				<div class="cell label">
+					Open Access
+				</div>
+				<div class="cell">
+					
+					Yes
+					
+				</div>
+			</div>
+			
+			
+			
+			
+		</div>
+	</div>
+	<div class="column full">
+		
+		
+
+		
+
+	</div>
+</div>
+
+</div>
+
+		<div id="footer_block" role="contentinfo" aria-label="footer">
+			<div id="footer_mission" class="content">
+				<div class="wrap row" id="about_wrap">
+					<div id="about">
+						<h2>Project MUSE Mission</h2>
+						<p>Project MUSE promotes the creation and dissemination of essential humanities and social science resources through collaboration with libraries, publishers, and scholars worldwide. Forged from a partnership between a university press and a library, Project MUSE is a trusted part of the academic and scholarly community it serves.</p>
+					</div>
+					<div id="about_logo" class="columns medium-10 show-for-large">
+						<img src="/images/muselogo_notext.png" alt="MUSE logo"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer_main">
+				<div class="footer_item_color wrap">
+					<div class="footer_item_left">
+						<div class="group">
+							<nav class="footer_item_about cont_sub" aria-labelledby="footer_about">
+								<div id="footer_about" class="foothead">About</div>
+								<ul>
+									<li><a href="https://about.muse.jhu.edu/about/story">MUSE Story</a></li>
+									<li><a href="https://about.muse.jhu.edu/publishers">Publishers</a></li>
+									<li><a href="https://about.muse.jhu.edu/about/discovery-partners/">Discovery Partners</a></li>
+									<li><a href="https://about.muse.jhu.edu/about/advisory-board/">Advisory Board</a></li>
+									<li><a href="https://about.muse.jhu.edu/about/journal-subscribers/">Journal Subscribers</a></li>
+									<li><a href="https://about.muse.jhu.edu/about/book-customers">Book Customers</a></li>
+									<li><a href="https://about.muse.jhu.edu/about/at-conferences/">Conferences</a></li>
+								</ul>
+							</nav>
+							<nav class="footer_item_what cont_sub" aria-labelledby="footer_what">
+								<div id="footer_what" class="foothead">What's on Muse</div>
+								<ul>
+									<li><a href="https://about.muse.jhu.edu/muse/open-access-overview/">Open Access</a></li>
+									<li><a href="https://about.muse.jhu.edu/muse/journals/all/">Journals</a></li>
+									<li><a href="https://about.muse.jhu.edu/muse/publishers/books/">Books</a></li>
+									<li><a href="https://about.muse.jhu.edu/muse-in-focus/">MUSE in Focus</a></li>
+									<li><a href="https://about.muse.jhu.edu/muse/eliot-prose/">T.S. Eliot Prose</a></li>
+								</ul>
+							</nav>
+							<div class="clear"></div>
+						</div>
+						<div class="group">
+						  <nav class="footer_item_res cont_sub" aria-labelledby="footer_resources">
+								<div id="footer_resources" class="foothead">Resources</div>
+								<ul>
+									<li><a href="https://about.muse.jhu.edu/resources/news/">News & Announcements</a></li>
+									<li><a href="https://about.muse.jhu.edu/news/signup/" target="_blank" aria-label="email sign-up link (opens in a new tab)">Email Sign-Up</a></li>
+									<li><a href="https://about.muse.jhu.edu/resources/promotional-materials">Promotional Materials</a></li>
+									<li><a href="https://about.muse.jhu.edu/resources/alerts">Get Alerts</a></li>
+									<li><a href="https://about.muse.jhu.edu/resources/muse-presentations">Presentations</a></li>
+								</ul>
+							</nav>
+							<nav class="footer_item_info cont_sub" aria-labelledby="footer_information">
+								<div id="footer_information" class="foothead">Information For</div>
+								<ul>
+									<li><a href="https://about.muse.jhu.edu/publishers">Publishers</a></li>
+									<li><a href="https://about.muse.jhu.edu/librarians">Librarians</a></li>
+									<li><a href="https://about.muse.jhu.edu/individuals">Individuals</a></li>
+								  <li><a href="https://about.muse.jhu.edu/instructors">Instructors</a></li>
+								</ul>
+							</nav>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="footer_item_right">
+						<div class="group">
+							<nav class="footer_item_social cont_sub" aria-labelledby="footer_social">
+								<div id="footer_social" class="foothead">Contact</div>
+								<ul>
+									<li class="clear"><a href="/contact">Contact Us</a></li>
+									<li><a href="https://about.muse.jhu.edu/resources/help-overview">Help</a></li>
+								</ul>
+								<ul>
+									<li>
+										<ol class="social_icons">
+											<li class="list_h"><a href="https://www.facebook.com/ProjectMUSE" target="_blank" aria-label="Facebook link (opens in a new tab)"><img src="/images/footer_icon_fb.png" alt="Facebook" /></a></li>
+											<li class="list_h"><a href="https://www.linkedin.com/company/projectmuse/" target="_blank" aria-label="LinkedIn link (opens in a new tab)"><img src="/images/footer_icon_linkedin.png" alt="Linkedin" /></a></li>
+											<li class="list_h"><a href="https://twitter.com/ProjectMUSE" target="_blank" aria-label="Twitter link (opens in a new tab)"><img src="/images/footer_icon_twitter.png" alt="Twitter" /></a></li>
+										</ol>
+									</li>
+								</ul>
+							</nav>
+							<nav class="footer_item_policy cont_sub" aria-labelledby="footer_policy">
+								<div id="footer_policy" class="foothead">Policy & Terms</div>
+								<ul>
+									<li><a href="https://about.muse.jhu.edu/about/accessibility/">Accessibility</a></li>
+									<li><a href="/privacy_policy">Privacy Policy</a></li>
+									<li><a href="/terms_use">Terms of Use</a></li>	
+								</ul>
+							</nav>
+							<div class="clear"></div>
+						</div>
+						<div class="group">
+							<div class="footer_item_addr cont_sub">
+								<p class="address"><span>2715 North Charles Street<br/>Baltimore, Maryland, USA 21218</span></p>
+								<p class="phone"><span><a href="tel:1-410-516-6989">+1 (410) 516-6989</a></span><br>
+								<span><a href="mailto:muse@jh.edu">muse@jh.edu</a></span></p>
+								<p class="footer_text_sm copy color_oxfordblue hide-for-small"><span>&copy;2022 Project MUSE. Produced by Johns Hopkins University Press in collaboration with The Sheridan Libraries.</span></p>
+							</div>
+							<div class="footer_item_logo cont_sub">
+								<p class="show-for-medium"><span class="semiboldit footer_text_sm">Now and Always,<br/>The Trusted Content Your Research Requires</span></p>
+								<p><span><a href="https://muse.jhu.edu">
+								
+								<img class="show-for-medium" src="/images/muselogoblack.png" alt="Project MUSE logo" />
+								
+								<img class="hide-for-medium" src="/images/muselogo.png" alt="Project MUSE logo" /></a></span></p>
+								<p class="hide-for-medium"><span class="semiboldit footer_text_sm">Now and Always, The Trusted Content Your Research Requires</span></p>
+								<p class="hide-for-small"><span class="footer_text_sm">Built on the Johns Hopkins University Campus</span></p>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="footer_item_sub wrap hide-for-medium">
+				<p><span class="footer_text_sm">Built on the Johns Hopkins University Campus</span></p>		
+				<p class="footer_text_sm copy color_oxfordblue"><span>&copy;2022 Project MUSE. Produced by Johns Hopkins University Press in collaboration with The Sheridan Libraries.</span></p>			
+			</div>		
+		</div>
+		
+		
+		
+		
+		<div id="btn_top">
+			<a href="#top"><span>Back To Top</span></a>
+		</div>
+		
+		
+		
+		  <input type="hidden" name="cookie_acknowledgement_type"  id="cookie_acknowledgement_type" value="cookie_acknowledgement">
+		
+		
+		
+			<div id="cookies_msg">
+				<p>This website uses cookies to ensure you get the best experience on our website. Without cookies your experience may not be seamless.</p>
+				<script>document.writeln('<a href="javascript://" class="btn_accept" id="accept_cookie_msg">Accept</a>');</script>
+				<noscript>	
+						
+								<form method="post" action="/account/set_attribute_no_ajax/cookie_acknowledgement/1">
+						
+						<input type="submit" class="btn_accept" value="accept">
+						</form>
+				</noscript>
+			</div>
+		
+		
+		<script type="text/javascript" src="/js/lightbox.js"></script>
+		<script type="text/javascript" src="/js/jquery.qtip2.min.js"></script>
+		<script type="text/javascript" src="/js/post.js"></script>
+		
+		<script type="text/javascript" src="/js/footnotes.js"></script>
+		
+		
+		<script type="text/javascript" src="/js/references.js"></script>
+		
+		
+	</body>
 </html>

@@ -1,2006 +1,1191 @@
+                    
+                                              
+                                 
+
+    
+
+        
 <!doctype html>
-<html 
-      lang="en"
-      dir="ltr">
-  <head>
-    <meta name="google-signin-client-id" content="721724668570-nbkv1cfusk7kk4eni4pjvepaus73b13t.apps.googleusercontent.com">
-    <meta name="google-signin-scope"
-          content="profile email https://www.googleapis.com/auth/developerprofiles https://www.googleapis.com/auth/developerprofiles.award">
-    <meta property="og:site_name" content="Google Developers">
-    <meta property="og:type" content="website"><meta name="robots" content="noindex"><meta name="theme-color" content="#e8710a"><meta charset="utf-8">
-    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-
-    <link rel="manifest" href="/_pwa/developers/manifest.json"
-          crossorigin="use-credentials">
-    <link rel="preconnect" href="//www.gstatic.com" crossorigin>
-    <link rel="preconnect" href="//fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="//fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="//apis.google.com" crossorigin>
-    <link rel="preconnect" href="//www.google-analytics.com" crossorigin><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&display=swap">
-      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Material+Icons&display=block"><link rel="stylesheet" href="https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers/css/app.css">
-      <link rel="shortcut icon" href="https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers/images/favicon.png">
-    <link rel="apple-touch-icon" href="https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers/images/touchicon-180.png"><link rel="canonical" href="https://developers.google.com/analytics/devguides/collection/analyticsjs"><link rel="search" type="application/opensearchdescription+xml"
-            title="Google Developers" href="https://developers.google.com/s/opensearch.xml">
-      
-
-<title>Add analytics.js to Your Site &nbsp;|&nbsp; Analytics for Web (analytics.js) &nbsp;|&nbsp; Google Developers</title>
-
-<meta property="og:title" content="Add analytics.js to Your Site &nbsp;|&nbsp; Analytics for Web (analytics.js) &nbsp;|&nbsp; Google Developers"><meta name="description" content="A JavaScript library that lets you measure how users interact with your website.
-">
-  <meta property="og:description" content="A JavaScript library that lets you measure how users interact with your website.
-"><meta property="og:url" content="https://developers.google.com/analytics/devguides/collection/analyticsjs"><meta property="og:image" content="https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers/images/opengraph/orange.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="675"><meta property="og:locale" content="en"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Google Analytics",
-      "item": "https://developers.google.com/analytics"
-    },{
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Measurement",
-      "item": "https://developers.google.com/analytics/devguides/collection"
-    },{
-      "@type": "ListItem",
-      "position": 3,
-      "name": "analytics.js",
-      "item": "https://developers.google.com/analytics/devguides/collection/analyticsjs"
-    }]
-  }
-  </script>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-    
-      <link rel="stylesheet" href="/extras.css"></head>
-  <body class=""
-        template="page"
-        theme="orange"
-        type="product"
-        
-        
-        layout="docs"
-        
-        
-        pending>
-    <devsite-progress type="indeterminate" id="app-progress"></devsite-progress>
-  
-    <section class="devsite-wrapper"><devsite-header>
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="devsite-header--inner nocontent">
-  <div class="devsite-top-logo-row-wrapper-wrapper">
-    <div class="devsite-top-logo-row-wrapper">
-      <div class="devsite-top-logo-row">
-        <button type="button" id="devsite-hamburger-menu"
-          class="devsite-header-icon-button button-flat material-icons gc-analytics-event"
-          data-category="Site-Wide Custom Events"
-          data-label="Navigation menu button"
-          visually-hidden
-          aria-label="Open menu">
-        </button>
-        <div class="devsite-product-name-wrapper">
-
-  
-    
-  
-  <a href="https://developers.google.com/analytics">
-    
-  <div class="devsite-product-logo-container"
-       
-       
-       
-    size="medium"
-  >
-  
-    
-      <img class="devsite-product-logo"
-           alt="Google Analytics"
-           src="https://www.gstatic.com/analytics-suite/header/suite/v2/ic_analytics.svg"
-           srcset=""
-           sizes="64px"
-           loading="lazy">
-    
-  
-  </div>
-  
-  </a>
-  
-
-  
-
-
-
-  
-  
-  <span class="devsite-product-name">
-    <ul class="devsite-breadcrumb-list"
-  
-    aria-label="Product breadcrumb">
-  
-  <li class="devsite-breadcrumb-item
-             devsite-has-google-wordmark">
-    
-    
-    
-      
-      
-        
-  <a href="https://developers.google.com/analytics"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Upper Header"
-      
-        data-value="1"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="1"
-      
-        track-metadata-eventdetail="Google Analytics"
-      
-    >
-    
-          <svg class="devsite-google-wordmark"
-       xmlns="http://www.w3.org/2000/svg"
-       viewBox="0 0 148 48">
-    <title>Google</title>
-    <path class="devsite-google-wordmark-svg-path" d="M19.58,37.65c-9.87,0-18.17-8.04-18.17-17.91c0-9.87,8.3-17.91,18.17-17.91c5.46,0,9.35,2.14,12.27,4.94l-3.45,3.45c-2.1-1.97-4.93-3.49-8.82-3.49c-7.21,0-12.84,5.81-12.84,13.02c0,7.21,5.64,13.02,12.84,13.02c4.67,0,7.34-1.88,9.04-3.58c1.4-1.4,2.32-3.41,2.66-6.16H19.58v-4.89h16.47c0.18,0.87,0.26,1.92,0.26,3.06c0,3.67-1.01,8.21-4.24,11.44C28.93,35.9,24.91,37.65,19.58,37.65z M61.78,26.12c0,6.64-5.1,11.53-11.36,11.53s-11.36-4.89-11.36-11.53c0-6.68,5.1-11.53,11.36-11.53S61.78,19.43,61.78,26.12z M56.8,26.12c0-4.15-2.96-6.99-6.39-6.99c-3.43,0-6.39,2.84-6.39,6.99c0,4.11,2.96,6.99,6.39,6.99C53.84,33.11,56.8,30.22,56.8,26.12z M87.25,26.12c0,6.64-5.1,11.53-11.36,11.53c-6.26,0-11.36-4.89-11.36-11.53c0-6.68,5.1-11.53,11.36-11.53C82.15,14.59,87.25,19.43,87.25,26.12zM82.28,26.12c0-4.15-2.96-6.99-6.39-6.99c-3.43,0-6.39,2.84-6.39,6.99c0,4.11,2.96,6.99,6.39,6.99C79.32,33.11,82.28,30.22,82.28,26.12z M112.09,15.29v20.7c0,8.52-5.02,12.01-10.96,12.01c-5.59,0-8.95-3.76-10.22-6.81l4.41-1.83c0.79,1.88,2.71,4.1,5.81,4.1c3.8,0,6.16-2.36,6.16-6.77v-1.66h-0.18c-1.14,1.4-3.32,2.62-6.07,2.62c-5.76,0-11.05-5.02-11.05-11.49c0-6.51,5.28-11.57,11.05-11.57c2.75,0,4.93,1.22,6.07,2.58h0.18v-1.88H112.09z M107.64,26.16c0-4.06-2.71-7.03-6.16-7.03c-3.49,0-6.42,2.97-6.42,7.03c0,4.02,2.93,6.94,6.42,6.94C104.93,33.11,107.64,30.18,107.64,26.16z M120.97,3.06v33.89h-5.07V3.06H120.97z M140.89,29.92l3.93,2.62c-1.27,1.88-4.32,5.11-9.61,5.11c-6.55,0-11.28-5.07-11.28-11.53c0-6.86,4.77-11.53,10.71-11.53c5.98,0,8.91,4.76,9.87,7.34l0.52,1.31l-15.42,6.38c1.18,2.31,3.01,3.49,5.59,3.49C137.79,33.11,139.58,31.84,140.89,29.92zM128.79,25.77l10.31-4.28c-0.57-1.44-2.27-2.45-4.28-2.45C132.24,19.04,128.66,21.31,128.79,25.77z"/>
-  </svg>Analytics
-        
-  </a>
-  
-      
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/analytics/devguides/collection"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Upper Header"
-      
-        data-value="2"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="2"
-      
-        track-metadata-eventdetail="Google Analytics APIs"
-      
-    >
-    
-        Measurement
-      
-  </a>
-  
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Upper Header"
-      
-        data-value="3"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="3"
-      
-        track-metadata-eventdetail="Google Analytics for Web (analytics.js)"
-      
-    >
-    
-        analytics.js
-      
-  </a>
-  
-    
-  </li>
-  
-</ul>
-  </span>
-
-</div>
-        <div class="devsite-top-logo-row-middle">
-          <div class="devsite-header-upper-tabs">
-            
-           </div>
-          
-<devsite-search
-    aria-expanded="false"
-    aria-haspopup="listbox"
-    enable-signin
-    enable-search
-    enable-suggestions
-      enable-query-completion
-    
-    project-name="Analytics for Web (analytics.js)"
-    tenant-name="Google Developers"
-    project-scope="/analytics/devguides/collection/analyticsjs"
-    url-scoped="https://developers.google.com/s/results/analytics/devguides/collection/analyticsjs"
-    
-    
-    
-    
-    role="combobox">
-  <form class="devsite-search-form" action="https://developers.google.com/s/results" method="GET">
-    <div class="devsite-search-container">
-      <div class="devsite-searchbox">
-        <input
-          aria-activedescendant=""
-          aria-autocomplete="list"
-          
-          aria-label="Search"
-          aria-haspopup="false"
-          aria-multiline="false"
-          aria-label="Search box"
-          autocomplete="off"
-          class="devsite-search-field devsite-search-query"
-          name="q"
-          
-          placeholder="Search"
-          role="searchbox"
-          type="text"
-          value=""
-          >
-        <div class="devsite-search-image material-icons" aria-hidden="true"></div>
-      </div>
-      <button type="button"
-              search-open
-              class="devsite-search-button devsite-header-icon-button button-flat material-icons"
-              
-              aria-label="Open search"></button>
-    </div>
-  </form>
-  <button type="button"
-          search-close
-          class="devsite-search-button devsite-header-icon-button button-flat material-icons"
-          
-          aria-label="Close search"></button>
-</devsite-search>
-
-        </div>
-
-        
-
-        
-
-        
-
-        
-<devsite-language-selector>
-  <ul>
-    
-    
-      
-      <li>Language</li>
-    
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=en" lang="en"
-        >English</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=id" lang="id"
-        >Bahasa Indonesia</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=de" lang="de"
-        >Deutsch</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=es" lang="es"
-        >Español</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=fr" lang="fr"
-        >Français</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=pt_br" lang="pt_br"
-        >Português – Brasil</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=ru" lang="ru"
-        >Русский</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=zh_cn" lang="zh_cn"
-        >中文 – 简体</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=ja" lang="ja"
-        >日本語</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=ko" lang="ko"
-        >한국어</a>
-    </li>
-    
-  </ul>
-</devsite-language-selector>
-
-
-        
-
-        
-          
-          
-          <devsite-user 
-                        
-                        
-                          enable-profiles
-                        
-                        
-                          fp-auth
-                        
-                        id="devsite-user">
-            
-              
-              <span class="button devsite-top-button" aria-hidden="true" visually-hidden>Sign in</span>
-            
-        </devsite-user>
-           
-        
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="devsite-collapsible-section
-    ">
-    <div class="devsite-header-background">
-      
-        
-      
-      
-        <div class="devsite-doc-set-nav-row">
-          
-          
-            
-            
-  <devsite-tabs class="lower-tabs">
-
-    <nav class="devsite-tabs-wrapper" aria-label="Lower tabs">
-      
-        
-          <tab  active>
-            <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs"
-   class="gc-analytics-event "
-   track-type="nav"
-   track-metadata-eventdetail="https://developers.google.com/analytics/devguides/collection/analyticsjs"
-   track-metadata-position="nav - guides"
-   track-metadata-module="primary nav"
-   aria-label="Guides, selected" 
-   
-    
-      data-category="Site-Wide Custom Events"
-    
-      data-label="Tab: Guides"
-    
-      track-name="guides"
-    
-  >
-  Guides
-</a>
-
-          </tab>
-        
-      
-        
-          <tab  >
-            <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/command-queue-reference"
-   class="gc-analytics-event "
-   track-type="nav"
-   track-metadata-eventdetail="https://developers.google.com/analytics/devguides/collection/analyticsjs/command-queue-reference"
-   track-metadata-position="nav - reference"
-   track-metadata-module="primary nav"
-   
-   
-    
-      data-category="Site-Wide Custom Events"
-    
-      data-label="Tab: Reference"
-    
-      track-name="reference"
-    
-  >
-  Reference
-</a>
-
-          </tab>
-        
-      
-        
-          <tab  >
-            <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/help"
-   class="gc-analytics-event "
-   track-type="nav"
-   track-metadata-eventdetail="https://developers.google.com/analytics/devguides/collection/analyticsjs/help"
-   track-metadata-position="nav - support"
-   track-metadata-module="primary nav"
-   
-   
-    
-      data-category="Site-Wide Custom Events"
-    
-      data-label="Tab: Support"
-    
-      track-name="support"
-    
-  >
-  Support
-</a>
-
-          </tab>
-        
-      
-    </nav>
-
-  </devsite-tabs>
-
-          
-          
-        </div>
-      
-    </div>
-  </div>
-
-</div>
-
-
-
-  
-</devsite-header>
-      <devsite-book-nav scrollbars >
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="devsite-book-nav-filter
-            ">
-  <input type="text"
-         placeholder="Filter"
-         
-         aria-label="Type to filter"
-         role="searchbox">
-  
-  <span class="filter-clear-button hidden"
-        data-title="Clear filter"
-        aria-label="Clear filter"
-        role="button"
-        tabindex="0"></span>
-</div>
-
-<nav class="devsite-book-nav devsite-nav nocontent"
-     aria-label="Side menu">
-  <div class="devsite-mobile-header">
-    <button type="button"
-            id="devsite-close-nav"
-            class="devsite-header-icon-button button-flat material-icons gc-analytics-event"
-            data-category="Site-Wide Custom Events"
-            data-label="Close navigation"
-            aria-label="Close navigation">
-    </button>
-    <div class="devsite-product-name-wrapper">
-
-  
-    
-  
-  <a href="https://developers.google.com/analytics">
-    
-  <div class="devsite-product-logo-container"
-       
-       
-       
-    size="medium"
-  >
-  
-    
-      <img class="devsite-product-logo"
-           alt="Google Analytics"
-           src="https://www.gstatic.com/analytics-suite/header/suite/v2/ic_analytics.svg"
-           srcset=""
-           sizes="64px"
-           loading="lazy">
-    
-  
-  </div>
-  
-  </a>
-  
-
-  
-
-
-  
-      <span class="devsite-product-name">
-        
-        
-        <ul class="devsite-breadcrumb-list"
-  
-    aria-label="Upper header breadcrumb">
-  
-  <li class="devsite-breadcrumb-item
-             devsite-has-google-wordmark">
-    
-    
-    
-      
-      
-        
-  <a href="https://developers.google.com/analytics"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Upper Header"
-      
-        data-value="1"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="1"
-      
-        track-metadata-eventdetail="Google Analytics"
-      
-    >
-    
-          <svg class="devsite-google-wordmark"
-       xmlns="http://www.w3.org/2000/svg"
-       viewBox="0 0 148 48">
-    <title>Google</title>
-    <path class="devsite-google-wordmark-svg-path" d="M19.58,37.65c-9.87,0-18.17-8.04-18.17-17.91c0-9.87,8.3-17.91,18.17-17.91c5.46,0,9.35,2.14,12.27,4.94l-3.45,3.45c-2.1-1.97-4.93-3.49-8.82-3.49c-7.21,0-12.84,5.81-12.84,13.02c0,7.21,5.64,13.02,12.84,13.02c4.67,0,7.34-1.88,9.04-3.58c1.4-1.4,2.32-3.41,2.66-6.16H19.58v-4.89h16.47c0.18,0.87,0.26,1.92,0.26,3.06c0,3.67-1.01,8.21-4.24,11.44C28.93,35.9,24.91,37.65,19.58,37.65z M61.78,26.12c0,6.64-5.1,11.53-11.36,11.53s-11.36-4.89-11.36-11.53c0-6.68,5.1-11.53,11.36-11.53S61.78,19.43,61.78,26.12z M56.8,26.12c0-4.15-2.96-6.99-6.39-6.99c-3.43,0-6.39,2.84-6.39,6.99c0,4.11,2.96,6.99,6.39,6.99C53.84,33.11,56.8,30.22,56.8,26.12z M87.25,26.12c0,6.64-5.1,11.53-11.36,11.53c-6.26,0-11.36-4.89-11.36-11.53c0-6.68,5.1-11.53,11.36-11.53C82.15,14.59,87.25,19.43,87.25,26.12zM82.28,26.12c0-4.15-2.96-6.99-6.39-6.99c-3.43,0-6.39,2.84-6.39,6.99c0,4.11,2.96,6.99,6.39,6.99C79.32,33.11,82.28,30.22,82.28,26.12z M112.09,15.29v20.7c0,8.52-5.02,12.01-10.96,12.01c-5.59,0-8.95-3.76-10.22-6.81l4.41-1.83c0.79,1.88,2.71,4.1,5.81,4.1c3.8,0,6.16-2.36,6.16-6.77v-1.66h-0.18c-1.14,1.4-3.32,2.62-6.07,2.62c-5.76,0-11.05-5.02-11.05-11.49c0-6.51,5.28-11.57,11.05-11.57c2.75,0,4.93,1.22,6.07,2.58h0.18v-1.88H112.09z M107.64,26.16c0-4.06-2.71-7.03-6.16-7.03c-3.49,0-6.42,2.97-6.42,7.03c0,4.02,2.93,6.94,6.42,6.94C104.93,33.11,107.64,30.18,107.64,26.16z M120.97,3.06v33.89h-5.07V3.06H120.97z M140.89,29.92l3.93,2.62c-1.27,1.88-4.32,5.11-9.61,5.11c-6.55,0-11.28-5.07-11.28-11.53c0-6.86,4.77-11.53,10.71-11.53c5.98,0,8.91,4.76,9.87,7.34l0.52,1.31l-15.42,6.38c1.18,2.31,3.01,3.49,5.59,3.49C137.79,33.11,139.58,31.84,140.89,29.92zM128.79,25.77l10.31-4.28c-0.57-1.44-2.27-2.45-4.28-2.45C132.24,19.04,128.66,21.31,128.79,25.77z"/>
-  </svg>Analytics
-        
-  </a>
-  
-      
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/analytics/devguides/collection"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Upper Header"
-      
-        data-value="2"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="2"
-      
-        track-metadata-eventdetail="Google Analytics APIs"
-      
-    >
-    
-        Measurement
-      
-  </a>
-  
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Upper Header"
-      
-        data-value="3"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="3"
-      
-        track-metadata-eventdetail="Google Analytics for Web (analytics.js)"
-      
-    >
-    
-        analytics.js
-      
-  </a>
-  
-    
-  </li>
-  
-</ul>
-      </span>
-    
-
-</div>
-  </div>
-
-  <div class="devsite-book-nav-wrapper">
-    <div class="devsite-mobile-nav-top">
-      
-        <ul class="devsite-nav-list">
-          
-            
-<li class="devsite-nav-item">
-
-  
-  <a href="/analytics/devguides/collection/analyticsjs"
-    
-       class="devsite-nav-title gc-analytics-event
-              devsite-nav-has-children
-              devsite-nav-active"
-    
-
-    
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Tab: Guides"
-      
-        track-name="guides"
-      
-    
-     data-category="Site-Wide Custom Events"
-     data-label="Responsive Tab: Guides"
-     track-type="navMenu"
-     track-metadata-eventDetail="globalMenu"
-     track-metadata-position="nav">
-  
-    <span class="devsite-nav-text" tooltip >
-      Guides
-   </span>
-    
-    <span class="devsite-nav-icon material-icons" data-icon="forward"
-          >
-    </span>
-    
-  
-  </a>
-  
-
-</li>
-
-          
-            
-<li class="devsite-nav-item">
-
-  
-  <a href="/analytics/devguides/collection/analyticsjs/command-queue-reference"
-    
-       class="devsite-nav-title gc-analytics-event
-              devsite-nav-has-children
-              "
-    
-
-    
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Tab: Reference"
-      
-        track-name="reference"
-      
-    
-     data-category="Site-Wide Custom Events"
-     data-label="Responsive Tab: Reference"
-     track-type="navMenu"
-     track-metadata-eventDetail="globalMenu"
-     track-metadata-position="nav">
-  
-    <span class="devsite-nav-text" tooltip >
-      Reference
-   </span>
-    
-    <span class="devsite-nav-icon material-icons" data-icon="forward"
-          >
-    </span>
-    
-  
-  </a>
-  
-
-</li>
-
-          
-            
-<li class="devsite-nav-item">
-
-  
-  <a href="/analytics/devguides/collection/analyticsjs/help"
-    
-       class="devsite-nav-title gc-analytics-event
-              devsite-nav-has-children
-              "
-    
-
-    
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Tab: Support"
-      
-        track-name="support"
-      
-    
-     data-category="Site-Wide Custom Events"
-     data-label="Responsive Tab: Support"
-     track-type="navMenu"
-     track-metadata-eventDetail="globalMenu"
-     track-metadata-position="nav">
-  
-    <span class="devsite-nav-text" tooltip >
-      Support
-   </span>
-    
-    <span class="devsite-nav-icon material-icons" data-icon="forward"
-          >
-    </span>
-    
-  
-  </a>
-  
-
-</li>
-
-          
-          
-          
-        </ul>
-      
-    </div>
-    
-      <div class="devsite-mobile-nav-bottom" role="navigation">
-        
-          
-          <ul class="devsite-nav-list" menu="_book">
-            <li class="devsite-nav-item
-           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path">
-        <span class="devsite-nav-text" tooltip>Fundamentals</span>
-      </div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Adding analytics.js to Your Site</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/how-analyticsjs-works"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>How analytics.js Works</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/creating-trackers"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Creating Trackers</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/accessing-trackers"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Getting and Setting Tracker Data</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/sending-hits"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Sending Data to Google Analytics</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/using-plugins"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Using Plugins</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/debugging"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Debugging</span></a></li></ul></li>
-
-  <li class="devsite-nav-item
-           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path">
-        <span class="devsite-nav-text" tooltip>Measuring common user interactions</span>
-      </div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/pages"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Page Views</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/events"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Event Measurement</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/social-interactions"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Social Interactions</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/screens"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>App / Screen Measurement</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/user-timings"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>User Timings</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/exceptions"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Measure Exceptions</span></a></li></ul></li>
-
-  <li class="devsite-nav-item
-           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path">
-        <span class="devsite-nav-text" tooltip>Advanced Topics</span>
-      </div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/cookies-user-id"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Cookies and User Identification</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/cross-domain"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Cross-domain Measurement</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/custom-dims-mets"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Custom Dimensions and Metrics</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/renaming-the-ga-object"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Renaming the Global (ga) Object</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/writing-plugins"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Writing Plugins</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/tasks"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Tasks</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/ip-anonymization"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>IP Anonymization</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/user-opt-out"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>User Opt-out</span></a></li></ul></li>
-
-  <li class="devsite-nav-item
-           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path">
-        <span class="devsite-nav-text" tooltip>Official Plugins</span>
-      </div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/display-features"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Advertising Features</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/ecommerce"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Ecommerce</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/enhanced-ecommerce"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Enhanced Ecommerce</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/enhanced-link-attribution"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Enhanced link attribution</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/linker"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Linker</span></a></li></ul></li>
-
-  <li class="devsite-nav-item
-           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path">
-        <span class="devsite-nav-text" tooltip>Solutions</span>
-      </div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/single-page-applications"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Single Page Applications</span></a></li></ul></li>
-
-  <li class="devsite-nav-item
-           devsite-nav-heading"><div class="devsite-nav-title devsite-nav-title-no-path">
-        <span class="devsite-nav-text" tooltip>Resources</span>
-      </div><ul class="devsite-nav-section"><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/cookie-usage"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Cookie Usage</span></a></li><li class="devsite-nav-item"><a href="/analytics/devguides/collection/analyticsjs/limits-quotas"
-        class="devsite-nav-title"
-      ><span class="devsite-nav-text" tooltip>Limits and Quotas</span></a></li></ul></li>
-          </ul>
-        
-        
-        
-          
-    
-  
-    
-  
-    
-  
-        
-      </div>
-    
-  </div>
-</nav>
-        
-      </devsite-book-nav>
-      <section id="gc-wrapper">
-        <main role="main" class="devsite-main-content"
-            has-book-nav
-            has-sidebar>
-          
-          <div class="devsite-sidebar">
-            <div class="devsite-sidebar-content">
-              <devsite-toc class="devsite-nav"
-                           role="navigation"
-                           aria-label="On this page"
-                           depth="2"
-                           scrollbars
-                ></devsite-toc>
-              <devsite-recommendations-sidebar class="nocontent devsite-nav">
-              </devsite-recommendations-sidebar>
-            </div>
-          </div>
-          
-          <devsite-content alternate="selector">
-            
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<article class="devsite-article">
-  
-  
-  
-
-  <div class="devsite-article-meta nocontent" role="navigation">
-    
-    
-    <ul class="devsite-breadcrumb-list"
-  
-    aria-label="Breadcrumb">
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-    
-    
-      
-  <a href="https://developers.google.com/"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Breadcrumbs"
-      
-        data-value="1"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="1"
-      
-        track-metadata-eventdetail=""
-      
-    >
-    
-        Home
-      
-  </a>
-  
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/products"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Breadcrumbs"
-      
-        data-value="2"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="2"
-      
-        track-metadata-eventdetail=""
-      
-    >
-    
-        Products
-      
-  </a>
-  
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/analytics"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Breadcrumbs"
-      
-        data-value="3"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="3"
-      
-        track-metadata-eventdetail="Google Analytics"
-      
-    >
-    
-        Google Analytics
-      
-  </a>
-  
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/analytics/devguides/collection"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Breadcrumbs"
-      
-        data-value="4"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="4"
-      
-        track-metadata-eventdetail="Google Analytics APIs"
-      
-    >
-    
-        Measurement
-      
-  </a>
-  
-    
-  </li>
-  
-  <li class="devsite-breadcrumb-item
-             ">
-    
-      
-      <div class="devsite-breadcrumb-guillemet material-icons" aria-hidden="true"></div>
-    
-    
-    
-      
-  <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs"
-      
-        class="devsite-breadcrumb-link gc-analytics-event"
-      
-        data-category="Site-Wide Custom Events"
-      
-        data-label="Breadcrumbs"
-      
-        data-value="5"
-      
-        track-type="globalNav"
-      
-        track-name="breadcrumb"
-      
-        track-metadata-position="5"
-      
-        track-metadata-eventdetail="Google Analytics for Web (analytics.js)"
-      
-    >
-    
-        analytics.js
-      
-  </a>
-  
-    
-  </li>
-  
-</ul>
-    
-      
-    <devsite-thumb-rating position="header">
-    </devsite-thumb-rating>
-  
-    
-  </div>
-  
-  
-    <h1 class="devsite-page-title">Add analytics.js to Your Site</h1>
-  
-  <devsite-bookmark></devsite-bookmark>
-  <devsite-toc class="devsite-nav"
-               depth="2"
-               devsite-toc-embedded
-               >
-  </devsite-toc>
-
-  
-
-  <div class="devsite-article-body clearfix
-    ">
-
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>The analytics.js library (also known as &quot;the Google Analytics tag&quot;) is a JavaScript library for measuring how users interact with your website. This document explains how to add the Google Analytics tag to your site.</p>
-
-<h2 id="the_google_analytics_tag" data-text="The Google Analytics tag">The Google Analytics tag</h2>
-
-<p>The Google Analytics tag should be added near the top of the <code translate="no" dir="ltr">&lt;head&gt;</code> tag and before any
-other script or CSS tags, and add
-the <a href="https://support.google.com/analytics/answer/1032385">property ID</a> of the Google Analytics property you wish to work with.</p>
-
-<aside class="special">
-  <strong>Tip:</strong>
-  If you do not know your property ID, you can use the
-  <a href="https://ga-dev-tools.web.app/account-explorer/">Account Explorer</a> to find it.
-</aside>
-
-<pre class="prettyprint" translate="no" dir="ltr">
-&lt;!-- Google Analytics --&gt;
-&lt;script&gt;
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-XXXXX-Y', 'auto');
-ga('send', 'pageview');
-&lt;/script&gt;
-&lt;!-- End Google Analytics --&gt;
-</pre>
-
-<p>The above code does four main things:</p>
-
-<ol>
-<li>Creates a <code translate="no" dir="ltr">&lt;script&gt;</code> element that starts asynchronously downloading the analytics.js JavaScript library from <code translate="no" dir="ltr">https://www.google-analytics.com/analytics.js</code></li>
-<li>Initializes a global <code translate="no" dir="ltr">ga</code> function (called <a href="/analytics/devguides/collection/analyticsjs/how-analyticsjs-works">the <code translate="no" dir="ltr">ga()</code> command queue</a>) that allows you to schedule commands to be run once the analytics.js library is loaded and ready to go.</li>
-<li>Adds a command to the <code translate="no" dir="ltr">ga()</code> command queue to <a href="/analytics/devguides/collection/analyticsjs/creating-trackers">create a new tracker object</a> for the property specified via the <code translate="no" dir="ltr">&#39;GA_MEASUREMENT_ID&#39;</code> parameter.</li>
-<li>Adds another command to the <code translate="no" dir="ltr">ga()</code> command queue to <a href="/analytics/devguides/collection/analyticsjs/sending-hits">send a pageview to Google Analytics</a> for the current page.</li>
-</ol>
-
-<p>Custom implementations may require modifying the last two lines of the Google Analytics tag (the <code translate="no" dir="ltr">create</code> and <code translate="no" dir="ltr">send</code> commands) or adding additional code to capture more interactions. However, you should not change the code that loads the analytics.js library or initializes the <code translate="no" dir="ltr">ga()</code> command queue function.</p>
-
-<h3 id="alternative_async_tag" data-text="Alternative async tag">Alternative async tag</h3>
-
-<p>While the Google Analytics tag described above ensures the script will be loaded and executed asynchronously on all browsers, it has the disadvantage of not allowing modern browsers to preload the script.</p>
-
-<p>The alternative async tag below adds support for preloading, which will provide a small performance boost on modern browsers, but can degrade to synchronous loading and execution on IE 9 and older mobile browsers that do not recognize the <code translate="no" dir="ltr">async</code> script attribute. Only use this tag configuration if your visitors primarily use modern browsers to access your site.</p>
-
-<pre class="prettyprint" translate="no" dir="ltr">
-&lt;!-- Google Analytics --&gt;
-&lt;script&gt;
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-XXXXX-Y', 'auto');
-ga('send', 'pageview');
-&lt;/script&gt;
-&lt;script async src='https://www.google-analytics.com/analytics.js'&gt;&lt;/script&gt;
-&lt;!-- End Google Analytics --&gt;
-</pre>
-
-<h2 id="what_data_does_the_google_analytics_tag_capture" data-text="What data does the Google Analytics tag capture?">What data does the Google Analytics tag capture?</h2>
-
-<p>When you add either of these tags to your website, you send a pageview for each page your users visit. Google Analytics processes this data and can infer a great deal of information including:</p>
-
-<ul>
-<li>The total time a user spends on your site.</li>
-<li>The time a user spends on each page and in what order those pages were visited.</li>
-<li>What internal links were clicked (based on the URL of the next pageview).</li>
-</ul>
-
-<p>In addition: The IP address, user agent string, and initial page inspection that analytics.js performs when creating a new tracker object is used to determine things like:</p>
-
-<ul>
-<li>The geographic location of the user.</li>
-<li>What browser and operating system are being used.</li>
-<li>Screen size and whether Flash or Java is installed.</li>
-<li>The referring site.</li>
-</ul>
-
-<h2 id="next_steps" data-text="Next steps">Next steps</h2>
-
-<p>For basic reporting needs, the data collected via the Google Analytics tag can suffice, but in many cases there are additional questions you want answered about your users.</p>
-
-<p>The guides on this site explain how to measure the interactions you care about with analytics.js, but before implementing a particular feature, it&#39;s highly recommended that you read the guides listed under the <em>Fundamentals</em> section in the left-side navigation. These guides will give you a high-level overview of the analytics.js library and help you better understand the code examples used throughout the site.</p>
-
-<p>The next guide in this series explains <a href="/analytics/devguides/collection/analyticsjs/how-analyticsjs-works">how analytics.js works</a>.</p>
-
-    
-
-    
-  </div>
-
-  
-
-  
-    
-    
-      
-    <devsite-thumb-rating position="footer">
-    </devsite-thumb-rating>
-  
-       
-    
-    
-  
-
-  
-  
-</article>
-
-
-<devsite-content-footer class="nocontent">
-  <p>Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 License</a>, and code samples are licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. For details, see the <a href="https://developers.google.com/site-policies">Google Developers Site Policies</a>. Java is a registered trademark of Oracle and/or its affiliates.</p>
-  <p>Last updated 2022-02-07 UTC.</p>
-</devsite-content-footer>
-
-
-<devsite-notification
->
-</devsite-notification>
-
-
-  
-<div class="devsite-content-data">
-  <template class="devsite-thumb-rating-down-categories">
-  [{
-      "type": "thumb-down",
-      "id": "missingTheInformationINeed",
-      "label":"Missing the information I need"
-    },{
-      "type": "thumb-down",
-      "id": "tooComplicatedTooManySteps",
-      "label":"Too complicated / too many steps"
-    },{
-      "type": "thumb-down",
-      "id": "outOfDate",
-      "label":"Out of date"
-    },{
-      "type": "thumb-down",
-      "id": "samplesCodeIssue",
-      "label":"Samples / code issue"
-    },{
-      "type": "thumb-down",
-      "id": "otherDown",
-      "label":"Other"
-    }]
-  </template>
-  <template class="devsite-thumb-rating-up-categories">
-  [{
-      "type": "thumb-up",
-      "id": "easyToUnderstand",
-      "label":"Easy to understand"
-    },{
-      "type": "thumb-up",
-      "id": "solvedMyProblem",
-      "label":"Solved my problem"
-    },{
-      "type": "thumb-up",
-      "id": "otherUp",
-      "label":"Other"
-    }]
-  </template>
-  
-</div>
-            
-          </devsite-content>
-        </main>
-        <devsite-footer-promos class="devsite-footer">
-          
-            
-
-<nav class="devsite-footer-promos nocontent" aria-label="Promotions">
-  <ul class="devsite-footer-promos-list">
-    
-    <li class="devsite-footer-promo">
-      <a href="https://github.com/googleanalytics/"
-         class="devsite-footer-promo-title gc-analytics-event"
-         data-category="Site-Wide Custom Events"
-       
-         
-         data-label="Footer Promo Link (index 1)"
-       
-       >
-        
-        
-          
-            <img class="devsite-footer-promo-icon"
-                 src="/site-assets/logo-github.svg"
-                 loading="lazy"
-                 alt="GitHub">
-          
-        
-        GitHub
-      </a>
-      <div class="devsite-footer-promo-description">Try Google Analytics samples</div>
-    </li>
-    
-    <li class="devsite-footer-promo">
-      <a href="http://stackoverflow.com/questions/tagged/google-analytics"
-         class="devsite-footer-promo-title gc-analytics-event"
-         data-category="Site-Wide Custom Events"
-       
-         
-         data-label="Footer Promo Link (index 2)"
-       
-       >
-        
-        
-          
-            <img class="devsite-footer-promo-icon"
-                 src="/site-assets/logo-stack-overflow.svg"
-                 loading="lazy"
-                 alt="Stack Overflow">
-          
-        
-        Stack Overflow
-      </a>
-      <div class="devsite-footer-promo-description">Ask questions using the google-analytics tag</div>
-    </li>
-    
-    <li class="devsite-footer-promo">
-      <a href="https://twitter.com/googleanalytics"
-         class="devsite-footer-promo-title gc-analytics-event"
-         data-category="Site-Wide Custom Events"
-       
-         
-         data-label="Footer Promo Link (index 3)"
-       
-       >
-        
-        
-          
-            <img class="devsite-footer-promo-icon"
-                 src="/site-assets/logo-twitter.svg"
-                 loading="lazy"
-                 alt="Twitter">
-          
-        
-        Twitter
-      </a>
-      <div class="devsite-footer-promo-description">Follow @googleanalytics on Twitter</div>
-    </li>
-    
-    <li class="devsite-footer-promo">
-      <a href="https://www.youtube.com/user/googleanalytics"
-         class="devsite-footer-promo-title gc-analytics-event"
-         data-category="Site-Wide Custom Events"
-       
-         
-         data-label="Footer Promo Link (index 4)"
-       
-       >
-        
-        
-          
-            <img class="devsite-footer-promo-icon"
-                 src="https://www.gstatic.com/images/icons/material/product/2x/youtube_64dp.png"
-                 loading="lazy"
-                 alt="Videos">
-          
-        
-        Videos
-      </a>
-      <div class="devsite-footer-promo-description">View Google Analytics videos on YouTube</div>
-    </li>
-    
-  </ul>
-</nav>
-
-          
-        </devsite-footer-promos>
-        <devsite-footer-linkboxes class="devsite-footer">
-          
-            
-<nav class="devsite-footer-linkboxes nocontent" aria-label="Footer links">
-  
-  <ul class="devsite-footer-linkboxes-list">
-    
-    <li class="devsite-footer-linkbox ">
-    <h3 class="devsite-footer-linkbox-heading no-link">Connect</h3>
-      <ul class="devsite-footer-linkbox-list">
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="/analytics/community"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 1)"
-            >
-            
-          
-            Community &amp; Updates
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="/analytics/help"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 2)"
-            >
-            
-          
-            Getting Help
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="https://issuetracker.google.com/issues?q=componentid:187400"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 3)"
-            >
-            
-              
-              
-            
-          
-            Reporting an Issue
-          
-          </a>
-          
-          
-        </li>
-        
-      </ul>
-    </li>
-    
-    <li class="devsite-footer-linkbox ">
-    <h3 class="devsite-footer-linkbox-heading no-link">Product Info</h3>
-      <ul class="devsite-footer-linkbox-list">
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="/analytics/policy"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 1)"
-            >
-            
-          
-            Protocol / SDK Policy
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="/analytics/terms/branding-policy"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 2)"
-            >
-            
-              
-              
-            
-          
-            Branding Policy
-          
-          </a>
-          
-          
-        </li>
-        
-      </ul>
-    </li>
-    
-    <li class="devsite-footer-linkbox ">
-    <h3 class="devsite-footer-linkbox-heading no-link">Developer consoles</h3>
-      <ul class="devsite-footer-linkbox-list">
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="//console.developers.google.com"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 1)"
-            >
-            
-          
-            Google API Console
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="//console.cloud.google.com"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 2)"
-            >
-            
-          
-            Google Cloud Platform Console
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="//play.google.com/apps/publish"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 3)"
-            >
-            
-          
-            Google Play Console
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="//console.firebase.google.com"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 4)"
-            >
-            
-          
-            Firebase Console
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="//console.actions.google.com"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 5)"
-            >
-            
-          
-            Actions on Google Console
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="//cast.google.com/publish"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 6)"
-            >
-            
-          
-            Cast SDK Developer Console
-          
-          </a>
-          
-          
-        </li>
-        
-        <li class="devsite-footer-linkbox-item">
-          
-          <a href="//chrome.google.com/webstore/developer/dashboard"
-             class="devsite-footer-linkbox-link gc-analytics-event"
-             data-category="Site-Wide Custom Events"
-            
-             data-label="Footer Link (index 7)"
-            >
-            
-              
-              
-            
-          
-            Chrome Web Store Dashboard
-          
-          </a>
-          
-          
-        </li>
-        
-      </ul>
-    </li>
-    
-  </ul>
-  
-</nav>
-          
-        </devsite-footer-linkboxes>
-        <devsite-footer-utility class="devsite-footer">
-          
-            
-
-<div class="devsite-footer-utility nocontent">
-  
-  
-  <nav class="devsite-footer-sites" aria-label="Other Google Developers websites">
-    <a href="https://developers.google.com/"
-       class="devsite-footer-sites-logo-link gc-analytics-event"
-       data-category="Site-Wide Custom Events"
-       data-label="Footer Google Developers Link">
-      <img class="devsite-footer-sites-logo"
-           src="https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers/images/lockup-developers.svg"
-           loading="lazy"
-           alt="Google Developers">
-    </a>
-    <ul class="devsite-footer-sites-list">
-      
-      <li class="devsite-footer-sites-item">
-        <a href="//developer.android.com"
-           class="devsite-footer-sites-link
-                  gc-analytics-event"
-           data-category="Site-Wide Custom Events"
-         
-           data-label="Footer Android Link"
-         
-         >
-          Android
-        </a>
-      </li>
-      
-      <li class="devsite-footer-sites-item">
-        <a href="//developer.chrome.com/home"
-           class="devsite-footer-sites-link
-                  gc-analytics-event"
-           data-category="Site-Wide Custom Events"
-         
-           data-label="Footer Chrome Link"
-         
-         >
-          Chrome
-        </a>
-      </li>
-      
-      <li class="devsite-footer-sites-item">
-        <a href="//firebase.google.com"
-           class="devsite-footer-sites-link
-                  gc-analytics-event"
-           data-category="Site-Wide Custom Events"
-         
-           data-label="Footer Firebase Link"
-         
-         >
-          Firebase
-        </a>
-      </li>
-      
-      <li class="devsite-footer-sites-item">
-        <a href="//cloud.google.com"
-           class="devsite-footer-sites-link
-                  gc-analytics-event"
-           data-category="Site-Wide Custom Events"
-         
-           data-label="Footer Google Cloud Platform Link"
-         
-         >
-          Google Cloud Platform
-        </a>
-      </li>
-      
-      <li class="devsite-footer-sites-item">
-        <a href="/products"
-           class="devsite-footer-sites-link
-                  gc-analytics-event"
-           data-category="Site-Wide Custom Events"
-         
-           data-label="Footer All products Link"
-         
-         >
-          All products
-        </a>
-      </li>
-      
-    </ul>
-  </nav>
-  
-
-  
-  <nav class="devsite-footer-utility-links" aria-label="Utility links">
-    
-    <ul class="devsite-footer-utility-list">
-      
-      <li class="devsite-footer-utility-item
-                 ">
-        
-        
-        <a class="devsite-footer-utility-link gc-analytics-event"
-           href="/terms/site-terms"
-           data-category="Site-Wide Custom Events"
-           data-label="Footer Terms link"
-         >
-          Terms
-        </a>
-        
-      </li>
-      
-      <li class="devsite-footer-utility-item
-                 ">
-        
-        
-        <a class="devsite-footer-utility-link gc-analytics-event"
-           href="//policies.google.com/privacy"
-           data-category="Site-Wide Custom Events"
-           data-label="Footer Privacy link"
-         >
-          Privacy
-        </a>
-        
-      </li>
-      
-      <li class="devsite-footer-utility-item
-                 devsite-footer-utility-button">
-        
-        <span class="devsite-footer-utility-description">Sign up for the Google Developers newsletter</span>
-        
-        
-        <a class="devsite-footer-utility-link gc-analytics-event"
-           href="//services.google.com/fb/forms/googledevelopersnewsletter/?utm_medium=referral&amp;utm_source=google-products&amp;utm_team=googledevs&amp;utm_campaign=201611-newsletter-launch"
-           data-category="Site-Wide Custom Events"
-           data-label="Footer Subscribe link"
-         >
-          Subscribe
-        </a>
-        
-      </li>
-      
-    </ul>
-    
-    
-<devsite-language-selector>
-  <ul>
-    
-    
-      
-      <li>Language</li>
-    
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=en" lang="en"
-        >English</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=id" lang="id"
-        >Bahasa Indonesia</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=de" lang="de"
-        >Deutsch</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=es" lang="es"
-        >Español</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=fr" lang="fr"
-        >Français</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=pt_br" lang="pt_br"
-        >Português – Brasil</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=ru" lang="ru"
-        >Русский</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=zh_cn" lang="zh_cn"
-        >中文 – 简体</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=ja" lang="ja"
-        >日本語</a>
-    </li>
-    
-    <li>
-      <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs?hl=ko" lang="ko"
-        >한국어</a>
-    </li>
-    
-  </ul>
-</devsite-language-selector>
-
-  </nav>
-</div>
-          
-        </devsite-footer-utility>
-        <devsite-panel></devsite-panel>
-      </section></section>
-    <devsite-sitemask></devsite-sitemask>
-    <devsite-snackbar
-    
-    >
-</devsite-snackbar>
-    <devsite-tooltip ></devsite-tooltip>
-    <devsite-heading-link></devsite-heading-link>
-    <devsite-analytics analytics-iframe>
-      
-        <script type="application/json" analytics>[{"dimensions": {"dimension11": false, "dimension5": "en", "dimension3": false, "dimension6": "en", "dimension1": "Signed out", "dimension4": "Analytics for Web (analytics.js)"}, "gaid": "UA-24532603-1", "metrics": {"ratings_value": "metric1", "ratings_count": "metric2"}}, {"dimensions": {"dimension11": false, "dimension5": "en", "dimension3": false, "dimension6": "en", "dimension1": "Signed out", "dimension4": "Analytics for Web (analytics.js)"}, "gaid": "UA-41425441-2", "metrics": {"ratings_value": "metric1", "ratings_count": "metric2"}}]</script>
-<script type="application/json" gtm>{"parameters": {"freeTrialEligibleUser": "True", "internalUser": "False", "language": {"machineTranslated": "False", "requested": "en", "served": "en"}, "pageType": "product", "projectName": "Analytics for Web (analytics.js)", "signedIn": "False", "tenant": "developers", "recommendations": {"sourcePage": "", "sourceType": 0, "sourceRank": 0, "sourceIdenticalDescriptions": 0, "sourceTitleWords": 0, "sourceDescriptionWords": 0, "experiment": ""}}, "tags": []}</script>
-      
-    </devsite-analytics>
-    
-      <devsite-badger></devsite-badger>
-    
-    
-    <script nonce="TzbO57Y4UABB8XHgHJYS7FqHJKFCnB">
-  
-  (function(d,e,v,s,i,t,E){d['GoogleDevelopersObject']=i;
-    t=e.createElement(v);t.async=1;t.src=s;E=e.getElementsByTagName(v)[0];
-    E.parentNode.insertBefore(t,E);})(window, document, 'script',
-    'https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers/js/app_loader.js', '[1,"en",null,"/js/devsite_app_module.js","https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9","https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers","https://developers-dot-devsite-v2-prod.appspot.com",1,null,["/_pwa/developers/manifest.json","https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/images/video-placeholder.svg","https://www.gstatic.com/devrel-devsite/prod/vd881210f9673d9985aa8864f5fd9cbfbb5e2b56bbc9c6e51f369462d48e84ef9/developers/images/favicon.png","https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&display=swap"],1,null,[1,6,8,12,14,17,21,25,40,50,52,63,70,75,76,80,87,91,92,93,97,98,100,101,102,103,104,105,107,108,109,110,111,112,113,115,116,117,118,120,122,123,124,125,126,127,129,130,131,132,133,134,135,136,138,140,141,144,147,148,149,150,151,152,154,155,156,157,158,159,161,163,164,165,168,169,170,173,179,182,183,186,191],"AIzaSyAP-jjEJBzmIyKR4F-3XITp8yM9T1gEEI8","AIzaSyB6xiKGDR5O3Ak2okS4rLkauxGUG7XP0hg","developers.google.com","AIzaSyAQk0fBONSGUqCNznf6Krs82Ap1-NV6J4o","AIzaSyCCxcqdrZ_7QMeLCRY20bh_SXdAYqy70KY"]')
-  
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns#	article: http://ogp.me/ns/article#">
+            <!-- ferd/hearst/templates/premium/article/header_main.tpl -->
+<head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app211.us.archive.org';v.server_ms=566;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php","20191218073533","https://web.archive.org/","web","/_static/",
+	      "1576654533");
 </script>
-    <devsite-a11y-announce></devsite-a11y-announce>
-  </body>
-</html>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+
+    <!-- eid:article.14814357 -->
+    <!-- generated at 2019-12-18 01:33:39 on pwcm7 running vr2.1.12.1 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Airbnb outlines steps to clamp down on parties after Orinda shooting - SFChronicle.com</title>
+    <!-- ferd/premiumsfgate/templates/common/fonts.tpl -->
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/national/NationalWeb-Light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/national/NationalWeb-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/national/NationalWeb-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/national/NationalWeb-Book.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/tiempos/TiemposHeadlineWeb-Black.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/tiempos/TiemposHeadlineWeb-Light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/tiempos/TiemposTextWeb-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/tiempos/TiemposTextWeb-BoldItalic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/tiempos/TiemposTextWeb-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/web/20191218073533/https://www.sfchronicle.com/css/ferd/hdn/fonts/tiempos/TiemposTextWeb-RegularItalic.woff2" as="font" type="font/woff2" crossorigin>
+<!-- e ferd/premiumsfgate/templates/common/fonts.tpl -->
+    <script>
+                var HDN = HDN || {};
+        HDN.t_firstbyte = Number(new Date());
+        HDN.dataLayer = HDN.dataLayer || {};
+        HDN.dataLayer.content = HDN.dataLayer.content || {};
+        HDN.dataLayer.paywall = HDN.dataLayer.paywall || {};
+        HDN.dataLayer.paywall.accessRule = "possiblyMetered";
+        HDN.dataLayer.paywall.mode = "edbHalfEnabled";
+        var channelId = '14814357';
+        var parentId = '8517';
+        var channelName = 'business';
+        var Article = {
+            "id": "14814357",
+            "title": "Airbnb outlines steps to clamp down on parties after Orinda shooting",
+            "url": "https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php",
+            "slug": "Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php",
+            "summary": "Airbnb’s CEO listed several steps the company will take to improve relations with hosts, guests and neighboring homes after the Orinda Halloween party shootings.",
+      "image": "https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/56/67/18542072/27/rawImage.jpg",            "keywords": "",
+            "siteName": "SFChronicle.com",
+            "env": "production",
+            "comments": "true",
+            "isSensitive": false        };
+    </script>
+        <!-- hearst/common/hdn_datalayer_header.tpl -->
+<script type="text/javascript">
+    // <![CDATA[
+
+        var HDN = HDN || {};
+        HDN.dataLayer = HDN.dataLayer || {};
+
+        // HDN.dataLayer object for content and href data
+        HDN.dataLayer.content = HDN.dataLayer.content || {};
+        HDN.dataLayer.href = HDN.dataLayer.href || {};
+
+    
+                    HDN.dataLayer.content.title = "Airbnb outlines steps to clamp down on parties after Orinda shooting";
+                HDN.dataLayer.content.subtitle = "";
+        HDN.dataLayer.content.objectId = "14814357";
+        
+        HDN.dataLayer.content.objectType = "article";
+                        HDN.dataLayer.content.sectionPath = ['business'];
+        HDN.dataLayer.content.pubDate = "2019-11-06 18:16:25";
+        HDN.dataLayer.content.lastModifiedDate = "2019-11-06 18:26:47";
+        HDN.dataLayer.content.wordCount = 309;
+        HDN.dataLayer.content.keywords = [];
+        HDN.dataLayer.content.keySubjects = [];
+        HDN.dataLayer.content.keyCategoryTags = [];
+        HDN.dataLayer.content.keyPersons = [];
+        HDN.dataLayer.content.keyOrganizations = [];
+        HDN.dataLayer.content.keyConcepts = [];
+        HDN.dataLayer.content.keyCategories = [];
+        HDN.dataLayer.content.keyPlaces = [];
+        HDN.dataLayer.content.keyNlpCategories = [];
+        HDN.dataLayer.content.keyNlpPerson = ['Brian Chesky',' Carolyn Said',' Ronald Davis',' Charles Ramsey',' Neighbor',' Obama',' @csaid'];
+        HDN.dataLayer.content.keyNlpLocation = ['Orinda',' East Palo Alto',' Washington',' D.C.',' Philadelphia',' U.S.'];
+        HDN.dataLayer.content.keyNlpOrganization = ['Orinda Airbnb',' Orinda Halloween',' San Francisco Chronicle'];
+        HDN.dataLayer.content.keyNlpEvent = [];
+        HDN.dataLayer.content.keyNlpWorkOfArt = [];
+        HDN.dataLayer.content.keyNlpConsumerGood = [];
+        HDN.dataLayer.content.keyNlpOther = ['&gt',' Twitter'];
+        HDN.dataLayer.content.keyNlpUnknown = [];
+
+        // HDN.dataLayer object for source information
+        HDN.dataLayer.source = HDN.dataLayer.source || {};
+
+        HDN.dataLayer.source.authorName = "By Carolyn Said";
+        HDN.dataLayer.source.authorTitle = "";
+        HDN.dataLayer.source.originalSourceSite = "SF";
+        HDN.dataLayer.source.publishingSite = "premiumsfgate";
+        HDN.dataLayer.source.sourceSite = "sfgate";
+        
+
+                    
+                // HDN.dataLayer object for sharing information
+        HDN.dataLayer.sharing = HDN.dataLayer.sharing || {};
+
+        HDN.dataLayer.sharing.openGraphUrl = "https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php";
+        HDN.dataLayer.sharing.openGraphType = "article";
+
+        HDN.dataLayer.href.pageUrl = "https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php";
+        HDN.dataLayer.href.canonicalUrl = "https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php";
+        HDN.dataLayer.href.pageUrlPath = window.location.pathname;
+        HDN.dataLayer.href.pageUrlPathFolders = window.location.pathname.replace(/[A-Za-z0-9-_.]+$/, '');
+        HDN.dataLayer.href.pageUrlQueryParams = window.location.search.replace(/^\?/, '');
+        HDN.dataLayer.href.pageUrlHash = window.location.hash;
+
+        // HDN.dataLayer object for site
+        HDN.dataLayer.site = HDN.dataLayer.site || {};
+
+    
+        // "geoloc" and "geocites" used for weather and other location based functionality
+        HDN.dataLayer.site.geoloc = "san_francisco";
+        HDN.dataLayer.site.geocities = {"antioch":{"geoloc":"antioch","city":"Antioch","state":"CA","lon":"-121.8667495","lat":"37.9810982","lockey":0},"concord":{"geoloc":"concord","city":"Concord","state":"CA","lon":"-122.0339173","lat":"37.9735415","lockey":1},"fairfield":{"geoloc":"fairfield","city":"Fairfield","state":"CA","lon":"-122.1040308","lat":"38.2336466","lockey":2},"hayward":{"geoloc":"hayward","city":"Hayward","state":"CA","lon":"-122.1408151","lat":"37.6179116","lockey":3},"livermore":{"geoloc":"livermore","city":"Livermore","state":"CA","lon":"-121.8427362","lat":"37.6801621","lockey":4},"mill_valley":{"geoloc":"mill_valley","city":"Mill Valley","state":"CA","lon":"-122.5632255","lat":"37.9066967","lockey":5},"mountain_view":{"geoloc":"mountain_view","city":"Mountain View","state":"CA","lon":"-122.1514787","lat":"37.4133027","lockey":6},"napa":{"geoloc":"napa","city":"Napa","state":"CA","lon":"-122.3601701","lat":"38.2859416","lockey":7},"oakland":{"geoloc":"oakland","city":"Oakland","state":"CA","lon":"-122.3757556","lat":"37.7583921","lockey":8},"palo_alto":{"geoloc":"palo_alto","city":"Palo Alto","state":"CA","lon":"-122.1704553","lat":"37.4256448","lockey":9},"richmond":{"geoloc":"richmond","city":"Richmond","state":"CA","lon":"-122.4129987","lat":"37.9552521","lockey":10},"san_carlos":{"geoloc":"san_carlos","city":"San Carlos","state":"CA","lon":"-122.2878715","lat":"37.4983993","lockey":11},"san_francisco":{"geoloc":"san_francisco","city":"San Francisco","state":"CA","lon":"-122.5078117","lat":"37.7576792","lockey":12},"san_jose":{"geoloc":"san_jose","city":"San Jose","state":"CA","lon":"-121.9578406","lat":"37.2969326","lockey":13},"santa_rosa":{"geoloc":"santa_rosa","city":"Santa Rosa","state":"CA","lon":"-122.7737567","lat":"38.4355291","lockey":14}};
+
+        // Include comments data for page use
+        
+                                          
+              
+                                        HDN.dataLayer.site.commentsType = 'spotim';
+                HDN.dataLayer.site.commentSiteKey = 'sp_e9s18MG6';
+                HDN.dataLayer.site.entitledComments = '';
+                            
+                    HDN.dataLayer.site.sailthruId = 'fca2a0390286f0e53120a668534d9529';
+        
+        // HDN.dataLayer object for presentation information
+        HDN.dataLayer.presentation = HDN.dataLayer.presentation || {};
+
+        
+        HDN.dataLayer.presentation.hasSlideshow = false;
+        HDN.dataLayer.presentation.hasSlideshowListView = false;
+        HDN.dataLayer.presentation.hasVideo = false;
+        HDN.dataLayer.presentation.hasInteractive = true;
+
+        // HDN.dataLayer object for paywall information
+        HDN.dataLayer.paywall = HDN.dataLayer.paywall || {};
+
+                HDN.dataLayer.paywall.premiumStatus = "isPremium";
+        HDN.dataLayer.paywall.premiumEndDate = "2030-01-01 08:00:00";
+        HDN.dataLayer.content.displayTemplate = "";
+        
+        // paymeter
+                    HDN.dataLayer.paywall.policy = "meter";
+                                
+        HDN.dataLayer.ads = HDN.dataLayer.ads || {};
+                          HDN.dataLayer.ads.videoBidding = true;
+            
+    // ]]>
+</script>
+<!-- e hearst/common/hdn_datalayer_header.tpl -->
+        
+    <!-- Hotfix Top freeform -->
+    
+    <!-- hearst/item/standalone.tpl -->
+<!-- mid:freeform.78644 -->
+<!-- ENG-1230 -->
+<meta name="apple-itunes-app" content="app-id=423260205">
+
+<!-- ENG-1582 -->
+<script type="application/javascript">
+  (function () {
+    var abCookieKey = 'hnpabt3';
+    var abCookieVariant = 'no';
+    var allCookies = document.cookie;
+    if (allCookies) {
+      allCookies = allCookies.split('; ');
+      var abIndex = allCookies.filter(function (el) {return el.indexOf(abCookieKey) !== -1;});
+      abCookieVariant = abIndex.length > 0 ? abIndex[0].split('=')[1] : abCookieVariant;
+    }
+    var abTestCompositeId;
+    if (abCookieVariant.toUpperCase() == 'B') {
+      abTestCompositeId = 'HNP_SFC_PHD_V1';
+    } else if (abCookieVariant.toUpperCase() == 'A') {
+      abTestCompositeId = 'HNP_SFC_PHD_C';
+    } else {
+      abTestCompositeId = 'HNP_SFC_PHD_NO';
+    }
+    // Add key to datalayer
+    if (abTestCompositeId) {
+      HDN.dataLayer.abtest = HDN.dataLayer.abtest || {};
+      HDN.dataLayer.abtest.experimentId = HDN.dataLayer.abtest.experimentId || [];
+      HDN.dataLayer.abtest.experimentId.push(abTestCompositeId);
+      // For juice KVP string value...
+      window.aps = window.aps || {};
+      window.aps.abtest = window.aps.abtest || '';
+      if (window.aps.abtest.length > 0) {
+        window.aps.abtest += ',';
+      }
+      window.aps.abtest += abTestCompositeId;
+    }
+  })();
+</script>
+        <script>HDN.dataLayer.content.displayTemplate = "ard";</script>                    <link rel="stylesheet" href="/web/20191218073533cs_/https://www.sfchronicle.com/css/ferd/article/main.css?r2.1.12.1">
+        <script type="text/javascript" src="/web/20191218073533js_/https://www.sfchronicle.com/js/ferd/hdn/libs/jquery-2.2.4.min.js"></script>
+            <!-- hmb:treg TREG JS -->
+        <script type="text/javascript" src="//web.archive.org/web/20191218073533js_/https://treg.hearstnp.com/treg.js"></script>
+                <!-- hmb:js_header Static JS Bundle  -->
+        <script type="text/javascript" src="/web/20191218073533js_/https://www.sfchronicle.com/js/ferd/article/main.js?r2.1.12.1"></script>
+    
+    <!-- ferd/common/head/meta_tags.tpl -->
+	<meta name="HandheldFriendly" content="true">
+	<meta name="twitter:dnt" content="on">
+	<meta name="apple-mobile-web-app-title" content="SFChronicle">
+	<meta name="environment" content="production">
+	<meta name="id" content="14814357">
+	<link rel="canonical" href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php"/>
+			<link rel="amphtml" href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/amp/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php"/>
+							<meta name="author.name" content="Carolyn Said"/>
+	<meta name="author.title" content="Business Reporter"/>
+		<meta name="description" content=" Airbnb’s CEO listed several steps the company will take to improve relations with hosts, guests and neighboring homes after the Orinda Halloween party shootings. "/>
+	<meta name="date.release" content="2019-11-06T18:16:25+00:00"/>
+	<meta name="time.release" content="2019-11-06T18:16:25+00:00"/>
+	<meta name="sections" content="Business"/>
+		<meta name="subject" content="Brian Chesky, Carolyn Said, Ronald Davis, Charles Ramsey, Neighbor, Obama, @csaid, Orinda, East Palo Alto, Washington, D.C., Philadelphia, U.S., Orinda Airbnb, Orinda Halloween, San Francisco Chronicle, >, Twitter"/>
+    <meta name="news_keywords" content="Brian Chesky, Carolyn Said, Ronald Davis, Charles Ramsey, Neighbor, Obama, @csaid, Orinda, East Palo Alto, Washington, D.C., Philadelphia, U.S., Orinda Airbnb, Orinda Halloween, San Francisco Chronicle, >, Twitter"/>
+    
+		<meta name="nlpOrganization" content="Orinda Airbnb, Orinda Halloween, San Francisco Chronicle"/>
+			<meta name="nlpPerson" content="Brian Chesky, Carolyn Said, Ronald Davis, Charles Ramsey, Neighbor, Obama, @csaid"/>
+			<meta name="nlpLocation" content="Orinda, East Palo Alto, Washington, D.C., Philadelphia, U.S."/>
+						<meta name="nlpOther" content=">, Twitter"/>
+					<!-- e ferd/common/head/meta_tags.tpl -->    <!-- ferd/common/head/opengraph.tpl -->
+<meta property="fb:admins" content="100006394927810"/><meta property="fb:app_id" content="137086563877087"/><meta property="fb:pages" content="105702905593"/><meta property="fb:pages" content="307851324523"/><meta property="fb:pages" content="12852567813"/><meta property="fb:pages" content="480760515417232"/><meta property="fb:pages" content="288240529145"/><meta property="fb:pages" content="316774245761"/><meta property="fb:pages" content="984197758297116"/><meta property="fb:pages" content="7457442370"/><meta property="fb:pages" content="207033189701"/><meta property="fb:pages" content="207346283795"/><meta property="fb:pages" content="222959748728"/><meta property="fb:pages" content="207042068180"/><meta property="fb:pages" content="72983690774"/><meta property="fb:pages" content="339413234035"/><meta property="fb:pages" content="343689323559"/><meta property="fb:pages" content="345828366626"/><meta property="fb:pages" content="234821559861394"/><meta property="fb:pages" content="335699426867"/><meta property="fb:pages" content="10150105039485602"/><meta property="fb:pages" content="338983127562"/><meta property="fb:pages" content="364516539001"/><meta property="fb:pages" content="337922332042"/><meta property="fb:pages" content="115637335153191"/><meta property="fb:pages" content="372011535931"/><meta property="fb:pages" content="333376634908"/><meta property="fb:pages" content="127590790608884"/><meta property="fb:pages" content="141923885872653"/><meta property="fb:pages" content="655037391286291"/><meta property="fb:pages" content="320774811368833"/><meta property="fb:pages" content="1740489152861748"/><meta property="fb:pages" content="469700473093040"/><meta property="fb:pages" content="386754203367"/><meta property="fb:pages" content="556449374478585"/><meta property="fb:pages" content="340999853450"/><meta property="fb:pages" content="350771491032"/><meta property="fb:pages" content="1120648627959218"/><meta property="fb:pages" content="342017778245"/><meta property="fb:pages" content="338463361591"/><meta property="fb:pages" content="138772706196968"/><meta property="fb:pages" content="1641688532739111"/><meta property="fb:pages" content="326312697536"/><meta property="fb:pages" content="353120110016"/><meta property="fb:pages" content="343366744658"/><meta property="fb:pages" content="335009494554"/><meta property="fb:pages" content="347261603104"/><meta property="fb:pages" content="350924013892"/><meta property="fb:pages" content="257724773860"/><meta property="fb:pages" content="361203926417"/><meta property="fb:pages" content="367174215398"/><meta property="fb:pages" content="284154645394"/><meta property="fb:pages" content="334501182354"/><meta property="fb:pages" content="350279743224"/><meta property="fb:pages" content="154340691263654"/><meta property="fb:pages" content="147848678611852"/><meta property="fb:pages" content="361381078011"/><meta property="fb:pages" content="362831597677"/><meta name="og:datePublished" content="2019-11-06T18:16:25+00:00"/><meta property="og:locale" content="en_US"/><meta property="og:type" content="article"/><meta property="og:title" content="Airbnb outlines steps to clamp down on parties after Orinda shooting"/><meta property="og:description" content="Airbnb’s CEO listed several steps the company will take to improve relations with hosts, guests and neighboring homes after the Orinda Halloween party shootings."/><meta property="og:url" content="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php"/><meta property="og:site_name" content="SFChronicle.com"/><meta property="og:image" content="https://web.archive.org/web/20191218073533im_/https://s.hdnux.com/photos/01/06/56/67/18542072/27/rawImage.jpg"/><meta property="article:published_time" content="2019-11-06T18:16:25+00:00"/><meta property="article:opinion" content="false"/><meta property="article:author" content="https://www.facebook.com/SFChronicle/"/><meta property="article:section" content="Business"/><meta property="article:tag" content="Brian Chesky"/><meta property="article:tag" content="Carolyn Said"/><meta property="article:tag" content="Ronald Davis"/><meta property="article:tag" content="Charles Ramsey"/><meta property="article:tag" content="Neighbor"/><meta property="article:tag" content="Obama"/><meta property="article:tag" content="@csaid"/><meta property="article:tag" content="Orinda"/><meta property="article:tag" content="East Palo Alto"/><meta property="article:tag" content="Washington"/><meta property="article:tag" content="D.C."/><meta property="article:tag" content="Philadelphia"/><meta property="article:tag" content="U.S."/><meta property="article:tag" content="Orinda Airbnb"/><meta property="article:tag" content="Orinda Halloween"/><meta property="article:tag" content="San Francisco Chronicle"/><meta property="article:tag" content="&amp;gt"/><meta property="article:tag" content="Twitter"/><meta property="article:content_tier" content="metered"/>
+<!-- e ferd/common/head/opengraph.tpl -->    <!-- ferd/common/head/twittercard.tpl -->
+	<meta name="twitter:card" content="summary_large_image"/>
+	<meta name="twitter:image" content="https://web.archive.org/web/20191218073533im_/https://s.hdnux.com/photos/01/06/56/67/18542072/27/rawImage.jpg"/>
+<meta name="twitter:description" content="<p>Airbnb’s CEO listed several steps the company will take to improve relations with hosts, guests and neighboring homes after the Orinda Halloween party shootings.</p>"/>
+	<meta name="twitter:title" content="Airbnb outlines steps to clamp down on parties after Orinda shooting"/>
+	<meta name="twitter:site" content="@sfchronicle"/>
+<!-- e ferd/common/head/twittercard.tpl -->    <!-- ferd/hearst/templates/free/article/head/analytics.tpl -->
+<script>var omni_channelPath = "Business";var omni_title = "Airbnb outlines steps to clamp down on parties after Orinda shooting";var omni_bizObjectId = "14814357";var omni_className = "article";var omni_publicationDate = "2019-11-06T18:16:25+00:00";var omni_sourceSite ="sfgate";var omni_authorName = "Carolyn Said";var omni_authorTitle = "";var omni_premiumStatus = "isPremium";var omni_premiumEndDate = "1893506400";var omni_originalSource = "SF";var omni_pageNumber = "0";var omni_breakingNewsFlag = "";var omni_localNewsFlag = "1";var omni_isListView = "0";var omni_paywallSite = "1";var omni_displayTemplate = "ard";
+	</script>
+
+<!-- e ferd/hearst/templates/free/article/head/analytics.tpl -->    <!-- ferd/common/head/schema_NewsArticle.tpl -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://web.archive.org/web/20191218073533/http://schema.org",
+		"@type": "NewsArticle",
+		"mainEntityOfPage": {
+			"@type": "WebPage",
+			"@id": "https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php"
+		},
+		"headline": "Airbnb outlines steps to clamp down on parties after Orinda shooting",
+		"image": {
+			"@type": "ImageObject",
+			"url":   "https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/56/67/18542072/27/rawImage.jpg"
+		},
+		"datePublished": "2019-11-06T18:16:25+00:00",
+		"dateModified": "2019-11-06T18:26:47+00:00",
+		"author": [
+					{"@type": "Person",
+			"name": "Carolyn Said",
+			"jobTitle": "Business Reporter"
+			}					],
+		"publisher": {
+			"@type": "Organization",
+			"name": "San Francisco Chronicle",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/img/ldjson_logo.png",
+				"width": 600,
+				"height": 60
+			}
+		},
+		"description": "&lt;p&gt;Airbnb’s CEO listed several steps the company will take to improve relations with hosts, guests and neighboring homes after the Orinda Halloween party shootings.&lt;/p&gt;"
+					, "isAccessibleForFree": "False",
+				"hasPart": {
+					"@type": "WebPageElement",
+					"isAccessibleForFree": "False",
+					"cssSelector": ".article"
+				}
+			}
+	</script>
+<!-- e ferd/common/head/schema_NewsArticle.tpl -->    <!-- ferd/common/head/schema_SearchAction.tpl -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://web.archive.org/web/20191218073533/http://schema.org",
+		"@type": "WebSite",
+		"url": "https://web.archive.org/web/20191218073533/https://sfchronicle.com",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/search/?action=search&sitelinks=1&searchindex=solr&query={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
+	</script>
+<!-- e ferd/common/head/schema_SearchAction.tpl -->    <!-- ux ferd/home/third_party_assets.tpl -->
+
+<!-- ferd/hearst/templates/common/header/sailthru.tpl -->
+<meta name="sailthru.title" content="Airbnb outlines steps to clamp down on parties after Orinda shooting"/><meta name="sailthru.date" content="2019-11-06 10:16:00 -0800"/><meta name="sailthru.author" content="Carolyn Said"/><meta name="sailthru_type" content="article"/><meta name="sailthru_uid" content="14814357"/><meta name="sailthru_section" content="business"/><meta name="sailthru_pubname" content="san-francisco-chronicle"/><meta name="sailthru_siteid" content="35"/><meta name="sailthru.isPremium" content="true"/><meta name="sailthru.tags" content="business"/><meta name="sailthru.image.thumb" content="https://s.hdnux.com/photos/01/06/56/67/18542072/27/sailthruImage.jpg"/>
+<!-- e ferd/hearst/templates/common/header/sailthru.tpl --><meta name="msvalidate.01" content="9451CA04ABC9D1D5C6419C73B4C4F7B7"/>
+<!-- e ux ferd third_party_assets.tpl -->    <link rel="shortcut icon" href="/web/20191218073533im_/https://www.sfchronicle.com/favicon.ico">
+            <link rel="apple-touch-icon" sizes="60x60" href="/web/20191218073533im_/https://www.sfchronicle.com/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/web/20191218073533im_/https://www.sfchronicle.com/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/web/20191218073533im_/https://www.sfchronicle.com/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/web/20191218073533im_/https://www.sfchronicle.com/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/web/20191218073533im_/https://www.sfchronicle.com/apple-touch-icon-128x128.png">
+    
+                                            <!-- hmb:juice Juice (loadAds.js) -->
+        <script src="https://web.archive.org/web/20191218073533js_/https://aps.hearstnp.com/Scripts/loadAds.js"></script>
+                    <!-- hmb:ensighten Ensighten  -->
+        <!-- ferd/common/ensighten.js.tpl -->
+<script type="text/javascript">!function(e){var t="//web.archive.org/web/20191218073533/https://nexus.ensighten.com/hearst/news/Bootstrap.js";-1<e.cookie.indexOf("nsghtn")&&(-1<e.cookie.indexOf("nsghtn=test-dev")?(console.log("Ensighten :: Test-Dev"),t="//web.archive.org/web/20191218073533/https://nexus-test.ensighten.com/hearst/news-dev/Bootstrap.js"):-1<e.cookie.indexOf("nsghtn=test")?(console.log("Ensighten :: Test"),t="//web.archive.org/web/20191218073533/https://nexus-test.ensighten.com/hearst/news/Bootstrap.js"):-1<e.cookie.indexOf("nsghtn=dev")&&(console.log("Ensighten :: Dev"),t="//web.archive.org/web/20191218073533/https://nexus.ensighten.com/hearst/news-dev/Bootstrap.js")),e.write("<script src='"+e.location.protocol+t+"'><\/script>")}(document);</script>
+<!-- e ferd/common/ensighten.js.tpl -->                <!-- hmb:ensighten Taboola  -->
+                                                                                        
+            <script type="text/javascript">
+                window._taboola = window._taboola || [];
+                window._taboolaHDNPageLabel = window._taboolaHDNPageLabel || 'article';
+                var tobj = {};
+                tobj[window._taboolaHDNPageLabel] = 'auto';
+                _taboola.push(tobj);
+                !function (e, f, u, i) {
+                    if (!document.getElementById(i)){
+                        e.async = 1;
+                        e.src = u;
+                        e.id = i;
+                        f.parentNode.insertBefore(e, f);
+                    }
+                }(document.createElement('script'), document.getElementsByTagName('script')[0], '//web.archive.org/web/20191218073533/https://cdn.taboola.com/libtrc/hearstlocalnews-sfchronicle/loader.js', 'tb_loader_script');
+                if(window.performance && typeof window.performance.mark == 'function') {
+                    window.performance.mark('tbl_ic');
+                }
+            </script>
+            
+                            
+            <script type="text/javascript">
+                window._newsroom = window._newsroom || [];
+                
+                !function(e,f,u){
+                    e.async = 1;
+                    e.src = u;
+                    f.parentNode.insertBefore(e,f);
+                }(document.createElement('script'),document.getElementsByTagName('script')[0],'//web.archive.org/web/20191218073533/https://c2.taboola.com/nr/hearstlocalnews-sfchronicle/newsroom.js');
+            </script>
+            
+                                    <script src="https://web.archive.org/web/20191218073533js_/https://cdn.blueconic.net/hearst.js"></script>
+                <!-- CSS/JS Hotfix freeform - all premium -->
+    <!-- hearst/item/standalone.tpl -->
+<!-- mid:freeform.46358 -->
+<style>@media screen and (min-width: 768px){.nav-menu {width: 187px;}</style>
+
+<style>
+.iframeContainer { height:0;margin-bottom:24px;overflow:hidden;position:relative; }
+.iframeContainer-16x9 { padding-top:56.25%; }
+@media screen and (min-width: 768px) { .iframeContainer-16x9 { padding-top:calc((100% - 368px) * .5625); width: 520px; }}
+.iframeContainer-4x3 { padding-top: 75%; }
+.iframeContainer iframe { height:100%;left:0;position:absolute;top:0;width:100%; }
+</style>
+
+
+<!-- Begin code for WCM-3983 -->
+<script type="text/javascript">
+if ( document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll)) {
+	addTaboolaClickClass();
+} else {
+	document.addEventListener("DOMContentLoaded", function() { addTaboolaClickClass(); });
+};
+var addTaboolaClickClass = function () {
+	var tbfrms = document.getElementsByClassName('taboola-frame');
+	for (var i = 0; i < tbfrms.length; i++) {
+		tbfrms.item(i).classList.add('.taboola-frame');
+	}
+};
+</script>
+<!-- End code for WCM-3983 -->
+
+<script>
+/* v 0.0.1 */
+(function() {
+var Banner = {
+	init: function () {
+		var _this = this;
+		['mousedown', 'scroll'].forEach(function (e) {
+			window.addEventListener(e, Banner.onFirstInteraction, false);
+		});
+	},
+	onFirstInteraction: function () {
+		var _this = this;
+		['mousedown', 'scroll'].forEach(function (e) {
+			window.removeEventListener(e, Banner.onFirstInteraction, false);
+		});
+		Banner.addModule();
+	},
+	addModule: function () {
+		console.log("Add banner");
+		var script = document.createElement('script');
+		script.async = true
+		script.id  = 'banner_' + (new Date()).getTime();
+		script.src = "https://web.archive.org/web/20191218073533/https://projects.hearstnp.com/utils/banner/banner.js";
+		document.body.appendChild(script);
+	}
+};
+Banner.init();
+})();
+</script>
+
+<!-- Begin code for ENG-2668 -->
+<style>
+.filler-3x2, .filler-3x2.filler-1x1 { padding: 0; }
+</style>
+<!-- End code for ENG-2668 -->
+
+<style>
+/* ENG-3232 */
+#BP300 {
+    display: block;
+    float: none;
+}
+</style>
+    <!-- CSS/JS ARD Hotfix freeform - all premium -->
+    
+<!-- noGen: item_ard_header_hotfix_all_premium_ssl 2 dne  -->
+    <!-- CSS/JS Hotfix freeform -->
+    
+<!-- noGen: item_header_hotfix_ssl 35 dne  -->
+    <!-- CSS/JS ARD Hotfix freeform -->
+    
+<!-- noGen: item_ard_header_hotfix_ssl 35 dne  -->
+
+    
+            </head>
+<!-- e ferd/hearst/templates/premium/article/header_main.tpl -->                 <body data-parent="" data-location="business"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20191218073533/https%3A//www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20191218073533" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20191218073533*/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="See a list of every capture for this URL">8 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">06 Nov 2019 - 17 Dec 2021</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20191107061245/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="07 Nov 2019"><strong>Nov</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 07:35:33 Dec 18, 2019">DEC</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20201022010501/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="22 Oct 2020"><strong>Oct</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20191107061245/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="06:12:45 Nov 07, 2019"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 07:35:33 Dec 18, 2019">18</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200101040856/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="04:08:56 Jan 01, 2020"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap">2018</td>
+	    <td class="c" id="displayYearEl" title="You are here: 07:35:33 Dec 18, 2019">2019</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210411044533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="11 Apr 2021"><strong>2021</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20191218073533/http://web.archive.org/screenshot/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/NO404);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/NO404" target="_new"><span class="wm-title">Internet Archive</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  These crawls are part of an effort to archive pages as they are created and archive the pages that they refer to.   That way, as the pages that are referenced are changed or taken from the web, a link to the version that was live when the page was written will be preserved.  
+<br><br>
+Then the Internet Archive hopes that references to these archived pages will be put in place of a link that would be otherwise be broken, or a companion link to allow people to see what was originally intended by a page's authors.
+<br><br>
+The goal is to <a href="https://blog.archive.org/2013/10/25/fixing-broken-links/">fix all broken links on the web</a>. 
+
+Crawls of supported "No More 404" sites.
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/NO404-GDELT)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/NO404-GDELT" target="_new"><span class="wm-title">GDELT</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  A daily crawl of more than 200,000 home pages of news sites, including the pages linked from those home pages. Site list provided by <a href="http://gdeltproject.org/about.html">The GDELT Project</a>
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php","20191218073533",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+                                    <!-- design/article/premium_story_page.tpl -->
+    <!-- ferd/hearst/templates/article/types/premium_story.tpl -->
+    <!-- ferd/hearst/templates/premium/common/header.tpl -->
+<header class="pageHeader standard" data-stage="0">
+    <div class="pageHeader--progress"><div class="pageHeader--progress-bar" id="progress"></div></div>
+    <div class="pageHeader--wrapper lock">
+        <div id="navToggle" class="pageHeader--menuButton navToggle" tabindex="0"></div>
+        <a id="mastheadLogo" href="/web/20191218073533/https://www.sfchronicle.com/" class="pageHeader--logo fade show hdn-analytics" data-hdn-analytics="visit|masthead|navigation|0"></a>
+        <div id="titleBar" class="pageHeader--titleBar fade show">
+                            <div class="pageHeader--titleBar-subsection">Currently Reading</div>
+                <div class="pageHeader--titleBar-title">Airbnb outlines steps to clamp down on parties after Orinda shooting</div>
+                    </div>
+        <div id="shareTools" class="pageHeader--shareTools shareTools fade show">
+            <!-- ferd/hearst/templates/premium/common/share_tools.tpl -->
+<div class="share-list">
+    <a class="share-facebook" data-sharenetwork="facebook">Facebook</a>
+    <a class="share-twitter" data-sharenetwork="twitter">Twitter</a>
+    <a class="share-email" data-sharenetwork="email">Email</a>
+    <a class="share-linkedin" data-sharenetwork="linkedin">LinkedIn</a>
+    <a class="share-reddit" data-sharenetwork="reddit">Reddit</a>
+    <a class="share-pinterest" data-sharenetwork="pinterest">Pinterest</a>
+                        <div class="pipe"></div>
+            <a class="share-comments" data-sharenetwork="comments" href="#article-comments">Comments</a>
+            </div>
+<!-- e ferd/hearst/templates/premium/common/share_tools.tpl -->        </div>
+        <a class="pageHeader--nextStory fade show hdn-analytics">Next Story</a>
+        <ul class="pageHeader--links fade show">
+                                                            <li id="subscription" class="pageHeader--subscribe subscribeButton fade show">
+                    <button data-link="https://offers.sfchronicle.com/subscribe?origin=button&amp;variant=wcm.action.business.site.id.35" class="btn">Subscribe</button>
+                </li>
+                        <li class="eEdition"><a href="/web/20191218073533/https://www.sfchronicle.com/e-edition">e-edition</a></li>
+            <li class="treg-is-gigya gigya_menu">
+                <div class="gya-title expandable treg-conditional treg-not-logged-in"><span>Sign In</span></div>
+                <div class="gya-title expandable treg-conditional treg-logged-in"><span></span></div>
+                <div class="gya-content expandable">
+                    <div class="treg-gya-login-widget"></div>
+                </div>
+            </li>
+            <li class="searchButton searchToggle" tabindex="0"></li>
+        </ul>
+        <div class="pageHeader--search searchField">
+            
+            <form class="pageHeader--search-form" action="/web/20191218073533/https://www.sfchronicle.com/search/" method="get">
+                <input type="hidden" name="action" value="search"/>
+                <input type="hidden" name="firstRequest" value="1"/>
+                <input type="hidden" name="searchindex" value="solr"/>
+                <div class="fieldset">
+                    <input class="pageHeader--search-input" id="search" name="query" type="text" value="" tabindex="0" placeholder="Search"/>
+                    <button class="searchButton btn" value="" name="search" type="submit"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- hearst/home/navigation.tpl -->
+ 
+    <!-- src/business/templates/hearst/home/premium_navigation_main.tpl -->
+    <!-- ferd/hearst/templates/common/dynamic_nav.tpl -->
+<nav id="navigation" class="navigation" role="navigation"><div class="navigation--wrapper lock fade"><div class="navigation--menu" role="menu"><ul class="hidden-sm hidden-md hidden-lg hidden-xl"><li class="parent" data-length="7"><a href="/web/20191218073533/https://www.sfchronicle.com/local/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="1355" data-hdn-analytics="visit|Local|navigation-ard|2" role="menuitem">Local</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 6;"><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/local/sanfrancisco/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3168" data-hdn-analytics="visit|Local-San Francisco|navigation-ard|1" role="menuitem">San Francisco</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/local/bayarea/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1397" data-hdn-analytics="visit|Local-Bay Area|navigation-ard|2" role="menuitem">Bay Area</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/local/crime/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1400" data-hdn-analytics="visit|Local-Crime|navigation-ard|3" role="menuitem">Crime</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/california-wildfires" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4580" data-hdn-analytics="visit|Local-Wildfires|navigation-ard|4" role="menuitem">Wildfires</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.legacy.com/obituaries/sfgate/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1460" data-hdn-analytics="visit|Local-Obituaries|navigation-ard|5" role="menuitem">Obituaries</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/sanjose/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4694" data-hdn-analytics="visit|Local-San Jose|navigation-ard|6" role="menuitem">San Jose</a></li></ul></li><li class="parent" data-length="10"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="1358" data-hdn-analytics="visit|Sports|navigation-ard|3" role="menuitem">Sports</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 9;"><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/giants/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1362" data-hdn-analytics="visit|Sports-Giants|navigation-ard|1" role="menuitem">Giants</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/warriors/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1364" data-hdn-analytics="visit|Sports-Warriors|navigation-ard|2" role="menuitem">Warriors</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/49ers/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1360" data-hdn-analytics="visit|Sports-49ers|navigation-ard|3" role="menuitem">49ers</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/raiders/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1361" data-hdn-analytics="visit|Sports-Raiders|navigation-ard|4" role="menuitem">Raiders</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/athletics/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1363" data-hdn-analytics="visit|Sports-A's|navigation-ard|5" role="menuitem">A's</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/sharks/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1366" data-hdn-analytics="visit|Sports-Sharks|navigation-ard|6" role="menuitem">Sharks</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/cal_sports/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3595" data-hdn-analytics="visit|Sports-Cal|navigation-ard|7" role="menuitem">Cal</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/stanford_sports/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3596" data-hdn-analytics="visit|Sports-Stanford|navigation-ard|8" role="menuitem">Stanford</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/high-school/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1369" data-hdn-analytics="visit|Sports-High School|navigation-ard|9" role="menuitem">High School</a></li></ul></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/elections/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4208" data-hdn-analytics="visit|Politics|navigation-ard|4" role="menuitem">Politics</a></li><li class="parent" data-length="3"><a href="/web/20191218073533/https://www.sfchronicle.com/business/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="1407" data-hdn-analytics="visit|Biz+Tech|navigation-ard|5" role="menuitem">Biz+Tech</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 2;"><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/visionsf" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4141" data-hdn-analytics="visit|Biz+Tech-VisionSF|navigation-ard|1" role="menuitem">VisionSF</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/business/realestate/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1409" data-hdn-analytics="visit|Biz+Tech-Real Estate|navigation-ard|2" role="menuitem">Real Estate</a></li></ul></li><li class="single" data-length="1"><a href="/web/20191218073533/https://www.sfchronicle.com/us-world/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="1356" data-hdn-analytics="visit|US &amp; World|navigation-ard|6" role="menuitem">US &amp; World</a></li><li class="single" data-length="1"><a href="/web/20191218073533/https://www.sfchronicle.com/opinion/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="1411" data-hdn-analytics="visit|Opinion|navigation-ard|7" role="menuitem">Opinion</a></li><li class="parent" data-length="10"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="1380" data-hdn-analytics="visit|Datebook|navigation-ard|8" role="menuitem">Datebook</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 9;"><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/movies-tv" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1381" data-hdn-analytics="visit|Datebook-Movies &amp; TV|navigation-ard|1" role="menuitem">Movies &amp; TV</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/music" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1383" data-hdn-analytics="visit|Datebook-Music|navigation-ard|2" role="menuitem">Music</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/theater" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4583" data-hdn-analytics="visit|Datebook-Theater|navigation-ard|3" role="menuitem">Theater</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/art-exhibits" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1382" data-hdn-analytics="visit|Datebook-Art &amp; Exhibits|navigation-ard|4" role="menuitem">Art &amp; Exhibits</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/dance" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4584" data-hdn-analytics="visit|Datebook-Dance|navigation-ard|5" role="menuitem">Dance</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/classical" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4585" data-hdn-analytics="visit|Datebook-Classical|navigation-ard|6" role="menuitem">Classical</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/books" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1385" data-hdn-analytics="visit|Datebook-Books|navigation-ard|7" role="menuitem">Books</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/category/festivals" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3853" data-hdn-analytics="visit|Datebook-Festivals|navigation-ard|8" role="menuitem">Festivals</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/badreporter/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1647" data-hdn-analytics="visit|Datebook-Bad Reporter|navigation-ard|9" role="menuitem">Bad Reporter</a></li></ul></li><li class="parent" data-length="7"><a href="/web/20191218073533/https://www.sfchronicle.com/food/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="3157" data-hdn-analytics="visit|Food|navigation-ard|9" role="menuitem">Food</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 6;"><li class="child"><a href="https://web.archive.org/web/20191218073533/http://thepress.sfchronicle.com/wine" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4330" data-hdn-analytics="visit|Food-The Press|navigation-ard|1" role="menuitem">The Press</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://projects.sfchronicle.com/top-100-restaurants/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1393" data-hdn-analytics="visit|Food-Top 100 Restaurants|navigation-ard|2" role="menuitem">Top 100 Restaurants</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/insidescoop/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4265" data-hdn-analytics="visit|Food-Inside Scoop|navigation-ard|3" role="menuitem">Inside Scoop</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/foodandhome/restaurants/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1387" data-hdn-analytics="visit|Food-Restaurants|navigation-ard|4" role="menuitem">Restaurants</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/foodandhome/recipes/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1391" data-hdn-analytics="visit|Food-Recipes|navigation-ard|5" role="menuitem">Recipes</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://projects.sfchronicle.com/2017/brewery-map/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4340" data-hdn-analytics="visit|Food-NorCal Brewery Map|navigation-ard|6" role="menuitem">NorCal Brewery Map</a></li></ul></li><li class="parent" data-length="3"><a href="/web/20191218073533/https://www.sfchronicle.com/culture/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="1371" data-hdn-analytics="visit|Culture Desk|navigation-ard|10" role="menuitem">Culture Desk</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 2;"><li class="child"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/lifestyle/outdoors/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="1375" data-hdn-analytics="visit|Culture Desk-Outdoors|navigation-ard|1" role="menuitem">Outdoors</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/lifestyle/travel/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3750" data-hdn-analytics="visit|Culture Desk-Travel|navigation-ard|2" role="menuitem">Travel</a></li></ul></li><li class="parent" data-length="6"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/vault/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4206" data-hdn-analytics="visit|Vault: Archive|navigation-ard|11" role="menuitem">Vault: Archive</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 5;"><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/covers/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3954" data-hdn-analytics="visit|Vault: Archive-Chronicle Covers|navigation-ard|1" role="menuitem">Chronicle Covers</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/oursf/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3426" data-hdn-analytics="visit|Vault: Archive-Our San Francisco|navigation-ard|2" role="menuitem">Our San Francisco</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/fromthearchive/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3412" data-hdn-analytics="visit|Vault: Archive-From the Archive|navigation-ard|3" role="menuitem">From the Archive</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/local/portalsofthepast/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4207" data-hdn-analytics="visit|Vault: Archive-Portals of the Past|navigation-ard|4" role="menuitem">Portals of the Past</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/archive/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3187" data-hdn-analytics="visit|Vault: Archive-Archives Search|navigation-ard|5" role="menuitem">Archives Search</a></li></ul></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/podcasts/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4440" data-hdn-analytics="visit|Podcasts|navigation-ard|12" role="menuitem">Podcasts</a></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/investigations/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4438" data-hdn-analytics="visit|Investigations|navigation-ard|13" role="menuitem">Investigations</a></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/2019/in-depth-projects/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="3419" data-hdn-analytics="visit|In-Depth|navigation-ard|14" role="menuitem">In-Depth</a></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/http://link.sfchronicle.com/join/signup" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4563" data-hdn-analytics="visit|Newsletters|navigation-ard|15" role="menuitem">Newsletters</a></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/thetake/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="3411" data-hdn-analytics="visit|Photos|navigation-ard|1" role="menuitem">Photos</a></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/sf-chronicle-quizzes/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4571" data-hdn-analytics="visit|Chronicle Quizzes|navigation-ard|2" role="menuitem">Chronicle Quizzes</a></li><li class="parent" data-length="7"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/membership/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="3169" data-hdn-analytics="visit|Membership|navigation-ard|3" role="menuitem">Membership</a><span class="toggle navigation--item-glyph"></span><ul class="navigation--subMenu" data-collapsed="true" style="--n: 6;"><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/membership/faq/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3170" data-hdn-analytics="visit|Membership-About Membership|navigation-ard|1" role="menuitem">About Membership</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/membership/#offers" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3172" data-hdn-analytics="visit|Membership-Exclusive offers|navigation-ard|2" role="menuitem">Exclusive offers</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://offers.sfchronicle.com/subscribe?ipid=nav_join&amp;origin=sfc.nav.membership" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3171" data-hdn-analytics="visit|Membership-Join Now|navigation-ard|3" role="menuitem">Join Now</a></li><li class="child"><a href="/web/20191218073533/https://www.sfchronicle.com/e-edition/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4199" data-hdn-analytics="visit|Membership-e-edition|navigation-ard|4" role="menuitem">e-edition</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/mobile-apps/" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="4198" data-hdn-analytics="visit|Membership-App|navigation-ard|5" role="menuitem">App</a></li><li class="child"><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/account" class="navigation--item navigation--subMenu-item hdn-analytics" data-naveid="3173" data-hdn-analytics="visit|Membership-Manage my account|navigation-ard|6" role="menuitem">Manage my account</a></li></ul></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/https://sfchronicle.myshopify.com/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4117" data-hdn-analytics="visit|Store|navigation-ard|4" role="menuitem">Store</a></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/privacy_policy/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4561" data-hdn-analytics="visit|Privacy Notice|navigation-ard|5" role="menuitem">Privacy Notice</a></li><li class="single" data-length="1"><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/terms_of_use/" class="navigation--item navigation--menu-item hdn-analytics" data-naveid="4562" data-hdn-analytics="visit|Terms of Use|navigation-ard|6" role="menuitem">Terms of Use</a></li></ul></div></div><span class="rule"></span><div id="navToggle__page" class="navTogglePage"></div></nav>
+<!-- ferd/hearst/templates/common/dynamic_nav.tpl --><!--e src/business/templates/hearst/home/premium_navigation_main.tpl -->
+<!-- e hearst/home/navigation.tpl -->    <!-- src/business/widgets/hearst/collection/widget.tpl -->
+
+    <div class="hide-rss-link hdnce-e hdnce-collection-94830-sub_navigation"><!-- hearst/collections/sub_navigation.tpl -->
+<!-- collection.sub_navigation.94830 -->
+<!-- templates/design/collection/sub_navigation/default.tpl  -->
+            <!-- ferd/hearst/templates/collections/sub_navigation_body.tpl -->
+    <nav id="subNavigation" class="subNavigation" data-progressive="true" role="navigation">
+        <div class="subNavigation--wrapper lock">
+            <ul class="subNavigation--menu" role="menu">
+                                                    <li class="subNavigation--menu-item" data-channel="Local"><a href="/web/20191218073533/https://www.sfchronicle.com/local/" class="hdn-analytics" data-hdn-analytics="visit|Local|navigation-ard-ribbon|1" role="menuitem">Local</a>
+                                    <li class="subNavigation--menu-item" data-channel="Sporting Green"><a href="/web/20191218073533/https://www.sfchronicle.com/sports/" class="hdn-analytics" data-hdn-analytics="visit|Sporting Green|navigation-ard-ribbon|2" role="menuitem">Sporting Green</a>
+                                    <li class="subNavigation--menu-item" data-channel="Politics"><a href="/web/20191218073533/https://www.sfchronicle.com/politics/" class="hdn-analytics" data-hdn-analytics="visit|Politics|navigation-ard-ribbon|3" role="menuitem">Politics</a>
+                                    <li class="subNavigation--menu-item" data-channel="Biz+Tech"><a href="/web/20191218073533/https://www.sfchronicle.com/business/" class="hdn-analytics" data-hdn-analytics="visit|Biz+Tech|navigation-ard-ribbon|4" role="menuitem">Biz+Tech</a>
+                                    <li class="subNavigation--menu-item" data-channel="Food"><a href="/web/20191218073533/https://www.sfchronicle.com/food/" class="hdn-analytics" data-hdn-analytics="visit|Food|navigation-ard-ribbon|5" role="menuitem">Food</a>
+                                    <li class="subNavigation--menu-item" data-channel="Culture Desk"><a href="/web/20191218073533/https://www.sfchronicle.com/culture/" class="hdn-analytics" data-hdn-analytics="visit|Culture Desk|navigation-ard-ribbon|6" role="menuitem">Culture Desk</a>
+                                    <li class="subNavigation--menu-item" data-channel="Datebook"><a href="https://web.archive.org/web/20191218073533/https://datebook.sfchronicle.com/" class="hdn-analytics" data-hdn-analytics="visit|Datebook|navigation-ard-ribbon|7" role="menuitem">Datebook</a>
+                                    <li class="subNavigation--menu-item" data-channel="US &amp; World"><a href="/web/20191218073533/https://www.sfchronicle.com/us-world/" class="hdn-analytics" data-hdn-analytics="visit|US &amp; World|navigation-ard-ribbon|8" role="menuitem">US &amp; World</a>
+                                    <li class="subNavigation--menu-item" data-channel="Opinion"><a href="/web/20191218073533/https://www.sfchronicle.com/opinion/" class="hdn-analytics" data-hdn-analytics="visit|Opinion|navigation-ard-ribbon|9" role="menuitem">Opinion</a>
+                                    <li class="subNavigation--menu-item" data-channel="Vault: Archive"><a href="/web/20191218073533/https://www.sfchronicle.com/vault/" class="hdn-analytics" data-hdn-analytics="visit|Vault: Archive|navigation-ard-ribbon|10" role="menuitem">Vault: Archive</a>
+                                    <li class="subNavigation--menu-item" data-channel="In-Depth"><a href="/web/20191218073533/https://www.sfchronicle.com/2019/in-depth-projects/" class="hdn-analytics" data-hdn-analytics="visit|In-Depth|navigation-ard-ribbon|11" role="menuitem">In-Depth</a>
+                                    <li class="subNavigation--menu-item" data-channel="Podcasts"><a href="/web/20191218073533/https://www.sfchronicle.com/podcasts/" class="hdn-analytics" data-hdn-analytics="visit|Podcasts|navigation-ard-ribbon|12" role="menuitem">Podcasts</a>
+                            </ul>
+        </div>
+    </nav>
+<!-- e ferd/hearst/templates/collections/sub_navigation_body.tpl -->    <!-- e templates/design/collection/sub_navigation/default.tpl --><!-- e hearst/collections/sub_navigation.tpl -->
+</div><!-- e src/business/widgets/hearst/collection/widget.tpl --></header>
+<!-- e ferd/hearst/templates/premium/common/header.tpl --> <div id="topZone" class="zone"></div>
+<!-- e ferd/templates/ads/banner_top.tpl -->
+<aside class="ad-point ad-banner top" data-component="ad"><div id="AP951"></div></aside>
+<!-- e ferd/templates/ads/banner_top.tpl -->
+<!-- ferd/templates/article/types/premium_story_body.tpl -->
+<article class="article">
+    <header class="header"><!-- ferd/hearst/templates/premium/article/article_header.tpl -->
+<!-- ferd/hearst/templates/premium/article/article_headline.tpl -->
+                        <div class="header-subsection kicker">
+                Biz &amp; Tech                 <span class="light"> // </span>                Business            </div>
+                <h1 itemprop="headline" class="header-title">Airbnb outlines steps to clamp down on parties after Orinda shooting</h1>
+<!-- e ferd/hearst/templates/premium/article/article_headline.tpl --> <div class="header-author-img-time">
+            <div class="header-author-img" data-progressive="true" data-component="photo">
+        <a href="//web.archive.org/web/20191218073533/https://www.sfchronicle.com/author/carolyn-said/" title="Carolyn Said" rel="author" itemprop="url" class="hdn-analytics" data-hdn-analytics="visit|Carolyn Said-Author Page|article-header|1" target="_blank" rel="noopener noreferrer"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/77/67/71/16744027/3/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/77/67/71/16744027/3/square_medium.jpg" alt="Photo of Carolyn Said"/></a>    </div>
+        <div class="header-author-time h5">
+        <span class="header-byline" itemscope itemtype="http://schema.org/Person">
+                                                                <a href="//web.archive.org/web/20191218073533/https://www.sfchronicle.com/author/carolyn-said/" title="Carolyn Said" rel="author" itemprop="url" class="header-authors-url hdn-analytics" data-hdn-analytics="visit|Carolyn Said-Author Page|article-header|2" target="_blank" rel="noopener noreferrer">
+                             <span itemprop="name" class="header-authors-name">Carolyn Said</span>
+                                            </a>                                                        </span>
+        <time datetime="2019-11-06T18:16:25+00:00" itemprop="datePublished">
+            Nov. 6, 2019
+        </time>
+                <time datetime="2019-11-06T18:26:47+00:00" itemprop="dateModified">
+            Updated: Nov. 6, 2019 10:26&nbsp;a.m.
+        </time>
+            </div>
+</div>
+<div class="header-social shareTools">
+    <!-- ferd/hearst/templates/premium/common/share_tools.tpl -->
+<div class="share-list">
+    <a class="share-facebook" data-sharenetwork="facebook">Facebook</a>
+    <a class="share-twitter" data-sharenetwork="twitter">Twitter</a>
+    <a class="share-email" data-sharenetwork="email">Email</a>
+    <a class="share-linkedin" data-sharenetwork="linkedin">LinkedIn</a>
+    <a class="share-reddit" data-sharenetwork="reddit">Reddit</a>
+    <a class="share-pinterest" data-sharenetwork="pinterest">Pinterest</a>
+                        <div class="pipe"></div>
+            <a class="share-comments" data-sharenetwork="comments" href="#article-comments">Comments</a>
+            </div>
+<!-- e ferd/hearst/templates/premium/common/share_tools.tpl --></div>
+<!-- e ferd/hearst/templates/premium/article/article_header.tpl --></header>
+    <main class="main">
+                                    <section class="featured">
+                    	
+<!-- ferd/premium/article//content/photo.tpl -->
+					<section class="media media-photo photo-18542072" data-progressive="true" data-component="photo">
+	<img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/56/67/18542072/27/420x0.jpg" data-src-2x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/56/67/18542072/27/640x0.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/56/67/18542072/27/940x0.jpg" itemprop="photo" class="fullwidth" alt="A Contra Costa Sheriffs deputy holds the police tape up for investigators to drive under at the intersection of Knickerbocker Lane and Spring Road near the location where several people were shot at a Halloween party on Lucille Way in Orinda , Calif., on Friday, November 1, 2019. Early reports stated that 4 people had been killed with others injured and transported to nearby hospitals. Though several of the injuries were believed to have been caused when guests ran from the shooting."/><div class="media-meta"><div class="media-meta-section media-meta-caption"><span class="media-meta-caption-inner">A Contra Costa Sheriffs deputy holds the police tape up for investigators to drive under at the intersection of Knickerbocker Lane and Spring Road near the location where several people were shot at a Halloween party on Lucille Way in Orinda , Calif., on Friday, November 1, 2019. Early reports stated that 4 people had been killed with others injured and transported to nearby hospitals. Though several of the injuries were believed to have been caused when guests ran from the shooting.</span><div class="media-meta-credits">Photo: Carlos Avila Gonzalez / The Chronicle</div></div></div>
+</section>
+<!-- e ferd/premium/article//content/photo.tpl -->
+
+
+
+                </section>
+                                                <section class="body">                 	<p>Airbnb took steps Wednesday to <a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Can-Airbnb-carry-out-ban-on-party-houses-14809066.php">clamp down on unauthorized house parties,</a> in the wake of <a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/crime/article/4-people-killed-at-Orinda-house-party-reports-say-14767586.php">shootings at a Halloween party</a> at an Orinda Airbnb rental that caused five deaths.</p>
+
+
+                                                                	<p>Trust is vital to the short-term rental platform, wrote Airbnb CEO and co-founder Brian Chesky in an <a href="https://web.archive.org/web/20191218073533/https://news.airbnb.com/in-the-business-of-trust/">email to employees.</a> &ldquo;People need to feel like they can trust our community, and that they can trust Airbnb when something does go wrong.&rdquo;</p>
+
+
+                                                                	
+                                                                	<p>He outlined several specific changes:</p>
+
+
+                                                                	<p><strong>&gt;Verify listings.</strong> Airbnb will start Wednesday to verify the accuracy of all 7 million listings for home and room rentals on its site. It expects to be finished by Dec. 15, 2020, he said. &ldquo;Homes will be verified for accuracy of the listing (including accuracy of photos, addresses, and listing details) and quality standards (including cleanliness, safety, and basic home amenities) and those that meet our high expectations will be clearly labeled.&rdquo;</p>
+
+
+                                                                	<p><strong>&gt;Guest guarantee.</strong> Starting Dec. 15 of this year, guests who find a listing does not match its description can get rebooked into an equivalent property or get a 100% refund.</p>
+
+
+                                                                	<p><strong>&gt;Neighbor hotline</strong>. A new 24/7 hotline to be introduced in the U.S. by the end of the year will be staffed with a rapid response team to answer concerns by neighbors. The number will be made prominently available. Airbnb has hired two advisers to help start it: Charles Ramsey, former chief of police in Philadelphia and Washington, D.C., and Ronald Davis, former chief of police in East Palo Alto and executive director of community-oriented policing services in the Obama administration.</p>
+
+
+                                                                	<!-- ferd/hearst/templates/premium/article/content/related-links.tpl -->
+	<section class="asset_relatedlinks relatedStories" data-progressive="true" data-component="collection" data-collection-type="related">
+		<div class="relatedStories--title">
+			<h2>Orinda Shooting</h2>
+							<div class="relatedStories--nav">
+					<button class="relatedStories--nav-btn relatedStories--nav-prev btn disabled" data-delta="-1"></button>
+					<button class="relatedStories--nav-btn relatedStories--nav-next btn" data-delta="1"></button>
+				</div>
+					</div>
+		<ul class="relatedStories--list" data-total="3">
+			<li class="relatedStories--item" data-number="1" data-progressive="true" data-component="photo"><div class="card" data-number="1"><a class="hdn-analytics" href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/crime/article/4-people-killed-at-Orinda-house-party-reports-say-14767586.php" data-hdn-analytics="related_stories|article-14767586|article-14814357|1"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/57/32/18544261/5/gallery_medium.jpg"></div><div class="card--headline"><h6 class="card--retSection">Crime</h6><h6 class="card--headline-byline">By Matthias Gafni, Evan Sernoffsky, Megan Cassidy and Alejandro Serrano</h6><h4 class="card--headline-title">Fifth victim dies after Halloween party shooting at Airbnb in...</h4></div></a></div></li><li class="relatedStories--item" data-number="2" data-progressive="true" data-component="photo"><div class="card" data-number="2"><a class="hdn-analytics" href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Can-Airbnb-carry-out-ban-on-party-houses-14809066.php" data-hdn-analytics="related_stories|article-14809066|article-14814357|2"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/56/67/18542072/27/gallery_medium.jpg"></div><div class="card--headline"><h6 class="card--retSection">Biz &amp; Tech</h6><h6 class="card--headline-byline">By Carolyn Said</h6><h4 class="card--headline-title">Can Airbnb carry out ban on ‘party houses’? Are Airbnb...</h4></div></a></div></li><li class="relatedStories--item" data-number="3" data-progressive="true" data-component="photo"><div class="card" data-number="3"><a class="hdn-analytics" href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/business/article/Orinda-shootings-Who-will-pay-for-Airbnb-14803199.php" data-hdn-analytics="related_stories|article-14803199|article-14814357|3"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/57/45/18544976/13/gallery_medium.jpg"></div><div class="card--headline"><h6 class="card--retSection">Biz &amp; Tech</h6><h6 class="card--headline-byline">By Matthias Gafni and Carolyn Said</h6><h4 class="card--headline-title">Orinda shootings: Who will pay for ‘Airbnb Mansion Party’...</h4></div></a></div></li>
+		</ul>
+	</section>
+<!-- e ferd/hearst/templates/premium/article/content/related-links.tpl -->
+                                                                	<p><strong>&gt;High-risk reviews.</strong> The company will expand its manual screening of reservations flagged by its algorithms as potentially risky. Factors such as the size and duration of the listing are potential flags signaling unauthorized parties, for instance. This will start Dec. 15 and roll out globally through 2020.</p>
+
+
+                                                                	
+                                                                	<em><p>Carolyn Said is a San Francisco Chronicle staff writer. Email: <a href="https://web.archive.org/web/20191218073533/mailto:csaid@sfchronicle.com">csaid@sfchronicle.com</a> Twitter: <a href="https://web.archive.org/web/20191218073533/https://twitter.com/csaid">@csaid</a></p></em>
+
+
+                            </section>
+        <footer class="footer">
+            <!-- ferd/premium/article/modules/author_bio.tpl -->
+        <div class="author-module">
+        <div class="author-header"><div class="author-img" data-progressive="true" data-component="photo"><a href="//web.archive.org/web/20191218073533/https://www.sfchronicle.com/author/carolyn-said/" title="Carolyn Said" rel="author" class="header-authors-url hdn-analytics" target="_blank" rel="noopener noreferrer" data-hdn-analytics="visit|article-|author-module|1"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/77/67/71/16744027/3/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/77/67/71/16744027/3/square_medium.jpg" alt="Photo of Carolyn Said" height="76" width="76"/></a></div><div class="author-contact"><h5 class="author-name"><a href="//web.archive.org/web/20191218073533/https://www.sfchronicle.com/author/carolyn-said/" title="Carolyn Said" rel="author" class="header-authors-url hdn-analytics" target="_blank" rel="noopener noreferrer" data-hdn-analytics="visit|article-212|author-module|2">Carolyn Said</a></h5><div class="author-follow"><div class="author-follow-text">Follow Carolyn on:</div><a class="iconText author-facebook" href="https://web.archive.org/web/20191218073533/https://www.facebook.com/SFChronicle/">https://www.facebook.com/SFChronicle/</a><a class="iconText author-twitter" href="https://web.archive.org/web/20191218073533/https://twitter.com/Csaid">Csaid</a></div></div></div><div class="author-bio"><p>Carolyn Said covers the on-demand economy (new marketplaces such as Uber, TaskRabbit and Airbnb that let people rent their time, goods and services), the impacts of automation and AI on labor, and the world of autonomous vehicles.  Previously she covered the housing market and foreclosure crisis, winning awards for stories that shed light on the human impact of sweeping economic trends. As a business reporter at The Chronicle since 1997, she also has covered the dot-com rise and fall, the California energy crisis, the corporate malfeasance scandals, and the fallout from economic downturns.</p>
+</div><h5 class="author-latest-label">Past Articles from this Author:</h5><ul class="author-latest"><li><a href="/web/20191218073533/https://www.sfchronicle.com/bayarea/article/Faced-with-eviction-disabled-Vacaville-couple-14906137.php" rel="noopener" class="hdn-analytics" data-hdn-analytics="visit|article-|author-module|4">Faced with eviction, disabled Vacaville couple get help with move to new housing</a></li><li><a href="/web/20191218073533/https://www.sfchronicle.com/business/article/SFO-sees-big-flight-delays-due-to-winds-14887770.php" rel="noopener" class="hdn-analytics" data-hdn-analytics="visit|article-|author-module|5">SFO sees big flight delays due to winds</a></li><li><a href="/web/20191218073533/https://www.sfchronicle.com/business/article/Airbnb-No-bad-guests-allowed-no-open-invite-14884650.php" rel="noopener" class="hdn-analytics" data-hdn-analytics="visit|article-|author-module|6">Airbnb: Misbehaving guests, open-invite parties to be banned</a></li></ul>
+    </div>
+<!-- e ferd/premium/article/modules/author_bio.tpl -->        </footer>
+    </main>
+    <aside class="aside">
+        <div class="stickyItem" data-ad="AP300">
+            <!-- ferd/templates/ads/ad_box.tpl -->
+<aside class="ad-point ad-point-wide ad-box" data-component="ad"><div id="AP300"></div></aside>
+<!-- e ferd/templates/ads/ad_box.tpl -->
+                
+                        <!-- business/templates/design/item/default.tpl -->
+           <!-- mid:freeform.91817 -->
+    <div class="hst-freeform hdnce-e hdnce-item-91817">
+                <div id="HP-Sig-Themes" class="HP-Sig-Modules top-3-wrap">
+	<div class="collectionHeader">
+    	<h2>Trends</h2>
+	</div>
+	<div class="tab-container">
+		<!-- INSTRUCTIONS: replace url in <a> tag + text! -->
+<a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/bayarea/article/The-city-needs-to-be-pushed-SF-supe-wants-14911273.php"><div id="hp-theme-1" class="theme-button">Homelessness</div></a>
+
+<a href="https://web.archive.org/web/20191218073533/https://projects.sfchronicle.com/2019/decades-best-buildings/"><div id="hp-theme-2" class="theme-button">Architecture</div></a>
+
+<a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/bayarea/article/SF-mayor-orders-budget-cuts-as-city-takes-on-14911585.php"><div id="hp-theme-3" class="theme-button">SF Budget</div></a>
+
+<a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/49ers/article/Nick-Bosa-first-49ers-rookie-voted-to-Pro-Bowl-14914383.php"><div id="hp-theme-4" class="theme-button">Nick Bosa</div></a>
+
+<a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/politics/article/Early-impeachment-backer-Tom-Steyer-isn-t-14913419.php"><div id="hp-theme-5" class="theme-button">Impeachment</div></a>
+
+	</div>
+
+
+
+
+<style>
+	.top-3-wrap .tab-container{
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: flex-start;
+		margin-bottom: 16px;
+	}
+	.top-3-wrap .tab-container a{
+		margin: 0 10px 10px 0;
+		text-decoration: none;
+	}	
+	.top-3-wrap .tab-container a:last-child{
+		margin-right: 0;
+	}		
+	.top-3-wrap .tab-container .theme-button{
+		color: #000;
+		/*font-family: "National";*/
+		/*font-weight: 500;*/
+		font-family: National Medium,"system sans-serif";
+		font-variant-numeric: lining-nums;
+		font-size: 16px;
+		padding: 10px 14px;
+		text-align: center;
+		border: 1px solid #EAEAEA;
+		border-radius: 2px;
+		background-color: #fff;
+		-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.08);
+		-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.08);
+		box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.08);	
+		position: relative;
+		transition: all .2s;
+	}
+	.top-3-wrap .tab-container .theme-button:hover{
+		-webkit-box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.08);
+		-moz-box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.08);
+		box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.08);			
+		transition: all .2s;
+	}
+	.top-3-wrap .tab-container .theme-button:before{
+		display: block;
+		content:".";
+		color: transparent;
+		font-size: 0;
+		border-left: 3px solid #2CB9BF;
+		position: absolute;
+		left: 0;
+		padding: 1px 0;
+		top: -1px;
+		bottom: -1px;
+	}
+
+</style>
+</div>
+    </div>
+
+
+                  
+                        <!-- business/templates/design/item/default.tpl -->
+           <!-- mid:freeform.90846 -->
+    <div class="hst-freeform hdnce-e hdnce-item-90846">
+                <script src="//web.archive.org/web/20191218073533js_/https://projects.sfchronicle.com/shared/js/responsive-frame.js"></script>
+<iframe is="responsive-iframe" src="https://web.archive.org/web/20191218073533if_/https://projects.sfchronicle.com/tools/arm/?cat=business"></iframe>
+    </div>
+
+
+              
+
+<!-- hearst/home/mostPopular.tpl -->
+    
+    <div class="mostPopular">
+        <div class="moduleHeader">
+            <h2>Most Popular</h2>
+        </div>
+                                    <ul class="contentGroup">
+                                                                    <li class="contentItem" data-progressive="true" data-component="photo">
+                            
+                                                            <h5>
+                                    <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/news/article/Japanese-manga-about-a-Uighur-woman-s-persecution-14906711.php" title="Japanese manga about a Uighur woman's persecution in China becomes viral hit" data-hdn-analytics="visit|article-14906711|most_popular|0">Japanese manga about a Uighur woman's persecution in China becomes viral hit</a>
+                                </h5>
+                                <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/news/article/Japanese-manga-about-a-Uighur-woman-s-persecution-14906711.php" title="Japanese manga about a Uighur woman's persecution in China becomes viral hit" data-hdn-analytics="visit-from-image|article-14906711|most_popular|0">
+                                                                            
+                                                                                <img class="img" data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/43/03/18755804/3/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/43/03/18755804/3/square_medium.jpg" itemprop="photo"/>                                                                    </a>
+                                                    </li>
+                                                                    <li class="contentItem" data-progressive="true" data-component="photo">
+                            
+                                                            <h5>
+                                    <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/bayarea/heatherknight/article/Beloved-SF-homelessness-nonprofit-scales-back-as-14911174.php" title="Beloved SF homelessness nonprofit scales back as ‘devastating’ crisis takes toll" data-hdn-analytics="visit|article-14911174|most_popular|1">Beloved SF homelessness nonprofit scales back as ‘devastating’ crisis takes toll</a>
+                                </h5>
+                                <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/bayarea/heatherknight/article/Beloved-SF-homelessness-nonprofit-scales-back-as-14911174.php" title="Beloved SF homelessness nonprofit scales back as ‘devastating’ crisis takes toll" data-hdn-analytics="visit-from-image|article-14911174|most_popular|1">
+                                                                            
+                                                                                <img class="img" data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/45/31/18765410/5/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/45/31/18765410/5/square_medium.jpg" itemprop="photo"/>                                                                    </a>
+                                                    </li>
+                                                                    <li class="contentItem" data-progressive="true" data-component="photo">
+                            
+                                                            <h5>
+                                    <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/business/networth/article/Big-changes-looming-for-IRAs-401-k-plans-under-14913978.php" title="Big changes looming for IRAs, 401(k) plans under bill on verge of adoption" data-hdn-analytics="visit|article-14913978|most_popular|2">Big changes looming for IRAs, 401(k) plans under bill on verge of adoption</a>
+                                </h5>
+                                <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/business/networth/article/Big-changes-looming-for-IRAs-401-k-plans-under-14913978.php" title="Big changes looming for IRAs, 401(k) plans under bill on verge of adoption" data-hdn-analytics="visit-from-image|article-14913978|most_popular|2">
+                                                                            
+                                                                                <img class="img" data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/52/18770599/5/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/52/18770599/5/square_medium.jpg" itemprop="photo"/>                                                                    </a>
+                                                    </li>
+                                                                    <li class="contentItem" data-progressive="true" data-component="photo">
+                            
+                                                            <h5>
+                                    <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/environment/article/Could-putting-pebbles-on-beaches-help-solve-14911295.php" title="Could putting pebbles on beaches help solve climate change?" data-hdn-analytics="visit|article-14911295|most_popular|3">Could putting pebbles on beaches help solve climate change?</a>
+                                </h5>
+                                <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/environment/article/Could-putting-pebbles-on-beaches-help-solve-14911295.php" title="Could putting pebbles on beaches help solve climate change?" data-hdn-analytics="visit-from-image|article-14911295|most_popular|3">
+                                                                            
+                                                                                <img class="img" data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/45/31/18765399/5/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/45/31/18765399/5/square_medium.jpg" itemprop="photo"/>                                                                    </a>
+                                                    </li>
+                                                                    <li class="contentItem" data-progressive="true" data-component="photo">
+                            
+                                                            <h5>
+                                    <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/food/article/Eataly-to-open-South-Bay-Italian-food-emporium-14913517.php" title="Eataly to open South Bay Italian food emporium" data-hdn-analytics="visit|article-14913517|most_popular|4">Eataly to open South Bay Italian food emporium</a>
+                                </h5>
+                                <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/food/article/Eataly-to-open-South-Bay-Italian-food-emporium-14913517.php" title="Eataly to open South Bay Italian food emporium" data-hdn-analytics="visit-from-image|article-14913517|most_popular|4">
+                                                                            
+                                                                                <img class="img" data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/33/18769662/5/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/33/18769662/5/square_medium.jpg" itemprop="photo"/>                                                                    </a>
+                                                    </li>
+                                                                    <li class="contentItem" data-progressive="true" data-component="photo">
+                            
+                                                            <h5>
+                                    <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/food/article/Tartine-closes-huge-Los-Angeles-restaurant-14911435.php" title="Tartine closes huge Los Angeles restaurant complex after less than a year" data-hdn-analytics="visit|article-14911435|most_popular|5">Tartine closes huge Los Angeles restaurant complex after less than a year</a>
+                                </h5>
+                                <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/food/article/Tartine-closes-huge-Los-Angeles-restaurant-14911435.php" title="Tartine closes huge Los Angeles restaurant complex after less than a year" data-hdn-analytics="visit-from-image|article-14911435|most_popular|5">
+                                                                            
+                                                                                <img class="img" data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/56/26/52/12151485/25/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/56/26/52/12151485/25/square_medium.jpg" itemprop="photo"/>                                                                    </a>
+                                                    </li>
+                                                                    <li class="contentItem" data-progressive="true" data-component="photo">
+                            
+                                                            <h5>
+                                    <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/sports/article/Are-the-Warriors-ready-to-make-some-trades-14911203.php" title="Are Golden State Warriors ready to make some trades?" data-hdn-analytics="visit|article-14911203|most_popular|6">Are Golden State Warriors ready to make some trades?</a>
+                                </h5>
+                                <a class="hdn-analytics" href="/web/20191218073533/https://www.sfchronicle.com/sports/article/Are-the-Warriors-ready-to-make-some-trades-14911203.php" title="Are Golden State Warriors ready to make some trades?" data-hdn-analytics="visit-from-image|article-14911203|most_popular|6">
+                                                                            
+                                                                                <img class="img" data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/45/54/18766647/7/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/45/54/18766647/7/square_medium.jpg" itemprop="photo"/>                                                                    </a>
+                                                    </li>
+                                    </ul>
+                        </div><!--/most-popular-->
+<!--e hearst/home/mostPopular.tpl -->                    </div>
+    </aside>
+</article>
+<!-- e ferd/templates/article/types/premium_story_body.tpl --><!-- ferd/templates/ads/banner_bottom.tpl -->
+<aside class="ad-point ad-banner bottom" data-component="ad"><div id="BP728"></div></aside>
+<!-- ferd/templates/ads/banner_bottom.tpl -->
+
+            <!-- Taboola Below Article Thumbnails freeform -->
+        
+        <!-- hearst/item/standalone.tpl -->
+<div class="hdnce-e hdnce-item-92422"><!-- mid:freeform.92422 -->
+<div id="taboola-below-article-thumbnails"></div>
+<script type="text/javascript">
+  window._taboola = window._taboola || [];
+  _taboola.push({
+    mode: 'thumbnails-a',
+    container: 'taboola-below-article-thumbnails',
+    placement: 'Below Article Thumbnails',
+    target_type: 'mix'
+  });
+</script>
+</div><!-- / hdnce-e -->    <div id="bottomZone" class="zone lock"><!-- src/business/widgets/hearst/collection/widget.tpl -->
+
+    <div class="hide-rss-link hdnce-e hdnce-collection-20952-premium_article_featured_articles"><!-- collections/premium_article_featured_articles.tpl -->
+<!-- collection.premium_article_featured_articles.20952 -->
+    <!-- collections/premium_article_featured_articles.tpl -->
+<!-- collection.premium_article_featured_articles.20952 -->
+            
+<!-- ferd/hearst/templates/collections/premium_article_featured_articles.tpl -->
+<div class="featuredArticles" data-component="collection" data-collection-type="featured" data-collection-id="20952"><div class="featuredArticles--column"><div class="featuredArticles--header" data-number="1"><!-- widgets/hearst/moduleHeader/widget.tpl -->
+                            <h2><span class="first-word">Top</span> of the News</h2>
+            <!-- e widgets/hearst/moduleHeader/widget.tpl --><div class="stroke"></div></div><ul class="featuredArticles--list"><li class="featuredArticles--list-item" data-progressive="true" data-component="photo" data-number="1"><div class="card" data-number="1"><a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/article/PG-E-state-utility-regulator-agree-to-1-675-14914304.php" data-hdn-analytics="visit|article-14914304|premium_article_featured_articles-20952|1"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/70/43/18581711/21/gallery_large.jpg"/></div><div class="card--headline"><h6 class="card--retSection">Biz &amp; Tech</h6><h6 class="card--headline-byline">By Roland Li</h6><h4 class="card--headline-title">PG&E;, regulator agree to $1.675B wildfire settlement</h4></div></a></div></li><li class="featuredArticles--list-item" data-progressive="true" data-component="photo" data-number="2"><div class="card" data-number="2"><a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/bayarea/article/Chilly-weather-to-get-a-dash-of-rain-before-14912566.php" data-hdn-analytics="visit|article-14912566|premium_article_featured_articles-20952|2"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/65/18771311/5/gallery_medium.jpg"/></div><div class="card--headline"><h6 class="card--retSection">Local</h6><h6 class="card--headline-byline">By Alejandro Serrano</h6><h4 class="card--headline-title">‘Continuous’ rain could disrupt 200,000 travelers airports</h4></div></a></div></li><li class="featuredArticles--list-item" data-progressive="true" data-component="photo" data-number="3"><div class="card" data-number="3"><a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/networth/article/Big-changes-looming-for-IRAs-401-k-plans-under-14913978.php" data-hdn-analytics="visit|article-14913978|premium_article_featured_articles-20952|3"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/52/18770599/5/gallery_medium.jpg"/></div><div class="card--headline"><h6 class="card--retSection">Biz &amp; Tech</h6><h6 class="card--headline-byline">By Kathleen Pender</h6><h4 class="card--headline-title">Big changes looming for IRAs, 401(k) plans under bill</h4></div></a></div></li></ul></div><div class="featuredArticles--column"><div class="featuredArticles--header" data-number="2"><!-- widgets/hearst/moduleHeader/widget.tpl -->
+                            <h2><span class="first-word">In-Depth</span></h2>
+            <!-- e widgets/hearst/moduleHeader/widget.tpl --><div class="stroke"></div></div><ul class="featuredArticles--list"><li class="featuredArticles--list-item" data-progressive="true" data-component="photo" data-number="4"><div class="card" data-number="4"><a class="hdn-analytics hdnce-e hdnce-link-82791" href="https://web.archive.org/web/20191218073533/https://projects.sfchronicle.com/2019/decades-best-buildings/" data-hdn-analytics="visit|link-82791|premium_article_featured_articles-20952|4"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/45/42/18765971/4/gallery_medium.jpg"/></div><div class="card--headline"><h4 class="card--headline-title">The decade’s 12 best buildings in a changing SF</h4></div></a></div></li><li class="featuredArticles--list-item" data-progressive="true" data-component="photo" data-number="5"><div class="card" data-number="5"><a class="hdn-analytics hdnce-e hdnce-link-82617" href="https://web.archive.org/web/20191218073533/https://projects.sfchronicle.com/2019/visuals/bumgarner-goodbye/" data-hdn-analytics="visit|link-82617|premium_article_featured_articles-20952|5"><div class="card--image"><img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/05/76/66/18345389/29/gallery_medium.jpg"/></div><div class="card--headline"><h4 class="card--headline-title">Goodbye MadBum: A look back at Madison Bumgarner's time in SF</h4></div></a></div></li></div></div>
+<!-- e ferd/hearst/templates/collections/premium_article_featured_articles.tpl -->    <!-- end premium_article_featured_articles.tpl --><!-- end premium_article_featured_articles.tpl -->
+</div><!-- e src/business/widgets/hearst/collection/widget.tpl --></div>
+<div id="bottomZone_2" class="zone lock"><!-- src/business/widgets/hearst/collection/widget.tpl -->
+
+    <div class="hide-rss-link hdnce-e hdnce-collection-87942-premium_article_ribbon"><!-- src/business/templates/hearst/collections/premium_article_ribbon.tpl -->
+<!-- collection.premium_article_ribbon.87942 -->
+    <!-- design/collection/premium_article_ribbon/single_zonw.tpl -->
+             <div id="articleRibbon" class="premium-articleRibbon articleRibbon" data-collection-id="87942">
+            
+<!-- ferd/hearst/templates/collections/premium_article_ribbon_body.tpl -->
+<div data-component="collection" data-collection-type="nextIn">
+    <script type="text/javascript">
+        var storyList = [
+                                            {
+                    "id": 14914257,
+                    "headline": "Juul lawsuit: San Francisco Unified, other Bay Area school districts join",
+                    "articleUrl": "/business/article/San-Francisco-Unified-other-Bay-Area-school-14914257.php"
+                },
+                                            {
+                    "id": 14914465,
+                    "headline": "Judge OKs $13.5 billion PG&E settlement with fire victims’ lawyers",
+                    "articleUrl": "/business/article/Judge-OKs-13-5-billion-PG-E-settlement-with-fire-14914465.php"
+                },
+                                            {
+                    "id": 14913978,
+                    "headline": "Big changes looming for IRAs, 401(k) plans under bill on verge of adoption",
+                    "articleUrl": "/business/networth/article/Big-changes-looming-for-IRAs-401-k-plans-under-14913978.php"
+                },
+                                            {
+                    "id": 14914304,
+                    "headline": "PG&E, state utility regulator agree to $1.675 billion wildfire settlement",
+                    "articleUrl": "/business/article/PG-E-state-utility-regulator-agree-to-1-675-14914304.php"
+                },
+                    ];
+    </script>
+</div>
+<div class="lock" data-component="collection" data-collection-type="ribbon">
+     <div class="articleRibbon--wrapper out" data-collection-id="87942">
+        <button class="articleRibbon--nav-btn articleRibbon--nav-prev prev btn disabled" data-delta="-1"></button>
+        <ul class="articleRibbon--list">
+                                            
+                                    <li class="articleRibbon--list-item" data-progressive="true" data-component="photo">
+                        <div class="articleRibbon--list-item-img">
+                            <a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/article/San-Francisco-Unified-other-Bay-Area-school-14914257.php" data-hdn-analytics="visit-from-img|article-14914257|premium_article_ribbon-87942|1">
+                                <img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/75/05/18600300/9/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/75/05/18600300/9/square_small.jpg"/>
+                            </a>
+                        </div>
+                        <div class="articleRibbon--list-item-wrapper">
+                            <div class="retSection">Biz &amp; Tech</div>                            <h6><a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/article/San-Francisco-Unified-other-Bay-Area-school-14914257.php" data-hdn-analytics="visit|article-14914257|premium_article_ribbon-87942|1">Juul lawsuit: San Francisco Unified, other Bay Area school districts join</a></h6>
+                        </div>
+                    </li>
+                                                            
+                                    <li class="articleRibbon--list-item" data-progressive="true" data-component="photo">
+                        <div class="articleRibbon--list-item-img">
+                            <a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/article/Judge-OKs-13-5-billion-PG-E-settlement-with-fire-14914465.php" data-hdn-analytics="visit-from-img|article-14914465|premium_article_ribbon-87942|2">
+                                <img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/00/14/34/16828179/13/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/00/14/34/16828179/13/square_small.jpg"/>
+                            </a>
+                        </div>
+                        <div class="articleRibbon--list-item-wrapper">
+                            <div class="retSection">Biz &amp; Tech</div>                            <h6><a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/article/Judge-OKs-13-5-billion-PG-E-settlement-with-fire-14914465.php" data-hdn-analytics="visit|article-14914465|premium_article_ribbon-87942|2">Judge OKs $13.5 billion PG&E; settlement with fire victims’ lawyers</a></h6>
+                        </div>
+                    </li>
+                                                            
+                                    <li class="articleRibbon--list-item" data-progressive="true" data-component="photo">
+                        <div class="articleRibbon--list-item-img">
+                            <a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/networth/article/Big-changes-looming-for-IRAs-401-k-plans-under-14913978.php" data-hdn-analytics="visit-from-img|article-14913978|premium_article_ribbon-87942|3">
+                                <img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/52/18770599/5/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/07/46/52/18770599/5/square_small.jpg"/>
+                            </a>
+                        </div>
+                        <div class="articleRibbon--list-item-wrapper">
+                            <div class="retSection">Biz &amp; Tech</div>                            <h6><a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/networth/article/Big-changes-looming-for-IRAs-401-k-plans-under-14913978.php" data-hdn-analytics="visit|article-14913978|premium_article_ribbon-87942|3">Big changes looming for IRAs, 401(k) plans under bill on verge of adoption</a></h6>
+                        </div>
+                    </li>
+                                                            
+                                    <li class="articleRibbon--list-item" data-progressive="true" data-component="photo">
+                        <div class="articleRibbon--list-item-img">
+                            <a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/article/PG-E-state-utility-regulator-agree-to-1-675-14914304.php" data-hdn-analytics="visit-from-img|article-14914304|premium_article_ribbon-87942|4">
+                                <img data-src="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/70/43/18581711/21/square_small.jpg" data-src-4x="https://web.archive.org/web/20191218073533/https://s.hdnux.com/photos/01/06/70/43/18581711/21/square_small.jpg"/>
+                            </a>
+                        </div>
+                        <div class="articleRibbon--list-item-wrapper last">
+                            <div class="retSection">Biz &amp; Tech</div>                            <h6><a class="hdn-analytics " href="/web/20191218073533/https://www.sfchronicle.com/business/article/PG-E-state-utility-regulator-agree-to-1-675-14914304.php" data-hdn-analytics="visit|article-14914304|premium_article_ribbon-87942|4">PG&E;, state utility regulator agree to $1.675 billion wildfire settlement</a></h6>
+                        </div>
+                    </li>
+                                    </ul>
+        <button class="articleRibbon--nav-btn articleRibbon--nav-next next btn" data-delta="1"></button>
+     </div>
+</div>
+
+<!-- e ferd/hearst/templates/collections/premium_article_ribbon_body.tpl -->        </div>
+    <!-- e design/collection/premium_article_ribbon/single_zone.tpl --><!-- e src/business/templates/hearst/collections/premium_article_ribbon.tpl -->
+</div><!-- e src/business/widgets/hearst/collection/widget.tpl --></div>
+            <!-- hearst/common/spotimcomments.tpl -->
+<section id="article-comments" class="clearfix" data-progressive="true" data-component="embed-comments" data-comments-type="spotim">
+    <div id="spotim-comments" class="hdn-comments" data-js="//launcher.spot.im/spot/sp_e9s18MG6" data-spot-id="sp_e9s18MG6" data-post-url="https://www.sfchronicle.com/business/article/Airbnb-outlines-steps-to-clamp-down-on-parties-14814357.php" data-post-id="premiumsfgate-article-14814357" data-spotim-module="spotim-launcher" data-article-tags="Brian Chesky, Carolyn Said, Ronald Davis, Charles Ramsey, Neighbor, Obama, @csaid">
+        <!-- ux/premiumsfgate/home/modal_signin_form.tpl -->
+
+<script>
+    if (typeof (treg.html) !== "undefined") {
+        document.write('<div class="treg-gya-commenting-bar"></div>');
+    }
+</script>
+
+<!-- e ux/premiumsfgate/home/modal_signin_form.tpl -->
+        <div class="treg-gya-commenting-bar"></div>
+    </div>
+</section>
+<!-- e hearst/common/spotimcomments.tpl -->        <!-- ferd/hearst/templates/premium/common/site_footer.tpl -->
+<footer class="pageFooter">
+    <div class="lock">
+        <div class="pageFooter--wrapper">
+            <div class="pageFooter--left">
+                <a href="/web/20191218073533/https://www.sfchronicle.com/" class="pageFooter--left-logo"></a>
+                <ul class="pageFooter--left-social">
+                    <li class="facebook"><a href="https://web.archive.org/web/20191218073533/https://www.facebook.com/SFChronicle/"></a></li>                    <li class="twitter"><a href="https://web.archive.org/web/20191218073533/https://twitter.com/sfchronicle"></a></li>                    <li class="instagram"><a href="https://web.archive.org/web/20191218073533/https://www.instagram.com/sfchronicle/"></a></li>                    <li class="linkedin"><a href="https://web.archive.org/web/20191218073533/https://www.linkedin.com/company/sfchronicle"></a></li>                </ul>
+            </div>
+            <div class="pageFooter--right">
+                <div class="pageFooter--right-topLine">
+                    <a href="#" id="scrollTop" class="return"><span class="full">Return to</span> Top</a>
+                </div>
+                <div class="pageFooter--right-links">
+                    
+                    <!-- hearst/item/standalone.tpl -->
+<div class="hdnce-e hdnce-item-87230"><!-- mid:freeform.87230 -->
+<ul class="wrapper">
+  <li>
+    <div id="about-footer-hc-mobile" class="title">About</div>
+    <ul class="section" role="list" aria-labelledby="about-footer-hc-mobile">
+      <li><a href="https://web.archive.org/web/20191218073533/http://www.hearst.com/newspapers/san-francisco-chronicle" target="_blank" role="listitem">Our Company</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/privacy_policy" target="_blank" role="listitem">Privacy Notice</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/privacy_policy/#caprivacyrights" target="_blank" role="listitem">Your California Privacy Rights</a></li>
+      <li><a class="adChoices" href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/privacy_policy/#interestbasedads" target="_blank" role="listitem">Interest Based Ads</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/terms_of_use/" target="_blank" role="listitem">Terms of Use</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/http://www.sfchronicle.com/hr/" target="_blank" role="listitem">Careers</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://marketing.sfgate.com/advertise-with-us-today" target="_blank" role="listitem">Advertising</a></li>
+    </ul>
+  </li>
+
+
+<li>
+    <div id="news-footer-hc-mobile" class="title">Newsroom</div>
+    <ul class="section" role="list" aria-labelledby="news-footer-hc-mobile">
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/file/519/1/5191-Chronicle%20ethics%2C%20standards%20and%20practices.pdf" target="_blank" role="listitem">Ethics Policy</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/file/518/8/5188-Correction%20policy.pdf" target="_blank" role="listitem">Correction Policy</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/file/519/0/5190-San%20Francisco%20Chronicle%20Photo%20Ethics.pdf" target="_blank" role="listitem">Visual Ethics Guidelines</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/file/518/9/5189-SFChronicle%20anonymous%20source%20policy.pdf" target="_blank" role="listitem">Anonymous Sources Policy</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/opinion/article/How-The-Chronicle-s-endorsement-process-works-14499467.php" target="_blank" role="listitem">Endorsement Process</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://newstips.sfchronicle.com/" target="_blank" role="listitem">News Tips</a></li>
+    </ul>
+  </li>
+
+
+  <li>
+    <div id="contact-footer-hc-mobile" class="title">Contact</div>
+    <ul class="section" role="list" aria-labelledby="contact-footer-hc-mobile">
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/customer_service" target="_blank" role="listitem">Customer Service</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/faq" target="_blank" role="listitem">FAQ</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/newsroom_contacts" target="_blank" role="listitem">Newsroom Contacts</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://docs.google.com/forms/d/e/1FAIpQLSc7kzf1i_25UJXGZlmfusYj08usFp9JeK36knUQmYdk7CbQ7A/viewform?usp=sf_link" target="_blank" role="listitem">Homepage Redesign Feedback</a></li>
+    </ul>
+  </li>
+  <li>
+    <div id="services-footer-hc-mobile" class="title">Services</div>
+    <ul class="section" role="list" aria-labelledby="services-footer-hc-mobile">
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/profile" target="_blank" role="listitem">Profile</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://subscription.sfchronicle.com/" target="_blank" role="listitem">Subscriber Services</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/e-edition" target="_blank" role="listitem">e-edition</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/mobile-apps/" target="_blank" role="listitem">App</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/archive" target="_blank" role="listitem">Archives</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfchronicle.com/membership" target="_blank" role="listitem">Membership</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://sfchronicle.myshopify.com/" target="_blank" role="listitem">Store</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://offers.sfchronicle.com/subscribe/?origin=sfc.footer&amp;ipid=suboffers" target="_blank" role="listitem">Subscription Offers</a></li>
+      <li><a href="https://web.archive.org/web/20191218073533/https://www.sfgate.com/" target="_blank" role="listitem">sfgate.com</a></li>
+    </ul>
+  </li>
+</ul>
+
+<script>
+$(".wrapper > li").css("flex","0 0 25% !important");
+</script>
+
+<style>
+.wrapper > li {
+flex: 0 0 25% !important;
+}
+</style>
+</div><!-- / hdnce-e -->                </div>
+            </div>
+        </div>
+        <div class="pageFooter--branding">
+            <img class="pageFooter--branding-logo" src="/web/20191218073533im_/https://www.sfchronicle.com/img/core/hearst_newspapers_logo.svg"/>
+            <span class="pageFooter--branding-copyright">&copy;2019 Hearst</span>
+        </div>
+    </div>
+    </footer>
+<!-- e ferd/hearst/templates/premium/common/site_footer.tpl --> <!-- hearst/ads/mobile_ad_PMAD.tpl -->
+<div id="hst-adhesion" class="hst-adhesion clearfix">
+             <!-- hmb:pmad pmad ad -->
+         <div id="PMAD" class="ad_deferrable"><script type="text/javascript"> /*<![CDATA[*/ hearstPlaceAd("PMAD"); /*]]>*/ </script></div>
+    </div>
+<!-- e mobile_ad_PMAD.tpl --><!-- e ferd/hearst/templates/article/types/premium_story.tpl --><!-- e design/article/premium_story_page.tpl -->
+                        </body>
+</html><!--
+     FILE ARCHIVED ON 07:35:33 Dec 18, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:30:50 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 426.614
+  exclusion.robots: 0.167
+  exclusion.robots.policy: 0.162
+  cdx.remote: 0.054
+  esindex: 0.009
+  LoadShardBlock: 114.783 (3)
+  PetaboxLoader3.datanode: 143.877 (4)
+  CDXLines.iter: 30.677 (3)
+  load_resource: 118.333
+  PetaboxLoader3.resolve: 64.326
+-->

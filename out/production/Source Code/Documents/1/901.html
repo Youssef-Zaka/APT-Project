@@ -1,613 +1,367 @@
- <!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1"/>
-        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-        <meta http-equiv="cache-control" content="no-cache,no-store"/>
-        <meta http-equiv="pragma" content="no-cache"/>
-        <meta http-equiv="expires" content="-1"/>
-        <meta name='mswebdialog-title' content='Connecting to UNESCO authentication service'/>
-
-        <title>Sign In</title>
-        <script type='text/javascript'>
-//<![CDATA[
-function LoginErrors(){this.userNameFormatError = 'Enter your user ID in the format \u0026quot;domain\\user\u0026quot; or \u0026quot;user@domain\u0026quot;.'; this.passwordEmpty = 'Enter your password.'; this.passwordTooLong = 'Password is too long (\u0026gt; 128 characters).';}; var maxPasswordLength = 128;
-//]]>
-</script>
-
-<script type='text/javascript'>
-//<![CDATA[
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-function InputUtil(errTextElementID, errDisplayElementID) {
-
-    if (!errTextElementID)  errTextElementID = 'errorText'; 
-    if (!errDisplayElementID)  errDisplayElementID = 'error'; 
-
-    this.hasFocus = false;
-    this.errLabel = document.getElementById(errTextElementID);
-    this.errDisplay = document.getElementById(errDisplayElementID);
-};
-InputUtil.prototype.canDisplayError = function () {
-    return this.errLabel && this.errDisplay;
-}
-InputUtil.prototype.checkError = function () {
-    if (!this.canDisplayError){
-        throw new Error ('Error element not present');
-    }
-    if (this.errLabel && this.errLabel.innerHTML) {
-        this.errDisplay.style.display = '';        
-        var cause = this.errLabel.getAttribute('for');
-        if (cause) {
-            var causeNode = document.getElementById(cause);
-            if (causeNode && causeNode.value) {
-                causeNode.focus();
-                this.hasFocus = true;
-            }
-        }
-    }
-    else {
-        this.errDisplay.style.display = 'none';
-    }
-};
-InputUtil.prototype.setInitialFocus = function (input) {
-    if (this.hasFocus) return;
-    var node = document.getElementById(input);
-    if (node) {
-        if ((/^\s*$/).test(node.value)) {
-            node.focus();
-            this.hasFocus = true;
-        }
-    }
-};
-InputUtil.prototype.setError = function (input, errorMsg) {
-    if (!this.canDisplayError) {
-        throw new Error('Error element not present');
-    }
-    input.focus();
-
-    if (errorMsg) {
-        this.errLabel.innerHTML = errorMsg;
-    }
-    this.errLabel.setAttribute('for', input.id);
-    this.errDisplay.style.display = '';
-};
-InputUtil.makePlaceholder = function (input) {
-    var ua = navigator.userAgent;
-
-    if (ua != null && 
-        (ua.match(/MSIE 9.0/) != null || 
-         ua.match(/MSIE 8.0/) != null ||
-         ua.match(/MSIE 7.0/) != null)) {
-        var node = document.getElementById(input);
-        if (node) {
-            var placeholder = node.getAttribute("placeholder");
-            if (placeholder != null && placeholder != '') {
-                var label = document.createElement('input');
-                label.type = "text";
-                label.value = placeholder;
-                label.readOnly = true;
-                label.style.position = 'absolute';
-                label.style.borderColor = 'transparent';
-                label.className = node.className + ' hint';
-                label.tabIndex = -1;
-                label.onfocus = function () { this.nextSibling.focus(); };
-
-                node.style.position = 'relative';
-                node.parentNode.style.position = 'relative';
-                node.parentNode.insertBefore(label, node);
-                node.onkeyup = function () { InputUtil.showHint(this); };
-                node.onblur = function () { InputUtil.showHint(this); };
-                node.style.background = 'transparent';
-
-                node.setAttribute("placeholder", "");
-                InputUtil.showHint(node);
-            }
-        }
-    }
-};
-InputUtil.focus = function (inputField) {
-    var node = document.getElementById(inputField);
-    if (node) node.focus();
-};
-InputUtil.hasClass = function(node, clsName) {
-    return node.className.match(new RegExp('(\\s|^)' + clsName + '(\\s|$)'));
-};
-InputUtil.addClass = function(node, clsName) {
-    if (!this.hasClass(node, clsName)) node.className += " " + clsName;
-};
-InputUtil.removeClass = function(node, clsName) {
-    if (this.hasClass(node, clsName)) {
-        var reg = new RegExp('(\\s|^)' + clsName + '(\\s|$)');
-        node.className = node.className.replace(reg, ' ');
-    }
-};
-InputUtil.showHint = function (node, gotFocus) {
-    if (node.value && node.value != '') {
-        node.previousSibling.style.display = 'none';
-    }
-    else {
-        node.previousSibling.style.display = '';
-    }
-};
-InputUtil.updatePlaceholder = function (input, placeholderText) {
-    var node = document.getElementById(input);
-    if (node) {
-        var ua = navigator.userAgent;
-        if (ua != null &&
-            (ua.match(/MSIE 9.0/) != null ||
-            ua.match(/MSIE 8.0/) != null ||
-            ua.match(/MSIE 7.0/) != null)) {
-            var label = node.previousSibling;
-            if (label != null) {
-                label.value = placeholderText;
-            }
-        }
-        else {
-            node.placeholder = placeholderText;
-        }
-    }
-};
-
-//]]>
-</script>
 
 
-        
-        <link rel="stylesheet" type="text/css" href="/adfs/portal/css/style.css?id=3B1A0C704CDAE8ECD48AA8F0D50409D981CEF21D7AE6DC85B0797D270101B151" /><style>.illustrationClass {background-image:url(/adfs/portal/illustration/illustration.png?id=0AB803EBFEA78F936437E54F4DC97B9D9AC40C5FE7CE488669DE6F732B808373);}</style>
+<!DOCTYPE html>
+<html lang="en" class="page-landing">
+  <head>
+    <meta charset="UTF-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    </head>
-    <body dir="ltr" class="body">
-    <div id="noScript" style="position:static; width:100%; height:100%; z-index:100">
-        <h1>JavaScript required</h1>
-        <p>JavaScript is required. This web browser does not support JavaScript or JavaScript in this web browser is not enabled.</p>
-        <p>To find out if your web browser supports JavaScript or to enable JavaScript, see web browser help.</p>
-    </div>
-    <script type="text/javascript" language="JavaScript">
-         document.getElementById("noScript").style.display = "none";
-    </script>
-    <div id="fullPage">
-        <div id="brandingWrapper" class="float">
-            <div id="branding"></div>
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon_new.png">
+
+<title>
+  Patent Public Search | USPTO
+  
+</title>
+    <link  rel="stylesheet" href="../assets/styles/main.css">
+
+
+    
+  </head>
+  <body class="parent-container"  data-spy="scroll" data-offset="1" data-target="#verticalScrollspy">
+    
+      <a class="skipnav" href="#main-content">
+    Skip to main content
+  </a>
+      
+
+      <section class="banner" aria-label="Official government website">
+  <div class="accordion">
+    <div class="d-md-none">
+      <button class="btn accordion-btn" type="button" data-toggle="collapse" data-target="#gov-banner-demo"
+          aria-expanded="false" aria-controls="gov-banner-demo">
+        <div class="banner-inner">
+          <img class="banner-header-flag mr-2" src="../assets/img/us_flag_small.png" alt="U.S. flag">
+          <div class="flex-fill">
+            <p class="banner-header-text">An official website of the United States government
+                <span class="expand-btn">Here’s how you know
+                  <i class="material-icons">keyboard_arrow_down</i></span></p>
+          </div>
+          <span class="close-btn">
+            <i class="material-icons ">close</i>
+          </span>
         </div>
-        <div id="contentWrapper" class="float">
-            <div id="content">
-                <div id="header">
-                    <h4>UNESCO authentication service</h4>
-                </div>
-                <main>
-                    <div id="workArea">
-                        
-    <div id="authArea" class="groupMargin">
-        
-        
-        
-    <div id="loginArea">        
-        <div id="loginMessage" class="groupMargin">Sign in</div>
-
-        <form method="post" id="loginForm" autocomplete="off" novalidate="novalidate" onKeyPress="if (event && event.keyCode == 13) Login.submitLoginRequest();" action="/adfs/ls/?SAMLRequest=jVNRb9owEH7vr0B5h4QAhVgQKQvdhsQgArqHvUyuc24tJXbmcwr993McKNG0slmRopy%2F%2B%2B7uuy9zpGVRkaQ2L3IHv2pAc9ez51QWEom7XHi1lkRRFEgkLQGJYWSffFuTcBCQSiujmCq8P9JuZ1FE0EYo2aatlgtvu3lYb7%2BsNj%2BjcTS7p9H9CEYRz4OnaDId8oiPZyHjwEYhC%2Fh4CnTSpn4HjZZn4VnaNpJp9Spy0BtbdeE9bh726fZcBrGGlURDpbEJQRj2g4l9DsMpGYcknP1ocUurgpDUON4XYyokvo8Gw0EtAZkaKP3s05yjX6D%2FXtTJ8EnIXMjn29M%2FtSAkXw%2BHrJ9t94eWJLmokiqJdQl6D%2FpVMHjcra99cN3topHaZy3cix3LvIkRN6uOmzZyXVe0mDaryud%2B9%2FaKr0gj12qZqUKwNxdvzmelS2o%2BnmY4GLqIyPvcQQmUVBRJnmtA9N55kqJQx1QDNXYlRtfg9fy4U%2FxsPcidEe34Bk6ml6qyolpgswY4UWbOE16n7MLTwrpqBzy%2BaTxGWIOz4cy%2BjkpfJPkr1f%2BW42AN5wxDqMWANIK1n0e7a3XEfxZpAR8oEd9drrs%2Favwb&RelayState=user&SigAlg=http%3A%2F%2Fwww.w3.org%2F2001%2F04%2Fxmldsig-more%23rsa-sha256&Signature=bIiRTW8Fhck%2BowgLZDRPYEpDJHsxGVFR%2FddGMtT0STkVvzJukIXPcaivcgn3stFfe%2BmJJt2hNSLR9fm1Uz5dZTR0Y4bpE8CR0XUPiNj7vJB6J9tng%2B4ZsWYnZoJOL65CzGLG7vEKWM%2BkYI6s0jpeqYABXZcDobfiVrWG979XTl6pD7zFOtfEoBEZRwFPxA89de5llFX4KRnUIXPyVOxAzJ1jdioXVLX3xa5hyyKN7AW7zLLZ0vX%2FxhTrxE6pT4PF1MB84qeyUq9hABkCSqNK6aGmdqMW4y2cNKnhBiV4fcrMtfe8%2FXIqv75CuFqFbqEyVcgFo10mKWkkcDeTJ9RfWg%3D%3D&client-request-id=3f1d5798-9076-4e05-1e56-0080020000ff" >
-            <div id="error" class="fieldMargin error smallText">
-                <span id="errorText" for="" aria-live="assertive" role="alert"></span>
-            </div>
-
-            <div id="formsAuthenticationArea">
-                <div id="userNameArea">
-                    <label id="userNameInputLabel" for="userNameInput" class="hidden">User Account</label>
-                    <input id="userNameInput" name="UserName" type="email" value="" tabindex="1" class="text fullWidth"
-                        spellcheck="false" placeholder="someone@example.com" autocomplete="off"/>
-                </div>
-
-                <div id="passwordArea">
-                    <label id="passwordInputLabel" for="passwordInput" class="hidden">Password</label>
-                    <input id="passwordInput" name="Password" type="password" tabindex="2" class="text fullWidth"
-                        placeholder="Password" autocomplete="off"/>
-                </div>
-                <div id="kmsiArea" style="display:none">
-                    <input type="checkbox" name="Kmsi" id="kmsiInput" value="true" tabindex="3" />
-                    <label for="kmsiInput">Keep me signed in</label>
-                </div>
-                <div id="submissionArea" class="submitMargin">
-                    <span id="submitButton" class="submit" tabindex="4" role="button"
-                        onKeyPress="if (event && event.keyCode == 32) Login.submitLoginRequest();"
-                        onclick="return Login.submitLoginRequest();">Sign in</span>
-                </div>
-            </div>
-            <input id="optionForms" type="hidden" name="AuthMethod" value="FormsAuthentication"/>
-        </form>
-
-             <div id="authOptions">
-         <form id="options" method="post" action="https://sts2.unesco.org:443/adfs/ls/?SAMLRequest=jVNRb9owEH7vr0B5h4QAhVgQKQvdhsQgArqHvUyuc24tJXbmcwr993McKNG0slmRopy%2F%2B%2B7uuy9zpGVRkaQ2L3IHv2pAc9ez51QWEom7XHi1lkRRFEgkLQGJYWSffFuTcBCQSiujmCq8P9JuZ1FE0EYo2aatlgtvu3lYb7%2BsNj%2BjcTS7p9H9CEYRz4OnaDId8oiPZyHjwEYhC%2Fh4CnTSpn4HjZZn4VnaNpJp9Spy0BtbdeE9bh726fZcBrGGlURDpbEJQRj2g4l9DsMpGYcknP1ocUurgpDUON4XYyokvo8Gw0EtAZkaKP3s05yjX6D%2FXtTJ8EnIXMjn29M%2FtSAkXw%2BHrJ9t94eWJLmokiqJdQl6D%2FpVMHjcra99cN3topHaZy3cix3LvIkRN6uOmzZyXVe0mDaryud%2B9%2FaKr0gj12qZqUKwNxdvzmelS2o%2BnmY4GLqIyPvcQQmUVBRJnmtA9N55kqJQx1QDNXYlRtfg9fy4U%2FxsPcidEe34Bk6ml6qyolpgswY4UWbOE16n7MLTwrpqBzy%2BaTxGWIOz4cy%2BjkpfJPkr1f%2BW42AN5wxDqMWANIK1n0e7a3XEfxZpAR8oEd9drrs%2Favwb&RelayState=user&SigAlg=http%3A%2F%2Fwww.w3.org%2F2001%2F04%2Fxmldsig-more%23rsa-sha256&Signature=bIiRTW8Fhck%2BowgLZDRPYEpDJHsxGVFR%2FddGMtT0STkVvzJukIXPcaivcgn3stFfe%2BmJJt2hNSLR9fm1Uz5dZTR0Y4bpE8CR0XUPiNj7vJB6J9tng%2B4ZsWYnZoJOL65CzGLG7vEKWM%2BkYI6s0jpeqYABXZcDobfiVrWG979XTl6pD7zFOtfEoBEZRwFPxA89de5llFX4KRnUIXPyVOxAzJ1jdioXVLX3xa5hyyKN7AW7zLLZ0vX%2FxhTrxE6pT4PF1MB84qeyUq9hABkCSqNK6aGmdqMW4y2cNKnhBiV4fcrMtfe8%2FXIqv75CuFqFbqEyVcgFo10mKWkkcDeTJ9RfWg%3D%3D&client-request-id=3f1d5798-9076-4e05-1e56-0080020000ff">
-             <script type="text/javascript">
-                function SelectOption(option) {
-                    var w = document.getElementById('waitingWheelDiv');
-                    if(w) w.style.display = 'inline';
-                    var i = document.getElementById('optionSelection');
-                    i.value = option;
-                    document.forms['options'].submit();
-                    return false;
-                }
-             </script>
-             <input id="optionSelection" type="hidden" name="AuthMethod" />
-             <input id="userNameInputOptionsHolder" name="UserName" value="" type="hidden"/>
-             <div id='authOptionLinks' class='groupMargin'><div id="waitingWheelDiv" style="display: none;"><div id="WaitingWheel">
-    <!-- NOTE: This style portion is identical to cookie pull page, they are not in shared css file because of legacy dependancies for custom themes-->
-    <!-- CSS for small "waiting" wheel -->
-    <style>
-        #floatingCirclesG {
-            position: relative;
-            width: 125px;
-            height: 125px;
-            margin: auto;
-            transform: scale(0.4);
-            -o-transform: scale(0.4);
-            -ms-transform: scale(0.4);
-            -webkit-transform: scale(0.4);
-            -moz-transform: scale(0.4);
-        }
-
-        .f_circleG {
-            position: absolute;
-            height: 22px;
-            width: 22px;
-            border-radius: 12px;
-            -o-border-radius: 12px;
-            -ms-border-radius: 12px;
-            -webkit-border-radius: 12px;
-            -moz-border-radius: 12px;
-            animation-name: f_fadeG;
-            -o-animation-name: f_fadeG;
-            -ms-animation-name: f_fadeG;
-            -webkit-animation-name: f_fadeG;
-            -moz-animation-name: f_fadeG;
-            animation-duration: 1.2s;
-            -o-animation-duration: 1.2s;
-            -ms-animation-duration: 1.2s;
-            -webkit-animation-duration: 1.2s;
-            -moz-animation-duration: 1.2s;
-            animation-iteration-count: infinite;
-            -o-animation-iteration-count: infinite;
-            -ms-animation-iteration-count: infinite;
-            -webkit-animation-iteration-count: infinite;
-            -moz-animation-iteration-count: infinite;
-            animation-direction: normal;
-            -o-animation-direction: normal;
-            -ms-animation-direction: normal;
-            -webkit-animation-direction: normal;
-            -moz-animation-direction: normal;
-        }
-
-        #frotateG_01 {
-            left: 0;
-            top: 51px;
-            animation-delay: 0.45s;
-            -o-animation-delay: 0.45s;
-            -ms-animation-delay: 0.45s;
-            -webkit-animation-delay: 0.45s;
-            -moz-animation-delay: 0.45s;
-        }
-
-        #frotateG_02 {
-            left: 15px;
-            top: 15px;
-            animation-delay: 0.6s;
-            -o-animation-delay: 0.6s;
-            -ms-animation-delay: 0.6s;
-            -webkit-animation-delay: 0.6s;
-            -moz-animation-delay: 0.6s;
-        }
-
-        #frotateG_03 {
-            left: 51px;
-            top: 0;
-            animation-delay: 0.75s;
-            -o-animation-delay: 0.75s;
-            -ms-animation-delay: 0.75s;
-            -webkit-animation-delay: 0.75s;
-            -moz-animation-delay: 0.75s;
-        }
-
-        #frotateG_04 {
-            right: 15px;
-            top: 15px;
-            animation-delay: 0.9s;
-            -o-animation-delay: 0.9s;
-            -ms-animation-delay: 0.9s;
-            -webkit-animation-delay: 0.9s;
-            -moz-animation-delay: 0.9s;
-        }
-
-        #frotateG_05 {
-            right: 0;
-            top: 51px;
-            animation-delay: 1.05s;
-            -o-animation-delay: 1.05s;
-            -ms-animation-delay: 1.05s;
-            -webkit-animation-delay: 1.05s;
-            -moz-animation-delay: 1.05s;
-        }
-
-        #frotateG_06 {
-            right: 15px;
-            bottom: 15px;
-            animation-delay: 1.2s;
-            -o-animation-delay: 1.2s;
-            -ms-animation-delay: 1.2s;
-            -webkit-animation-delay: 1.2s;
-            -moz-animation-delay: 1.2s;
-        }
-
-        #frotateG_07 {
-            left: 51px;
-            bottom: 0;
-            animation-delay: 1.35s;
-            -o-animation-delay: 1.35s;
-            -ms-animation-delay: 1.35s;
-            -webkit-animation-delay: 1.35s;
-            -moz-animation-delay: 1.35s;
-        }
-
-        #frotateG_08 {
-            left: 15px;
-            bottom: 15px;
-            animation-delay: 1.5s;
-            -o-animation-delay: 1.5s;
-            -ms-animation-delay: 1.5s;
-            -webkit-animation-delay: 1.5s;
-            -moz-animation-delay: 1.5s;
-        }
-
-        @keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-o-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-ms-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-webkit-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-moz-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-    </style>
-
-    <!-- Div containing small "waiting" wheel -->
-    <div id="floatingCirclesG">
-        <div class="f_circleG" id="frotateG_01"></div>
-        <div class="f_circleG" id="frotateG_02"></div>
-        <div class="f_circleG" id="frotateG_03"></div>
-        <div class="f_circleG" id="frotateG_04"></div>
-        <div class="f_circleG" id="frotateG_05"></div>
-        <div class="f_circleG" id="frotateG_06"></div>
-        <div class="f_circleG" id="frotateG_07"></div>
-        <div class="f_circleG" id="frotateG_08"></div>
+      </button>
     </div>
-</div></div></div>
-         </form>
+    <div class="d-none d-md-block">
+      <div class="banner-inner align-itens-center">
+
+        <img class="banner-header-flag mr-2" src="../assets/img/us_flag_small.png" alt="U.S. flag">
+
+        <p class="banner-header-text">An official website of the United States government</p>
+
+        <button class="btn banner-btn ml-2" type="button" data-toggle="collapse" data-target="#gov-banner-demo"
+            aria-expanded="false" aria-controls="gov-banner-demo">
+            Here’s how you know
+            <i class="material-icons">keyboard_arrow_down</i>
+        </button>
+
+      </div>
+    </div>
+    <div class="banner-content collapse" id="gov-banner-demo">
+      <div class="row no-gutters-sm">
+        <div class="col-md-6 media">
+          <img class="banner-icon align-self-start" src="../assets/img/icon-dot-gov.svg" role="img" alt="Dot gov">
+          <div class="media-body">
+            <p>
+              <strong>The .gov means it’s official.</strong>
+              <br>
+                Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure
+                you’re on a federal government site.
+              </p>
+          </div>
+        </div>
+        <div class="col-md-6  media">
+          <img class="banner-icon align-self-start" src="../assets/img/icon-https.svg" role="img" alt="Https">
+          <div class="media-body">
+            <p>
+              <strong>The site is secure.</strong>
+              <br>
+                The <strong>https://</strong> ensures that you are connecting to the official website and that any
+                information you provide is encrypted and transmitted securely.
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+      
+      <header id="global-header">
+ 
+        
+          <div class="uspto-header-top">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+
+    <a href="https://www.uspto.gov" target="_blank" class="uspto-logo"
+          title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
+      <span class="sr-only">
+            United States Patent and Trademark Office
+          </span>
+    </a>
+    <div class="ml-auto d-flex">
+      <!-- Dynamic menu zone -->
+      <!-- Do not customize this area -->
+      <div class="display-inline dyn-menuarea">
+        <!-- Patents -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default ex-btn-inverse"
+                onclick="location.href = 'https://www.uspto.gov/patent';" aria-haspopup="false" aria-expanded="false">
+            <span class="btn-text">Patents</span>
+            <span class="btn-icon">
+              <span class="uspto-icon-lightbulb"></span></span>
+          </button>
+        </div>
+
+        <!-- Trademarks -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default ex-btn-inverse"
+                onclick="location.href = 'https://www.uspto.gov/trademark';" aria-haspopup="false"
+                aria-expanded="false">
+            <span class="btn-text">Trademarks</span>
+            <span class="btn-icon">
+              <span class="uspto-icon-trademark"></span></span>
+          </button>
+        </div>
+
+        <!-- Fees and payment -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default ex-btn-inverse"
+                onclick="location.href = 'https://fees.uspto.gov';" aria-haspopup="false" aria-expanded="false">
+            <span class="btn-text">Fees and payment</span>
+            <span class="btn-icon">
+              <span class="uspto-icon-dollar"></span></span>
+          </button>
+        </div>
+
+        <!-- Help -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            <span class="btn-text">Help<span class="caret"></span></span>
+            <span class="btn-icon">
+              <span class="uspto-icon-question-circle"></span></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <a href="https://www.uspto.gov/learning-resources" target="_blank"
+                    data-event-category="myuspto Header: Help menu" data-event-action="myuspto menu link clicked"
+                    data-event-label="FAQs">FAQs</a>
+            </li>
+            <li>
+              <a href="https://www.uspto.gov/about-us/contact-us" target="_blank"
+                    data-event-category="myuspto Header: Help menu" data-event-action="myuspto menu link clicked"
+                    data-event-label="Contact us">Contact us</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- /End dynamic menu zone -->
+
+      <!-- Sign-in/user menu -->
+
+      <!-- MyUSPTO Link -->
+      <div class="btn-group">
+        <a class="btn btn-default ex-btn-inverse my-link" href="https://my.uspto.gov">
+          <span class="btn-text">MyUSPTO</span>
+          <span class="btn-icon">
+            <span class="uspto-icon-myuspto"></span></span>
+
+        </a>
       </div>
 
-        <div id="introduction" class="groupMargin">
-                                 
+      <div class="btn-group">
+        <!--
+                The code snippet for the .btn-group below will need to
+                be conditionally displayed when the user is signed in
+                and it's appropriate to show account information.
+               -->
+        <!-- BEGIN USER DROPDOWN MENU -->
+        <button type="button" class="btn btn-default dropdown-toggle ex-btn-inverse user-link"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="btn-text">Sign in<span class="caret"></span></span>
+          <span class="btn-icon">
+            <span class="uspto-icon-user"></span></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li>
+            <a href="https://my.uspto.gov">
+              <span class="uspto-icon-home"></span> MyUSPTO<span class="sr-only">console</span></a>
+          </li>
+          <li>
+            <a href="https://account.uspto.gov">
+              <span class="uspto-icon-user-white"></span>
+              <span class="sr-only">Manage your</span>Account</a>
+          </li>
+          <li>
+            <a href="https://my.uspto.gov/signout">
+              <span class="uspto-icon-sign-out"></span> Sign out</a>
+          </li>
+        </ul>
+        <!-- END USER DROPDOWN MENU -->
+
+        <!--<a href="" class="btn btn-default user-link">Sign in</a>-->
+
+        <!--
+                  The code snippet for the .btn-group below will need to
+                  be conditionally displayed when it's appropriate to show
+                  the "Sign in" button.
+              -->
+        <!-- BEGIN SIGN IN BUTTON TO OPEN SIGN-IN WIDGET-->
+        <!-- <button
+                  class="btn btn-default ex-btn-inverse user-link"
+                  type="button"
+                  onclick="SIW.init({type:'modal'});">Sign in</button>-->
+        <!-- END SIGN IN BUTTON TO OPEN SIGN-IN WIDGET-->
+      </div>
+    </div>
+    <!-- /.pull-right -->
+
+  </nav>
+</div>
+<div class="uspto-header-middle ">
+  <div class="flex-fill">
+    <a class="navbar-brand" href="#" title="Patent Public Search">
+          Patent Public Search
+    </a>
+
+  </div>
+</div>
+        
+        
+          <div class="uspto-header-bottom">
+  <nav class="navbar navbar-expand-md navbar-dark " aria-label="header sub navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="landing.html"
+                  >
+            <span class="material-icons"> home </span>
+            <span class="sr-only">Home (current)</span></a
+                >
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Resources
+        </a>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            
+              <a class="dropdown-item" id="faq.html" href="faq.html" title="FAQs" group="1">
+                FAQs
+              </a>
+            
+              <a class="dropdown-item" id="quick-reference-guides.html" href="quick-reference-guides.html" title="Training materials" group="2">
+                Training materials
+              </a>
+            
+              <a class="dropdown-item" id="contact-us.html" href="contact-us.html" title="Help" group="3">
+                Help
+              </a>
+            
+          </ul>
+        </li>
+
+      </ul>
+
+    </div>
+  </nav>
+</div>
+        
+      </header>
+
+      <div class="main-container">
+        
+  <section class="jumbotron jumbotron-fluid bg-light rounded-0 pb-0 mb-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-9">
+          <h1 class="display-4">
+            <span>Welcome to </span>
+            <span class="text-dark font-weight-bold">Patent Public Search</span>
+          </h1>
+          <p>
+            The Patent Public Search tool is a new web-based patent search application that will replace internal legacy search tools PubEast and PubWest and external legacy search tools PatFT and AppFT. Patent Public Search has two user selectable modern interfaces that provide enhanced access to prior art. The new, powerful, and flexible capabilities of the application will improve the overall patent searching process.
+          </p>
+          <!-- create the navigation needed in landing/assets/js/main.js -->
+          <button class="btn btn-primary btn-lg" onclick="getStarted()" >Start search</button>
         </div>
-
-        <script type="text/javascript">
-        //<![CDATA[
-
-            function Login() {
-            }
-
-            Login.userNameInput = 'userNameInput';
-            Login.passwordInput = 'passwordInput';
-
-            Login.initialize = function () {
-
-                var u = new InputUtil();
-
-                u.checkError();
-                u.setInitialFocus(Login.userNameInput);
-                u.setInitialFocus(Login.passwordInput);
-            }();
-
-            Login.submitLoginRequest = function () { 
-                var u = new InputUtil();
-                var e = new LoginErrors();
-
-                var userName = document.getElementById(Login.userNameInput);
-                var password = document.getElementById(Login.passwordInput);
-
-                if (!userName.value || !userName.value.match('[@\\\\]')) {
-                    u.setError(userName, e.userNameFormatError);
-                    return false;
-                }
-
-                if (!password.value) {
-                    u.setError(password, e.passwordEmpty);
-                    return false;
-                }
-
-                if (password.value.length > maxPasswordLength) {
-                    u.setError(password, e.passwordTooLong);
-                    return false;
-                }
-
-                document.forms['loginForm'].submit();
-                return false;
-            };
-
-            InputUtil.makePlaceholder(Login.userNameInput);
-            InputUtil.makePlaceholder(Login.passwordInput);
-        //]]>
-        </script>
+        <div class="col-12 col-md-6 col-lg-3 img-bottom-60">
+          <img
+                class="light_bulb"
+                src="../assets/img/star-search.png"
+                alt="Light bulb"/>
+        </div>
+      </div>
     </div>
-
+  </section>
+  <section>
+    <div class="container pt-4 pb-4 text-center">
+      <div class="row">
+        <div class="col-4 p-2">
+          <a class="btn" href="contact-us.html" target="_blank">
+            <img src="../assets/img/Icon_Help.png" alt="Help Icon"/>
+            <span class="sr-only">Help</span>
+          </a>
+          <h2 class="h4 text-primary">Help</h2>
+          <p>Information and support</p>
+        </div>
+        <div class="col-4 p-2">
+          <a class="btn" href="faq.html" target="_blank">
+            <img src="../assets/img/Icon_FAQs.png"  alt="FAQs Icon"/>
+            <span class="sr-only">FAQ</span>
+          </a>
+          <h2 class="h4 text-primary">FAQs</h2>
+          <p >Answers to frequently asked questions</p>
+        </div>
+        <div class="col-4 p-2">
+          <a class="btn" href="quick-reference-guides.html" target="_blank">
+            <img src="../assets/img/Icon_Training.png"  alt="Quick Reference Guides Icon"/>
+            <span class="sr-only">Training</span>
+          </a>
+          <h2 class="h4 text-primary">Training materials</h2>
+          <p>Learn about Patent Public Search features and functionalities</p>
+        </div>
+      </div>
     </div>
+  </section>
+  <div class="container mt-auto p-0">
 
-                    </div>
-                </main>
-                <div id="footerPlaceholder"></div>
-            </div>
-            <footer id="footer">
-                <div id="footerLinks" class="floatReverse">
-                    <div><span id="copyright">&#169; 2018 Microsoft</span></div>
-                </div>
-            </footer>
-        </div>     
-    </div>
-    <script type='text/javascript'>
-//<![CDATA[
-// Copyright (c) Microsoft Corporation.  All rights reserved.
+    <p class="release_notes mb-0"></p>
 
-// This file contains several workarounds on inconsistent browser behaviors that administrators may customize.
-"use strict";
+  </div>
 
-// iPhone email friendly keyboard does not include "\" key, use regular keyboard instead.
-// Note change input type does not work on all versions of all browsers.
-if (navigator.userAgent.match(/iPhone/i) != null) {
-    var emails = document.querySelectorAll("input[type='email']");
-    if (emails) {
-        for (var i = 0; i < emails.length; i++) {
-            emails[i].type = 'text';
-        }
-    }
-}
 
-// In the CSS file we set the ms-viewport to be consistent with the device dimensions, 
-// which is necessary for correct functionality of immersive IE. 
-// However, for Windows 8 phone we need to reset the ms-viewport's dimension to its original
-// values (auto), otherwise the viewport dimensions will be wrong for Windows 8 phone.
-// Windows 8 phone has agent string 'IEMobile 10.0'
-if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-    var msViewportStyle = document.createElement("style");
-    msViewportStyle.appendChild(
-        document.createTextNode(
-            "@-ms-viewport{width:auto!important}"
-        )
-    );
-    msViewportStyle.appendChild(
-        document.createTextNode(
-            "@-ms-viewport{height:auto!important}"
-        )
-    );
-    document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
-}
+      </div>
 
-// If the innerWidth is defined, use it as the viewport width.
-if (window.innerWidth && window.outerWidth && window.innerWidth !== window.outerWidth) {
-    var viewport = document.querySelector("meta[name=viewport]");
-    viewport.setAttribute('content', 'width=' + window.innerWidth + ', initial-scale=1.0, user-scalable=1');
-}
+    
 
-// Gets the current style of a specific property for a specific element.
-function getStyle(element, styleProp) {
-    var propStyle = null;
+    <footer class="footer">
+  <div class="container text-center">
+  </div>
+</footer>
+    
 
-    if (element && element.currentStyle) {
-        propStyle = element.currentStyle[styleProp];
-    }
-    else if (element && window.getComputedStyle) {
-        propStyle = document.defaultView.getComputedStyle(element, null).getPropertyValue(styleProp);
-    }
+    <script src="../../vendor/jquery/jquery.min.js"></script>
 
-    return propStyle;
-}
-
-// The script below is used for downloading the illustration image 
-// only when the branding is displaying. This script work together
-// with the code in PageBase.cs that sets the html inline style
-// containing the class 'illustrationClass' with the background image.
-var computeLoadIllustration = function () {
-    var branding = document.getElementById("branding");
-    var brandingDisplay = getStyle(branding, "display");
-    var brandingWrapperDisplay = getStyle(document.getElementById("brandingWrapper"), "display");
-
-    if (brandingDisplay && brandingDisplay !== "none" &&
-        brandingWrapperDisplay && brandingWrapperDisplay !== "none") {
-        var newClass = "illustrationClass";
-
-        if (branding.classList && branding.classList.add) {
-            branding.classList.add(newClass);
-        } else if (branding.className !== undefined) {
-            branding.className += " " + newClass;
-        }
-        if (window.removeEventListener) {
-            window.removeEventListener('load', computeLoadIllustration, false);
-            window.removeEventListener('resize', computeLoadIllustration, false);
-        }
-        else if (window.detachEvent) {
-            window.detachEvent('onload', computeLoadIllustration);
-            window.detachEvent('onresize', computeLoadIllustration);
-        }
-    }
-};
-
-if (window.addEventListener) {
-    window.addEventListener('resize', computeLoadIllustration, false);
-    window.addEventListener('load', computeLoadIllustration, false);
-}
-else if (window.attachEvent) {
-    window.attachEvent('onresize', computeLoadIllustration);
-    window.attachEvent('onload', computeLoadIllustration);
-}
-
-// Function to change illustration image. Usage example below.
-function SetIllustrationImage(imageUri) {
-    var illustrationImageClass = '.illustrationClass {background-image:url(' + imageUri + ');}';
-
-    var css = document.createElement('style');
-    css.type = 'text/css';
-
-    if (css.styleSheet) css.styleSheet.cssText = illustrationImageClass;
-    else css.appendChild(document.createTextNode(illustrationImageClass));
-
-    document.getElementsByTagName("head")[0].appendChild(css);
-}
-
-// Example to change illustration image on HRD page after adding the image to active theme:
-// PSH> Set-AdfsWebTheme -TargetName <activeTheme> -AdditionalFileResource @{uri='/adfs/portal/images/hrd.jpg';path='.\hrd.jpg'}
-//
-//if (typeof HRD != 'undefined') {
-//    SetIllustrationImage('/adfs/portal/images/hrd.jpg');
-//}
-//]]>
+<script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="../assets/vendor/uswds/uswds.min.js"></script>
+<script src="https://components.uspto.gov/json/dynamic-trans-menu-2.0.0.js"></script>
+<script src="../assets/js/fetchHeaderMenu.js"></script>
+<script>
+  $(function () {
+     ptoDynamicHeader.loadMenu(); 
+  })
 </script>
+<script src="../assets/js/main.js"></script>
 
-
-    </body>
-</html> 
-
+    
+    
+  </body>
+</html>

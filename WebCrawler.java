@@ -7,19 +7,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class WebCrawler {
 
     //All the URLs that will be downloaded after crawler fills the HashMap
     static HashMap<String, Integer> URLMap = new HashMap<>(5000);
     static HashMap<String, Integer> checkerMap = new HashMap<>(5000);
+    static HashSet<String> refusedURLs = new HashSet<>(20000);
+
+    static HashMap<Integer, Set<Integer>> relevanceMap = new HashMap<>(5000);
 
     final static String URLFilePath = "URLs.txt";
+    final static String refusedURLsFile = "RefusedURLs.txt";
     final static String checkerFilePath = "URLChecker.txt";
     final static String documentNumber = "documentCount.txt";
     final static String iteratorNumber = "iteratorCount.txt";
     final static String URLSources = "URLSources.txt";
     final static String ThreadNumber = "ThreadNumber.txt";
+    final static String relevanceGraph = "RelevanceGraph.txt";
 
     static int THREAD_NUMBER;
 
@@ -29,6 +35,7 @@ public class WebCrawler {
     static LinkedList<Integer> URLList = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
+        Thread.currentThread().setName("Main Thread");
         BufferedReader br = null;
         try {
             File file = new File(ThreadNumber);
@@ -40,7 +47,7 @@ public class WebCrawler {
             System.out.println("Enter number of threads: ");
             try {
                 THREAD_NUMBER = in.nextInt();
-                if (THREAD_NUMBER > 16) {
+                if (THREAD_NUMBER > 16 || THREAD_NUMBER < 1) {
                     System.out.println("Invalid Number of threads, exiting...");
                     return;
                 }
@@ -83,21 +90,35 @@ public class WebCrawler {
 
                     String currentURL = URLScanner.nextLine();
 
-                    if (addIndex(currentURL, documentCount)) documentCount++;
+                    if (addIndex(currentURL, documentCount, -1)) documentCount++;
 
                 }
             } catch (FileNotFoundException e) {
                 System.out.println("Could not open SeedSet.txt");
                 return;
             }
+            for (int d = 0; d < documentCount; d++)
+                documentList.removeFirst();
         }
+
+        try {
+            documentList.getFirst();
+        }
+        catch (Exception ignored) {
+            PrintWriter fileClearer = new PrintWriter(URLFilePath);
+            fileClearer.print("");
+            fileClearer.close();
+            System.out.println("\nFailed to load files");
+            return;
+        }
+
         System.out.println("\nWorking with " + THREAD_NUMBER + " Threads...");
 
         Thread[] crawlerThreads = new Thread[THREAD_NUMBER];
 
         for (int k = 0; k < THREAD_NUMBER; k++) {
             crawlerThreads[k] = new Thread(() -> {
-                System.out.println(Thread.currentThread().getName() + " Up!");
+                System.out.println(Thread.currentThread().getName() + " is UP!");
                 while (true) {
                     int threadURLIterator;
                     synchronized (URLList) {
@@ -130,29 +151,17 @@ public class WebCrawler {
 
                     Elements links = doc.select("a[href]");
 
-                    int documentsFetched = 0;
-                    int documentsNotFetched = 0;
-
-                    long start = System.currentTimeMillis();
-
                     int j = 0;
-                    while (true) {
-                        if (j == links.size())
-                            break;
-                        long end = System.currentTimeMillis();
-                        if ((end - start) / 1000 > 60)  //Some documents take a lot of time to be fetched, (skip those docs for this URL)
-                            break;
-                        if (documentsFetched == 100 || documentsNotFetched == 100)      //Fetch a maximum of 100 documents per document
-                            break;
+                    while (j != links.size()) {
                         //The second condition causes the crawler to continue searching through other documents
                         String currentHyperlink = links.get(j).attr("href");
-                        if (addIndex(currentHyperlink, threadDocCount)) {
+                        if (!refusedURLs.contains(currentHyperlink) && addIndex(currentHyperlink, threadDocCount, threadURLIterator)) {
                             threadDocCount++;
-                            documentsFetched++;
-                            if (threadDocCount % 20 == 0)
+                            if (threadDocCount % 25 == 0) {
                                 saveCrawlerState();
-                            if (threadDocCount % 50 == 0)
                                 saveURLs();
+                                saveRelevanceGraph();
+                            }
                             if (oldDocCount != threadDocCount) {
                                 synchronized (documentList) {
                                     if (documentList.size() == 0)
@@ -163,9 +172,6 @@ public class WebCrawler {
                                 oldDocCount = threadDocCount;
                             }
 
-                        } else {
-                            //System.out.print(".");  //This is just an indicator that shows whether the crawler is fetching documents or not
-                            documentsNotFetched++;
                         }
                         j++;
                     }
@@ -178,16 +184,27 @@ public class WebCrawler {
             crawlerThreads[k].start();
         }
 
+        while (documentList.getFirst() < 4550) {
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException ignored) {
+
+            }
+            System.out.println("\n\n" + Thread.currentThread().getName() + ": Crawler Progress = " + (100 * documentList.getFirst() / 5000) + "%");
+        }
+
         for (int j = 0; j < THREAD_NUMBER; j++) {
             try {
                 crawlerThreads[j].join();
             } catch (Exception ignored) {
-                System.out.println(j);
             }
         }
 
+        checkMissingDoc();
 
         saveURLs();
+        saveRelevanceGraph();
+
         PrintWriter fileClearer = new PrintWriter(checkerFilePath);
         fileClearer.print("");
         fileClearer.close();
@@ -202,13 +219,16 @@ public class WebCrawler {
         fileClearer.close();
     }
 
-    public static boolean addIndex(String currentURL, int threadDocCount) {
+    public static boolean addIndex(String currentURL, int threadDocCount, int threadFetchingDoc) {
         URLConnection connection;
         System.setProperty("sun.net.client.defaultConnectTimeout", "2000");
         System.setProperty("sun.net.client.defaultReadTimeout", "2000");
         try {
             if (!robotSafe(new URL(currentURL))) {
-                System.out.print("\nURL: " + currentURL +" has been refused by Robot");
+                System.out.print("\nURL: " + currentURL + " has been refused by Robot");
+                synchronized (refusedURLs) {
+                    refusedURLs.add(currentURL);
+                }
                 return false;
             }
         } catch (MalformedURLException ignored) {
@@ -221,24 +241,42 @@ public class WebCrawler {
             content = s.hasNext() ? s.next() : "";
 
         } catch (Exception ex) {
+            synchronized (refusedURLs) {
+                refusedURLs.add(currentURL);
+            }
             return false;
         }
         boolean taken;
         synchronized (URLMap) {
             taken = URLMap.containsKey(currentURL);
         }
-        if (taken) return false;
+        if (taken) {
+            synchronized (refusedURLs) {
+                refusedURLs.add(currentURL);
+            }
+            return false;
+        }
         String checker;
         try {
             checker = (content.length() + content.substring(content.length() / 2, content.length() / 2 + 30)).replace("\n", "");
             boolean oldContent;
             synchronized (checkerMap) {
                 oldContent = checkerMap.containsKey(checker);
+                boolean invalid;
                 synchronized (URLMap) {
-                    if (oldContent && Objects.equals(checkerMap.get(checker), URLMap.get(currentURL))) return false;
+                    invalid = oldContent && Objects.equals(checkerMap.get(checker), URLMap.get(currentURL));
+                }
+                if (invalid) {
+                    synchronized (refusedURLs) {
+                        refusedURLs.add(currentURL);
+                    }
+                    return false;
                 }
             }
         } catch (Exception ignored) {
+            synchronized (refusedURLs) {
+                refusedURLs.add(currentURL);
+            }
             return false;
         }
         String documentName = "Documents\\" + (threadDocCount / 1000 + 1) + "\\" + threadDocCount + ".html";
@@ -266,13 +304,26 @@ public class WebCrawler {
                     checkerMap.putIfAbsent(checker, threadDocCount);
                 }
                 System.out.print("\n" + Thread.currentThread().getName() + " successfully added document #" + threadDocCount + " with length " + content.length() + " ");
-            } else return false;
+            } else {
+                synchronized (refusedURLs) {
+                    refusedURLs.add(currentURL);
+                }
+                return false;
+            }
         } catch (Exception e) {
+            synchronized (refusedURLs) {
+                refusedURLs.add(currentURL);
+            }
             return false;
         }
         synchronized (URLList) {
             URLList.add(threadDocCount);
         }
+        if (threadFetchingDoc > -1)
+            synchronized (relevanceMap) {
+                relevanceMap.putIfAbsent(threadFetchingDoc, new HashSet<>());
+                relevanceMap.get(threadFetchingDoc).add(threadDocCount);
+            }
         return true;
     }
 
@@ -396,13 +447,13 @@ public class WebCrawler {
                     //bfD.write(Integer.valueOf(documentCount).toString());
                     synchronized (documentList) {
                         for (Integer docNum : documentList)
-                            bfD.write(Integer.valueOf(docNum).toString()+"\n");
+                            bfD.write(Integer.valueOf(docNum).toString() + "\n");
                         bfD.flush();
 
                         bfE = new BufferedWriter(new FileWriter(iteratorFile));
                         synchronized (URLList) {
                             for (Integer iteratorNum : URLList)
-                                bfE.write(Integer.valueOf(iteratorNum).toString()+"\n");
+                                bfE.write(Integer.valueOf(iteratorNum).toString() + "\n");
                             bfE.flush();
                         }
                     }
@@ -425,7 +476,7 @@ public class WebCrawler {
 
             }
         }
-        System.out.println("\n\n" + Thread.currentThread().getName() +" saved the crawler state successfully");
+        System.out.print("\n" + Thread.currentThread().getName() + " saved the crawler state successfully");
     }
 
     public static int loadCrawlerState() {
@@ -458,6 +509,9 @@ public class WebCrawler {
                 }
             }
         }
+        if (URLMap.isEmpty())
+            return 0;
+
         try {
             File file = new File(checkerFilePath);
             br = new BufferedReader(new FileReader(file));
@@ -504,8 +558,40 @@ public class WebCrawler {
         } catch (Exception ignored) {
         }
 
-        if (URLMap.isEmpty())
-            return 0;
+        file = new File(refusedURLsFile);
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                refusedURLs.add(line);
+            }
+        } catch (Exception ignored) {
+        }
+
+        file = new File(relevanceGraph);
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                int starty = 0;
+                int endy = 0;
+                Integer doc = 0;
+                for (char c : line.toCharArray()) {
+                    if (c == ',') {
+                        doc = Integer.parseInt(line.substring(starty, endy));
+                        relevanceMap.putIfAbsent(doc, new HashSet<>());
+                        starty = endy + 1;
+                    } else if (c == '-') {
+                        relevanceMap.get(doc).add(Integer.parseInt(line.substring(starty, endy)));
+                        starty = endy + 1;
+                    }
+                    endy++;
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
+
         return docCount;
     }
 
@@ -537,6 +623,90 @@ public class WebCrawler {
             } catch (Exception ignored) {
             }
         }
-        System.out.println("\n" + Thread.currentThread().getName() + " saved URLs successfully\n");
+
+        urlFile = new File(refusedURLsFile);
+
+        bfU = null;
+        try {
+            bfU = new BufferedWriter(new FileWriter(urlFile));
+            synchronized (refusedURLs) {
+                for (String refusedURL : refusedURLs)
+                    bfU.write(refusedURL + "\n");
+            }
+            bfU.flush();
+        } catch (IOException e) {
+            return;
+        } finally {
+            try {
+                // Close Writers
+                assert bfU != null;
+                bfU.close();
+            } catch (Exception ignored) {
+            }
+        }
+        System.out.print("\n" + Thread.currentThread().getName() + " saved URLs successfully");
+    }
+
+    public static void saveRelevanceGraph() {
+        // File Objects
+        File relevanceFile = new File(relevanceGraph);
+
+        BufferedWriter bfU = null;
+        try {
+            bfU = new BufferedWriter(new FileWriter(relevanceFile));
+            synchronized (relevanceMap) {
+                for (Map.Entry<Integer, Set<Integer>> entry : relevanceMap.entrySet()) {
+                    bfU.write(entry.getKey().toString() + ",");
+                    for (Integer k : entry.getValue())
+                        bfU.write(k + "-");
+                    bfU.write("\n");
+                }
+            }
+            bfU.flush();
+        } catch (IOException e) {
+            return;
+        } finally {
+            try {
+                // Close Writers
+                assert bfU != null;
+                bfU.close();
+            } catch (Exception ignored) {
+            }
+        }
+        System.out.print("\n" + Thread.currentThread().getName() + " saved relevance graph file successfully");
+    }
+
+    public static void checkMissingDoc() {
+        int documentNumber = 0;
+        while (documentNumber < 5000) {
+            String documentName = "Documents\\" + (documentNumber / 1000 + 1) + "\\" + documentNumber + ".html";
+            try {
+                File input = new File(documentName);
+                if (input.length() > 0)
+                    documentNumber++;
+            } catch (Exception e) {
+                int threadURLIterator = URLList.getFirst();
+
+                documentName = "Documents\\" + (threadURLIterator / 1000 + 1) + "\\" + threadURLIterator + ".html";
+                File input = new File(documentName);
+                Document doc = null;
+                try {
+                    doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
+                } catch (Exception ignore) {
+                }
+
+                assert doc != null;
+                Elements links = doc.select("a[href]");
+                int j = 0;
+                while (j != links.size()) {
+                    //The second condition causes the crawler to continue searching through other documents
+                    String currentHyperlink = links.get(j).attr("href");
+                    if (!refusedURLs.contains(currentHyperlink) && addIndex(currentHyperlink, documentNumber, threadURLIterator)) {
+                        break;
+                    }
+                }
+                documentNumber++;
+            }
+        }
     }
 }

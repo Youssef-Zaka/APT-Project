@@ -1,677 +1,940 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<head>
-  <title>[2202.00470] An Assessment of the Impact of OCR Noise on Language Models</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
 
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
-</script>
-  <meta name="citation_title" content="An Assessment of the Impact of OCR Noise on Language Models"/>
-  <meta name="citation_author" content="Todorov, Konstantin"/>
-  <meta name="citation_author" content="Colavizza, Giovanni"/>
-  <meta name="citation_date" content="2022/01/26"/>
-  <meta name="citation_online_date" content="2022/01/26"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2202.00470"/>
-  <meta name="citation_arxiv_id" content="2202.00470"/>
-  <meta name="citation_abstract" content=" Neural language models are the backbone of modern-day natural language
-processing applications. Their use on textual heritage collections which have
-undergone Optical Character Recognition (OCR) is therefore also increasing.
-Nevertheless, our understanding of the impact OCR noise could have on language
-models is still limited. We perform an assessment of the impact OCR noise has
-on a variety of language models, using data in Dutch, English, French and
-German. We find that OCR noise poses a significant obstacle to language
-modelling, with language models increasingly diverging from their noiseless
-targets as OCR quality lowers. In the presence of small corpora, simpler models
-including PPMI and Word2Vec consistently outperform transformer-based models in
-this respect.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2202.00470"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="An Assessment of the Impact of OCR Noise on Language Models"/>
-    <meta name="twitter:description" content="Neural language models are the backbone of modern-day natural language
-processing applications. Their use on textual heritage collections which have
-undergone Optical Character Recognition (OCR)..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="An Assessment of the Impact of OCR Noise on Language Models"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2202.00470v1"/>
-    <meta property="og:description" content="Neural language models are the backbone of modern-day natural language
-processing applications. Their use on textual heritage collections which have
-undergone Optical Character Recognition (OCR) is therefore also increasing.
-Nevertheless, our understanding of the impact OCR noise could have on language
-models is still limited. We perform an assessment of the impact OCR noise has
-on a variety of language models, using data in Dutch, English, French and
-German. We find that OCR noise poses a significant obstacle to language
-modelling, with language models increasingly diverging from their noiseless
-targets as OCR quality lowers. In the presence of small corpora, simpler models
-including PPMI and Word2Vec consistently outperform transformer-based models in
-this respect."/>
-</head>
 
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+					
+		
+	
+	
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
+		
+		
+			
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+   
+   
+   
+
+
+
+	
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <!-- Google Tag Manager --> 
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TXG3TFZ');</script> 
+  <!-- End Google Tag Manager --> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  <meta name="viewport" content="initial-scale=1.0"> 
+  <!-- Below tag is added to avoid IE loading in compatibility mode by default --> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+  <meta name="format-detection" content="telephone=no"> 
+  <link rel="shortcut icon" href="/academic/system/images/favicon.ico" type="image/x-icon"> 
+  <!-- Country Lang meta tag --> 
+  <meta http-equiv="Content-Language" content="en_GB"> 
+  <meta name="language" content="en_GB"> 
+  <meta name="description" content="Help on the Academic Oxford University Press website"> 
+  <title>Help - Oxford University Press</title> 
+  <meta name="keywords" content=""> 
+  <!-- This is done as the fn:endsWith() does not look for the last index of the substring --> 
+  <meta name="WT.cg_n" content="Help"> 
+  <meta name="WT.sp" content="GAB_Marketing"> 
+  <meta name="WT.z_cc" content="us"> 
+  <meta name="WT.z_lang" content="en"> 
+  <!-- Open Graph data --> 
+  <!-- For PDP Page --> 
+  <!-- Twitter Card data --> 
+  <link rel="canonical" href="https://global.oup.com/academic/help/"> 
+ </head>
+ <body>
+  <input type="hidden" name="host_server_name" value="ip-10-160-86-110.eu-west-1.compute.internal"> 
+  <input type="hidden" name="host_server_canonical_name" value="ip-10-160-86-110.eu-west-1.compute.internal"> 
+  <script>
+			var oupcookiepolicy_siteid = 'gab_academic_marketing';	  			// the website id 	
+			var oupcookiepolicy_messagetype = 'implied';			// type of alert message e.g, implied / explicit
+			var oupcookiepolicy_preferredlanguage = 'en';			// preferred language of the website
+			var oupcookiepolicy_impliedmessageclass = 'cookiepolicyimplied';	// the css class for implied alert message
+			var oupcookiepolicy_documentroot='/academic/';	  			// the document root the cookie is set to
+		</script> 
+  <script type="text/javascript" src="/academic/system/js/jquery-1.7.2-min.js"></script> 
+  <script type="text/javascript" src="//d179lslaign324.cloudfront.net/aws-cookie/oupcookiepolicy.fancybox.js"></script> 
+  <script type="text/javascript" src="//d179lslaign324.cloudfront.net/aws-cookie/oup.cookiepolicy.pack.js"> </script> 
+  <link rel="stylesheet" href="//d179lslaign324.cloudfront.net/aws-cookie/jquery.fancybox-1.3.4_1.css" type="text/css" media="screen"> 
+  <noscript>
+   We use cookies to enhance your experience on our website. By continuing to use our website, you are agreeing to our use of cookies. You can change your cookie settings at any time. 
+   <a href="http://global.oup.com/cookiepolicy/" target="_blank">Find out more</a>
+  </noscript> 
+  <style type="text/css">
+	        #oupcookiepolicy_message {
+			    background: none repeat scroll 0 0 #304F72;
+			    font-size: 1.2em;
+			    list-style: decimal-leading-zero outside none;
+			    padding: 1em 3%;
+			}
+			.cookiepolicylinks li {
+				background-image: none;
+			}
+		</style> 
   <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
-  </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
-      </div>
-    </div>
-  </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+			var $ = jQuery;
+		</script> 
+  <link rel="stylesheet" type="text/css" href="/academic/system/css/global,oupextra,carousel,series,collections,phase2_ecommerce,jquery,phase2_promo_banner.css"> 
+  <link rel="stylesheet" type="text/css" href="/academic/system/css/print.css" media="print"> 
+  <!--[if IE 9]>
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/global_ie9.css" />
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/phase2_ecommerce_ie9.css" />
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/phase2_promo_banner_ie9.css" />
+        <![endif]--> 
+  <!--[if lte IE 8]>
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/global_ie6-8.css" />
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/phase2_ecommerce_ie7-8.css" />
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/phase2_promo_banner_ie7-8.css" />
+        <![endif]--> 
+  <!--[if IE 7]>
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/global_ie7.css" />
+        <![endif]--> 
+  <!--[if IE 6]>
+            <link rel="stylesheet" type="text/css" href="/academic/system/css/global_ie6.css" />
+        <![endif]--> 
+  <!-- included webtrends in pageHead rather than site Footer for JIRA GAB-1059 WebTrends DCS Tags not responding --> 
+  <!-- START OF SmartSource Data Collector TAG v10.2.36 --> 
+  <!-- Copyright (c) 2012 Webtrends Inc.  All rights reserved. --> 
+  <script>
+		window.webtrendsAsyncInit=function(){
+		    var dcs=new Webtrends.dcs().init({
+		        dcsid:"dcsugntzj100008q5w79rl876_1f1g",
+		        domain:"statse.webtrendslive.com",
+		        timezone:0,
+		        i18n:true,
+		        offsite:true,
+		        download:true,
+		        downloadtypes:"csv,doc,docx,flv,gzip,mov,mp3,mp4,pdf,ppt,pptx,ram,rar,rm,rpa,txt,wmv,wvx,xls,xlsx,xml,zip",
+		        onsitedoms:new RegExp("oup.com"),
+		        fpcdom:".oup.com",
+		        plugins:{
+		            hm:{src:"//s.webtrends.com/js/webtrends.hm.js"}
+		        }
+		        }).track();
+		};
+		(function(){
+		    var s=document.createElement("script"); s.async=true; s.src="/academic/system/js/webtrends.min.js";
+		    var s2=document.getElementsByTagName("script")[0]; s2.parentNode.insertBefore(s,s2);
+		}());
+		</script> 
+  <noscript>
+   <img alt="dcsimg" id="dcsimg" width="1" height="1" src="https://statse.webtrendslive.com/dcsugntzj100008q5w79rl876_1f1g/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.2.36&amp;dcssip=www.oup.com">
+  </noscript> 
+  <!-- END OF SmartSource Data Collector TAG v10.2.36 -->   
+  <!-- Google Tag Manager (noscript) --> 
+  <noscript>
+   <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXG3TFZ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript> 
+  <!-- End Google Tag Manager (noscript) --> 
+  <div id="wrapper"> 
+   <div id="header"> 
+    <div id="left_column"> 
+     <a href="/academic/?lang=en&amp;cc=us" title="Oxford University Press (OUP)" accesskey="1"><img src="/academic/system/images/logo.svg" alt="Oxford University Press (OUP)" style="padding-right: 22px;width: 230px;height: 55px;"></a> 
+     <span>Academic</span> 
+     <a id="skip_to_content" href="#content" accesskey="2">Skip to main content</a> 
+    </div> 
+    <div id="right_column"> 
+     <div id="header_nav" class="header_right"> 
+      <a href="#" onclick="javascript:showPromoModel('country_change_modal_overlay', 'country_change_modal_container'); return false;">United States<img src="/academic/system/images/icon-arrow-down.png"></a> 
+      <span class="link_divider"> | </span> 
+      <a href="/academic/aboutus/?lang=en&amp;cc=us">About Us</a> 
+      <span class="link_divider"> | </span> 
+      <a href="/academic/careers/?lang=en&amp;cc=us">Careers</a> 
+      <span class="link_divider"> | </span> 
+      <a href="/academic/contactus/?lang=en&amp;cc=us">Contact Us</a> 
+      <span class="link_divider"> | </span> 
+      <a href="/academic/help/?lang=en&amp;cc=us">Help</a> 
+     </div> 
+     <div class="clearer"></div> 
+     <div id="header_promo"> 
+      <a href="/academic/store/signin?lang=en&amp;cc=us">Sign In</a> 
+      <span class="link_divider"> |</span> 
+      <a href="/academic/store/register?lang=en&amp;cc=us">Register</a> 
+      <span class="link_divider"> |</span> 
+      <a href="/academic/store/my-account?lang=en&amp;cc=us">My Account</a> 
+      <span class="link_divider"> |</span> 
+      <a href="/academic/store/cart?lang=en&amp;cc=us">Cart</a> 
+      <img src="/academic/system/images/basket_icon.jpg" alt=""> 
+      <span>0 items</span> 
+     </div> 
+     <div class="clearer"></div> 
+     <div id="simple_search"> 
+      <div> 
+       <form id="simple_search_form" name="simple_search_form" class="inline_layout" action="/academic/search" method="get"> 
+        <label for="simple_search_text">Search</label> 
+        <input style="width: 225px; font-size: 1.2em;" name="q" type="text" class="default_text" value="Keyword, Author, ISBN, Title"> 
+        <input type="hidden" name="cc" value="us"> 
+        <input type="hidden" name="lang" value="en"> 
+        <label for="simple_search_submit">Start Search</label> 
+        <input style="padding: 4px 25px; font-size: 1.2em;" id="simple_search_submit" type="submit" title="Start a basic search" value="Search"> 
+       </form> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="clearer"></div> 
+   </div> 
+   <div style="display: none;" class="promo_message_modal_overlay" id="country_change_modal_overlay"></div> 
+   <div style="display: none" class="promo_message_modal_container" id="country_change_modal_container"> 
+    <div class="promo_message_modal_inner RemoveThisForIcon_information" id="modal_inner"> 
+     <label class="country_select_label" id="country_select_label"> Choose your country or region </label> 
+     <select aria-controls="ph2_country_disallowed" aria-labelledby="ph2_country_label" name="country" id="ph2_country" autofocus autocorrect="off" autocomplete="off"> </select> 
+     <p> <input type="button" onclick="javascript:changeCountry(); return false;" class="change_country" value="Change Country" name="Change_Country" id="Change_Country"> </p> 
+     <a href="#" class="close_modal_link">Close</a> 
+    </div> 
+   </div> 
+   <div id="primary_nav"> 
+    <div id="tier_layout_container"> 
+     <ul> 
+      <li class="arts_humanities menu_default"> <a href="/academic/category/arts-and-humanities/?lang=en&amp;cc=us" accesskey="a">Arts &amp; Humanities</a> 
+       <div> 
+        <ul> 
+         <li class="subject_columns triple_columns"> 
+          <ul> 
+           <li><a href="/academic/category/arts-and-humanities/archaeology/?lang=en&amp;cc=us">Archaeology</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/architecture/?lang=en&amp;cc=us">Architecture</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/art/?lang=en&amp;cc=us">Art</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/biography/?lang=en&amp;cc=us">Biography</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/byzantine-studies/?lang=en&amp;cc=us">Byzantine Studies</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/classical-studies/?lang=en&amp;cc=us">Classical Studies</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/digital-humanities/?lang=en&amp;cc=us">Digital Humanities</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/egyptology/?lang=en&amp;cc=us">Egyptology</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/history/?lang=en&amp;cc=us">History</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/journalism/?lang=en&amp;cc=us">Journalism</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/language-teaching-and-learning/?lang=en&amp;cc=us">Language Teaching &amp; Learning</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/linguistics/?lang=en&amp;cc=us">Linguistics</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/literature/?lang=en&amp;cc=us">Literature</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/media-studies/?lang=en&amp;cc=us">Media Studies</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/music/?lang=en&amp;cc=us">Music</a></li> 
+          </ul> 
+          <ul> 
+           <li><a href="/academic/category/arts-and-humanities/sheet-music/?lang=en&amp;cc=us">Music - Sheet Music</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/performing-arts/?lang=en&amp;cc=us">Performing Arts</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/philosophy/?lang=en&amp;cc=us">Philosophy</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/publishing/?lang=en&amp;cc=us">Publishing</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/religion/?lang=en&amp;cc=us">Religion</a></li> 
+           <li><a href="/academic/category/arts-and-humanities/society-and-culture/?lang=en&amp;cc=us">Society &amp; Culture</a></li> 
+          </ul> 
+          <ul> 
+           <li> <span><strong>Series</strong></span> 
+            <ul> 
+             <li><a title="Classical Presences" href="https://global.oup.com/academic/content/series/c/classical-presences-clpr/">Classical Presences</a></li>
+             <li><a title="Great BAttles" href="https://global.oup.com/academic/content/series/g/great-battles-gba/">Great Battles</a></li>
+             <li><a title="Oxford Handbooks" href="https://global.oup.com/academic/content/series/o/oxford-handbooks-ohbk/?type=listing&amp;subjectcode1=1793239%7CAHU00010">Oxford Handbooks</a></li>
+             <li><a title="Oxford World's Classics" href="https://global.oup.com/academic/content/series/o/oxford-worlds-classics-owc/">Oxford World's Classics</a></li> 
+             <li><a class="view_all" href="/academic/series/arts-and-humanities/?lang=en&amp;cc=us">View All</a></li> 
+            </ul></li> 
+          </ul> </li> 
+         <li> <span><strong>Online Resources</strong></span> 
+          <ul> 
+           <li><a href="https://global.oup.com/academic/product/grove-art-online-9781884446054?">Grove Art Online</a></li>
+           <li><a title="Grove Music" href="https://global.oup.com/academic/product/grove-music-online-9781561592630?">Grove Music Online</a></li>
+           <li><a title="Oxford Islamic Studies Online" href="https://global.oup.com/academic/product/oxford-islamic-studies-online-9780195301748">Oxford Islamic Studies Online</a></li>
+           <li><a title="Oxford Scholarly Editions Online - Medieval Poetry" href="https://global.oup.com/academic/product/oxford-scholarly-editions-online---medieval-poetry-9780191881053">Oxford Scholarly Editions Online - Medieval Poetry</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/online/?type=listing&amp;subjectcode1=1135928|AHU00010">View All</a></li> 
+          </ul> <span><strong>Journals</strong></span> 
+          <ul> 
+           <li><a title="American Historical Review" href="https://global.oup.com/academic/product/19375239">The American Historical Review</a></li>
+           <li><a title="Applied Linguistics" href="https://global.oup.com/academic/product/1477450X">Applied Linguistics</a></li>
+           <li><a title="The British Journal for the Philosophy of Science" href="https://global.oup.com/academic/product/14643537">The British Journal for the Philosophy of Science</a></li>
+           <li><a title="The Oral History Review" href="https://global.oup.com/academic/product/15338592">The Oral History Review</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/category/arts-and-humanities/?type=listing&amp;facet_narrowbybinding_facet=Journal">View All</a></li> 
+          </ul> </li> 
+         <li class="resources_column"> <span><strong>Resources</strong></span> 
+          <ul> 
+           <li><a title="Authors Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Authors<br></a></li>
+           <li><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers<br></a></li>
+           <li><a title="Instructors Resource Center" href="/academic/instructors/?lang=en&amp;cc=us">Instructors<br></a></li>
+           <li><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarians<br></a></li>
+           <li><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press</a></li>
+           <li><a title="Publisher Services" href="/academic/publisher-resources-info/?lang=en&amp;cc=us">Publisher Services</a></li>
+           <li><a title="Researchers Resource Center" href="/academic/researchers/?lang=en&amp;cc=us">Researchers<br></a></li>
+           <li><a title="Societies Resource Center" href="/academic/societies/?lang=en&amp;cc=us">Societies<br></a></li>
+           <li><a title="Sponsors &amp; Advertisers Resource Center" href="/academic/advertising/?lang=en&amp;cc=us">Sponsors &amp; Advertisers <br></a></li>
+           <li><a title="Students Resource Center" href="/academic/students/?lang=en&amp;cc=us">Students</a></li> 
+          </ul> </li> 
+         <li class="refresh_page_column"> <a class="refresh_page_link" href="#">Close</a> </li> 
+        </ul> 
+       </div> </li> 
+      <li class="dictionaries_reference menu_default"> <a href="/academic/category/dictionaries-and-reference/?lang=en&amp;cc=us" accesskey="a">Dictionaries &amp; Reference</a> 
+       <div> 
+        <ul> 
+         <li class="subject_columns triple_columns"> 
+          <ul> 
+           <li><a href="/academic/category/dictionaries-and-reference/geographical-reference/?lang=en&amp;cc=us">Geographical Reference</a></li> 
+           <li><a href="/academic/category/dictionaries-and-reference/bilingual-dictionaries/?lang=en&amp;cc=us">Bilingual Dictionaries</a></li> 
+           <li><a href="/academic/category/dictionaries-and-reference/encyclopedias/?lang=en&amp;cc=us">Encyclopedias</a></li> 
+           <li><a href="/academic/category/dictionaries-and-reference/english-dictionaries/?lang=en&amp;cc=us">English Dictionaries</a></li> 
+           <li><a href="/academic/category/dictionaries-and-reference/language-reference/?lang=en&amp;cc=us">Language Reference</a></li> 
+           <li><a href="/academic/category/dictionaries-and-reference/public-speaking-guides/?lang=en&amp;cc=us">Public Speaking Guides</a></li> 
+           <li><a href="/academic/category/dictionaries-and-reference/quotations/?lang=en&amp;cc=us">Quotations</a></li> 
+           <li><a href="/academic/category/dictionaries-and-reference/thesauri/?lang=en&amp;cc=us">Thesauri</a></li> 
+          </ul> 
+          <ul> 
+          </ul> 
+          <ul> 
+           <li> <span><strong>Series</strong></span> 
+            <ul> 
+             <li><a title="Oxford Companions" href="https://global.oup.com/academic/content/series/o/oxford-companions-oc/">Oxford Companions</a></li>
+             <li><a title="Oxford Handbooks" href="https://global.oup.com/academic/content/series/o/oxford-handbooks-ohbk/">Oxford Handbooks</a></li>
+             <li><a title="Oxford Quick Reference" href="https://global.oup.com/academic/content/series/o/oxford-quick-reference-oqr/">Oxford Quick Reference</a></li>
+             <li><a title="Very Short Introductions" href="https://global.oup.com/academic/content/series/v/very-short-introductions-vsi/">Very Short Introductions</a></li> 
+             <li><a class="view_all" href="/academic/series/dictionaries-and-reference/?lang=en&amp;cc=us">View All</a></li> 
+            </ul></li> 
+          </ul> </li> 
+         <li> <span><strong>Online Resources</strong></span> 
+          <ul> 
+           <li><a title="Oxford Bibliographies" href="https://global.oup.com/academic/product/9780199799701">Oxford Bibliographies</a></li>
+           <li><a title="Oxford Dictionary of National Biography Online" href="https://global.oup.com/academic/product/9780195221961">Oxford Dictionary of National Biography Online</a></li>
+           <li><a title="Oxford Research Encyclopedias" href="https://global.oup.com/academic/product/9780199396283">Oxford Research Encyclopedias</a></li>
+           <li><a title="University Press Scholarship Online" href="https://global.oup.com/academic/product/9780199897865">University Press Scholarship Online</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/online/?type=listing&amp;subjectcode1=1136810|GEN00010">View All</a></li> 
+          </ul> </li> 
+         <li class="resources_column"> <span><strong>Resources</strong></span> 
+          <ul> 
+           <li><a title="Authors Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Authors<br></a></li>
+           <li><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers<br></a></li>
+           <li><a title="Instructors Resource Center" href="/academic/instructors/?lang=en&amp;cc=us">Instructors<br></a></li>
+           <li><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarians<br></a></li>
+           <li><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press</a></li>
+           <li><a title="Publisher Services" href="/academic/publisher-resources-info/?lang=en&amp;cc=us">Publisher Services</a></li>
+           <li><a title="Researchers Resource Center" href="/academic/researchers/?lang=en&amp;cc=us">Researchers<br></a></li>
+           <li><a title="Societies Resource Center" href="/academic/societies/?lang=en&amp;cc=us">Societies<br></a></li>
+           <li><a title="Sponsors &amp; Advertisers Resource Center" href="/academic/advertising/?lang=en&amp;cc=us">Sponsors &amp; Advertisers <br></a></li>
+           <li><a title="Students Resource Center" href="/academic/students/?lang=en&amp;cc=us">Students</a></li> 
+          </ul> </li> 
+         <li class="refresh_page_column"> <a class="refresh_page_link" href="#">Close</a> </li> 
+        </ul> 
+       </div> </li> 
+      <li class="law menu_default"> <a href="/academic/category/law/?lang=en&amp;cc=us" accesskey="a">Law</a> 
+       <div> 
+        <ul> 
+         <li class="subject_columns triple_columns"> 
+          <ul> 
+           <li><a href="/academic/category/law/antitrust-law/?lang=en&amp;cc=us">Antitrust Law</a></li> 
+           <li><a href="/academic/category/law/arbitration/?lang=en&amp;cc=us">Arbitration</a></li> 
+           <li><a href="/academic/category/law/civil-law/?lang=en&amp;cc=us">Civil Law</a></li> 
+           <li><a href="/academic/category/law/comparative-law/?lang=en&amp;cc=us">Comparative Law</a></li> 
+           <li><a href="/academic/category/law/constitutional-and-administrative-law/?lang=en&amp;cc=us">Constitutional &amp; Administrative Law</a></li> 
+           <li><a href="/academic/category/law/construction-law/?lang=en&amp;cc=us">Construction Law</a></li> 
+           <li><a href="/academic/category/law/contract-law/?lang=en&amp;cc=us">Contract Law</a></li> 
+           <li><a href="/academic/category/law/corporate-law/?lang=en&amp;cc=us">Corporate Law</a></li> 
+           <li><a href="/academic/category/law/criminal-law/?lang=en&amp;cc=us">Criminal Law</a></li> 
+           <li><a href="/academic/category/law/employment-and-labor-law/?lang=en&amp;cc=us">Employment &amp; Labor Law</a></li> 
+           <li><a href="/academic/category/law/environment-and-energy-law/?lang=en&amp;cc=us">Environment &amp; Energy Law</a></li> 
+           <li><a href="/academic/category/law/european-union-law/?lang=en&amp;cc=us">European Union Law</a></li> 
+           <li><a href="/academic/category/law/family-law/?lang=en&amp;cc=us">Family Law</a></li> 
+           <li><a href="/academic/category/law/financial-law/?lang=en&amp;cc=us">Financial Law</a></li> 
+           <li><a href="/academic/category/law/history-of-law/?lang=en&amp;cc=us">History of Law</a></li> 
+          </ul> 
+          <ul> 
+           <li><a href="/academic/category/law/human-rights-and-immigration/?lang=en&amp;cc=us">Human Rights &amp; Immigration</a></li> 
+           <li><a href="/academic/category/law/intellectual-property-law/?lang=en&amp;cc=us">Intellectual Property Law</a></li> 
+           <li><a href="/academic/category/law/international-law/?lang=en&amp;cc=us">International Law</a></li> 
+           <li><a href="/academic/category/law/it-and-communications-law/?lang=en&amp;cc=us">IT &amp; Communications Law</a></li> 
+           <li><a href="/academic/category/law/jurisprudence-and-philosophy-of-law/?lang=en&amp;cc=us">Jurisprudence &amp; Philosophy of Law</a></li> 
+           <li><a href="/academic/category/law/law-and-politics/?lang=en&amp;cc=us">Law &amp; Politics</a></li> 
+           <li><a href="/academic/category/law/law-and-society/?lang=en&amp;cc=us">Law &amp; Society</a></li> 
+           <li><a href="/academic/category/law/legal-system-and-practice/?lang=en&amp;cc=us">Legal System &amp; Practice</a></li> 
+           <li><a href="/academic/category/law/medical-and-healthcare-law/?lang=en&amp;cc=us">Medical &amp; Healthcare Law</a></li> 
+           <li><a href="/academic/category/law/philosophy-of-law/?lang=en&amp;cc=us">Philosophy of Law</a></li> 
+           <li><a href="/academic/category/law/policing/?lang=en&amp;cc=us">Policing</a></li> 
+           <li><a href="/academic/category/law/property-law/?lang=en&amp;cc=us">Property Law</a></li> 
+           <li><a href="/academic/category/law/study-and-revision/?lang=en&amp;cc=us">Study &amp; Revision</a></li> 
+           <li><a href="/academic/category/law/terrorism-and-national-security-law/?lang=en&amp;cc=us">Terrorism &amp; National Security Law</a></li> 
+           <li><a href="/academic/category/law/tort/?lang=en&amp;cc=us">Tort Law</a></li> 
+          </ul> 
+          <ul> 
+           <li><a href="/academic/category/law/trusts-law/?lang=en&amp;cc=us">Trusts Law</a></li> 
+           <li><a href="/academic/category/law/media-law/?lang=en&amp;cc=us">Media Law</a></li> 
+           <li>&nbsp;</li> 
+           <li> <span><strong>Series</strong></span> 
+            <ul> 
+             <li><a title="Blackstone's Police Manuals" href="https://global.oup.com/academic/content/series/b/blackstones-police-manuals-pol/">Blackstone's Police Manuals</a></li>
+             <li><a title="International Economic Law Series" href="https://global.oup.com/academic/content/series/i/international-economic-law-series-iels/">International Economic Law Series</a></li>
+             <li><a title="Oxford Commentaries on International Law" href="https://global.oup.com/academic/content/series/o/oxford-commentaries-on-international-law-ocils/">Oxford Commentaries on International Law</a></li>
+             <li><a title="Oxford Handbooks" href="https://global.oup.com/academic/content/series/o/oxford-handbooks-ohbk/?type=listing&amp;subjectcode1=1803299%7CLAW00010">Oxford Handbooks</a></li> 
+             <li><a class="view_all" href="/academic/series/law/?lang=en&amp;cc=us">View All</a></li> 
+            </ul></li> 
+          </ul> </li> 
+         <li> <span><strong>Online Resources</strong></span> 
+          <ul> 
+           <li><a title="Investment Claims" href="https://global.oup.com/academic/product/9780199230907">Investment Claims</a></li>
+           <li><a title="Oxford International Organizations" href="https://global.oup.com/academic/product/9780191836602">Oxford International Organizations</a></li>
+           <li><a title="Oxford Legal Research Library" href="https://global.oup.com/academic/product/9780191774409">Oxford Legal Research Library</a></li>
+           <li><a title="Oxford Reports on International Law" href="https://global.oup.com/academic/product/9780199533671">Oxford Reports on International Law</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/online/?type=listing&amp;subjectcode1=1136862|LAW00010">View All</a></li> 
+          </ul> <span><strong>Journals</strong></span> 
+          <ul> 
+           <li><a title="American Law and Economics Review" href="https://global.oup.com/academic/product/american-law-and-economics-review-14657260?">American Law and Economics Review</a></li>
+           <li><a title="Human Rights Law Review" href="https://global.oup.com/academic/product/human-rights-law-review-17441021?">Human Rights Law Review</a></li>
+           <li><a title="Journal of Environmental Law" href="https://global.oup.com/academic/product/journal-of-environmental-law-1464374X?">Journal of Environmental Law</a></li>
+           <li><a title="Journal of International Economic Law" href="https://global.oup.com/academic/product/journal-of-international-economic-law-14643758?">Journal of International Economic Law</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/category/law/?type=listing&amp;facet_narrowbybinding_facet=Journal">View All</a></li> 
+          </ul> </li> 
+         <li class="resources_column"> <span><strong>Resources</strong></span> 
+          <ul> 
+           <li><a title="Authors Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Authors<br></a></li>
+           <li><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers<br></a></li>
+           <li><a title="Instructors Resource Center" href="/academic/instructors/?lang=en&amp;cc=us">Instructors<br></a></li>
+           <li><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarians<br></a></li>
+           <li><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press</a></li>
+           <li><a title="Publisher Services" href="/academic/publisher-resources-info/?lang=en&amp;cc=us">Publisher Services</a></li>
+           <li><a title="Researchers Resource Center" href="/academic/researchers/?lang=en&amp;cc=us">Researchers<br></a></li>
+           <li><a title="Societies Resource Center" href="/academic/societies/?lang=en&amp;cc=us">Societies<br></a></li>
+           <li><a title="Sponsors &amp; Advertisers Resource Center" href="/academic/advertising/?lang=en&amp;cc=us">Sponsors &amp; Advertisers <br></a></li>
+           <li><a title="Students Resource Center" href="/academic/students/?lang=en&amp;cc=us">Students</a></li> 
+          </ul> </li> 
+         <li class="refresh_page_column"> <a class="refresh_page_link" href="#">Close</a> </li> 
+        </ul> 
+       </div> </li> 
+      <li class="medicine_health menu_default"> <a href="/academic/category/medicine-and-health/?lang=en&amp;cc=us" accesskey="a">Medicine &amp; Health</a> 
+       <div> 
+        <ul> 
+         <li class="subject_columns triple_columns"> 
+          <ul> 
+           <li><a href="/academic/category/medicine-and-health/allied-health-professions/?lang=en&amp;cc=us">Allied Health Professions</a></li> 
+           <li><a href="/academic/category/medicine-and-health/anesthesiology/?lang=en&amp;cc=us">Anesthesiology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/clinical-medicine/?lang=en&amp;cc=us">Clinical Medicine</a></li> 
+           <li><a href="/academic/category/medicine-and-health/clinical-neuroscience/?lang=en&amp;cc=us">Clinical Neuroscience</a></li> 
+           <li><a href="/academic/category/medicine-and-health/critical-care/?lang=en&amp;cc=us">Critical Care</a></li> 
+           <li><a href="/academic/category/medicine-and-health/dentistry/?lang=en&amp;cc=us">Dentistry</a></li> 
+           <li><a href="/academic/category/medicine-and-health/emergency-medicine/?lang=en&amp;cc=us">Emergency Medicine</a></li> 
+           <li><a href="/academic/category/medicine-and-health/family-practice/?lang=en&amp;cc=us">Family Practice</a></li> 
+           <li><a href="/academic/category/medicine-and-health/forensic-medicine/?lang=en&amp;cc=us">Forensic Medicine</a></li> 
+           <li><a href="/academic/category/medicine-and-health/hematology/?lang=en&amp;cc=us">Hematology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/history-of-medicine/?lang=en&amp;cc=us">History of Medicine</a></li> 
+           <li><a href="/academic/category/medicine-and-health/medical-dentistry/?lang=en&amp;cc=us">Medical Dentistry</a></li> 
+           <li><a href="/academic/category/medicine-and-health/medical-ethics/?lang=en&amp;cc=us">Medical Ethics</a></li> 
+           <li><a href="/academic/category/medicine-and-health/medical-skills/?lang=en&amp;cc=us">Medical Skills</a></li> 
+          </ul> 
+          <ul> 
+           <li><a href="/academic/category/medicine-and-health/medical-statistics-and-methodology/?lang=en&amp;cc=us">Medical Statistics &amp; Methodology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/midwifery/?lang=en&amp;cc=us">Midwifery</a></li> 
+           <li><a href="/academic/category/medicine-and-health/nursing-studies/?lang=en&amp;cc=us">Nursing Studies</a></li> 
+           <li><a href="/academic/category/medicine-and-health/nursing/?lang=en&amp;cc=us">Nursing</a></li> 
+           <li><a href="/academic/category/medicine-and-health/obstetrics-and-gynecology/?lang=en&amp;cc=us">Obstetrics &amp; Gynecology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/occupational-medicine/?lang=en&amp;cc=us">Occupational Medicine</a></li> 
+           <li><a href="/academic/category/medicine-and-health/ophthalmology/?lang=en&amp;cc=us">Ophthalmology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/otolaryngology-ear-nose-throat/?lang=en&amp;cc=us">Otolaryngology (Ear, Nose, Throat)</a></li> 
+           <li><a href="/academic/category/medicine-and-health/pathology/?lang=en&amp;cc=us">Pathology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/pediatrics/?lang=en&amp;cc=us">Pediatrics</a></li> 
+           <li><a href="/academic/category/medicine-and-health/pharmacology/?lang=en&amp;cc=us">Pharmacology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/popular-health/?lang=en&amp;cc=us">Popular Health</a></li> 
+           <li><a href="/academic/category/medicine-and-health/preclinical-medicine/?lang=en&amp;cc=us">Preclinical Medicine</a></li> 
+          </ul> 
+          <ul> 
+           <li><a href="/academic/category/medicine-and-health/psychiatry/?lang=en&amp;cc=us">Psychiatry</a></li> 
+           <li><a href="/academic/category/medicine-and-health/psychotherapy/?lang=en&amp;cc=us">Psychotherapy</a></li> 
+           <li><a href="/academic/category/medicine-and-health/public-health-and-epidemiology/?lang=en&amp;cc=us">Public Health &amp; Epidemiology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/radiology/?lang=en&amp;cc=us">Radiology</a></li> 
+           <li><a href="/academic/category/medicine-and-health/reproductive-medicine/?lang=en&amp;cc=us">Reproductive Medicine</a></li> 
+           <li><a href="/academic/category/medicine-and-health/surgery/?lang=en&amp;cc=us">Surgery</a></li> 
+           <li>&nbsp;</li> 
+           <li> <span><strong>Series</strong></span> 
+            <ul> 
+             <li><a href="https://global.oup.com/academic/content/series/c/contemporary-neurology-series-cns/">Contemporary Neurology Series</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/m/mayo-clinic-scientific-press-mayo/">Mayo Clinic Scientific Press</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/o/oxford-medical-handbooks-oxhmed/">The Oxford Medical Handbooks</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/e/the-european-society-of-cardiology-esc/">The European Society of Cardiology Series</a></li> 
+             <li><a class="view_all" href="https://global.oup.com/academic/series/medicine-and-health/">View All</a></li> 
+            </ul></li> 
+          </ul> </li> 
+         <li> <span><strong>Online Resources</strong></span> 
+          <ul> 
+           <li><a href="https://global.oup.com/academic/product/esc-cardiomed-9780191780462?">ESC CardioMed</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780199656783">Oxford Medicine Online</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780190632366">Oxford Research Encyclopedias: Global Public Health</a></li>
+           <li><a title="" href="https://global.oup.com/academic/category/medicine-and-health/oxfordstudentroom/">Oxford Student Room</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/online/?type=listing&amp;subjectcode1=1137036|MED00010">View All</a></li> 
+          </ul> <span><strong>Journals</strong></span> 
+          <ul> 
+           <li><a href="https://global.oup.com/academic/product/15698041">Annals of Oncology</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/15376591">Clinical Infectious Diseases</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/15229645">European Heart Journal</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/14602369">Human Reproduction Update</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/category/medicine-and-health/?type=listing&amp;facet_narrowbybinding_facet=Journal">View All</a></li> 
+          </ul> </li> 
+         <li class="resources_column"> <span><strong>Resources</strong></span> 
+          <ul> 
+           <li><a title="Authors Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Authors<br></a></li>
+           <li><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers<br></a></li>
+           <li><a title="Instructors Resource Center" href="/academic/instructors/?lang=en&amp;cc=us">Instructors<br></a></li>
+           <li><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarians<br></a></li>
+           <li><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press</a></li>
+           <li><a title="Publisher Services" href="/academic/publisher-resources-info/?lang=en&amp;cc=us">Publisher Services</a></li>
+           <li><a title="Researchers Resource Center" href="/academic/researchers/?lang=en&amp;cc=us">Researchers<br></a></li>
+           <li><a title="Societies Resource Center" href="/academic/societies/?lang=en&amp;cc=us">Societies<br></a></li>
+           <li><a title="Sponsors &amp; Advertisers Resource Center" href="/academic/advertising/?lang=en&amp;cc=us">Sponsors &amp; Advertisers <br></a></li>
+           <li><a title="Students Resource Center" href="/academic/students/?lang=en&amp;cc=us">Students</a></li> 
+          </ul> </li> 
+         <li class="refresh_page_column"> <a class="refresh_page_link" href="#">Close</a> </li> 
+        </ul> 
+       </div> </li> 
+      <li class="science_mathematics menu_default"> <a href="/academic/category/science-and-mathematics/?lang=en&amp;cc=us" accesskey="a">Science &amp; Mathematics</a> 
+       <div> 
+        <ul> 
+         <li class="subject_columns triple_columns"> 
+          <ul> 
+           <li><a href="/academic/category/science-and-mathematics/biological-sciences/?lang=en&amp;cc=us">Biological Sciences</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/chemistry/?lang=en&amp;cc=us">Chemistry</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/computer-science/?lang=en&amp;cc=us">Computer Science</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/computing/?lang=en&amp;cc=us">Computing</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/earth-sciences-and-geography/?lang=en&amp;cc=us">Earth Sciences &amp; Geography</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/engineering-and-technology/?lang=en&amp;cc=us">Engineering &amp; Technology</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/environmental-science/?lang=en&amp;cc=us">Environmental Science</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/history-of-science-and-technology/?lang=en&amp;cc=us">History of Science &amp; Technology</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/materials-science/?lang=en&amp;cc=us">Materials Science</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/mathematics/?lang=en&amp;cc=us">Mathematics</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/neuroscience/?lang=en&amp;cc=us">Neuroscience</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/physics/?lang=en&amp;cc=us">Physics</a></li> 
+           <li><a href="/academic/category/science-and-mathematics/psychology/?lang=en&amp;cc=us">Psychology</a></li> 
+          </ul> 
+          <ul> 
+          </ul> 
+          <ul> 
+           <li> <span><strong>Series</strong></span> 
+            <ul> 
+             <li><a href="https://global.oup.com/academic/content/series/o/oxford-graduate-texts-ogt/">Oxford Graduate Texts</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/o/oxford-series-in-ecology-and-evolution-osee">Oxford Series in Ecology and Evolution</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/t/treatments-that-work-ttw">Treatments that work</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/v/very-short-introductions-vsi">Very Short Introductions</a></li> 
+             <li><a class="view_all" href="/academic/series/science-and-mathematics/?lang=en&amp;cc=us">View All</a></li> 
+            </ul></li> 
+          </ul> </li> 
+         <li> <span><strong>Online Resources</strong></span> 
+          <ul> 
+           <li><a href="https://global.oup.com/academic/product/9780190249717">Oxford Clinical Psychology</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780190871994">Oxford Research Encyclopedias: Physics</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780199272334">Oxford Scholarship Online</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780191770418">Very Short Introductions</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/online/?type=listing&amp;subjectcode1=1137310|SCI00010">View All</a></li> 
+          </ul> <span><strong>Journals</strong></span> 
+          <ul> 
+           <li><a href="https://global.oup.com/academic/product/14774054">Briefings in Bioinformatics</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/17580463">Database</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/15371719">Molecular Biology and Evolution</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/13624962">Nucleic Acids Research</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/category/science-and-mathematics/?type=listing&amp;facet_narrowbybinding_facet=Journal">View All</a></li> 
+          </ul> </li> 
+         <li class="resources_column"> <span><strong>Resources</strong></span> 
+          <ul> 
+           <li><a title="Authors Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Authors<br></a></li>
+           <li><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers<br></a></li>
+           <li><a title="Instructors Resource Center" href="/academic/instructors/?lang=en&amp;cc=us">Instructors<br></a></li>
+           <li><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarians<br></a></li>
+           <li><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press</a></li>
+           <li><a title="Publisher Services" href="/academic/publisher-resources-info/?lang=en&amp;cc=us">Publisher Services</a></li>
+           <li><a title="Researchers Resource Center" href="/academic/researchers/?lang=en&amp;cc=us">Researchers<br></a></li>
+           <li><a title="Societies Resource Center" href="/academic/societies/?lang=en&amp;cc=us">Societies<br></a></li>
+           <li><a title="Sponsors &amp; Advertisers Resource Center" href="/academic/advertising/?lang=en&amp;cc=us">Sponsors &amp; Advertisers <br></a></li>
+           <li><a title="Students Resource Center" href="/academic/students/?lang=en&amp;cc=us">Students</a></li> 
+          </ul> </li> 
+         <li class="refresh_page_column"> <a class="refresh_page_link" href="#">Close</a> </li> 
+        </ul> 
+       </div> </li> 
+      <li class="social_sciences menu_default"> <a href="/academic/category/social-sciences/?lang=en&amp;cc=us" accesskey="a">Social Sciences</a> 
+       <div> 
+        <ul> 
+         <li class="subject_columns triple_columns"> 
+          <ul> 
+           <li><a href="/academic/category/social-sciences/anthropology/?lang=en&amp;cc=us">Anthropology</a></li> 
+           <li><a href="/academic/category/social-sciences/business-and-management/?lang=en&amp;cc=us">Business &amp; Management</a></li> 
+           <li><a href="/academic/category/social-sciences/criminology-and-criminal-justice/?lang=en&amp;cc=us">Criminology &amp; Criminal Justice</a></li> 
+           <li><a href="/academic/category/social-sciences/development-studies/?lang=en&amp;cc=us">Development Studies</a></li> 
+           <li><a href="/academic/category/social-sciences/economics/?lang=en&amp;cc=us">Economics</a></li> 
+           <li><a href="/academic/category/social-sciences/education/?lang=en&amp;cc=us">Education</a></li> 
+           <li><a href="/academic/category/social-sciences/environment/?lang=en&amp;cc=us">Environment</a></li> 
+           <li><a href="/academic/category/social-sciences/human-geography/?lang=en&amp;cc=us">Human Geography</a></li> 
+           <li><a href="/academic/category/social-sciences/interdisciplinary-studies/?lang=en&amp;cc=us">Interdisciplinary Studies</a></li> 
+           <li><a href="/academic/category/social-sciences/museums-libraries-and-information-sciences/?lang=en&amp;cc=us">Museums, Libraries, &amp; Information Sciences</a></li> 
+           <li><a href="/academic/category/social-sciences/politics/?lang=en&amp;cc=us">Politics</a></li> 
+           <li><a href="/academic/category/social-sciences/regional-and-area-studies/?lang=en&amp;cc=us">Regional &amp; Area Studies</a></li> 
+           <li><a href="/academic/category/social-sciences/research-and-information/?lang=en&amp;cc=us">Research &amp; Information</a></li> 
+           <li><a href="/academic/category/social-sciences/sociology/?lang=en&amp;cc=us">Sociology</a></li> 
+           <li><a href="/academic/category/social-sciences/social-work/?lang=en&amp;cc=us">Social Work</a></li> 
+          </ul> 
+          <ul> 
+           <li><a href="/academic/category/social-sciences/warfare-and-defense/?lang=en&amp;cc=us">Warfare &amp; Defense</a></li> 
+          </ul> 
+          <ul> 
+           <li> <span><strong>Series</strong></span> 
+            <ul> 
+             <li><a href="https://global.oup.com/academic/content/series/i/international-policy-exchange-ipe">International Policy Exchange</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/o/oxford-handbooks-ohbk/?type=listing&amp;subjectcode1=1805239|SOC00010">Oxford Handbooks</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/v/very-short-introductions-vsi">Very Short Introductions</a></li>
+             <li><a title="" href="https://global.oup.com/academic/content/series/w/what-everyone-needs-to-know-wentk">What Everyone Needs To Know</a></li> 
+             <li><a class="view_all" href="/academic/series/social-sciences/?lang=en&amp;cc=us">View All</a></li> 
+            </ul></li> 
+          </ul> </li> 
+         <li> <span><strong>Online Resources</strong></span> 
+          <ul> 
+           <li><a href="https://global.oup.com/academic/product/9780199975839">Encyclopedia of Social Work</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780199935307">Oxford Handbooks Online: Political Science</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780199272334">Oxford Scholarship Online</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/9780191770418">Very Short Introductions</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/online/?type=listing&amp;subjectcode1=1137832|SOC00010">View All</a></li> 
+          </ul> <span><strong>Journals</strong></span> 
+          <ul> 
+           <li><a href="https://global.oup.com/academic/product/14678276">American Journal of Agricultural Economics</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/14602466">Journal of Communication</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/14779803">Journal of Public Administration Research and Theory</a></li>
+           <li><a title="" href="https://global.oup.com/academic/product/15314650">The Quarterly Journal of Economics</a></li> 
+           <li><a class="view_all" href="http://global.oup.com/academic/category/social-sciences/?type=listing&amp;facet_narrowbybinding_facet=Journal">View All</a></li> 
+          </ul> </li> 
+         <li class="resources_column"> <span><strong>Resources</strong></span> 
+          <ul> 
+           <li><a title="Authors Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Authors<br></a></li>
+           <li><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers<br></a></li>
+           <li><a title="Instructors Resource Center" href="/academic/instructors/?lang=en&amp;cc=us">Instructors<br></a></li>
+           <li><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarians<br></a></li>
+           <li><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press</a></li>
+           <li><a title="Publisher Services" href="/academic/publisher-resources-info/?lang=en&amp;cc=us">Publisher Services</a></li>
+           <li><a title="Researchers Resource Center" href="/academic/researchers/?lang=en&amp;cc=us">Researchers<br></a></li>
+           <li><a title="Societies Resource Center" href="/academic/societies/?lang=en&amp;cc=us">Societies<br></a></li>
+           <li><a title="Sponsors &amp; Advertisers Resource Center" href="/academic/advertising/?lang=en&amp;cc=us">Sponsors &amp; Advertisers <br></a></li>
+           <li><a title="Students Resource Center" href="/academic/students/?lang=en&amp;cc=us">Students</a></li> 
+          </ul> </li> 
+         <li class="refresh_page_column"> <a class="refresh_page_link" href="#">Close</a> </li> 
+        </ul> 
+       </div> </li> 
+     </ul> 
+     <div class="clearer"></div> 
+    </div> 
+    <a id="journals" class="supplementary_link" href="https://academic.oup.com/journals">Journals</a> 
+    <a id="higher_education" class="supplementary_link" href="http://global.oup.com/ushe">Higher Education</a> 
+    <div class="clearer"></div> 
+   </div> 
+   <div id="breadcrumb"> 
+    <span>You are here: </span> 
+    <a href="/academic/?lang=en&amp;cc=us">Home Page </a> 
+    <span class="link_divider">&gt;</span> 
+    <span>Help</span> 
+    <a href="/academic/?lang=en&amp;cc=us"><img src="/academic/system/images/breadcrumb_remove_span.gif" alt="Remove"></a> 
+    <div class="clearer"></div> 
+   </div> 
+   <div id="site_wide_messaging" class="bottom_divider"> 
+    <div class="message"> 
+     <img class="message_icon" alt="Important" src="/academic/system/images/information_icon_red.gif"> 
+     <span class="text_colour_lilac text_font_verdana"> <strong>OUP's Response to COVID-19</strong> </span> 
+     <a href="#" class="ecommerce_promo_banner bg_colour_mid_blue_tint" onclick="javascript:showPromoModel('covid_modal_overlay', 'covid_modal_container'); return 
+false;"><span class="show_as_button bg_colour_gold">Learn more</span></a> 
+    </div> 
+   </div> 
+   <div id="covid_modal_overlay" class="promo_message_modal_overlay" style="DISPLAY: none"></div> 
+   <div id="covid_modal_container" class="promo_message_modal_container" style="DISPLAY: none"> 
+    <div id="modal_inner" class="promo_message_modal_inner RemoveThisForIcon_information"> 
+     <h3>Dear Customer,</h3> 
+     <p>As a global organization, we, like many others, recognize the significant threat posed by the coronavirus.</p> 
+     <p>During this time, we have made some of our learning resources freely accessible. Learn more about these useful resources on our <a href="https://global.oup.com/about/covid19">COVID-19 page</a>.</p> 
+     <p>Our distribution centers are open and orders can be placed online. Do be advised that shipments may be delayed due to extra safety precautions implemented at our centers and delays with local shipping carriers.</p> 
+     <p>Please contact our Customer Service Team if you have any questions.</p> 
+     <a class="close_modal_link" href="#">Close</a> 
+     <div class="clearer"></div> 
+    </div> 
+   </div> 
+   <div id="page_content"> 
+    <!--  If GAB Promo item and UK region check for UK banner --> 
+    <div class="content_left"> 
+     <div class="content_block secondary_nav bottom_divider text_top"> 
+      <ul> 
+       <li><span><strong>Help</strong></span> 
+        <ul> 
+         <li><a href="/academic/help/myaccount/?lang=en&amp;cc=us">My Account</a></li> 
+         <li><a href="/academic/help/ordering/?lang=en&amp;cc=us">Ordering</a></li> 
+         <li><a href="/academic/help/examination-copy/?lang=en&amp;cc=us">Request an Examination Copy</a></li> 
+         <li><a href="/academic/help/shipping/?lang=en&amp;cc=us">Shipping</a></li> 
+         <li><a href="/academic/help/sales-tax/?lang=en&amp;cc=us">Sales Tax</a></li> 
+         <li><a href="/academic/help/refunds/?lang=en&amp;cc=us">Returns and Refunds</a></li> 
+         <li><a href="/academic/help/bible-registration/?lang=en&amp;cc=us">Bible Registration Form</a></li> 
+         <li><a href="/academic/help/personal-subscriptions/?lang=en&amp;cc=us">Personal Subscriptions</a></li> 
+         <li><a href="/academic/help/ebooks/?lang=en&amp;cc=us">Ebooks</a></li> 
+         <li><a href="/academic/help/music/?lang=en&amp;cc=us">Sheet Music</a></li> 
+         <li><a href="/academic/help/technical-support/?lang=en&amp;cc=us">Technical Support</a></li> 
+        </ul> </li> 
+      </ul> 
+      <div class="clearer"></div> 
+     </div> 
+     <div class="content_block secondary_nav"> 
+      <p><strong>Useful Links</strong></p> 
+      <p><a title="Credit Application" href="/academic/pdf/booksellers/credit-application.pdf?lang=en&amp;cc=us" target="_blank">Credit Application</a></p> 
+      <p><a title="Customer Service" href="/academic/contactus/customer-service?lang=en&amp;cc=us">Customer Service</a></p> 
+      <p><a title="English Language Teaching" href="http://elt.oup.com/">ELT </a></p> 
+      <p><a title="Find an Editor" href="/academic/contactus/editorial/?lang=en&amp;cc=us">Find an Editor</a></p> 
+      <p><a title="Find a Rep" href="/academic/contactus/find-a-rep/?lang=en&amp;cc=us">Find a Sales Rep</a></p> 
+      <p><a title="" href="http://www.oxfordjournals.org/faq/">Journals Help Page</a></p> 
+      <p><a title="Rights &amp; Permissions" href="/academic/rights/?lang=en&amp;cc=us">Rights &amp; Permissions</a></p> 
+      <p><a title="Sales Tax Exemption Form" href="/academic/pdf/booksellers/sales-tax-exemption-form.pdf?lang=en&amp;cc=us" target="_blank">Resale Tax Form</a><br></p> 
+      <p><font color="#000080"><a title="Author Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Author Resource Center</a></font></p> 
+      <p><font color="#000080"><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers Resource Center</a></font></p> 
+      <p><font color="#000080"><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarian Resource Center</a></font><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us"><font color="#000080"></font></a></p>
+      <a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us"><font color="#000080"> </font></a>
+      <p><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us"><font color="#000080"></font></a><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press Resource Center</a></p> 
+      <p>&nbsp;</p> 
+     </div> 
+    </div> 
+    <div class="wrapper_four_column"> 
+     <div class="content_centre_single increased_font_size"> 
+      <h1 id="content" class="inspire_promo_title removed_bottom_margin">Help</h1> 
+      <div class="inset_information fixed_inset_width bg_colour_light_grey floated_content_right" style="width:180px;">
+       <a title="Email icon" href="http://www.oup.com/uk/academic"></a> 
+       <h3><a title="Customer Service" href="/academic/contactus/customer-service?lang=en&amp;cc=us">Customer Service Information</a></h3> 
+       <p>Contact Customer Service<br>&nbsp;<br>1-800-445-9714 (phone)</p> 
+       <p>1-919-677-1303 (fax)&nbsp;</p> 
+       <p><a href="mailto:custserv.us@oup.com">custserv.us@oup.com</a></p> 
+       <p>Our hours of operation are Monday - Friday between 8:00 am - 6:00 pm (Eastern Standard Time).</p>
+      </div> 
+      <h2><a href="/academic/help/myaccount/?lang=en&amp;cc=us">My Account</a></h2> 
+      <p> <a href="/academic/help/myaccount/#my-account">My Account</a>, </p> 
+      <h2><a href="/academic/help/ordering/?lang=en&amp;cc=us">Ordering</a></h2> 
+      <p> <a href="/academic/help/ordering/#products-to-buy-online">Buying online</a>, <a href="/academic/help/ordering/#payment-options">Payment Options</a>, <a href="/academic/help/ordering/#registration">Registration</a><a href="#" id="ordering" class="showHiddenHelpItems">...</a><span class="hiddenHelpItems_ordering" style="display:none">, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#promotioncodes">Sales Promotion Codes</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#continuation">Continuation Orders</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#bulk">Bulk Orders</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#backorders-preorders">Backorders and Pre-Orders</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#customerservice">Customer Service Contact Information</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#wholesale-retail">Wholesale and Retail Orders</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#journals-orders">Journals Orders</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#librarians">Librarians</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#ebooks">Ebook Ordering</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#onlineresources">Online Resource Subscriptions</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#sheetmusic">Sheet Music</a>, </span> <span class="hiddenHelpItems_ordering" style="display:none"> <a href="/academic/help/ordering/#country-list">Country List</a>, </span> </p> 
+      <h2><a href="/academic/help/examination-copy/?lang=en&amp;cc=us">Request an Examination Copy</a></h2> 
+      <p> </p> 
+      <h2><a href="/academic/help/shipping/?lang=en&amp;cc=us">Shipping</a></h2> 
+      <p> <a href="/academic/help/shipping/#domestic-shipping">Domestic Shipping</a>, <a href="/academic/help/shipping/#heavy-book-charge">Heavy Book Charge</a>, <a href="/academic/help/shipping/#international">International Customers</a><a href="#" id="shipping" class="showHiddenHelpItems">...</a><span class="hiddenHelpItems_shipping" style="display:none">, </span> </p> 
+      <h2><a href="/academic/help/sales-tax/?lang=en&amp;cc=us">Sales Tax</a></h2> 
+      <p> </p> 
+      <h2><a href="/academic/help/refunds/?lang=en&amp;cc=us">Returns and Refunds</a></h2> 
+      <p> <a href="/academic/help/refunds/#returns">Returns Policy</a>, <a href="/academic/help/refunds/#shortage-claims">Shortage Claims</a>, <a href="/academic/help/refunds/#damage-claims">Damage Claims</a><a href="#" id="refunds" class="showHiddenHelpItems">...</a><span class="hiddenHelpItems_refunds" style="display:none">, </span> </p> 
+      <h2><a href="/academic/help/personal-subscriptions/?lang=en&amp;cc=us">Personal Subscriptions</a></h2> 
+      <p> <a href="/academic/help/personal-subscriptions/#online-products">Personal subscriptions</a>, <a href="/academic/help/personal-subscriptions/#subscribe">How to order</a>, <a href="/academic/help/personal-subscriptions/#credit-cards-us">Credit cards</a><a href="#" id="personal-subscriptions" class="showHiddenHelpItems">...</a><span class="hiddenHelpItems_personal-subscriptions" style="display:none">, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#country-list-us">Country list</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#purchase-complete">Order confirmation</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#where-to-log-in">Where to log in</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#access-online-subscription">Username and access</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#resetting-your-password">Resetting your password</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#start-date">Start dates</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#auto-renew">Renewals</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#download-information">Downloading content</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#security">Security</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#refunds">Refunds policy</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#share-subscription">Sharing your personal subscription</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#trade-discount">Trade customers</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#multiple-access-purchase-us">Institutional pricing and ordering</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#another-question">Contact us</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#terms">Terms and Conditions</a>, </span> <span class="hiddenHelpItems_personal-subscriptions" style="display:none"> <a href="/academic/help/personal-subscriptions/#tax_personal_subscription">Tax</a>, </span> </p> 
+      <h2><a href="/academic/help/ebooks/?lang=en&amp;cc=us">Ebooks</a></h2> 
+      <p> </p> 
+      <h2><a href="/academic/help/music/?lang=en&amp;cc=us">Sheet Music</a></h2> 
+      <p> <a href="/academic/help/music/#ordering-us">How to order OUP music</a>, </p> 
+      <h2><a href="/academic/help/technical-support/?lang=en&amp;cc=us">Technical Support</a></h2> 
+      <p> </p> 
+      <div class="clearer"></div> 
+     </div> 
+     <div class="content_right"> 
+      <!-- change for tsk 580483 - GA Web Promo item display issues --> 
+      <div id="connect_container" class="content_block"> 
+       <div class="connect_box_preferenceForm" style="margin-left: -14px;margin-top: -20px;"> 
+        <form novalidate method="post" modelattribute="preferenceForm" action="/academic/emailpreferences/signin/?cc=us&amp;lang=en" class="validated_form" name="register" id="ph2_registration_form"> 
+         <table class="validated_form_layout"> 
+          <tbody> 
+           <tr class="message_list_row"> 
+            <td></td> 
+            <td> 
+             <table class="message_list field_error_email_required_valid"> 
+              <tbody> 
+              </tbody> 
+             </table> </td> 
+           </tr> 
+           <tr> 
+            <td> <input type="email" maxlength="70" class="email_required email_valid email_max_length" aria-required="true" aria-labelledby="ph2_email_label" name="email" id="ph2_email" placeholder="Enter your email address" style="width: 150px; margin-left: 8px;margin-bottom: -10px;margin-top: 10px;"> </td> 
+           </tr> 
+           <tr> 
+            <td> <input type="submit" value="Sign Up for Email" class="preferences_signup_button" aria-controls="ph2_registration_form_errors" name="ph2_register" id="ph2_register" style="background-color: #C44A06; 	border: #C44A06;" onmouseover="javascript:$('.preferences_signup_button').css('background', '#D4640A')" onmouseout="javascript:$('.preferences_signup_button').css('background', '#C44A06')"> </td> 
+           </tr> 
+          </tbody> 
+         </table> 
+         <input type="hidden" name="country" value="us"> 
+        </form> 
+       </div> 
+       <div class="clearer"></div> 
+       <h2><a href="/academic/connect/?lang=en&amp;cc=us" style="float:none;margin:0;">Connect with OUP</a></h2> 
+       <a href="http://www.facebook.com/OUPAcademic" target="_blank" title="Facebook"><img src="/academic/images/connect/3959380" alt="Facebook" height="32" width="32"></a> 
+       <a href="http://twitter.com/oupacademic" target="_blank" title="Twitter"><img src="/academic/system/images/connect_twitter.jpg" alt="Twitter"></a> 
+       <a href="https://www.linkedin.com/showcase/oup-academic" target="_blank" title="LinkedIn"><img src="/academic/images/connect/linkedin_icon" alt="LinkedIn" height="32" width="32"></a> 
+       <a href="http://blog.oup.com" target="_blank" title="Blog"><img src="/academic/images/connect/3959375" alt="Blog"></a> 
+       <div class="clearer"></div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="clearer"></div> 
+   </div> 
+   <script src="https://www.google.com/recaptcha/api.js"></script> 
+   <script type="text/javascript" src="/academic/system/js/jquery.jcarousel.min,jquery.cycle.all,jquery.expandable,scripts,oup-extras-scripts,jquery-ui-autocomplete,jquery.select-to-autocomplete,phase2_ecommerce,jquery.maskedinput.min.js?site=gab"></script> 
+   <script type="text/javascript">
+            $(document).ready(function () { documentReady($); });
+            $(window).load(function () { windowLoaded($); });
+        </script> 
+   <div id="footer"> 
+    <div id="column_left"> 
+     <ul> 
+      <li><a title="About Us" href="/academic/aboutus/?lang=en&amp;cc=us">About Us</a></li>
+      <li><a title="Career" href="/academic/careers/?lang=en&amp;cc=us">Careers</a></li>
+      <li><a title="Connect" href="/academic/connect/?lang=en&amp;cc=us">Connect</a></li>
+      <li><a title="Contact Us" href="/academic/contactus/?lang=en&amp;cc=us">Contact Us</a></li>
+      <li><a title="News" href="/academic/news/?lang=en&amp;cc=us">News</a></li>
+      <li><a title="Rights and Permissions" href="/academic/rights/?lang=en&amp;cc=us">Rights &amp; Permissions</a></li> 
+     </ul> 
+    </div> 
+    <div id="column_centre"> 
+     <ul> 
+      <li> <span><strong>Gateways</strong></span> 
+       <ul> 
+        <li><a title="Oxford English Dictionary" href="http://www.oed.com/">Oxford English Dictionary</a></li>
+        <li><a title="Oxford Dictionaries" href="http://oxforddictionaries.com/us/ ">Oxford Dictionaries</a></li>
+        <li>&nbsp;</li>
+        <li><a title="Epigeum" href="https://www.epigeum.com/">Epigeum</a></li>
+        <li>&nbsp;</li>
+        <li><a title="English Language Teaching" href="http://elt.oup.com/">English Language Teaching</a></li>
+        <li><a title="OUP Worldwide" href="http://global.oup.com">OUP Worldwide</a></li>
+        <li>&nbsp;</li>
+        <li><a title="University of Oxford" href="http://www.ox.ac.uk/">University of Oxford</a></li> 
+       </ul> </li> 
+      <li> <span><strong>Categories</strong></span> 
+       <ul> 
+        <li><a title=" Arts &amp; Humanities" href="/academic/category/arts-and-humanities/?lang=en&amp;cc=us">Arts &amp; Humanities</a></li>
+        <li><a title=" Dictionaries &amp; Reference" href="/academic/category/dictionaries-and-reference/?lang=en&amp;cc=us">Dictionaries &amp; Reference</a></li>
+        <li><a title=" Law" href="/academic/category/law/?lang=en&amp;cc=us">Law</a></li>
+        <li><a title=" Medicine &amp; Health" href="/academic/category/medicine-and-health/?lang=en&amp;cc=us">Medicine &amp; Health</a></li>
+        <li><a title=" Science &amp; Mathematics" href="/academic/category/science-and-mathematics/?lang=en&amp;cc=us">Science &amp; Mathematics</a></li>
+        <li><a title=" Social Sciences" href="/academic/category/social-sciences/?lang=en&amp;cc=us">Social Sciences</a></li>
+        <li>&nbsp;</li>
+        <li><a title="Journals homepage" href="http://www.oxfordjournals.org/">Journals</a></li>
+        <li><a title="OUP Higher Education" href="http://global.oup.com/ushe">Higher Education</a></li>
+        <li>&nbsp;</li>
+        <li><a title="Online Resources" href="/academic/online/?lang=en&amp;cc=us">Online Resources</a></li>
+        <li><a title="Series" href="/academic/series/?lang=en&amp;cc=us">Series</a></li> 
+       </ul> </li> 
+      <li> <span><strong>Resources</strong></span> 
+       <ul> 
+        <li><a title="Authors Resource Center" href="/academic/authors/?lang=en&amp;cc=us">Authors<br></a></li>
+        <li><a title="Booksellers Resource Center" href="/academic/booksellers/?lang=en&amp;cc=us">Booksellers<br></a></li>
+        <li><a title="Instructors Resource Center" href="/academic/instructors/?lang=en&amp;cc=us">Instructors<br></a></li>
+        <li><a title="Librarians Resource Center" href="/academic/librarians/?lang=en&amp;cc=us">Librarians<br></a></li>
+        <li><a title="Press Resource Center" href="/academic/press/?lang=en&amp;cc=us">Press<br></a></li>
+        <li><a title="Publisher Services Resource Center" href="/academic/publisher-resources-info/?lang=en&amp;cc=us">Publisher Services<br></a></li>
+        <li><a title="Researchers Resource Center" href="/academic/researchers/?lang=en&amp;cc=us">Researchers<br></a></li>
+        <li><a title="Societies Resource Center" href="/academic/societies/?lang=en&amp;cc=us">Societies</a></li>
+        <li><a title="Sponsors &amp; Advertisers Resource Center" href="/academic/advertising/?lang=en&amp;cc=us">Sponsors &amp; Advertisers <br></a></li>
+        <li><a title="Students Resource Center" href="/academic/students/?lang=en&amp;cc=us">Students</a></li> 
+       </ul> </li> 
+      <li> <span><strong>Customer Services</strong></span> 
+       <ul> 
+        <li><a title="Contact Us" href="https://global.oup.com/academic/contactus/">Contact Us</a></li>
+        <li><a title="Help" href="https://global.oup.com/academic/help/">Help</a></li>
+        <li><a title="Email Sign Up Page" href="https://global.oup.com/academic/subscribe/">Join Our Email List</a></li>
+        <li><a title="How to Request an Examination Copy" href="https://global.oup.com/academic/help/examination-copy/">Examination Copies</a></li>
+        <li><a title="ordering" href="https://global.oup.com/academic/help/ordering/">Ordering </a></li>
+        <li><a title="Shipping" href="https://global.oup.com/academic/help/shipping/">Shipping</a></li>
+        <li><a title="Returns" href="https://global.oup.com/academic/help/refunds/">Returns</a></li> 
+       </ul> </li> 
+     </ul> 
+    </div> 
+    <div id="column_right"> 
+     <p class="text_font_georgia">Oxford University Press is a department of the University of Oxford. It furthers the University's objective of excellence in research, scholarship, and education by publishing worldwide.</p> 
+     <img src="/academic/system/images/footer_logo.svg" alt="Oxford University Press" style="left: 785px;"> 
+    </div> 
+    <div class="clearer"></div> 
+   </div> 
+   <div id="legal"> 
+    <div id="copyright"> 
+     <span>Copyright © Oxford University Press 2022</span> 
+    </div> 
+    <div id="policy_index_terms"> 
+     <a href="https://global.oup.com/privacy" accesskey="4">Privacy Policy</a> 
+     <span class="link_divider"> | </span> 
+     <a href="https://global.oup.com/cookiepolicy/" accesskey="8" target="_blank">Cookie Policy</a> 
+     <span class="link_divider"> | </span> 
+     <a href="https://global.oup.com/legal" accesskey="5">Legal Notice</a> 
+     <span class="link_divider"> | </span> 
+     <a href="/academic/siteindex/?lang=en&amp;cc=us" accesskey="6">Site Index</a> 
+     <span class="link_divider"> | </span> 
+     <a href="/academic/accessibility/?lang=en&amp;cc=us" accesskey="7">Accessibility</a> 
+    </div> 
+    <div class="clearer"></div> 
+   </div> 
+   <div class="clearer"></div> 
+  </div>  
+ </body>
+</html>
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
-
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
-
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2202.00470
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2202.00470"
-        dc:identifier="/abs/2202.00470"
-        dc:title="An Assessment of the Impact of OCR Noise on Language Models"
-        trackback:ping="/trackback/2202.00470" />
-    </rdf:RDF>
--->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computation and Language</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2202.00470</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 26 Jan 2022]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>An Assessment of the Impact of OCR Noise on Language Models</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Todorov%2C+K">Konstantin Todorov</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Colavizza%2C+G">Giovanni Colavizza</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2202.00470">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  Neural language models are the backbone of modern-day natural language
-processing applications. Their use on textual heritage collections which have
-undergone Optical Character Recognition (OCR) is therefore also increasing.
-Nevertheless, our understanding of the impact OCR noise could have on language
-models is still limited. We perform an assessment of the impact OCR noise has
-on a variety of language models, using data in Dutch, English, French and
-German. We find that OCR noise poses a significant obstacle to language
-modelling, with language models increasingly diverging from their noiseless
-targets as OCR quality lowers. In the presence of small corpora, simpler models
-including PPMI and Word2Vec consistently outperform transformer-based models in
-this respect.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata"><tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computation and Language (cs.CL)</span>; Machine Learning (cs.LG)</td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2202.00470">arXiv:2202.00470</a> [cs.CL]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2202.00470v1">arXiv:2202.00470v1</a> [cs.CL]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2202.00470">https://doi.org/10.48550/arXiv.2202.00470</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
-</div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Konstantin Todorov [<a href="/show-email/ad0ba1b4/2202.00470">view email</a>]
-      <br/><strong>[v1]</strong>
-Wed, 26 Jan 2022 21:56:14 UTC (1,818 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2202.00470" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2202.00470" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CL</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2202.00470&amp;function=prev&amp;context=cs.CL"
-         accesskey="p" title="previous in cs.CL (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2202.00470&amp;function=next&amp;context=cs.CL" accesskey="n"
-         title="next in cs.CL (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CL/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CL/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CL/2202">2202</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2202.00470?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-        <a class="subclass" href="/abs/2202.00470?context=cs.LG">cs.LG</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2202.00470">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2202.00470" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2202.00470" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2202.html#abs-2202-00470" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2202-00470" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Giovanni%20Colavizza" title="DBLP author search">Giovanni Colavizza</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
-
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2202.00470%26description%3DAn+Assessment+of+the+Impact+of+OCR+Noise+on+Language+Models&amp;v=68501f09"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2202.00470&amp;v=9a808449"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2202.00470%26title%3DAn+Assessment+of+the+Impact+of+OCR+Noise+on+Language+Models&amp;v=9e885786"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2202.00470&amp;v=130f26c1"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
-
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
-
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2202.00470" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
-
-      </div>
-    </main>
-
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
-</body>
 
 </html>

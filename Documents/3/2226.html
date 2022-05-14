@@ -1,2592 +1,536 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This crate provides a library for parsing, compiling, and executing regular expressions. Its syntax is similar to Perl-style regular expressions, but lacks a few features like look around and backreferences. In exchange, all searches execute in linear time with respect to the size of the regular expression and search text."><meta name="keywords" content="rust, rustlang, rust-lang, regex"><title>regex - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="/SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="/SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="/normalize-20220307-1.61.0-nightly-03918badd.css"><link rel="stylesheet" href="/-/static/vendored.css?0-6-0-ff301c9-2022-04-27" type="text/css" media="all" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 
-<link rel="stylesheet" type="text/css" href="/rustdoc-20220307-1.61.0-nightly-03918badd.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="/ayu-20220307-1.61.0-nightly-03918badd.css" disabled><link rel="stylesheet" type="text/css" href="/dark-20220307-1.61.0-nightly-03918badd.css" disabled><link rel="stylesheet" type="text/css" href="/light-20220307-1.61.0-nightly-03918badd.css" id="themeStyle"><script id="default-settings" ></script><script src="/storage-20220307-1.61.0-nightly-03918badd.js"></script><script src="../crates-20220307-1.61.0-nightly-03918badd.js"></script><script defer src="/main-20220307-1.61.0-nightly-03918badd.js"></script>
-    <noscript><link rel="stylesheet" href="/noscript-20220307-1.61.0-nightly-03918badd.css"></noscript><link rel="alternate icon" type="image/png" href="/favicon-16x16-20220307-1.61.0-nightly-03918badd.png"><link rel="alternate icon" type="image/png" href="/favicon-32x32-20220307-1.61.0-nightly-03918badd.png"><link rel="icon" type="image/svg+xml" href="/favicon-20220307-1.61.0-nightly-03918badd.svg"><link rel="stylesheet" href="/-/static/rustdoc-2021-12-05.css?0-6-0-ff301c9-2022-04-27" type="text/css" media="all" />
-
-        <link rel="search" href="/-/static/opensearch.xml" type="application/opensearchdescription+xml" title="Docs.rs" />
-
-        <script type="text/javascript">function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
-}
-
-window.addEventListener('storage', function (ev) {
-  if (ev.key === 'rustdoc-theme') {
-    applyTheme(ev.newValue);
-  }
-});
-
-// see ./storage-change-detection.html for details
-window.addEventListener('message', function (ev) {
-  if (ev.data && ev.data.storage && ev.data.storage.key === 'rustdoc-theme') {
-    applyTheme(ev.data.storage.value);
-  }
-});
-
-applyTheme(window.localStorage.getItem('rustdoc-theme'));
-</script>
-</head><body class="rustdoc-page">
-<div class="nav-container">
-    <div class="container">
-        <div class="pure-menu pure-menu-horizontal" role="navigation" aria-label="Main navigation">
-            <form action="/releases/search"
-                  method="GET"
-                  class="landing-search-form-nav  ">
-
-                
-                <a href="/" class="pure-menu-heading pure-menu-link docsrs-logo" aria-label="Docs.rs">
-                    <span title="Docs.rs"><span class="fa-svg " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M488.6 250.2L392 214V105.5c0-15-9.3-28.4-23.4-33.7l-100-37.5c-8.1-3.1-17.1-3.1-25.3 0l-100 37.5c-14.1 5.3-23.4 18.7-23.4 33.7V214l-96.6 36.2C9.3 255.5 0 268.9 0 283.9V394c0 13.6 7.7 26.1 19.9 32.2l100 50c10.1 5.1 22.1 5.1 32.2 0l103.9-52 103.9 52c10.1 5.1 22.1 5.1 32.2 0l100-50c12.2-6.1 19.9-18.6 19.9-32.2V283.9c0-15-9.3-28.4-23.4-33.7zM358 214.8l-85 31.9v-68.2l85-37v73.3zM154 104.1l102-38.2 102 38.2v.6l-102 41.4-102-41.4v-.6zm84 291.1l-85 42.5v-79.1l85-38.8v75.4zm0-112l-102 41.4-102-41.4v-.6l102-38.2 102 38.2v.6zm240 112l-85 42.5v-79.1l85-38.8v75.4zm0-112l-102 41.4-102-41.4v-.6l102-38.2 102 38.2v.6z"/></svg></span></span>
-                    <span class="title">Docs.rs</span>
-                </a>
-<ul class="pure-menu-list"><li class="pure-menu-item pure-menu-has-children">
-            <a href="#" class="pure-menu-link crate-name" title="An implementation of regular expressions for Rust. This implementation uses
-finite automata and guarantees linear time matching on all inputs.
-">
-                <span class="fa-svg " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M239.1 6.3l-208 78c-18.7 7-31.1 25-31.1 45v225.1c0 18.2 10.3 34.8 26.5 42.9l208 104c13.5 6.8 29.4 6.8 42.9 0l208-104c16.3-8.1 26.5-24.8 26.5-42.9V129.3c0-20-12.4-37.9-31.1-44.9l-208-78C262 2.2 250 2.2 239.1 6.3zM256 68.4l192 72v1.1l-192 78-192-78v-1.1l192-72zm32 356V275.5l160-65v133.9l-160 80z"/></svg></span>
-                <span class="title">regex-1.5.5</span>
-            </a>
-
-            
-            <div class="pure-menu-children package-details-menu">
-                
-                <ul class="pure-menu-list menu-item-divided">
-                    <li class="pure-menu-heading" id="crate-title">
-                        regex 1.5.5
-                        <span id="clipboard" class="fa-svg fa-svg-fw" title="Copy crate name and version information"><svg width="24" height="25" viewBox="0 0 24 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard"><path d="M18 20h2v3c0 1-1 2-2 2H2c-.998 0-2-1-2-2V5c0-.911.755-1.667 1.667-1.667h5A3.323 3.323 0 0110 0a3.323 3.323 0 013.333 3.333h5C19.245 3.333 20 4.09 20 5v8.333h-2V9H2v14h16v-3zM3 7h14c0-.911-.793-1.667-1.75-1.667H13.5c-.957 0-1.75-.755-1.75-1.666C11.75 2.755 10.957 2 10 2s-1.75.755-1.75 1.667c0 .911-.793 1.666-1.75 1.666H4.75C3.793 5.333 3 6.09 3 7z"/><path d="M4 19h6v2H4zM12 11H4v2h8zM4 17h4v-2H4zM15 15v-3l-4.5 4.5L15 21v-3l8.027-.032L23 15z"/></svg></span>
-                    </li><li class="pure-menu-item">
-                        <a href="/regex/1.5.5/regex/index.html" class="pure-menu-link description" id="permalink" title="Get a link to this specific version">
-                            <span class="fa-svg " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></span> Permalink
-                        </a>
-                    </li><li class="pure-menu-item">
-                        <a href="/crate/regex/latest" class="pure-menu-link description" title="See regex in docs.rs">
-                            <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M239.1 6.3l-208 78c-18.7 7-31.1 25-31.1 45v225.1c0 18.2 10.3 34.8 26.5 42.9l208 104c13.5 6.8 29.4 6.8 42.9 0l208-104c16.3-8.1 26.5-24.8 26.5-42.9V129.3c0-20-12.4-37.9-31.1-44.9l-208-78C262 2.2 250 2.2 239.1 6.3zM256 68.4l192 72v1.1l-192 78-192-78v-1.1l192-72zm32 356V275.5l160-65v133.9l-160 80z"/></svg></span> Docs.rs crate page
-                        </a>
-                    </li>
-
-                    <li class="pure-menu-item">
-                        <a href="/crate/regex/latest" class="pure-menu-link">
-                            <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M96 464v32c0 8.84 7.16 16 16 16h224c8.84 0 16-7.16 16-16V153.25c4.56-2 8.92-4.35 12.99-7.12l142.05 47.63c8.38 2.81 17.45-1.71 20.26-10.08l10.17-30.34c2.81-8.38-1.71-17.45-10.08-20.26l-128.4-43.05c.42-3.32 1.01-6.6 1.01-10.03 0-44.18-35.82-80-80-80-29.69 0-55.3 16.36-69.11 40.37L132.96.83c-8.38-2.81-17.45 1.71-20.26 10.08l-10.17 30.34c-2.81 8.38 1.71 17.45 10.08 20.26l132 44.26c7.28 21.25 22.96 38.54 43.38 47.47V448H112c-8.84 0-16 7.16-16 16zM0 304c0 44.18 57.31 80 128 80s128-35.82 128-80h-.02c0-15.67 2.08-7.25-85.05-181.51-17.68-35.36-68.22-35.29-85.87 0C-1.32 295.27.02 287.82.02 304H0zm56-16l72-144 72 144H56zm328.02 144H384c0 44.18 57.31 80 128 80s128-35.82 128-80h-.02c0-15.67 2.08-7.25-85.05-181.51-17.68-35.36-68.22-35.29-85.87 0-86.38 172.78-85.04 165.33-85.04 181.51zM440 416l72-144 72 144H440z"/></svg></span> MIT OR Apache-2.0
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="pure-g menu-item-divided">
-                    <div class="pure-u-1-2 right-border">
-                        <ul class="pure-menu-list">
-                            <li class="pure-menu-heading">Links</li>
-
-                            <li class="pure-menu-item">
-                                    <a href="https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;regex" class="pure-menu-link">
-                                        <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"/></svg></span> Homepage
-                                    </a>
-                                </li><li class="pure-menu-item">
-                                    <a href="https:&#x2F;&#x2F;docs.rs&#x2F;regex" title="Canonical documentation" class="pure-menu-link">
-                                        <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"/></svg></span> Documentation
-                                    </a>
-                                </li><li class="pure-menu-item">
-                                    <a href="https:&#x2F;&#x2F;github.com&#x2F;rust-lang&#x2F;regex" class="pure-menu-link">
-                                        <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M384 144c0-44.2-35.8-80-80-80s-80 35.8-80 80c0 36.4 24.3 67.1 57.5 76.8-.6 16.1-4.2 28.5-11 36.9-15.4 19.2-49.3 22.4-85.2 25.7-28.2 2.6-57.4 5.4-81.3 16.9v-144c32.5-10.2 56-40.5 56-76.3 0-44.2-35.8-80-80-80S0 35.8 0 80c0 35.8 23.5 66.1 56 76.3v199.3C23.5 365.9 0 396.2 0 432c0 44.2 35.8 80 80 80s80-35.8 80-80c0-34-21.2-63.1-51.2-74.6 3.1-5.2 7.8-9.8 14.9-13.4 16.2-8.2 40.4-10.4 66.1-12.8 42.2-3.9 90-8.4 118.2-43.4 14-17.4 21.1-39.8 21.6-67.9 31.6-10.8 54.4-40.7 54.4-75.9zM80 64c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16zm0 384c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zm224-320c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16z"/></svg></span> Repository
-                                    </a>
-                                </li><li class="pure-menu-item">
-                                <a href="https://crates.io/crates/regex" class="pure-menu-link" title="See regex in crates.io">
-                                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M239.1 6.3l-208 78c-18.7 7-31.1 25-31.1 45v225.1c0 18.2 10.3 34.8 26.5 42.9l208 104c13.5 6.8 29.4 6.8 42.9 0l208-104c16.3-8.1 26.5-24.8 26.5-42.9V129.3c0-20-12.4-37.9-31.1-44.9l-208-78C262 2.2 250 2.2 239.1 6.3zM256 68.4l192 72v1.1l-192 78-192-78v-1.1l192-72zm32 356V275.5l160-65v133.9l-160 80z"/></svg></span> Crates.io
-                                </a>
-                            </li>
-
-                            
-                            <li class="pure-menu-item">
-                                <a href="/crate/regex/latest/source/" title="Browse source of regex-1.5.5" class="pure-menu-link">
-                                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M572.694 292.093L500.27 416.248A63.997 63.997 0 0 1 444.989 448H45.025c-18.523 0-30.064-20.093-20.731-36.093l72.424-124.155A64 64 0 0 1 152 256h399.964c18.523 0 30.064 20.093 20.73 36.093zM152 224h328v-48c0-26.51-21.49-48-48-48H272l-64-64H48C21.49 64 0 85.49 0 112v278.046l69.077-118.418C86.214 242.25 117.989 224 152 224z"/></svg></span> Source
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    
-                    <div class="pure-u-1-2">
-                        <ul class="pure-menu-list">
-                            <li class="pure-menu-heading">Owners</li><li class="pure-menu-item">
-                                    <a href="/releases/BurntSushi" class="pure-menu-link">
-                                        <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg></span> BurntSushi
-                                    </a>
-                                </li><li class="pure-menu-item">
-                                    <a href="/releases/alexcrichton" class="pure-menu-link">
-                                        <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg></span> alexcrichton
-                                    </a>
-                                </li><li class="pure-menu-item">
-                                    <a href="/releases/github:rust-lang-nursery:regex-owners" class="pure-menu-link">
-                                        <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg></span> github:rust-lang-nursery:regex-owners
-                                    </a>
-                                </li><li class="pure-menu-item">
-                                    <a href="/releases/github:rust-lang:libs" class="pure-menu-link">
-                                        <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg></span> github:rust-lang:libs
-                                    </a>
-                                </li></ul>
-                    </div>
-                </div>
-
-                <div class="pure-g menu-item-divided">
-                    <div class="pure-u-1-2 right-border">
-                        <ul class="pure-menu-list">
-                            <li class="pure-menu-heading">Dependencies</li>
-
-                            
-                            <li class="pure-menu-item">
-                                <div class="pure-menu pure-menu-scrollable sub-menu" tabindex="-1">
-                                    <ul class="pure-menu-list"><li class="pure-menu-item">
-                                                <a href="/aho-corasick/^0.7.18" class="pure-menu-link">
-                                                    aho-corasick ^0.7.18
-                                                    <i class="dependencies normal">normal</i>
-                                                </a>
-                                            </li><li class="pure-menu-item">
-                                                <a href="/memchr/^2.4.0" class="pure-menu-link">
-                                                    memchr ^2.4.0
-                                                    <i class="dependencies normal">normal</i>
-                                                </a>
-                                            </li><li class="pure-menu-item">
-                                                <a href="/regex-syntax/^0.6.25" class="pure-menu-link">
-                                                    regex-syntax ^0.6.25
-                                                    <i class="dependencies normal">normal</i>
-                                                </a>
-                                            </li><li class="pure-menu-item">
-                                                <a href="/lazy_static/^1" class="pure-menu-link">
-                                                    lazy_static ^1
-                                                    <i class="dependencies dev">dev</i>
-                                                </a>
-                                            </li><li class="pure-menu-item">
-                                                <a href="/quickcheck/^1.0.3" class="pure-menu-link">
-                                                    quickcheck ^1.0.3
-                                                    <i class="dependencies dev">dev</i>
-                                                </a>
-                                            </li><li class="pure-menu-item">
-                                                <a href="/rand/^0.8.3" class="pure-menu-link">
-                                                    rand ^0.8.3
-                                                    <i class="dependencies dev">dev</i>
-                                                </a>
-                                            </li></ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="pure-u-1-2">
-                        <ul class="pure-menu-list">
-                            <li class="pure-menu-heading">Versions</li>
-
-                            <li class="pure-menu-item">
-                                <div class="pure-menu pure-menu-scrollable sub-menu" tabindex="-1">
-                                    <ul class="pure-menu-list">
-                                        
-                                        
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.5.5/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.5.5
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.5.4/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.5.4
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.5.3/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.5.3
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.5.2/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.5.2
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.5.1/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.5.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.5.0/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.5.0
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.4.6/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.4.6
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.4.5/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.4.5
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.4.4/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.4.4
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.4.3/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.4.3
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.4.2/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.4.2
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.4.1/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.4.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.4.0/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.4.0
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.9/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.9
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.8/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.8
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.7/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.7
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.6/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.6
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.5/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.5
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.4/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.4
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.3/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.3
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.2/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.2
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.1/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.3.0/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.3.0
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.2.1/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.2.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.9/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.9
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.8/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.8
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.7/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.7
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.6/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.6
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.5/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.5
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.4/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.4
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.3/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.3
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.2/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.2
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.1/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.1.0/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.1.0
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.0.6/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.0.6
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.0.5/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.0.5
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.0.4/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.0.4
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.0.3/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.0.3
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.0.2/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.0.2
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.0.1/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.0.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/1.0.0/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                1.0.0
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.11/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.11
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.10/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.10
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.9/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.9
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.8/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.8
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.7/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.7
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.6/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.6
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.5/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.5
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.4/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.4
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.3/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.3
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.2/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.2
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.1/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.2.0/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.2.0
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.80/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.80
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.79/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.79
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.78/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.78
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.77/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.77
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.76/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.76
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.75/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.75
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.74/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.74
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.73/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.73
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.72/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.72
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.71/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.71
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.70/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.70
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.69/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.69
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.68/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.68
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.67/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.67
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.65/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.65
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.64/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.64
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.63/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.63
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.62/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.62
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.61/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.61
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.60/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.60
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.59/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.59
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.58/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.58
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.56/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.56
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.55/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.55
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.54/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.54
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.53/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.53
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.52/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.52
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.51/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.51
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.48/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.48
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.47/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.47
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.46/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.46
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.45/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.45
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.44/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.44
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.43/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.43"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.43
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.42/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.42"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.42
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.41/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.41"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.41
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.40/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.40"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.40
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.39/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.39"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.39
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.38/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.38
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.37/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.37
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.36/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.36
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.35/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.35
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.34/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.34
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.33/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.33
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.32/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.32
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.30/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.30
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.29/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.29
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.28/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.28
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.27/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.27
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.26/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.26
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.25/target-redirect/regex/index.html"
-                class="pure-menu-link"
-                
-                data-fragment="retain"
-            >
-                
-                0.1.25
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.24/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.24"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.24
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.23/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.23"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.23
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.22/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.22"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.22
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.21/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.21"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.21
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.20/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.20"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.20
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.19/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.19"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.19
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.18/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.18"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.18
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.17/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.17"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.17
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.16/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.16"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.16
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.15/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.15"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.15
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.14/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.14"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.14
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.13/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.13"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.13
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.12/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.12"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.12
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.11/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.11"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.11
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.10/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.10"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.10
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.9/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.9"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.9
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.8/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.8"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.8
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.7/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.7"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.7
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.6/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.6"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.6
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.5/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.5"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.5
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.4/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.4"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.4
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.3/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.3"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.3
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.2/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.2"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.2
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.1/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.1"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.1
-            </a>
-        </li>
-        
-        
-        <li class="pure-menu-item">
-            <a
-                href="/crate/regex/0.1.0/target-redirect/regex/index.html"
-                class="pure-menu-link warn"
-                 title="docs.rs failed to build regex-0.1.0"
-                data-fragment="retain"
-            >
-                
-                    <span class="fa-svg fa-svg-fw " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>
-                
-                0.1.0
-            </a>
-        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                    <div class="pure-g">
-                        <div class="pure-u-1">
-                            <ul class="pure-menu-list">
-                                <li>
-                                    <a href="/crate/regex/latest" class="pure-menu-link">
-                                        <b>100%</b>
-                                        of the crate is documented
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div></div>
-        </li><li class="pure-menu-item pure-menu-has-children">
-        <a href="#" class="pure-menu-link" aria-label="Platform">
-            <span class="fa-svg " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg></span>
-            <span class="title">Platform</span>
-        </a>
-
-        
-        <ul class="pure-menu-children"><li class="pure-menu-item">
-                    <a href="/crate/regex/latest/target-redirect/x86_64-unknown-linux-gnu/regex/index.html" class="pure-menu-link" data-fragment="retain" rel="nofollow">x86_64-unknown-linux-gnu</a>
-                </li><li class="pure-menu-item">
-                    <a href="/crate/regex/latest/target-redirect/i686-pc-windows-msvc/regex/index.html" class="pure-menu-link" data-fragment="retain" rel="nofollow">i686-pc-windows-msvc</a>
-                </li><li class="pure-menu-item">
-                    <a href="/crate/regex/latest/target-redirect/x86_64-pc-windows-msvc/regex/index.html" class="pure-menu-link" data-fragment="retain" rel="nofollow">x86_64-pc-windows-msvc</a>
-                </li><li class="pure-menu-item">
-                    <a href="/crate/regex/latest/target-redirect/i686-unknown-linux-gnu/regex/index.html" class="pure-menu-link" data-fragment="retain" rel="nofollow">i686-unknown-linux-gnu</a>
-                </li><li class="pure-menu-item">
-                    <a href="/crate/regex/latest/target-redirect/x86_64-apple-darwin/regex/index.html" class="pure-menu-link" data-fragment="retain" rel="nofollow">x86_64-apple-darwin</a>
-                </li></ul>
-    </li><li class="pure-menu-item">
-        <a href="/crate/regex/latest/features" title="Browse available feature flags of regex-1.5.5" class="pure-menu-link">
-            <span class="fa-svg " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M349.565 98.783C295.978 98.783 251.721 64 184.348 64c-24.955 0-47.309 4.384-68.045 12.013a55.947 55.947 0 0 0 3.586-23.562C118.117 24.015 94.806 1.206 66.338.048 34.345-1.254 8 24.296 8 56c0 19.026 9.497 35.825 24 45.945V488c0 13.255 10.745 24 24 24h16c13.255 0 24-10.745 24-24v-94.4c28.311-12.064 63.582-22.122 114.435-22.122 53.588 0 97.844 34.783 165.217 34.783 48.169 0 86.667-16.294 122.505-40.858C506.84 359.452 512 349.571 512 339.045v-243.1c0-23.393-24.269-38.87-45.485-29.016-34.338 15.948-76.454 31.854-116.95 31.854z"/></svg></span>
-            <span class="title">Feature flags</span>
-        </a>
-    </li>
     
-</ul><div class="spacer"></div>
-                
-                <ul class="pure-menu-list">
-                    <li class="pure-menu-item pure-menu-has-children">
-                        <a href="#" class="pure-menu-link">
-                            <span title="Releases"><span class="fa-svg " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M546.2 9.7c-5.6-12.5-21.6-13-28.3-1.2C486.9 62.4 431.4 96 368 96h-80C182 96 96 182 96 288c0 7 .8 13.7 1.5 20.5C161.3 262.8 253.4 224 384 224c8.8 0 16 7.2 16 16s-7.2 16-16 16C132.6 256 26 410.1 2.4 468c-6.6 16.3 1.2 34.9 17.5 41.6 16.4 6.8 35-1.1 41.8-17.3 1.5-3.6 20.9-47.9 71.9-90.6 32.4 43.9 94 85.8 174.9 77.2C465.5 467.5 576 326.7 576 154.3c0-50.2-10.8-102.2-29.8-144.6z"/></svg></span></span>
-                            <span class="title">Releases</span>
-                        </a>
+    
 
-                        <ul class="pure-menu-children">
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="&#x2F;releases" >
-            All Releases
-        </a>
-    </li>
+    <link rel="stylesheet" media="screen" href="/css2.50.3/dist/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" media="screen" href="/css2.50.3/dist/LibAnswers_public.min.css" />
 
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="&#x2F;releases&#x2F;stars" >
-            Releases by Stars
-        </a>
-    </li>
+    <title>
+        How do I request a research appointment in the Law Library Reading Room? - Ask a Librarian
+    </title>
 
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="&#x2F;releases&#x2F;recent-failures" >
-            Recent Build Failures
-        </a>
-    </li>
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="&#x2F;releases&#x2F;failures" >
-            Build Failures by Stars
-        </a>
-    </li>
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="&#x2F;releases&#x2F;activity" >
-            Release Activity
-        </a>
-    </li>
-
-                        </ul>
-                    </li><li class="pure-menu-item pure-menu-has-children">
-                        <a href="#" class="pure-menu-link" aria-label="Rust">Rust</a>
-                        <ul class="pure-menu-children">
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="https:&#x2F;&#x2F;www.rust-lang.org&#x2F;" target="_blank">
-            Rust website
-        </a>
-    </li>
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;book&#x2F;" target="_blank">
-            The Book
-        </a>
-    </li>
-
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;std&#x2F;" target="_blank">
-            Standard Library API Reference
-        </a>
-    </li>
-
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;rust-by-example&#x2F;" target="_blank">
-            Rust by Example
-        </a>
-    </li>
-
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link menu-item-divided" href="https:&#x2F;&#x2F;rust-lang-nursery.github.io&#x2F;rust-cookbook&#x2F;" target="_blank">
-            Rust Cookbook
-        </a>
-    </li>
-
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="https:&#x2F;&#x2F;crates.io" target="_blank">
-            Crates.io
-        </a>
-    </li>
-
-
-                            
-    <li class="pure-menu-item">
-        <a class="pure-menu-link " href="http:&#x2F;&#x2F;doc.crates.io&#x2F;guide.html" target="_blank">
-            The Cargo Guide
-        </a>
-    </li>
-
-                        </ul>
-                    </li>
-                </ul>
-                
-                <div id="search-input-nav">
-                    <label for="nav-search">
-                        <span class="fa-svg " aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span>
-                    </label>
-
+	<style>
                     
-                    
-                    <input id="nav-search" name="query" type="text" aria-label="Find crate by search query" tabindex="-1"
-                        placeholder="Find crate">
-                </div>
-            </form>
+            .s-la-color-header { background-image: none; background-color: #ffffff; }
+                
+    </style>
+
+    <link rel="stylesheet" media="print" href="/css2.50.3/dist/la_print.min.css" />
+
+
+    <script src="https://v2.libanswers.com/js2.50.3/dist/jquery.min.js"></script>
+    <script src="/js2.50.3/dist/LibAnswers_public.min.js"></script>
+    <script>
+var springSpace = springSpace || {};
+springSpace.la = springSpace.la || {};
+springSpace.la.Page = {
+    iid: 2246,
+    group_id: 6188,
+    faq_id: 362211,
+    qlog_id: 0,
+    auth_id: 0
+};
+</script>
+
+    <link rel="shortcut icon" href='https://www.loc.gov/favicon.ico' />
+<link rel="icon" sizes="192x192" href="https://www.loc.gov/touch-icon-192x192.png" />
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://www.loc.gov/apple-touch-icon-180x180.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://www.loc.gov/apple-touch-icon-152x152.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://www.loc.gov/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" href="https://www.loc.gov/apple-touch-icon-precomposed.png" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="https://www.loc.gov/ms-icon-144x144.png" />
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Slab:400,700" rel="stylesheet" />
+<link href="https://cdn.loc.gov/libguide/css/askloc.css" rel="stylesheet" />
+<style>
+/* add styles here */
+</style>
+<script src="https://www.loc.gov/static/js/lib/iframeResizer.js"></script>
+<script>
+$( document ).ready(function() {
+    // iframeresizer
+    $('iframe').iFrameResize({log:true});
+    // add role attributes to the right side column
+    $('.s-la-page-home #s-la-page-column-2, .s-la-page-faq #s-la-page-column-2').attr('role', 'complementary');
+    // widget button
+    setTimeout(function() {
+        $('.tab-pane-content .s-la-widget .btn-default').removeClass('btn-default').addClass('btn-primary');
+    }, 300);
+    // remove non-breaking space from faq links list
+    $(".s-la-faq-links .s-la-alink").html(function (i, html) {
+        return html.replace(/ /g, '');
+    });
+    // move search results out of navbar
+    $(".search .s-la-content-search").prependTo(".search #s-la-page-title-bar");
+    $(".search .s-la-content-search form").removeClass("navbar-form navbar-left");
+    // deep link tabs
+    var url = window.location.href;
+    if (url.indexOf("#") > 0){
+        var activeTab = url.substring(url.indexOf("#") + 1);
+        $('.nav[role="tablist"] a[href="#'+activeTab+'"]').tab('show');
+    }
+    $('a[role="tab"]').on("click", function() {
+        var newUrl;
+        const hash = $(this).attr("href");
+        newUrl = url.split("#")[0] + hash;
+        history.replaceState(null, null, newUrl);
+    });
+});
+</script><style>
+#s-la-page-title-bar {
+    display: none;
+}
+</style>
+</head>
+<body id="s-la-page-38477" class="s-la-page-public s-la-page-faq">
+    <a id="s-la-public-skiplink" class="alert-info" href="#s-la-public-header-title">Skip to Main Content</a>
+    <!-- start custom header -->
+    <div class="loc-header-wrapper">
+<div class="container">
+<header class="loc-header row">
+<div class="logo-container col-xs-12">
+<a href="https://www.loc.gov/" class="logo-loc">
+<span>Library of Congress</span>
+<img src="https://cdn.loc.gov/libguide/images/logo-loc-padded.svg" alt="" />
+</a>
+<a href="/" class="logo-ask-librarian">
+<span>Ask a Librarian</span>
+<img src="https://cdn.loc.gov/libguide/images/logo-ask-librarian.svg" alt="" />
+</a>
+</div>
+</header>
+</div>
+</div>
+<!-- alert message -->
+<div class="alert-wrapper">
+<div class="container">
+    <div class="alert alert-warning alert-dismissible fade in" role="alert" style="border-radius: 0; padding-top: 10px; padding-bottom: 10px; margin-bottom: 10px;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <p>The Library of Congress welcomes researchers to its reading rooms and research centers. Appointments are <a href="https://research-appointments.loc.gov/" target="_blank"><strong>optional</strong></a>, but <strong>encouraged</strong> to serve you best, ensure collection material is accessible during your visit and optimize your time at the Library. The Thomas Jefferson Building has reopened to visitors via timed, ticketed entry—<a href="https://www.loc.gov/visit/" target="_blank">learn how to obtain a timed-entry pass.</a> Virtual events and online services continue to be available.</p>
+ </div>
+</div>
+</div>
+    <!-- end custom header -->
+    <div class="container">
+            
+        <div id="s-la-bc" class="row" role="navigation">
+        <div class="col-md-12">
+            <ol class="breadcrumb s-la-color-bars s-la-color-bars-border">
+                <li>
+                    <a href="https://www.loc.gov/">Library of Congress</a>
+                </li>
+                <li class="">
+                    <a href="/">Ask a Librarian</a>
+                </li>
+                                    <li class="">
+                                                    <a href="/law/">Law</a>
+                                            </li>
+                            </ol>
         </div>
     </div>
+    <div id="s-la-public-header" class="s-la-header row clearfix">
+        <div class="col-md-12">
+                        <noscript>
+    <div id="s-la-noscript" class="alert alert-warning">
+        <strong>Warning:</strong> Your browser has javascript disabled. Without javascript some functions will not work, including question submission via the form.
+    </div>
+</noscript>
+            <div class="s-la-public-header-text ">
+                <h1 class="s-la-public-header-title">
+    Frequently Asked Questions: Law Library of Congress
+</h1>
+                <div class="s-la-public-header-description">
+    Browse some of the most frequently asked questions answered by our subject specialists.
+    </div>
+            </div>
+        </div>
+    </div>
+        <div id="s-la-page-title-bar" role="navigation">
+        <div class="navbar navbar-default s-la-color-bars s-la-color-bars-border">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#s-la-browsebar-collapse" aria-hidden="true">
+                    <span class="fa fa-bars"></span><span class="sr-only">Toggle menu visibility</span>
+                </button></div>
+
+            <div class="collapse navbar-collapse" id="s-la-browsebar-collapse">
+                <div id="s-la-content-search-67888" class="s-la-content-search">
+    <form method="get" class="navbar-form navbar-left" role="search" name="s-la-searchform" id="s-la-searchform-67888" action="/law/search/" aria-labelledby="s-la-content-search-query-67888">
+        <input type="hidden" name="t" value="0" />
+        <div class="form-group">
+            <label for="s-la-content-search-query-67888" class="s-la-searchform-label sr-only control-label">Ask Another Question</label>
+            <div class="col-xs-9">
+                <input type="text" id="s-la-content-search-query-67888" class="s-la-content-search-query form-control" name="q" placeholder="Type your question" value="" autocomplete="off" />
+            </div>
+            <div class="col-xs-3 s-la-searchform-buttoncol">
+                <button type="submit" class="btn btn-default s-la-searchform-button">
+                                    Search
+                                </button>
+            </div>
+        </div>
+    </form>
+
+            <script>$(function() { searchform_67888 = springSpace.la.initFaqSearchForm({ contentId: 67888, iid: 2246, apiDomain: 'ask.loc.gov', groupId: [6188], limit: 10 }); });</script>
+    </div>
+
+                <ul class="nav navbar-nav s-la-navbrowse">
+                    <li>
+                        <p class="navbar-text">Browse:</p>
+                    </li>
+                    <li>
+                        <a class="" href="/law/search/">All</a>
+                    </li>
+                    <li class="dropdown" id="s-la-browse-groups">
+    <a id="s-la-browse-group-drop" data-toggle="dropdown" data-target="#s-la-browse-groups" class="dropdown-toggle" href="#">Groups <b class="caret"></b></a>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="s-la-browse-group-drop" aria-hidden="true">
+
+                                    <li><a href="/africa-middle-east/" role="menuitem">Africa, Middle East</a></li>
+                            <li><a href="/american-folklife/" role="menuitem">American Folklife</a></li>
+                            <li><a href="/asia/" role="menuitem">Asia</a></li>
+                            <li><a href="/business/" role="menuitem">Business</a></li>
+                            <li><a href="/caribbean-iberia-latin-america/" role="menuitem">Caribbean, Iberia, Latin America</a></li>
+                            <li><a href="/special-search/" role="menuitem">Collections Management Division</a></li>
+                            <li><a href="/europe/" role="menuitem">Europe</a></li>
+                            <li><a href="/film-tv-video/" role="menuitem">Film, TV, Video</a></li>
+                            <li><a href="/genealogy-local-history/" role="menuitem">Genealogy, Local History</a></li>
+                            <li><a href="/" role="menuitem">General Reference</a></li>
+                            <li><a href="/history-humanities-social-sciences/" role="menuitem">History, Humanities, Social Sciences</a></li>
+                            <li><a href="/law/" role="menuitem">Law</a></li>
+                            <li><a href="/loan-reserves-accounts/" role="menuitem">Loan & Accounts</a></li>
+                            <li><a href="/manuscripts/" role="menuitem">Manuscripts</a></li>
+                            <li><a href="/map-geography/" role="menuitem">Maps, Geography</a></li>
+                            <li><a href="/national-library-service/" role="menuitem">National Library Service for the Blind and Print Disabled</a></li>
+                            <li><a href="/newspapers-periodicals/" role="menuitem">Newspapers, Periodicals, Comic Books</a></li>
+                            <li><a href="/performing-arts/" role="menuitem">Performing Arts</a></li>
+                            <li><a href="/poetry-literature/" role="menuitem">Poetry, Literature</a></li>
+                            <li><a href="/preservation/" role="menuitem">Preservation</a></li>
+                            <li><a href="/prints-photographs/" role="menuitem">Prints and Photographs</a></li>
+                            <li><a href="/rare-books-special-collections/" role="menuitem">Rare Books, Special Collections</a></li>
+                            <li><a href="/recorded-sound/" role="menuitem">Recorded Sound, Audio</a></li>
+                            <li><a href="/science/" role="menuitem">Science, Technical Reports</a></li>
+                            <li><a href="/teacher-resources/" role="menuitem">Teacher Resources</a></li>
+                            <li><a href="/veterans-history/" role="menuitem">Veterans History</a></li>
+            
+                    
+            </ul>
+</li>
+                    <li id="s-la-page-title-bar-topics" class="dropdown">
+    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Topics <b class="caret"></b></a>
+    <ul class="dropdown-menu dropdown-scroll dropdown-menu-right" role="menu" aria-hidden="true">
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=About%20the%20Law%20Library&adv=1" role="menuitem"><span class="badge">9</span><span class="topic_item">About the Law Library</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Beginner%27s%20Guides&adv=1" role="menuitem"><span class="badge">27</span><span class="topic_item">Beginner's Guides</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Federal%20Legislative%20History&adv=1" role="menuitem"><span class="badge">10</span><span class="topic_item">Federal Legislative History</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Law%20Library%20Collections&adv=1" role="menuitem"><span class="badge">14</span><span class="topic_item">Law Library Collections</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Law%20Library%20Reading%20Room&adv=1" role="menuitem"><span class="badge">12</span><span class="topic_item">Law Library Reading Room</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Law%20Library%20Research%20Guides&adv=1" role="menuitem"><span class="badge">36</span><span class="topic_item">Law Library Research Guides</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Law%20of%20the%20Electoral%20College&adv=1" role="menuitem"><span class="badge">8</span><span class="topic_item">Law of the Electoral College</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Legal%20Research&adv=1" role="menuitem"><span class="badge">53</span><span class="topic_item">Legal Research</span></a>
+            </li>
+                    <li>
+                <a href="/law/search/?t=0&g=6188&topics=Legislative%20Process&adv=1" role="menuitem"><span class="badge">6</span><span class="topic_item">Legislative Process</span></a>
+            </li>
+            </ul>
+</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<div id="s-la-page-maincontent" role="main">
+    <div class="s-la-row row">
+        <div id="s-la-page-column-0" class="s-la-column-top col-md-12">
+                                </div>
+    </div>
+
+    <div class="s-la-row row">
+                    <div id="s-la-page-column-1" class="s-la-page-column col-md-8">
+                                                            
+
+<div id="s-la-box-86005-container" class="s-la-box-container s-la-color-bars-border s-la-box-borderless s-la-box-type-4 s-la-box-position-1">
+    <div id="s-la-box-86005" class="s-la-box s-la-box-html">
+        <div class="s-la-box-title s-la-color-bars s-la-color-bars-border">
+            <h2>How do I request a research appointment in the Law Library Reading Room? </h2>
+        </div>
+        <div id="" class="s-la-box-content clearfix"  >
+            <div class="s-la-faq-details"></div>
+<div class="s-la-faq-answer"><p><strong>Appointments are optional, but encouraged.</strong> To help us better serve you, request a <a href="https://research-appointments.loc.gov/reserve/law-reading-room">research appointment</a> to ensure collection material is accessible during your visit to the Library. There are two appointment time blocks: 8:30 am&ndash;1:00 pm or&nbsp;1:00 pm&ndash;5:00 pm (Monday&ndash;Saturday). Appointments should be scheduled at least one day in advance.</p>
+
+<p>Please use the <a href="https://research-appointments.loc.gov/reserve/law-reading-room">online reservation system</a> to request an appointment; you will receive a message when your requested appointment time is confirmed. For additional instructions, see the <a href="https://research-appointments.loc.gov/">Researcher Scheduling</a> page.</p>
+
+<p>To speak with a legal reference librarian about scheduling an appointment, call 202-707-5079 during normal business hours (8:30 am - 5:00 pm).</p></div>
+<div class="s-la-faq-links"><h3>Learn More</h3><ul class="list-unstyled"><li id="faqlink573652" class="s-la-alink">
+    <a href="https://loc.gov/about/pandemic-information/for-researchers/" target="_blank"><i class="fa fa-external-link"></i> Library of Congress: Pandemic Information for Researchers</a>
+    </li>
+<li id="faqlink573651" class="s-la-alink">
+    <a href="https://www.loc.gov/research-centers/law-library-of-congress/researcher-resources/" target="_blank"><i class="fa fa-external-link"></i> Law Library of Congress: Researcher Resources</a>
+    </li>
+<li id="faqlink573653" class="s-la-alink">
+    <a href="https://catalog.loc.gov/" target="_blank"><i class="fa fa-external-link"></i> Library of Congress Catalog</a>
+    </li>
+</ul></div>
+
+<div class="s-la-faq-topics"><h3>Related Topics</h3><ul class="list-unstyled"><li><span class="label label-topic"><a href="/law/search/?t=0&adv=1&topics=Law%20Library%20Reading%20Room">Law Library Reading Room</a></span></li><li><span class="label label-topic"><a href="/law/search/?t=0&adv=1&topics=About%20the%20Law%20Library">About the Law Library</a></span></li></ul></div>
+<hr />
+<div class="row"><div class="col-sm-6 align-left"><span class="s-la-faq-updated" title="Last Updated"><strong>Last Updated:</strong> Apr 21, 2022 </span></div> <div class="col-sm-6 align-right"><span class="s-la-faq-views" title="Views"><strong>Views:</strong> 39</span></div></div>
+        </div>
+                            </div>
 </div>
-<div class="rustdoc mod crate container-rustdoc" id="rustdoc_body_wrapper" tabindex="-1"><script type="text/javascript" src="/-/static/menu.js?0-6-0-ff301c9-2022-04-27"></script>
-<script type="text/javascript" src="/-/static/index.js?0-6-0-ff301c9-2022-04-27"></script>
 
-<iframe src="/-/storage-change-detection.html" width="0" height="0" style="display: none"></iframe><div class="docs-rs-footer">
-    <a href="/about">About docs.rs</a>
-    <a href="https://foundation.rust-lang.org/policies/privacy-policy/#docs.rs">Privacy policy</a>
-    <a href="/releases/queue">Build queue</a>
+                                                <div id="s-la-faq-action-bar-86006" class="s-la-faq-action-bar">
+        <div class="navbar navbar-default s-la-color-bars s-la-color-bars-border">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#s-la-faqbar-collapse-86006" aria-hidden="true">
+                    <span class="fa fa-bars"><span class="sr-only">Toggle action bar</span></span>
+                </button>
+                <a class="navbar-brand" href="#" onclick="return false;">FAQ Actions</a>
+            </div>
+            <div class="collapse navbar-collapse" id="s-la-faqbar-collapse-86006">
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="s-la-faq-printlink">
+    <a href="#" onclick="window.print();">
+        <i class="fa fa-print"></i> <span class="sr-only icon-label"> Print</span>
+    </a>
+</li>
+<li id="s-la-faq-tweetlink">
+    <a href="#" onclick="faqHit(362211, 2246, 2); window.open(`https://twitter.com/share?url=${encodeURIComponent('https\u003A\/\/ask.loc.gov\/law\/faq\/362211')}`);">
+        <i class="fa fa-twitter"></i><span class="sr-only icon-label"> Tweet</span>
+    </a>
+</li>
+<li id="s-la-faq-fblink">
+    <a href="#" onclick="faqHit(362211, 2246, 3); window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https\u003A\/\/ask.loc.gov\/law\/faq\/362211')}`);">
+    <i class="fa fa-facebook-square"></i><span class="sr-only icon-label"> Share on Facebook</span>
+    </a>
+</li>
+                </ul>
+                <p id="s-la-vote" class="navbar-text">
+                    <span id="s-la-vote-label">Was this helpful?</span>
+<button id="s-la-vote-yes" type="button" class="btn btn-link mg-left" data-vote="1" data-warn="" >
+    <span class="fa fa-thumbs-o-up text-success" aria-hidden="true"></span>
+    <span class="fa fa-thumbs-up text-success" aria-hidden="true"></span>
+    <span class="sr-only icon-label">Yes</span>
+</button>
+<span id="s-la-vote-yes-ct">0</span>
+<button id="s-la-vote-no" type="button" class="btn btn-link mg-left" data-vote="0" data-warn="" >
+    <span class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></span>
+    <span class="fa fa-thumbs-down text-danger" aria-hidden="true"></span>
+    <span class="sr-only icon-label">No</span>
+</button>
+<span id="s-la-vote-no-ct">0</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+                                                                </div>
+                    <div id="s-la-page-column-2" class="s-la-page-column col-md-4">
+                                                            
+
+<div id="s-la-box-85996-container" class="s-la-box-container s-la-color-bars-border s-la-box-borderless s-la-box-type-1 s-la-box-position-1">
+    <div id="s-la-box-85996" class="s-la-box s-la-box-html">
+        <div class="s-la-box-title s-la-color-bars s-la-color-bars-border">
+            <h2>Learn More </h2>
+        </div>
+        <div id="" class="s-la-box-content clearfix"  >
+            <div id="s-la-content-link-85102" class="s-la-content-link s-la-content">
+        <a class="s-la-content-link-a" href="https://www.loc.gov/law/">Law Library of Congress</a>
+        <div class="s-la-content-link-description">Established by Congress in 1832, the Law Library has a collection of over 2.65 million volumes spanning the ages and covering virtually every jurisdiction in the world.</div>
+    </div>
+<div id="s-la-content-link-85103" class="s-la-content-link s-la-content">
+        <a class="s-la-content-link-a" href="https://guides.loc.gov/law-library">Law Library Research Guides</a>
+        <div class="s-la-content-link-description">View guides created for topics ranging from law basics to the Supreme Court.</div>
+    </div>
+
+        </div>
+                            </div>
 </div>
-<!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../regex/index.html"><div class="logo-container"><img class="rust-logo" src="/rust-logo-20220307-1.61.0-nightly-03918badd.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../regex/index.html"><div class="logo-container"><img class="rust-logo" src="/rust-logo-20220307-1.61.0-nightly-03918badd.svg" alt="logo"></div>
-        </a><h2 class="location"><a href="#">Crate regex</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 1.5.5</li><li><a id="all-types" href="all.html">All Items</a></li></div></ul><section><div class="block"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div></section><div id="sidebar-vars" data-name="regex" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items-20220307-1.61.0-nightly-03918badd.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../regex/index.html"><img class="rust-logo" src="/rust-logo-20220307-1.61.0-nightly-03918badd.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="/brush-20220307-1.61.0-nightly-03918badd.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="/wheel-20220307-1.61.0-nightly-03918badd.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
-    <h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">regex</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="/clipboard-20220307-1.61.0-nightly-03918badd.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/regex/lib.rs.html#1-767">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This crate provides a library for parsing, compiling, and executing regular
-expressions. Its syntax is similar to Perl-style regular expressions, but lacks
-a few features like look around and backreferences. In exchange, all searches
-execute in linear time with respect to the size of the regular expression and
-search text.</p>
-<p>This crate’s documentation provides some simple examples, describes
-<a href="#unicode">Unicode support</a> and exhaustively lists the
-<a href="#syntax">supported syntax</a>.</p>
-<p>For more specific details on the API for regular expressions, please see the
-documentation for the <a href="struct.Regex.html"><code>Regex</code></a> type.</p>
-<h2 id="usage"><a href="#usage">Usage</a></h2>
-<p>This crate is <a href="https://crates.io/crates/regex">on crates.io</a> and can be
-used by adding <code>regex</code> to your dependencies in your project’s <code>Cargo.toml</code>.</p>
-<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
-regex = &quot;1&quot;</code></pre></div><h2 id="example-find-a-date"><a href="#example-find-a-date">Example: find a date</a></h2>
-<p>General use of regular expressions in this package involves compiling an
-expression and then using it to search, split or replace text. For example,
-to confirm that some text resembles a date:</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">regex::Regex</span>;
-<span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;^\d{4}-\d{2}-\d{2}$&quot;</span>).<span class="ident">unwrap</span>();
-<span class="macro">assert!</span>(<span class="ident">re</span>.<span class="ident">is_match</span>(<span class="string">&quot;2014-01-01&quot;</span>));</code></pre></div>
-<p>Notice the use of the <code>^</code> and <code>$</code> anchors. In this crate, every expression
-is executed with an implicit <code>.*?</code> at the beginning and end, which allows
-it to match anywhere in the text. Anchors can be used to ensure that the
-full text matches an expression.</p>
-<p>This example also demonstrates the utility of
-<a href="https://doc.rust-lang.org/stable/reference/tokens.html#raw-string-literals">raw strings</a>
-in Rust, which
-are just like regular strings except they are prefixed with an <code>r</code> and do
-not process any escape sequences. For example, <code>&quot;\\d&quot;</code> is the same
-expression as <code>r&quot;\d&quot;</code>.</p>
-<h2 id="example-avoid-compiling-the-same-regex-in-a-loop"><a href="#example-avoid-compiling-the-same-regex-in-a-loop">Example: Avoid compiling the same regex in a loop</a></h2>
-<p>It is an anti-pattern to compile the same regular expression in a loop
-since compilation is typically expensive. (It takes anywhere from a few
-microseconds to a few <strong>milliseconds</strong> depending on the size of the
-regex.) Not only is compilation itself expensive, but this also prevents
-optimizations that reuse allocations internally to the matching engines.</p>
-<p>In Rust, it can sometimes be a pain to pass regular expressions around if
-they’re used from inside a helper function. Instead, we recommend using the
-<a href="https://crates.io/crates/lazy_static"><code>lazy_static</code></a> crate to ensure that
-regular expressions are compiled exactly once.</p>
-<p>For example:</p>
+                                            
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">lazy_static::lazy_static</span>;
-<span class="kw">use</span> <span class="ident">regex::Regex</span>;
+<div id="s-la-box-85997-container" class="s-la-box-container s-la-color-bars-border s-la-box-borderless s-la-box-type-1 s-la-box-position-2">
+    <div id="s-la-box-85997" class="s-la-box s-la-box-html">
+        <div class="s-la-box-title s-la-color-bars s-la-color-bars-border">
+            <h2>Follow Us </h2>
+        </div>
+        <div id="" class="s-la-box-content clearfix"  >
+            <div id="s-la-content-link-85104" class="s-la-content-link s-la-content">
+        <a class="s-la-content-link-a" href="http://blogs.loc.gov/law/"><i class="fa fa-rss"></i> In Custodia Legis</a>
+        <div class="s-la-content-link-description">The official blog of the Law Library.</div>
+    </div>
+<div id="s-la-content-link-85105" class="s-la-content-link s-la-content">
+        <a class="s-la-content-link-a" href="https://twitter.com/LawLibCongress"><i class="fa fa-twitter"></i> @LawLibCongress <i class="fa fa-external-link"></i><span class="screen-readers-only">External</span></a>
+        <div class="s-la-content-link-description">News and information from the Law Library of Congress in Washington, DC.</div>
+    </div>
+<div id="s-la-content-link-85106" class="s-la-content-link s-la-content">
+        <a class="s-la-content-link-a" href="https://twitter.com/congressdotgov"><i class="fa fa-twitter"></i> @Congressdotgov <i class="fa fa-external-link"></i><span class="screen-readers-only">External</span></a>
+        <div class="s-la-content-link-description">Tweets about Congress.gov, the U.S. legislative information system.</div>
+    </div>
 
-<span class="kw">fn</span> <span class="ident">some_helper_function</span>(<span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">bool</span> {
-    <span class="macro">lazy_static!</span> {
-        <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">RE</span>: <span class="ident">Regex</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">&quot;...&quot;</span>).<span class="ident">unwrap</span>();
-    }
-    <span class="ident">RE</span>.<span class="ident">is_match</span>(<span class="ident">text</span>)
-}
+        </div>
+                            </div>
+</div>
 
-<span class="kw">fn</span> <span class="ident">main</span>() {}</code></pre></div>
-<p>Specifically, in this example, the regex will be compiled when it is used for
-the first time. On subsequent uses, it will reuse the previous compilation.</p>
-<h2 id="example-iterating-over-capture-groups"><a href="#example-iterating-over-capture-groups">Example: iterating over capture groups</a></h2>
-<p>This crate provides convenient iterators for matching an expression
-repeatedly against a search string to find successive non-overlapping
-matches. For example, to find all dates in a string and be able to access
-them by their component pieces:</p>
+                                            
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(\d{4})-(\d{2})-(\d{2})&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="string">&quot;2012-03-14, 2013-01-01 and 2014-07-05&quot;</span>;
-<span class="kw">for</span> <span class="ident">cap</span> <span class="kw">in</span> <span class="ident">re</span>.<span class="ident">captures_iter</span>(<span class="ident">text</span>) {
-    <span class="macro">println!</span>(<span class="string">&quot;Month: {} Day: {} Year: {}&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">cap</span>[<span class="number">2</span>], <span class="kw-2">&amp;</span><span class="ident">cap</span>[<span class="number">3</span>], <span class="kw-2">&amp;</span><span class="ident">cap</span>[<span class="number">1</span>]);
-}
-<span class="comment">// Output:</span>
-<span class="comment">// Month: 03 Day: 14 Year: 2012</span>
-<span class="comment">// Month: 01 Day: 01 Year: 2013</span>
-<span class="comment">// Month: 07 Day: 05 Year: 2014</span></code></pre></div>
-<p>Notice that the year is in the capture group indexed at <code>1</code>. This is
-because the <em>entire match</em> is stored in the capture group at index <code>0</code>.</p>
-<h2 id="example-replacement-with-named-capture-groups"><a href="#example-replacement-with-named-capture-groups">Example: replacement with named capture groups</a></h2>
-<p>Building on the previous example, perhaps we’d like to rearrange the date
-formats. This can be done with text replacement. But to make the code
-clearer, we can <em>name</em>  our capture groups and use those names as variables
-in our replacement text:</p>
+<div id="s-la-box-85998-container" class="s-la-box-container s-la-color-bars-border s-la-box-borderless s-la-box-type-1 s-la-box-position-3">
+    <div id="s-la-box-85998" class="s-la-box s-la-box-html">
+        <div class="s-la-box-title s-la-color-bars s-la-color-bars-border">
+            <h2>Additional Ways to Contact Us </h2>
+        </div>
+        <div id="" class="s-la-box-content clearfix"  >
+            <div id="s-la-content-text-85107" class="s-la-content-text s-la-content">
+        <p><strong>Send written correspondence to:</strong></p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(?P&lt;y&gt;\d{4})-(?P&lt;m&gt;\d{2})-(?P&lt;d&gt;\d{2})&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">before</span> <span class="op">=</span> <span class="string">&quot;2012-03-14, 2013-01-01 and 2014-07-05&quot;</span>;
-<span class="kw">let</span> <span class="ident">after</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">replace_all</span>(<span class="ident">before</span>, <span class="string">&quot;$m/$d/$y&quot;</span>);
-<span class="macro">assert_eq!</span>(<span class="ident">after</span>, <span class="string">&quot;03/14/2012, 01/01/2013 and 07/05/2014&quot;</span>);</code></pre></div>
-<p>The <code>replace</code> methods are actually polymorphic in the replacement, which
-provides more flexibility than is seen here. (See the documentation for
-<code>Regex::replace</code> for more details.)</p>
-<p>Note that if your regex gets complicated, you can use the <code>x</code> flag to
-enable insignificant whitespace mode, which also lets you write comments:</p>
+<p>The Law Library of Congress<br />
+101 Independence Avenue<br />
+Washington, DC 20540-4860</p>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(?x)
-  (?P&lt;y&gt;\d{4}) # the year
-  -
-  (?P&lt;m&gt;\d{2}) # the month
-  -
-  (?P&lt;d&gt;\d{2}) # the day
-&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">before</span> <span class="op">=</span> <span class="string">&quot;2012-03-14, 2013-01-01 and 2014-07-05&quot;</span>;
-<span class="kw">let</span> <span class="ident">after</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">replace_all</span>(<span class="ident">before</span>, <span class="string">&quot;$m/$d/$y&quot;</span>);
-<span class="macro">assert_eq!</span>(<span class="ident">after</span>, <span class="string">&quot;03/14/2012, 01/01/2013 and 07/05/2014&quot;</span>);</code></pre></div>
-<p>If you wish to match against whitespace in this mode, you can still use <code>\s</code>,
-<code>\n</code>, <code>\t</code>, etc. For escaping a single space character, you can escape it
-directly with <code>\ </code>, use its hex character code <code>\x20</code> or temporarily disable
-the <code>x</code> flag, e.g., <code>(?-x: )</code>.</p>
-<h2 id="example-match-multiple-regular-expressions-simultaneously"><a href="#example-match-multiple-regular-expressions-simultaneously">Example: match multiple regular expressions simultaneously</a></h2>
-<p>This demonstrates how to use a <code>RegexSet</code> to match multiple (possibly
-overlapping) regular expressions in a single scan of the search text:</p>
+</div>
+<div id="s-la-content-iconitem-85108" class="s-la-content-iconitem s-la-content clearfix">
+                <div class="s-la-content-iconitem-icon" aria-hidden="true">
+                    <a href="2027075079">
+                
+                    <i class="fa fa-phone"></i><span class="sr-only">(202) 707-5079</span>
+                            </a>
+                </div>
+    
+    <div class="s-la-content-iconitem-text">
+                                    <a href="2027075079">(202) 707-5079</a>
+                                </div>
+</div>
+<div id="s-la-content-iconitem-85109" class="s-la-content-iconitem s-la-content clearfix">
+                <div class="s-la-content-iconitem-icon" aria-hidden="true">
+                    <a href="202)7071820">
+                
+                    <i class="fa fa-fax"></i><span class="sr-only">(202) 707-1820</span>
+                            </a>
+                </div>
+    
+    <div class="s-la-content-iconitem-text">
+                                    <a href="202)7071820">(202) 707-1820</a>
+                                </div>
+</div>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">regex::RegexSet</span>;
+        </div>
+                            </div>
+</div>
 
-<span class="kw">let</span> <span class="ident">set</span> <span class="op">=</span> <span class="ident">RegexSet::new</span>(<span class="kw-2">&amp;</span>[
-    <span class="string">r&quot;\w+&quot;</span>,
-    <span class="string">r&quot;\d+&quot;</span>,
-    <span class="string">r&quot;\pL+&quot;</span>,
-    <span class="string">r&quot;foo&quot;</span>,
-    <span class="string">r&quot;bar&quot;</span>,
-    <span class="string">r&quot;barfoo&quot;</span>,
-    <span class="string">r&quot;foobar&quot;</span>,
-]).<span class="ident">unwrap</span>();
+                                            
 
-<span class="comment">// Iterate over and collect all of the matches.</span>
-<span class="kw">let</span> <span class="ident">matches</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">set</span>.<span class="ident">matches</span>(<span class="string">&quot;foobar&quot;</span>).<span class="ident">into_iter</span>().<span class="ident">collect</span>();
-<span class="macro">assert_eq!</span>(<span class="ident">matches</span>, <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>]);
+<div id="s-la-box-85999-container" class="s-la-box-container s-la-color-bars-border s-la-box-borderless s-la-box-type-1 s-la-box-position-4">
+    <div id="s-la-box-85999" class="s-la-box s-la-box-html">
+        <div class="s-la-box-title s-la-color-bars s-la-color-bars-border">
+            <h2>Please Note </h2>
+        </div>
+        <div id="" class="s-la-box-content clearfix"  >
+            <div id="s-la-content-text-85096" class="s-la-content-text s-la-content">
+        <p>We cannot provide&nbsp;legal advice, interpretation, or analysis which could be interpreted as the practice of law; extensive bibliographies or legislative histories; or answers for student homework assignments.</p>
 
-<span class="comment">// You can also test whether a particular regex matched:</span>
-<span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="ident">set</span>.<span class="ident">matches</span>(<span class="string">&quot;foobar&quot;</span>);
-<span class="macro">assert!</span>(<span class="op">!</span><span class="ident">matches</span>.<span class="ident">matched</span>(<span class="number">5</span>));
-<span class="macro">assert!</span>(<span class="ident">matches</span>.<span class="ident">matched</span>(<span class="number">6</span>));</code></pre></div>
-<h2 id="pay-for-what-you-use"><a href="#pay-for-what-you-use">Pay for what you use</a></h2>
-<p>With respect to searching text with a regular expression, there are three
-questions that can be asked:</p>
-<ol>
-<li>Does the text match this expression?</li>
-<li>If so, where does it match?</li>
-<li>Where did the capturing groups match?</li>
-</ol>
-<p>Generally speaking, this crate could provide a function to answer only #3,
-which would subsume #1 and #2 automatically. However, it can be significantly
-more expensive to compute the location of capturing group matches, so it’s best
-not to do it if you don’t need to.</p>
-<p>Therefore, only use what you need. For example, don’t use <code>find</code> if you
-only need to test if an expression matches a string. (Use <code>is_match</code>
-instead.)</p>
-<h2 id="unicode"><a href="#unicode">Unicode</a></h2>
-<p>This implementation executes regular expressions <strong>only</strong> on valid UTF-8
-while exposing match locations as byte indices into the search string. (To
-relax this restriction, use the <a href="bytes/index.html"><code>bytes</code></a> sub-module.)</p>
-<p>Only simple case folding is supported. Namely, when matching
-case-insensitively, the characters are first mapped using the “simple” case
-folding rules defined by Unicode.</p>
-<p>Regular expressions themselves are <strong>only</strong> interpreted as a sequence of
-Unicode scalar values. This means you can use Unicode characters directly
-in your expression:</p>
+</div>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(?i)Δ+&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">mat</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">find</span>(<span class="string">&quot;ΔδΔ&quot;</span>).<span class="ident">unwrap</span>();
-<span class="macro">assert_eq!</span>((<span class="ident">mat</span>.<span class="ident">start</span>(), <span class="ident">mat</span>.<span class="ident">end</span>()), (<span class="number">0</span>, <span class="number">6</span>));</code></pre></div>
-<p>Most features of the regular expressions in this crate are Unicode aware. Here
-are some examples:</p>
-<ul>
-<li><code>.</code> will match any valid UTF-8 encoded Unicode scalar value except for <code>\n</code>.
-(To also match <code>\n</code>, enable the <code>s</code> flag, e.g., <code>(?s:.)</code>.)</li>
-<li><code>\w</code>, <code>\d</code> and <code>\s</code> are Unicode aware. For example, <code>\s</code> will match all forms
-of whitespace categorized by Unicode.</li>
-<li><code>\b</code> matches a Unicode word boundary.</li>
-<li>Negated character classes like <code>[^a]</code> match all Unicode scalar values except
-for <code>a</code>.</li>
-<li><code>^</code> and <code>$</code> are <strong>not</strong> Unicode aware in multi-line mode. Namely, they only
-recognize <code>\n</code> and not any of the other forms of line terminators defined
-by Unicode.</li>
-</ul>
-<p>Unicode general categories, scripts, script extensions, ages and a smattering
-of boolean properties are available as character classes. For example, you can
-match a sequence of numerals, Greek or Cherokee letters:</p>
+        </div>
+                            </div>
+</div>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;[\pN\p{Greek}\p{Cherokee}]+&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">mat</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">find</span>(<span class="string">&quot;abcΔᎠβⅠᏴγδⅡxyz&quot;</span>).<span class="ident">unwrap</span>();
-<span class="macro">assert_eq!</span>((<span class="ident">mat</span>.<span class="ident">start</span>(), <span class="ident">mat</span>.<span class="ident">end</span>()), (<span class="number">3</span>, <span class="number">23</span>));</code></pre></div>
-<p>For a more detailed breakdown of Unicode support with respect to
-<a href="https://unicode.org/reports/tr18/">UTS#18</a>,
-please see the
-<a href="https://github.com/rust-lang/regex/blob/master/UNICODE.md">UNICODE</a>
-document in the root of the regex repository.</p>
-<h2 id="opt-out-of-unicode-support"><a href="#opt-out-of-unicode-support">Opt out of Unicode support</a></h2>
-<p>The <code>bytes</code> sub-module provides a <code>Regex</code> type that can be used to match
-on <code>&amp;[u8]</code>. By default, text is interpreted as UTF-8 just like it is with
-the main <code>Regex</code> type. However, this behavior can be disabled by turning
-off the <code>u</code> flag, even if doing so could result in matching invalid UTF-8.
-For example, when the <code>u</code> flag is disabled, <code>.</code> will match any byte instead
-of any Unicode scalar value.</p>
-<p>Disabling the <code>u</code> flag is also possible with the standard <code>&amp;str</code>-based <code>Regex</code>
-type, but it is only allowed where the UTF-8 invariant is maintained. For
-example, <code>(?-u:\w)</code> is an ASCII-only <code>\w</code> character class and is legal in an
-<code>&amp;str</code>-based <code>Regex</code>, but <code>(?-u:\xFF)</code> will attempt to match the raw byte
-<code>\xFF</code>, which is invalid UTF-8 and therefore is illegal in <code>&amp;str</code>-based
-regexes.</p>
-<p>Finally, since Unicode support requires bundling large Unicode data
-tables, this crate exposes knobs to disable the compilation of those
-data tables, which can be useful for shrinking binary size and reducing
-compilation times. For details on how to do that, see the section on <a href="#crate-features">crate
-features</a>.</p>
-<h2 id="syntax"><a href="#syntax">Syntax</a></h2>
-<p>The syntax supported in this crate is documented below.</p>
-<p>Note that the regular expression parser and abstract syntax are exposed in
-a separate crate, <a href="https://docs.rs/regex-syntax"><code>regex-syntax</code></a>.</p>
-<h3 id="matching-one-character"><a href="#matching-one-character">Matching one character</a></h3><pre class="rust">
-.             any character except new line (includes new line with s flag)
-\d            digit (\p{Nd})
-\D            not digit
-\pN           One-letter name Unicode character class
-\p{Greek}     Unicode character class (general category or script)
-\PN           Negated one-letter name Unicode character class
-\P{Greek}     negated Unicode character class (general category or script)
-</pre>
-<h4 id="character-classes"><a href="#character-classes">Character classes</a></h4><pre class="rust">
-[xyz]         A character class matching either x, y or z (union).
-[^xyz]        A character class matching any character except x, y and z.
-[a-z]         A character class matching any character in range a-z.
-[[:alpha:]]   ASCII character class ([A-Za-z])
-[[:^alpha:]]  Negated ASCII character class ([^A-Za-z])
-[x[^xyz]]     Nested/grouping character class (matching any character except y and z)
-[a-y&&xyz]    Intersection (matching x or y)
-[0-9&&[^4]]   Subtraction using intersection and negation (matching 0-9 except 4)
-[0-9--4]      Direct subtraction (matching 0-9 except 4)
-[a-g~~b-h]    Symmetric difference (matching `a` and `h` only)
-[\[\]]        Escaping in character classes (matching [ or ])
-</pre>
-<p>Any named character class may appear inside a bracketed <code>[...]</code> character
-class. For example, <code>[\p{Greek}[:digit:]]</code> matches any Greek or ASCII
-digit. <code>[\p{Greek}&amp;&amp;\pL]</code> matches Greek letters.</p>
-<p>Precedence in character classes, from most binding to least:</p>
-<ol>
-<li>Ranges: <code>a-cd</code> == <code>[a-c]d</code></li>
-<li>Union: <code>ab&amp;&amp;bc</code> == <code>[ab]&amp;&amp;[bc]</code></li>
-<li>Intersection: <code>^a-z&amp;&amp;b</code> == <code>^[a-z&amp;&amp;b]</code></li>
-<li>Negation</li>
-</ol>
-<h3 id="composites"><a href="#composites">Composites</a></h3><pre class="rust">
-xy    concatenation (x followed by y)
-x|y   alternation (x or y, prefer x)
-</pre>
-<h3 id="repetitions"><a href="#repetitions">Repetitions</a></h3><pre class="rust">
-x*        zero or more of x (greedy)
-x+        one or more of x (greedy)
-x?        zero or one of x (greedy)
-x*?       zero or more of x (ungreedy/lazy)
-x+?       one or more of x (ungreedy/lazy)
-x??       zero or one of x (ungreedy/lazy)
-x{n,m}    at least n x and at most m x (greedy)
-x{n,}     at least n x (greedy)
-x{n}      exactly n x
-x{n,m}?   at least n x and at most m x (ungreedy/lazy)
-x{n,}?    at least n x (ungreedy/lazy)
-x{n}?     exactly n x
-</pre>
-<h3 id="empty-matches"><a href="#empty-matches">Empty matches</a></h3><pre class="rust">
-^     the beginning of text (or start-of-line with multi-line mode)
-$     the end of text (or end-of-line with multi-line mode)
-\A    only the beginning of text (even with multi-line mode enabled)
-\z    only the end of text (even with multi-line mode enabled)
-\b    a Unicode word boundary (\w on one side and \W, \A, or \z on other)
-\B    not a Unicode word boundary
-</pre>
-<h3 id="grouping-and-flags"><a href="#grouping-and-flags">Grouping and flags</a></h3><pre class="rust">
-(exp)          numbered capture group (indexed by opening parenthesis)
-(?P&lt;name&gt;exp)  named (also numbered) capture group (allowed chars: [_0-9a-zA-Z.\[\]])
-(?:exp)        non-capturing group
-(?flags)       set flags within current group
-(?flags:exp)   set flags for exp (non-capturing)
-</pre>
-<p>Flags are each a single character. For example, <code>(?x)</code> sets the flag <code>x</code>
-and <code>(?-x)</code> clears the flag <code>x</code>. Multiple flags can be set or cleared at
-the same time: <code>(?xy)</code> sets both the <code>x</code> and <code>y</code> flags and <code>(?x-y)</code> sets
-the <code>x</code> flag and clears the <code>y</code> flag.</p>
-<p>All flags are by default disabled unless stated otherwise. They are:</p>
-<pre class="rust">
-i     case-insensitive: letters match both upper and lower case
-m     multi-line mode: ^ and $ match begin/end of line
-s     allow . to match \n
-U     swap the meaning of x* and x*?
-u     Unicode support (enabled by default)
-x     ignore whitespace and allow line comments (starting with `#`)
-</pre>
-<p>Flags can be toggled within a pattern. Here’s an example that matches
-case-insensitively for the first part but case-sensitively for the second part:</p>
+                                                                </div>
+            </div>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(?i)a+(?-i)b+&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">cap</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">captures</span>(<span class="string">&quot;AaAaAbbBBBb&quot;</span>).<span class="ident">unwrap</span>();
-<span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">cap</span>[<span class="number">0</span>], <span class="string">&quot;AaAaAbb&quot;</span>);</code></pre></div>
-<p>Notice that the <code>a+</code> matches either <code>a</code> or <code>A</code>, but the <code>b+</code> only matches
-<code>b</code>.</p>
-<p>Multi-line mode means <code>^</code> and <code>$</code> no longer match just at the beginning/end of
-the input, but at the beginning/end of lines:</p>
+    <div class="s-la-row row">
+        <div id="s-la-page-column-4" class="s-la-column-bottom col-md-12">
+                                </div>
+    </div>
+</div>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(?m)^line \d+&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">find</span>(<span class="string">&quot;line one\nline 2\n&quot;</span>).<span class="ident">unwrap</span>();
-<span class="macro">assert_eq!</span>(<span class="ident">m</span>.<span class="ident">as_str</span>(), <span class="string">&quot;line 2&quot;</span>);</code></pre></div>
-<p>Note that <code>^</code> matches after new lines, even at the end of input:</p>
+<div id="s-la-public-footer" class="s-la-footer s-la-color-bars s-la-color-bars-border" role="contentinfo">
+    <div id="s-la-footer-brand">Powered by <a href="http://www.springshare.com">Springshare</a>; All rights reserved.</div>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(?m)^&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">find_iter</span>(<span class="string">&quot;test\n&quot;</span>).<span class="ident">last</span>().<span class="ident">unwrap</span>();
-<span class="macro">assert_eq!</span>((<span class="ident">m</span>.<span class="ident">start</span>(), <span class="ident">m</span>.<span class="ident">end</span>()), (<span class="number">5</span>, <span class="number">5</span>));</code></pre></div>
-<p>Here is an example that uses an ASCII word boundary instead of a Unicode
-word boundary:</p>
+    
+    <div id="s-la-footer-admin-links">
+                    <span id="s-la-footer-login-link"><a href="/admin/login">Login to LibApps</a></span>
+                        </div>
+</div>
 
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let</span> <span class="ident">re</span> <span class="op">=</span> <span class="ident">Regex::new</span>(<span class="string">r&quot;(?-u:\b).+(?-u:\b)&quot;</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">cap</span> <span class="op">=</span> <span class="ident">re</span>.<span class="ident">captures</span>(<span class="string">&quot;$$abc$$&quot;</span>).<span class="ident">unwrap</span>();
-<span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">cap</span>[<span class="number">0</span>], <span class="string">&quot;abc&quot;</span>);</code></pre></div>
-<h3 id="escape-sequences"><a href="#escape-sequences">Escape sequences</a></h3><pre class="rust">
-\*          literal *, works for any punctuation character: \.+*?()|[]{}^$
-\a          bell (\x07)
-\f          form feed (\x0C)
-\t          horizontal tab
-\n          new line
-\r          carriage return
-\v          vertical tab (\x0B)
-\123        octal character code (up to three digits) (when enabled)
-\x7F        hex character code (exactly two digits)
-\x{10FFFF}  any hex character code corresponding to a Unicode code point
-\u007F      hex character code (exactly four digits)
-\u{7F}      any hex character code corresponding to a Unicode code point
-\U0000007F  hex character code (exactly eight digits)
-\U{7F}      any hex character code corresponding to a Unicode code point
-</pre>
-<h3 id="perl-character-classes-unicode-friendly"><a href="#perl-character-classes-unicode-friendly">Perl character classes (Unicode friendly)</a></h3>
-<p>These classes are based on the definitions provided in
-<a href="https://www.unicode.org/reports/tr18/#Compatibility_Properties">UTS#18</a>:</p>
-<pre class="rust">
-\d     digit (\p{Nd})
-\D     not digit
-\s     whitespace (\p{White_Space})
-\S     not whitespace
-\w     word character (\p{Alphabetic} + \p{M} + \d + \p{Pc} + \p{Join_Control})
-\W     not word character
-</pre>
-<h3 id="ascii-character-classes"><a href="#ascii-character-classes">ASCII character classes</a></h3><pre class="rust">
-[[:alnum:]]    alphanumeric ([0-9A-Za-z])
-[[:alpha:]]    alphabetic ([A-Za-z])
-[[:ascii:]]    ASCII ([\x00-\x7F])
-[[:blank:]]    blank ([\t ])
-[[:cntrl:]]    control ([\x00-\x1F\x7F])
-[[:digit:]]    digits ([0-9])
-[[:graph:]]    graphical ([!-~])
-[[:lower:]]    lower case ([a-z])
-[[:print:]]    printable ([ -~])
-[[:punct:]]    punctuation ([!-/:-@\[-`{-~])
-[[:space:]]    whitespace ([\t\n\v\f\r ])
-[[:upper:]]    upper case ([A-Z])
-[[:word:]]     word characters ([0-9A-Za-z_])
-[[:xdigit:]]   hex digit ([0-9A-Fa-f])
-</pre>
-<h2 id="crate-features"><a href="#crate-features">Crate features</a></h2>
-<p>By default, this crate tries pretty hard to make regex matching both as fast
-as possible and as correct as it can be, within reason. This means that there
-is a lot of code dedicated to performance, the handling of Unicode data and the
-Unicode data itself. Overall, this leads to more dependencies, larger binaries
-and longer compile times.  This trade off may not be appropriate in all cases,
-and indeed, even when all Unicode and performance features are disabled, one
-is still left with a perfectly serviceable regex engine that will work well
-in many cases.</p>
-<p>This crate exposes a number of features for controlling that trade off. Some
-of these features are strictly performance oriented, such that disabling them
-won’t result in a loss of functionality, but may result in worse performance.
-Other features, such as the ones controlling the presence or absence of Unicode
-data, can result in a loss of functionality. For example, if one disables the
-<code>unicode-case</code> feature (described below), then compiling the regex <code>(?i)a</code>
-will fail since Unicode case insensitivity is enabled by default. Instead,
-callers must use <code>(?i-u)a</code> instead to disable Unicode case folding. Stated
-differently, enabling or disabling any of the features below can only add or
-subtract from the total set of valid regular expressions. Enabling or disabling
-a feature will never modify the match semantics of a regular expression.</p>
-<p>All features below are enabled by default.</p>
-<h4 id="ecosystem-features"><a href="#ecosystem-features">Ecosystem features</a></h4>
-<ul>
-<li><strong>std</strong> -
-When enabled, this will cause <code>regex</code> to use the standard library. Currently,
-disabling this feature will always result in a compilation error. It is
-intended to add <code>alloc</code>-only support to regex in the future.</li>
-</ul>
-<h4 id="performance-features"><a href="#performance-features">Performance features</a></h4>
-<ul>
-<li><strong>perf</strong> -
-Enables all performance related features. This feature is enabled by default
-and will always cover all features that improve performance, even if more
-are added in the future.</li>
-<li><strong>perf-dfa</strong> -
-Enables the use of a lazy DFA for matching. The lazy DFA is used to compile
-portions of a regex to a very fast DFA on an as-needed basis. This can
-result in substantial speedups, usually by an order of magnitude on large
-haystacks. The lazy DFA does not bring in any new dependencies, but it can
-make compile times longer.</li>
-<li><strong>perf-inline</strong> -
-Enables the use of aggressive inlining inside match routines. This reduces
-the overhead of each match. The aggressive inlining, however, increases
-compile times and binary size.</li>
-<li><strong>perf-literal</strong> -
-Enables the use of literal optimizations for speeding up matches. In some
-cases, literal optimizations can result in speedups of <em>several</em> orders of
-magnitude. Disabling this drops the <code>aho-corasick</code> and <code>memchr</code> dependencies.</li>
-<li><strong>perf-cache</strong> -
-This feature used to enable a faster internal cache at the cost of using
-additional dependencies, but this is no longer an option. A fast internal
-cache is now used unconditionally with no additional dependencies. This may
-change in the future.</li>
-</ul>
-<h4 id="unicode-features"><a href="#unicode-features">Unicode features</a></h4>
-<ul>
-<li><strong>unicode</strong> -
-Enables all Unicode features. This feature is enabled by default, and will
-always cover all Unicode features, even if more are added in the future.</li>
-<li><strong>unicode-age</strong> -
-Provide the data for the
-<a href="https://www.unicode.org/reports/tr44/tr44-24.html#Character_Age">Unicode <code>Age</code> property</a>.
-This makes it possible to use classes like <code>\p{Age:6.0}</code> to refer to all
-codepoints first introduced in Unicode 6.0</li>
-<li><strong>unicode-bool</strong> -
-Provide the data for numerous Unicode boolean properties. The full list
-is not included here, but contains properties like <code>Alphabetic</code>, <code>Emoji</code>,
-<code>Lowercase</code>, <code>Math</code>, <code>Uppercase</code> and <code>White_Space</code>.</li>
-<li><strong>unicode-case</strong> -
-Provide the data for case insensitive matching using
-<a href="https://www.unicode.org/reports/tr18/#Simple_Loose_Matches">Unicode’s “simple loose matches” specification</a>.</li>
-<li><strong>unicode-gencat</strong> -
-Provide the data for
-<a href="https://www.unicode.org/reports/tr44/tr44-24.html#General_Category_Values">Unicode general categories</a>.
-This includes, but is not limited to, <code>Decimal_Number</code>, <code>Letter</code>,
-<code>Math_Symbol</code>, <code>Number</code> and <code>Punctuation</code>.</li>
-<li><strong>unicode-perl</strong> -
-Provide the data for supporting the Unicode-aware Perl character classes,
-corresponding to <code>\w</code>, <code>\s</code> and <code>\d</code>. This is also necessary for using
-Unicode-aware word boundary assertions. Note that if this feature is
-disabled, the <code>\s</code> and <code>\d</code> character classes are still available if the
-<code>unicode-bool</code> and <code>unicode-gencat</code> features are enabled, respectively.</li>
-<li><strong>unicode-script</strong> -
-Provide the data for
-<a href="https://www.unicode.org/reports/tr24/">Unicode scripts and script extensions</a>.
-This includes, but is not limited to, <code>Arabic</code>, <code>Cyrillic</code>, <code>Hebrew</code>,
-<code>Latin</code> and <code>Thai</code>.</li>
-<li><strong>unicode-segment</strong> -
-Provide the data necessary to provide the properties used to implement the
-<a href="https://www.unicode.org/reports/tr29/">Unicode text segmentation algorithms</a>.
-This enables using classes like <code>\p{gcb=Extend}</code>, <code>\p{wb=Katakana}</code> and
-<code>\p{sb=ATerm}</code>.</li>
-</ul>
-<h2 id="untrusted-input"><a href="#untrusted-input">Untrusted input</a></h2>
-<p>This crate can handle both untrusted regular expressions and untrusted
-search text.</p>
-<p>Untrusted regular expressions are handled by capping the size of a compiled
-regular expression.
-(See <a href="struct.RegexBuilder.html#method.size_limit"><code>RegexBuilder::size_limit</code></a>.)
-Without this, it would be trivial for an attacker to exhaust your system’s
-memory with expressions like <code>a{100}{100}{100}</code>.</p>
-<p>Untrusted search text is allowed because the matching engine(s) in this
-crate have time complexity <code>O(mn)</code> (with <code>m ~ regex</code> and <code>n ~ search text</code>), which means there’s no way to cause exponential blow-up like with
-some other regular expression engines. (We pay for this by disallowing
-features like arbitrary look-ahead and backreferences.)</p>
-<p>When a DFA is used, pathological cases with exponential state blow-up are
-avoided by constructing the DFA lazily or in an “online” manner. Therefore,
-at most one new state can be created for each byte of input. This satisfies
-our time complexity guarantees, but can lead to memory growth
-proportional to the size of the input. As a stopgap, the DFA is only
-allowed to store a fixed number of states. When the limit is reached, its
-states are wiped and continues on, possibly duplicating previous work. If
-the limit is reached too frequently, it gives up and hands control off to
-another matching engine with fixed memory requirements.
-(The DFA size limit can also be tweaked. See
-<a href="struct.RegexBuilder.html#method.dfa_size_limit"><code>RegexBuilder::dfa_size_limit</code></a>.)</p>
-</div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2>
-<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="bytes/index.html" title="regex::bytes mod">bytes</a></div><div class="item-right docblock-short"><p>Match regular expressions on arbitrary bytes.</p>
-</div></div></div><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2>
-<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.CaptureLocations.html" title="regex::CaptureLocations struct">CaptureLocations</a></div><div class="item-right docblock-short"><p>CaptureLocations is a low level representation of the raw offsets of each
-submatch.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.CaptureMatches.html" title="regex::CaptureMatches struct">CaptureMatches</a></div><div class="item-right docblock-short"><p>An iterator that yields all non-overlapping capture groups matching a
-particular regular expression.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.CaptureNames.html" title="regex::CaptureNames struct">CaptureNames</a></div><div class="item-right docblock-short"><p>An iterator over the names of all possible captures.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Captures.html" title="regex::Captures struct">Captures</a></div><div class="item-right docblock-short"><p>Captures represents a group of captured strings for a single match.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Match.html" title="regex::Match struct">Match</a></div><div class="item-right docblock-short"><p>Match represents a single match of a regex in a haystack.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Matches.html" title="regex::Matches struct">Matches</a></div><div class="item-right docblock-short"><p>An iterator over all non-overlapping matches for a particular string.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.NoExpand.html" title="regex::NoExpand struct">NoExpand</a></div><div class="item-right docblock-short"><p><code>NoExpand</code> indicates literal string replacement.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Regex.html" title="regex::Regex struct">Regex</a></div><div class="item-right docblock-short"><p>A compiled regular expression for matching Unicode strings.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RegexBuilder.html" title="regex::RegexBuilder struct">RegexBuilder</a></div><div class="item-right docblock-short"><p>A configurable builder for a regular expression.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RegexSet.html" title="regex::RegexSet struct">RegexSet</a></div><div class="item-right docblock-short"><p>Match multiple (possibly overlapping) regular expressions in a single scan.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RegexSetBuilder.html" title="regex::RegexSetBuilder struct">RegexSetBuilder</a></div><div class="item-right docblock-short"><p>A configurable builder for a set of regular expressions.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ReplacerRef.html" title="regex::ReplacerRef struct">ReplacerRef</a></div><div class="item-right docblock-short"><p>By-reference adaptor for a <code>Replacer</code></p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SetMatches.html" title="regex::SetMatches struct">SetMatches</a></div><div class="item-right docblock-short"><p>A set of matches returned by a regex set.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SetMatchesIntoIter.html" title="regex::SetMatchesIntoIter struct">SetMatchesIntoIter</a></div><div class="item-right docblock-short"><p>An owned iterator over the set of matches from a regex set.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SetMatchesIter.html" title="regex::SetMatchesIter struct">SetMatchesIter</a></div><div class="item-right docblock-short"><p>A borrowed iterator over the set of matches from a regex set.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Split.html" title="regex::Split struct">Split</a></div><div class="item-right docblock-short"><p>Yields all substrings delimited by a regular expression match.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SplitN.html" title="regex::SplitN struct">SplitN</a></div><div class="item-right docblock-short"><p>Yields at most <code>N</code> substrings delimited by a regular expression match.</p>
-</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.SubCaptureMatches.html" title="regex::SubCaptureMatches struct">SubCaptureMatches</a></div><div class="item-right docblock-short"><p>An iterator that yields all capturing matches in the order in which they
-appear in the regex.</p>
-</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2>
-<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Error.html" title="regex::Error enum">Error</a></div><div class="item-right docblock-short"><p>An error that occurred during parsing or compiling a regular expression.</p>
-</div></div></div><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2>
-<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Replacer.html" title="regex::Replacer trait">Replacer</a></div><div class="item-right docblock-short"><p>Replacer describes types that can be used to replace matches in a string.</p>
-</div></div></div><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2>
-<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.escape.html" title="regex::escape fn">escape</a></div><div class="item-right docblock-short"><p>Escapes all regular expression meta characters in <code>text</code>.</p>
-</div></div></div></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="regex" data-themes="ayu,dark,light" data-resource-suffix="-20220307-1.61.0-nightly-03918badd" data-rustdoc-version="1.61.0-nightly (03918badd 2022-03-07)" ></div>
-</div></body></html>
+    </div>
+    <!-- start custom footer -->
+    <div class="loc-libguides-footer-wrapper">
+<div class="container">
+<div class="loc-libguides-footer-container row">
+<div class="loc-libguides-footer col-xs-12">
+<div class="loc-libguides-footer-left">
+Hosted by Springshare
+</div>
+<div class="loc-libguides-footer-center">
+<a href="https://www.loc.gov/legal/" target="_blank">Library of Congress Legal</a>
+<a href="https://springshare.com/privacy.html" target="_blank">SpringShare Privacy Policy</a>
+</div>
+<div class="loc-libguides-footer-right">
+<!-- login link -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+$(function() {
+    // .removeClass("s-la-box-border-simple")
+    $(".s-la-box-container.s-la-box-border-simple").addClass("red");
+    // .removeClass("s-la-box-borderless")
+    $(".s-la-box-container.s-la-box-borderless").addClass("blue");
+    // move springshare footer links
+    $( "#s-la-public-footer" ).appendTo( ".loc-libguides-footer-right" ).removeClass("s-la-footer s-la-color-bars s-la-color-bars-border");
+});
+</script>
+    <!-- Optional stat code -->
+            <div id="s-la-public-tracking"><script src="//assets.adobedtm.com/dac62e20b491e735c6b56e64c39134d8ee93f9cf/satelliteLib-6b47f831c184878d7338d4683ecf773a17973bb9.js"></script>
+        <script type="text/javascript">_satellite.pageBottom();</script></div>
+        <!-- Optional cookie warning -->
+            <script>
+    springSpace.cookieConsent.alert({
+        placement: 'bottom',
+        consent_message: 'This\u0020site\u0020uses\u0020cookies\u0020as\u0020well\u0020as\u0020records\u0020your\u0020IP\u0020address\u0020for\u0020usage\u0020statistics.\u0020\u003Ca\u0020id\u003D\u0022s\u002Dui\u002Dcc\u002Dread\u002Dmore\u002Dlink\u0022\u0020href\u003D\u0022https\u003A\/\/www.loc.gov\/legal\/privacy\u002Dpolicy\/\u0022\u0020target\u003D\u0022_blank\u0022\u0020rel\u003D\u0022noreferrer\u0020noopener\u0022\u003ERead\u0020more\u003C\/a\u003E',
+        read_more_callback: function(ev) {
+            ev.preventDefault();
+            var bannerModal = springSpace.sui.modal({
+                title: 'Privacy\u0020Statement',
+                content: '\u003Cp\u003ETo\u0020use\u0020this\u0020platform,\u0020the\u0020system\u0020writes\u0020one\u0020or\u0020more\u0020cookies\u0020in\u0020your\u0020browser.\u0020These\u0020cookies\u0020are\u0020not\u0020shared\u0020with\u0020any\u0020third\u0020parties.\u0020In\u0020addition,\u0020your\u0020IP\u0020address\u0020and\u0020browser\u0020information\u0020is\u0020stored\u0020in\u0020server\u0020logs\u0020and\u0020used\u0020to\u0020generate\u0020anonymized\u0020usage\u0020statistics.\u0020The\u0020Library\u0020uses\u0020these\u0020statistics\u0020to\u0020gauge\u0020the\u0020use\u0020of\u0020library\u0020content,\u0020and\u0020the\u0020information\u0020is\u0020not\u0020shared\u0020with\u0020any\u0020third\u0020parties.\u0020More\u0020information\u0020on\u0020the\u0020Library\u0027s\u0020privacy\u0020policy\u0020and\u0020general\u0020disclaimer\u0020\u003Ca\u0020href\u003D\u0022https\u003A\/\/www.loc.gov\/legal\/privacy\u002Dpolicy\/\u002520target\u003D\u0022\u003Eavailable\u0020here.\u003C\/a\u003E\u003C\/p\u003E'
+            });
+        }
+    });
+</script>
+
+        <script>
+    jQuery(document).ready(function() {
+        setUpPublicPage();
+        setUpAnswerPage(
+            springSpace.la.Page.faq_id,
+            springSpace.la.Page.iid,
+            false 
+        );
+
+            });
+</script>
+
+    <div id="s-ui-alertarea" role="alert"></div>
+</body>
+</html>

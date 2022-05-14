@@ -1,1186 +1,543 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7 " lang="en"> <![endif]-->
-<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 " lang="en"> <![endif]-->
-<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9 " lang="en"> <![endif]-->
-<!--[if IE 9]><html class="no-js lt-ie10 " lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js "> <!--<![endif]-->
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="author" content="WordPress.com / Automattic Inc.">
-	<meta name="viewport" content="width=device-width">
-		
-	<title>Ad Program for WordPress &#8211; Jetpack</title>
-<meta name='robots' content='max-image-preview:large' />
-<meta name="google-site-verification" content="gprBhnJ5dQ2j8I3RU2MexFOZp5a6Ty3tLmUpKk4cbPg" />
-
-<!-- Async WordPress.com Remote Login -->
-<script id="wpcom_remote_login_js">
-var wpcom_remote_login_extra_auth = '';
-function wpcom_remote_login_remove_dom_node_id( element_id ) {
-	var dom_node = document.getElementById( element_id );
-	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
-}
-function wpcom_remote_login_remove_dom_node_classes( class_name ) {
-	var dom_nodes = document.querySelectorAll( '.' + class_name );
-	for ( var i = 0; i < dom_nodes.length; i++ ) {
-		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
-	}
-}
-function wpcom_remote_login_final_cleanup() {
-	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
-}
-
-// Watch for messages back from the remote login
-window.addEventListener( "message", function( e ) {
-	if ( e.origin === "https://r-login.wordpress.com" ) {
-		var data = {};
-		try {
-			data = JSON.parse( e.data );
-		} catch( e ) {
-			wpcom_remote_login_final_cleanup();
-			return;
-		}
-
-		if ( data.msg === 'LOGIN' ) {
-			// Clean up the login check iframe
-			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
-
-			var id_regex = new RegExp( /^[0-9]+$/ );
-			var token_regex = new RegExp( /^.*|.*|.*$/ );
-			if (
-				token_regex.test( data.token )
-				&& id_regex.test( data.wpcomid )
-			) {
-				// We have everything we need to ask for a login
-				var script = document.createElement( "script" );
-				script.setAttribute( "id", "wpcom_remote_login_validate" );
-				script.src = '/remote-login.php?wpcom_remote_login=validate'
-					+ '&wpcomid=' + data.wpcomid
-					+ '&token=' + encodeURIComponent( data.token )
-					+ '&host=' + window.location.protocol
-					+ '//' + window.location.hostname
-					+ '&postid=14843'
-					+ '&is_singular=';
-				document.body.appendChild( script );
-			}
-
-			return;
-		}
-
-		// Safari ITP, not logged in, so redirect
-		if ( data.msg === 'LOGIN-REDIRECT' ) {
-			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
-			return;
-		}
-
-		// Safari ITP, storage access failed, remove the request
-		if ( data.msg === 'LOGIN-REMOVE' ) {
-			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
-			var style_zap = document.createElement( 'style' );
-			style_zap.type = 'text/css';
-			style_zap.appendChild( document.createTextNode( css_zap ) );
-			document.body.appendChild( style_zap );
-
-			var e = document.getElementById( 'wpcom_request_access_iframe' );
-			e.parentNode.removeChild( e );
-
-			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
-
-			return;
-		}
-
-		// Safari ITP
-		if ( data.msg === 'REQUEST_ACCESS' ) {
-			console.log( 'request access: safari' );
-
-			// Check ITP iframe enable/disable knob
-			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
-				return;
-			}
-
-			// If we are in a "private window" there is no ITP.
-			var private_window = false;
-			try {
-				var opendb = window.openDatabase( null, null, null, null );
-			} catch( e ) {
-				private_window = true;
-			}
-
-			if ( private_window ) {
-				console.log( 'private window' );
-				return;
-			}
-
-			var iframe = document.createElement( 'iframe' );
-			iframe.id = 'wpcom_request_access_iframe';
-			iframe.setAttribute( 'scrolling', 'no' );
-			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
-			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
-
-			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
-
-			var style = document.createElement( 'style' );
-			style.type = 'text/css';
-			style.id = 'wpcom_request_access_styles';
-			style.appendChild( document.createTextNode( css ) );
-			document.body.appendChild( style );
-
-			document.body.appendChild( iframe );
-		}
-
-		if ( data.msg === 'DONE' ) {
-			wpcom_remote_login_final_cleanup();
-		}
-	}
-}, false );
-
-// Inject the remote login iframe after the page has had a chance to load
-// more critical resources
-window.addEventListener( "DOMContentLoaded", function( e ) {
-	var iframe = document.createElement( "iframe" );
-	iframe.style.display = "none";
-	iframe.setAttribute( "scrolling", "no" );
-	iframe.setAttribute( "id", "wpcom_remote_login_key" );
-	iframe.src = "https://r-login.wordpress.com/remote-login.php"
-		+ "?wpcom_remote_login=key"
-		+ "&origin=aHR0cHM6Ly9qZXRwYWNrLmNvbQ%3D%3D"
-		+ "&wpcomid=20115252"
-		+ "&time=1651851024";
-	document.body.appendChild( iframe );
-}, false );
-</script>
-<link rel='dns-prefetch' href='//s2.wp.com' />
-<link rel='dns-prefetch' href='//s0.wp.com' />
-<link rel='dns-prefetch' href='//stats.wp.com' />
-<link rel='dns-prefetch' href='//cdn.parsely.com' />
-<link rel='dns-prefetch' href='//jetpackme.wordpress.com' />
-<link rel="alternate" type="application/rss+xml" title="Jetpack &raquo; Feed" href="https://jetpack.com/feed/" />
-<link rel="alternate" type="application/rss+xml" title="Jetpack &raquo; Comments Feed" href="https://jetpack.com/comments/feed/" />
-	<script type="text/javascript">
-		/* <![CDATA[ */
-		function addLoadEvent(func) {
-			var oldonload = window.onload;
-			if (typeof window.onload != 'function') {
-				window.onload = func;
-			} else {
-				window.onload = function () {
-					oldonload();
-					func();
-				}
-			}
-		}
-		/* ]]> */
-	</script>
-	<script type="text/javascript">
-window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s1.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=6.0-alpha-53047"}};
-/*! This file is auto-generated */
-!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
-</script>
-<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 0.07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJytj8sOwiAQRX9ImKLxsTF+C9AJTh0o4WHD34uLxsaNG5cnJ+cmF5Yo7BwKhgK+isjVUciwRDt7kT0xti+SNucdbLK1cbWjweS6SQhPdZBKDmAq8QiGZ/sQTCbp1CCXxviPoXJH/xmiYLmOmGHK4HEkjdz1+9kGIuuGSTA6bZv0FH7n3W15jW7+qk5Hpc7DZX+aXqKzeZM=?cssminify=yes' type='text/css' media='all' />
-<style id='wp-block-library-inline-css'>
-.has-text-align-justify {
-	text-align:justify;
-}
-</style>
-<style id='wp-parsely-recommendations-style-inline-css'>
-.parsely-recommendations-list-title{font-size:1.2em}.parsely-recommendations-list{list-style:none;padding:unset}.parsely-recommendations-cardbody{overflow:hidden;padding:.8em;text-overflow:ellipsis;white-space:nowrap}.parsely-recommendations-cardmedia{padding:.8em .8em 0}
-
-</style>
-<link rel='stylesheet' id='all-css-2-1' href='https://s2.wp.com/_static/??-eJyVjEEOgjAQAD/kdq0KejG+pSybplDaprvV8Hs5EK7G4yQzg58ClJNyUiyx+ZAEfdtw4OphiJlmwYm1OJohujU3BV/DiKJrZEMiJ/xnUZ2G5OVHTnnPLsY+jAUJS4kMld/G4hhEDwOO0Wt52v7W9d3dnq/TF9fMT2k=?cssminify=yes' type='text/css' media='all' />
-<style id='global-styles-inline-css'>
-body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--jetpack-green-30: #2fb41f;--wp--preset--color--jetpack-green-40: #069e08;--wp--preset--color--jetpack-green-50: #008710;--wp--preset--color--jetpack-green-60: #007117;--wp--preset--color--gray-0: #f6f7f7;--wp--preset--color--gray-70: #3c434a;--wp--preset--color--blue-0: #e9eff5;--wp--preset--color--blue-50: #2271b1;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 15px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 24px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-size--normal: 18px;--wp--preset--font-size--huge: 32px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
-</style>
-<link rel='stylesheet' id='all-css-4-1' href='https://s2.wp.com/_static/??-eJx9kNtuAjEMRH+orlVu4qXiW7JhGkJzU+zVwt/XgFYIUe2LNbbm2JPw1MjXoijKeaSWxhCLsK8dNs/NKZsj4xgdErLZPr3IB/+PTfEYoIbLrElxWUaanaFhaB0iZDXHMZOe7JYscQGVUvVOYy0vDf0kF/sS2jGkGkyGe9Bn+wY9YrDbez5Dm/O/GVQwseg14c2e4sC3GAkURnsOOskU1Z/QeRb0+JfZN49vuw75+2u32W+2q9Vuff4D8JCZ8g==?cssminify=yes' type='text/css' media='all' />
-<style id='jetpack-global-styles-frontend-style-inline-css'>
-:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
-</style>
-<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&cssminify=yes' type='text/css' media='all' />
-<script id='media-video-widget-extensions-js-extra'>
-var videopressAjax = {"ajaxUrl":"https:\/\/jetpackme.wordpress.com\/wp-admin\/admin-ajax.php","bridgeUrl":"https:\/\/s2.wp.com\/wp-content\/mu-plugins\/videopress\/js\/videopress-token-bridge.js"};
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJydUdtOwzAM/SHSrCDGXhCfgtLG69wmdnCcXf6eDK1TgQESL4mcc3HsYw/J9EwKpDYWk0IZkLLdowdOAjnbcVkZ5QnIdIJ+gGbMd3ahr8zIHQYwJYO4ob4ZpC3f4ElQk4SPpxlD6kPx8NHOY1a7B/IsVqDaVDNlMVJIMUITkf6SVShxOG0xhCV9/sE85lBq2YEMFRGw+/ahaZuV7QoGb3fMU7ZIHo7/9sB2Qz9bLBY+gibXT+Z81M1lW7fjS6/INGOvl9lcUY5OFfuryuUMmhc9TWDnQb421B3E6u02V2kEQ3A4r2/MlcYTfov1V1G6lcT4VkBOl+unuD6RTMShhjxn+xKf2/Vj2z6tNvfr8R0g8/oi'></script>
-<script type='text/javascript'>
-	window.addEventListener( 'DOMContentLoaded', function() {
-		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
-	} );
-</script>
-<script type='text/javascript'>
-wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
-</script>
-<script type='text/javascript'>
-wp.jpI18nLoader.state = {"baseUrl":"https://widgets.wp.com/languages/","locale":"en_US","domainMap":{"jetpack-heartbeat":"plugins/jetpack","jetpack-post-list":"plugins/jetpack","jetpack-admin-ui":"plugins/jetpack","jetpack-connection":"plugins/jetpack","jetpack-password-checker":"plugins/jetpack","jetpack-assets":"plugins/jetpack","jetpack-idc":"plugins/jetpack","jetpack-sync":"plugins/jetpack","jetpack-plugins-installer":"plugins/jetpack","jetpack-licensing":"plugins/jetpack","jetpack-my-jetpack":"plugins/jetpack","jetpack-connection-ui":"plugins/jetpack","jetpack-config":"plugins/jetpack","jetpack-publicize-pkg":"plugins/jetpack","jetpack-backup-pkg":"plugins/jetpack","jetpack-compat":"plugins/jetpack","jetpack-google-fonts-provider":"plugins/jetpack","jetpack-jitm":"plugins/jetpack","jetpack-lazy-images":"plugins/jetpack","jetpack-search-pkg":"plugins/jetpack","jetpack-tracking":"plugins/jetpack","jetpack-wordads":"plugins/jetpack"},"domainPaths":{"jetpack-heartbeat":"jetpack_vendor/automattic/jetpack-heartbeat/","jetpack-post-list":"jetpack_vendor/automattic/jetpack-post-list/","jetpack-admin-ui":"jetpack_vendor/automattic/jetpack-admin-ui/","jetpack-connection":"jetpack_vendor/automattic/jetpack-connection/","jetpack-password-checker":"jetpack_vendor/automattic/jetpack-password-checker/","jetpack-assets":"jetpack_vendor/automattic/jetpack-assets/","jetpack-idc":"jetpack_vendor/automattic/jetpack-identity-crisis/","jetpack-sync":"jetpack_vendor/automattic/jetpack-sync/","jetpack-plugins-installer":"jetpack_vendor/automattic/jetpack-plugins-installer/","jetpack-licensing":"jetpack_vendor/automattic/jetpack-licensing/","jetpack-my-jetpack":"jetpack_vendor/automattic/jetpack-my-jetpack/","jetpack-connection-ui":"jetpack_vendor/automattic/jetpack-connection-ui/","jetpack-config":"jetpack_vendor/automattic/jetpack-config/","jetpack-publicize-pkg":"jetpack_vendor/automattic/jetpack-publicize/","jetpack-backup-pkg":"jetpack_vendor/automattic/jetpack-backup/","jetpack-compat":"jetpack_vendor/automattic/jetpack-compat/","jetpack-google-fonts-provider":"jetpack_vendor/automattic/jetpack-google-fonts-provider/","jetpack-jitm":"jetpack_vendor/automattic/jetpack-jitm/","jetpack-lazy-images":"jetpack_vendor/automattic/jetpack-lazy-images/","jetpack-search-pkg":"jetpack_vendor/automattic/jetpack-search/","jetpack-tracking":"jetpack_vendor/automattic/jetpack-tracking/","jetpack-wordads":"jetpack_vendor/automattic/jetpack-wordads/"}};
-</script>
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://jetpackme.wordpress.com/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress.com" />
-<link rel='shortlink' href='https://wp.me/P1moTy-3Rp' />
-	<style>
-		@font-face {
-			font-family: Recoleta;
-			font-display: swap;
-			src: url('https://s1.wp.com/i/fonts/recoleta/400.woff2')
-		}
-	</style>
-	<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fjetpack.com%2Ffeatures%2Fgrowth%2Fads%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fjetpack.com%2Ffeatures%2Fgrowth%2Fads%2F&amp;for=wpcom-auto-discovery" />
-<!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Ad Program for WordPress" />
-<meta property="og:url" content="https://jetpack.com/features/growth/ads/" />
-<meta property="og:description" content="Jetpack Ads - a unique ad program that enables you to focus on creating great content while generating income. Available with paid Jetpack plans." />
-<meta property="article:published_time" content="2017-01-12T15:40:53+00:00" />
-<meta property="article:modified_time" content="2021-08-02T17:31:24+00:00" />
-<meta property="og:site_name" content="Jetpack" />
-<meta property="og:image" content="https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png" />
-<meta property="og:image:width" content="2130" />
-<meta property="og:image:height" content="1128" />
-<meta property="og:image:alt" content="WordPress ad revenue settings with Jetpack" />
-<meta property="og:locale" content="en_US" />
-<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
-<meta name="twitter:site" content="@jetpack" />
-<meta name="twitter:text:title" content="Ad Program for&nbsp;WordPress" />
-<meta name="twitter:image" content="https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png?w=640" />
-<meta name="twitter:image:alt" content="WordPress ad revenue settings with Jetpack" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="description" content="Jetpack Ads - a unique ad program that enables you to focus on creating great content while generating income. Available with paid Jetpack plans." />
-<meta name="twitter:app:name:iphone" content="WordPress" />
-<meta name="twitter:app:id:iphone" content="335703880" />
-<meta name="twitter:app:name:ipad" content="WordPress" />
-<meta name="twitter:app:id:ipad" content="335703880" />
-<meta name="twitter:app:name:googleplay" content="WordPress" />
-<meta name="twitter:app:id:googleplay" content="org.wordpress.android" />
-
-<!-- End Jetpack Open Graph Tags -->
-<link rel='openid.server' href='https://jetpack.com/?openidserver=1' />
-<link rel='openid.delegate' href='https://jetpack.com/' />
-<link rel="search" type="application/opensearchdescription+xml" href="https://jetpack.com/osd.xml" title="Jetpack" />
-<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
-<script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"WebPage","headline":"Ad Program for&nbsp;WordPress","url":"http:\/\/jetpack.com\/features\/growth\/ads\/"}</script><meta name="ahrefs-site-verification" content="6fa21ec91fd22f37a48517db6b327918614366e821de0edc5b7f323cd1fc9dd4">
-<link rel="canonical" href="https://jetpack.com/features/growth/ads/" />
-		<style type="text/css">
-			.recentcomments a {
-				display: inline !important;
-				padding: 0 !important;
-				margin: 0 !important;
-			}
-
-			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
-				border: 0px;
-				margin: 0;
-			}
-
-			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
-				border: 0px !important;
-				background-color: transparent !important;
-			}
-
-			td.recentcommentsavatarend, td.recentcommentsavatartop {
-				padding: 0px 0px 1px 0px;
-				margin: 0px;
-			}
-
-			td.recentcommentstextend {
-				border: none !important;
-				padding: 0px 0px 2px 10px;
-			}
-
-			.rtl td.recentcommentstextend {
-				padding: 0px 10px 2px 0px;
-			}
-
-			td.recentcommentstexttop {
-				border: none;
-				padding: 0px 0px 0px 10px;
-			}
-
-			.rtl td.recentcommentstexttop {
-				padding: 0px 10px 0px 0px;
-			}
-		</style>
-		<meta name="application-name" content="Jetpack" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="The ultimate WordPress plugin for security, backups, site performance, and growth tools" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://jetpack.com/feed/;icon-uri=https://jetpackme.files.wordpress.com/2018/04/cropped-jetpack-favicon-2018.png?w=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><link rel="icon" href="https://jetpackme.files.wordpress.com/2018/04/cropped-jetpack-favicon-2018.png?w=32" sizes="32x32" />
-<link rel="icon" href="https://jetpackme.files.wordpress.com/2018/04/cropped-jetpack-favicon-2018.png?w=192" sizes="192x192" />
-<link rel="apple-touch-icon" href="https://jetpackme.files.wordpress.com/2018/04/cropped-jetpack-favicon-2018.png?w=180" />
-<meta name="msapplication-TileImage" content="https://jetpackme.files.wordpress.com/2018/04/cropped-jetpack-favicon-2018.png?w=270" />
-		<link rel="stylesheet" id="custom-css-css" type="text/css" href="https://s2.wp.com/?custom-css=1&#038;csblog=1moTy&#038;cscache=6&#038;csrev=284" />
-		<!-- Your Google Analytics Plugin is missing the tracking ID -->
-	<script>document.querySelector('html').classList.remove('no-js');</script>
-</head>
-
-<body class="page-template page-template-page-single-feature page-template-page-single-feature-php page page-id-14843 page-child parent-pageid-14546 wp-embed-responsive jps-theme-a8c/jetpackme-new customizer-styles-applied highlander-enabled highlander-light">
-
-<header class="mast">
-	
-
-<header class="header js-header force-opaque">
-
-	<nav class="header__content">
-
-		<a class="header__skip" href="#content">Skip to main content</a>
-
-		
-<a href="https://jetpack.com/" aria-label="Jetpack home" class="home-link header__home-link">
-	
-<svg class="jetpack-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.93 38" 
-aria-hidden="true"width="140"height="38">
-	<path class="jetpack-emblem" d="M19,0A19,19,0,1,0,38,19,19,19,0,0,0,19,0ZM18,22.15H8.56L18,3.73Zm1.92,12.08V15.81h9.47Z"/>
-	<path d="M49.06,31.55c-.54-.84-1.05-1.67-1.56-2.47,2.68-1.63,3.59-2.94,3.59-5.4V9.43H47.94V6.71h6.7V23C54.64,27.09,53.45,29.41,49.06,31.55Z"/>
-	<path d="M77.16,21.83c0,1.38,1,1.52,1.63,1.52a9.6,9.6,0,0,0,2.32-.43v2.53A10.63,10.63,0,0,1,77.6,26c-1.75,0-3.78-.65-3.78-3.69V14.87H72V12.29h1.84V8.48h3.34v3.81h4.21v2.58H77.16Z"/>
-	<path d="M84.12,32.81V12.26h3.19v1.23a7,7,0,0,1,4.43-1.6c3,0,5.4,2.11,5.4,6.64S94.53,26,90.21,26a12.79,12.79,0,0,1-2.75-.33v7.11H84.12Zm6.75-18.16a5.38,5.38,0,0,0-3.38,1.49v7a11.81,11.81,0,0,0,2.51.26c2.35,0,3.69-1.49,3.69-4.61C93.69,15.92,92.72,14.65,90.87,14.65Z"/>
-	<path d="M110.27,25.71h-3.12V24.22h-.08A6.89,6.89,0,0,1,102.65,26,3.62,3.62,0,0,1,99,22.12c0-3.45,2.94-4.1,5-4.39l2.94-.4v-.4c0-1.81-.73-2.39-2.43-2.39a13.37,13.37,0,0,0-4.39.91l-.29-2.69a17,17,0,0,1,5.11-.87c3.26,0,5.37,1.31,5.37,5.19v8.63Zm-3.34-6.27-2.76.43a1.79,1.79,0,0,0-1.7,1.85,1.5,1.5,0,0,0,1.52,1.7,5.51,5.51,0,0,0,2.94-1.23Z"/>
-	<path d="M124,25.27a12.15,12.15,0,0,1-4.17.76c-5,0-7-2.86-7-7,0-4.39,2.75-7.11,7.21-7.11a10.91,10.91,0,0,1,3.81.66v2.82a11.45,11.45,0,0,0-3.77-.76c-2,0-3.77,1.09-3.77,4.21,0,3.44,1.74,4.49,4,4.49a10,10,0,0,0,3.77-.83v2.79Z"/>
-	<path d="M130.35,18.06c.29-.33.51-.66,4.72-5.77h4.35L134,18.67l6,7.07h-4.36l-5.18-6.38v6.38h-3.34v-19h3.34V18.06Z"/>
-	<path d="M69.47,25.27a15.54,15.54,0,0,1-5,.76c-4.28,0-6.93-2.13-6.93-7.14,0-3.66,2.25-7,6.56-7s5.77,3,5.77,5.8c0,.95-.07,1.46-.11,2H61.17c.07,2.94,1.74,3.62,4.24,3.62a11.57,11.57,0,0,0,4-.83v2.79Zm-3-7.79c0-1.63-.55-3.05-2.32-3.05s-2.69,1.2-2.9,3.05Z"/>
-</svg>
-</a>
-
-		<a class="header__mobile-btn mobile-btn js-mobile-btn" href="#mobile-menu" aria-expanded="false" style="display:none;">
-			<span class="mobile-btn__icon" aria-hidden="true">
-				<span class="mobile-btn__inner"></span>
-			</span>
-			<span class="mobile-btn__label">Menu</span>
-		</a>
-
-		<div class="header__nav-wrapper js-mobile-menu" id="mobile-menu">
-			<ul class="header__sections-list js-nav-list">
-														<li>
-						<a
-							class="header__menu-btn js-menu-btn"
-							href="#products" 
-							aria-expanded="false">
-								Products								<svg class="gridicon gridicons-chevron-down" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M20 9l-8 8-8-8 1.414-1.414L12 14.172l6.586-6.586"/></g></svg>						</a>
-												<div
-							id="products"
-							class="header__submenu js-menu"
-							tabindex="-1"
-							aria-label="
-							Products menu							"
-						>
-							<div class="header__submenu-content">
-								<button class="header__back-btn js-menu-back" style="display:none;">
-									<svg class="gridicon gridicons-chevron-left" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M14 20l-8-8 8-8 1.414 1.414L8.828 12l6.586 6.586"/></g></svg>									Back								</button>
-								<ul class="header__submenu-categories-list">
-																		<li>
-										<a class="header__submenu-category header__submenu-link" href="/features/security/">
-											<span class="header__submenu-label">
-												<span class="header__submenu-chevron">
-													<svg class="gridicon gridicons-chevron-right" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M10 20l8-8-8-8-1.414 1.414L15.172 12l-6.586 6.586"/></g></svg>												</span>
-												Security											</span>
-											<span class="header__submenu-tagline">Protect your site</span>
-										</a>
-										<ul class="header__submenu-links-list">
-																						<li>
-												<a class="header__submenu-link" href="/upgrade/backup/">
-													<span class="header__submenu-label">Backup</span>
-													<span class="header__submenu-tagline">Save every change in real-time</span>
-												</a>
-											</li>
-																						<li>
-												<a class="header__submenu-link" href="/upgrade/scan/">
-													<span class="header__submenu-label">Scan</span>
-													<span class="header__submenu-tagline">Stay one step ahead of threats</span>
-												</a>
-											</li>
-																						<li>
-												<a class="header__submenu-link" href="/upgrade/anti-spam/">
-													<span class="header__submenu-label">Anti-spam</span>
-													<span class="header__submenu-tagline">Stop comment and form spam</span>
-												</a>
-											</li>
-																					</ul>
-									</li>
-																		<li>
-										<a class="header__submenu-category header__submenu-link" href="/features/performance/">
-											<span class="header__submenu-label">
-												<span class="header__submenu-chevron">
-													<svg class="gridicon gridicons-chevron-right" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M10 20l8-8-8-8-1.414 1.414L15.172 12l-6.586 6.586"/></g></svg>												</span>
-												Performance											</span>
-											<span class="header__submenu-tagline">Speed up your site</span>
-										</a>
-										<ul class="header__submenu-links-list">
-																						<li>
-												<a class="header__submenu-link" href="/upgrade/search/">
-													<span class="header__submenu-label">Site Search</span>
-													<span class="header__submenu-tagline">Help them find what they need</span>
-												</a>
-											</li>
-																						<li>
-												<a class="header__submenu-link" href="/boost/">
-													<span class="header__submenu-label">Boost</span>
-													<span class="header__submenu-tagline">Instant speed and SEO</span>
-												</a>
-											</li>
-																						<li>
-												<a class="header__submenu-link" href="/videopress/">
-													<span class="header__submenu-label">VideoPress</span>
-													<span class="header__submenu-tagline">High-quality, ad-free video</span>
-												</a>
-											</li>
-																					</ul>
-									</li>
-																		<li>
-										<a class="header__submenu-category header__submenu-link" href="/features/growth/">
-											<span class="header__submenu-label">
-												<span class="header__submenu-chevron">
-													<svg class="gridicon gridicons-chevron-right" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M10 20l8-8-8-8-1.414 1.414L15.172 12l-6.586 6.586"/></g></svg>												</span>
-												Growth											</span>
-											<span class="header__submenu-tagline">Grow your audience</span>
-										</a>
-										<ul class="header__submenu-links-list">
-																						<li>
-												<a class="header__submenu-link" href="https://jetpackcrm.com/?utm_medium=automattic_referred&#038;utm_source=jpcom_header">
-													<span class="header__submenu-label">CRM</span>
-													<span class="header__submenu-tagline">Connect with your people</span>
-												</a>
-											</li>
-																					</ul>
-									</li>
-																	</ul>
-							</div>
-						</div>
-											</li>
-														<li>
-						<a
-							class=""
-							href="/pricing/" 
-							>
-								Pricing														</a>
-											</li>
-														<li>
-						<a
-							class=""
-							href="/for/agencies/" 
-							>
-								Agencies														</a>
-											</li>
-														<li>
-						<a
-							class=""
-							href="/support/" 
-							>
-								Support														</a>
-											</li>
-														<li>
-						<a
-							class=""
-							href="/blog/" 
-							>
-								Blog														</a>
-											</li>
-								<li class="header__more js-more" style="display:none;">
-					<button class="header__menu-btn js-more-btn js-menu-btn" aria-expanded="false" hidden>
-						More						<svg class="gridicon gridicons-chevron-down" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M20 9l-8 8-8-8 1.414-1.414L12 14.172l6.586-6.586"/></g></svg>					</button>
-					<div class="header__submenu header__more-submenu js-menu" tabindex="-1" hidden>
-						<div class="header__submenu-content">
-							<ul class="header__submenu-categories-list">
-								<li>
-									<ul class="header__submenu-links-list js-more-container"></ul>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</li>
-			</ul>
-
-			<ul class="header__actions-list">
-				<li>
-					<a class="header__search-btn jetpack-search-filter__link" href="#">
-						<svg class="gridicon gridicons-search" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M21 19l-5.154-5.154C16.574 12.742 17 11.42 17 10c0-3.866-3.134-7-7-7s-7 3.134-7 7 3.134 7 7 7c1.42 0 2.742-.426 3.846-1.154L19 21l2-2zM5 10c0-2.757 2.243-5 5-5s5 2.243 5 5-2.243 5-5 5-5-2.243-5-5z"/></g></svg>						<span class="header__search-label">Search</span>
-					</a>
-				</li>
-				<li class="header__user-menu user-menu ">
-																<a class="header__action-link js-login" href="https://jetpack.com/login/">
-						Log in					</a>
-									</li>
-				<li class="header__cta">
-					<a class="secondary-button js-get-started" href="https://jetpack.com/pricing/">
-						Get started					</a>	
-				</li>
-			</ul>
-		</div>
-
-	</nav>
-</header>
-
-	<div class="in revolving-headers">
-
-	
-							
-		</div>	</header>
-
-<div id="content">
-	
-	<section class="feature-section feature-header feature-acenter invert">
-<div class="in">
-<h1>Ad Program for WordPress Sites</h1>
-<h2>A unique ad program that enables you to focus on creating great content while generating income.</h2>
-<div class="cta-install"><a id="btn-mast-getstarted" class="btn" title="Get Started" href="#get-started">Get Started</a></div>
-</div>
-</section>
-<section class="feature-section feature-intro feature-light">
-<div class="in">
-<h2>How can I make money from my site?</h2>
-<p><span style="font-weight:400;">If you write content regularly and have already built an audience, generating ad revenue from your </span><span style="font-weight:400;">WordPress blog is a great next step. </span></p>
-<p><span style="font-weight:400;">Ads generate “passive income”, meaning you’re able to make money from articles you previously published without needing to put in any additional work or upkeep. You can start generating revenue with your site without spending time selling products or incorporating affiliate links into all of your content.</span></p>
-<p><span style="font-weight:400;">Display ads, like those generated from WordAds, require minimal configuration upfront and essentially maintain themselves. You can skip setting up an e-commerce framework, and you don’t have to update and keep track of affiliate links. Additionally, site visitors won’t be required to create accounts with your website, like most membership sites necessitate.</span></p>
-<p>Jetpack now includes the official WordPress.com advertising program that lets you monetize your WordPress site.</p>
-<p>Once active, Jetpack will display high-quality ads from our approved advertisers on your site allowing you to earn money when readers view an ad.</p>
-<p><img loading="lazy" data-attachment-id="118192" data-permalink="https://jetpack.com/features/growth/ads/screen-shot-2021-01-24-at-3-30-39-pm/" data-orig-file="https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png" data-orig-size="2130,1128" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="WordPress ad revenue" data-image-description="" data-image-caption="" data-medium-file="https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png?w=300" data-large-file="https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png?w=840" class="alignnone size-full wp-image-118192" src="https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png" alt="WordPress ad revenue settings with Jetpack" width="2130" height="1128" srcset="https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png 2130w, https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png?w=150&amp;h=79 150w, https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png?w=300&amp;h=159 300w, https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png?w=768&amp;h=407 768w, https://jetpackme.files.wordpress.com/2021/01/screen-shot-2021-01-24-at-3.30.39-pm.png?w=1024&amp;h=542 1024w" sizes="(max-width: 2130px) 100vw, 2130px" /></p>
-<p><span style="font-weight:400;">By default, advertisements are displayed below every post, page, and the first article on your homepage. You can further increase your WordPress ad revenue by using the Ads widget (included with Jetpack) to place advertisements at the top of your site, and to any widgetized area.</span></p>
-<p><span style="font-weight:400;">In addition to being optimized for use on all WordPress sites, WordAds are catered to each one of your site visitors. Most WordPress ads are generated based on users’ geographic locations, technologies such as retargeting (when you focus on returning site visitors), and a list of approved advertisers to ensure that ads are relevant to your audience members.</span></p>
-<p>WordAds is available to customers with a <a href="https://cloud.jetpack.com/pricing">Jetpack Security or Complete</a> paid plan.</p>
-<p><a id="btn-singlefeature-install" class="feature-button-cta" href="#get-started">Get Started</a></p>
-</div>
-</section>
-<section class="feature-section feature-highlights feature-acenter invert">
-<div class="in">
-<h2>Feature Detail</h2>
-<ul>
-<li>No approval process for your site.</li>
-<li>View stats and earnings on WordPress.com.</li>
-<li><span style="font-weight:400;">The only ad program designed and optimized </span><span style="font-weight:400;">from the ground up for generating WordPress ad revenue.</span></li>
-<li>Ads optimized for geographic location and locale.</li>
-</ul>
-<p>Part of Jetpack&#8217;s suite of <a href="https://jetpack.com/features/traffic/">traffic tools</a> for WordPress sites including stats, sharing, automatic promotion, related posts, and more.</p>
-</div>
-</section>
-<section class="feature-section feature-intro">
-<div class="in">
-<h2>Frequently Asked Questions</h2>
-<p>Here are the answers to some common questions. And we&#8217;re always more than happy to answer any <a href="https://jetpack.com/contact-support/">additional questions</a> you may have.</p>
-<h4>Can I get a refund if I&#8217;m not happy?</h4>
-<p>If — <strong>for any reason</strong> — you’re not satisfied with our services,  we will issue a full refund within 14 days for yearly plans, and within 7 days for monthly plans. No questions asked.</p>
-<hr />
-<h4>How do I turn it on?</h4>
-<p>Simply <a href="https://wordpress.com/jetpack/connect/install">install Jetpack</a>, purchase a paid plan (either Jetpack Security or Jetpack Complete), and enable it with one click from your Jetpack dashboard. <span style="font-weight:400;">You’ll be generating WordPress ad revenue in no time. For advanced settings and trouble-shooting, <a href="https://jetpack.com/support/ads/">read our detailed support document.</a><br /></span></p>
-<hr />
-<p><b>How Much Can I Earn with WordAds?</b></p>
-<p><span style="font-weight:400;">The amount of WordPress ad revenue you can earn varies depending on a variety of factors, including your site’s traffic. A greater number of site visitors increases the likelihood that someone will view or click on your banner ads, and therefore increase your earnings. Jetpack makes it easy to track your WordPress ad revenue on your dedicated ad dashboard.</span></p>
-<hr />
-<p><b>How often will I receive payment?</b></p>
-<p><span style="font-weight:400;">WordPress ad revenue is calculated daily and finalized around the second week of the following month. Payments are sent on or about the last day of the following month. If you earned less than $100 in a given month, your earnings carry over to the next month.</span></p>
-</div>
-</section>
-
-<p> </p>
-
-
-<p></p>
-
-	
-	</div>
-
-<footer>
-	<div class="jetpack-footer">
-		<div class="jetpack-footer__content">
-			<div class="jetpack-footer__head">
-				<div>
-					
-<a href="https://jetpack.com/" aria-label="Jetpack home" class="home-link jetpack-footer__home-link">
-	
-<svg class="jetpack-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.93 38" 
-aria-hidden="true"width="140"height="38">
-	<path class="jetpack-emblem" d="M19,0A19,19,0,1,0,38,19,19,19,0,0,0,19,0ZM18,22.15H8.56L18,3.73Zm1.92,12.08V15.81h9.47Z"/>
-	<path d="M49.06,31.55c-.54-.84-1.05-1.67-1.56-2.47,2.68-1.63,3.59-2.94,3.59-5.4V9.43H47.94V6.71h6.7V23C54.64,27.09,53.45,29.41,49.06,31.55Z"/>
-	<path d="M77.16,21.83c0,1.38,1,1.52,1.63,1.52a9.6,9.6,0,0,0,2.32-.43v2.53A10.63,10.63,0,0,1,77.6,26c-1.75,0-3.78-.65-3.78-3.69V14.87H72V12.29h1.84V8.48h3.34v3.81h4.21v2.58H77.16Z"/>
-	<path d="M84.12,32.81V12.26h3.19v1.23a7,7,0,0,1,4.43-1.6c3,0,5.4,2.11,5.4,6.64S94.53,26,90.21,26a12.79,12.79,0,0,1-2.75-.33v7.11H84.12Zm6.75-18.16a5.38,5.38,0,0,0-3.38,1.49v7a11.81,11.81,0,0,0,2.51.26c2.35,0,3.69-1.49,3.69-4.61C93.69,15.92,92.72,14.65,90.87,14.65Z"/>
-	<path d="M110.27,25.71h-3.12V24.22h-.08A6.89,6.89,0,0,1,102.65,26,3.62,3.62,0,0,1,99,22.12c0-3.45,2.94-4.1,5-4.39l2.94-.4v-.4c0-1.81-.73-2.39-2.43-2.39a13.37,13.37,0,0,0-4.39.91l-.29-2.69a17,17,0,0,1,5.11-.87c3.26,0,5.37,1.31,5.37,5.19v8.63Zm-3.34-6.27-2.76.43a1.79,1.79,0,0,0-1.7,1.85,1.5,1.5,0,0,0,1.52,1.7,5.51,5.51,0,0,0,2.94-1.23Z"/>
-	<path d="M124,25.27a12.15,12.15,0,0,1-4.17.76c-5,0-7-2.86-7-7,0-4.39,2.75-7.11,7.21-7.11a10.91,10.91,0,0,1,3.81.66v2.82a11.45,11.45,0,0,0-3.77-.76c-2,0-3.77,1.09-3.77,4.21,0,3.44,1.74,4.49,4,4.49a10,10,0,0,0,3.77-.83v2.79Z"/>
-	<path d="M130.35,18.06c.29-.33.51-.66,4.72-5.77h4.35L134,18.67l6,7.07h-4.36l-5.18-6.38v6.38h-3.34v-19h3.34V18.06Z"/>
-	<path d="M69.47,25.27a15.54,15.54,0,0,1-5,.76c-4.28,0-6.93-2.13-6.93-7.14,0-3.66,2.25-7,6.56-7s5.77,3,5.77,5.8c0,.95-.07,1.46-.11,2H61.17c.07,2.94,1.74,3.62,4.24,3.62a11.57,11.57,0,0,0,4-.83v2.79Zm-3-7.79c0-1.63-.55-3.05-2.32-3.05s-2.69,1.2-2.9,3.05Z"/>
-</svg>
-</a>
-				</div>
-				<div class="jetpack-footer__language">
-					
-<button aria-label="Select language" class="language-toggle jetpack-footer__language-toggle">
-	<span>en</span>
-	<svg class="gridicon gridicons-chevron-down" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-		<path d="M20 9l-8 8-8-8 1.414-1.414L12 14.172l6.586-6.586"></path>
-	</svg>
-</button>				</div>
-			</div>
-			<nav class="jetpack-footer__sitemap sitemap" aria-label="Footer">
-				<ul class="sitemap__list">
-					<li class="sitemap__category">
-						<span class="sitemap__category-label">WordPress Plugins</span>
-						<ul class="sitemap__link-list">
-							<li><a href="https://jetpack.com/" class="sitemap__link">Jetpack</a></li>
-							<li><a href="https://jetpack.com/upgrade/backup/" class="sitemap__link">Jetpack Backup</a></li>
-							<li><a href="https://jetpackcrm.com/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer" class="sitemap__link">Jetpack CRM</a></li>
-							<li><a href="https://jetpack.com/boost/" class="sitemap__link">Jetpack Boost</a></li>
-						</ul>
-					</li>
-					<li class="sitemap__category">
-						<span class="sitemap__category-label">Partners</span>
-						<ul class="sitemap__link-list">
-							<li><a href="https://jetpack.com/hosting/" class="sitemap__link">Recommended Hosts</a></li>
-							<li><a href="https://jetpack.com/for/hosts/" class="sitemap__link">For Hosts</a></li>
-							<li><a href="https://jetpack.com/for/agencies/" class="sitemap__link">For Agencies</a></li>
-						</ul>
-					</li>
-					<li class="sitemap__category">
-						<span class="sitemap__category-label">Developers</span>
-						<ul class="sitemap__link-list">
-							<li><a href="https://developer.jetpack.com/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer" class="sitemap__link">Documentation</a></li>
-							<li><a href="https://jetpack.com/beta/" class="sitemap__link">Beta Program</a></li>
-							<li><a href="https://jetpack.com/contribute/" class="sitemap__link">Contribute to Jetpack</a></li>
-						</ul>
-					</li>
-					<li class="sitemap__category">
-						<span class="sitemap__category-label">Legal</span>
-						<ul class="sitemap__link-list">
-						<li><a href="https://wordpress.com/tos/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer" class="sitemap__link">Terms of Service</a></li>
-						<li><a href="https://automattic.com/privacy/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer" class="sitemap__link">Privacy Policy</a></li>
-						<li><a href="https://automattic.com/privacy/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer#california-consumer-privacy-act-ccpa" class="sitemap__link" id="footer-cta-ccpa">Privacy Notice for California Users</a></li>
-						</ul>
-					</li>
-					<li class="sitemap__category">
-						<span class="sitemap__category-label">Help</span>
-						<ul class="sitemap__link-list">
-							<li><a href="https://jetpack.com/support/" class="sitemap__link">Knowledge Base</a></li>
-							<li><a href="https://wordpress.org/support/plugin/jetpack/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer" class="sitemap__link">Forums</a></li>
-							<li><a href="https://jetpack.com/features/security/library" class="sitemap__link">Security Library</a></li>
-							<li><a href="https://jetpack.com/contact-support/" class="sitemap__link">Contact Us</a></li>
-							<li><a href="https://automattic.com/press/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer" class="sitemap__link">Press</a></li>
-						</ul>
-					</li>
-					<li class="sitemap__category sitemap__category-social">
-						<span class="sitemap__category-label">Social</span>
-						<ul class="sitemap__link-list social-properties">
-							<li>
-								<a href="https://twitter.com/jetpack" class="sitemap__link" aria-label="Jetpack Twitter account">
-									<img src="https://s2.wp.com/wp-content/themes/a8c/jetpackme-new/images/icons/icon-twitter.svg" alt="Twitter" loading="lazy" decoding="async">
-								</a>
-							</li>
-							<li>
-								<a href="https://www.facebook.com/jetpackme/" class="sitemap__link" aria-label="Jetpack Facebook page">
-									<img src="https://s2.wp.com/wp-content/themes/a8c/jetpackme-new/images/icons/icon-facebook.svg" alt="Facebook" loading="lazy" decoding="async">
-								</a>
-							</li>
-							<li>
-								<a href="https://www.linkedin.com/company/jetpack-for-wordpress/" class="sitemap__link" aria-label="Jetpack LinkedIn page">
-									<img src="https://s2.wp.com/wp-content/themes/a8c/jetpackme-new/images/icons/icon-linkedin.svg" alt="LinkedIn" loading="lazy" decoding="async">	
-								</a></li>
-							<li>
-								<a href="https://www.youtube.com/JetpackOfficial" class="sitemap__link" aria-label="Jetpack Youtube channel">
-									<img src="https://s2.wp.com/wp-content/themes/a8c/jetpackme-new/images/icons/icon-youtube.svg" alt="Youtube" loading="lazy" decoding="async">	
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="sitemap__category sitemap__category-mobile">
-						<span class="sitemap__category-label">Mobile Apps</span>
-						<div class="store-buttons"><ul><li class="play-store-button" id="play-store-button" data-tracking-id="play-store"><a href="https://play.google.com/store/apps/details?id=com.jetpack.android"><img src="https://jetpackme.files.wordpress.com/2021/05/footer-google-play-badge-2x.png" alt="Get Jetpack on Google Play" class="wp-image-121435" width="135" height="40" loading="lazy" decoding="async"></a></li><li id="app-store-button" data-tracking-id="app-store"><a href="https://apps.apple.com/us/app/jetpack-wp-security-speed/id1565481562"><img src="https://jetpackme.files.wordpress.com/2021/05/footer-ios-badge-2x.png" alt="Download Jetpack on the App Store" class="wp-image-121436" width="120" height="40" loading="lazy" decoding="async"></a></li></ul></div>					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-	<div class="a8c-footer">
-		<ul class="a8c-footer__link-list">
-			<li class="a8c-footer__home">
-				<a class="a8c-footer__home-link" href="https://automattic.com/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer">
-					An <img class="a8c-footer__a8c-logo" src="https://s2.wp.com/wp-content/themes/a8c/jetpackme-new/images/logos/logo-a8c-white.svg" alt="Automattic" loading="lazy" decoding="async" /> airline				</a>
-			</li>
-			<li class="a8c-footer__work">
-				<a class="a8c-footer__work-link" href="https://automattic.com/work-with-us/?utm_medium=automattic_referred&#038;utm_source=jpcom_footer">
-					Work With Us				</a>
-			</li>
-		</ul>
-	</div>
-</footer>
-
-
-<script>
-	// Language switcher widget
-	jetpackMeReady( function() {
-		'use strict';
-
-		var locales = [{"code":"en","locale_name":"English","href":"\/\/en.jetpack.com\/features\/growth\/ads\/"},{"code":"ar","locale_name":"\u0627\u0644\u0639\u0631\u0628\u064a\u0629","href":"\/\/ar.jetpack.com\/features\/growth\/ads\/"},{"code":"de","locale_name":"Deutsch","href":"\/\/de.jetpack.com\/features\/growth\/ads\/"},{"code":"es","locale_name":"Espa\u00f1ol","href":"\/\/es.jetpack.com\/features\/growth\/ads\/"},{"code":"fr","locale_name":"Fran\u00e7ais","href":"\/\/fr.jetpack.com\/features\/growth\/ads\/"},{"code":"he","locale_name":"\u05e2\u05b4\u05d1\u05b0\u05e8\u05b4\u05d9\u05ea","href":"\/\/he.jetpack.com\/features\/growth\/ads\/"},{"code":"id","locale_name":"Bahasa Indonesia","href":"\/\/id.jetpack.com\/features\/growth\/ads\/"},{"code":"it","locale_name":"Italiano","href":"\/\/it.jetpack.com\/features\/growth\/ads\/"},{"code":"ja","locale_name":"\u65e5\u672c\u8a9e","href":"\/\/ja.jetpack.com\/features\/growth\/ads\/"},{"code":"ko","locale_name":"\ud55c\uad6d\uc5b4","href":"\/\/ko.jetpack.com\/features\/growth\/ads\/"},{"code":"nl","locale_name":"Nederlands","href":"\/\/nl.jetpack.com\/features\/growth\/ads\/"},{"code":"pt-br","locale_name":"Portugu\u00eas do Brasil","href":"\/\/br.jetpack.com\/features\/growth\/ads\/"},{"code":"ru","locale_name":"\u0420\u0443\u0441\u0441\u043a\u0438\u0439","href":"\/\/ru.jetpack.com\/features\/growth\/ads\/"},{"code":"sv","locale_name":"Svenska","href":"\/\/sv.jetpack.com\/features\/growth\/ads\/"},{"code":"tr","locale_name":"T\u00fcrk\u00e7e","href":"\/\/tr.jetpack.com\/features\/growth\/ads\/"},{"code":"zh-cn","locale_name":"\u7b80\u4f53\u4e2d\u6587","href":"\/\/zh-cn.jetpack.com\/features\/growth\/ads\/"},{"code":"zh-tw","locale_name":"\u7e41\u9ad4\u4e2d\u6587","href":"\/\/zh-tw.jetpack.com\/features\/growth\/ads\/"}];
-		var toggles = document.querySelector( '.language-toggle' );
-
-		window.WPCOMLocaleSwitcher.init( locales, 'en', '.jetpack.com' );
-
-		Array.prototype.forEach.call( document.querySelectorAll( '.language-toggle' ), function ( toggle ) {
-			toggle.addEventListener( 'click', function ( event ) {
-				event.preventDefault();
-				window.WPCOMLocaleSwitcher.toggle();
-
-				// Set the focus to the current language
-				var current = document.querySelector( '#ls-overlay .active a' );
-
-				if ( current ) {
-					current.focus();
-				}
-			} )
-		} );
-	} );
-</script>
-
-
-	<script type="text/javascript">
-		function GetURLParameter( sParam ) {
-			var sPageURL = window.location.search.substring(1);
-			var sURLVariables = sPageURL.split( '&' );
-			for ( var i = 0; i < sURLVariables.length; i++ ) {
-				var sParameterName = sURLVariables[i].split( '=' );
-				if ( sParameterName[0] == sParam ) {
-					return sParameterName[1];
-				}
-			}
-		}
-
-		function GetFeatureProps() {
-			var featureProps = {};
-			var featurePath = window.location.pathname.split( '/' );
-			var featurePage = '_';
-
-			for ( i = 1; i < featurePath.length - 1; i++ ) {
-				featurePage += featurePath[i] + '_';
-			}
-
-			// Remove any trailing underscore.
-			featurePage = featurePage.slice( 1, -1 );
-
-			// Add event props.
-			featureProps.slug = 'ads';
-			featureProps.feature = 'Ad Program for WordPress';
-			featureProps.page = featurePage.replace( /-/g, '_' );
-
-			return featureProps;
-		}
-
-		jQuery ( document ).ready(function() {
-			var cta = decodeURIComponent( GetURLParameter( 'cta' ) );
-			if( cta != "undefined" ) {
-				jQuery ('footer').hide();
-			}
-		});
-
-		jQuery ( document ).ready(function() {
-			_tkq = window._tkq || [];
-			_tkq.push(['recordEvent', 'jetpack_single_features_visit', GetFeatureProps()]);
-			jQuery( '#btn-mast-getstarted' ).click(function() {_tkq.push(['recordEvent', 'jetpack_singlefeature_get_started', {'feature':'Ad Program for&nbsp;WordPress'} ]);});
-			jQuery( '#btn-singlefeature-install' ).click(function() {_tkq.push(['recordEvent', 'jetpack_singlefeature_install_jetpack', {'feature':'Ad Program for&nbsp;WordPress'} ]);});
-			jQuery( '#btn-singlefeature-enable' ).click(function() {_tkq.push(['recordEvent', 'jetpack_singlefeature_enable_feature', {'feature':'Ad Program for&nbsp;WordPress'} ]);});
-			jQuery( '#btn-singlefeature-suggestion' ).click(function() {_tkq.push(['recordEvent', 'jetpack_singlefeature_suggestion_click', {'feature':'Ad Program for&nbsp;WordPress'} ]);});
-		});
-	</script>
-
-<!--  -->
-		<div class="jetpack-instant-search__widget-area" style="display: none">
-							<div id="jetpack-search-filters-5" class="widget jetpack-filters widget_search">			<div id="jetpack-search-filters-5-wrapper" class="jetpack-instant-search-wrapper">
-		</div></div>					</div>
-					<!-- A8C Analytics [start] -->
-			<script type="text/javascript">
-				( function() {
-					'use strict';
-
-					var setupAnalytics = function() {
-						window.a8cAnalyticsConfig = {"cookieBanner":{"version":"2","cssZIndex":50001,"skipBanner":false,"cookieDomain":"jetpack.com","v1CookieName":"sensitive_pixel_option","v2CookieName":"sensitive_pixel_options","v1Text":"Our websites and dashboards use cookies. By continuing, you agree to their use. <a target=\"_blank\" href=\"https:\/\/automattic.com\/cookies\/\">Learn more<\/a>, including how to control cookies.","v2Text":"We and our partners process your personal data (such as browsing data, IP addresses, cookie information, and other unique identifiers) based on your consent and\/or our legitimate interest to optimize our website, marketing activities, and your user experience.","v2OptionsText":"Your privacy is critically important to us. We and our partners use, store, and process your personal data to optimize: our <strong>website<\/strong> such as by improving security or conducting analytics, <strong>marketing activities<\/strong> to help deliver relevant marketing or content, and your <strong>user experience<\/strong> such as by remembering your account name, language settings, or cart information, where applicable. You can customize your cookie settings below. Learn more in our <a href=\"https:\/\/automattic.com\/privacy\/\" target=\"_blank\">Privacy Policy<\/a> and <a href=\"https:\/\/automattic.com\/cookies\/\" target=\"_blank\">Cookie Policy<\/a>.","v2EssentialOptionText":"<strong>Required:<\/strong> These cookies are essential for our websites and services to perform basic functions and are necessary for us to operate certain features. These include those required to allow registered users to authenticate and perform account-related functions, store preferences set by users such as account name, language, and location, and ensure our services are operating properly.","v2AnalyticsOptionText":"<strong>Analytics:<\/strong> These cookies allow us to optimize performance by collecting information on how users interact with our websites, including which pages are visited most, as well as other analytical data. We use these details to improve how our websites function and to understand how users interact with them. You can opt-out by logging into your account and changing your privacy settings at <a target=\"_blank\" href=\"https:\/\/wordpress.com\/me\/privacy\">https:\/\/wordpress.com\/me\/privacy<\/a>.","v2AdvertisingOptionText":"<strong>Advertising:<\/strong> These cookies are set by us and our advertising partners to provide you with relevant content and to understand that content\u2019s effectiveness. They may be used to collect information about your online activities over time and across different websites to predict your preferences and to display more relevant advertisements to you. These cookies also allow a profile to be built about you and your interests, and enable personalized ads to be shown to you based on your profile.","v1ButtonText":"Got It!","v2CustomizeButtonText":"Customize","v2AcceptAllButtonText":"Accept All","v2AcceptSelectionButtonText":"Accept Selection"},"adminAnalytics":"analytics-wpcom-admin.php","fireAnalyticsOptions":[]};
-					};
-
-					if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-						defQueue.items.push( setupAnalytics );
-					} else {
-						setupAnalytics();
-					}
-				} )();
-			</script>
-
-			<script type="text/javascript">
-	function getJetpackAnalyticsDefaultConfig() {
-		return {
-			currentUserIdHashShort: "",
-			currentUserEmailHash: "",
-		};
-	}
-
-	document.addEventListener( 'a8c-analytics:loaded', function () {
-		'use strict';
-
-		var cb = window.a8cAnalytics.cb;
-		var kit = window.a8cAnalytics.kit;
-
-		var gaOptimize = window.a8cGAOptimize || null;
-		var ssGAOptimize = window.a8cAnalyticsConfig.ssGAOptimize || null;
-		gaOptimize = gaOptimize && gaOptimize.isEnabled() ? gaOptimize : null;
-
-		var config = getJetpackAnalyticsDefaultConfig();
-
-		function fireAffiliateReferrals() {
-			kit.attachScriptElement( 'https://refer.wordpress.com/wp-content/themes/refer-wordpress/assets/js/referrals.min.js?v=20181205', {
-				'data-vendor': 67401,
-			} );
-		}
-
-		function fireGoogleAnalyticsWithGtag() {
-			kit.loadGtag( 'UA-52447-43', {
-				anonymize_ip: true,
-				linker: {
-					domains: [ 'wordpress.com' ]
-				}
-			} );
-		}
-
-		function fireFacebook() {
-			kit.loadFacebook();
-			fbq( 'init', '919484458159593' );
-			fbq( 'track', "PageView" );
-		}
-
-		function fireBing() {
-			(function( w, d, t, r, u ) {
-				var f, n, i;
-				w[ u ] = w[ u ] || [], f = function() {
-					var o = { ti: "4074038" };
-					o.q = w[ u ], w[ u ] = new UET( o ), w[ u ].push( "pageLoad" )
-				}, n = d.createElement( t ), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function() {
-					var s = this.readyState;
-					s && s !== "loaded" && s !== "complete" || ( f(), n.onload = n.onreadystatechange = null )
-				}, i = d.getElementsByTagName( t )[ 0 ], i.parentNode.insertBefore( n, i )
-			} )( window, document, "script", "//s1.wp.com/wp-content/mu-plugins/a8c-analytics/3rd-party/bing/bat.js?v=20190826", "uetq" );
-		}
-
-		function loadGoogleAdsGtag() {
-			kit.loadGtag( 'AW-946162814' );
-		}
-
-		function loadFullStory() {
-			if (
-				window.location.pathname.startsWith( '/support' ) ||
-				window.location.pathname.startsWith( '/blog' ) ||
-				window.location.pathname.startsWith( '/contact-support' ) ||
-				/^\/\d{4}\/\d{2}\/\d{2}\//.test( window.location.pathname )
-			) {
-				return;
-			} else {
-				kit.loadFullStory( '181XXV' );
-			}
-		}
-
-		if ( kit.doNotTrack() ) {
-			if ( gaOptimize ) {
-				gaOptimize.endAsyncDim();
-			}
-			return;
-		}
-
-		function applyLinkers() {
-			kit.linkQueryVars( [
-				{
-					includeRegExps: [
-						/^(?:[^\/]+\.)?(?:wordpress|jetpack|woocommerce|crowdsignal|wpjobmanager)\.com(?:\/|$)/i,
-					],
-					linkQueryVars: [
-						'aff',
-						'affiliate',
-						'cid', // Aff campaign ID.
-						'sid', // Aff sub ID.
-						'gclid', // Google Ads
-					],
-				},
-				{
-					includeRegExps: [
-						/^(?:[^\/]+\.)?(?:wordpress|jetpack)\.com(?:\/|$)/i,
-					],
-					linkQueryVars: [
-						'coupon',
-					],
-				},
-			] );
-		}
-
-		// ------- Apply Linkers -------
-
-		applyLinkers();
-
-		// ------- Fire Normal Pixels -------
-
-		cb.addTracker( 'analytics', false, fireAffiliateReferrals );
-
-		// ------- Fire "Sensitive" Pixels -------
-
-				cb.addTracker( 'advertising', true, fireGoogleAnalyticsWithGtag );
-		cb.addTracker( 'analytics', true, loadFullStory );
-		cb.addTracker( 'advertising', true, loadGoogleAdsGtag );
-		cb.addTracker( 'advertising', true, fireFacebook );
-		cb.addTracker( 'advertising', true, fireBing );
-
-	} );
-</script>
-
-			<script type="text/javascript">
-				( function() {
-					'use strict';
-					var currentScript = document.currentScript;
-
-					var setupAnalytics = function() {
-						function getScript() {
-							var script = document.createElement( 'script' );
-							var prev = currentScript || document.getElementsByTagName( 'script' )[ 0 ];
-							script.setAttribute( 'src', "https:\/\/s0.wp.com\/wp-content\/mu-plugins\/a8c-analytics\/a8c-analytics.js?v=1645447154" );
-							script.setAttribute( 'async', true );
-							prev.parentNode.insertBefore( script, prev );
-						}
-
-													getScript();
-											};
-
-					if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-						defQueue.items.push( setupAnalytics );
-					} else {
-						setupAnalytics();
-					}
-				} )();
-			</script>
-			<!-- A8C Analytics [end] -->
-			<div style="display:none">
-	</div>
-		<div id="jp-carousel-loading-overlay">
-			<div id="jp-carousel-loading-wrapper">
-				<span id="jp-carousel-library-loading">&nbsp;</span>
-			</div>
-		</div>
-		<div class="jp-carousel-overlay" style="display: none;">
-
-		<div class="jp-carousel-container">
-			<!-- The Carousel Swiper -->
-			<div
-				class="jp-carousel-wrap swiper-container jp-carousel-swiper-container jp-carousel-transitions"
-				itemscope
-				itemtype="https://schema.org/ImageGallery">
-				<div class="jp-carousel swiper-wrapper"></div>
-				<div class="jp-swiper-button-prev swiper-button-prev">
-					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<mask id="maskPrev" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="9" height="12">
-							<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"/>
-						</mask>
-						<g mask="url(#maskPrev)">
-							<rect x="0.579102" width="23.8823" height="24" fill="#FFFFFF"/>
-						</g>
-					</svg>
-				</div>
-				<div class="jp-swiper-button-next swiper-button-next">
-					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<mask id="maskNext" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="8" height="12">
-							<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"/>
-						</mask>
-						<g mask="url(#maskNext)">
-							<rect x="0.34375" width="23.8822" height="24" fill="#FFFFFF"/>
-						</g>
-					</svg>
-				</div>
-			</div>
-			<!-- The main close buton -->
-			<div class="jp-carousel-close-hint">
-				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<mask id="maskClose" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="14">
-						<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"/>
-					</mask>
-					<g mask="url(#maskClose)">
-						<rect x="0.409668" width="23.8823" height="24" fill="#FFFFFF"/>
-					</g>
-				</svg>
-			</div>
-			<!-- Image info, comments and meta -->
-			<div class="jp-carousel-info">
-				<div class="jp-carousel-info-footer">
-					<div class="jp-carousel-pagination-container">
-						<div class="jp-swiper-pagination swiper-pagination"></div>
-						<div class="jp-carousel-pagination"></div>
-					</div>
-					<div class="jp-carousel-photo-title-container">
-						<h2 class="jp-carousel-photo-caption"></h2>
-					</div>
-					<div class="jp-carousel-photo-icons-container">
-						<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-info" aria-label="Toggle photo metadata visibility">
-							<span class="jp-carousel-icon">
-								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<mask id="maskInfo" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
-										<path fill-rule="evenodd" clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white"/>
-									</mask>
-									<g mask="url(#maskInfo)">
-										<rect x="0.8125" width="23.8823" height="24" fill="#FFFFFF"/>
-									</g>
-								</svg>
-							</span>
-						</a>
-												<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-comments" aria-label="Toggle photo comments visibility">
-							<span class="jp-carousel-icon">
-								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<mask id="maskComments" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
-										<path fill-rule="evenodd" clip-rule="evenodd" d="M4.3271 2H20.2486C21.3432 2 22.2388 2.9 22.2388 4V16C22.2388 17.1 21.3432 18 20.2486 18H6.31729L2.33691 22V4C2.33691 2.9 3.2325 2 4.3271 2ZM6.31729 16H20.2486V4H4.3271V18L6.31729 16Z" fill="white"/>
-									</mask>
-									<g mask="url(#maskComments)">
-										<rect x="0.34668" width="23.8823" height="24" fill="#FFFFFF"/>
-									</g>
-								</svg>
-
-								<span class="jp-carousel-has-comments-indicator" aria-label="This image has comments."></span>
-							</span>
-						</a>
-											</div>
-				</div>
-				<div class="jp-carousel-info-extra">
-					<div class="jp-carousel-info-content-wrapper">
-						<div class="jp-carousel-photo-title-container">
-							<h2 class="jp-carousel-photo-title"></h2>
-						</div>
-						<div class="jp-carousel-comments-wrapper">
-															<div id="jp-carousel-comments-loading">
-									<span>Loading Comments...</span>
-								</div>
-								<div class="jp-carousel-comments"></div>
-								<div id="jp-carousel-comment-form-container">
-									<span id="jp-carousel-comment-form-spinner">&nbsp;</span>
-									<div id="jp-carousel-comment-post-results"></div>
-																														<form id="jp-carousel-comment-form">
-												<label for="jp-carousel-comment-form-comment-field" class="screen-reader-text">Write a Comment...</label>
-												<textarea
-													name="comment"
-													class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea"
-													id="jp-carousel-comment-form-comment-field"
-													placeholder="Write a Comment..."
-												></textarea>
-												<div id="jp-carousel-comment-form-submit-and-info-wrapper">
-													<div id="jp-carousel-comment-form-commenting-as">
-																													<fieldset>
-																<label for="jp-carousel-comment-form-email-field">Email (Required)</label>
-																<input type="text" name="email" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-email-field" />
-															</fieldset>
-															<fieldset>
-																<label for="jp-carousel-comment-form-author-field">Name (Required)</label>
-																<input type="text" name="author" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-author-field" />
-															</fieldset>
-															<fieldset>
-																<label for="jp-carousel-comment-form-url-field">Website</label>
-																<input type="text" name="url" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-url-field" />
-															</fieldset>
-																											</div>
-													<input
-														type="submit"
-														name="submit"
-														class="jp-carousel-comment-form-button"
-														id="jp-carousel-comment-form-button-submit"
-														value="Post Comment" />
-												</div>
-											</form>
-																											</div>
-													</div>
-						<div class="jp-carousel-image-meta">
-							<div class="jp-carousel-title-and-caption">
-								<div class="jp-carousel-photo-info">
-									<h3 class="jp-carousel-caption" itemprop="caption description"></h3>
-								</div>
-
-								<div class="jp-carousel-photo-description"></div>
-							</div>
-							<ul class="jp-carousel-image-exif" style="display: none;"></ul>
-							<a class="jp-carousel-image-download" target="_blank" style="display: none;">
-								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="19" height="18">
-										<path fill-rule="evenodd" clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white"/>
-									</mask>
-									<g mask="url(#mask0)">
-										<rect x="0.870605" width="23.8823" height="24" fill="#FFFFFF"/>
-									</g>
-								</svg>
-								<span class="jp-carousel-download-text"></span>
-							</a>
-							<div class="jp-carousel-image-map" style="display: none;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		</div>
-		<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/swiper-bundle.css,/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1630955947j&cssminify=yes' type='text/css' media='all' />
-<script type='text/javascript' id='jetpack-instant-search-js-translations'>
-( function( domain, translations ) {
-	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
-	localeData[""].domain = domain;
-	wp.i18n.setLocaleData( localeData, domain );
-} )( "jetpack-search-pkg", { "locale_data": { "messages": { "": {} } } } );
-</script>
-<script type='text/javascript'>
-var JetpackInstantSearchOptions=JSON.parse(decodeURIComponent("%7B%22overlayOptions%22%3A%7B%22colorTheme%22%3A%22light%22%2C%22enableInfScroll%22%3Atrue%2C%22enableSort%22%3Atrue%2C%22highlightColor%22%3A%22%23e6f2e8%22%2C%22overlayTrigger%22%3A%22results%22%2C%22resultFormat%22%3A%22minimal%22%2C%22showPoweredBy%22%3Atrue%2C%22defaultSort%22%3A%22relevance%22%2C%22excludedPostTypes%22%3A%5B%5D%7D%2C%22homeUrl%22%3A%22https%3A%5C%2F%5C%2Fjetpack.com%22%2C%22locale%22%3A%22en%22%2C%22postsPerPage%22%3A10%2C%22siteId%22%3A20115252%2C%22postTypes%22%3A%7B%22post%22%3A%7B%22singular_name%22%3A%22Post%22%2C%22name%22%3A%22Posts%22%7D%2C%22page%22%3A%7B%22singular_name%22%3A%22Page%22%2C%22name%22%3A%22Pages%22%7D%2C%22attachment%22%3A%7B%22singular_name%22%3A%22Media%22%2C%22name%22%3A%22Media%22%7D%2C%22security%22%3A%7B%22singular_name%22%3A%22Vulnerability%22%2C%22name%22%3A%22Vulnerabilities%22%7D%2C%22theme%22%3A%7B%22singular_name%22%3A%22Theme%22%2C%22name%22%3A%22Themes%22%7D%2C%22jetpack_support%22%3A%7B%22singular_name%22%3A%22Article%22%2C%22name%22%3A%22Support%22%7D%7D%2C%22webpackPublicPath%22%3A%22https%3A%5C%2F%5C%2Fs2.wp.com%5C%2Fwp-content%5C%2Fmu-plugins%5C%2Fjetpack-packages%5C%2Fproduction%5C%2Fjetpack_vendor%5C%2Fautomattic%5C%2Fjetpack-search%5C%2Fbuild%5C%2Finstant-search%5C%2F%22%2C%22isPhotonEnabled%22%3Atrue%2C%22apiRoot%22%3A%22https%3A%5C%2F%5C%2Fpublic-api.wordpress.com%5C%2F%22%2C%22apiNonce%22%3A%2229884505b9%22%2C%22isPrivateSite%22%3Afalse%2C%22isWpcom%22%3Atrue%2C%22hasOverlayWidgets%22%3Atrue%2C%22widgets%22%3A%5B%7B%22filters%22%3A%5B%7B%22name%22%3A%22Categories%22%2C%22type%22%3A%22taxonomy%22%2C%22taxonomy%22%3A%22category%22%2C%22count%22%3A5%2C%22widget_id%22%3A%22jetpack-search-filters-5%22%2C%22filter_id%22%3A%22taxonomy_0%22%7D%2C%7B%22name%22%3A%22Post%20Types%22%2C%22type%22%3A%22post_type%22%2C%22count%22%3A5%2C%22widget_id%22%3A%22jetpack-search-filters-5%22%2C%22filter_id%22%3A%22post_type_1%22%7D%2C%7B%22name%22%3A%22Month%22%2C%22type%22%3A%22date_histogram%22%2C%22count%22%3A5%2C%22field%22%3A%22post_date%22%2C%22interval%22%3A%22month%22%2C%22widget_id%22%3A%22jetpack-search-filters-5%22%2C%22filter_id%22%3A%22date_histogram_2%22%7D%5D%2C%22widget_id%22%3A%22jetpack-search-filters-5%22%7D%5D%2C%22widgetsOutsideOverlay%22%3A%5B%5D%2C%22hasNonSearchWidgets%22%3Afalse%2C%22adminQueryFilter%22%3A%7B%22bool%22%3A%7B%22must_not%22%3A%5B%7B%22term%22%3A%7B%22post_type%22%3A%22attachment%22%7D%7D%2C%7B%22term%22%3A%7B%22post_type%22%3A%22security%22%7D%7D%5D%7D%7D%7D"));
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/devicepx.js,/wp-content/mu-plugins/jetpack-packages/production/jetpack_vendor/automattic/jetpack-search/build/instant-search/jp-search.js?m=1651769837j'></script>
-<script crossorigin="anonymous" src='//stats.wp.com/w.js?ver=202218' id='jp-tracks-js'></script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/wp-content/plugins/wp-parsely/build/loader.js?m=1651502011h'></script>
-<script data-parsely-site="jetpack.com" src='https://cdn.parsely.com/keys/jetpack.com/p.js?ver=3.3.1' id="parsely-cfg"></script>
-<script id='jetpack-carousel-js-extra'>
-var jetpackSwiperLibraryPath = {"url":"\/wp-content\/mu-plugins\/carousel\/swiper-bundle.js"};
-var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/jetpack.com\/wp-admin\/admin-ajax.php","nonce":"3bcaac14ec","display_exif":"1","display_comments":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/jetpackme.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fjetpack.com%2Ffeatures%2Fgrowth%2Fads%2F","blog_id":"20115252","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"stats_query_args":"blog=20115252&v=wpcom&tz=-4&user_id=0&subd=jetpackme","is_public":"1"};
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJylkEsKwzAMRC9UVW0a+lmUnkVxRGLHPywFX7/ZGEoWpdDdaNAbmMGawaSoHBV15sCCdDfoWDOZJTBErugEZ6aRy9HJAT8Ibwf0yZBnmFYW4QJSrZqZCzYB1Y4Ta/tr9j9RWiiKJ7Upyj4nrJD9Otm4FRmDjTBQwUCiXDYFG2qWb5ChklZh3yaAZvzAQM0mhd25ca/wPF/7R3/qutvFvQEV94tW'></script>
+<!DOCTYPE html><html dir="ltr" lang="en" class="no-js"><head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app220.us.archive.org';v.server_ms=305;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
 <script type="text/javascript">
-// <![CDATA[
-(function() {
-try{
-  if ( window.external &&'msIsSiteMode' in window.external) {
-    if (window.external.msIsSiteMode()) {
-      var jl = document.createElement('script');
-      jl.type='text/javascript';
-      jl.async=true;
-      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(jl, s);
-    }
-  }
-}catch(e){}
-})();
-// ]]>
-</script><script src="//stats.wp.com/w.js?63" defer></script> <script type="text/javascript">
-_tkq = window._tkq || [];
-_stq = window._stq || [];
-_tkq.push(['storeContext', {'blog_id':'20115252','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
-_stq.push(['view', {'blog':'20115252','v':'wpcom','tz':'-4','user_id':'0','post':'14843','subd':'jetpackme'}]);
-_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1lSiYrZXhzUkM5fD1uTDNLUGt6QzVbd3FKb3Q4aWxFU0VMK3ppSG1wamM0bi81JStxN2lKP1pvVnxQRHk3W0d3VEh0SklpNENJfHppaiZjVlFtdzJJS0ovSDNEK0wuP0ZBPW5mTU1iSjY2dXExbCVab2ZBfFM9U2RrZW1xX1lNfHBnclY1UX4tXXx3aXJUbmImLXBmT3wxdEhXeFJnY2RPZUxWZnZbU1RMZHM/fFZnNThKVG4raUclLk1EcXo2JS9LZ1QmWHx6PVppbzN6Z35OeG5PSHBwMUw5WkZUcWFvVnV0LUVVK0hiT2V+S1ljQzJhUUsxQWVHQiVYZCslak1rcTJDNDEmbDFoVVV5RkFnZ0osK2pvJls0TkddeW5kSyx1dA=='}]);
-_stq.push([ 'clickTrackerInit', '20115252', '14843' ]);
-	</script>
-<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
-<script defer id="bilmur" data-customproperties="{&quot;enq_jquery&quot;:&quot;1&quot;,&quot;logged_in&quot;:&quot;0&quot;,&quot;wptheme&quot;:&quot;a8c\/jetpackme-new&quot;}" data-provider="wordpress.com" data-service="simple"  src="/wp-content/js/bilmur.min.js?i=3&m=202218"></script><script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/wp-content/themes/a8c/jetpackme-new/js/utm-tracking.js?m=1649335172h'></script>
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.scientificamerican.com/education/","20200107075754","https://web.archive.org/","web","/_static/",
+	      "1578383874");
+</script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+<meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="description" content="Scientific American is the essential guide to the most awe-inspiring advances in science and technology, explaining how they change our understanding of the world and shape our lives."><meta itemprop="name" content="Scientific American" itemprop="description" content="Scientific American is the essential guide to the most awe-inspiring advances in science and technology, explaining how they change our understanding of the world and shape our lives."><meta name="msapplication-TileImage" content="/public/resources/favicons/favicon-196-f10395ba7ecf07756e4b5a82c4795b61.png"><meta name="referrer" content="unsafe-url"><meta name="com.silverpop.brandeddomains" content="www.pages04.net,www.scientificamerican.com"/><meta name="com.silverpop.cothost" content="pod4.ibmmarketingcloud.com"/><title>Education - Scientific American</title><link rel="apple-touch-icon" sizes="196x196" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-196-f10395ba7ecf07756e4b5a82c4795b61.png"><link rel="apple-touch-icon" sizes="128x128" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-128-4b9aa97db8311c4616270d6a8a662eac.png"><link rel="apple-touch-icon" sizes="96x96" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-96-387ab1daffb7a1698601f6e49da87a1c.png"><link rel="apple-touch-icon" sizes="32x32" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-32-cadc19705538fdb538db10f2a98c1d46.png"><link rel="apple-touch-icon" sizes="16x16" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-16-59d034d523b133557208a7c24f448374.png">		<link rel="shortcut icon" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-4c8c70500bd3f01ae8c38cf7dd2771fe.ico"><meta name="theme-color" content="#093969"/><link rel="stylesheet" type="text/css" rel="preload" href="/web/20200107075754cs_/https://www.scientificamerican.com/public/resources/sa-c798113fa11711e649be374a60d3aee7.css" as="style"/><link rel="stylesheet" type="text/css" rel="preload" href="/web/20200107075754cs_/https://www.scientificamerican.com/public/resources/icons-742382d06c2ee8300dd33b9ae799b010.css" as="style"/><link href="https://web.archive.org/web/20200107075754/https://static.scientificamerican.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.krxd.net/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://www.googletagservices.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://plugin.mediavoice.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://connect.facebook.net/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.marphezis.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://ajax.googleapis.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://s3.amazonaws.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://www.googletagmanager.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://www.google-analytics.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://get.s-onetag.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://adservice.google.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.cookielaw.org/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://logx.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://ads.deliverimp.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://z.moatads.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://a1859010085.cdn.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://tpc.googlesyndication.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://pixel.moatads.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://consumer.krxd.net/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://securepubads.g.doubleclick.net/" rel="preconnect"><link rel="canonical" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/education/"><script>dataLayer = [{"content":{"authorization":{"status":1,"freeToAccess":1,"type":"free_to_air"},"category":{"contentSubType1":"","subjectSubType1":"","subjectType":"","contentType":"Education"},"updatedAt":"","contentInfo":{"keywords":"","publishedAtDate":"","publishedAtTime":"","contentId":"17B53536-CFA5-437F-A0C91C417A8C11DB","brand":"Scientific American","publishedAt":"","author":[],"title":"Education"},"attributes":{"keywords":"","language":"en","subjects":"","copyright":{"native":0,"syndicated":0,"resale":0},"template":"sciam"}},"session":{"createdAt":"","authentication":{"loginStatus":"logged out"},"updatedAt":"","attributes":{},"sessionInfo":{"sessionID":"{{GA populated session ID}}"}},"version":"1.0.0","productsInCart":[],"product":[],"privacy":{},"currency":"","user":[{"sitelicense":{"accessLevel":"","grantBPID":[],"BPID":[],"siteID":[],"isSiteLicenseCustomer":false,"accessReason":""},"licence":[{"category":{"licenceType":""},"licenceInfo":{"licenceName":"","licenceID":""},"attributes":{}}],"updatedAt":"","segment":{"emailSubscriber":0,"isInExtendedSession":false,"appUserMind":0,"registered":0,"siteLicenseCustomer":false,"customer":0,"hasAccess":false,"subscriberMind":0,"logouturl":"?slatAction=public:account.logout","isLoggedIn":false,"emailVerificationError":false,"appUserSA":0,"subscriber":0,"giftRecipient":0,"hasSoftAccess":false,"commented":0,"subscriberSA":0},"profile":[{"profileInfo":{"profileID":""},"attributes":{"recency":{"appLoginSA":"","appLoginMind":"","webLogin":""}}}]}],"page":{"error":{},"pageInfo":{},"category":{"pageType":"single-page"},"attributes":{},"component":[{}]}}];</script>
+<script type="text/javascript" src="/web/20200107075754js_/https://www.scientificamerican.com/core/modules/v1/core_assets/js/mura.min.js?v=7.1.213"></script>
 <script>
-if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+(function(root,config){
+ root.queuedMuraCmds=[];
+ root.deferMuraInit=function(){
+ if(typeof root.Mura != 'undefined' && typeof root.Mura.init == 'function'){
+ root.Mura.init(config);
+ for(var cmd in root.queuedMuraCmds){
+ root.Mura(root.queuedMuraCmds[cmd]);
+ }
+ } else {
+ if(typeof root.Mura != 'function'){
+ root.mura = root.m = root.Mura = function(cmd){root.queuedMuraCmds.push(cmd);};
+ }
+ setTimeout(root.deferMuraInit);
+ }
+ }
+ root.deferMuraInit();
+ }
+)(this,{
+ loginURL:"?display=login",
+ siteid:"sciam",
+ siteID:"sciam",
+ contentid:"17B53536-CFA5-437F-A0C91C417A8C11DB",
+ contenthistid:"EB6EDEEF-07DC-4EC3-BF4F6AC35FD83575",
+ ismind:"false",
+ parentid:"00000000000000000000000000000000001",
+ context:"",
+ nocache:0,
+ assetpath:"/sites/sciam",
+ corepath:"/core",
+ themepath:"/themes/responsive",
+ reCAPTCHALanguage:"en",
+ preloaderMarkup: "",
+ mobileformat: false,
+ windowdocumentdomain: "",
+ layoutmanager:true,
+ type:"Folder",
+ subtype:"Education",
+ queueObjects: true,
+ rb:{"formrequiredwrapperclass":"","formradiolabelclass":"radio","formresponsewrapperclass":"","formwrapperclass":"well","formbuttoncancellabel":"Cancel","formselectclass":"form-control","formbuttonclass":"btn btn-default","formfileclass":"form-control","formbuttonwrapperclass":"btn-group","formbuttoninnerclass":"","formcheckboxwrapperclass":"","formradiowrapperclass":"","formcheckboxlabelclass":"checkbox","formbuttonnextlclass":"form-nav","forminputclass":"form-control","formradioclass":"","formcheckboxclass":"","formfieldlabelclass":"control-label","formtextareaclass":"form-control","formbuttonbacklabel":"Back","formbuttonsubmitlabel":"Submit","formrequiredlabel":"Required","generalwrapperclass":"well","formbuttonnextlabel":"Next","generalwrapperbodyclass":"","formbuttomsubmitclass":"form-submit btn-primary","formbuttonbackclass":"form-nav","formerrorwrapperclass":"","formbuttoncancelclass":"form-cancel btn-primary pull-right","formwrapperbodyclass":"","formgeneralcontrolclass":"form-control","formfieldwrapperclass":"control-group"},
+ dtExample:"11/10/2018",
+	dtCh:"/",
+	dtFormat:[0,1,2],
+	dtLocale:"en-US",
+ hassoftaccess: false,
+ hashardaccess: false,
+ cookiedomain:".scientificamerican.com",
+ securedomain:"https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/"
+})
+</script>
+<meta property="og:site_name" content="Scientific American"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:title" content="Education"/>
+	<meta property="og:description" content=""/>
+	<meta property="og:image" content="https://web.archive.org/web/20200107075754im_/http://www.scientificamerican.com/themes/responsive/images/global/logo400x400.jpg" itemprop="image"/>
+	<meta property="og:image:width" content="790"/>
+	<meta property="og:image:height" content="496"/>
+	
+	
+	<meta property="og:url" content="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/education/"/>
 
-	wpcom_mobile_user_agent_info.init();
-	var mobileStatsQueryString = "";
 	
-	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
-		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
-	
-	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
-		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
-	
-	if( wpcom_mobile_user_agent_info.isIPad() )
-		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@sciam">
+	<meta name="twitter:title" content="Education">
 
-	if( "" != mobileStatsQueryString ) {
-		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
-	}
+
 	
+	
+	<meta name="description" content="">
+	<meta name="keywords" content=""><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://web.archive.org/web/20200107075754/https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PL33XX4');</script><!-- End Google Tag Manager --><meta name="google-site-verification" content="c3vEwQZqsGgDzoxA9EFSJfvsACgCmxZrh1mnt6oodUg"/><meta property="fb:pages" content="340704949293332"/><!--[ if lte IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![ endif]--></head><body class="site-sciam lang-en   leaderboard-top  " data-behavior="onetrust"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
 }
-</script>	</body>
-</html>
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20200107075754/https%3A//www.scientificamerican.com/education/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.scientificamerican.com/education/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20200107075754" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20200107075754*/https://www.scientificamerican.com/education/" title="See a list of every capture for this URL">1,694 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">03 May 2011 - 06 Apr 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20191205131000/https://www.scientificamerican.com/education/" title="05 Dec 2019"><strong>Dec</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 07:57:54 Jan 07, 2020">JAN</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200208202044/https://www.scientificamerican.com/education/" title="08 Feb 2020"><strong>Feb</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200105085713/https://www.scientificamerican.com/education/" title="08:57:13 Jan 05, 2020"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 07:57:54 Jan 07, 2020">07</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200108081829/https://www.scientificamerican.com/education/" title="08:18:29 Jan 08, 2020"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20190106110706/https://www.scientificamerican.com/education/" title="06 Jan 2019"><strong>2019</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 07:57:54 Jan 07, 2020">2020</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210119081847/https://www.scientificamerican.com/education/" title="19 Jan 2021"><strong>2021</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20200107075754/http://web.archive.org/screenshot/https://www.scientificamerican.com/education/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/education/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/education/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/webwidecrawl);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/webwidecrawl" target="_new"><span class="wm-title">Internet Archive</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  The Internet Archive discovers and captures web pages through many different web crawls.
+
+At any given time several distinct crawls are running, some for months, and some every day or longer.
+
+View the web archive through the <a href="http://archive.org/web/web.php">Wayback Machine</a>.
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/liveweb)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/liveweb" target="_new"><span class="wm-title">Live Web Proxy Crawls</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Content crawled via the <a href="http://archive.org/web/web.php">Wayback Machine</a> Live Proxy mostly by the Save Page Now feature on web.archive.org.
+<br><br>
+Liveweb proxy is a component of Internet Archive’s wayback machine project. The liveweb proxy captures the content of a web page in real time, archives it into a ARC or WARC file and returns the ARC/WARC record back to the wayback machine to process. The recorded ARC/WARC file becomes part of the wayback machine in due course of time.
+<br>
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/education/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.scientificamerican.com/education/","20200107075754",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT --><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://web.archive.org/web/20200107075754if_/https://www.googletagmanager.com/ns.html?id=GTM-PL33XX4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) --><div id="div-gpt-ad-interstitial-1" class="banner-interstitial"><div id="div-gpt-ad-interstitial-1-child" data-dfp-adcontainer="div-gpt-ad-interstitial-1"></div></div><!--[if IE 8]><![endif]--><!--[if lte IE 9]><div class="browser-update" data-behavior="browser_update"><div class="container"><p class="t_meta"><span class="browser-update__alert"><img src="/public/resources/png/icon__alert-ae613ac2fae0e0da4832a26804bf2b38.png" alt=""></span> We're sorry, your browser is not supported. Please update to a modern browser to view this page. <a href="page/frequently-asked-questions/?tab=about-the-site#what-are-the-technical-specifications-for-using-scientificamericancom" class="browser-update__link">Learn More</a></p><div class="browser-update__close"><a href="#" data-browser-update-close><span class="icon icon__close--black icon--subtle"></span></a></div></div></div><![endif]--><a role="link" arial-label="Skip to main content" class="skipnav" href="#sa_body">Skip to main content</a><div id="scientific-american"><div class="banner banner-leaderboard banner-leaderboard-top" data-banner-leaderboard><div id="div-gpt-ad-top-1"><div id="div-gpt-ad-top-1-child" data-dfp-adcontainer="div-gpt-ad-top-1"></div></div></div><div class="sticky-bounds"><header class="sticky-header" data-behavior="sticky underline_menu_item"><nav class="header" aria-label="main navigation bar"><div class="container flex-container-row--nowrap-vertical-center"><div class="header__left"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="js-header__subscribe-btn medium-down-hide  " data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="HNSB" data-track-ecommerce-promo-name="Navigation Subscribe Button" data-track-ecommerce-promo-creative="mainHeader" data-track-ecommerce-promo-position="1"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn">Subscribe</button></a><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/archive/?magazineFilterID=all" class="js-header__issue-btn medium-down-hide  " data-track="click" data-track-action="click" data-track-label="latestissues-nav" data-track-category="nav"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn--issue">Latest Issues</button></a><button role="button" class="header__menu-btn large-up-hide" class="navbar-burger" aria-label="menu" aria-expanded="false" data-behavior="primary_nav"><span class="icon icon__menu--black">Menu</span></button></div><div class="header__logo" itemtype="http://schema.org/Organization" itemscope itemprop="publisher"><a role="link" itemprop="url" aria-label="Scientific American" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/" class="icon icon__logo--175"><span itemprop="name">Scientific American</span></a><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://web.archive.org/web/20200107075754/https://static.scientificamerican.com/sciam/assets/Image/newsletter/salogo.png"/></span></div><div class="header__right tooltip-outer"> <ul class="meta-list medium-down-hide"><li class="meta-list__item tx_meta cart__icon"><a aria-label="You have 0 items in your cart" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/shopping-cart/" data-track="click" data-track-action="cart-button" data-track-label="cart-button" data-track-category="main-header-cart-button">Cart <span class="cart-count cart__icon--dark-grey">0</span></a></li><li class="meta-list__item tx_meta " data-behavior="sign_in_flyout"><button role="button" aria-expanded="false" id="signin-click" class="link signin-click" data-track="click" data-track-action="header-signin-link" data-track-label="header-signin" data-track-category="sign-in-link">Sign In </button><section tabindex="-1" aria-expanded="true" class="signin-flyout" id="signin-flyout"><button tabindex="0" class="icon__close--white" id="signin-flyout__close" aria-label="Close Sign In Flyout" data-track="click" data-track-action="close-signin-flyout-button" data-track-label="close-signin-flyout" data-track-category="main-header-close-signin-flyout-link"></button><span class="signin-flyout__arrow"></span><form class="signin-flyout__form" action="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/?s=1" method="post" data-behavior="csrf_token_update"><input type="hidden" name="slatAction" value="public:account.login"><input type="hidden" name="flyoutlogin" value="true"><input type="hidden" name="sRedirectURL" value="https://www.scientificamerican.com/education/"/><input type="hidden" name="csrf_token" value="6252132159BB469695A1DD2EEC1A5318"/><input type="hidden" name="csrf_token_expires" value="200107055755428"/><label for="emailAddress1" class="signin-flyout__form__label">Email *:</label><input type="text" name="emailAddress" id="emailAddress1" class="signin-flyout__form__input" data-signin-email><label for="password1" class="signin-flyout__form__label">Password *:</label><input type="password" name="password" id="password1" class="signin-flyout__form__input" data-signin-password><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/forgot-password/" class="signin-flyout__form__forgot" data-track="click" data-track-action="flyout-forgot-password-link" data-track-label="flyout-forgot-password" data-track-category="main-header-flyout-forgot-password-link">Forgot password?</a><button class="btn btn--inverted signin-flyout__form__submit" type="submit" data-signin-submit-btn data-track="click" data-track-action="signin-flyout-button" data-track-label="signin-flyout" data-track-category="main-header-flyout-signin-flyout-button">Login</button><img src="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/loader-eba9d808f62929c2c4c744e562eca7d9.gif" class="signin-flyout__form__loading" alt="Loading" data-signin-loading/></form><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/register/" class="signin-flyout__register" data-track="click" data-track-action="not-register-flyout-button" data-track-label="not-register-flyout" data-track-category="main-header-flyout-not-register-button">Not yet registered?</a></section></li><li class="meta-list__item meta-list__item--informedLink tx_meta ">|<a tabindex="0" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2019_sciam_StayInformed_NewsletterSignUp" class="link register-click" data-track="click" data-track-action="header-stay-informed-link" data-track-label="header-stay-informed" data-track-category="stay-informed-link">Stay Informed</a></li></ul><button role="button" aria-label="submit search" class="header__search-btn icon icon__search--black xlarge-hide medium-down-hide  " data-behavior="toggle_open" data-target="search__container">Search</button><a class="large-up-hide" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="MHNSB" data-track-ecommerce-promo-name="Mobile Navigation Subscribe Button" data-track-ecommerce-promo-creative="mainHeaderMobile" data-track-ecommerce-promo-position="1"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn">Subscribe</button></a></div></div></nav><nav aria-label="main navigation bar" class="primary-nav "><div class="primary-nav__bg large-up-hide"><button type="button" class="primary-nav__close-btn large-up-hide" data-behavior="primary_nav"><span class="icon icon__close--white icon--subtle">Close</span></button></div><div class="container "><div class="search__container container" data-toggle="search__container"><form id="global-search-form" class="search__form" action="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/search/" method="get"><div class="search__form--wrapper"><label for="q" class="hide-label" aria-label="Search"></label><input class="search__input" type="search" name="q" autocomplete="off" placeholder="Search" tabindex="1" aria-label="Search Input" data-behavior="search" data-query=""><button class="search__button icon" type="button" data-behavior="toggle_open" data-target="search__container">Search</button><button class="search__button--close icon icon__close--muted" type="button" data-behavior="toggle_open" data-target="search__container">Close</button></div><button type="submit" class="search__button--submit btn btn--cart">Search</button></form><a href="#advanced-search" class="advanced-search-toggle tx_meta small" style="flex-basis: 100%">Advanced Search</a></div><ul class="primary-nav__list"><li class="primary-nav__list-item" data-title="the-sciences"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/the-sciences/" data-track="click" data-track-label="thesciences-nav" data-track-category="nav" data-track-action="link">The Sciences</a></li><li class="primary-nav__list-item" data-title="mind"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/mind/" data-track="click" data-track-label="mind-nav" data-track-category="nav" data-track-action="link">Mind</a></li><li class="primary-nav__list-item" data-title="health"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/health/" data-track="click" data-track-label="health-nav" data-track-category="nav" data-track-action="link">Health</a></li><li class="primary-nav__list-item" data-title="tech"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/tech/" data-track="click" data-track-label="tech-nav" data-track-category="nav" data-track-action="link"> Tech</a></li><li class="primary-nav__list-item" data-title="sustainability"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/sustainability/" data-track="click" data-track-label="sustainability-nav" data-track-category="nav" data-track-action="link">Sustainability</a></li><li class="primary-nav__list-item" data-title="education"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/education/" data-track="click" data-track-label="education-nav" data-track-category="nav" data-track-action="link">Education</a></li><li class="primary-nav__list-item" data-title="video"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/" data-track="click" data-track-label="video-nav" data-track-category="nav" data-track-action="link">Video</a></li><li class="primary-nav__list-item" data-title="podcasts"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcasts/" data-track="click" data-track-label="podcasts-nav" data-track-category="nav" data-track-action="link">Podcasts</a></li><li class="primary-nav__list-item" data-title="blogs"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/" data-track="click" data-track-label="blogs-nav" data-track-category="nav" data-track-action="link">Blogs</a></li><li class="primary-nav__list-item" data-title="store"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/" data-track="click" data-track-label="publications-nav" data-track-category="nav" data-track-action="link">Publications</a></li></ul><ul class="primary-nav__list--drawer-utils large-up-hide"><li class="primary-nav__list-item--btn"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="btn btn--small" data-track="click" data-track-label="stayinformed-nav-mobile" data-track-category="nav" data-track-action="link">Subscribe</a></li><li class="primary-nav__list-item--btn"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/sa/2020/01-01/" class="btn btn--small" data-track="click" data-track-action="click" data-track-label="currentissue-nav" data-track-category="mobile-nav">Current Issue</a></li><li class="primary-nav__list-item--drawer-utils" style="border-top: 1px solid #e5e5e5; margin-top: 20px"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/shopping-cart/" data-track="click" data-track-label="cart-nav" data-track-category="nav" data-track-action="link">Cart<span class="cart-count cart__icon--dark-grey">0</span></a></li><li class="primary-nav__list-item--drawer-utils"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/" data-track="click" data-track-action="mobile-signin-link" data-track-label="mobile-menu-signin" data-track-category="mobile-sign-in-link">Sign In</a></li><li class="primary-nav__list-item--drawer-utils"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/newsletter-sign-up/" data-track="click" data-track-action="mobile-menu-stay-informed-link" data-track-label="mobile-stay-informed" data-track-category="mobile-stay-informed-link">Stay Informed</a></li></ul><ul class="primary-nav__list--social large-up-hide"></ul></div><div class="search__autocomplete-container"><ul class="search__autocomplete-results-list container"></ul></div></nav></header><main id="sa_body" class="panel main-area    "><div class="mura-region"><div class="mura-region-inherited"></div><div class="mura-region-local"></div></div><header class="landing-header container landing-header--thin"><h1 class="landing-header__title">Education</h1><nav class="landing-header__nav" aria-label="education"><div class="landing-header__util education-landing-nav"><nav class="videos-util-bar" id="education-util-bar"><div class="videos-util-bar__left"><div class="videos-util-bar__group"><ul class="videos-util-bar__group__list"><li class="prefixed-list videos-util-bar__group__list__item"><ul class="util-list prefixed-list__list__edu is-active" id="filter-list"><li class="util-list__item tooltip-outer filter-dd-outer" data-behavior="tooltip" data-track="click" data-track-action="K-12-link" data-track-label="K-12-subnav" data-track-category="subnav">K-12 <span class="icon icon--subtle icon__ddarr--black"></span><span class="icon icon__uparr--black"></span><div class="tooltip" id="filter-k-12"><div class="tooltip__arrow"></div><ul><li class="tooltip__field"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/bring-science-home/">Bring Science Home</a></li><li class="tooltip__field"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/google-science-fair/">Google Science Fair</a></li></ul></div></li></ul></li><li class="prefixed-list videos-util-bar__group__list__item"><ul class="util-list prefixed-list__list__edu is-active" id="filter-list"><li class="util-list__item tooltip-outer filter-dd-outer" data-behavior="tooltip" data-track="click" data-track-action="Higher Ed-link" data-track-label="Higher Ed-subnav" data-track-category="subnav">Higher Ed <span class="icon icon--subtle icon__ddarr--black"></span><span class="icon icon__uparr--black"></span><div class="tooltip" id="filter-higher-ed"><div class="tooltip__arrow"></div><ul><li class="tooltip__field"><a href="/web/20200107075754/https://www.scientificamerican.com/education/higher-ed/scitable/">Scitable</a></li><li class="tooltip__field"><a href="/web/20200107075754/https://www.scientificamerican.com/education/higher-ed/world-library-of-science/">World Library of Science</a></li></ul></div></li></ul></li><li class="prefixed-list videos-util-bar__group__list__item"><ul class="util-list prefixed-list__list__edu is-active" id="filter-list"><li class="util-list__item tooltip-outer filter-dd-outer" data-behavior="tooltip" data-track="click" data-track-action="Lifelong Learning-link" data-track-label="Lifelong Learning-subnav" data-track-category="subnav">Lifelong Learning <span class="icon icon--subtle icon__ddarr--black"></span><span class="icon icon__uparr--black"></span><div class="tooltip" id="filter-lifelong-learning"><div class="tooltip__arrow"></div><ul><li class="tooltip__field"><a href="/web/20200107075754/https://www.scientificamerican.com/education/lifelong-learning/cruises/">Cruises: With Lectures</a></li></ul></div></li></ul></li><li class="prefixed-list videos-util-bar__group__list__item"><ul class="util-list prefixed-list__list__edu is-active" id="filter-list"><li class="util-list__item tooltip-outer filter-dd-outer" data-behavior="tooltip" data-track="click" data-track-action="Citizen Science-link" data-track-label="Citizen Science-subnav" data-track-category="subnav"><a href="/web/20200107075754/https://www.scientificamerican.com/education/citizen-science-link/">Citizen Science</a></li></ul></li><li class="prefixed-list videos-util-bar__group__list__item"><ul class="util-list prefixed-list__list__edu is-active" id="filter-list"><li class="util-list__item tooltip-outer filter-dd-outer" data-behavior="tooltip" data-track="click" data-track-action="Careers-link" data-track-label="Careers-subnav" data-track-category="subnav"><a href="/web/20200107075754/https://www.scientificamerican.com/education/careers/">Careers</a></li></ul></li></ul></div></div></nav></div></nav></header><div class="landing-main"><section class="container"><div class="education-landing-group grid"><div class="grid__col medium-1-2 large-up-1-3"><article class="education-landing-item "><div class="education-landing-poster"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/bring-science-home/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D681BA13-1548-4974-B1AF65D45D8517A5_source.png?w=380&amp;h=253&amp;fit=crop" alt="Bring Science Home"></a><div class="education-landing-poster__title"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/bring-science-home/"><h3 class="education-landing-poster__title__inner"><span>Bring Science Home</span></h3></a></div></div><div class="education-landing-item__main"><p class="t_article-summary t_article-summary--thin education-landing-item__main__summary"><p>Try our fun science activities, which parents and their kids ages 6-12 can do together with household items.&nbsp;</p></p><div class="education-landing-item__main__featured"><div class="education-landing-item__main__featured__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/how-warm-is-sweet-enough/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/BFD26C36-A25B-4131-95634324A5E02F99_small.jpg?w=65&amp;h=65&amp;fit=crop" alt="How Warm Is Sweet Enough?"></a></div><div class="tx_caption">Featured Activity</div><div class="t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/how-warm-is-sweet-enough/">How Warm Is Sweet Enough?</a></div></div><div class="education-landing-item__main__cta"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/bring-science-home/" class="btn btn--inverted">View Activities</a></div></div></article></div><div class="grid__col medium-1-2 large-up-1-3"><article class="education-landing-item "><div class="education-landing-poster"><a href="/web/20200107075754/https://www.scientificamerican.com/education/citizen-science-link/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/B458041B-884E-490D-B6FE13355DE25418_source.jpg?w=380&amp;h=253&amp;fit=crop" alt="Citizen Science"></a><div class="education-landing-poster__title"><a href="/web/20200107075754/https://www.scientificamerican.com/education/citizen-science-link/"><h3 class="education-landing-poster__title__inner"><span>Citizen Science</span></h3></a></div></div><div class="education-landing-item__main"><p class="t_article-summary t_article-summary--thin education-landing-item__main__summary"><p>Help make science happen by volunteering your time to support real research projects around the world.</p></p><div class="education-landing-item__main__featured"><div class="education-landing-item__main__featured__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/citizen-science/caribbean-storms-2017/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/E33F8186-E889-4D8D-B7863ADAE173662E_small.jpg?w=65&amp;h=65&amp;fit=crop" alt="Caribbean Storms 2017"></a></div><div class="tx_caption">Featured Project</div><div class="t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/citizen-science/caribbean-storms-2017/">Caribbean Storms 2017</a></div></div><div class="education-landing-item__main__cta"><a href="/web/20200107075754/https://www.scientificamerican.com/education/citizen-science-link/" class="btn btn--inverted">Volunteer Now</a></div></div></article></div><div class="grid__col medium-1-2 large-up-1-3"><article class="education-landing-item "><div class="education-landing-poster"><a href="/web/20200107075754/https://www.scientificamerican.com/education/stem-stories/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/DDA0927D-A3DA-4A3A-BF175C91E9276A11_source.png?w=380&amp;h=253&amp;fit=crop" alt="STEM Stories"></a><div class="education-landing-poster__title"><a href="/web/20200107075754/https://www.scientificamerican.com/education/stem-stories/"><h3 class="education-landing-poster__title__inner"><span>STEM Stories</span></h3></a></div></div><div class="education-landing-item__main"><p class="t_article-summary t_article-summary--thin education-landing-item__main__summary"><p>News about Science, Technology, Engineering and Math and the future of education.</p></p><div class="education-landing-item__main__featured"><div class="education-landing-item__main__featured__thumb"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/budding-scientist/its-like-an-analogy/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/E314F0F0-E292-44E5-BB4704CA69FFB15F_small.jpg?w=65&amp;h=65&amp;fit=crop" alt="It's like an Analogy"></a></div><div class="tx_caption">Featured Story</div><div class="t_meta"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/budding-scientist/its-like-an-analogy/">It&rsquo;s like an Analogy</a></div></div><div class="education-landing-item__main__cta"><a href="/web/20200107075754/https://www.scientificamerican.com/education/stem-stories/" class="btn btn--inverted">Read More</a></div></div></article></div><div class="grid__col medium-up-1-2"><article class="education-landing-item education-landing-item--wide"><div class="education-landing-poster"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/google-science-fair/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/08D8B3A2-47BD-4306-AB0DF155F74DCF2C_source.jpg?w=590&amp;h=253&amp;fit=crop" alt="Education"></a><div class="education-landing-poster__title"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/google-science-fair/"><h3 class="education-landing-poster__title__inner"><span>Google Science Fair</span></h3></a></div></div><div class="education-landing-item__main"><p class="t_article-summary t_article-summary--thin education-landing-item__main__summary"><p><i>Scientific American</i>&nbsp;is a partner of the Google Science Fair, now in its sixth&nbsp;year, and sponsors The Scientific American Innovator Award</p></p><div class="education-landing-item__main__cta"><a href="/web/20200107075754/https://www.scientificamerican.com/education/k-12/google-science-fair/" class="btn btn--inverted">Explore</a></div></div></article></div><div class="grid__col medium-up-1-2"><article class="education-landing-item education-landing-item--wide"><div class="education-landing-poster"><a href="/web/20200107075754/https://www.scientificamerican.com/education/careers/"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9C3F0C9D-77D8-4332-B4A728D26D873856_source.jpg?w=590&amp;h=253&amp;fit=crop" alt="Education"></a><div class="education-landing-poster__title"><a href="/web/20200107075754/https://www.scientificamerican.com/education/careers/"><h3 class="education-landing-poster__title__inner"><span>Careers</span></h3></a></div></div><div class="education-landing-item__main"><p class="t_article-summary t_article-summary--thin education-landing-item__main__summary"><p>Scientific American Jobs, powered by Nature Careers, the global resource for scientists to manage and develop their careers.</p></p><div class="education-landing-item__main__cta"><a href="/web/20200107075754/https://www.scientificamerican.com/education/careers/" class="btn btn--inverted">Learn More</a></div></div></article></div></div></section></div><aside class="tout_subscribe container"><h2 class="tout_subscribe-title">Expertise. Insights. Illumination.</h2><p class="small-hide">Discover world-changing science. Explore our digital archive back to 1845, including articles by more than 150 Nobel Prize winners.</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="btn editable-button white" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="HNFSB" data-track-ecommerce-promo-name="Navigation Footer Subscribe Banner" data-track-ecommerce-promo-creative="footerBlueBanner" data-track-ecommerce-promo-position="3">Subscribe Now!</a><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D3A9EF6F-F20D-4025-8EC3A1254468C14D_source.png?w=220&amp;h=100"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D3A9EF6F-F20D-4025-8EC3A1254468C14D_source.png?w=420&amp;h=190"/><img aria-hidden="true" src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5AF5187-56F7-4844-9937BFECE4B78D53_source.png?w=385&amp;h=375" alt="Expertise. Insights. Illumination."/></picture></aside></main></div></div><footer id="footer" class="container"><p>Follow us</p><ul class="footer_followUs">			<li class=""><a href="https://web.archive.org/web/20200107075754/https://www.instagram.com/scientific_american/?hl=en" title="instagram" target="_blank" rel="noopener"><span class="icon icon--mid icon__instagram--black">instagram</span></a></li>			<li class="hide"><a href="" title="soundcloud" target="_blank" rel="noopener"><span class="icon icon--mid icon__soundcloud--black">soundcloud</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/https://www.youtube.com/user/SciAmerican" title="youtube" target="_blank" rel="noopener"><span class="icon icon--mid icon__youtube--black">youtube</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/https://twitter.com/sciam" title="twitter" target="_blank" rel="noopener"><span class="icon icon--mid icon__twitter--black">twitter</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/https://www.facebook.com/ScientificAmerican" title="facebook" target="_blank" rel="noopener"><span class="icon icon--mid icon__facebook--black">facebook</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/http://rss.sciam.com/ScientificAmerican-Global" title="rss" target="_blank" rel="noopener"><span class="icon icon--mid icon__rss--black">rss</span></a></li></ul><div class="footer_arabic"><p>Scientific american arabic</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/arabic/">العربية</a></div><div class="panel"><div class="grid"><div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/">Store</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/about-scientific-american/">About</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/pressroom/">Press Room</a></li>
+	</ul>
+</div>
+
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/frequently-asked-questions/">FAQs</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/contact-us/">Contact Us</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/sitemap">Site Map</a></li>
+	</ul>
+</div>
+
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/mediakit/">Advertise</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://partnerships.nature.com/product/nature-research-custom-media/">SA Custom Media</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/terms-of-use/">Terms of Use</a></li>
+	</ul>
+</div>
+
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/privacy-policy/">Privacy Policy</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/use-of-cookies/">Use of Cookies</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/international/">International Editions</a></li>
+	</ul>
+</div></div></div><div class="panel"><div class="tx_meta footer_disclosure">Scientific American is part of Springer Nature, which owns or has commercial relations with thousands of scientific publications (many of them can be found at <a href="https://web.archive.org/web/20200107075754/http://www.springernature.com/us" target="_blank" rel="noopener">www.springernature.com/us</a>). Scientific American maintains a strict policy of editorial independence in reporting developments in science to our readers.</div><p class="footer-copyright">&copy; 2020 Scientific American, a Division of Springer Nature America, Inc.</p><p class="footer-copyright">All Rights Reserved.</p></div></footer><a role="link" arial-label="Scroll to top" class="scrolltop" href="#sa_body">Scroll To Top</a>		<script async src="https://web.archive.org/web/20200107075754js_/https://cdn.cookielaw.org/consent/e6551f00-e840-41c1-862f-dd92bad8bf86.js"></script><script>var A17 = window.A17 || {};var dfp	= window.dfp || {};A17.svgSupport = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");A17.browserSpec = (typeof document.querySelectorAll && 'addEventListener' in window && A17.svgSupport) ? "html5" : "html4";var element = document.createElement('x');element.style.cssText = 'pointer-events:auto';(function(){var doc = document.documentElement;var str = " js "+(A17.svgSupport ? " svg" : " no-svg") + (element.style.pointerEvents === 'auto' ? " csspointerevents" : " no-csspointerevents");doc.className = doc.className.replace(/\bno-js\b/,str);})();</script><script src="https://web.archive.org/web/20200107075754js_/https://cdnjs.cloudflare.com/ajax/libs/airbrake-js/1.0.7/client.min.js" crossorigin="anonymous"></script><script type="text/javascript">var airbrake = new airbrakeJs.Client({projectId: 177290,projectKey: 'fde133a285fff2da6ad65f7c374e0d6e'});airbrake.addFilter(function (notice) {notice.context.environment = 'production';return notice;});</script><script src="/web/20200107075754js_/https://www.scientificamerican.com/public/resources/main-277aa3774600bee68b3df7b760171881.js"></script>
+<script>
+(function() {
+		
+		var DFP_id = dfp.adUnit;
+		// For testing
+		//var DFP_id = "/7814368/NativeAdUnit";
+
+		var compiledTemplateHomePopular = "";
+		var compiledTemplateHomeLatest = "";
+		var compiledTemplateHomeAgenda = "";
+		var compiledTemplateTagLatest = "";
+		var compiledTemplateArticleLatest = "";
+		var compiledTemplateVideoLatest = "";
+
+		templates();
+
+		window.NATIVEADS = window.NATIVEADS || {};
+		window.NATIVEADS_QUEUE = window.NATIVEADS_QUEUE || [];
+
+		var q = function() {
+			return window.NATIVEADS_QUEUE;
+		};
+
+		q().push(["setPropertyID", "NA-SCIEAMERLIVE-11237933"]);
+
+		switch (mura.subtype) {
+			case 'Home':
+				
+					q().push(["insertPreview", {
+						label: "HomeLatest",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-latest3')
+						},
+						location: "#latest-news > article.listing:eq(2)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeLatest,
+						onRender: function($element) {
+							var parent = document.getElementById('latest-news');
+							var lastChild = parent.children[5];
+							parent.removeChild(lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+				
+					q().push(["insertPreview", {
+						label: "HomeAgenda",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-agenda4')
+						},
+						location: "#agenda-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeAgenda,
+						onRender: function($element) {
+							var parent = document.getElementById('agenda-latest');
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+			case 'Topic':
+
+				
+					q().push(["insertPreview", {
+						label: "TopicAgenda",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-category')
+						},
+						location: "#agenda-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeAgenda,
+						onRender: function($element) {
+							var parent = document.getElementById('agenda-latest');
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+				
+					q().push(["insertPreview", {
+						label: "HomePopular",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-popular3')
+						},
+						location: ".most-popular__grid > div.grid__col:eq(2)",
+						template: compiledTemplateHomePopular,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('most-popular')[0];
+							var parentBody = parent.children[0];
+							parentBody.removeChild(parentBody.lastChild);
+
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) {}
+					}]);
+				
+
+			break;
+
+
+			case 'Section':
+				
+					q().push(["insertPreview", {
+						label: "TagLatest",
+							unit: {
+								"server": "dfp",
+								"id": DFP_id,
+								"size": "2x2",
+								"targets": renderTagerting('n-tag3')
+							},
+						location: "div.section-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateTagLatest,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('section-latest')[0];
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+
+			case 'Video':
+			case 'VideoSeries':
+				
+					q().push(["insertPreview", {
+						label: "VideoLatest",
+							unit: {
+								"server": "dfp",
+								"id": DFP_id,
+								"size": "2x2",
+								"targets": renderTagerting('n-video')
+							},
+						location: "div.recent-videos-group > div:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateVideoLatest,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('recent-videos-group')[0];
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+
+			case 'Article':
+			case 'PrintArticle':
+			case 'PartnerArticle':
+			case 'BlogPost':
+				
+					q().push(["insertPreview", {
+						label: "ArticleLatest",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-article')
+						},
+						location: "#read-next > div.aside-block__body > div.related-article-group > div:nth-child(1)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateArticleLatest,
+						onRender: function($element) {
+							var parent = document.getElementById('read-next');
+							var parentBody = parent.children[1].children[0];
+							parentBody.removeChild(parentBody.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+		}
+
+		function templates () {
+
+
+
+		compiledTemplateHomePopular = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "\n<div class=\"grid__col large-up-1 medium-1-2\">\n <article class=\"listing-wide\" data-listing-template=\"Home_Popular\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"listing-wide__thumb\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (80) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (210), 'height': (140) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (275), 'height': (183) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor " + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n </a>\n </div>\n <div class=\"listing-wide__inner\">\n <h3 class=\"t_listing-title\">\n <a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a>\n </h3>\n <p class=\"t_body listing-wide__inner__desc\">\n "; if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.summary; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\n </p>\n <div class=\"t_meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</div>\n <div class=\"listing-wide__inner__small-sponsor\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n </div>\n </article>\n</div>"; return buffer; };
+
+		compiledTemplateHomeLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<article class=\"listing listing--with-thumb \" data-listing-count=\"6\" data-listing-template=\"Home\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"t_tag medium-up-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n <div class=\"t_tag small-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n <div class=\"t_thumb listing__thumb \">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (280), 'height': (187) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (690), 'height': (460) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 1024px) and (max-width: 1279px)\" srcset=\""; options = {hash:{ 'width': (450), 'height': (300) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (590), 'height': (393) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n </a>\n </div>\n <h2 class=\"t_small-listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h2>\n <p class=\"t_meta listing__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n</article>"; return buffer; };
+
+		compiledTemplateTagLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "\n<article class=\"listing-wide\" data-listing-template=\"Section\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"listing-wide__thumb\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (80) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (210), 'height': (140) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (275), 'height': (183) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">\n </picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor " + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </a>\n </div>\n <div class=\"listing-wide__inner\">\n <h2 class=\"t_listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h2>\n <p class=\"t_body listing-wide__inner__desc\">\n "; if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.summary; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\n </p>\n <div class=\"t_meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</div>\n <div class=\"listing-wide__inner__small-sponsor\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </div>\n</article>"; return buffer; };
+
+		compiledTemplateHomeAgenda = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<article class=\"listing listing--with-thumb \" data-listing-count=\"4\" data-listing-template=\"Home\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"t_tag medium-up-hide\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n <div class=\"t_thumb listing__thumb \">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (280), 'height': (187) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (690), 'height': (460) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 1024px) and (max-width: 1279px)\" srcset=\""; options = {hash:{ 'width': (450), 'height': (300) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (590), 'height': (393) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor "+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </a>\n </div>\n <h2 class=\"t_small-listing-title\">\n <a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a>\n </h2>\n <p class=\"t_meta listing__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n</article>"; return buffer; };
+
+		compiledTemplateArticleLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<div class=\"related-article-group__item\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <section class=\"related-article\">\n <div class=\"related-article__body\">\n <div class=\"t_tag related-article__thumb__category\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n <h3 class=\"t_small-listing-title\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</h3>\n <p class=\"related-article__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n </div>\n </section>\n </a>\n</div>"; return buffer; };
+
+		compiledTemplateVideoLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<div class=\"grid__col large-1-2 xlarge-1-4 medium-1-2 recent-videos-group__item\">\n	<article class=\"listing--media listing--with-thumb\" data-video-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\" data-video-template=\"related-videos\">\n		<div class=\"t_tag medium-up-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n		<div class=\"t_thumb listing--media__thumb\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\" class=\"icon-overlay\"><span class=\"icon-overlay__icon icon__play--md--white\"></span><span class=\"icon-overlay__icon icon__play--sm--white\"></span><picture><source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (330), 'height': (186) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\"><source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (45) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\"><img src=\""; options = {hash:{ 'width': (275), 'height': (155) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture><div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor \">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div></a>\n		</div>\n		<h3 class=\"t_small-listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h3>\n		<p class=\"t_meta listing--media__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n	</article>\n</div>"; return buffer; };
+	}
+
+	function getFormattedDate(data) {
+		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		var d = new Date(data.pubDate);
+		data.pubDate = monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+
+		if (data.custom.AdType == 'Product'){
+			data.custom.AdType = "sponsor--blue";
+		}
+		else {
+			data.custom.AdType = "";
+		}
+
+		return data;
+	}
+
+})();
+
+(function(d, s, id) {
+ var js, fjs = d.getElementsByTagName(s)[0], p = d.location.protocol;
+ if (d.getElementById(id)) {return;}
+ js = d.createElement(s);
+ js.id = id; js.type = "text/javascript"; js.async = true;
+ js.src = ((p == "https:") ? p : "http:") + "//web.archive.org/web/20200107075754/https://plugin.mediavoice.com/plugin.js";
+ fjs.parentNode.insertBefore(js, fjs);
+})(document, "script", "nativeads-plugin");
+
+
+
+function renderTagerting(pos) {
+	var polarTargeting = JSON.parse(JSON.stringify(dfp.targeting));
+	var ppos = [];
+	if (pos !== 'undefined') {
+		ppos = [pos];
+	}
+
+	polarTargeting['pos'] = ppos;
+	return polarTargeting;
+}
+</script>
+<noscript><div><img src="//web.archive.org/web/20200107075754im_/https://secure-us.imrworldwide.com/cgi-bin/m?ci=us-403331h&amp;cg=0&amp;cc=1&amp;ts=noscript" width="1" height="1" alt=""/></div></noscript><div class="spw"><section class="spw__banner" data-toggle="spw__banner"><div class="container"><div class="banner__header"><p><strong>You have <span id="spw-article-count"></span> free article<span id="article-count-plural">s</span> left.</strong></p><div class="banner__btn--toggle"><label id="spw-toggle-label" for="expand/collapse" data-toggle-label="Hide"><strong></strong></label><button name="expand/collapse" aria-label="expand/collapse Metered Paywall" aria-expanded="false"><span class="icon icon__uparr--black"></span></button></div></div><div class="full-divider"></div><div class="banner__cta flex-container-row--nowrap-center"><picture><source srcset="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/paywall_temp_img-098a5039687a6951d2abc22803855180.jpg"><img src="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/paywall_temp_img-098a5039687a6951d2abc22803855180.jpg" alt="Temp Paywall Img"></picture><div class="flex-container-column"><p class="banner__message">Support our award-winning coverage of advances in science &amp; technology.</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="a-btn" id="spw-subscription-options" role="link" title="Subscription Options" aria-label="See Subscription Options" data-track="click" data-track-category="meter-paywall"><button class="btn btn--small btn--cart" name="Subscription Options" role="link" aria-label="See Subscription Options">See Subscription Options</button></a><p>Already a subscriber? <a id="spw-signin-link" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/?s=1" data-track="click" data-track-category="meter-paywall">Sign in.</a></p></div></div></div></section><section class="spw__modal"><div class="modal__header"><div class="icon icon__logo--lg"></div></div><div class="modal__cta"><div class="flex-container-column--center"><p class="modal__message">Subscribers get more award-winning coverage of advances in science &amp; technology.</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/?s=1" class="a-btn" role="link" title="Sign In" aria-label="Sign In" data-track="click" data-track-action="metered-paywall-overlay-signin-link" data-track-label="metered-paywall-overlay-signin" data-track-category="meter-paywall"><button class="btn btn--small btn--cart" name="sign in" aria-label="Sign In">Sign In</button></a><p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="dark-text" role="link" title="Subscription Options" aria-label="See Subscription Options" data-track="click" data-track-action="metered-paywall-overlay-see-subscription-options-button" data-track-label="metered-paywall-overlay-subscription-options" data-track-category="meter-paywall">See Subscription Options</a></p></div></div></section></div></body></html><!--
+     FILE ARCHIVED ON 07:57:54 Jan 07, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:14:16 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 150.894
+  exclusion.robots: 0.28
+  exclusion.robots.policy: 0.269
+  RedisCDXSource: 1.369
+  esindex: 0.01
+  LoadShardBlock: 108.098 (3)
+  PetaboxLoader3.datanode: 115.777 (4)
+  CDXLines.iter: 20.903 (3)
+  load_resource: 131.82
+  PetaboxLoader3.resolve: 44.399
+-->

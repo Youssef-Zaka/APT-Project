@@ -1,34 +1,948 @@
 <!DOCTYPE html>
-<html lang="en">
-<meta charset="utf-8">
-<meta name="description" content="Gerrit Code Review">
-<meta name="referrer" content="never">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-<noscript>To use PolyGerrit, please enable JavaScript in your browser settings, and then refresh this page.</noscript><script>window.polymerSkipLoadingFontRoboto = true; window.CLOSURE_NO_DEPS = true; window.DEFAULT_DETAIL_HEXES = {}; window.PRELOADED_QUERIES = {};window.CANONICAL_PATH = '\/r';window.STATIC_RESOURCE_PATH = '\/r';window.INITIAL_DATA = JSON.parse('\x7b\x22\/config\/server\/version\x22: \x223.4.4\x22, \x22\/config\/server\/info\x22: \x7b\x22accounts\x22:\x7b\x22visibility\x22:\x22ALL\x22,\x22default_display_name\x22:\x22FULL_NAME\x22\x7d,\x22auth\x22:\x7b\x22auth_type\x22:\x22LDAP\x22,\x22editable_account_fields\x22:\x5b\x22REGISTER_NEW_EMAIL\x22\x5d,\x22register_url\x22:\x22https:\/\/wikitech.wikimedia.org\/w\/index.php?title\\u003dSpecial:CreateAccount\\u0026returnto\\u003dGerrit\/NewUser\x22,\x22git_basic_auth_policy\x22:\x22HTTP_LDAP\x22\x7d,\x22change\x22:\x7b\x22allow_blame\x22:true,\x22disable_private_changes\x22:true,\x22reply_label\x22:\x22Reply…\x22,\x22reply_tooltip\x22:\x22Reply and score (Shortcut: a)\x22,\x22update_delay\x22:300,\x22mergeability_computation_behavior\x22:\x22API_REF_UPDATED_AND_CHANGE_REINDEX\x22,\x22enable_attention_set\x22:true\x7d,\x22download\x22:\x7b\x22schemes\x22:\x7b\x22anonymous http\x22:\x7b\x22url\x22:\x22https:\/\/gerrit.wikimedia.org\/r\/$\x7bproject\x7d\x22,\x22commands\x22:\x7b\x7d,\x22clone_commands\x22:\x7b\x22Clone\x22:\x22git clone \\\x22https:\/\/gerrit.wikimedia.org\/r\/$\x7bproject\x7d\\\x22\x22\x7d\x7d\x7d,\x22archives\x22:\x5b\x22tgz\x22,\x22tar\x22,\x22tbz2\x22,\x22txz\x22\x5d\x7d,\x22gerrit\x22:\x7b\x22all_projects\x22:\x22All-Projects\x22,\x22all_users\x22:\x22All-Users\x22,\x22doc_search\x22:true,\x22report_bug_url\x22:\x22https:\/\/phabricator.wikimedia.org\/maniphest\/task\/create\/?projects\\u003dPHID-PROJ-lc5rwomzjp6fmcdpbw43\x22\x7d,\x22note_db_enabled\x22:true,\x22plugin\x22:\x7b\x22js_resource_paths\x22:\x5b\x22plugins\/codemirror-editor\/static\/codemirror_editor.js\x22,\x22plugins\/delete-project\/static\/delete-project.js\x22,\x22plugins\/lfs\/static\/gr-lfs.js\x22,\x22plugins\/reviewers\/static\/rv-reviewers.js\x22,\x22plugins\/zuul\/static\/zuul.js\x22\x5d\x7d,\x22sshd\x22:\x7b\x7d,\x22suggest\x22:\x7b\x22from\x22:0\x7d,\x22user\x22:\x7b\x22anonymous_coward_name\x22:\x22Name of user not set\x22\x7d,\x22receive\x22:\x7b\x22enable_signed_push\x22:false\x7d,\x22default_theme\x22:\x22\/static\/gerrit-theme.js\x22\x7d, \x22\/config\/server\/top-menus\x22: \x5b\x5d\x7d');window.ENABLED_EXPERIMENTS = JSON.parse('\x5b\x22UiFeature__patchset_comments\x22\x5d');</script>
-<link rel="icon" type="image/x-icon" href="/r/static/wikimedia-codereview-logo.cache.ico">
-<link rel="preload" href="/r/fonts/opensans-latin-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/opensans-latin-600.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/opensans-latin-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/opensans-latin-ext-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/opensans-latin-ext-600.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/opensans-latin-ext-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-latin-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-latin-500.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-latin-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-latin-ext-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-latin-ext-500.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-latin-ext-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-mono-latin-500.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-mono-latin-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-mono-latin-ext-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-mono-latin-ext-500.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" href="/r/fonts/roboto-mono-latin-ext-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" as="style" href="/r/styles/fonts.css">
-<link rel="preload" as="style" href="/r/styles/main.css">
-<script src="/r/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="stylesheet" href="/r/styles/fonts.css">
-<link rel="stylesheet" href="/r/styles/main.css">
-<body unresolved>
-<gr-app id="app"></gr-app>
-<script src="/r/elements/gr-app.js" crossorigin="anonymous"></script>
+<html lang="en_US">
+    <head>
+        <!--SEO-related tags: title, keywords, description-->
+                    <title>Scrabble Word Finder | Official Scrabble Players Dictionary</title>
+                        
+        <!--Static meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="robots" content="noodp, noydir">
+        <meta property="fb:app_id" content="177288989106908">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Index wrapper script -->
+        <script async src="//js-sec.indexww.com/ht/p/183900-111561114054435.js"></script>
+        <script>
+        // GetUsPrivacy function
+            function getUsPrivacy(){var c=document.cookie.match("(^|;) ?usprivacy=([^;]*)(;|$)");return c?c[2]:"1---"}
+        </script>
+        <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+        <script type='text/javascript'>!function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function(){q("f",arguments)},setDisplayBids:function(){},targetingKeys:function(){return[]},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");apstag.init({pubID:'3022',adServer:'googletag',bidTimeout:1500,params:{us_privacy: getUsPrivacy()}});</script>
+        <meta name="google-site-verification" content="B04oi9KzfP-kAgqNlVn3th9CrG6vcfGanpQBuP7_gjs">
+
+        <!--Opensearch link-->
+        <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="M-W Scrabble Finder" />
+
+                <link rel="canonical" href="https://www.merriam-webster.com/dictionary/dog">
+        <!-- FAVICON -->
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <!-- VENDOR CSS -->
+        <link href="/vendor/normalize.2.1.2/normalize.min.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+        <link href="/vendor/font-awesome-4.1.0/css/font-awesome.min.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+        <link href="/vendor/amodal_1.6.5/amodal.min.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+        <link href="/vendor/jquery-ui-1.10.3.custom/css/smoothness/jquery-ui-1.10.3.custom.min.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+        <!-- SHARED CSS -->
+        <link href="/css/shared/utils.0002.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+        <link href="/css/shared/reusable.0003.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+        <link href="/css/shared/resets.0001.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+        <!-- TEMPLATE CSS (both mobile + desktop)-->
+        <link href="/css/main_template.0023.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+        <!-- Mobile CSS Files each section, will combine later on -->
+        <link href="/css/mobile/layout.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+        <link href="/css/mobile/search.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+        <link href="/css/mobile/ads.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+        <!--MODERNIZR-->
+        <script src="/vendor/modernizr.2.7.1/modernizr.custom.95871.js"></script>
+        <!-- jQuery -->
+        <script src="/vendor/jquery.1.11.2/jquery-1.11.2.min.js"></script>
+        <!-- JS -->
+        <script src="/vendor/requirejs.2.1.6/require.min.js"></script>
+        <script type="text/javascript">
+            //define jquery
+            define('jquery', function() { return window.jQuery});
+            /*
+             * The reason I use js for path construction here - Google reports crawl errors while
+             * parsing out AMD paths from this JS chunk that it was never supposed to parse in the first place. :-(
+             */
+            var vnd = '/vendor/';
+            var fwdsl = '/';
+            requirejs.config({
+
+                enforceDefine: false,
+                paths: {
+                    //mine AMDs
+                    'auth_messages':     fwdsl + 'js' + fwdsl + 'auth' + fwdsl + 'assign_errors.0002',
+
+                    //other AMDs (those I don't merge in - as they're updated independently)
+                    "jquery.jqueryui":   vnd + 'jquery-ui-1.10.3.custom' + fwdsl + 'js' + fwdsl + 'jquery-ui-1.10.3.custom.min',
+                    "underscore":        vnd + 'lodash_1.2.1'  + fwdsl + 'lodash.min',
+                    "jquery.event_drag": vnd + 'amodal_1.6.5'  + fwdsl + 'jquery.event.drag.min',
+                    "jquery.amodal":     vnd + 'amodal_1.6.5'  + fwdsl + 'amodal.min',
+                    "jquery.blockui":    vnd + 'blockui_2.6.1' + fwdsl + 'jquery.blockUI',
+                    "bowser":            vnd + 'bowser.0.3.1'  + fwdsl + 'bowser.min',
+                    "jquery.cookie":     vnd + 'jquery_cookie_1.4.0' + fwdsl + 'jquery.cookie',
+                    //non-AMDs
+                    'dfpTagApi':         '//www.googletagservices.com/tag/js/gpt',
+                    "twitter":           '//platform.twitter.com/widgets',
+                    "jquery.cycle2":     vnd + 'cycle2' + fwdsl + 'jquery.cycle2.20130909.min',
+                    "jquery.rrssb":      vnd + 'rrssb.1.6.0' + fwdsl + 'js' + fwdsl + 'rrssb.min'
+                },
+                shim: {
+                    "jquery.cycle2":     ['jquery'],
+                    "jquery.event_drag": ['jquery'],
+                    "jquery.amodal":     ['jquery.event_drag'],
+                    "jquery.jqueryui":   ['jquery'],
+                    "jquery.rrssb":      ['jquery']
+                }
+            });
+        </script>
+
+        <!-- Global site tag (gtag.js) (circa 2020)-->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8WDRQNP96"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-H8WDRQNP96', { 'send_page_view': false });
+        </script>
+
+        <!-- Google Analytics (circa 2016)-->
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-296234-18', 'auto');
+        </script>
+
+
+                <!-- OneTrust Cookies Consent Notice start -->
+<script>window.ONETRUSTDOMAIN = "scrabble";</script>
+        <script defer src="https://www.merriam-webster.com/assets/mw/static/shared/mw-shared/js/onetrust/onetrust-v2.min.js"></script>
+    </head>
+    <body class="arial_font">
+
+        <!--Facebook Api-->
+        <script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<div id="fb-root"></div>
+        <!-- "Upgrade your browser" message -->
+        <!--CSS-->
+<link href="/css/update_browser.0001.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+<!--HTML-->
+<!--NOJS warning-->
+<noscript>
+	<div class = "upgr8d3r_container">
+		<div class = "upgr8d3r_container_internal upgr8d3r_browser_noscript">
+			This website requires JavaScript in order to work correctly.<br/>
+			Please enable JavaScript in your browser.
+		</div>
+	</div>
+</noscript>
+	
+<!---Bad browsers warning -->
+<!--[if lt IE 7]>
+<div class = "upgr8d3r_container">
+    <div class = "upgr8d3r_container_internal upgr8d3r_browser_warning">
+		<b>ATTENTION: You are using an outdated browser</b>
+		This website will not be displayed correctly:(<br/>
+		Please use one of the free popular alternative modern browsers (Google Chrome preferred)<br/>
+		<div class = "upgr8d3r_container_links">
+			<a href='http://www.firefox.com'>
+				<span class = "browser_icon firefox">&nbsp;</span>
+				<div class = "browser_text">Mozilla<br/>Firefox</div>
+			</a>
+			<a href='http://www.google.com/chrome'>
+				<span class = "browser_icon chrome">&nbsp;</span>
+				<div class = "browser_text">Google<br/>Chrome</div>
+			</a>
+			<a href='http://www.apple.com/safari/download'>
+				<span class = "browser_icon safari">&nbsp;</span>
+				<div class = "browser_text">Apple<br/>Safari</div>
+			</a>
+		</div>
+    </div>
+</div>
+<![endif]-->
+        <!--Wrapper-->
+        <div id="wrap_full">
+            <!-- Mobile Header -->
+<link href="/css/mobile/header.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+<div class="mobile mobile__header">
+    <div class="mobile__header__logo-container">
+        <a href="/"><img class="mobile__header__logo" src="/images/logos/mw_logo_scrabble_round3.jpg" alt="Scrabble® Application Logo"/></a>
+    </div>
+</div>                            <!-- Mobile Top AdMobile Top Ad for HP -->
+                <div class="mobile-ad-container">
+                    <div class="mobile-ad-wrap ad-320-50"><div id="mobile-ad-top" class="mobile-ad ad-320-50"></div></div>
+                </div>
+                        <div id="wrap_c">
+
+                <!--Central left-->
+                <div id="wrap_cl" class="noprint">
+                    <div id = "brit_logo_container">
+                        <a href="https://www.britannica.com/" target="_blank"><img id="brit_logo" src="/images/logos/d_brit.0001.jpg" alt="An Encylopedia Britannica Company" /></a>
+                    </div>
+                    <div id = "logo">
+                        <a href="/"><img src="/images/logos/mw_logo_scrabble_round3.jpg" alt="Scrabble® Application Logo" /></a>
+                    </div>
+
+                    <!--ADVERTISEMENT CONTAINER-->
+                                    </div>
+
+                <!--Central right-->
+                <div id="wrap_cr">                   
+
+                    <!--Central right: top-->
+                    <div id="wrap_cr_t" class="noprint box_sizing hm_page">
+
+                    </div>
+
+                    <!--Central right: bottom-->
+                    <div id="wrap_cr_b" class="box_sizing">
+
+                        <!--Central right: bottom: left column-->
+                        <div id="wrap_cr_bl" class="box_sizing">
+
+                            <!--Desktop top-->
+                            <div class="desktop_top box_sizing noprint">
+
+                                <!--Top menu-->
+                                <div class="section-links noprint">
+                                    <ul>
+                                        <li>
+                                            <a class="nmlink" href="/word-lists">Word Lists</a>
+                                        </li>
+                                        <li>
+                                            <a class="nmlink" href="/hook-words">Hook Words</a>
+                                        </li>
+                                        <li>
+                                            <a class="nmlink" href="/bingo-stems">Bingo Stems</a>
+                                        </li>
+                                        <li>
+                                            <a class="nmlink nmlink-last" href="/game/sprint">Game</a>
+                                        </li>
+                                        <!-- <li>
+                                            <span class = "naspa_login">
+                                                                                                    <a href="/naspa/login" class="login_l">Tournament Mode</a>
+                                                                                            </span>
+                                        </li> -->
+                                                                                    <!-- <li>
+                                                <a href="/naspa/login" class="login_btn sbl_button">Log in</a>
+                                            </li> -->
+                                                                            </ul>
+                                </div>
+
+                                <!--Main title-->
+                                <div id = "main_title" class="georgia_font noprint">
+                                    <div class="scrabble_image"><a href="/"><img src="/images/logos/scrabble_logo_for_header_217x50legal.gif"></a></div>
+                                    <div class="title"><a href="/">Word Finder</a></div>
+                                                                        <div class="tagline">Home of the Official SCRABBLE<sup>®</sup> Players Dictionary</div>
+                                                                    </div>
+                                
+                                <!--Main title mobile-->
+                                <!-- <div id="main_title" class="georga_font noprint mobile">
+                                    <div class="scrabble_image"><a href="/"><img src="/images/logos/scrabble_logo_for_header_217x50legal.gif"></a></div>
+                                    <div class="title"><a href="/">Word Finder</a></div>
+                                    <div class="tagline">Home of the Official SCRABBLE<sup>®</sup> Players Dictionary</div>
+                                </div> -->
+
+                                <!--Search form-->
+                                <div id = "sbl_search" class="box_sizing noprint">
+                                    <div class="frm box_sizing">
+                                        <input type="text" name="sbl_search_inp" autocapitalize="off" spellcheck="false" autocorrect="off" autocomplete="off" class="sbl_search_inp box_sizing" maxlength="17" placeholder="Search the Official SCRABBLE® Players Dictionary" value="" />
+                                    </div>
+                                    <button class="search_btn"><i class="fa fa-search fa-flip-horizontal"></i></button>
+
+                                    <div class="sbl_m_b">
+
+                                        <div class="cboxes box_sizing">
+                                            <input type="hidden" name="starts_with" value="0" />
+                                            <input id="starts_with" type="checkbox" name="starts_with" value="1" />
+                                            <label for="starts_with">Starts with</label>
+
+                                            <input type="hidden" name="ends_with" value="0" />
+                                            <input id="ends_with" type="checkbox" name="ends_with" value="1" />
+                                            <label for="ends_with">Ends with</label>
+
+                                            <input type="hidden" name="contains" value="0" />
+                                            <input id="contains" type="checkbox" name="contains" value="1" />
+                                            <label for="contains">Contains</label>
+                                        </div>
+
+                                         <div class="ddown_c box_sizing">
+                                                                                    </div>
+
+                                        <div class="yellow_box box_sizing">
+                                            <span class="closex"></span>
+
+                                            <ul>
+                                                <li><span>Enter a word to see if it's playable (up to 15 letters).</span></li>
+                                                <li><span>Enter any letters to see what words can be formed from them.</span></li>
+                                                <li><span>Use up to two "?" wildcard characters to represent blank tiles or any letter.</span></li>
+                                            </ul>
+
+                                            <div class="not_again">
+                                                <input id="not_again_cb" type="checkbox" name="not_again_cb" value="1" />
+                                                <label for="not_again_cb">Don't show this again</label>
+                                            </div>
+                                       </div>
+
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Actual  content -->
+                            <!-- CSS -->
+<link href="/css/home.0003.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+<!-- HTML -->
+<div class="block20pxh"></div>
+<div id = "hp_cent" class="box_sizing">
+    <div id = "hp_cent_t" class="box_sizing">
+        <div class="box_sizing hp_cent_box">
+            <!--header-->
+            <a class="area_header verdana_font" href="/q-words-without-u">
+                featured word list<span class="triangle"> ▸</span>
+            </a>
+            
+            <!--widget-->
+            <div class="hc_block">
+                <div class="featured_word_list_title verdana_font">Q words without U</div>
+                
+                                                    <div class="featured_word_list">
+                        <ul>
+                                                                                                <li class="list_word"><a href="/finder/qi">qi</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qat">qat</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qis">qis</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/cinq">cinq</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qadi">qadi</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qaid">qaid</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qats">qats</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qoph">qoph</a></li>
+                                                                                     </ul>
+                    </div>
+                                    <div class="featured_word_list">
+                        <ul>
+                                                                                                <li class="list_word"><a href="/finder/cinqs">cinqs</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/faqir">faqir</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/niqab">niqab</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qadis">qadis</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qaids">qaids</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qajaq">qajaq</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qanat">qanat</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qapik">qapik</a></li>
+                                                                                     </ul>
+                    </div>
+                                    <div class="featured_word_list">
+                        <ul>
+                                                                                                <li class="list_word"><a href="/finder/qibla">qibla</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qophs">qophs</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/tranq">tranq</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/faqirs">faqirs</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/niqaab">niqaab</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/niqabs">niqabs</a></li>
+                                                                                                                                <li class="list_word"><a href="/finder/qabala">qabala</a></li>
+                                                                                                                                <li><a class="list_total" href="/q-words-without-u">Full list »</a></li>
+                                                                                     </ul>
+                    </div>
+                            </div>
+        </div>
+        <div class="box_sizing hp_cent_box">
+            <!--header-->
+            <a class="area_header verdana_font" href = "/word-lists">
+                popular word lists<span class="triangle"> ▸</span>
+            </a>
+
+            <!--widget-->
+            <div class="hc_block">
+                <ul class="sbl_l1">
+                    <li><a href="/words/with/q">Q Words</a> — Playable words that contain the letter Q.</li>
+                    <li><a href="/q-words-without-u">Q without U</a> — Playable words that contain a Q not followed by a U.</li>
+                    <li><a href="/words/with/j">J Words</a> — Playable words that contain the letter J.</li>
+                    <li><a href="/words/with/x">X Words</a> — Playable words that contain the letter X.</li>
+                    <li><a href="/words/with/z">Z Words</a> — Playable words that contain the letter Z.</li>
+                </ul>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div id = "hp_cent_b" class="box_sizing">
+        <div class="box_sizing hp_cent_box">
+            <!--header-->
+            <a class="area_header verdana_font" href="/bingo-stems">
+                improve your game! <span class="triangle">▸</span>
+            </a>
+
+            <!--widget-->
+            <div class="hc_block">
+                <ul class="sbl_l1">
+                    <li><a href="/bingo-stems">Bingo Stem Words</a> — 6-letter stems that can help you form a "bingo" -- a play that uses uses all seven tiles on your rack.</li>
+                    <li><a href="/hook-words">Hook Words</a> — Playable words which can be formed from another word by adding a single letter at either the beginning or the end.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="box_sizing hp_cent_box">
+            <!--header-->
+            <a class="area_header verdana_font" href="/game/sprint">
+                Game <span class="triangle">▸</span>
+            </a>
+
+            <!--widget-->
+            <div class="hc_block">
+                <div class="scrabble_hasbro_promo">
+                    <div class="scrabble_hasbro_title verdana_font"><a href = "https://www.hasbro.com/scrabble" target="_blank">SCRABBLE<sup>®</sup> Board Game</a></div>
+                    <div class="scrabble_hasbro_descr">
+                        <p>Learn more about SCRABBLE<sup>®</sup> board game at <a href="https://www.hasbro.com/scrabble" target="_blank">Hasbro.com/scrabble »</a></p>
+                    </div>
+                </div>
+                
+                <div class="scrabble_sprint_promo">
+                    <div class="scrabble_sprint_title verdana_font"><a href = "/game/sprint">SCRABBLE<sup>®</sup> Sprint</a></div>
+                    <div class="scrabble_sprint_image"><a href = "/game/sprint"><img src="/images/logos/scrabble_sprint_by_pogo.jpg"></a></div>
+                    <div class="scrabble_sprint_descr">
+                        Improve your skills with this fast-paced SCRABBLE solitaire game. <a href="/game/sprint">Play now »</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</div>                        </div>
+
+                        <!--Central right: bottom: right column-->
+                        <div id = "wrap_cr_br" class="box_sizing noprint">
+
+                            <!--ADVERTISEMENT CONTAINER-->
+                            <div id="ad_slot_right_top" class="box_sizing">
+                                                                                                            <div id="div-gpt-ad-450156520255894295-1"></div>
+                                                                                                </div>
+
+                                                            <div id = "wrap_rbr_c" class="box_sizing">
+                                    <div class="scrabble_app_promo">
+                                        <a class="area_header verdana_font margin_bottom_10" href="/apps">
+                                            apps<span class="triangle"> ▸</span>
+                                        </a>
+                                        <div class="promo_title verdana_font"><a href="/apps">SCRABBLE<sup>®</sup> Dictionary</a></div>
+                                        <div class="promo_image"><a href="/apps"><img src="/images/promos/scrabble-dict-fifth-ed-app-screenshot-small.jpg" /></a></div>
+                                        <p><a class="the_perf" href="/apps">The perfect dictionary for playing SCRABBLE<sup>®</sup> - an enhanced version of the best-selling book from Merriam-Webster.</a></p>
+                                        <p><a href="/apps">Learn More »</a></p>
+                                    </div>
+                                </div>
+                            
+                            <!--ADVERTISEMENT CONTAINER-->
+                            <div id="ad_slot_right_bottom" class="box_sizing">
+                                                                                                            <div id="div-gpt-ad-450156520255894295-2"></div>
+                                                                                                </div>
+                        </div>
+
+                        <!--Central right: bottom: clearing column floats-->
+                        <div style = "clear:both;"></div>
+                    </div>
+
+                                        <div class="mobile mobile-message">
+                        <ul>
+                            <li>Enter a word to see if it’s playable (up to 15 letters).</li>
+                            <li>Enter any letters to see what words can be formed from them.</li>
+                            <li>Use up to two “?” wildcard characters to represent blank tiles or any letter.</li>
+                        </ul>
+                    </div>
+                                    </div>
+
+                <!--Central: clearing column floats-->
+                <div style = "clear:both;"></div>
+
+                <!--Footer:-->
+                <div id="wrap_cf" class="box_sizing noprint">
+                    <div id="footer" class="box_sizing footer-oa">
+                        <div class="offerings_top">
+                            <div class="offer1 ind_offer">
+                                <div class="featTitle">
+                                    The Merriam-Webster <br> Unabridged Dictionary
+                                </div>
+
+                                <div class="featImage_1">
+                                    <a href="https://unabridged.merriam-webster.com/subscriber/register?refc=SIGNUP_SCRABBLE" >
+                                        <img src="/images/promos/unabridged-promo.gif" alt="Merriam-Webster Unabridged Book Cover" />
+                                    </a>
+                                </div>
+
+                                <div class="featDescr">
+                                    Online access to a <br> legendary resource <br> <a href="https://unabridged.merriam-webster.com/subscriber/login">Log In</a> or <a href="https://unabridged.merriam-webster.com/subscriber/register?refc=SIGNUP_SCRABBLE">Sign Up&nbsp;»</a>
+                                </div>
+                            </div>
+
+                            <div class="offer3 ind_offer">
+                                <div class="featImage_3">
+                                    <a href="https://www.merriam-webster.com/dictionary-apps/android-ipad-iphone-windows.htm">
+                                        <img src="/images/promos/iphone-app-woman-with-cell.jpg" alt="Woman With Cell Phone" />
+                                    </a>
+                                </div>
+
+                                <div class="featTitle">
+                                    Our Dictionary, <br> On Your Devices
+                                </div>
+
+                                <div class="featDescr">
+                                    Merriam-Webster, <br> <em>With Voice Search</em> <br> <a href="https://www.merriam-webster.com/dictionary-apps/android-ipad-iphone-windows.htm">Get the Free Apps! »</a>
+                                </div>
+                            </div>
+
+                            <div class="offer4 ind_offer">
+                                <div class="featTitle">
+                                    The Official SCRABBLE<sup>®</sup> <br> Players Dictionary
+                                </div>
+
+                                <div class="featImage_4">
+                                    <a href="https://www.merriam-webster.com/shop-dictionaries/game-books/scrabble-dictionary">
+                                        <img src="/images/promos/scrabble-thumb.jpg" border="0" />
+                                    </a>
+                                </div>
+
+                                <div class="featDescr">
+                                    EMOJI, FACEPALM, and EW<br/>
+                                    join over 300 new words<br/>
+                                    added to the Sixth Edition!<br/>
+                                    <a href="https://www.merriam-webster.com/shop-dictionaries/game-books/scrabble-dictionary">Learn More »</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Footer: advertisement area-->
+                        <div class="ad_holder">
+                            <!--ADVERTISEMENT CONTAINER-->
+                            <div id="ad_slot_bottom" class="box_sizing">
+                                                                                                            <div id="div-gpt-ad-450156520255894295-3"></div>
+                                                                                                </div>
+                        </div>
+
+                        <!--The rest of the footer-->
+                        <div class="offerings_bottom">
+                            <div class="offer5 ind_offer">
+                                <div class="featTitle">
+                                    Join Us
+                                </div>
+
+                                <div class="twitter">
+                                    <div class="twLogo">
+                                        <a href="https://twitter.com/merriamwebster"><img src="/images/social/twitter-logo.png"></a>
+                                    </div>
+                                    <div class="twDescr">
+                                        <a href="https://twitter.com/merriamwebster">Merriam-Webster<br>on Twitter&nbsp;»</a>
+                                    </div>
+                                </div>
+
+                                <div class="facebook">
+                                    <div class="fbLogo">
+                                        <a href="https://www.facebook.com/merriamwebster"><img src="/images/social/facebook-logo.png"></a>
+                                    </div>
+                                    <div class="fbDescr">
+                                        <a href="https://www.facebook.com/merriamwebster">Merriam-Webster<br>on Facebook&nbsp;»</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="offer6 ind_offer">
+                                <div class="featTitle">
+                                    Bookstore: Digital and Print
+                                </div>
+                                <div class="bookstoreDescr">
+                                    Merriam-Webster references for Mobile, Kindle, print, and more. <a href="https://www.merriam-webster.com/shop-dictionaries">See all&nbsp;»</a>
+                                </div>
+                            </div>
+
+                            <div class="offer7 ind_offer">
+                                <div class="featTitle">
+                                    Other Merriam-Webster Dictionaries
+                                </div>
+
+                                <div class="dictURLs_1">
+                                    <a href="https://unabridged.merriam-webster.com">Webster's Unabridged Dictionary&nbsp;»</a>
+                                    <a href="http://www.nglish.com/spanish">Nglish - Spanish-English Translation &nbsp;»</a>
+                                    <a href="http://visual.merriam-webster.com/">Visual Dictionary&nbsp;»</a>
+                                </div>
+                            </div>
+                            <div style="clear:left;"></div>
+                        </div>
+
+
+                        <!--Footer: some other things-->
+                        <div class="footer_b">
+                            
+                            <div class="browse-dictionary">
+                                <a href="/browse/a">Browse the SCRABBLE Dictionary</a>
+                            </div>
+
+                            <div class="major-links">
+                                <ol>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="https://www.merriam-webster.com/about-us" target="_blank">About Us</a></li>
+                                    <li><a href="https://www.merriam-webster.com/apps">Mobile Apps</a></li>
+                                    <li><a href="https://www.dictionaryapi.com/" target="_blank">Dictionary API</a></li>
+                                    <li><a href="https://shop.merriam-webster.com/">Shop</a></li>
+                                </ol>
+                            </div>
+                            <div class="minor-links">
+                                <ol>
+                                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                                    <li><a href="/terms-of-use">Terms Of Use</a></li>
+                                    <li><a href="/contact">Contact Us</a></li>
+                                </ol>
+                            </div>
+                            <div class="copyright">
+                                <a href="/terms-of-use#copyright"><sup>®</sup> <script type="text/javascript">document.write(new Date().getFullYear());</script> Merriam-Webster, Incorporated</a>
+                            </div>
+                        </div>
+
+                        <!--legal info-->
+                        <div class="hasbro_legal">
+                            <a href="https://www.hasbro.com/scrabble/" target="_blank">HASBRO, its logo, and SCRABBLE are trademarks of Hasbro in the U.S. and Canada and are used with permission <sup>®</sup> 2022 Hasbro. All Rights Reserved.</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <link href="/css/mobile/footer.css" type="text/css" rel="Stylesheet" charset="utf-8" />
+
+<div class="mobile mobile__footer">
+    <p class="mobile__footer__navigation-title"><a href="/browse/a">Browse the SCRABBLE Dictionary</a></p>
+    <div class="mobile__footer__navigation mobile__footer__navigation-row">
+        <div class="mobile__footer__navigation-column" style="margin-right: 70px">
+            <a href="/" class="mobile__footer__navigation__link">Home</a>
+            <a href="https://www.merriam-webster.com/about-us" class="mobile__footer__navigation__link">About Us</a>
+            <a href="https://www.merriam-webster.com/apps" class="mobile__footer__navigation__link">Mobile Apps</a>
+            <a href="https://www.dictionaryapi.com/" class="mobile__footer__navigation__link">Dictionary API</a>
+            <a href="https://shop.merriam-webster.com/"
+            class="mobile__footer__navigation__link">Shop</a>
+        </div>
+        <div class="mobile__footer__navigation-column">
+            <a href="/privacy-policy" class="mobile__footer__navigation__link">Privacy Policy</a>
+            <a href="/terms-of-use" class="mobile__footer__navigation__link">Terms of Use</a>
+            <a href="/contact" class="mobile__footer__navigation__link">Contact Us</a>
+            <a href="/#" id="doNotSellMobile" class="mobile__footer__navigation__link">Do Not Sell My Info</a>
+        </div>
+    </div>
+    <div class="mobile__footer__social">
+        <p>Follow Merriam-Webster</p>
+        <a href="https://www.facebook.com/merriamwebster" class="mobile__footer__social__icon"><img src="/images/logos/Facebook.svg"></a>
+        <a href="https://twitter.com/merriamwebster" class="mobile__footer__social__icon"><img src="/images/logos/Twitter.svg"></a>
+        <a href="https://www.youtube.com/user/MerriamWebsterOnline" class="mobile__footer__social__icon"><img src="/images/logos/Youtube.svg"></a>
+        <a href="https://www.instagram.com/merriamwebster/" class="mobile__footer__social__icon"><img src="/images/logos/Instagram.svg"></a>
+    </div>
+    <div class="mobile__footer__remarks">
+        <p><a href="/terms-of-use#copyright">&#174; 2021 Merriam-Webster, Incorporated</a></p>
+        <br>
+        <p><a href="https://www.hasbro.com/scrabble/" target="_blank">HASBRO, its logo, and SCRABBLE are trademarks of Hasbro in the U.S. and Canada and are used with permission <sup>®</sup> 2022 Hasbro. All Rights Reserved.</a></p>
+    </div>
+</div>
+<script>
+    function clickDNS(e) {
+        e.preventDefault();
+        var dns = document.getElementById("doNotSell");
+        (dns) ? dns.click(): window.setTimeout(clickDNS, 1000);
+    }
+    var dnsM = document.getElementById("doNotSellMobile");
+    dnsM.addEventListener('click', clickDNS);
+</script>   
+
+        <!-- JAVASCRIPT -->
+        <script type="text/javascript">
+
+            var isHomePage = true;
+            var isLoggedIn = false;
+
+            require(['underscore', 'jquery', 'jquery.jqueryui', 'jquery.cookie'], function(_) {
+
+                
+                $.ajax({
+                url: '/geo-data',
+                dataType: 'json',
+                type: 'GET',
+                data: {}
+                }).done(function(ajaxResponse) {
+
+                    if (ajaxResponse.status ==='success') {
+                        var country = ajaxResponse['iso-code'];
+                        if (country !== 'US' && country !== 'CA') {
+                            window.location.href = 'http://www.scrabble.com';
+                        } else {
+
+                            //We should track as location being US or CA means that user is not being redirected away.
+                            ga('send', 'pageview');
+
+                            //Same with gtag
+                            gtag('event', 'page_view', {
+                                page_title: document.title,
+                                page_location: window.location.href,
+                                page_path: window.location.pathname,
+                                send_to: 'G-H8WDRQNP96'
+                            });
+                        }
+                    }
+
+                }).fail( function(response) {
+                    var ajaxResponse = $.parseJSON(response.responseText);
+
+                    //We should still track even on failed geo-call, as this means that user 
+                    //is not being redirected away either.
+                    ga('send', 'pageview');
+
+                    //Same with gtag
+                    gtag('event', 'page_view', {
+                        page_title: document.title,
+                        page_location: window.location.href,
+                        page_path: window.location.pathname,
+                        send_to: 'G-H8WDRQNP96'
+                    });
+                });
+
+
+
+
+                //search-related
+                var searchArea  = $('#sbl_search');
+                var searchInput = searchArea.find('.sbl_search_inp');
+                var searchBtn   = searchArea.find('.search_btn');
+
+                //This action redirects user to a definition
+                var submitSearch = function() {
+                    var textToSubmit = searchInput.val();
+                    if (textToSubmit !== '') {
+                        var urlBase = '/finder/';
+                        if (searchArea.find("input[name=ends_with]").is(':checked')){
+                            urlBase = '/words/end-with/';
+                        }
+                        if (searchArea.find("input[name=starts_with]").is(':checked')) {
+                            urlBase = '/words/start-with/';
+                        }
+                        if (searchArea.find("input[name=contains]").is(':checked')) {
+                            urlBase = '/words/with/';
+                        }
+                        window.location = urlBase + encodeURIComponent(textToSubmit);
+                    }
+                };
+
+                //user click on submit button
+                searchBtn.on('click', function(e) {e.preventDefault();e.stopPropagation();
+                    submitSearch();
+                });
+
+                //user presses enter
+                searchInput.on('keydown', function(e) {
+                    if (e.keyCode == 13) {
+                        e.stopPropagation();e.preventDefault();
+                        submitSearch();
+                    }
+                });
+
+                //One checkbox check should clear another
+                searchArea.find("input[type=checkbox]").change(function() {
+                    if ($(this).is(':checked')) {
+                        $(this).siblings(':checkbox').prop('checked', false);
+                    }
+                });
+
+                //Refresh page on change
+                $('#sbl_list_sel').on('change', function() {
+                    var nowMode = this.value;
+                    if (nowMode == 'ospd') {
+                        $.cookie('sbl_mode', 'ospd', { expires: 365*10, path: '/' });
+                    } else {
+                        $.removeCookie('sbl_mode', { path: '/' }); //true
+                    }
+
+                    location.reload();
+                });
+
+                //Relative width
+                var cboxesWidth = $('.cboxes').outerWidth();
+                var contWidth = $('.sbl_m_b').outerWidth();
+                var yboxWidth = contWidth - cboxesWidth - 14;
+                $('.yellow_box').css('width', yboxWidth + 'px');
+
+                //if no cookie - slide don yellow box
+                if (($.cookie('sbl_no_ybox') == undefined) && isHomePage) {
+                    $('.yellow_box').slideDown({duration: 400, easing: 'easeInOutQuad', complete: function(){}});
+                }
+
+                //close yellow box forever
+                $('.closex').on('click', function() {
+                    if ($('#not_again_cb').is(':checked')) {
+                        $.cookie('sbl_no_ybox', '1', { expires: 365*10, path: '/' });
+                    }
+                    $('.yellow_box').css('display', 'none');
+                });
+
+                //logout link has redirect param
+                $('.logout_btn').on('click', function(e) {e.preventDefault();
+                    var logoutUrl = $(this).attr('href');
+                    var redirectUrl = window.location.pathname;
+                    var url = logoutUrl + '?redirect=' + encodeURIComponent(redirectUrl);
+                    window.location = url;
+                });
+
+                //naspa track visit
+                if (isLoggedIn) {
+                    ga('send', {
+                      'hitType': 'event',
+                      'eventCategory': 'scrabble',
+                      'eventAction': 'naspa user page view',
+                      'eventLabel': window.location.href,
+                    });
+                }
+            });
+        </script>
+                <!-- CCPA -->
+    <script src="https://www.merriam-webster.com/assets/mw/static/shared/mw-shared/js/onetrust/ad-ccpa.min.js"></script>
+   
+        
+        <div class="mobile-ad-container mobile-ad-container-fixed">
+            <div class="mobile-ad-wrap ad-320-50"><div id="mobile-ad-fixed" class="mobile-ad ad-320-50"></div></div>
+        </div>
+
+                <script>
+  var gSlots = {}, apsSlots = [], refreshCounter = 0, refreshInterval;
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];      
+  window.headertag = window.headertag || {};
+  window.headertagconfig = {};
+  googletag.cmd.push(function() {
+      if (typeof window.headertag === 'undefined' ||
+          window.headertag.apiReady !== true) {
+          window.headertag = googletag;
+      //     console.log("Index Not Ready");
+      // } else {
+      //   console.log("Index Ready");
+      }
+  });
+  //Desktop Ads as before
+  var ads = {"ad_slot_right_top":{"type":"google_dfp","data":{"slot":"\/15510053\/SCRABBLE\/HOME","id":"div-gpt-ad-450156520255894295-1","width":"300","height":"250","targeting":[["POS",["TOP"]],["qsegs",["X"]]],"sizes":[]}},"ad_slot_right_bottom":{"type":"google_dfp","data":{"slot":"\/15510053\/SCRABBLE\/HOME","id":"div-gpt-ad-450156520255894295-2","width":"300","height":"250","targeting":[["POS",["BOT"]],["qsegs",["X"]]],"sizes":[]}},"ad_slot_bottom":{"type":"google_dfp","data":{"slot":"\/15510053\/SCRABBLE\/HOME","id":"div-gpt-ad-450156520255894295-3","width":"728","height":"90","targeting":[["POS",["BOT"]],["qsegs",["X"]]],"sizes":[]}}};
+  //Mobile Ads
+  //Top and Fixed the rest is base on page
+  //All Ad Size is 320x50
+
+  var mFixedAdSlot = 'mobile-ad-fixed';
+  var mobile_ads = {mobile_ad_slot_top:{data:{id:"mobile-ad-top",adSize:[320,50],POS:"SC32050MTOP"}},"mobile-ad-fixed":{data:{id:mFixedAdSlot,adSize:[320,50],POS:"SC32050MBOT1"}},mobile_ad_slot_bot:{data:{id:"mobile-ad-bot",adSize:[320,50],POS:"SC32050MBOT"}},mobile_ad_slot_bot2:{data:{id:"mobile-ad-bot2",adSize:[320,50],POS:"SC32050MBOT2"}},mobile_ad_slot_bot3:{data:{id:"mobile-ad-bot3",adSize:[320,50],POS:"SC32050MBOT3"}},mobile_ad_slot_bot4:{data:{id:"mobile-ad-bot4",adSize:[320,50],POS:"SC32050MBOT4"}},mobile_ad_slot_bot5:{data:{id:"mobile-ad-bot5",adSize:[320,50],POS:"SC32050MBOT5"}}};
+  var adKeys = Object.keys(ads);
+  var pageAdUnit = ads[adKeys[0]].data.slot;
+  var isMobile = window.matchMedia('(max-width: 991px)').matches;
+  var pageAds =  isMobile ? mobile_ads:ads;
+
+  if (isMobile) {
+    // Add ID to Div for target
+    pageAds = mobile_ads;
+    var botAds = document.querySelectorAll(".mobile-ad-bot");
+    if (botAds.length) {
+      botAds.forEach(function(botAd, i) {
+        //first one set Id = mobile-ad-bot
+        var divID = (i == 0) ? "":++i;
+        botAd.id = "mobile-ad-bot" + divID;
+        // console.log(botAd.id);
+      })
+    }
+  }
+
+  var REFRESH_SLOT = '/15510053/SCRABBLE_REF';
+  var SCADS = {ad_slot_left:{adSize:[160,600],POS:"SC160600TOP"},ad_slot_right_top:{adSize:[300,250],POS:"SC300250TOP"},ad_slot_right_bottom:{adSize:[300,250],POS:"SC300250BOT"},ad_slot_bottom:{adSize:[728,90],POS:"SC72890BOT"}};
+
+  function setRefreshAds() {
+      refreshCounter = refreshCounter + 1;
+      apsSlots = [];
+      // console.log("destroy slots");
+      definePageAds(true);
+      // console.log(refreshCounter);
+
+        apstag.fetchBids({
+          slots: apsSlots
+        }, function(bids) {
+          // set apstag bids, then trigger the first request to DFP
+          googletag.cmd.push(function() {
+            apstag.setDisplayBids();
+            (isMobile) ? headertag.pubads().refresh([gSlots[mFixedAdSlot]]):headertag.pubads().refresh();
+            // console.log("display ads")
+          });
+        });
+
+      //refresh 3 times
+      if (refreshCounter >= 3 ) {
+        window.clearInterval(refreshInterval);
+      }
+  }
+
+
+  function definePageAds(refresh) {
+    var slotKeys = (!!refresh && isMobile) ? [mFixedAdSlot]: Object.keys(pageAds);
+    slotKeys.forEach(function(slotKey) {
+      var slot = pageAds[slotKey].data;
+      var adID = slot.id;
+      // console.log(adID);
+      var adDiv = document.getElementById(adID);
+      if (adDiv) {
+      // var adUnitPath = slot.slot; hard code below for now since no ads loading
+      var adUnitPath = (!!refresh) ? REFRESH_SLOT:pageAdUnit;
+      var adSize = slot.adSize || SCADS[slotKey].adSize;
+      var adPos = slot.POS || SCADS[slotKey].POS;
+      adDiv.dataset.pos = adPos;
+        if (!!refresh) {
+          googletag.cmd.push(function() {
+            headertag.destroySlots([gSlots[adID]]);          
+            gSlots[adID] = googletag.defineSlot(adUnitPath, adSize, adID).addService(googletag.pubads()).setTargeting('POS',adPos).setTargeting('REFRESH',refreshCounter).setTargeting('index_pos',adPos);
+          });          
+        } else {
+          googletag.cmd.push(function() {
+            gSlots[adID] = googletag.defineSlot(adUnitPath, adSize, adID).addService(googletag.pubads()).setTargeting('POS',adPos).setTargeting('index_kv',adPos);
+          });         
+        }
+        apsSlots.push({
+          slotID: adID,
+          slotName: adUnitPath+'/'+adPos,
+          sizes: adSize
+        });
+      // } else {
+      //   console.log("not found " + adID);
+      }
+    });
+  }
+
+    definePageAds(false);
+    
+    googletag.cmd.push(function() {
+      googletag.pubads().disableInitialLoad();
+      googletag.pubads().enableSingleRequest();
+      googletag.enableServices();
+    });
+
+  // Display all the Ads 
+  googletag.cmd.push(function() {
+    var slotIDKeys = Object.keys(gSlots);
+    slotIDKeys.forEach(function(slotId) {
+      headertag.display(slotId);
+      // console.log(slotId);
+    });
+  });
+
+
+  apstag.fetchBids({
+    slots: apsSlots
+  }, function(bids) {
+    // set apstag bids, then trigger the first request to DFP
+    googletag.cmd.push(function() {
+      apstag.setDisplayBids();
+      headertag.pubads().refresh();
+      // console.log("display ads");
+    });
+  });
+
+  refreshInterval = window.setInterval(setRefreshAds,65000);
+  
+</script>
+    </body>
+</html>

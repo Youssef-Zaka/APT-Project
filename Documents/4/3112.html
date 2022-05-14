@@ -1,686 +1,1696 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
-<head>
-  <title>[2109.00835] WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<!DOCTYPE html>
+<html lang="en_US">
+<head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app221.us.archive.org';v.server_ms=204;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("http://www.spanishcentral.com/","20190217041819","https://web.archive.org/","web","/_static/",
+	      "1550377099");
 </script>
-  <meta name="citation_title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"/>
-  <meta name="citation_author" content="Trokhymovych, Mykola"/>
-  <meta name="citation_author" content="Saez-Trumper, Diego"/>
-  <meta name="citation_date" content="2021/09/02"/>
-  <meta name="citation_online_date" content="2021/09/02"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2109.00835"/>
-  <meta name="citation_arxiv_id" content="2109.00835"/>
-  <meta name="citation_abstract" content=" With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model&#39;s performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2109.00835"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API..."/>
-    <meta name="twitter:description" content="With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2109.00835v1"/>
-    <meta property="og:description" content="With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model&#39;s performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances."/>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+
+
+    <!--SEO-related tags: title, keywords, description-->
+            <title>Free English to Spanish Translation | Spanish Central</title>
+                <meta name="description" content="Learn to speak Spanish with Spanish Central from Merriam-Webster. English to Spanish translator, flashcards, and translations of Spanish words, phrases, &amp; common uses.">
+        
+    <!--Static meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="fb:app_id" content="177288989106908">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <meta name="robots" content="noodp, noydir">
+    
+    <script type="text/javascript" data-type="googletags">
+      var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+
+    <!-- Index Wrapper -->
+    <script async src="//web.archive.org/web/20190217041819js_/http://js-sec.indexww.com/ht/p/183900-245599417303270.js"></script>
+
+    <!--Opensearch link-->
+    <link rel="search" type="application/opensearchdescription+xml" href="/web/20190217041819/http://www.spanishcentral.com/opensearch.xml" title="M-W Spanish Dictionary"/>
+
+    
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="/web/20190217041819im_/http://www.spanishcentral.com/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/web/20190217041819im_/http://www.spanishcentral.com/favicon.ico" type="image/x-icon">
+    
+    <!-- VENDOR FONT -->
+    <link href="https://web.archive.org/web/20190217041819cs_/http://fonts.googleapis.com/css?family=Voces" rel="stylesheet" type="text/css">
+
+    <!-- VENDOR CSS -->
+    <link href="/web/20190217041819cs_/http://www.spanishcentral.com/css/vendor.min.css?4" type="text/css" rel="stylesheet" charset="utf-8"/>
+
+    <!-- OUR CSS -->
+    <link href="/web/20190217041819cs_/http://www.spanishcentral.com/css/application.min.css?23" type="text/css" rel="stylesheet" charset="utf-8"/>
+
+    <!--Loading modernizr-->
+    <script src="/web/20190217041819js_/http://www.spanishcentral.com/vendor/modernizr.2.7.1/modernizr.custom.95871.js"></script>
+
+    <script type="text/javascript">
+      googletag.cmd.push(function() {
+        if  (typeof window.headertag === 'undefined' || window.headertag.apiReady !== true) {
+          window.headertag = googletag;
+            }
+      });
+    </script>
+    
+    <!-- async Deployable Ad -->
+    <script async src="https://web.archive.org/web/20190217041819js_/https://www.googletagservices.com/tag/js/gpt.js"></script>
+
+
+    <!-- JS -->
+    <script src="/web/20190217041819js_/http://www.spanishcentral.com/vendor/requirejs.2.1.6/require.min.js"></script>
+    <script type="text/javascript">
+        /*
+         * The reason I use js for path construction here - Google reports crawl errors while
+         * parsing out AMD paths from this JS chunk that it was never supposed to parse in the first place. :-(
+         */
+        var vnd = '/vendor/';
+        var fwdsl = '/';
+        requirejs.config({
+
+            enforceDefine: false,
+            paths: {
+                "jquery":            vnd + 'jquery.1.11.2' + fwdsl + 'jquery-1.11.2.min',
+                "jquery.jqueryui":   vnd + 'jquery-ui-1.10.3.custom' + fwdsl + 'js' + fwdsl + 'jquery-ui-1.10.3.custom.min',
+                "underscore":        vnd + 'lodash_1.2.1'  + fwdsl + 'lodash.min',
+                "jquery.event_drag": vnd + 'amodal_1.6.5'  + fwdsl + 'jquery.event.drag.min',
+                "jquery.amodal":     vnd + 'amodal_1.6.5'  + fwdsl + 'amodal.min',
+                "jquery.blockui":    vnd + 'blockui_2.6.1' + fwdsl + 'jquery.blockUI',
+                "bowser":            vnd + 'bowser.0.3.1'  + fwdsl + 'bowser.min',           
+                
+                //non-AMDs
+                // 'dfpTagApi':          '//web.archive.org/web/20190217041819/http://www.googletagservices.com/tag/js/gpt',
+                "twitter":            '//web.archive.org/web/20190217041819/http://platform.twitter.com/widgets',
+                "jquery.cycle2":      vnd + 'cycle2' + fwdsl + 'jquery.cycle2.20130909.min',
+                "jquery.event.move":  vnd + 'stephband' + fwdsl + 'jquery.event.move',
+                "jquery.event.swipe": vnd + 'stephband' + fwdsl + 'jquery.event.swipe',
+            },
+            shim: {
+                "jquery.cycle2":     ['jquery'],
+                "jquery.event_drag": ['jquery'],
+                "jquery.amodal":     ['jquery.event_drag'],
+                "jquery.jqueryui":   ['jquery']
+            }
+        });
+    </script>
+
+    <!-- Lotame -->
+    <script type="text/javascript" src="https://web.archive.org/web/20190217041819js_/http://tags.crwdcntrl.net/c/6935/cc.js?ns=_cc6935" id="LOTCC_6935"></script>
+    <script type="text/javascript" language="javascript">_cc6935.bcp();</script>
+
+    <!--ADs-->
+    <!--UPDATE CORRECT POS NAME BASE ON SIZE-->
+<script>
+  var ads = {"ad_slot_right_top":{"type":"google_dfp","data":{"slot":"\/15510053\/SPANISH_CENTRAL\/HOME","id":"div-gpt-ad-301800714321697772-2","width":"300","height":"250","targeting":[["POS",["TOP"]]],"sizes":{"0,0":["300,250"]}}},"ad_slot_right_bottom":{"type":"google_dfp","data":{"slot":"\/15510053\/SPANISH_CENTRAL\/HOME","id":"div-gpt-ad-301800714321697772-3","width":"300","height":"250","targeting":[["POS",["BOT"]]],"sizes":{"0,0":["300,250"]}}},"ad_slot_bottom":{"type":"google_dfp","data":{"slot":"\/15510053\/SPANISH_CENTRAL\/HOME","id":"div-gpt-ad-301800714321697772-4","width":"728","height":"90","targeting":[["POS",["BOT"]]],"sizes":{"767,200":["728,90"],"0,0":["320,50"]}}}};
+  // Willy: Need to move all this to AD Library
+  // get the browser's current window dimensions 
+  function getWindowDimensions() {
+    var width = window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+    var height = window.innerHeight ||
+      document.documentElement.clientHeight ||
+      document.body.clientHeight;
+    return [width, height];
+  }
+
+  // given a size mapping like: [[[1000, 600], [[300, 250], [300,600]]],[[0,0], [[300,250]]]]
+  // return the valid size mapping as an array like: [[300,250]] when the screen dimensions
+  // are less than 1000 width and 600 height
+  function parseSizeMappings(sizeMappings) {
+    try{
+      // get current window dimensions
+      var sd = getWindowDimensions();
+
+      // filter mappings that are valid by confirming that the current screen dimensions
+      // are both greater than or equal to the breakpoint [x, y] minimums specified in the first position in the mapping
+      console.log(sizeMappings);
+      var validMappings = sizeMappings.filter(function(m) {return  m[0][0] <= sd[0] && m[0][1] <= sd[1]});
+
+      // return the leftmost mapping's sizes or an empty array
+      return validMappings.length > 0 ? validMappings[0][1] :  [];
+    } catch (e) {
+      console.log('error parsing sizeMappings:');
+      console.log(sizeMappings);
+      console.log(e);
+      // fallback to last size mapping supplied 
+      return sizeMappings[ sizeMappings.length -1 ][1];
+    }   
+  }
+
+  function updateADPOSNaming() {
+    var i,j,adPos, adSize;
+    var setPOSName = function(adData) {
+      if (Array.isArray(adData.sizeMap) && adData.sizeMap.length > 0) {
+        adSize = adData.sizeMap[0].toString().replace(",","");   
+        for (i = 0; i < adData.targeting.length; i++) {
+          if (adData.targeting[i][0].toUpperCase() === "POS") {
+            adPos = "S" + adSize + adData.targeting[i][1];
+            adData.targeting[i][1] = [adPos];
+            break;
+          }
+        }
+      }
+    }
+    for (i in ads) {
+      setPOSName(ads[i].data);
+    }
+  }
+
+  function createSizeMapping() {
+    try {
+      var sizeMap, sizeMap2, adData, adData2;
+      for (var i in ads) {
+        adData = ads[i].data;
+        sizeMap = [];
+        if (typeof(adData.sizes) !== "undefined") {
+          for (var j in adData.sizes) {
+            sizeMap.push([j.split(","),adData.sizes[j]]);
+          }
+          ads[i].data.sizeMap = parseSizeMappings(sizeMap);            
+          if (ads[i].data.sizeMap.length === 0) {
+              ads[i].data.sizeMap =  adData.defSizes;
+          }
+        }
+      }
+
+    } catch (e) {
+      for (var i in ads) {
+        ads[i].data.sizeMap =  ads[i].data.defSizes;
+      }      
+    }
+  }
+  createSizeMapping();
+  updateADPOSNaming();
+</script>
+<!--LOAD ADVERTISEMENTS-->
+<script type="text/javascript">
+    window.gptadslots = {};
+    window.quantSegs=[];
+    window.gpTagsLastFetchTimestamp = new Date().getTime();
+
+    //WW: init Admik Variable;
+    window.Adomik = window.Adomik || {};
+    Adomik.randomAdGroup = function() {
+        var rand = Math.random();
+        switch (false) {
+            case !(rand < 0.09): return "ad_ex" + (Math.floor(100 * rand));
+            case !(rand < 0.10): return "ad_bc";
+            default: return "ad_opt";
+        }
+    };
+
+    if (ads !== null) {
+        /*
+         * Determine what types of ad-networks are present.
+         * Determine if targeting includes quantcast.
+         */
+        var googleDfpAdsPresent = false;
+        var quantcastRequired   = false;
+        for (var adHolderDivId in ads) {
+            if (ads.hasOwnProperty(adHolderDivId)) {
+                var adEntry = ads[adHolderDivId];
+                if (adEntry.type === 'google_dfp') {
+                    googleDfpAdsPresent = true;
+                }
+                if (typeof adEntry.data.targeting !== 'undefined') {
+                    for (var i = 0; i < adEntry.data.targeting.length; i++) {
+                        var currentTarget = adEntry.data.targeting[i];
+                        if ((currentTarget[0] === 'qsegs')) {
+                            quantcastRequired = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        var killDfpAds = function(slots) {
+            $.each(slots, function(index, slot) {
+                googletag.pubads().clear([gptadslots[slot]]);
+            });
+        };
+
+        var loadDfpAds = function(result, isDesktop) {
+            isDesktop = (typeof isDesktop === 'undefined') ? true : isDesktop;
+
+            googletag.cmd.push(function() {
+                for (var adHolderDivId in ads) {
+                    if (ads.hasOwnProperty(adHolderDivId)) {
+                        var adEntry = ads[adHolderDivId];
+
+                        if (adEntry.type === 'google_dfp' && (isDesktop || (!isDesktop && (adHolderDivId === 'ad_slot_bottom')))) {
+
+                            /*
+                             * Creating a slot
+                             */
+                            gptadslots[adHolderDivId] = googletag
+                                .defineSlot(
+                                    adEntry.data.slot,
+                                    [
+                                        parseInt(adEntry.data.width),
+                                        parseInt(adEntry.data.height)
+                                    ],
+                                    adEntry.data.id
+                                )
+                                .setTargeting('ad_group', Adomik.randomAdGroup())
+
+                            /*
+                             * Defining targets if any
+                             */
+                            if (typeof adEntry.data.targeting !== 'undefined') {
+                                for (var i = 0; i < adEntry.data.targeting.length; i++) {
+                                    var currentTarget = adEntry.data.targeting[i];
+                                    var targetingType = (currentTarget[0] === 'qsegs') ? result : currentTarget[1];
+                                    if (targetingType !== null) {
+                                        gptadslots[adHolderDivId].setTargeting(currentTarget[0], targetingType);
+                                        console.log(currentTarget[0]);
+                                        console.log(targetingType);
+                                    }
+                                }
+                            }
+
+                            // Adding responsive mappings to a slot
+                            var mapping = googletag.sizeMapping();
+                            for (var key in adEntry.data.sizes) {
+                                if (adEntry.data.sizes.hasOwnProperty(key)) {
+                                    var browserSize = key.split(",");//w,h
+                                    for (var i = 0; i < adEntry.data.sizes[key].length; i++) {
+                                        var adSize = adEntry.data.sizes[key][i].split(",");//w,h
+                                        mapping.addSize([parseInt(browserSize[0]), parseInt(browserSize[1])], [parseInt(adSize[0]), parseInt(adSize[1])]);
+                                    }
+                                }
+                            }
+
+                            mapping = mapping.build();
+                            gptadslots[adHolderDivId].defineSizeMapping(mapping);
+
+                            //add color
+                            gptadslots[adHolderDivId].set("adsense_background_color", "#CCCCCC");
+                            gptadslots[adHolderDivId].set("adsense_border_color", "#FF0000");
+
+
+                            //adding service
+                            gptadslots[adHolderDivId].addService(googletag.pubads());
+
+                        }
+                    }
+                }
+
+                googletag.pubads().enableAsyncRendering();
+                gpTagsLastFetchTimestamp = new Date().getTime();
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+
+        /*
+         * Load google ads if they're present
+         */
+        if (googleDfpAdsPresent) {
+            var isDesktop = function() {
+                return (window.innerWidth >= 768);
+            };
+
+            if (quantcastRequired) {
+                function qc_results(result) {
+                    quantSegs = [];
+                    for (var i = 0; i < result.segments.length; i++) {
+                        quantSegs.push(result.segments[i].id);
+                    }
+                    loadDfpAds(quantSegs, true);
+                }
+            } else {
+                loadDfpAds(null, isDesktop());
+            }
+        }
+    }
+</script>
+
+    <!-- Tracking: iframe buster-->
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//web.archive.org/web/20190217041819/http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-296234-15', 'spanishcentral.com');
+  ga('send', 'pageview');
+</script>
 </head>
-
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
+<body class=" "><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20190217041819/http%3A//www.spanishcentral.com/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
   </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="http://www.spanishcentral.com/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20190217041819" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20190217041819*/http://www.spanishcentral.com/" title="See a list of every capture for this URL">1,252 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">30 Nov 2001 - 13 May 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20190113042034/http://www.spanishcentral.com/" title="13 Jan 2019"><strong>Jan</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 04:18:19 Feb 17, 2019">FEB</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20190318230240/http://www.spanishcentral.com/" title="18 Mar 2019"><strong>Mar</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20190215054857/http://www.spanishcentral.com/" title="05:48:57 Feb 15, 2019"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 04:18:19 Feb 17, 2019">17</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20190224045248/http://www.spanishcentral.com/" title="04:52:48 Feb 24, 2019"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20180216222014/http://www.spanishcentral.com:80/" title="16 Feb 2018"><strong>2018</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 04:18:19 Feb 17, 2019">2019</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200220000341/http://www.spanishcentral.com/" title="20 Feb 2020"><strong>2020</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20190217041819/http://web.archive.org/screenshot/http://www.spanishcentral.com/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20190217041819/http://www.spanishcentral.com/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20190217041819/http://www.spanishcentral.com/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
       </div>
     </div>
   </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
-
-        <!-- timeboxed column --><!-- /end timeboxed column -->
-
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
-
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2109.00835
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/twitteroutlinks)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/twitteroutlinks" target="_new"><span class="wm-title">Twitter Outlinks</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  This is a Collection of URLs (and Outlinked URLs) extracted from a random feed of 1% of all Tweets.<div><br></div><div><br></div>
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20190217041819/http://www.spanishcentral.com/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","http://www.spanishcentral.com/","20190217041819",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+    <!--Facebook Api-->
+    <script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//web.archive.org/web/20190217041819/http://connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<div id="fb-root"></div>
+    <!--Wrapper-->
+    <div id="content_wrapper_full">
+        <div id="content_wrapper_central">
+            <div id="content_wrapper_central_left">
+                <div id="brit_logo_container">
+                    <img id="brit_logo" src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/brit.jpg" alt="An Encylopedia Britannica Company"/>
                 </div>
-              </form>
-            </div>
 
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
+                <div id="logo">
+                    <a href="/web/20190217041819/http://www.spanishcentral.com/"><img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/mw_logo_0004.gif" alt="Spanish Central Logo"/></a>
+                </div>
+
+                            </div>
+            <div id="content_wrapper_central_right">
+
+                <div id="content_wrapper_central_right_top" class="mobile-hide">
+                    <!--ADVERTISEMENT CONTAINER-->
+                    <!--<div id="ad_slot_top" class="box_sizing">
+                                            </div>-->
+                </div>
+
+                <div id="content_wrapper_central_right_bottom">
+                    <div id="content_wrapper_central_right_bottom_left">
+                        <!--Top menu-->
+                        <div id="section-links" class="mobile-hide">
+                            <ul>
+                                <li class="flashcards_link">
+                                    <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/all">Flashcards</a>
+                                </li>
+                                <li class="word_of_the_day_link">
+                                    <a href="/web/20190217041819/http://www.spanishcentral.com/word-of-the-day">Spanish Word of the Day</a>
+                                </li>
+                                <li class="most_popular_words_link">
+                                    <a href="/web/20190217041819/http://www.spanishcentral.com/most-popular-words">Most Popular Words</a>
+                                </li>
+                                <li class="quizzes_link">
+                                    <a href="/web/20190217041819/http://www.spanishcentral.com/quizzes">Quizzes</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="main-wrapper">
+                            <!--Main title-->
+                            <div id="main_title">
+                                <div class="main-title-wrapper">
+                                    <a href="/web/20190217041819/http://www.spanishcentral.com/" class="clearfix">
+                                        <img class="mobile-only" src="/web/20190217041819im_/http://www.spanishcentral.com/images/general/mobile-logo-small.png"/>
+                                        <div class="main-title-inner">
+                                            Spanish Central
+                                            <span class="main-title-subheading mobile-only">mobile search</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <a href="#" class="hamburger-menu mobile-only"></a>
+                                <a href="#" class="search-menu mobile-only"></a>
+                            </div>
+                            <div class="hamburger-menu-content mobile-only">
+                                                                    <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/all">
+                                        Flashcards                                    </a>
+                                                                    <a href="/web/20190217041819/http://www.spanishcentral.com/word-of-the-day">
+                                        Spanish Word of the Day                                    </a>
+                                                                    <a href="/web/20190217041819/http://www.spanishcentral.com/most-popular-words">
+                                        Most Popular Words                                    </a>
+                                                                    <a href="/web/20190217041819/http://www.spanishcentral.com/quizzes">
+                                        Quizzes                                    </a>
+                                                            </div>
+                        </div>
+
+                        <!--Injecting search(translation) interface here-->
+                        <div class="search-partial ">
+                            <div id="spanish_search_form_container" class="box_sizing">
+    <div id="spanish_search_form" class="box_sizing">
+        <input type="text" data-lang_code="null" data-text_string="null" name="spanish_search" id="spanish_search" class="box_sizing" rows="2" data-placeholder="Translate words or phrases..." value="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+        <div id="autocomplete_holder"></div>
+    </div>
+    <a class="mobile-only search-button translate-trigger" href="javascript:void(0)">&nbsp;</a>
+    <a class="search-close" href="#">&nbsp;</a>
+    <div id="lang-bar">
+        <div id="special_char_bar">
+            <a class="arial_font" href="javascript:void(0)" data-character="á">&#225;</a>
+            <a class="arial_font" href="javascript:void(0)" data-character="é">&#233;</a>
+            <a class="arial_font" href="javascript:void(0)" data-character="í">&#237;</a>
+            <a class="arial_font" href="javascript:void(0)" data-character="ó">&#243;</a>
+            <a class="arial_font" href="javascript:void(0)" data-character="ú">&#250;</a>
+            <a class="arial_font" href="javascript:void(0)" data-character="ü">&#252;</a>
+            <a class="arial_font" href="javascript:void(0)" data-character="ñ">&#241;</a>
+            <a class="arial_font special_char_bar_adjust" href="javascript:void(0)" data-character="¿">&#191;</a>
+            <a class="arial_font special_char_bar_adjust" href="javascript:void(0)" data-character="¡">&#161;</a>
         </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2109.00835"
-        dc:identifier="/abs/2109.00835"
-        dc:title="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"
-        trackback:ping="/trackback/2109.00835" />
-    </rdf:RDF>
--->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computers and Society</h1>
+        <div id="translate" class="translate-trigger">
+            <a href="javascript:void(0)">Translate &#187;</a>
+        </div>
     </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2109.00835</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 2 Sep 2021]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Trokhymovych%2C+M">Mykola Trokhymovych</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Saez-Trumper%2C+D">Diego Saez-Trumper</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2109.00835">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model's performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata"><tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computers and Society (cs.CY)</span></td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2109.00835">arXiv:2109.00835</a> [cs.CY]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2109.00835v1">arXiv:2109.00835v1</a> [cs.CY]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2109.00835">https://doi.org/10.48550/arXiv.2109.00835</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
 </div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Diego Saez-Trumper [<a href="/show-email/12a895fd/2109.00835">view email</a>]
-      <br/><strong>[v1]</strong>
-Thu, 2 Sep 2021 10:45:07 UTC (5,621 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2109.00835" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2109.00835" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CY</div>
 
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2109.00835&amp;function=prev&amp;context=cs.CY"
-         accesskey="p" title="previous in cs.CY (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2109.00835&amp;function=next&amp;context=cs.CY" accesskey="n"
-         title="next in cs.CY (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CY/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CY/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CY/2109">2109</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2109.00835?context=cs">cs</a><br class="is-hidden-mobile">
+<!--JAVASCRIPT-->
+<script type="text/javascript">
+    require(['underscore', 'jquery', 'jquery.jqueryui'], function(_) {
+
+
+        /******************************************************************
+         * AUTOCOMPLETE SHENANIGANS
+         ******************************************************************/
+        window.spanishAutocompleteCache = {};
+        window.spanishAutocompleteQuery = null;
+
+        /*
+         * Custom autocomplete implementation for categories
+         */
+        $.widget( "custom.catcomplete", $.ui.autocomplete, {
+            _renderMenu: function(ul, items) {
+                var that = this;
+                var currentCategory = '';
+                $.each(items, function(index, item) {
+                    if (item.category != currentCategory) {
+                        var langCode = (item.category==='English') ? 'en' : 'es';
+                        ul.append( "<li class='ui-autocomplete-category georgia_font' data-langcode='" + langCode + "'>" + item.category + "</li>" );
+                        currentCategory = item.category;
+                    }
+                    that._renderItemData(ul, item);
+                });
+            }
+        });
+
+        /*
+         * Instantiating autocomplete
+         */
+        var catComplete = $("#spanish_search").catcomplete({
+            appendTo: "#autocomplete_holder",
+            messages: {
+                noResults: '',
+                results: function() {}
+            },
+            position: {
+                my: "left top",
+                at: "left bottom"
+            },
+            minLength: 2,
+            delay: 500,
+            source: function(request, response) {
+                var term = request.term;
+                if (term in spanishAutocompleteCache) {
+                    response(spanishAutocompleteCache[term]);
+                    return;
+                }
+                $.getJSON( "/ac", request, function(data, status, xhr) {
+                    /*
+                     * Spanish comes first
+                     */
+                    var spanish = [];
+                    var english = [];
+                    _.forEach(data, function(entry) {
+                        if ('category' in entry) {
+                            if (entry.category === 'Spanish') {
+                                spanish.push(entry);
+                            }
+                            if (entry.category === 'English') {
+                                english.push(entry);
+                            }
+                        }
+                    });
+                    data = spanish.concat(english);
+                    spanishAutocompleteCache[term] = data;
+
+                    response(data);
+                });
+            },
+
+            /*
+             * On click or enter - add lang code and go there
+             */
+            select: function(event, ui) {
+                limitSearchLength();
+                submitSearch(ui.item.value, (ui.item.category === 'Spanish') ? 'es' : 'en');
+            },
+
+            /*
+             * When focusing somewhere - set text for future language help
+             */
+            focus: function(event, ui) {
+                $("#spanish_search").attr('data-lang_code', (ui.item.category === 'Spanish') ? 'es' : 'en');
+                $("#spanish_search").attr('data-text_string', ui.item.value);
+            },
+
+            /*
+             * Nulling after close
+             */
+            close: function(event, ui) {
+                //$("#spanish_search").attr('data-lang_code', 'null');
+                //$("#spanish_search").attr('data-text_string', 'null');
+            }
+        });
+
+        /******************************************************************
+         * INJECTING CHARCTERS AT CARET
+         ******************************************************************/
+
+        /*
+         * This is required for search/translate
+         */
+        jQuery.fn.extend({
+            insertAtCaret: function(myValue){
+                return this.each(function(i) {
+                    if (document.selection) {
+                        //For browsers like Internet Explorer
+                        this.focus();
+                        var sel = document.selection.createRange();
+                        sel.text = myValue;
+                        this.focus();
+                    }
+                    else if (this.selectionStart || this.selectionStart == '0') {
+                        //For browsers like Firefox and Webkit based
+                        var startPos = this.selectionStart;
+                        var endPos = this.selectionEnd;
+                        var scrollTop = this.scrollTop;
+                        this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
+                        this.focus();
+                        this.selectionStart = startPos + myValue.length;
+                        this.selectionEnd = startPos + myValue.length;
+                        this.scrollTop = scrollTop;
+                    } else {
+                        this.value += myValue;
+                        this.focus();
+                    }
+                });
+            }
+        });
+
+        /*
+         * Inserting at caret
+         */
+        $('[data-character]').on('click', function(e) {e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+            if ( $('[name=spanish_search]').val() ==  $('[name=spanish_search]').attr('data-placeholder')) {
+                 $('[name=spanish_search]').val('').removeClass('spanish_search_form_placeholder');
+            }
+            $('#spanish_search').insertAtCaret($(this).attr('data-character'));
+            $('#spanish_search').trigger('focus');
+
+            /*
+             * Also - autocomplete closed - so let's reopen it
+             */
+            catComplete.catcomplete("search", $('#spanish_search').val()).focus();
+        });
+
+
+        /******************************************************************
+         * SUBMITTING AND CHAR LIMITING
+         ******************************************************************/
+        /*
+         * This action redirects user to a search page
+         */
+        var submitSearch = function(textToSubmit, langCode) {
+            var textArea = $('[name=spanish_search]');
+
+            /*
+             * Don't submit if search contains default text
+             */
+            if (textToSubmit === textArea.attr('data-placeholder')) {
+                return;
+            } else {
+                /*
+                 * If value is the same that was last clicked - we then should submit
+                 * a language code along with search
+                 */
+                var postfix = '';
+                if (langCode !== null) {
+                    postfix = '?l=' + langCode;
+                }
+
+                /*
+                 * This is temporary fix that strips linefeeds
+                 */
+                textToSubmit = textToSubmit.replace(/(\r\n|\n|\r)/gm,' ');
+
+                /*
+                 * Url-encoding that word
+                 */
+                textToSubmitEncoded = encodeURIComponent(textToSubmit);
+
+                /*
+                 * Mantis ticket 1849: Any words that contain + character should get replaced with %20
+                 * P.S. This is silly illogical to me. (Andrei)
+                 */
+                textToSubmitEncoded = textToSubmitEncoded.replace('%2B', '%20');
+
+                /*
+                 * Submit a search
+                 */
+                window.location = '/translate/' + textToSubmitEncoded + postfix;
+            }
+        };
+
+        /*
+         * This action checks textarea length and limits it
+         */
+        var limitSearchLength = function() {
+            var textArea = $('[name=spanish_search]');
+            textArea.val(textArea.val().substring(0, 400));
+        };
+
+        /*
+         * This is what happens on ENTER in textarea
+         */
+        $('#spanish_search_form').on('keydown', '[name=spanish_search]', function(e) {
+            var textField  = $(this);
+            if (e.keyCode == 13) {
+                /*
+                 * Submitting the search on enter
+                 */
+                e.preventDefault();
+                e.stopPropagation();
+
+                /*
+                 * Submit a search
+                 */
+                var textFieldTextString = textField.attr('data-text_string');
+                var textFieldLangCode = ((textField.attr('data-lang_code') !== 'null') && (textFieldTextString===textField.val())) ? textField.attr('data-lang_code') : null;
+
+                limitSearchLength();
+                submitSearch(textField.val(), textFieldLangCode, textFieldTextString);
+            } else {
+                /*
+                 * Nulling autocomplete lang code on anything else
+                 */
+                //textField.attr('data-text_string', 'null');
+                //textField.attr('data-lang_code', 'null');
+            }
+        });
+
+
+        /*
+         * this is what happens on textarea click and keyup.
+         * (purely to limit search entry length)
+         */
+        $('[name=spanish_search]').on('keyup change', function(e) {
+            limitSearchLength();
+            if ($(this).val().length === 0 && $(this).val() !== $(this).data('placeholder')) {
+                $('.search-close').removeClass('search-close-override');
+            } else {
+                $('.search-close').addClass('search-close-override');
+            }
+        });
+
+        /*
+         * this is what happens on translate click
+         */
+        $('.translate-trigger').on('click', function(e) {e.preventDefault();
+            limitSearchLength();
+            submitSearch($("#spanish_search").val(), null);
+        });
+
+        $body         = $('body');
+        $mainWrapper  = $('#content_wrapper_central_right_bottom_left');
+        $closeButton  = $('.search-close');
+        $searchInput  = $('[name=spanish_search]');
+
+        var contain   = $body.hasClass('contain-search');
+        var isDesktop = function() {
+            return (window.innerWidth > 767);
+        };
+
+        function searchDidFocus() {
+            if (! contain) {
+                $body.addClass('contain-search');
+            }
+
+            $('html, body').animate({
+                scrollTop: 0
+            }, 10);
+
+            $body.addClass('search-focus');
+
+            $searchInput.catcomplete('search');
+
+            if (typeof killDfpAds !== 'undefined') {
+                killDfpAds(['ad_slot_bottom']);
+            }
+        }
+
+        function searchDidBlur() {
+            if (! contain) {
+                $body.removeClass('contain-search');
+            }
+            $body.removeClass('search-focus');
+            googletag.pubads().refresh();
+        }
+
+        $closeButton.on('click touchend', function(e) {
+            e.preventDefault();
+            $searchInput.val('');
+            $closeButton.removeClass('search-close-override');
+            $searchInput.focus();
+        });
+
+        /*
+         * Implementing cross-browser placeholder
+         */
+        $searchInput.focus(function() {
+            var input = $(this);
+            if (input.val() == input.attr('data-placeholder')) {
+                input.val('').removeClass('spanish_search_form_placeholder');
+            }
+            searchDidFocus();
+        }).blur(function(e) {
+            var input = $(this);
+
+            if (e.relatedTarget && ($(e.relatedTarget).is('.search-close')) || $(e.relatedTarget).is('.search-button')) {
+                return;
+            }
+
+            if ((input.val() == '') || (input.val() == input.attr('data-placeholder'))) {
+                input.addClass('spanish_search_form_placeholder');
+                input.val(input.attr('data-placeholder'));
+            }
+
+            if (! isDesktop()) {
+                searchDidBlur();
+            }
+        }).blur();
+
+    });
+</script>
+                        </div>
+
+                        <!--Actual central content shall be here-->
+                        <div class="block50pxh mobile-hide"></div>
+<div id="home_page_central">
+    <div id="home_page_central_top">
+        <div id="home_page_central_top_left" class="box_sizing">
+            <div id="wod_home">
+	<div class="wod_main_header mobile-hide">
+        WORD OF THE DAY
+	</div>
+	<div class="mobile-header mobile-only">
+		Word of the Day, 02/16/2019	</div>
+	<div class="wrap clearfix">
+		<div id="wod_home_mtable">
+			<div>
+				<div class="wod_home_mtable_td2">
+					<div class="wod_home_stable_date mobile-hide">
+						February 16, 2019					</div>
+					<div class="wod_home_stable_word_text_pron">
+						<a class="front_wod_widget_word_text georgia_font" href="/web/20190217041819/http://www.spanishcentral.com/word-of-the-day" title="incitar">incitar</a>
+						<a class="a_play wod_listen_home" href="#" data-lang="es" data-dir="i" data-word="incitar" data-file="incit01sp"><i class="fa fa-volume-up"></i></a>
+					</div>
+
+					<div class="wod_home_trans_container">
+						<a class="georgia_font" href="/web/20190217041819/http://www.spanishcentral.com/word-of-the-day" title="">to incite</a>
+					</div>
+
+					<div class="wod_home_continue_container">
+						<a href="/web/20190217041819/http://www.spanishcentral.com/word-of-the-day">Learn More &#187;</a>
+					</div>
+				</div>
+				<div class="wod_home_mtable_td3">
+					<div class="wod_homepage_img_container">
+													<a href="/web/20190217041819/http://www.spanishcentral.com/word-of-the-day" title="to incite">
+								<img alt="TO INCITE" src="https://web.archive.org/web/20190217041819im_/http://assets.merriam-webster.com/sc/word_of_the_day/images/2696/thumb.jpg"/>
+							</a>
+											</div>
+				</div>
+			</div>
+			<div class="wod-home-signup">
+				<div class="wod_home_mtable_td4">
+					<div class="sg_up">
+						<div class="sg_up_hdr">
+							Subscribe to the Spanish Word of the day e-mail
+						</div>
+						<form id="wod_subscribe_form" action="https://web.archive.org/web/20190217041819/http://wodsignup.merriam-webster.com/mw-signup-swod/subscribe.php" method="post">
+							<table class="wod_email_inputs">
+								<tr>
+									<td>
+										<input id="wod_email" class="email_entry" type="text" name="email" placeholder="Enter e-mail address..."/>
+										<input class="submit_button" value="Subscribe" type="submit" data-loading1="loading..." data-normal1="SUBSCRIBE"/>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script type="text/javascript">
+	require(['underscore', 'jquery'], function(_) {
+
+		// This is what happens on submit
+		$('#wod_subscribe_form').on('submit', function(e){e.preventDefault();
+			var form = $(this);
+			var submitButton = form.find('[type=submit]');
+			var textField = form.find('[type=text]');
+
+			/*
+			 * Prevent double-clicking
+			 */
+			if (submitButton.hasClass('busy1')) {
+				return;
+			}
+
+			/*
+			 * Showing user that we're working
+			 */
+			submitButton.val(submitButton.attr('data-loading1'));
+			submitButton.addClass('busy1');
+
+			/*
+			 * Processing
+			 */
+			$.ajax({
+				type: 'GET',
+				dataType: "jsonp",
+				url: 'https://web.archive.org/web/20190217041819/http://wodsignup.merriam-webster.com/mw-signup-swod/subscribe.php',
+				jsonp: false,
+				jsonpCallback: 'signup_callback',
+				data: {
+					email: textField.val(),
+					subscribe: '1',
+					callback: 'signup_callback'
+				}
+			}).done(function(dataWeGotViaJsonp) {
+				window.location = '/wod-signup-message?message=' + dataWeGotViaJsonp;
+			}).always(function() {
+				submitButton.val(submitButton.attr('data-normal1'));
+				submitButton.removeClass('busy1');
+			});
+		});
+	});
+</script>        </div>
+        <div id="home_page_central_top_right" class="box_sizing">
+            <div id="fc_flashcards_home">
+    <div class="hdr mobile-hide">
+        <span class="attn">NEW!</span> FLASHCARDS
+    </div>
+    <div class="mobile-only mobile-header">
+        Flashcards
+    </div>
+    <div class="main_content">
+        <div class="main_content_liner">
+            <div class="ct_ar1">
+                <div class="ct_ar1_i">
+                    <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/all"><img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/flashcards/flashcards_75_55.0002.gif" alt="Flashcards icon"/></a>
+                </div>
+                <div class="ct_ar1_c">
+                    <div class="title">
+                        <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/all">How Do You Say...?</a>
+                    </div>
+                    <div class="descr mobile-hide">
+                        <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/all">Study and learn with our interactive flashcards</a>
+                    </div>
+                    <div class="descr mobile-only">
+                        Study and learn new Spanish vocabulary
+                        <br/>
+                        <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/all"><strong>Start now &#187;</strong></a>
+                    </div>
+                </div>
+            </div>
+                            <ul class="ct_ar2_ul mobile-hide">
+                                            <li class="ct_ar2_li">
+                            <div>
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/personality-types" class="ct_ar2_li_f">Personality Types</a>
+                                <span class="ct_ar2_li_semi">:&nbsp;</span>
+
+                                                                                                                                        <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/personality-types" class="ct_ar2_li_m">curioso, curiosa</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/personality-types" class="ct_ar2_li_m">extrovertido, extrovertida</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/personality-types" class="ct_ar2_li_m">introvertido, introvertida</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/personality-types" class="ct_ar2_li_m">valiente</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/personality-types" class="ct_ar2_li_m">tranquilo, tranquila</a>                                                                                                    <span class="ct_ar2_li_3dots">...</span>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </li>
+                                            <li class="ct_ar2_li">
+                            <div>
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/political-terms" class="ct_ar2_li_f">Political Terms</a>
+                                <span class="ct_ar2_li_semi">:&nbsp;</span>
+
+                                                                                                                                        <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/political-terms" class="ct_ar2_li_m">la ley</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/political-terms" class="ct_ar2_li_m">el proyecto de ley</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/political-terms" class="ct_ar2_li_m">votar</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/political-terms" class="ct_ar2_li_m">el referéndum</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/political-terms" class="ct_ar2_li_m">el presidente, la presidenta</a>                                                                                                    <span class="ct_ar2_li_3dots">...</span>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </li>
+                                            <li class="ct_ar2_li">
+                            <div>
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/sentence-connectors" class="ct_ar2_li_f">Sentence Connectors</a>
+                                <span class="ct_ar2_li_semi">:&nbsp;</span>
+
+                                                                                                                                        <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/sentence-connectors" class="ct_ar2_li_m">y</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/sentence-connectors" class="ct_ar2_li_m">también</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/sentence-connectors" class="ct_ar2_li_m">sin embargo</a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/sentence-connectors" class="ct_ar2_li_m">respecto a </a>,                                                                                                                                            <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/practice/sentence-connectors" class="ct_ar2_li_m">puesto que </a>                                                                                                    <span class="ct_ar2_li_3dots">...</span>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </li>
+                                    </ul>
+            
+            <!--See all word lists-->
+            <div class="ct_ar3 mobile-hide">
+                <a href="/web/20190217041819/http://www.spanishcentral.com/flashcards/all" title="See All Flashcard Sets">See All Flashcard Sets&nbsp;&#187;</a>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div id="home_page_central_bottom">
+        <div id="home_page_central_bottom_left" class="box_sizing">
+            <div id="homepage_quizzes_container">
+    <div class="quizzes_main_header mobile-hide">
+        Spanish Quizzes
+    </div>
+    <div class="mobile-header mobile-only">
+        Quizzes
+    </div>
+    <div class="main_content">
+        <div class="feature_quiz">
+            <div class="quiz_icon">
+                <a href="/web/20190217041819/http://www.spanishcentral.com/quiz/vocabulary-start"><img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/quizzes/vocabulary-quiz-70x55.gif" alt="Vocabulary Quiz Icon"/></a>
+            </div><!--quiz_icon-->
+            <div class="quiz_content">
+                <div class="title">
+                    <a href="/web/20190217041819/http://www.spanishcentral.com/quiz/vocabulary-start">How Strong Is Your Vocabulary?</a>
+                </div><!--title-->
+                <div class="descr">
+                    <a href="/web/20190217041819/http://www.spanishcentral.com/quiz/vocabulary-start">Take our 10-question quiz to find out</a>
+                </div><!--descr-->
+            </div><!--quiz_content-->
+        </div><!--feature_quiz-->
+
+        <div class="athletics-dots mobile-hide"></div>
+
+        <div class="feature_quiz">
+            <div class="quiz_icon">
+                <a href="/web/20190217041819/http://www.spanishcentral.com/quiz/name-that-thing-pick"><img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/quizzes/name-that-thing-70x55.gif" alt="Name That Thing Icon"/></a>
+            </div><!--quiz_icon-->
+            <div class="quiz_content">
+                <div class="title">
+                    <a href="/web/20190217041819/http://www.spanishcentral.com/quiz/name-that-thing-pick">Name That Thing</a>
+                </div><!--title-->
+                <div class="descr">
+                    <a href="/web/20190217041819/http://www.spanishcentral.com/quiz/name-that-thing-pick">Take our visual vocabulary quiz</a>
+                </div><!--descr-->
+            </div><!--quiz_content-->
+        </div><!--feature_quiz-->
+    </div><!--main_content-->
+</div><!--homepage_quizzes_container-->
+        </div>
+        <div id="home_page_central_bottom_right" class="box_sizing">
+            <div id="mp_front_container">
+	<div class="most_popular_main_header mobile-hide" onclick="location.href='/most-popular-words'">
+        Most Popular <span><img src="/web/20190217041819im_/http://www.spanishcentral.com/images/general/blue_right_arrow.gif"/></span>
+	</div>
+    <div class="mobile-only mobile-header">
+		Most Popular
+    </div>
+    <div id="spanish_mp_front_widget_main_holder">
+        <div id="spanish_mp_front_widget_main_holder_subtitle">
+            The most frequently looked up words on this site:
+        </div>
+        <table id="spanish_mp_front_widget_main_holder_table">
+            <thead>
+                <tr>
+                    <th>
+                        Past 24 hours
+                    </th>
+                    <th>
+                        Past Seven Days
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                1.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/sexo" alt="sexo" title="sexo">sexo</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                1.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/sexo" alt="sexo" title="sexo">sexo</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                2.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/sexy" alt="sexy" title="sexy">sexy</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                2.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/sexy" alt="sexy" title="sexy">sexy</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                3.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/basura" alt="basura" title="basura">basura</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                3.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/tambi%C3%A9n" alt="también" title="también">también</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                4.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/tambi%C3%A9n" alt="también" title="también">también</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                4.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/pedir" alt="pedir" title="pedir">pedir</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                5.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/dura" alt="dura" title="dura">dura</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                5.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/caliente" alt="caliente" title="caliente">caliente</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                6.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/impuesto" alt="impuesto" title="impuesto">impuesto</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                6.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/hermoso" alt="hermoso" title="hermoso">hermoso</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                7.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/arriba" alt="arriba" title="arriba">arriba</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                7.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/traductor" alt="traductor" title="traductor">traductor</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                8.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/cari%C3%B1o" alt="cariño" title="cariño">cariño</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                8.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/cari%C3%B1o" alt="cariño" title="cariño">cariño</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                9.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/disponible" alt="disponible" title="disponible">disponible</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                9.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/bueno" alt="bueno" title="bueno">bueno</a>                            </span>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td class="spanish_mp_front_widget_main_holder_table_td1">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                10.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/coraz%C3%B3n" alt="corazón" title="corazón">corazón</a>                            </span>
+                        </td>
+                        <td class="spanish_mp_front_widget_main_holder_table_td2">
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_counter">
+                                10.
+                            </span>
+                            <span class="spanish_mp_front_widget_main_holder_table_td1_text">
+                                <a href="/web/20190217041819/http://www.spanishcentral.com/translate/puta" alt="puta" title="puta">puta</a>                            </span>
+                        </td>
+                    </tr>
+                            </tbody>
+        </table>
+        <div id="mp_front_container_all_holder" class="box_sizing">
+            <a href="/web/20190217041819/http://www.spanishcentral.com/most-popular-words">View All &#187;</a>
+        </div>
+    </div>
+
+</div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</div>
+                    </div>
+                    <div id="content_wrapper_central_right_bottom_right">
+
+                        <!--ADVERTISEMENT CONTAINER-->
+                        <div id="ad_slot_right_top" class="box_sizing mobile-hide">
+                                                                                                <div id="div-gpt-ad-301800714321697772-2" style="width:300px;height:250px;display:inline-block;">
+                                        <script type="text/javascript">
+                                            googletag.cmd.push(function() { googletag.display("div-gpt-ad-301800714321697772-2"); });
+                                        </script>
+                                    </div>
+                                                                                    </div>
+
+                        <div id="right_actual_content_container" class="mobile-hide">
+                                                            <table class="free_apps_table">
+                                    <tr>
+                                        <td>
+                                            <a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/dictionary-apps/android-ipad-iphone-windows.htm">
+                                                <img src="/web/20190217041819im_/http://www.spanishcentral.com/images/general/mw_ipad_iphone_android_app_homepage_promo.jpg"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                                    </div>
+
+                        <!--ADVERTISEMENT CONTAINER-->
+                        <div id="ad_slot_right_bottom" class="box_sizing mobile-hide">
+                                                                                                <div id="div-gpt-ad-301800714321697772-3" style="width:300px;height:250px;display:inline-block;">
+                                        <script type="text/javascript">
+                                            googletag.cmd.push(function() { googletag.display("div-gpt-ad-301800714321697772-3"); });
+                                        </script>
+                                    </div>
+                                                                                    </div>
+                    </div>
+
+                    <!--Clearing columns-->
+                    <div style="clear:both;"></div>
+                </div>
+            </div>
+
+            <!--Clearing columns-->
+            <div style="clear:both;"></div>
+
+
+            <!--And finally- injecting a static footer-->
+            <div id="content_wrapper_full">
+                <div id="footer" class="footer-oa">
+
+                                    <div class="offerings_top">
+                        <div class="offer1">
+                            <div class="featTitle">
+                                The Merriam-Webster <br> Unabridged Dictionary
+                            </div>
+
+                            <div class="featImage_1">
+                                <a href="https://web.archive.org/web/20190217041819/https://unabridged.merriam-webster.com/">
+                                    <img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/footer_images/unabridged-promo.gif" alt="Merriam-Webster Unabridged Book Cover"/>
+                                </a>
+                            </div>
+
+                            <div class="featDescr">
+                                Online access to a <br> legendary resource <br> <a href="https://web.archive.org/web/20190217041819/https://unabridged.merriam-webster.com/subscriber/login">Log In</a> or <a href="https://web.archive.org/web/20190217041819/https://unabridged.merriam-webster.com/subscriber/register?refc=SIGNUP_SPANISH">Sign Up&nbsp;»</a>
+                            </div>
+                        </div>
+
+                        <div class="offer2">
+                            <div class="featTitle">
+                                Learning English? <br>We can help.
+                            </div>
+
+                            <div class="featImage_2">
+                                <a href="https://web.archive.org/web/20190217041819/http://www.learnersdictionary.com/">
+                                    <img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/footer_images/learners-promo.gif" alt="Learner's Dictionary Book Cover"/>
+                                </a>
+                            </div>
+
+                            <div class="featDescr">
+                                Visit our free site designed <br> especially for learners and <br> teachers of English <br> <a href="https://web.archive.org/web/20190217041819/http://www.learnersdictionary.com/">LearnersDictionary.com&nbsp;»</a>
+                            </div>
+                        </div>
+
+                        <div class="offer3">
+                            <div class="featImage_3">
+                                <a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/dictionary-apps/android-ipad-iphone-windows.htm">
+                                    <img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/footer_images/iphone-app-woman-with-cell.jpg" alt="Woman With Cell Phone"/>
+                                </a>
+                            </div>
+
+                            <div class="featTitle">
+                                Our Dictionary, <br> On Your Devices
+                            </div>
+
+                            <div class="featDescr">
+                                Merriam-Webster, <br> <em>With Voice Search</em> <br> <a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/dictionary-apps/android-ipad-iphone-windows.htm">Get the Free Apps! »</a>
+                            </div>
+                        </div>
+
+                        <div class="offer4">
+                            <div class="featTitle">
+                                Merriam-Webster's <br> Visual Dictionaries
+                            </div>
+
+                            <div class="featImage_4">
+                                <a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/shop/products/books/visual-dictionary-second-edition.htm">
+                                    <img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/footer_images/visual-dictionary-promo.gif" border="0" alt="Visual Dictionary Book Cover"/>
+                                </a>
+                            </div>
+
+                            <div class="featDescr">
+                                The new edition of the <br> remarkable reference <br> features 8,000 <br> illustrations. <br> <a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/shop/products/books/visual-dictionary-second-edition.htm">Learn More »</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Footer advertisement area-->
+                    <div id="footer_ad_holder">
+                        <!--ADVERTISEMENT CONTAINER-->
+                        <div id="ad_slot_bottom" class="box_sizing">
+                                                                                                <div id="div-gpt-ad-301800714321697772-4">
+                                        <script type="text/javascript">
+                                            googletag.cmd.push(function() { googletag.display("div-gpt-ad-301800714321697772-4"); });
+                                        </script>
+                                    </div>
+                                                                                    </div>
+                    </div>
+
+                    <div class="offerings_bottom">
+                        <div class="offer5">
+                            <div class="featTitle">
+                                Join Us
+                            </div>
+
+                            <div class="twitter">
+                                <div class="twLogo">
+                                    <a href="https://web.archive.org/web/20190217041819/http://twitter.com/merriamwebster"><img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/footer_images/twitter-logo.png"></a>
+                                </div>
+                                <div class="twDescr">
+                                    <a href="https://web.archive.org/web/20190217041819/http://twitter.com/merriamwebster">Merriam-Webster<br>on Twitter&nbsp;»</a>
+                                </div>
+                            </div>
+
+                            <div class="facebook">
+                                <div class="fbLogo">
+                                    <a href="https://web.archive.org/web/20190217041819/http://www.facebook.com/merriamwebster"><img src="/web/20190217041819im_/http://www.spanishcentral.com/images/freestanding/footer_images/facebook-logo.png"></a>
+                                </div>
+                                <div class="fbDescr">
+                                    <a href="https://web.archive.org/web/20190217041819/http://www.facebook.com/merriamwebster">Merriam-Webster<br>on Facebook&nbsp;»</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="offer6">
+                            <div class="featTitle">
+                                Bookstore: Digital and Print
+                            </div>
+                            <div class="bookstoreDescr">
+                                Merriam-Webster references for Mobile, Kindle, print, and more. <a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/shop/index.htm">See all&nbsp;»</a>
+                            </div>
+                        </div>
+
+                        <div class="offer7">
+                            <div class="featTitle">
+                                Other Merriam-Webster Dictionaries
+                            </div>
+
+                            <div class="dictURLs_1">
+                                <a href="https://web.archive.org/web/20190217041819/http://unabridged.merriam-webster.com/">Webster's Unabridged Dictionary&nbsp;»</a>
+                                <a href="https://web.archive.org/web/20190217041819/http://www.wordcentral.com/">WordCentral for Kids&nbsp;»</a>
+                            </div>
+                            <div class="dictURLs_2">
+                                <a href="https://web.archive.org/web/20190217041819/http://www.learnersdictionary.com/">Learner's ESL Dictionary&nbsp;»</a>
+                                <a href="https://web.archive.org/web/20190217041819/http://visual.merriam-webster.com/">Visual Dictionary&nbsp;»</a>
+                            </div>
+                        </div>
+                        <div style="clear:left;"></div>
+                    </div>
+                
+                    <!--And some other things-->
+                    <div class="footer-links-wrapper">
+                        <div class="browse-dictionary mobile-hide">
+                            <a href="/web/20190217041819/http://www.spanishcentral.com/browse/a">Browse the Spanish-English Dictionary</a>
+                        </div>
+                        <div class="major-links">
+                            <ol>
+                                <li><a href="/web/20190217041819/http://www.spanishcentral.com/">Home</a></li>
+                                <li><a href="/web/20190217041819/http://www.spanishcentral.com/help">Help</a></li>
+                                <li><a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/info/index.htm" target="_blank">About Us</a></li>
+                                <li><a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/shop/index.htm" target="_blank">Shop</a></li>
+                                <li><a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/advertising/">Advertising Info</a></li>
+                                <li><a href="https://web.archive.org/web/20190217041819/http://www.dictionaryapi.com/" target="_blank">Dictionary API</a></li>
+                            </ol>
+                        </div>
+                        <div class="browse-dictionary mobile-only">
+                            <a href="/web/20190217041819/http://www.spanishcentral.com/browse/a">Browse the Spanish-English Dictionary</a>
+                        </div>
+                        <div class="minor-links">
+                            <ol>
+                                <li><a href="/web/20190217041819/http://www.spanishcentral.com/privacy-policy">Privacy Policy</a></li>
+                                <li><a href="/web/20190217041819/http://www.spanishcentral.com/terms-of-use">Terms Of Use</a></li>
+                                <li><a href="https://web.archive.org/web/20190217041819/https://www.merriam-webster.com/contact-us">Contact Us</a></li>
+                            </ol>
+                        </div>
+                        <div class="copyright">
+                            <a href="/web/20190217041819/http://www.spanishcentral.com/terms-of-use#copyright">© 2019 Merriam-Webster, Incorporated</a>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- OneTrust Cookies Consent Notice start -->
+    <script type="text/javascript">
+        var oneTrustScript = 'https://web.archive.org/web/20190217041819/https://cdn.cookielaw.org/consent/c2f7a3bf-d454-4fd6-8e0f-140268e9f0a7.js';
+    </script>
+<!-- OneTrust Cookies Consent Notice end -->
+
+<script type="text/javascript">
+    require(['jquery'], function($) {
+        $.getScript(oneTrustScript)
+          .done(function(script, textStatus) {
+            // console.log( textStatus );
+          })
+          .fail(function( jqxhr, settings, exception ) {
+            // console.log('error message');
+        });
+      });
+</script>
+
+<script type="text/javascript">
+window.mwdata = {};
+window.mwdata.assetsDomain2 = 'https://web.archive.org/web/20190217041819/http://www.merriam-webster.com/assets';
+</script>
+<script src="https://web.archive.org/web/20190217041819js_/http://www.merriam-webster.com/assets/mw/static/shared/mw-shared/js/onetrust/onetrust.min.js"></script>
+    <!-- JAVASCRIPT -->
+    <script type="text/javascript">
+        require(['jquery'], function() {
+            
         
-      
-    </div>
-  </div>
-  
-    </div>
+            //Universal audio playback (this is used to play wod main, wod home, wod right, dict hw prons)
+            //JC: the reason playback functionality is duplicated - because
+            //afaik playback works differently in different places (would be nice to combine though)
+            $('.a_play').on('click touchdown', function(e){e.preventDefault();
+                
+                //JC: attached variables
+                var file = $(this).data('file');
+                var lang = $(this).data('lang');
+                var dir  = $(this).data('dir');
+                var word = $(this).data('word');
+                
+                //JC here's the dinamically constructed urls we will use
+                var mp3Url = 'https://web.archive.org/web/20190217041819/http://media.merriam-webster.com/audio/prons/es/me/mp3/' + dir + '/' + file + '.mp3';
+                var popUrl = 'https://web.archive.org/web/20190217041819/http://www.spanishcentral.com/audio?file=' + file + '&word=' + encodeURIComponent(word) + '&text=&format=mp3';
+                
+                //JC: if "mobile" view - just play it
+                if (window.innerWidth < 767) {
+                    if (typeof Audio !== 'undefined') {
+                        var audio = new Audio(mp3Url);
+                        audio.play();
+                        return;
+                    }
+                }
+                
+                //JC: if "desktop" view - open legacy popup thingie (we should really get rid of it)
+                var newwindow = window.open(popUrl, 'Listen', 'toolbar=no,scrollbars=yes,status=no,resizable=yes,menubar=no,height = 300,width = 670');
+                if (window.focus) {
+                    newwindow.focus();
+                }
+                
+                return;
+            });
+            
+            //Some googe analitics tracking. This should really be reafactored.
+            $('.offer1').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position1', 'Unabridged Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.offer2').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position2', 'Learner\'s Dictionary Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.offer3').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position3', 'Mobile Apps Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.offer4').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position4', 'Visual Dictionary Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.offer5').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Bottom3-Position1', 'Twitter/Facebook Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.offer6').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Bottom3-Position2', 'Bookstore Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.offer7').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Bottom3-Position3', 'Other Dictionaries Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.ad_slot1').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position1', 'Flashcards Body Parts Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.ad_slot2').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position2', '13 Ways to Say Goodbye Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.ad_slot3').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position3', 'Take the Visual Quiz Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
+            $('.ad_slot4').find('a').on('click', function(e) {e.preventDefault();
+                var url = $(this).attr('href');
+                ga('send', 'event', 'Site Promos', 'Top4-Position4', 'Personalities and Moods Promo', {'page': url, 'hitCallback': function () {document.location = url;}});
+            });
 
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2109.00835">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2109.00835" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2109.00835" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
+            var $menu = $('.hamburger-menu-content');
 
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2109.html#abs-2109-00835" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2109-00835" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Diego%20S%C3%A1ez-Trumper" title="DBLP author search">Diego Sáez-Trumper</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
+            $('.hamburger-menu').on('click', function(e) {
+                e.preventDefault();
 
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
+                $menu.toggleClass('active');
 
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835%26description%3DWikiCheck%3A+An+end-to-end+open+source+Automatic+Fact-Checking+API+based+on+Wikipedia&amp;v=d13a24f6"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835&amp;v=d98a6ef1"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835%26title%3DWikiCheck%3A+An+end-to-end+open+source+Automatic+Fact-Checking+API+based+on+Wikipedia&amp;v=b90eb72e"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835&amp;v=065950b4"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
+                return false;
+            });
 
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
+            $('.search-menu').on('click', function(e) {
+                e.preventDefault();
 
+                $('body')
+                    .removeClass('hide-search')
+                    .find('.search-partial')
+                    .removeClass('mobile-hide');
 
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
+                return false;
+            });
 
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
+            $('#spanish_search').on('focus', function(e) {
+                $menu.removeClass('active');
+            });
+            
+            $(document).on('click', function(e) {
+                var $target = $(e.target);
+                if ($target.is('.hamburger-menu') || $target.is('.hamburger-menu-content a')) {
+                    return;
+                }
 
+                $menu.removeClass('active')
+            });
+        });
+    </script>
 
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2109.00835" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
-
-      </div>
-    </main>
-
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
 </body>
-
 </html>
+<!--
+     FILE ARCHIVED ON 04:18:19 Feb 17, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:18:26 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 101.566
+  exclusion.robots: 0.257
+  exclusion.robots.policy: 0.247
+  RedisCDXSource: 1.187
+  esindex: 0.01
+  LoadShardBlock: 66.227 (3)
+  PetaboxLoader3.datanode: 117.738 (4)
+  CDXLines.iter: 18.962 (3)
+  load_resource: 90.104
+  PetaboxLoader3.resolve: 28.985
+-->

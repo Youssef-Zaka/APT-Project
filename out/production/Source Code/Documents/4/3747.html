@@ -1,598 +1,1583 @@
+
 <!DOCTYPE html>
-<html dir="ltr" lang="en-us">
+<html lang="en-US">
 <head>
-<!-- begin spin_special_output(head_start) -->
-<style type="text/css" wd_script_id="featureboxes_style">
-		.wd_featurebox_icon {
-			display: inline;
-		}
-		.wd_featurebox_icon img {
-			vertical-align: middle;
-		}
-		div.wd_featurebox_group div.wd_tabs_wrapper {
-			border: none;
-			border-bottom: 1px solid #E1E1E1;
-			padding: 0 0 5px 0;
-		}
-		div.wd_featurebox_group div.wd_featurebox {
-			border: none;
-			padding: 8px 0 0 0;
-		}
-		div.wd_featurebox_group li.wd_tab {
-			float: none;
-			color: #666666;
-		}
-		div.wd_featurebox_group li.wd_tab-active {
-			border: none;
-			background-color: transparent;
-			color: #000000;
-			font-weight: bold;
-		}
-		div.wd_featurebox_group li.wd_tab-inactive {
-			cursor: auto;
-		}
-	</style>
-<style type="text/css" wd_script_id="search_form_style">
-		.wd_search_form .wd_input_datepicker {
-			margin-right: 2px;
-		}
-		.wd_search_type_checkbox {
-			margin-left: 20px;
-		}
-		</style>
-<script type="text/javascript" src="js/jquery-webdriver.js" wd_script_id="jquery-webdriver.js"></script>
-<script type="text/javascript" src="js/webdriver.js" wd_script_id="webdriver.js"></script>
-<script type="text/javascript" wd_script_id="search_form_script">
-			function wd_toggle_search_form(link, advanced) {
-				var $ = webDriver.jQuery;
-				var $container = $(link).closest(".wd_search_form_container");
-				var basic_form = $container.find(".wd_search_form_basic");
-				var basic_query = basic_form.find('input[name="query"]');
-				var advanced_form = $container.find(".wd_search_form_advanced");
-				var advanced_query = advanced_form.find('input[name="query"]');
 
-				if (advanced) {
-					advanced_query.val(basic_query.val());
-					advanced_form.show();
-					basic_form.hide();
-				} else {
-					basic_query.val(advanced_query.val());
-					basic_form.show();
-					advanced_form.hide();
-				}
-			}
 
-			function wd_toggle_search_type_checkboxes(radio) {
-				var $ = webDriver.jQuery;
-				var $radio = $(radio);
-				var all = $radio.val() == "All" ? $radio.is(":checked") : !$radio.is(":checked");
-				var $checkboxes = $radio.closest(".wd_form_field").find(".wd_search_type_checkbox");
-				$checkboxes.find('input[type="checkbox"]').prop("disabled", all);
-				$checkboxes.toggle(!all);
-			}
+			<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-title" content="The Royal Gazette | Bermuda News, Business, Sports, Events, &amp;amp; Community - ">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://www.royalgazette.com/xmlrpc.php">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
 
-			webDriver.jQuery(function ($) {
-				$('.wd_search_type_radio input[type="radio"]').each(function() {wd_toggle_search_type_checkboxes(this);});
-			});
-		</script>
-<style type="text/css" wd_script_id="addthis_WCAG_style">
-		#at15s .at4-icon {
-			height: auto !important;
-			line-height: auto !important;
-			min-height: 16px;
-		}
-		span.wd_page_tool .at-share-tbx-element .at-share-btn {
-			margin: 0;
-		}
-		span.wd_page_tool .at-share-tbx-element .at-share-btn + .at-share-btn {
-			margin-left: 2ex;
-		}
-		div.wd_page_toolbar td span.wd_page_tool .at-share-tbx-element .at-share-btn + .at-share-btn {
-			margin-left: 4px;
-		}
-		li.wd_tool .at-resp-share-element .at-share-btn {
-			margin: 0;
-		}
-		li.wd_tool .at-resp-share-element .at-share-btn + .at-share-btn {
-			margin-left: 2px;
-		}
-	</style>
-<script type="text/javascript" wd_script_id="view_printable_script">
-	function view_printable() {
-		var loc = window.location;
-		var sep = (loc.search == "") ? "?" : "&";
-		var url = loc.protocol+"//"+loc.host+loc.pathname+loc.search+sep+"printable"+loc.hash;
-		window.open(url, "_blank", "");
-	}
-</script>
-<link href="thirdparty/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" wd_script_id="font-awesome.min.css">
-<style type="text/css" wd_script_id="toolbar_style">
-			div.wd_toolbar {
-				border-top: 1px solid #cccccc;
-				border-bottom: 1px solid #cccccc;
-				margin: 15px 0px 15px 0px;
-				padding: 5px;
-				line-height: 1;
-			}
-			div.wd_toolbar-page {
-				clear: both;
-			}
-			div.wd_toolbar ul.wd_tools {
-				display: inline-block;
-				width: 100%;
-				margin: 0;
-				padding: 5px 0;
-			}
-			div.wd_toolbar ul.wd_tools li.wd_tool {
-				display: block;
-				list-style-type: none;
-				margin-right: 5px;
-				padding: 0;
-				float: right;
-			}
-			span.wd_tool_icon > a:link,
-			span.wd_tool_icon > a:visited {
-				border-radius: 2px;
-				display: inline-block;
-				width: 30px;
-				height: 30px;
-				box-sizing: border-box;
-				margin: 0;
-				padding: 7px;
-				font-size: 16px;
-				line-height: 1;
-				text-align: center;
-				color: #ffffff;
-				background-color: #8d8d8d;
-			}
-			span.wd_tool_icon > a:hover {
-				color: #ffffff;
-				background-color: #666666;
-				text-decoration: none;
-			}
-			div.wd_toolbar ul.wd_tools li.wd_tool-addthis {
-				float: left;
-			}
-		</style>
-<style type="text/css" wd_script_id="template_list_inline_style">
-						ul.wd_layout-inline {
-							display: inline-block;
-							list-style: none;
-							padding: 0;
-							margin: 0;
-						}
-						ul.wd_layout-inline li {
-							display: inline-block;
-							padding: 0;
-							margin: 0 0 0 1em;
-						}
-					</style>
-<style type="text/css" wd_script_id="template detail:articles:site style">.wd_articles-detail a:hover {
-	background: transparent;
-}
-.wd_articles-detail .wd_title {
-	font-size: 1.7em;
-	margin: 10px 0 5px;
-}
-.wd_articles-detail p {
-	margin: 0 0 0 0;
-	padding: 0 0 5px 0;
-}
-.wd_articles-detail .item_name a {
-	font-size: 1.2em;
-	font-weight: normal;
-}
-.wd_articles-detail tr:first-child {
-	border-top: 0px none;
-	margin: 0 0 5px;
-}</style>
-<style type="text/css" wd_script_id="template teaser_list:articles:system style">
-.wd_articles-teaser .wd_date {
-	font-weight: bold;
-}
-.wd_articles-teaser .wd_title {
-	font-weight: bold;
-}
-.wd_articles-teaser .subscribe_link {
-	margin-bottom: 1em;
-}
-.wd_articles-teaser span.wd_subscribe_email-icon {  
-	font-size: 1.2em; 
-}</style>
+			<link rel="shortcut icon" href="https://www.royalgazette.com/wp-content/themes/royalgazette/images/default_favicon.ico" />
+	<script>var articleType = '';</script><script>var dfpType = '';</script><script>var pageTargeting = ["onion goes to oxford!",""];</script><style>.row-edit {display:flex; flex-wrap:wrap}.list-item a {color: #212529}.related-heading {font-family:Arial,Helvetica,sans-serif;font-size: 18px;font-weight: bold;font-style: normal;}.related-img {float:left;margin-right:7px}.related-title a {font-size: 14px !important;}.related-title {color: #2b4381 !important;font-weight: 600;line-height: 18px; font-family:Arial,Helvetica,sans-serif}/* Fancy Seperation */.fusion-separator.sep-shadow{margin:0 0 20px 0;height:1px;overflow:visible;border:none;background:0 0;background:linear-gradient(left,rgba(150,150,150,0) 0,rgba(150,150,150,0) 15%,rgba(150,150,150,.65) 50%,rgba(150,150,150,0) 85%,rgba(150,150,150,0) 100%)}.fusion-separator.sep-shadow:after{display:block;margin-top:30px;height:6px;width:100%;content:'';background:radial-gradient(ellipse at 50% -50%,rgba(0,0,0,.5) 0,rgba(255,255,255,0) 65%)}
+</style><script>var articleType = "Metered";[{"Type": "Article","Expression": window.articleType == "Metered"}]</script><script type="text/javascript">var dfpType = 'article';var category_dfp_array = ["General","News"];
+var tag_dfp_array = ["Language"];
+var articleTags = ["Language"];
+var articleUUID = '23ede185-e1ff-4548-9d56-31bc0484f77f';
+</script><title>Onion - and other Bermudian words - go to Oxford! - The Royal Gazette | Bermuda News, Business, Sports, Events, &amp;amp; Community | </title>
+<meta name="title" content="Onion - and other Bermudian words - go to Oxford!" />
+<meta name="keywords" content="Language" />
+<meta name="news_keywords" content="Language" />
+<meta name="description" content="A batch of Bermudian words has been added to the Oxford English Dictionary for the first time – along with a guide on how to pronounce them.
+Aceboy, Gombey, greeze, mice, and mug are among the new ent..." />
+<meta name="author" content="Sam Strangeways" />
+<meta property="category" content="News">
+<meta property="sub-category" content="General">
+<meta property="article:published_time" content="2021-03-17T18:39:00-03:00" />
+<meta property="article:updated_time" content="2021-03-17T18:39:56-03:00" />
+<meta itemprop="pageType" content="article">
 
-<!-- end spin_special_output(head_start) -->
-
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta charset="utf-8">
-	<meta name="robots" content="index, follow">
-	<meta name="rights" content="© Copyright IBM Corporation 2022">
-	<meta name="referrer" content="no-referrer-when-downgrade">
-	<script>cpp = {"path":"\/cloud\/ajax\/product\/{product}"}</script>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon">
-	<title>Update on our actions: War in Ukraine</title>
-	
- <meta name="keywords" content="We have suspended all business in Russia. IBMers' support for Ukrainian refugees in neighboring countries is truly inspiring. IBMers around the world are encouraged to continue making donations to the International Red Cross." />
- <meta name="description" content="" />
- <meta name="twitter:card" content="summary" />
- <meta name="twitter:title" content="Update on our actions: War in Ukraine" />
- <meta name="twitter:description" content="We have suspended all business in Russia. IBMers' support for Ukrainian refugees in neighboring countries is truly inspiring. IBMers around the world are encouraged to continue making donations to the International Red Cross." />
- <meta name="twitter:image" content="https://newsroom.ibm.com/image/Ukraine+Flag1.jpg" />
- <meta property="og:site_name" content="IBM Newsroom" />
- <meta property="og:url" content="https://newsroom.ibm.com/Update-on-our-actions-War-in-Ukraine" />
- <meta property="og:title" content="Update on our actions: War in Ukraine" />
- <meta property="og:description" content="We have suspended all business in Russia. IBMers' support for Ukrainian refugees in neighboring countries is truly inspiring. IBMers around the world are encouraged to continue making donations to the International Red Cross." />
- <meta name="image" property="og:image" content="https://newsroom.ibm.com/image/Ukraine+Flag1.jpg" />
-	<link rel="alternate" hreflang="en-us" href="https://www.ibm.com/us-en/" />
-    <link rel="alternate" hreflang="x-default" href="https://www.ibm.com" />
-    
-	<!-- <link rel="stylesheet" href="css/www.css" media="all">
-	<link rel="stylesheet" href="css/styles.chunk.css">
-	<link rel="stylesheet" href="css/expertise.css" media="all">
-	<link rel="stylesheet" href="css/forms.css" media="all">
-	<link rel="stylesheet" href="css/syntaxhighlighter.css" media="all">
-	<link rel="stylesheet" href="css/tables.css" media="all">
-	<link rel="stylesheet" href="css/grid-fluid.css" media="all">
-	<link rel="stylesheet" href="css/css_Cr98Co91qznllKC9Wy5J_7gpdfQEqV0SybQw-ck_JqE__iOLGJsklPd7.css" media="all"> -->
-	<link rel="stylesheet" href="css/jquery.fancybox.min.css">
-	<link rel="stylesheet" href="fontawesome/css/all.min.css">
-	<link rel="stylesheet" href="https://1.www.s81c.com/common/v18/css/www.css" />
-	<link rel="stylesheet" href="css/styles.chunk.css">
-	<link rel="stylesheet" type="text/css" href="css/wdcontent.css">
-	<link rel="alternate" href="https://newsroom.ibm.com/announcements?pagetemplate=rss" type="application/rss+xml" title="IBM - Announcements">			<!--<script src="https://1.www.s81c.com/common/v18/js/www.js"></script>-->
-	<script type="module">
-      //import 'https://1.www.s81c.com/common/carbon-for-ibm-dotcom/latest/ibmdotcom-web-components-dotcom-shell.min.js';
-	</script>
-	<!--[if lte IE 8]>
-	<script src="//1.cms.s81c.com/sites/default/files/js/js_VtafjXmRvoUgAzqzYTA3Wrjkx9wcWhjP0G4ZnnqRamA__iOLGJsklPd7s--QzuQq7ItMADkdM4v3PHQXFA_udVU.js"></script>
-	<![endif]-->
-	<!-- <script src="js/js_dUs2LcFOOCh7KM9XOxYjXu0rvvyAosRovLTET5mKHdc__iOLGJsklPd7s-.js"></script> -->
-	<!-- <script src="js/www.js"></script> -->
-	<script>
-		//IBMCore.common.config.masthead.enabled = false;
-		//IBMCore.common.util.config.set({
-        //"masthead": {
-        //  "type": "alternate"
-        //}
-     // });
-	</script>
-	<script type = "text/javascript">
-		window._ibmAnalytics = {
-		"settings": {
-			"name": "Newsroom",
-			"tealiumProfileName": "ibm-web-app"
-		}
-	};
-	digitalData = {
-		"page": {
-			"pageInfo": {
-				"ibm": {
-				"siteId": "IBM_" + _ibmAnalytics.settings.name,
-				}
-			},
-			"category": {
-				"primaryCategory": "PC190"
-			}
-		}
-	};
-	
-	</script>
-	<script src="//1.www.s81c.com/common/stats/ibm-common.js" defer=""></script>
-	
-<!-- begin spin_special_output(head_end) -->
-<script type="text/javascript" src="js/jquery.fancybox.min.js" wd_script_id="jquery.fancybox.min.js"></script>
-<link rel="canonical" href="https://newsroom.ibm.com/Update-on-our-actions-War-in-Ukraine?lnk=hpv18nf1" />
-<!-- end spin_special_output(head_end) -->
-<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
-<body class="wd_pageid_34223 wd_item_page wd_item_1281 wd_featured_item_page ibm-type">
-	<div id="ibm-top" class="ibm-landing-page">
-		<!-- MASTHEAD_BEGIN -->
-		<div class="bx--masthead__l0">
-			<header role="banner" class="bx--header">
-				<a id="link" part="link" class="bx--header__name" href="https://www.ibm.com/" aria-label="IBM logo"><svg focusable="false" preserveAspectRatio="xMidYMid meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" width="58px" height="23px" viewBox="0 0 58 23"><!----><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="ibm-8-bar-logo--h15-copy" fill="#161616"><path d="M58,21.4666667 L58,23 L50.3684211,23 L50.3684211,21.4666667 L58,21.4666667 Z M39.6842105,21.4666667 L39.6842105,23 L32.0526316,23 L32.0526316,21.4666667 L39.6842105,21.4666667 Z M45.6385329,21.4666667 L45.0245693,23 L44.41871,21.4666667 L45.6385329,21.4666667 Z M28.5421053,21.4666667 C27.4471432,22.4188667 26.0029202,23 24.3905263,23 L24.3905263,23 L12.2105263,23 L12.2105263,21.4666667 Z M10.6842105,21.4666667 L10.6842105,23 L0,23 L0,21.4666667 L10.6842105,21.4666667 Z M39.6842105,18.4 L39.6842105,19.9333333 L32.0526316,19.9333333 L32.0526316,18.4 L39.6842105,18.4 Z M46.8318522,18.4 L46.2377311,19.9333333 L43.8212353,19.9333333 L43.2226426,18.4 L46.8318522,18.4 Z M30.0684211,18.4 C29.9306437,18.9451697 29.7105614,19.4599515 29.4273684,19.9333333 L29.4273684,19.9333333 L12.2105263,19.9333333 L12.2105263,18.4 Z M10.6842105,18.4 L10.6842105,19.9333333 L0,19.9333333 L0,18.4 L10.6842105,18.4 Z M58,18.4 L58,19.9333333 L50.3684211,19.9333333 L50.3684211,18.4 L58,18.4 Z M54.9473684,15.3333333 L54.9473684,16.8666667 L50.3684211,16.8666667 L50.3684211,15.3333333 L54.9473684,15.3333333 Z M39.6842105,15.3333333 L39.6842105,16.8666667 L35.1052632,16.8666667 L35.1052632,15.3333333 L39.6842105,15.3333333 Z M48.0292704,15.3333333 L47.4295831,16.8666667 L42.6233978,16.8666667 L42.019006,15.3333333 L48.0292704,15.3333333 Z M29.8547368,15.3333333 C29.991899,15.8221879 30.0684211,16.3357152 30.0684211,16.8666667 L30.0684211,16.8666667 L24.4210526,16.8666667 L24.4210526,15.3333333 Z M19.8421053,15.3333333 L19.8421053,16.8666667 L15.2631579,16.8666667 L15.2631579,15.3333333 L19.8421053,15.3333333 Z M7.63157895,15.3333333 L7.63157895,16.8666667 L3.05263158,16.8666667 L3.05263158,15.3333333 L7.63157895,15.3333333 Z M54.9473684,12.2666667 L54.9473684,13.8 L50.3684211,13.8 L50.3684211,12.2666667 L54.9473684,12.2666667 Z M39.6842105,12.2666667 L39.6842105,13.8 L35.1052632,13.8 L35.1052632,12.2666667 L39.6842105,12.2666667 Z M49.2252679,12.2666667 L48.6284686,13.8 L41.4089474,13.8 L40.8168134,12.2666667 L49.2252679,12.2666667 Z M27.9773684,12.2666667 C28.5037637,12.6994848 28.9570701,13.2181697 29.3052632,13.8 L29.3052632,13.8 L15.2631579,13.8 L15.2631579,12.2666667 Z M7.63157895,12.2666667 L7.63157895,13.8 L3.05263158,13.8 L3.05263158,12.2666667 L7.63157895,12.2666667 Z M44.5987396,9.2 L45.0263158,10.4393515 L45.4535426,9.2 L54.9473684,9.2 L54.9473684,10.7333333 L50.3684211,10.7333333 L50.3684211,9.32433939 L49.8494737,10.7333333 L40.1878947,10.7333333 L39.6842105,9.3242 L39.6842105,10.7333333 L35.1052632,10.7333333 L35.1052632,9.2 L44.5987396,9.2 Z M7.63157895,9.2 L7.63157895,10.7333333 L3.05263158,10.7333333 L3.05263158,9.2 L7.63157895,9.2 Z M29.3052632,9.2 C28.9570701,9.7818303 28.5037637,10.3003758 27.9773684,10.7333333 L27.9773684,10.7333333 L15.2631579,10.7333333 L15.2631579,9.2 Z M54.9473684,6.13333333 L54.9473684,7.66666667 L45.9831118,7.66666667 L46.5234001,6.13333333 L54.9473684,6.13333333 Z M43.534302,6.13333333 L44.0745993,7.66666667 L35.1052632,7.66666667 L35.1052632,6.13333333 L43.534302,6.13333333 Z M30.0684211,6.13333333 C30.0684211,6.66414545 29.991899,7.17767273 29.8547368,7.66666667 L29.8547368,7.66666667 L24.4210526,7.66666667 L24.4210526,6.13333333 Z M19.8421053,6.13333333 L19.8421053,7.66666667 L15.2631579,7.66666667 L15.2631579,6.13333333 L19.8421053,6.13333333 Z M7.63157895,6.13333333 L7.63157895,7.66666667 L3.05263158,7.66666667 L3.05263158,6.13333333 L7.63157895,6.13333333 Z M42.4774196,3.06666667 L43.0079113,4.6 L32.0527757,4.6 L32.0526316,3.06666667 L42.4774196,3.06666667 Z M58,3.06666667 L58,4.6 L47.0390632,4.6 L47.5903678,3.06666667 L58,3.06666667 Z M29.4273684,3.06666667 C29.7105614,3.54004848 29.9306437,4.0548303 30.0684211,4.6 L30.0684211,4.6 L12.2105263,4.6 L12.2105263,3.06666667 Z M10.6842105,3.06666667 L10.6842105,4.6 L0,4.6 L0,3.06666667 L10.6842105,3.06666667 Z M41.4056725,0 L41.9462722,1.53333333 L32.05278,1.53333333 L32.0526316,0 L41.4056725,0 Z M58,0 L58,1.53333333 L48.1188427,1.53333333 L48.6466706,0 L58,0 Z M24.3905263,0 C25.9912083,0 27.4472798,0.581133333 28.5421053,1.53333333 L28.5421053,1.53333333 L12.2105263,1.53333333 L12.2105263,0 Z M10.6842105,0 L10.6842105,1.53333333 L0,1.53333333 L0,0 L10.6842105,0 Z" id="Combined-Shape"></path></g></g></svg></a>				
-				<!-- <dds-search-with-typeahead></search-with-typeahead> -->
-				<!-- <a role="menuitem" tabindex="0" href="javascript:void 0" aria-haspopup="menu" class="bx--header__menu-item bx--header__menu-title" aria-expanded="false" aria-label="User profile">
-        			<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 32 32"><path d="M16 4a5 5 0 11-5 5 5 5 0 015-5m0-2a7 7 0 107 7A7 7 0 0016 2zM26 30H24V25a5 5 0 00-5-5H13a5 5 0 00-5 5v5H6V25a7 7 0 017-7h6a7 7 0 017 7z"></path></svg>
-    			</a>
-				<ul role="menu" class="bx--header__menu">
-					<li><a part="link" role="menuitem" tabindex="0" class="bx--header__menu-item" href="https://myibm.ibm.com/?lnk=mmi"> <span part="title" class="bx--text-truncate--end"></span> </a></li>
-					<li><a part="link" role="menuitem" tabindex="0" class="bx--header__menu-item" href="https://login.ibm.com/oidc/endpoint/default/authorize?redirect_uri=https%3A%2F%2Fmyibm.ibm.com%2FOIDCHandler.html&amp;response_type=token&amp;client_id=v18LoginProdCI&amp;scope=openid&amp;state=http%3A%2F%2Fstage.mediaroom.com%2Fibmnewsroom%2Fannouncements&amp;nonce=8675309"> <span part="title" class="bx--text-truncate--end"></span> </a></li>
-				</ul>-->
-				<div class="bx--header__search">
-					<div class="wd_search_form_container"><form name="basic_search" method="get" action="https://newsroom.ibm.com/index.php?s=20322" class="wd_search_form wd_search_form_basic"><input type="hidden" name="s" value="search_results" /><input type="text" name="query" value="" size="32" placeholder="Search the IBM Newsroom" title="Search the IBM Newsroom" /> <a href="#" onclick="webDriver.jQuery(this).closest('form').submit(); return false;"><button role="button" value="Submit" type="submit"><svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 32 32"><path d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z"></path></svg></button></a></form>
-</div>          		</div>
-				<div class="bx--header__search--actions">
-					<button type="button" part="open-button" class="bx--header__action bx--header__search--search" aria-label="Open IBM search field">
-						<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 32 32">
-							<path d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z"></path>
-						</svg>
-					</button>
-					<button type="button" part="close-button" class="bx--header__action bx--header__search--close" aria-label="Close">
-						<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" width="20" height="20" viewBox="0 0 32 32">
-							<path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path>
-						</svg>
-					</button>
-				</div>				
-			</header>
-		</div>
-		<dds-masthead-container></dds-masthead-container>
-		<!-- MASTHEAD_END -->
-		<div id="ibm-content-wrapper">		
-			<header role="banner" class="bx--header wd_nav_header">
-				<a class="bx--header__name pl-header-text" href="index.php"><span class="bx--header__name--prefix">IBM&nbsp;</span>Newsroom</a>
-				<div class="ibm-divider"></div>
-				<button data-autoid="dds--masthead-default-sidenav__l0-menu" aria-label="Open menu" class="bx--header__action bx--header__menu-trigger bx--header__menu-toggle bx--header__menu-toggle__hidden" title="Open menu" type="button">
-					<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
-						<path d="M2 14.8H18V16H2zM2 11.2H18V12.399999999999999H2zM2 7.6H18V8.799999999999999H2zM2 4H18V5.2H2z"></path>
-					</svg>
-				</button>
-				<nav role="navigation">
-					<div class="ibm-sitenav-menu-list">
-						<ul role="menubar">
-	<li role="presentation"><a role="menuitem" href="https://newsroom.ibm.com/home" tabindex="-1" target="_self">Home</a></li>
-	<li class="ibm-haschildlist" role="presentation">
-	<button role="menuitem" tabindex="0">Latest News</button>
-	<ul role="menu level2">
-	<li role="presentation"><a role="menuitem" href="latest-news-hybrid-cloud" tabindex="-1" target="_self">Hybrid Cloud</a></li>
-	<li role="presentation"><a role="menuitem" href="latest-news-AI" tabindex="-1" target="_self">AI</a></li>
-	<li role="presentation"><a role="menuitem" href="latest-news-quantum-innovation" tabindex="-1" target="_self">Quantum & Innovation</a></li>
-	<li role="presentation">
-	<a role="menuitem" href="latest-news-business-growth" tabindex="-1" target="_self">Business Growth</a>
-	<ul role="menu level3">
-	<li role="presentation">
-		<a href="https://newsroom.ibm.com/mergers-and-acquisitions" target="_self" role="menuitem">Mergers & Acquisitions </a>
-	</li>
-</ul>
-	</li>
-	<li role="presentation"><a role="menuitem" href="latest-new-good-tech" tabindex="-1" target="_self">Good Tech</a></li>
-</ul>
-	</li>
-	<li role="presentation"><a role="menuitem" href="https://newsroom.ibm.com/announcements" tabindex="-1" target="_self">Press Releases</a></li>
-	<li role="presentation"><a role="menuitem" href="https://newsroom.ibm.com/contacts" tabindex="-1" target="_self">Media Contacts</a></li>
-	<li role="presentation"><a role="menuitem" href="https://newsroom.ibm.com/media-center-l1" tabindex="-1" target="_self">Media Center</a></li>
-	<li role="presentation"><a role="menuitem" href="https://newsroom.ibm.com/executive-bios" tabindex="-1" target="_self">Leadership</a></li>
-	<li role="presentation"><a role="menuitem" href="https://newsroom.ibm.com/global-news-room" tabindex="-1" target="_self">Global Newsrooms</a></li>
-	<li role="presentation"><a role="menuitem" href="subscribe" tabindex="-1" target="_self">Subscribe</a></li>
-</ul>
-					</div>
-				</nav>
-			</header>
-
-			<main role="main" aria-label="Experience IBM">
-								<div id="ibm-pcon">
-					<div id="ibm-content">
-						<div id="ibm-content-body" class="ibm-padding-top-0">
-							<div id="ibm-content-main">
-																								
-								
-																			
-								 
-								<section>
-									<div class="bx--grid ibm-pt-3 ibm-pb-2 wd_header_container">
-										<div class="bx--row think-content-row">
-											<div class="bx--col-lg-16">
-												<h1>Latest News</h1>
-											</div>
-										</div>
-									</div>												
-									<div class="bx--grid ibm-pt-2">
-										<div class="bx--row think-content-row">
-										<div id="wd_featured_item" class="bx--col-lg-16 ibm-pb-5"></div>
-											<div class="bx--col-lg-1 ibm-mb-3" id="wd_page_tools">
-											</div>
-											<div class="bx--col-lg-10 wd_border_right ibm-mb-3">
-												<!-- BEGIN CONTENT-WRAPPER -->	
-												<div class="wd_content">
-																										<div id="wd_printable_content">
-<div class="wd_articles-detail">
-<div id="wd_move_content_up">
-<div class="wd_title">Update on Our Actions: War in Ukraine</div>
-
-<div class="wd_author_info">
-By Arvind  Krishna | Chairman and CEO, IBM
-</div>
-
-<div class="wd_date">March 07, 2022</div>
-
-			<div class="wd_captioned_image" style="float: left;  margin: 10px 10px 10px 0px; width: 1920px;">
-				<div class="wd_image"><img src="/image/Ukraine+Flag2.jpg" border="0"/></div>
+<meta property="fb:pages" content="249363077854" />
+<meta property="og:title" content="Onion - and other Bermudian words - go to Oxford!" />
+<meta property="og:type" content="article" />
+<meta property="og:cat" content="News" />
+<meta property="og:sub" content="General" />
+<meta property="og:url" content="https://www.royalgazette.com/news/article/20210317/onion-goes-to-oxford/" />
+<meta property="og:description" content="A batch of Bermudian words has been added to the Oxford English Dictionary for the first time – along with a guide on how to pronounce them.
+Aceboy, Gombey, greeze, mice, and mug are among the new ent..." />
+<meta property="og:image" content="https://imengine.editorial.prod.rgb.navigacloud.com/?uuid=AB8C79DB-ECCE-458F-82B6-942023975292&function=fit&type=preview" />
 				
+<meta name="twitter:url" content="https://www.royalgazette.com/news/article/20210317/onion-goes-to-oxford/" />
+<meta name="twitter:site" content="@TheRoyalGazette" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Onion - and other Bermudian words - go to Oxford!" />
+<meta name="twitter:description" content="A batch of Bermudian words has been added to the Oxford English Dictionary for the first time – along with a guide on how to pronounce them.
+Aceboy, Gombey, greeze, mice, and mug are among the new ent..." />
+
+<!-- Global Dimension -->
+<script type="text/javascript">
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+	'article_id': '23ede185-e1ff-4548-9d56-31bc0484f77f',
+	'type': 'article',
+	'category': 'News',
+	'subcat': 'General',
+	'pubdate': '2021-03-17-06:39PM'
+	});
+</script>
+
+
+<script type="text/javascript">var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+  var gads = document.createElement('script');
+  gads.async = true;
+  gads.type = 'text/javascript';
+  var useSSL = 'https:' == document.location.protocol;
+  gads.src = (useSSL ? 'https:' : 'http:') +
+    '//www.googletagservices.com/tag/js/gpt.js';
+  var node = document.getElementsByTagName('script')[0];
+  node.parentNode.insertBefore(gads, node);
+})();
+
+googletag.cmd.push(function() {
+
+  var path =  window.location.pathname;
+
+  if (path.indexOf('classifieds') !== -1) {
+    pageTargeting = 'classifieds';
+  } else if (path.indexOf('jobs') !== -1) {
+    pageTargeting = 'jobs';
+  } else if (path.indexOf('gentlemens-corner') !== -1) {
+    pageTargeting = 'island';
+  } else if (path.indexOf('political-cartoons') !== -1) {
+    pageTargeting = 'comment';
+  } 
+
+  googletag.defineSlot('/10134346/468x60_Above_page', [468, 60], 'div-gpt-ad-1397220158251-11').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/990x100_Above_Masthead', [990, 100], 'div-gpt-ad-1397220158251-12').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/center5-630x100', [630, 100], 'div-gpt-ad-1397220158251-20').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/300x250-SKYBOX', [300, 250], 'div-gpt-ad-1397220158251-10').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/300x250-SKYBOX2', [300, 250], 'div-gpt-ad-1397220158251-23').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/300x250-RR1', [300, 250], 'div-gpt-ad-1397220158251-8').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/300x250-RR2', [300, 250], 'div-gpt-ad-1397220158251-9').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/300x100-RR3', [[300,250],[300,100]], 'div-gpt-ad-1397220158251-3').addService(googletag.pubads());
+  // googletag.defineSlot('/10134346/300x100-RR4', [[300,250],[300,100]], 'div-gpt-ad-1397220158251-4').addService(googletag.pubads());
+  // googletag.defineSlot('/10134346/300x100-RR5', [[300,250],[300,100]], 'div-gpt-ad-1397220158251-5').addService(googletag.pubads());
+  // googletag.defineSlot('/10134346/300x100-RR6', [[300,250],[300,100]], 'div-gpt-ad-1397220158251-6').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/300x100-RR7', [[300,250],[300,100]], 'div-gpt-ad-1397220158251-7').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/article-ad3-600x140', [[600, 140],[630, 100],[300,250]], 'div-gpt-ad-1397220158251-15').addService(googletag.pubads());
+//  googletag.defineSlot('/10134346/Article-inside-300x250', [300, 250], 'div-gpt-ad-1397220158251-16').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/Mobile-Head-320x60', [320, 60], 'mobile-head').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/Mobile-Homepage-320x60', [320, 60], 'mobile-home').addService(googletag.pubads());
+  googletag.defineSlot('/10134346/Mobile-Content-320x60', [320, 60], 'mobile-content').addService(googletag.pubads());
+
+  if (path == '/') {
+
+		googletag.pubads().setTargeting('section', ['mobile', 'frontpage']);
+  
+  } else if (dfpType == 'article'){
+
+        for(var i=0; i < category_dfp_array.length; i++) {
+            category_dfp_array[i] = category_dfp_array[i].toUpperCase();
+            if (category_dfp_array[i] == 'LIFESTYLE') {
+              category_dfp_array[i] = 'ISLAND';
+            }
+        }
+
+        for(var i=0; i < tag_dfp_array.length; i++) {
+            tag_dfp_array[i] = tag_dfp_array[i].toUpperCase();
+        }
+
+        var articleTargetingArray = category_dfp_array.concat(tag_dfp_array);
+        articleTargetingArray.push(articleUUID);
+		if (pageTargeting[0] != '') {
+    	articleTargetingArray.push(pageTargeting.toString().toLowerCase());
+		}
+		googletag.pubads().setTargeting('section', ['mobile', articleTargetingArray]);
+  
+  } else if (dfpType == 'concept_page') {
+
+       var regex1level = /\/(.*)\//g;
+       var regex2levels = /\/(.*)\/(.*)\//g;
+       var replacePattern = `$1`;
+
+        if (path == '/') {
+          path = '/home';
+        }
+
+       var onelevel = path.search(regex1level) >= 0;
+       var twolevels = path.search(regex2levels) >= 0;
+
+       if (twolevels == true){
+         var conceptpage_category_url = path.replace(regex2levels, replacePattern);
+       } else if (onelevel == true){
+         var conceptpage_category_url = path.replace(regex1level, replacePattern);
+       } else {
+         var conceptpage_category_url = false;
+       }
+
+        var conceptpage_categories = [];
+        if (conceptpage_category_url == 'lifestyle') {
+            conceptpage_category_url = 'island';
+        }
+
+        conceptpage_categories.push(conceptpage_category_url.toLowerCase());
+        conceptpage_categories.push(conceptpage_category.toLowerCase());
+
+        for(var i=0; i < pageTargeting.length; i++) {
+            conceptpage_categories.push(pageTargeting[i]);
+        }
+		googletag.pubads().setTargeting('section', ['mobile', conceptpage_categories]);
+
+  } else {
+
+		googletag.pubads().setTargeting('section', ['mobile', pageTargeting]);
+  
+  }
+
+  googletag.pubads().collapseEmptyDivs();
+  googletag.pubads().setCentering(true);
+  googletag.pubads().enableSingleRequest();
+  googletag.enableServices();
+});</script><!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=Test"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	var postType = 'article';
+
+	if (postType == 'article'){ 
+		gtag('config', 'Test', {
+		'custom_map': {'dimension1': 'Article'}
+		});
+
+		gtag('event', 'article_dimensions', {'Article': 'true'});
+	} else {
+		gtag('config', 'Test', {
+		'custom_map': {'dimension1': 'Article'}
+		});
+
+		gtag('event', 'article_dimensions', {'Article': 'false'});		
+	}
+</script><meta name="facebook-domain-verification" content="aouo99pbihc6nskaefa5otznt7z1ld" />
+<script src="//cdn.districtm.ca/merge/merge.v4.5.141582.js"></script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K6NC2S7');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Global site tag (gtag.js) - Google Ads: 810985573 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-810985573"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-810985573');
+</script>
+
+<script>
+  gtag('event', 'page_view', {
+    'send_to': 'AW-810985573',
+    'user_id': 'RG'
+  });
+</script>
+
+<!-- Start Alexa Certify Javascript -->
+<script type="text/javascript">
+_atrk_opts = { atrk_acct:"EA85u1DlQy20Y8", domain:"royalgazette.com",dynamic: true};
+(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://certify-js.alexametrics.com/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+</script>
+<noscript><img src="https://certify.alexametrics.com/atrk.gif?account=EA85u1DlQy20Y8" style="display:none" height="1" width="1" alt="" /></noscript>
+<!-- End Alexa Certify Javascript -->
+
+<!-- push notification -->
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>
+  window.OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "0cb47398-04f0-4842-89c8-73390d473ed1",
+    });
+  });
+</script><title>Onion goes to Oxford! &#8211; The Royal Gazette | Bermuda News, Business, Sports, Events, &amp; Community</title>
+<style type='text/css'> 
+                html, body { font-family: Arial, Helvetica, sans-serif !important;}
+                form#login { font-family: Arial, Helvetica, sans-serif !important; }
+                .header-region { background-color: #ffffff; }
+                @font-face { font-family: Merriweather; src: url(https://fonts.googleapis.com/css?family=Merriweather); }
+                .hamburger-menu #top-main-menu { width: 300px ; }
+                .teaser-body.frontpagecategoryblock, .teaser-body.frontpagefeaturedtop, .section-teaser .teaser__leadin { color: #212121; } 
+                a, .concept-page a { color: #000000; text-decoration: none !important; }
+                .search_page_container a { color: #000000; text-decoration: none !important; }  
+                a:hover span.teaser__headline-marker, div#top-bar a:hover, div#right-sidebar a:hover { color: #605151; text-decoration: none !important;  }  
+                .main-navigation a.nav-link:hover { color: #ffffff !important; }
+                #top-bar, #top-bar .bg-primary { background-color: #3260ae !important; } 
+                div#top-bar a:hover { color: #e4e4e4; }  
+                #footer-menu .bg-primary { background-color: #3260ae !important; } 
+                .footer-menu a { color: #dddddd; } 
+                .footer-menu a:hover { color: #6d6d6d; }  
+                img.footer_logo_image { max-height: 70px; } 
+                #wrapper-navbar .main-navigation.navbar { background-color: #ffffff !important; } 
+                nav.main-navigation li a { color: #000000 !important; } 
+                .btn-primary, .btn-secondary, .btn, .main-nav-search input#searchsubmit { background-color: #636363 !important;, border-color: #636363 !important; } 
+                i.fa.fa-window-close { color: #636363; }
+                #sidebarMenu li a { font-size: 16px; font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif; } 
+                .sidebarMenu { background-color: #ffffff} 
+                #sidebarMenu li a, #sidebarMenu hr.sidebarMenuLine, .sidebarMenuCloseButton { color: #1e0745; }
+                .widget-title, .frontpagefeaturedtop, .every_board .teaser__headline span { color: #000000; font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif; } 
+                .content-area .entry-header .entry-title, .search_page_title { font-size: 28px; } 
+                .section-teaser .entry-title h2.teaser__headline { font-size: 22px; } 
+                .section-teaser .category_overlay { background-color: #1e0745; color: #ffffff; } 
+                .frontpage-category-title { font-size: 20px; font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif;} 
+                .frontpage-slider .teaser__headline-marker, .frontpagefeaturedtop .teaser__headline-marker { font-size: 18px; } 
+                .article-page .article__headline { font-size: 32px; font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif; } 
+                .entry-title.frontpagecategoryblock, .entry-title.frontpagecategoryblock h2, article.teaser.frontpagecategorylistrest .teaser__headline { font-size: 18px; } 
+                article.teaser.frontpagecategorylisttop .teaser__headline { font-size: 18px; }
+                article.teaser.frontpagecategorylistrest .teaser__headline { font-size: 14px; } 
+                .above_footer_widget_area { background-color: #ffffff; color: #000000; } 
+                #wrapper-footer { background-color: #3260ae;} 
+                .content-area.entry-content, .article__body .article-restofcontent { font-family: Arial, Helvetica, sans-serif;}
+                .article__body .article-restofcontent { color: #000000;}
+                span.article__body.article__leadin { color: #000000; font-family: Arial, Helvetica, sans-serif;}
+                .teaser-body.frontpagecategoryblock, .teaser-body.frontpagefeaturedtop { font-size: 15px; }
+                .section-teaser .teaser-body { font-size: 14px; }
+                .article__body .article-restofcontent { font-size: 14px; }
+                .article-date { font-family: Arial, Helvetica, sans-serif;}
+                div#wrapper-navbar { max-width: 990px; margin: auto; }
+                nav.main-navigation, nav.main-navigation li a { font-family: Arial,sans-serif; font-size: 14px; }
+                .container, .breakingnews-top { max-width: 990px !important ; }
+                @media (min-width: 1050px) { a.navbar-brand.custom-logo-link { width: 440px ; } }
+                form#login { background-color: #ffffff ; color: #000000; border: 1px solid #000000; }
+                div#top-bar, div#top-bar a { font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif; font-size: 12px; color: #e4e4e4;  }
+                .sidemenuTrigger, .sideMenuTrigger.mobile, .hamburger-menu button#dropdownMenuButton { font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif; font-size: 12px; color: #ffffff;  }
+                .footer-menu { font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif;  }
+                .footer-menu .footer-heading { font-size: 18px; color: #ffffff; }
+                .footer-menu a { font-size: 14px;  }
+                .footer-logo-contactinfo { font-size: 12px; font-family: Georgia, Baskerville, Helvetica, Arial, sans-serif; color: #ffffff; }
+                .footer-social-media-icon a { color: #ffffff; font-size: 18px; }
+                .footer_copyright { color: #ffffff; font-size: 12px;   }
+                #right-sidebar, #left-sidebar, .sidebar { background-color: #ffffff; } 
+                article.breaking-section, article.breaking_fullLength { background-color: #9a2323; } 
+                .breaking_title, .breaking-teaser, .breaking-teaser .teaser-article-date, .breaking-teaser a, 
+                article.breaking_fullLength, article.breaking_fullLength a, .section-teaser.breaking-teaser a:hover { color: white; } 
+                .teaser-thin-teaser-category { color: #1e0745; } 
+                article.thin-teaser { background-color: #dddddd; } 
+                .frontpagecategoryblock.teaser-category, .teaser-frontpage-category-main-category { color: #2e009b } 
+                .teaser-frontpage-category-side.opinion .teaser-frontpage-category-side-author, .frontpage-category-main.opinion .teaser-frontpage-category-main-author { color: #935401 } </style><link rel='dns-prefetch' href='//www.royalgazette.com' />
+<link rel='dns-prefetch' href='//platform-api.sharethis.com' />
+<link rel='dns-prefetch' href='//loader-cdn.azureedge.net' />
+<link rel='dns-prefetch' href='//code.jquery.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='stylesheet' id='wp-polls-css'  href='https://www.royalgazette.com/wp-content/plugins/wp-polls/polls-css.css?ver=2.75.5' type='text/css' media='all' />
+<style id='wp-polls-inline-css' type='text/css'>
+.wp-polls .pollbar {
+	margin: 1px;
+	font-size: 6px;
+	line-height: 8px;
+	height: 8px;
+	background-image: url('https://www.royalgazette.com/wp-content/plugins/wp-polls/images/default/pollbg.gif');
+	border: 1px solid #c8c8c8;
+}
+
+</style>
+<link rel='stylesheet' id='parent-style-css'  href='https://www.royalgazette.com/wp-content/themes/everyware-theme-base-1/style.css?ver=4.9.4' type='text/css' media='all' />
+<link rel='stylesheet' id='main-css'  href='https://www.royalgazette.com/wp-content/themes/royalgazette/css/main.min.css?ver=20220119' type='text/css' media='' />
+<link rel='stylesheet' id='understrap-css'  href='https://www.royalgazette.com/wp-content/themes/everyware-theme-base-1/css/understrap.min.css?ver=4.9.4' type='text/css' media='all' />
+<link rel='stylesheet' id='slick-css'  href='https://www.royalgazette.com/wp-content/themes/royalgazette/slick/slick.css?ver=4.9.4' type='text/css' media='' />
+<link rel='stylesheet' id='slick-theme-css'  href='https://www.royalgazette.com/wp-content/themes/royalgazette/slick/slick-theme.min.css?ver=4.9.4' type='text/css' media='all' />
+<link rel='stylesheet' id='rgb-style-css'  href='https://www.royalgazette.com/wp-content/themes/royalgazette/assets/css/style.css?ver=0cd6f8809900b30e70a40a0624ffdc4470cf9299' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css'  href='https://www.royalgazette.com/wp-content/themes/royalgazette/style.css?ver=4.9.4' type='text/css' media='all' />
+<link rel='stylesheet' id='base-theme-css'  href='https://www.royalgazette.com/wp-content/themes/royalgazette/css/base-theme.min.css?ver=4.9.4' type='text/css' media='all' />
+<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js?ver=3.3.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajax_login_object = {"ajaxurl":"https:\/\/www.royalgazette.com\/wp-admin\/admin-ajax.php","redirecturl":"https:\/\/www.royalgazette.com","loadingmessage":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/js/login-modal.js?ver=4.9.4'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/css/base-theme.min.css?ver=4.9.4'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/js/sidebar.min.js?ver=20200901-2'></script>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js?ver=4.9.4#property=59ce6165feebe0001600e9b3&#038;product=inline-share-buttons'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/assets/js/head.js?ver=0cd6f8809900b30e70a40a0624ffdc4470cf9299'></script>
+<link rel='https://api.w.org/' href='https://www.royalgazette.com/wp-json/' />
+<link rel='prev' title='Devonshire Industries down 30.8%' href='https://www.royalgazette.com/bermuda-stock-exchange/business/article/20210317/devonshire-industries-down-30-8/' />
+<link rel='next' title='Hamilton Parish semi-annual meeting on March 29' href='https://www.royalgazette.com/general/sport/article/20210317/hamilton-parish-semi-annual-meeting-on-march-29/' />
+
+<link rel="canonical" href="https://www.royalgazette.com/news/article/20210317/onion-goes-to-oxford/" />
+<link rel='shortlink' href='https://www.royalgazette.com/?p=277803' />
+<link rel="alternate" type="application/json+oembed" href="https://www.royalgazette.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.royalgazette.com%2Fnews%2Farticle%2F20210317%2Fonion-goes-to-oxford%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.royalgazette.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.royalgazette.com%2Fnews%2Farticle%2F20210317%2Fonion-goes-to-oxford%2F&#038;format=xml" />
+<script src='https://prod.ew.rgb.navigacloud.com/?dm=57c9b89633572b02cc3fff738d631684&amp;action=load&amp;blogid=2&amp;siteid=1&amp;t=2140716617&amp;back=https%3A%2F%2Fwww.royalgazette.com%2Fnews%2Farticle%2F20210317%2Fonion-goes-to-oxford%2F' type='text/javascript'></script><script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-176153517-1', 'auto');
+ga('send', 'pageview');
+</script>		<style type="text/css" id="wp-custom-css">
+			ul, ol {
+    list-style: none;
+}
+.concept-page .breadcrumb .category a {
+    font-weight: 600;
+}
+
+#wrapper-navbar .main-navigation .dropdown-menu li a {
+    text-align: left;
+    border-bottom: solid 1px #cdcdcd;
+    padding-left: 12px;
+}
+
+.section-teaser-opinion .teaser__headline {
+    line-height: 18px;
+}
+
+.frontpage-category-title.top-padding {
+    margin-top: 20px;
+}
+
+.concept-page .breadcrumb.opinion {
+    background: #6D6E71;
+}
+
+.frontpage-category-title.opinion {
+    background: #6D6E71;
+}
+
+.gallery-teaser-front .teaser-body {
+    font-size: 11px;
+    line-height: 15px;
+}
+
+.article-page .article__body a {
+    color: #2b4381;
+	  font-weight:bold;
+}
+
+#wrapper-navbar .main-navigation .dropdown-menu li a {
+    padding-top: 6px;
+}
+
+.section-teaser-one-column-main .teaser-image img {
+    padding-left: 15px;
+}
+
+.concept-page .section-teaser-one-column-main .teaser-content {
+    padding-left: 0;
+}
+
+.article-page .article-factbox {
+    background-color: #f0f0f0;
+}
+
+.frontpage-category-title.gallery {
+    margin-bottom: 0;
+    background: #EA2C8F;
+}
+
+.frontpage-category-title.video {
+    margin-bottom: 0;
+    background: #F07637;
+}
+	
+	.gallery-teaser-front.col-md-3 {
+    float: left;
+    margin-right: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+		    max-width: 24.6% !important;
+}
+
+@media(max-width:767px){
+.gallery-teaser-front.col-md-3 {
+		    max-width: 49.2% !important;
+}
+	
+.articleprinttext, .articlefacebooktext, .articletwittertext, .articlemailtext {
+    font-size: 12px !important;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 3px;
+    padding-left: 6px;
+}
+
+.article-twitter, .article-mail, .article-print {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+	
+	#right-sidebar .advertisement {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+}
+
+.preferred_posts_sidebar.mobile {
+    text-align: center;
+}
+
+.preferred_posts_sidebar ul.social.mobile {
+    width: 100%;
+}
+
+hr.sidebarMenuLine {
+    margin-left: 0;
+    margin-right: 0;
+    background: white;
+    opacity: 1;
+}
+
+#sidebarMenu li a {
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+}
+
+.frontpage-category-title .view_more {
+    text-align: right;
+    padding-right: 25px;
+}
+
+.frontpage-category-title .view_more a {
+    color: white;
+    font-size: 13px;
+}
+
+.olderhood.podcasts {
+    height: 50px;
+}
+
+#wrapper-navbar .main-navigation .dropdown-menu li a:hover {
+    background: #6D6E71;
+}
+
+.frontpagecategorylist-more img.video-icon {
+    max-width: 18px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+}
+
+.frontpagecategorylist.main .teaser-content img.video-icon {
+    max-width: 16px;
+}
+
+.left-sidebar-contact-us {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.article__part--main {padding:0 7px}
+
+.frontpage-category-title {
+    border-bottom: 2px solid #DAE6F2;
+}
+
+@media(min-width:767px) {
+#right-sidebar .advertisement {
+    margin-left: 0;
+	}
+}
+
+@media (max-width:767px) {
+	.top-stories-category {
+    font-size: 10px;
+}
+	
+	.sweather .widget-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+	
+	.emoo-sidebar .ap_ad_widget {
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+	
+	.gallery-teaser-front {
+    height: 400px;
+}
+
+}
+
+.article-page .article-restofcontent {
+    min-height: 700px;
+}
+
+.article-page.gallery .article-restofcontent {
+    min-height: 0;
+}
+
+div#mobile-content {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.frontpage-category-title .view_more {
+    margin-top: 0;
+}
+
+main {width:100%; max-width:990px ;margin:0 auto}
+body {font-size:13px}
+
+.article-page .article-factbox p, .article-page .article-factbox-mobile p {
+    margin-bottom: 12px;
+}
+
+#jobs-page .job-article .image.hide {
+    position: fixed;
+    opacity: 0;
+}
+
+#columnists-page .right-sidebar section.ew-article-list__container {
+	margin-bottom: 15px;
+}
+
+#columnists-page .columnists-heading-with-title img {
+    max-width: 55px;
+}
+
+#columnists-page .columnists-heading-with-title .columnist-secnoname {
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 52px;
+    margin-bottom: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#columnists-page .columnists-heading-with-title {
+    border-top: 1px solid #e5e5e5;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    Border-bottom: 0;
+    background: #f5f5f5;
+    padding: 5px;
+}
+
+@media (min-width: 767px) {
+.left-sidebar .gallery-teaser-front {
+    height: auto;
+	} 
+}
+
+@media (max-width: 767px) {
+.left-sidebar .gallery-teaser-front {
+    height: 520px;
+	} 
+
+	    .concept-page .section-teaser-one-column-bottom .teaser-content {
+        padding-left: 0;
+    }
+	
+	.mobile-slider .slick-arrow {
+    margin-top: 60px;
+}
+}
+
+.concept-page .breadcrumb {
+    background: #6d6e71;
+}
+
+/* sidebar - Obits */
+.txt_indent_obits {
+    border: 3px solid #dae6f2;
+    padding: 5px 5px 0px 5px;
+	margin-bottom:15px;
+}
+.wrapper1 {
+    width: 100%;
+    overflow: hidden;
+}
+#msndiv ul {padding:0; margin:0}
+#msndiv {
+    background-color: #fff;
+}
+#msndiv li {
+    padding: 3px 10px;
+    font-size: 12px;
+}
+p.boxFooter {
+    margin: 5px 0 0 0;
+    padding: 0;
+    width: 292px;
+    background-color:#3173a5;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: bold;
+}
+p.boxFooter a {
+    margin: 5px 0 0 0;
+    border: 0;
+    background-color: #0060ae;
+    color: #fff;
+    display: block;
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    width: 142px;
+    margin-bottom: 5px;
+}
+	p.boxFooter a:hover {
+    background: #efefef;
+    color: #990000;
+    text-decoration: none;
+}
+	p.boxFooter a.rightLink {
+    margin: 5px 0 0 8px;
+}
+#msndiv li:nth-child(odd) {background:#e8edf1}
+#msndiv li:nth-child(even) {background:#fff}
+#msndiv li a {color:#2b4381}
+.spacer {margin-bottom:15px}
+
+@media only screen and (min-width: 992px) {.concept-template-default .content-area .container{padding:0}}
+
+#wrapper-footer .nav-link {
+	padding: .2rem .5rem}
+
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+.livestream iframe, .youtube iframe, .jwplatform iframe, .facebook iframe {height:200px}
+}
+
+.inlineimg {width:100%;margin-bottom: 15px;}
+
+/* temp fix */
+.new-icon {display:none}
+
+/* mobile pinch to zoom fix */
+.slick-slider{
+    touch-action: auto!important;
+}
+
+/* factbox fix */
+.article-factbox p {word-wrap: break-word;}
+
+
+.mobile-slider-container .teaser-content .bottom {display:none}
+
+
+/* fix related media overflow */
+.article-pdf .pdf-title .download-title {word-wrap: break-word}
+
+/* temp fix */
+.new-icon {display:none}
+
+/* login dropdown */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  border-radius:8px;
+  z-index: 1;
+}
+.dropdown:hover .dropdown-content {display: block !important;}
+.dropdown-content ul{list-style:none; padding:0; text-align:center}
+.dropdown-content li a {font-size:16px !important;line-height:32px !important; color:#000 !important}
+
+.btn-profile {background-image: linear-gradient(to top, #04befe, #4481eb);
+    border: none;
+    margin-bottom: 1rem;
+	height: 43px;
+    width: 100%;
+    padding: 0;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+#sidebarMenu li a {
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+	
+}
+
+.sidebarMenu_right li a {
+	border-bottom: #FFFFFF 0.05em solid;
+}
+
+.mobile-slider-container .teaser-content .bottom {display:none}
+
+.inline-img {margin-bottom:15px}
+
+
+
+.page-id-8902 .heading {
+    display: none;
+}
+div#disqusClose { margin: 0 25px; }
+
+div#disqusClose a#MG2login  {
+    background-image: linear-gradient(to top, #04befe, #4481eb);
+    margin-bottom: 1rem;
+    height: 43px;
+    width: 60%;
+    padding: 0;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+div#disqusClose a#MG2logout  {
+    background-image: linear-gradient(to top, #04befe, #4481eb);
+    margin-bottom: 1rem;
+    height: 43px;
+    width: 60%;
+    padding: 0;
+    border-radius: 2px;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+#mobile-content {padding-left:0}
+.pod-info {font-size:11px; color:#990000; padding:5px 0 0 10px; font-weight:bold}		</style>
+	</head>
+
+<body class="article-template-default single single-article postid-277803">
+
+	<div class="desktop-header-ad d-none d-lg-block">
+		<div id="special-banner" style="width:990px; margin: 0px auto; overflow:hidden">
+			<!-- /10134346/990x100_Above_Masthead -->
+			<div id='div-gpt-ad-1397220158251-12' style='height:100px; width:990px;'>
+				<script type='text/javascript'>
+					googletag.cmd.push(function() { googletag.display('div-gpt-ad-1397220158251-12'); });
+				</script>
 			</div>
-		
+		</div>
+	</div>
+
+	<div class="mobile-header-ad d-block d-lg-none">
+		<div id="mobile-head" class="advertisement col-md-12">
+			<script type="text/javascript">
+				if (googletag !== undefined) {
+					googletag.cmd.push(function() { googletag.display("mobile-head"); })
+				}
+			</script>
+		</div>
+	</div>
+
+	<div id="main-container" class="container">
+
+	<input type="hidden" id="security" name="security" value="6c05aaa027" /><input type="hidden" name="_wp_http_referer" value="/news/article/20210317/onion-goes-to-oxford/" /><form id="login" action="login" method="post">
+	<h1 class="login-modal-title">Log In</h1>
+	<hr class="login-modal-line">
+    <p class="status"></p>
+    <label id="login-modal-username" for="username"><i class="fa fa-user"></i></label>
+    <input id="username" type="text" name="username" placeholder="Username">
+    <label id="login-modal-password" for="password"><i class="fa fa-lock"></i></label>
+    <input id="password" type="password" name="password" placeholder="Password">
+    <a class="lost" href="/wp-login.php?action=lostpassword">Reset Password</a>
+    <input class="login-modal-button btn btn-primary submit" type="submit" value="Login" name="submit">
+    <a class="close" href="#"><i class="fa fa-window-close" aria-hidden="true"></i></a>
+    <input type="hidden" id="security" name="security" value="6c05aaa027" /><input type="hidden" name="_wp_http_referer" value="/news/article/20210317/onion-goes-to-oxford/" />
+</form><div class="sidebarMenuCloseButton" onclick="closeNav()"><i class="fa fa-close"></i></div>
+	<div id="sidebarMenu" class="sidebarMenu"><ul id="menu-hamburger-menu" class="list-group list-group-flush"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-28151 nav-item"><a title="Home" href="https://www.royalgazette.com/" class="nav-link">Home</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28152 nav-item"><a title="Coronavirus" href="https://www.royalgazette.com/coronavirus/" class="nav-link">Coronavirus</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-428390 nav-item"><a title="Covid-19 In-depth" href="https://www.royalgazette.com/covid-19-in-depth/" class="nav-link">Covid-19 In-depth</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-3299 nav-item"><a title="News" href="https://www.royalgazette.com/news/" class="nav-link">News</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-3300 nav-item"><a title="Business" href="https://www.royalgazette.com/business/" class="nav-link">Business</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-3301 nav-item"><a title="Sport" href="https://www.royalgazette.com/sport/" class="nav-link">Sport</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-3302 nav-item"><a title="Opinion" href="https://www.royalgazette.com/opinion/" class="nav-link">Opinion</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-252153 nav-item"><a title="Navigate Bermuda" href="https://www.royalgazette.com/navigate-bermuda/" class="nav-link">Navigate Bermuda</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-277139 nav-item"><a title="RG Podcast" href="https://www.royalgazette.com/rg-podcast/" class="nav-link">RG Podcast</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-28404 nav-item"><a title="RG Fantasy League" href="https://www.royalgazette.com/sport/rg-fantasy-league/" class="nav-link">RG Fantasy League</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-3303 nav-item"><a title="Lifestyle" href="https://www.royalgazette.com/lifestyle/" class="nav-link">Lifestyle</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3305 nav-item"><a title="Jobs" href="https://www.royalgazette.com/jobs/" class="nav-link">Jobs</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3304 nav-item"><a title="Classifieds" href="https://www.royalgazette.com/classifieds/" class="nav-link">Classifieds</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3306 nav-item"><a title="Obituaries" href="https://www.legacy.com/obituaries/theroyalgazette/" class="nav-link">Obituaries</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28035 nav-item"><a title="Weather" href="https://www.royalgazette.com/weather/" class="nav-link">Weather</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-27805 nav-item"><a title="Newsrack" href="http://newsrack.royalgazette.com/" class="nav-link">Newsrack</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3308 nav-item"><a title="RGmags" href="https://www.rgmags.com/" class="nav-link">RGmags</a><hr class="sidebarMenuLine"></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3307 nav-item"><a title="Drive For Change" href="https://www.royalgazette.com/drive-for-change/" class="nav-link">Drive For Change</a><hr class="sidebarMenuLine"></li>
+</ul></div>
+<div id="sidemenuDim" class="closed" onclick="closeNav()"></div>
+
+<form method="get" class="searchform mobile" action="/" role="search">
+	<label class="sr-only" for="s">Search</label>
+	<div class="input-group">
+		<input class="field form-control s" name="s" type="text"
+			placeholder="SEARCH ARTICLES">
+		<span class="input-group-append">
+			<input class="submit searchsubmit btn btn-primary fa fa-input" type="submit"
+			value="GO">
+	</span>
+	</div>
+</form><div class="sidebarMenuCloseButton_right" onclick="closeNav_right()"><i class="fa fa-close"></i></div>
+	<div id="sidebarMenu_right" class="sidebarMenu_right"><ul id="menu-hamburger-menu-right" class="list-group list-group-flush"><li class="engage-item"><a href="#" style="display:none" id="MG2login"  data-mg2-action="register"><strong>Log in</strong></a></li><li class="engage-item"><a href="#" style="display:none" id="MG2logout"  data-mg2-action="logout"><strong>Log out</strong></a></li><li class="engage-item"><a href="#" style="display:none" id="MG2activation" data-mg2-action="activation"><strong>Activate</strong></a></li><li class="engage-item"><a href="https://myaccount.royalgazette.com/1/myprofile" style="display:none" id="MG2MyAccount" target="_blank"><strong>My account</strong></a></li><li class="engage-item"><a href="https://subscribe.royalgazette.com/Subscribe2?sitecode=2&promo_code=D" style="display:none" id="MG2Subscribe"><strong>Subscribe</strong></a></li><li class="engage-item"><a href="https://newsrack.royalgazette.com/" target="_blank" ><strong>ePaper</strong></a></li><li class="engage-item"><a href="https://myaccount.royalgazette.com/1/preference" target="_blank" ><strong>Newsletter</strong></a></li><li class="engage-item"><a href="https://www.royalgazette.com/advertise/" target="_blank" ><strong>Advertise</strong></a></li><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1696" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1696 nav-item"><a title="Terms of Service" href="/terms-of-service/" class="nav-link">Terms of Service</a><hr class="sidebarMenuLine"></li>
+</ul></div>
+<div id="sidemenuDim_right" class="closed" onclick="closeNav_right()"></div><div class="mobile d-lg-none"><div id="above_header_ad" class="advertisement col-md-12">
+	<script type="text/javascript">
+		if (googletag !== undefined) {
+			googletag.cmd.push(function() { googletag.display("above_header_ad"); })
+		}
+	</script>
 </div>
-<div class="wd_summary"><p>The following message was shared with IBMers worldwide on Monday, March 7, 2022. I've heard from many of you in response to last week's announcement regarding the war in Ukraine, and I appreciate...</p></div>
 
-<div class="wd_body"><p><em>The following message was shared with IBMers worldwide on Monday, March 7, 2022.</em><br />
-&nbsp;</p>
+<div id="top-bar-mobile">
+    <div class="container">
+        <div class="row">
 
-<p>I&#39;ve heard from many of you in response to<a href="https://newsroom.ibm.com/War-in-Ukraine-Supporting-IBMers" target="_blank"> last week&#39;s announcement</a> regarding the war in Ukraine, and I appreciate your feedback. First, let me be very clear -- we have suspended all business in Russia. In addition, I want to give you an update on a few of the efforts underway to support our colleagues in the region.</p>
+        <div class="sidemenuTrigger col-2" onclick="openNav('250')">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </div>
 
-<p>IBMers&#39; support for Ukrainian refugees in neighboring countries is truly inspiring. For example, a newly developed and deployed IBMer Resource Finder Map connects Ukrainian IBMers and IBM contractors fleeing their country with IBM colleagues in the immediate CEE region who can offer assistance, including lodging, transportation, food and supplies, for them and their families. It is heartening to see that hundreds of CEE employees have already signed on as volunteers in less than 24 hours.</p>
+        <div class="logo col-8">
+            <a href="/"><img src="/wp-content/themes/royalgazette/images/mobile_logo.png"></a>
+        </div>
 
-<p>IBMers around the world are encouraged to continue making donations to the<a href="https://sso.yourlearning.ibm.com/?referer=ibmorg.yourlearning.ibm.com&amp;client_id=FSr2qTsxYQDW9nW3&amp;redirect_uri=https%3A%2F%2Fidsvr.yourcause.com%2Fsignin-oidc&amp;response_type=code&amp;scope=openid+profile&amp;code_challenge=dxuzBTL0Ci0JjHChXKC9PpIxNWjFGL_APkrLGymiC4o&amp;code_challenge_method=S256&amp;response_mode=form_post&amp;state=CfDJ8O7Ua_-4-CZLv92fmGO7ynFk1PCohrQ0ZLGOGJR8KZ9OmBah0izaj6sTrEhOLuvo01BG-F4Fs5B_OU_8keM8P_x4GoJe-roPOkRqIg_0uILnKdxbVK_39YboG1KoItuja1ayBrCPt3FirDVTnUwmSfTkh0hxoWgJCYfmPUcavCTNOPEMScC-qnEugyVoD8UYuVEQDQMBjIcswTwZo2_nOuGfW_2SocQh_k9YA8hF5EexYgVTe9VD-qBQoZ55i0MB0jiaJJFX2ZQrN3nBkKs5QHpkeiAUiwoaZx_Cwz4wyWy7H7CaUf5nsgH6Xfq_bau-dd92qld5OIbdXHVacL55irkNXZ2bAELy7y6prJMdqf146YvG0VT3w0_8x1W06EUEw3Vl1_MvtaMt5TyWA5Uj2Cg7j7sjpKCIqrSLWUJqqTZaFVHglncOI_yEDh5GdDVW5WmymXqreA0SWLzU-P-dcwsQCAczca59-uL-bTljLt2CZwam7vej373zVx4ytiLAmyFHNJKSnF4Q6BuhS8FSsj5YpKVWzyUaJwK5rCcsC_kdUJB0zKxok-EljtYAvd5qW0vL11GNHMaPqN0YcK3XvhEnCPg-OmayXb0o77nuHJJ1UD0F-wdLnMXKpt8qdyKKiAIiL51eCAkRv3VGEgrM38dxYpHAk03n90iN-gbQ8xYmA1c9WtGrDszAVtDFEZHPdgMz2Gcy-0sADmySI5ko1pJsh8zrTurSTcYPqzf7SlwH1n9IUD1g66KTkxh8a7JzVWnQb8MFOriMlDSgN8su_lotwx5KdZ-TrFkWg8Cs3pilrAcPQOapo_tjA60G4CMAPEciSuydHqBs-HI3UTpJICYj_7wYLJmTMpxXGs2s_cm6yRRrqpzkEZkmD9Noq6dIWus3FVzElL3GyLXfsAnjA5HIRMvFj0G3SNlfqV3Yb4HaIBsFRnbxFef8FWX-s28A3CYRmjTchyHSxcp562d4hnAkm6B-pFk9shiUWtuSopTMF_cDnvfpOcKqEiR3zSeCdw&amp;x-client-SKU=ID_NETSTANDARD2_0&amp;x-client-ver=5.5.0.0" target="_blank"> International Red Cross</a>. In addition, the company is donating to two organizations that are providing critical support to the most heavily impacted areas: $250,000 to People in Need in Czech Republic, and $250,000 to Polish Humanitarian Action in Poland.</p>
+        <div class="sidemenuTriggerRight col-2" onclick="openNav_right('250')">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </div>
 
-<p>In Ukraine, we have been in constant touch with our local teams and continue to provide assistance that includes relocation and financial support. The safety and security of IBMers and their families in all areas impacted by this crisis remains our top priority.</p>
-
-<p>Thank you,<br />
-Arvind</p>
+        </div>
+    </div>
 </div>
-<div class="wd_toolbar wd_toolbar-detail"><ul class="wd_tools"><li class="wd_tool wd_tool-addthis"><a class="addthis_inline_share_toolbox_5yrt"></a></li><li class="wd_tool wd_tool-print"><span class="wd_tool_icon"><a onclick="view_printable(); return false;" rel="nofollow" href="#print" title="print"><span class="fa fa-print"></span></a></span></li><li class="wd_tool wd_tool-email"><span class="wd_tool_icon"><a onclick="window.location.href = 'mailto:?subject=Update%20on%20our%20actions%3A%20War%20in%20Ukraine&amp;body='+encodeURIComponent(window.location.href);return false;" href="#email" title="email"><span class="fa fa-envelope"></span></a></span></li><li class="wd_tool wd_tool-rss"><span class="wd_tool_icon"><a href="https://newsroom.ibm.com/index.php?s=20324&amp;rsspage=34223" title="rss"><span class="fa fa-rss"></span></a></span></li></ul></div>
-		<script type="text/javascript">
-			var addthis_config = {
-				"data_track_clickback": true,
-				"pubid" : "thefuelteam",
-				"ui_language" : "en"
-			};
-		</script>
-		<script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=thefuelteam" async="async"></script>
-	
-<div class="bx--btn bx--btn--primary wd_subscribe" role="button" tabindex="0" aria-label="Subscribe to email"><a href="subscribe">Subscribe to email</a></div>
+<div class="mobile-topbar-separator"></div></div>
+		<div class="desktop d-none d-lg-block"><div id="top-bar" class=" no_sidebar_menu">
+    <div class="container">        <div class="row">
 
-<h4>Article Categories</h4>
-<ul class="wd_layout-inline wd_category_link_list"><li class="wd_category_link"><a href="https://newsroom.ibm.com/latest-news-business-growth">Business Growth</a></li><li class="wd_category_link"><a href="https://newsroom.ibm.com/latest-new-good-tech">Good Tech</a></li></ul>
+<script>
+  var d = new Date();
 
-<button class="bx--btn bx--btn--primary bx--btn-set ibm-margin-bottom-1 ibm-margin-top-1" id="wd_back_to">Back to Stories</button>	
-</div>
-</div>													
+  var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+  var monthname = month[d.getMonth()];
 
-												</div><!-- END CONTENT -->
-											</div>
-																						<div class="bx--col-lg-4 ibm-mb-3">
-												<div class="wd_featureboxes_right wd_featureboxes-vertical">
-<div id="wd_featurebox-teaser_1437" class="wd_featurebox_container wd_featurebox-teaser"><div class="wd_featurebox_title">more articles</div><div class="wd_featurebox">
-<div class="wd_standard-teaser">
-<div class="item"><div class="item_name"><a href="https://newsroom.ibm.com/index.php?s=20317&item=33352" class="itemlink"><a href="https://newsroom.ibm.com/2022-04-28-More-than-Half-of-Chief-Supply-Chain-Officers-Surveyed-Would-Sacrifice-Profit-for-Sustainability">More than Half of Chief Supply Chain Officers Surveyed Would Sacrifice Profit for Sustainability</a></a></div></div>
-<div class="item"><div class="item_name"><a href="https://newsroom.ibm.com/index.php?s=20317&item=33351" class="itemlink"><a href="https://newsroom.ibm.com/2022-04-25-The-Weather-Company,-an-IBM-Business,-Expands-Max-Platform-Offerings-to-Include-New-Storytelling-Technology-and-On-Air-Severe-Weather-Alerting-Features">The Weather Company, an IBM Business, Expands Max Platform Offerings to Include New Storytelling Technology and On-Air Severe Weather Alerting Features</a></a></div></div>
-<div class="item"><div class="item_name"><a href="https://newsroom.ibm.com/index.php?s=20317&item=33350" class="itemlink"><a href="https://newsroom.ibm.com/Breaking-down-barriers-to-environmental-sustainability">Breaking Down Barriers to Environmental Sustainability</a></a></div></div>
+  var year = d.getFullYear();
 
-</div>
-</div></div></div>
-												 
-																																				<div class="wd_sidebar_search">
-													<h4>Categories</h4>
-													<form action="https://newsroom.ibm.com/campaign" method="get" name="wd_sidebar_search" id="wd_sidebar_search">
-													<ul class="tagsFilter-tags">
+  var day = d.getDate();
+  var weekday = new Array(7);
+  weekday[0] = "Sun";
+  weekday[1] = "Mon";
+  weekday[2] = "Tue";
+  weekday[3] = "Wed";
+  weekday[4] = "Thu";
+  weekday[5] = "Fri";
+  weekday[6] = "Sat";
+  if(day<10)
+  {
+      day='0'+day;
+  }
+  var weekdayname = weekday[d.getDay()];
 
+  formatteddate = weekdayname+', '+monthname+' '+day+', '+year;
+</script>
 
-<li class="tagsFilter-tags-item" role="button" tabindex="0" aria-label="AI">
-	<a href="#" data-url="10" class="vsubnav">AI</a>
-</li>
+        <div class="top-bar-left col-md-6">
+            <span class="title">BERMUDA</span> | <span class="date"><script>document.write(formatteddate);</script></span>
+            <span class="rss"><a href="/feeds">RSS</a></span>
+			<span class="rss"><a href="/rg-podcast">PODCAST</a></span>
+        </div>
 
+        <div class="top-bar-right col-md-6">
+            <div class="row">
+                <nav class="navbar navbar-expand-md navbar-light bg-primary col-md-7  d-none d-lg-block">
+                    <div class="top-bar-right-menu">
+                        <div id="topMenu_right" class="collapse navbar-collapse"><ul id="Top Bar Menu - Right - Royal Gazette" class="navbar-nav navbar"><div class="dropdown"><span class="engage-item" style="display:none" id="MG2extra" data-mg2-action="register"><strong><i class="fa fa-user-circle-o welcomeicon"></i>Log in</strong></span><span class="engage-item" style="display:none" id="MG2exMylogin"  ><strong>My Profile</strong></span><div class="dropdown-content"><ul><button class="engage-item btn-profile" style="display:none" id="MG2logout" data-mg2-action="logout">Logout</button><button class="engage-item btn-profile" style="display:none" id="MG2login" data-mg2-action="register">Log in</button><li class="engage-item"><a href="#" style="display:none" id="MG2activation" data-mg2-action="activation"><strong>Activate</strong></a></li><li class="engage-item"><a href="https://myaccount.royalgazette.com/1/myprofile" style="display:none" id="MG2MyAccount" target="_blank"><strong>My account</strong></a></li><li class="engage-item"><a href="https://subscribe.royalgazette.com/Subscribe2?sitecode=2&promo_code=D" style="display:none" id="MG2Subscribe"><strong>Subscribe</strong></a></li><li class="engage-item"><a href="https://newsrack.royalgazette.com/" target="_blank" ><strong>ePaper</strong></a></li><li class="engage-item"><a href="https://myaccount.royalgazette.com/1/preference" target="_blank" ><strong>Newsletter</strong></a></li><li class="engage-item"><a href="https://www.royalgazette.com/advertise/" target="_blank" ><strong>Advertise</strong></a></li></ul></div></div></ul></div>
+                    </div>
+                </nav>
+                <div class="top-bar-search col-md-5 d-none d-lg-block">
+                    
+<form method="get" class="searchform" action="https://www.royalgazette.com/" role="search">
+	<label class="sr-only" for="s">Search</label>
+	<div class="input-group">
+		<input class="field form-control s" name="s" type="text"
+			placeholder="SEARCH ARTICLES" value="">
+		<span class="input-group-append">
+			<input class="submit searchsubmit btn btn-primary fa fa-input" type="submit"
+			value="GO">
+	</span>
+	</div>
+</form>
 
+                </div>
+            </div>
+        </div>
 
+        </div>
+    </div></div></div><div class="desktop d-none d-lg-block"><div class="header-region">
+    <div class="container">
+        <div class="row">
 
+            <div class="logo col-md-6">
+                                                            <a class="navbar-brand" rel="home" href="https://www.royalgazette.com/" title="The Royal Gazette | Bermuda News, Business, Sports, Events, &amp;amp; Community">
+                            <img src="https://www.royalgazette.com/wp-content/themes/royalgazette/images/default_logo.png">
+                        </a>
+                                                </div>
 
-<li class="tagsFilter-tags-item" role="button" tabindex="0" aria-label="Business Growth">
-	<a href="#" data-url="11" class="vsubnav">Business Growth</a>
-</li>
+            <div class="headerad col-md-6">
+				
+                <div class="headerleaderboard advertisement">
+                    <!-- /10134346/468x60_Above_page -->
+                    <div id='div-gpt-ad-1397220158251-11' style='height:60px; width:468px;'>
+                        <script type='text/javascript'>
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1397220158251-11'); });
+                        </script>
+                    </div>
+                </div>
 
+            </div>
 
+        </div>    </div></div>
+</div><div class="desktop d-none d-lg-block">    <div id="wrapper-navbar" itemscope itemtype="https://schema.org/WebSite">
+        <nav class="main-navigation navbar navbar-expand-md navbar-light">
 
+            <div class="container">
 
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<li class="tagsFilter-tags-item" role="button" tabindex="0" aria-label="Good Tech">
-	<a href="#" data-url="12" class="vsubnav">Good Tech</a>
-</li>
-
-
-
-
-
-<li class="tagsFilter-tags-item" role="button" tabindex="0" aria-label="Hybrid Cloud">
-	<a href="#" data-url="13" class="vsubnav">Hybrid Cloud</a>
-</li>
-
-
-
-
-
-<li class="tagsFilter-tags-item" role="button" tabindex="0" aria-label="Quantum & Innovation">
-	<a href="#" data-url="14" class="vsubnav">Quantum & Innovation</a>
-</li>
-
-
-
+            <div id="navbarNavDropdown" class="collapse navbar-collapse"><ul id="main-menu" class="navbar-nav nav-fill w-100"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1672" class="news menu-item menu-item-type-post_type menu-item-object-concept menu-item-has-children dropdown menu-item-1672 nav-item"><a title="News" href="https://www.royalgazette.com/news/" class="nav-link parentlink dropdown-toggle">News</a>
+<ul class="dropdown-menu"  role="menu">
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-432851" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-432851 nav-item"><a title="Year in Review" href="https://www.royalgazette.com/year-in-review/" class="dropdown-item">Year in Review</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-431584" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-431584 nav-item"><a title="December 2 Anniversary" href="https://www.royalgazette.com/news/december-2-anniversary/" class="dropdown-item">December 2 Anniversary</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18336" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18336 nav-item"><a title="Coronavirus" href="https://www.royalgazette.com/coronavirus/" class="dropdown-item">Coronavirus</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-428389" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-428389 nav-item"><a title="Covid-19 In-depth" href="https://www.royalgazette.com/covid-19-in-depth/" class="dropdown-item">Covid-19 In-depth</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-430894" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-430894 nav-item"><a title="Drive for Change" href="https://www.royalgazette.com/drive-for-change/" class="dropdown-item">Drive for Change</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1955" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1955 nav-item"><a title="Budget" href="https://www.royalgazette.com/news/budget/" class="dropdown-item">Budget</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18408" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-18408 nav-item"><a title="Campaigns" href="https://www.royalgazette.com/news/campaigns/" class="dropdown-item">Campaigns</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1953" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1953 nav-item"><a title="Court" href="https://www.royalgazette.com/news/court/" class="dropdown-item">Court</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1954" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1954 nav-item"><a title="Crime" href="https://www.royalgazette.com/news/crime/" class="dropdown-item">Crime</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18358" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-18358 nav-item"><a title="Education" href="https://www.royalgazette.com/news/education/" class="dropdown-item">Education</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-275140" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-275140 nav-item"><a title="Entertainment" href="https://www.royalgazette.com/news/entertainment/" class="dropdown-item">Entertainment</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1956" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1956 nav-item"><a title="Environment" href="https://www.royalgazette.com/news/environment/" class="dropdown-item">Environment</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-229071" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-229071 nav-item"><a title="General" href="https://www.royalgazette.com/news/general/" class="dropdown-item">General</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1787" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1787 nav-item"><a title="Health" href="https://www.royalgazette.com/news/health/" class="dropdown-item">Health</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-291240" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-291240 nav-item"><a title="Labour" href="https://www.royalgazette.com/news/labour/" class="dropdown-item">Labour</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1950" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1950 nav-item"><a title="Politics" href="https://www.royalgazette.com/news/politics/" class="dropdown-item">Politics</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1951" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1951 nav-item"><a title="Same-Sex Marriage" href="https://www.royalgazette.com/news/same-sex-marriage/" class="dropdown-item">Same-Sex Marriage</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1952" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1952 nav-item"><a title="Tourism" href="https://www.royalgazette.com/news/tourism/" class="dropdown-item">Tourism</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-275139" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-275139 nav-item"><a title="Transport" href="https://www.royalgazette.com/news/transport/" class="dropdown-item">Transport</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18391" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-18391 nav-item"><a title="Weather" href="https://www.royalgazette.com/news/weather/" class="dropdown-item">Weather</a></li>
 </ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1651" class="business menu-item menu-item-type-post_type menu-item-object-concept menu-item-has-children dropdown menu-item-1651 nav-item"><a title="Business" href="https://www.royalgazette.com/business/" class="nav-link parentlink dropdown-toggle">Business</a>
+<ul class="dropdown-menu"  role="menu">
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-251728" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-251728 nav-item"><a title="Navigate Bermuda" href="https://www.royalgazette.com/navigate-bermuda/" class="dropdown-item">Navigate Bermuda</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-275141" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-275141 nav-item"><a title="Banking" href="https://www.royalgazette.com/business/banking/" class="dropdown-item">Banking</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-167318" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-167318 nav-item"><a title="Bermuda Islander" href="https://www.royalgazette.com/bermuda-islander/" class="dropdown-item">Bermuda Islander</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2039" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2039 nav-item"><a title="Bermuda Stock Exchange" href="https://www.royalgazette.com/business/bermuda-stock-exchange/" class="dropdown-item">Bermuda Stock Exchange</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2034" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2034 nav-item"><a title="Economy" href="https://www.royalgazette.com/business/economy/" class="dropdown-item">Economy</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2035" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2035 nav-item"><a title="International Business" href="https://www.royalgazette.com/business/international-business/" class="dropdown-item">International Business</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2036" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2036 nav-item"><a title="Local Business" href="https://www.royalgazette.com/business/local-business/" class="dropdown-item">Local Business</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2041" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2041 nav-item"><a title="Personal Finance" href="https://www.royalgazette.com/business/personal-finance/" class="dropdown-item">Personal Finance</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2037" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2037 nav-item"><a title="Re-Insurance" href="https://www.royalgazette.com/business/re-insurance/" class="dropdown-item">Re-Insurance</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2040" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2040 nav-item"><a title="Technology" href="https://www.royalgazette.com/business/technology/" class="dropdown-item">Technology</a></li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1649" class="sport menu-item menu-item-type-post_type menu-item-object-concept menu-item-has-children dropdown menu-item-1649 nav-item"><a title="Sport" href="https://www.royalgazette.com/sport/" class="nav-link parentlink dropdown-toggle">Sport</a>
+<ul class="dropdown-menu"  role="menu">
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-438502" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-438502 nav-item"><a title="SailGP Bermuda" href="https://www.royalgazette.com/sport/sailgp-bermuda/" class="dropdown-item">SailGP Bermuda</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-429971" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-429971 nav-item"><a title="PGA Bermuda Championship" href="https://www.royalgazette.com/sport/pga-bermuda-championship/" class="dropdown-item">PGA Bermuda Championship</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-425865" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-425865 nav-item"><a title="Flora Duffy" href="https://www.royalgazette.com/sport/flora-duffy/" class="dropdown-item">Flora Duffy</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18695" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-18695 nav-item"><a title="RG Fantasy League" href="https://www.royalgazette.com/sport/rg-fantasy-league/" class="dropdown-item">RG Fantasy League</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1964" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1964 nav-item"><a title="Basketball" href="https://www.royalgazette.com/sport/basketball/" class="dropdown-item">Basketball</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2059" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2059 nav-item"><a title="Boxing" href="https://www.royalgazette.com/sport/boxing/" class="dropdown-item">Boxing</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1959" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1959 nav-item"><a title="Cricket" href="https://www.royalgazette.com/sport/cricket/" class="dropdown-item">Cricket</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1967" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1967 nav-item"><a title="Cycling" href="https://www.royalgazette.com/sport/cycling/" class="dropdown-item">Cycling</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2058" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2058 nav-item"><a title="Equestrian" href="https://www.royalgazette.com/sport/equestrian/" class="dropdown-item">Equestrian</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-241458" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-241458 nav-item"><a title="General" href="https://www.royalgazette.com/sport/general/" class="dropdown-item">General</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1963" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1963 nav-item"><a title="Golf" href="https://www.royalgazette.com/sport/golf/" class="dropdown-item">Golf</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1968" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1968 nav-item"><a title="Gymnastics" href="https://www.royalgazette.com/sport/gymnastics/" class="dropdown-item">Gymnastics</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2057" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2057 nav-item"><a title="Motor Sports" href="https://www.royalgazette.com/sport/motor-sports/" class="dropdown-item">Motor Sports</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1966" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1966 nav-item"><a title="Rugby" href="https://www.royalgazette.com/sport/rugby/" class="dropdown-item">Rugby</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1962" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1962 nav-item"><a title="Running/Triathlon" href="https://www.royalgazette.com/sport/running-triathlon/" class="dropdown-item">Running/Triathlon</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1960" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1960 nav-item"><a title="Sailing" href="https://www.royalgazette.com/sport/sailing/" class="dropdown-item">Sailing</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1958" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1958 nav-item"><a title="Soccer" href="https://www.royalgazette.com/sport/soccer/" class="dropdown-item">Soccer</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2056" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2056 nav-item"><a title="Swimming" href="https://www.royalgazette.com/sport/swimming/" class="dropdown-item">Swimming</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2055" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2055 nav-item"><a title="Tennis/Squash" href="https://www.royalgazette.com/sport/tennis-squash/" class="dropdown-item">Tennis/Squash</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1961" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1961 nav-item"><a title="Track &#038; Field" href="https://www.royalgazette.com/sport/track-field/" class="dropdown-item">Track &#038; Field</a></li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1650" class="lifestyle menu-item menu-item-type-post_type menu-item-object-concept menu-item-has-children dropdown menu-item-1650 nav-item"><a title="Lifestyle" href="https://www.royalgazette.com/lifestyle/" class="nav-link parentlink dropdown-toggle">Lifestyle</a>
+<ul class="dropdown-menu"  role="menu">
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2047" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2047 nav-item"><a title="Arts &#038; Entertainment" href="https://www.royalgazette.com/lifestyle/arts-entertainment/" class="dropdown-item">Arts &#038; Entertainment</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-274061" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-274061 nav-item"><a title="Community" href="https://www.royalgazette.com/lifestyle/community/" class="dropdown-item">Community</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2050" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2050 nav-item"><a title="Fashion" href="https://www.royalgazette.com/lifestyle/fashion/" class="dropdown-item">Fashion</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2051" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2051 nav-item"><a title="Food &#038; Wine" href="https://www.royalgazette.com/lifestyle/food-wine/" class="dropdown-item">Food &#038; Wine</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2046" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2046 nav-item"><a title="Home &#038; Away" href="https://www.royalgazette.com/lifestyle/home-away/" class="dropdown-item">Home &#038; Away</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2052" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2052 nav-item"><a title="Parenting" href="https://www.royalgazette.com/lifestyle/parenting/" class="dropdown-item">Parenting</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2049" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2049 nav-item"><a title="Religion" href="https://www.royalgazette.com/lifestyle/religion/" class="dropdown-item">Religion</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2053" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2053 nav-item"><a title="Wellness" href="https://www.royalgazette.com/lifestyle/wellness/" class="dropdown-item">Wellness</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2048" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2048 nav-item"><a title="Young Observer" href="https://www.royalgazette.com/lifestyle/young-observer/" class="dropdown-item">Young Observer</a></li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2033" class="opinion menu-item menu-item-type-post_type menu-item-object-concept menu-item-has-children dropdown menu-item-2033 nav-item"><a title="Opinion" href="https://www.royalgazette.com/opinion/" class="nav-link parentlink dropdown-toggle">Opinion</a>
+<ul class="dropdown-menu"  role="menu">
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-438621" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-438621 nav-item"><a title="Bermuda Youth Connect" href="https://www.royalgazette.com/bermuda-youth-connect/" class="dropdown-item">Bermuda Youth Connect</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2043" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2043 nav-item"><a title="Editorials" href="https://www.royalgazette.com/opinion/editorials/" class="dropdown-item">Editorials</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2045" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-2045 nav-item"><a title="Letters to the Editor" href="https://www.royalgazette.com/opinion/letters-to-the-editor/" class="dropdown-item">Letters to the Editor</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-9211" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9211 nav-item"><a title="Opinion Writer" href="https://www.royalgazette.com/columnists/" class="dropdown-item">Opinion Writer</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-9212" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9212 nav-item"><a title="Political Cartoons" href="https://www.royalgazette.com/opinion/political-cartoons/" class="dropdown-item">Political Cartoons</a></li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1664" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1664 nav-item"><a title="Classifieds" href="https://www.royalgazette.com/classifieds/" class="nav-link">Classifieds</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1665" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1665 nav-item"><a title="Jobs" href="https://www.royalgazette.com/jobs/" class="nav-link">Jobs</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1667" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1667 nav-item"><a title="Obituaries" href="https://www.legacy.com/obituaries/theroyalgazette/" class="nav-link">Obituaries</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1668" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown menu-item-1668 nav-item"><a title="RGmags" href="https://www.rgmags.com/" class="nav-link parentlink dropdown-toggle">RGmags</a>
+<ul class="dropdown-menu"  role="menu">
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18595" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-18595 nav-item"><a title="RG Business Magazine" target="_blank" href="http://rgmags.com/rg-business/" class="dropdown-item">RG Business Magazine</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18594" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-18594 nav-item"><a title="RG Business Top Ten" target="_blank" href="http://rgmags.com/rg-business-top-ten/" class="dropdown-item">RG Business Top Ten</a></li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-7924" class="newsrack menu-item menu-item-type-custom menu-item-object-custom menu-item-7924 nav-item"><a href="http://newsrack.royalgazette.com/" class="nav-link"><img src="/wp-content/themes/royalgazette/images/newsrack.jpg"></a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-7925" class="subscribe menu-item menu-item-type-custom menu-item-object-custom menu-item-7925 nav-item"><a title="Subscribe" href="https://subscribe.royalgazette.com/Subscribe2?sitecode=2&#038;promo_code=D" class="nav-link">Subscribe</a></li>
+</ul></div>
 
 
-																										<div class="wd_year_wrap">
-													<h4>Year</h4>
-													<select name="year"><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option></select>													</div>
-																										<input type="hidden" name="cat" value="">
-													<button type="submit" class="bx--btn bx--btn--primary" id="wd_submit_sidebar_search">Submit</button>													
-													</form>																
-												</div>
+            
+            
+            </div>
+        </nav>
+    </div>
 
-																									<div class="bx--btn bx--btn--primary wd_subscribe" role="button" tabindex="0" aria-label="Subscribe to email">
-	                									<a href="subscribe">Subscribe to email</a>
-                									</div>
-												
-												
-												<!-- <div id="wd_right_assets">
-													<h4>Additional Assets</h4>
-												</div> -->
-																							</div>
-																					</div>
-									</div>
-								</section>
-																<section class="wd_stories_container">
-									<div class="bx--grid ibm-pt-8 ibm-pb-4">
-										<div class="bx--row think-content-row">
-											<div class="bx--col-lg-16">
-												<div class="wd_featureboxes_recommended_stories wd_featureboxes-vertical">
-<div id="wd_featurebox-teaser_1438" class="wd_featurebox_container wd_featurebox-teaser"><div class="wd_featurebox_title">Recommended Stories</div><div class="wd_featurebox">
-<div class="wd_articles-teaser">
 
-	
-		<div class="item">
-			
-			<div class="item_date">Jul 15, 2021</div>
-			<div class="item_name"><a href="https://newsroom.ibm.com/index.php?s=34222&item=1062" class="itemlink"><a href="https://newsroom.ibm.com/2021-07-15-IBM-to-Acquire-Bluetab-to-Expand-Data-and-Hybrid-Cloud-Consulting-Services-in-Europe-and-Latin-America">IBM to Acquire Bluetab to Expand Data and Hybrid Cloud Consulting Services in Europe and Latin America</a></a></div>
-			
+
+</div>	
+	<div class="desktop d-none d-lg-block">		<div id="banner" class="underNavAd advertisement col-md-12">
+			<script type="text/javascript">
+				if (googletag !== undefined) {
+					googletag.cmd.push(function() { googletag.display("banner"); })
+				}
+			</script>
 		</div>
-	
-		<div class="item">
+	</div>	<!-- ***************************************************** -->
+	<!-- **************  END Header Region ******************* -->
+	<!-- ***************************************************** -->
+<div class="wrapper" id="article-page">
+	<div class="container" id="content" tabindex="-1">
+		<div class="row">
+
+			<!-- Do the left sidebar check and opens the everyware-theme-base-1 div -->
 			
-			<div class="item_date">Jul 8, 2021</div>
-			<div class="item_name"><a href="https://newsroom.ibm.com/index.php?s=34222&item=1060" class="itemlink"><a href="https://newsroom.ibm.com/2021-07-08-Atos-and-IBM-to-Collaborate-to-Build-a-Secured-Infrastructure-for-the-Dutch-Ministry-of-Defense">Atos and IBM to Collaborate to Build a Secured Infrastructure for the Dutch Ministry of Defense</a></a></div>
-			
-		</div>
-	
-		<div class="item">
-			
-			<div class="item_date">Jul 7, 2021</div>
-			<div class="item_name"><a href="https://newsroom.ibm.com/index.php?s=34222&item=1061" class="itemlink"><a href="https://www.research.ibm.com/blog/codeflare-ml-experiments" target="_blank">CodeFlare Drastically Reduces Time to Set Up, Run, Scale Machine-Learning Tests</a></a></div>
-			
-		</div>
-	
 
 
-</div>
-<p class="more"><a href="https://newsroom.ibm.com/index.php?s=34222">More &raquo;</a></p>
-</div></div></div>
+<div class="col-lg-8 col-md-12 content-area" id="everyware-theme-base-1">
+			
+	<div class="container">
+
+		<div id="main-body">
+			    <div id="navPageId">23ede185-e1ff-4548-9d56-31bc0484f77f</div>
+	<article id="navArticleBody" class="article-page article" data-uuid="23ede185-e1ff-4548-9d56-31bc0484f77f">
+		<div class="article__part--main col-12">
+			
+						
+			<h1 id="navArticleTitle" class="article__headline">
+                Onion - and other Bermudian words - go to Oxford!
+			</h1>
+
+			<div class="row justify-content-md-center">
+				<div class="col-12">
+
+										<div class="article-byline navArticleAuthor">
+																														<a href="/columnist?uuid=28891ab2-60e2-4d42-beea-1217ef8f9a23">Sam Strangeways</a>
+																										</div>
+										
+
+									<div class="article-date navArticleDate">
+													<div class="article-modifieddate">Updated: Mar 17, 2021 06:39 PM</div>
 											</div>
-										</div>
-									</div>
-								</section>
-																																							</div>
+				
+				<div class="disqus-comment-count" data-disqus-identifier=" / 23ede185-e1ff-4548-9d56-31bc0484f77f"></div>
+
+									<div id="article-social-media" class="article-social-media">
+						<center><div class="sharethis-inline-share-buttons"></div></center>
+					</div>
+				
+				
+									
+										<div class="article-slider singleimage">
+																								<div class="image"><img src="https://imengine.editorial.prod.rgb.navigacloud.com/?uuid=AB8C79DB-ECCE-458F-82B6-942023975292&type=primary&function=cover&source=false&width=800" uuid="AB8C79DB-ECCE-458F-82B6-942023975292"></div>
+											</div>
+				
+										
+					<div class="article-restofcontent">
+						<div class="article_image_caption image_text" data-uuid="AB8C79DB-ECCE-458F-82B6-942023975292">Rosemary Hall (File photograph by Akil Simmons)</div><!-- Blank because headline is in article-page.twig --><p class="article__body">A batch of Bermudian words has been added to the Oxford English Dictionary for the first time – along with a guide on how to pronounce them.</p><p class="article__body">Aceboy, Gombey, greeze, mice, and mug are among the new entries, included because of Bermudian linguist Rosemary Hall’s work as a consultant with the OED.</p><p class="article__body">Dr Hall, of the University of Leeds, wrote in a <a href="https://public.oed.com/blog/introducing-bermudian-english/" id="link-d6f2bb9cdffb22b573d47c07aaf2337b"><strong id="strong-4a22f404aa71ce66f8f4fb217a7e28e7">blog entry</strong></a> on the OED website: “While the addition of this batch of words is particularly exciting for me as a Bermudian, it is also a landmark moment for the OED and for World English enthusiasts.</p><p class="article__body">“With an estimated 65,000 speakers, Bermudian English is the smallest national variety yet to be represented in the OED. It’s also one of the oldest.</p><p class="article__body">“Settled in 1612, Bermuda was one of the very first places – after Jamestown, Virginia – where English was spoken outside the British Isles.”</p><p class="article__body">Dr Hall, who grew up in Bermuda, said the island’s location was probably one of the reasons why its dialect was little studied for many years, even among scholars of lesser-known varieties of English.</p><p class="article__body">She wrote her MPhil thesis at Oxford University in 2018 <a href="https://www.royalgazette.com/education/news/article/20150805/student-researches-our-distinctive-dialect/" id="link-f1cc9c99a827e8ad7db60c20dee60b39" target="_blank">on the origins of the Bermudian dialect.</a> The abstract can be found <a href="https://ora.ox.ac.uk/objects/uuid:af21b23b-a090-4413-b320-883bbc5022a1" id="link-0feb89dfd371e02164707c30fdd3b31e" target="_blank">here</a>.</p><p class="article__body">She added: “Linguists classify World Englishes into groups including the British Isles and the Americas and the Caribbean, and while Bermuda has links with both of these areas, it does not neatly fit into either category.</p><p class="article__body">“Equally, as a dependent territory that was uninhabited when it was discovered, Bermuda does not meet the criteria for either of the World Englishes types of ‘settler colonial’ and ‘postcolonial’, but sits somewhere in between.</p><p class="article__body">“A bit like the Bermuda triangle, it’s ambiguous, but that’s what makes it so interesting!”</p><p class="article__body">Dr Hall said the OED decided that a <a href="https://public.oed.com/how-to-use-the-oed/key-to-pronunciation/pronunciations-for-world-englishes/pronunciation-model-bermudian-english/" id="link-4f7c9e27ce9f442efb036fc304880bf1"><strong id="strong-6ff11d6f53ab1d123822d62cf01660dc">Bermudian English model</strong></a> was needed to go with the new words to give readers a general guide to pronunciation.</p><p class="article__body">The full list of Bermudian words added to the updated March 2021 OED is: aceboy, acegirl, Bermudian English, chingas, chopse, chopsing, go long, Gombey, greeze, gribble, mice, mug, Onion, well, and wrinch.</p>						
+					</div>
+
+								<div class="related-links hidden">
+					<div class="fusion-separator sep-shadow sepa"></div>
+						<div class="related-heading">Related Stories</div>
+						<div class="list-menu list-unstyled row-edit" >
+													<article class="list-item col-sm-6 col-xs-12 border-top py-2 px-1"><div class="related-img"><img src="https://imengine.editorial.prod.rgb.navigacloud.com/?uuid=65f2388a-da71-5811-816f-4e73081a3ccc&function=thumbnail&type=preview&source=false&width=75&height=70"></div><div class="related-title"><a href="https://www.royalgazette.com/general/news/article/20220514/party-planners-brought-down-to-earth-due-to-helium-shortage/">Party planners brought down to earth due to helium shortage</a></div></article><hr>
+													<article class="list-item col-sm-6 col-xs-12 border-top py-2 px-1"><div class="related-img"><img src="https://imengine.editorial.prod.rgb.navigacloud.com/?uuid=7a8b1826-93ef-5f31-afef-e8f27371b7d6&function=thumbnail&type=preview&source=false&width=75&height=70"></div><div class="related-title"><a href="https://www.royalgazette.com/general/news/article/20220514/barking-up-the-wrong-tree-famous-palmetto-was-not-from-bermuda/">Barking up the wrong tree: Famous palmetto was not from Bermuda </a></div></article><hr>
+													<article class="list-item col-sm-6 col-xs-12 border-top py-2 px-1"><div class="related-img"><img src="https://imengine.editorial.prod.rgb.navigacloud.com/?uuid=8d3d00e7-0e35-5ec7-a948-6e25083915be&function=thumbnail&type=preview&source=false&width=75&height=70"></div><div class="related-title"><a href="https://www.royalgazette.com/general/news/article/20220513/marketplace-raises-23000-for-ukraine/">MarketPlace raises $23,000 for Ukraine</a></div></article><hr>
+													<article class="list-item col-sm-6 col-xs-12 border-top py-2 px-1"><div class="related-img"><img src="https://imengine.editorial.prod.rgb.navigacloud.com/?uuid=0bc43498-183a-5229-b1ea-fa0821caa123&function=thumbnail&type=preview&source=false&width=75&height=70"></div><div class="related-title"><a href="https://www.royalgazette.com/general/news/article/20220514/arts-and-culture-in-focus-at-creatives-conference/">Arts and culture in focus at creatives conference</a></div></article><hr>
+												</div>
+						<div class="related-media hidden">
+							<div class="title">Related Media</div>
+							<ul></ul>
+						</div>
+				</div>
+				
+									<div id="article-social-media-bottom" class="article-social-media">
+						<center><div class="sharethis-inline-share-buttons"></div></center>
+					</div>
+				
+				<div class="inline-ads">
+					<div class="below-article-ad d-lg-block d-none">
+						<div id="div-gpt-ad-1397220158251-15" style="width:100%;" class="advertisement">
+							<script type="text/javascript">
+								if (googletag !== undefined) {
+									googletag.cmd.push(function() {
+									googletag.display("div-gpt-ad-1397220158251-15");
+								})
+								}
+							</script>
 						</div>
 					</div>
+
+		            <div class="mobile-content-ad d-block d-lg-none">
+                        <div id="mobile-content" class="advertisement col-md-12">
+                            <script type="text/javascript">
+                                if (googletag !== undefined) {
+                                    googletag.cmd.push(function() { googletag.display("mobile-content"); })
+                                }
+                            </script>
+                        </div>
+                    </div>
 				</div>
-			</main>
-		</div><!-- IBM Content wrapper -->
-	</div><!-- IBM top -->
-	<script type="module" src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/footer.min.js"></script>
-	<!-- <script type="module" src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/search-with-typeahead.rtl.min.js"></script> -->
-		<!-- FOOTER_BEGIN -->
-		<dds-footer-container></dds-footer-container>
-		<!-- FOOTER_END -->
-	<script src="js/wd_js.js"></script>
+											<div class="comment-box-container">
+							<div class="row">
+								<div class="comment-box-left col-md-4">
+									<div class="row">
+										<div class="heading col-md-8 col-8">
+											<a id="comments" name="comments">Comments</a>
+										</div>
+										<div class="image col-md-4 col-4"><img src="/wp-content/themes/royalgazette/images/commentsicondouble.png"></div>
+									</div>
+									<div class="message">
+																			<p>You must be Registered or <span class="engage-item"><a href="#" style="display:none" id="MG2login"  data-mg2-action="register"><strong>Signed in</strong></a></span> to post comment or to vote.</p>
+																		</div>
+								</div>
+								
+								<div class="comment-box-right col-md-8">
+									<div class="date">Published March 17, 2021 at 6:39 pm (Updated March 17, 2021 at 6:39 pm)</div>
+									<span class="comments-title">
+										<h1>Onion - and other Bermudian words - go to Oxford!</h1>
+									</span>
+								</div>
+							</div>
+						</div>
 
-<!-- begin spin_special_output(body_end) -->
-<script wd_script_id="piwik_tracking_code"></script>
-<!-- Piwik Tracking Code -->
+						<div class="commentInfoContainer">
+							<div class="row">
+								<div class="commentInfo col-md-2">
+									<div class="row">
+										<div class="commentMore col-md-6 col-6">What you<br>Need to<br>Know</div>
+										<div class="image col-md-6 col-6"><img src="/wp-content/themes/royalgazette/images/comments_info.png"></div>
+									</div>
+								</div>
+
+								<div class="commentRules col-md-10">
+									1. For a smooth experience with our commenting system we recommend that you use Internet Explorer 10 or higher, Firefox or Chrome Browsers. Additionally please clear both your browser's cache and cookies - <a href="https://www.google.com/support/accounts/bin/answer.py?answer=32050" target="_blank">How do I clear my cache and cookies?</a> <br>
+									2. Please respect the use of this community forum and its users. <br>
+									3. Any poster that insults, threatens or verbally abuses another member, uses defamatory language, or deliberately disrupts discussions will be banned.<br>
+									4. Users who violate the <a href="/terms-of-service">Terms of Service</a> or any commenting rules will be banned.<br>
+									5. Please stay on topic.  "Trolling" to incite emotional responses and disrupt conversations will be deleted. <br>
+									6. To understand further what is and isn't allowed and the actions we may take, please read our <a href="/terms-of-service">Terms of Service</a><br>
+									<div class="new-sep">7. To report breaches of the <a href="/terms-of-service">Terms of Service</a> use the flag icon</div><br>
+								</div>
+							</div>
+						</div>
+
+						<div id="disqus_thread"></div>
+						<div class="disqus_must_be_logged_in" style="display:none; margin-top:30px;">You must be logged in to post or view comments with Disqus.</div>
+					
+											<script>
+							jQuery(document).ready(function( $ ) {
+								$(".comment-box-container").hide();
+								$(".commentInfoContainer").hide();
+								$("#disqus_thread").hide();
+								$(".disqus_must_be_logged_in").show();
+
+								MG2Loader.init({
+									plugins: [{
+										name: "NXT",
+										initOptions: {
+											clientCode: "royalgazette",
+											environment: 'prod',
+											siteCode: "TRG",
+											configCode: "RoyalGaz_Default",
+											debug: true,
+											silentmode: false,
+											integrateDisqus: true,
+											publicEventHandlers: {
+												onNotAuthorized: function(eventData) {
+													$(".comment-box-container").hide();
+													$(".commentInfoContainer").hide();
+													$("#disqus_thread").hide();
+													$(".disqus_must_be_logged_in").show();
+													console.log ("NXT:  NotAuthorized!");
+												}
+												OnHasAccess: function(eventData) {
+													$(".comment-box-container").show();
+													$(".commentInfoContainer").show();
+													$("#disqus_thread").show();
+													$(".disqus_must_be_logged_in").show();
+													console.log ("NXT:   OnHasAccess!");
+
+												}
+											}
+										}
+									}]
+								});
+
+							});
+						</script>
+					
+					<script>
+
+						/**
+						*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+						*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+						
+						
+						var disqus_config = function () {
+						this.page.url = 'https://www.royalgazette.com/news/article/20210317/onion-goes-to-oxford/';  // Replace PAGE_URL with your page's canonical URL variable
+													this.page.identifier = '23ede185-e1ff-4548-9d56-31bc0484f77f'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+												};
+						
+						(function() { // DON'T EDIT BELOW THIS LINE
+						var d = document, s = d.createElement('script');
+						s.src = 'https://royalgazette.disqus.com/embed.js';
+						s.setAttribute('data-timestamp', +new Date());
+						(d.head || d.body).appendChild(s);
+						})();
+					</script>
+
+					<script type="text/javascript"> 
+						function readCookie(name) { 
+							var nameEQ = name + "="; 
+							var ca = document.cookie.split(';'); 
+						
+							for(var i=0;i < ca.length;i++) { 
+								var c = ca[i]; 
+								while (c.charAt(0)==' ') c = c.substring(1,c.length); 
+									if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length); 
+								} 
+								return null; 
+							} 
+						
+															var DCookie = readCookie('nxtDisqus'); 
+							
+							if (DCookie!=null && DCookie!=""){ 
+							DCookie = DCookie.replace(/"/gi,""); /* " */ 
+							}		
+							
+														var disqus_config = function () { 
+							// The generated payload which authenticates users with Disqus - engage
+							this.page.remote_auth_s3 = DCookie; 
+							this.page.api_key = 'nBYwV7wQU72nu1cEMoiBjJElCWbYATkHHiPJUUznevNEnmPuSIwS7LP6pf7rtbeG'; 
+							this.sso = { 
+							name: "Royal Gazette", 
+							button: "https://www.royalgazette.com/wp-content/themes/royalgazette/images/rg_disqus.png", 
+							icon: "https://www.royalgazette.com/wp-content/themes/royalgazette/images/rg_disqus.png", 
+							width: "520", 
+							height: "800",
+							url: "https://www.royalgazette.com/comment-login/?nxtDisqusClose=true",
+
+							logout: "https://www.royalgazette.com/comment-login/?nxtResumeURL=https://www.royalgazette.com/news/article/20210317/onion-goes-to-oxford/" }; 
+							} 
+														
+
+							
+
+							var disqus_shortname = 'royalgazette'; // required: replace example with your forum shortname 
+							var disqus_identifier = ' / 23ede185-e1ff-4548-9d56-31bc0484f77f'; 
+							var disqus_url = 'https://www.royalgazette.com/news/article/20210317/onion-goes-to-oxford/';
+							var disqus_title = ""; 
+							/* * * DON'T EDIT BELOW THIS LINE * * */ 
+							(function() { 
+							var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true; 
+							dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js'; 
+							(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq); 
+							})(); 
+					</script> 
+					<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+		</div>
+
+	</div>
+
+			<!-- Do the right sidebar check -->
+			
+</div><!-- #closing the everyware-theme-base-1 container from /global-templates/left-sidebar-check.php -->
+
+
+
+  
+	<div class="d-none d-md-block col-lg-4 col-md-12 widget-area" id="right-sidebar" role="complementary">
+
+<div id="div-gpt-ad-1397220158251-8" style="width:300px; height:250px;" class="div-gpt-ad-1397220158251-8 advertisement"><script type="text/javascript">if (googletag !== undefined) {googletag.cmd.push(function() { googletag.display("div-gpt-ad-1397220158251-8"); })}</script></div><aside id="custom_html-21" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><style type="text/css" media="screen">
+	.sweather {margin-bottom:15px}
+ul.widget-container {width:300px;min-height:90px;background:#e1effa;list-style: none;margin:0;padding:0}
+ul.widget-container li {display:inline-block;}
+.bf-logo {width:109px; float:left; margin:0; padding:0}
+li.wunder {font-size:11px; font-family:Arial, Helvetica, sans-serif; text-align:center; padding:10px 10px}
+li.wunder a {text-decoration:none; color:#000; font-weight:bold}
+li.wunder a:hover {color:#fd0707}
+.details {padding-top:5px}
+</style>
+<!-- 2 Weather Widget-->
+<div class="sweather">
+<ul class="widget-container">
+<li class="bf-logo"><a href="https://www.bfm.bm/" target="_blank"><img src="https://static.ew.rgb.navigacloud.com/wp-content/uploads/sites/2/2020/07/01115814/bfm-logo-v2.jpg" /></a></li>
+<li class="wunder">
+		<div id="weatherone"></div>
+</li>
+</ul>
+</div></div></aside><div id="div-gpt-ad-1397220158251-9" style="width:300px; height:250px;" class="div-gpt-ad-1397220158251-9 advertisement"><script type="text/javascript">if (googletag !== undefined) {googletag.cmd.push(function() { googletag.display("div-gpt-ad-1397220158251-9"); })}</script></div><aside id="custom_html-9" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="sidebar-heading"><span class="bold">Preferred Posts</span></div></div></aside><aside id="custom_html-11" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="preferred_posts_sidebar mobile d-lg-none"><iframe src="https://royalgazette.friends2follow.com/f2f/widget/html/socialstack/123/0/20/150/1/2/0/0" frameborder="0" height="400" width="100%" scrolling="no"></iframe>
+<ul class="social mobile">
+<li class="nss-Instagram"><a href="https://www.instagram.com/theroyalgazette/" target="_blank"><i class="fa fa-instagram"></i><span class="nss-site-name">Instagram</span></a></li>
+<li class="nss-twitter"><a href="https://twitter.com/TheRoyalGazette" target="_blank"><i class="fa fa-twitter"></i><span class="nss-site-name">Twitter</span></a></li>
+<li class="nss-youtube"><a href="https://www.youtube.com/channel/UC3AlIphiZWwWw2nWsjgvmsA" target="_blank"><i class="fa fa-youtube-play"></i><span class="nss-site-name">youtube</span></a></li>
+<li class="nss-facebook"><a href="https://www.facebook.com/theroyalgazette/" target="_blank"><i class="fa fa-facebook"></i><span class="nss-site-name">Facebook</span></a></li>
+</ul>
+</div></div></aside><aside id="custom_html-10" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="preferred_posts_sidebar d-none d-lg-block"><iframe src="https://royalgazette.friends2follow.com/f2f/widget/html/socialstack/123/0/20/150/1/2/0/0" frameborder="0" height="400" width="300" scrolling="no"></iframe>
+<ul class="social">
+<li class="nss-Instagram"><a href="https://www.instagram.com/theroyalgazette/" target="_blank"><i class="fa fa-instagram"></i><span class="nss-site-name">Instagram</span></a></li>
+<li class="nss-twitter"><a href="https://twitter.com/TheRoyalGazette" target="_blank"><i class="fa fa-twitter"></i><span class="nss-site-name">Twitter</span></a></li>
+<li class="nss-youtube"><a href="https://www.youtube.com/channel/UC3AlIphiZWwWw2nWsjgvmsA" target="_blank"><i class="fa fa-youtube-play"></i><span class="nss-site-name">youtube</span></a></li>
+<li class="nss-facebook"><a href="https://www.facebook.com/theroyalgazette/" target="_blank"><i class="fa fa-facebook"></i><span class="nss-site-name">Facebook</span></a></li>
+</ul>
+</div></div></aside><div id="div-gpt-ad-1397220158251-7" class="div-gpt-ad-1397220158251-7 advertisement"><script type="text/javascript">if (googletag !== undefined) {googletag.cmd.push(function() { googletag.display("div-gpt-ad-1397220158251-7"); })}</script></div><aside id="custom_html-6" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="sidebar-heading">
+	Most <span class="bold">Popular</span>
+</div></div></aside><aside id="custom_html-33" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><ul class="tabs">
+				<li class="most-read-tab active"><a class="most-read">Today</a></li>
+				<li class="most-commented-tab"><a class="most-commented">Most Commented</a></li>
+			</ul></div></aside><section class="ew-most-read-google-analytics ew-most-read-google-analytics__container"><article class="teaser mostread teaser--standard" data-uuid="dac6b319-92f7-4f33-97a8-e6fee066ff90" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/politics/news/article/20220513/magistrate-cuts-rent-arrears-payment-after-ex-senator-fails-to-pay/">Magistrate cuts rent arrears payment after ex-senator fails to pay</a></article><article class="teaser mostread teaser--standard" data-uuid="b127baec-d6c1-4546-9239-5334c0f77c10" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/general/news/article/20220513/bermudian-heading-to-ukraine-to-provide-aid/">Bermudian heading to Ukraine to provide aid</a></article><article class="teaser mostread teaser--standard" data-uuid="b2731e6d-0992-4a06-b93f-97d864cfde38" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/politics/news/article/20220512/governor-reserves-assent-on-cannabis-legalisation-bill/">Governor reserves assent on cannabis legalisation Bill</a></article><article class="teaser mostread teaser--standard" data-uuid="c5c2c446-0bbd-4338-967d-aba7e2dc64e1" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/general/news/article/20220513/second-victim-of-house-explosion-dies/">Second victim of apartment block explosion dies</a></article><article class="teaser mostread teaser--standard" data-uuid="ef86b17f-12b9-4f2b-a1df-2743d0296b16" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/14/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/court/news/article/20220514/judge-quashes-jail-term-for-former-bermuda-day-race-winner/">Judge quashes jail term for former Bermuda Day race winner </a></article><article class="teaser mostread teaser--standard" data-uuid="a28b9f13-57ea-4327-84e6-0d7bc915bac3" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/event/news/article/20220513/crowds-flock-to-front-street-for-sailgp-festivities/">Crowds flock to Front Street for SailGP festivities</a></article><article class="teaser mostread teaser--standard" data-uuid="24696c1c-c85c-482d-ac73-709d9d84700e" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/court/news/article/20220513/lawyers-failure-to-pay-bills-distressed-disabled-employer/">Lawyer’s failure to pay bills distressed disabled employer</a></article><article class="teaser mostread teaser--standard" data-uuid="6db7b23a-f195-4603-a03d-579b49aed302" data-comment-id=""><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/tourism/news/article/20220513/burt-pledges-gencom-will-train-bermudians/">Burt pledges Gencom will train Bermudians</a></article></section><aside id="custom_html-32" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="disqus-most-commented-container hidden"></div></div></aside><div id="div-gpt-ad-1397220158251-10" style="width:300px; height:250px;" class="div-gpt-ad-1397220158251-10 advertisement"><script type="text/javascript">if (googletag !== undefined) {googletag.cmd.push(function() { googletag.display("div-gpt-ad-1397220158251-10"); })}</script></div><aside id="custom_html-48" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="spacer"></div></div></aside><div id="div-gpt-ad-1397220158251-3" class="div-gpt-ad-1397220158251-3 advertisement"><script type="text/javascript">if (googletag !== undefined) {googletag.cmd.push(function() { googletag.display("div-gpt-ad-1397220158251-3"); })}</script></div><aside id="custom_html-20" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="calendar-container-block" style="margin-bottom:15px">
+<p class="calendar-widget"><a href="https://www.bermuda.com/things-to-do/events-calendar/" target="_blank"><img src="https://static.ew.rgb.navigacloud.com/wp-content/uploads/sites/2/2021/08/03083621/bermuda-events-logo2.jpg" class="ntdib-logo" alt=""></a></p>
+</div><!-- end of calendar-container-block --></div></aside><div id="div-gpt-ad-1397220158251-23" style="width:300px; height:250px;" class="div-gpt-ad-1397220158251-23 advertisement"><script type="text/javascript">if (googletag !== undefined) {googletag.cmd.push(function() { googletag.display("div-gpt-ad-1397220158251-23"); })}</script></div><aside id="custom_html-19" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="sidebar-heading poll">
+	Take Our <span class="bold">Poll</span>
+</div></div></aside><aside id="polls-widget-2" class="widget widget_polls-widget"><div id="polls-43" class="wp-polls">
+	<form id="polls_form_43" class="wp-polls-form" action="/index.php" method="post">
+		<p style="display: none;"><input type="hidden" id="poll_43_nonce" name="wp-polls-nonce" value="ffa83a57df" /></p>
+		<p style="display: none;"><input type="hidden" name="poll_id" value="43" /></p>
+		<div class="question"><p><strong>Should Bermuda continue with Bermuda Travel Authorisations for Covid-19?</strong></p></div><div id="polls-43-ans" class="wp-polls-ans"><ul class="wp-polls-ul">
+		<li><input type="radio" id="poll-answer-222" name="poll_43" value="222" /> <label class="poll-answer" for="poll-answer-222">Yes</label></li>
+		<li><input type="radio" id="poll-answer-223" name="poll_43" value="223" /> <label class="poll-answer" for="poll-answer-223">No, but only allow vaccinated visitors</label></li>
+		<li><input type="radio" id="poll-answer-224" name="poll_43" value="224" /> <label class="poll-answer" for="poll-answer-224">No and open the doors to all travelers</label></li>
+		<li><input type="radio" id="poll-answer-225" name="poll_43" value="225" /> <label class="poll-answer" for="poll-answer-225">Don’t Know</label></li>
+		</ul><p style="text-align: center"><input type="button" name="vote" value="   Vote   " class="Buttons" onclick="poll_vote(43);" /></p><div class="poll_results"><p><a href="#ViewPollResults" onclick="poll_result(43); return false;" title="View Results Of This Poll">View Results</a></p></div><div class="poll_archive"><a href="/pollarchive">Poll Archive</a></div></div>
+	</form>
+</div>
+</aside><aside id="custom_html-47" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="spacer"></div>
+</div></aside><aside id="custom_html-46" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="sidebar-heading">Today's <span class="bold">Obituaries</span></div></div></aside><aside id="custom_html-43" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><!-- 12 Obits -->	
+<script type="text/javascript" src="/wp-content/themes/royalgazette/js/jquery.jfeed.pack.js"></script>
 <script type="text/javascript">
-  var _paq = _paq || [];
-
-  _paq.push(["setCustomVariable", 1, "Content Type", "Articles", "page"]);
-
-  _paq.push(["setCustomVariable", 3, "Navigation Page", "Latest News", "page"]);
-
-  _paq.push(["trackPageView"]);
-  _paq.push(["enableLinkTracking"]);
-  (function() {
-    var u="//stats.drivetheweb.com/";
-    _paq.push(["setTrackerUrl", u+"piwik.php"]);
-    _paq.push(["setSiteId", 6292]);
-    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0];
-    g.type="text/javascript"; g.async=true; g.defer=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-  })();
+jQuery(function() {
+jQuery.getFeed({
+		// RSS path must be local unless using a proxy
+        url: 'https://www.legacy.com/obituaries/theroyalgazette/services/rss.ashx',
+        success: function(feed) {
+var html = '';
+// Selects how many RSS items to parse
+for(var i = 0; i < feed.items.length && i < 50; i++) {
+var item = feed.items[i];
+html += '<li>' + '<a href="' + item.link + '" target="_blank">' + item.title + '</a>' + '</li>';
+            }
+            jQuery('#msndiv ul').append(html);
+        }    
+    });
+});
 </script>
-<noscript>
-	<img src="https://stats.drivetheweb.com/piwik.php?idsite=6292&rec=1" style="border:0" alt="" />
-</noscript>
-<!-- End Piwik Tracking Code -->
-		
-<!-- end spin_special_output(body_end) -->
-<script type="text/javascript">(function(){window['__CF$cv$params']={r:'706c92e46d800fd6',m:'tLNsg8OyNBJzMV64AQj4hJ6CJiEIO2PaXR9Hyck.OTM-1651786189-0-AfWRddQ206RRzodhmxyXgQxlizIP4SIo283hParYRxnMA+pl3XiFnvrjFG6jPeipcHKHcUcUQ+AhWxLdc9KrOYT6FIq4G8ZfqvY6a3TUQmGQjKY9GE71/cqQItqtGecAxU3xyrnYmgxZrdZY3MeDrAT3ry24kpVY3PdD83fpvCIgR9KTVBV7y6KLGsuR67PilA==',s:[0x4b2086e20b,0xe842e852bb],}})();</script></body>
+<div class="txt_indent_obits">
+<div class="wrapper1">
+<div id="msndiv"><ul></ul></div>
+<p class="boxFooter">
+<a class="leftLink" href="http://www.legacy.com/obituaries/theroyalgazette/">View all Obituaries</a> <a class="rightLink" href="http://www.legacy.com/theroyalgazette/obituaries.asp?page=placeanobituary">Place an obituary</a>
+</p>
+</div>
+</div></div></aside><aside id="custom_html-24" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="sidebar-heading">
+	eMoo <span class="bold">Posts</span>
+</div></div></aside><aside id="custom_html-23" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="emoo-sidebar spacer" style="text-align:center;">
+	<iframe src="//d1irnt4y4bv3ok.cloudfront.net/adwidget/emoo/classifieds?hostname=www.emoo.bm&l=100&dl=10&classified_link=https://emoo.bm&placead_link=https://emoo.adperfect.com%2F&ws=bigbox&header_back_color=15356a&button_back_color=15356a&button_txt_color=fff&u=Spotlight&iframe_js=0" style="border:none;width:100%;height:250px;"></iframe>
+</div></div></aside><aside id="custom_html-61" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="sidebar-heading"><span class="bold"><a href="/rg-podcast" target="_blank">RG Sound Lounge – The Latest Podcasts</a></span></div><style>.sidebar-heading a {color:#fff !important}</style></div></aside><aside id="custom_html-63" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="pod-info">PUBLISHED: 2 MAY 2022</div><iframe title="BILTIR – Bermuda International Long Term Insurers and Reinsurers" allowtransparency="true" height="150" width="100%" style="border: none; min-width: min(100%, 430px);" scrolling="no" data-name="pb-iframe-player" src="https://www.podbean.com/player-v2/?i=k4tvs-1216ed5-pb&from=pb6admin&share=1&download=0&rtl=0&fonts=Arial&skin=1&font-color=&logo_link=episode_page&btn-skin=3"></iframe></div></aside><aside id="custom_html-62" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><div class="pod-info">PUBLISHED: 29 APRIL 2022</div><iframe title="Mental Health" allowtransparency="true" height="150" width="100%" style="border: none; min-width: min(100%, 430px);" scrolling="no" data-name="pb-iframe-player" src="https://www.podbean.com/player-v2/?i=fta5c-1212a1a-pb&from=pb6admin&share=1&download=0&rtl=0&fonts=Arial&skin=1&font-color=auto&logo_link=episode_page&btn-skin=3"></iframe></div></aside>
+<!-- result code: 0 --><div class="disqus-most-commented-links"><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/12/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/politics/news/article/20220512/governor-reserves-assent-on-cannabis-legalisation-bill/">Governor reserves assent on cannabis legalisation Bill</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/11/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/health/news/article/20220511/one-more-covid-19-death-but-active-case-decline/">One more Covid-19 death, but active case decline</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/tourism/news/article/20220513/burt-pledges-gencom-will-train-bermudians/">Burt pledges Gencom will train Bermudians</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/12/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/opinion-writer/opinion/article/20220512/the-toxicity-that-whataboutism-engenders/">The toxicity that whataboutism engenders</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/13/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/general/news/article/20220513/bermudian-heading-to-ukraine-to-provide-aid/">Bermudian heading to Ukraine to provide aid</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/14/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/politics/news/article/20220514/government-says-it-is-waiting-to-hear-from-uk-on-cannabis-law/">Government says it is waiting to hear from UK on cannabis law</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/12/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/tourism/news/article/20220512/oba-government-mps-were-intimidated-over-tax-breaks/">OBA: Government MPs were intimidated over tax breaks</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/11/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/politics/news/article/20220511/new-national-heroes-to-be-named-once-a-decade/">New national heroes to be named once a decade</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/12/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/tourism/news/article/20220512/ariel-sands-redevelopment-gets-go-ahead/">Ariel Sands redevelopment gets go-ahead</a></article><article class="teaser mostread mostcommented"><div class="teaser-date"><span class="icon"><img src="/wp-content/themes/royalgazette/images/icon.gif"></span>05/12/2022</div><a class="teaser-headline" href="https://www.royalgazette.com/politics/news/article/20220512/senator-raises-concern-about-refinancing-debt/">Senator raises concern about refinancing debt</a></article></div>
+</div><!-- #right-sidebar -->
+
+
+		</div><!-- .row -->
+	</div><!-- Container end -->
+</div><!-- Wrapper end -->
+
+
+
+	<!--Ad Code for leaderboard ad above footer-->
+	
+	<div class="wrapper copyright" id="wrapper-footer">
+
+	<div class="container">
+		<div class="row">
+
+
+			<div class="footer-main footer-menu col-md-12">
+				<div class="menu-footer-menu-main-container"><ul id="Footer Menu - 1" class="navbar navbar-expand-md justify-content-center"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1703" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1703 nav-item"><a title="News" href="https://www.royalgazette.com/news/" class="nav-link">News</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1707" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1707 nav-item"><a title="Business" href="https://www.royalgazette.com/business/" class="nav-link">Business</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1705" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1705 nav-item"><a title="Sport" href="https://www.royalgazette.com/sport/" class="nav-link">Sport</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1706" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-1706 nav-item"><a title="Lifestyle" href="https://www.royalgazette.com/lifestyle/" class="nav-link">Lifestyle</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14739" class="menu-item menu-item-type-post_type menu-item-object-concept menu-item-14739 nav-item"><a title="Opinion" href="https://www.royalgazette.com/opinion/" class="nav-link">Opinion</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14740" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14740 nav-item"><a title="Classifieds" href="https://www.royalgazette.com/classifieds/" class="nav-link">Classifieds</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14741" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14741 nav-item"><a title="Weather" href="https://www.royalgazette.com/weather/" class="nav-link">Weather</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14742" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14742 nav-item"><a title="Calendar" href="https://www.royalgazette.com/calendar/" class="nav-link">Calendar</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14743" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14743 nav-item"><a title="Newsrack" href="http://newsrack.royalgazette.com/" class="nav-link">Newsrack</a></li>
+</ul></div>
+			</div>	
+
+							<div class="footer-two-menu-heading footer-heading">Newspaper Services:</div> 
+			
+			<div class="footer-newspaper-services footer-menu col-md-12">
+				<div class="menu-footer-menu-2-container"><ul id="Footer Menu - 2" class="navbar navbar-expand-md justify-content-center"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14744" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14744 nav-item"><a title="About Us" href="https://www.royalgazette.com/about-us/" class="nav-link">About Us</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14745" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14745 nav-item"><a title="Contact Us" href="https://www.royalgazette.com/contact-us/" class="nav-link">Contact Us</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14746" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14746 nav-item"><a title="Subscribe" href="https://subscribe.royalgazette.com/Subscribe2?sitecode=2&#038;promo_code=D" class="nav-link">Subscribe</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14747" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14747 nav-item"><a title="Electronic Edition" href="http://newsrack.royalgazette.com/" class="nav-link">Electronic Edition</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14748" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14748 nav-item"><a title="Advertise" href="https://www.royalgazette.com/advertise/" class="nav-link">Advertise</a></li>
+</ul></div>
+			</div>	
+
+							<div class="footer-three-menu-heading footer-heading">Online Services:</div> 
+						
+			<div class="footer-online-services footer-menu col-md-12">
+				<div class="container">
+				<div class="menu-footer-menu-3-container"><ul id="Footer Menu - 3" class="navbar navbar-expand-md justify-content-center"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14749" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14749 nav-item"><a title="Registration" href="https://subscribe.royalgazette.com/Subscribe2?sitecode=2&#038;promo_code=D" class="nav-link">Registration</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14750" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14750 nav-item"><a title="RSS Feeds" href="https://navweb.royalgazette.com/feeds" class="nav-link">RSS Feeds</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14752" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14752 nav-item"><a title="Privacy Policy" href="https://www.royalgazette.com/privacy-policy/" class="nav-link">Privacy Policy</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14753" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14753 nav-item"><a title="Terms of Service" href="https://www.royalgazette.com/terms-of-service/" class="nav-link">Terms of Service</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14756" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14756 nav-item"><a title="Contact Us" href="https://navweb.royalgazette.com/contact-us-online-advertising/" class="nav-link">Contact Us</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-14755" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14755 nav-item"><a title="Advertise" href="https://www.royalgazette.com/advertise/" class="nav-link">Advertise</a></li>
+</ul></div>
+				</div>
+			</div>	
+
+			<div class="footer_copyright col-md-12">
+				<div class="termsofservices">Use of this website signifies your agreement to the Terms of Service and Privacy Policy</p>
+				© Copyright 2022 royalgazette.com. All rights reserved.
+			</div>
+
+			</div>
+		</div>
+
+		</div>	</div></div>
+		<script type='text/javascript'>
+/* <![CDATA[ */
+var pollsL10n = {"ajax_url":"https:\/\/www.royalgazette.com\/wp-admin\/admin-ajax.php","text_wait":"Your last request is still being processed. Please wait a while ...","text_valid":"Please choose a valid poll answer.","text_multiple":"Maximum number of choices allowed: ","show_loading":"0","show_fading":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/plugins/wp-polls/polls-js.js?ver=2.75.5'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/js/menus.js?ver=20201012'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/everyware-theme-base-1/js/understrap.min.js?ver=4.9.4'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/slick/slick.min.js?ver=4.9.4'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/slick/slick-theme.js?ver=20201022'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/js/content.js?ver=20220125'></script>
+<script type='text/javascript' src='https://loader-cdn.azureedge.net/prod/royalgazette/loader.min.js?ver=2021028'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/js/engage_prod_trg.js?ver=2021028'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var infomaker = {"ajaxurl":"https:\/\/www.royalgazette.com\/ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/assets/js/body.js?ver=0cd6f8809900b30e70a40a0624ffdc4470cf9299'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/assets/js/article.js?ver=0cd6f8809900b30e70a40a0624ffdc4470cf9299'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-content/themes/royalgazette/js/breaking.js?ver=4.9.4'></script>
+<script type='text/javascript' src='https://www.royalgazette.com/wp-includes/js/wp-embed.min.js?ver=4.9.4'></script>
+
+		<!-- CUSTOM JQUERY AND JAVASCRIPT HERE --> 
+				<!-- END JQUERY -->
+				</div><!-- END OPENING CONTAINER TAG -->
+
+		<script id="dsq-count-scr" src="//royalgazette.disqus.com/count.js" async></script>
+	<script async type="text/javascript" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1638947622"></script>
+</body>
 </html>
+
+
+
+
+
+

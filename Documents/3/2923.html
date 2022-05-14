@@ -1,682 +1,634 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-<head>
-	<meta charset="UTF-8" />
-	<meta name="robots" content="noodp" />
-	<link rel="pingback" href="https://automattic.com/xmlrpc.php" />
-	<meta name="google-site-verification" content="LsUOC70Kd1OVRa84YXSdDMeWfa_tu9k9Cyi9HUFlR60" />
-	<link rel="start" href="https://automattic.com/" title="Automattic" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="preconnect" href="https://s0.wp.com">
-	<title>Privacy Notice for Visitors to Our Users’ Sites &#8211; Automattic</title>
-<meta name='robots' content='max-image-preview:large' />
-<meta name="google-site-verification" content="XECAgs1qhOf9tfH5snpZFPxF4nDR6Jmy58IraJfFVo0" />
-
-<!-- Async WordPress.com Remote Login -->
-<script id="wpcom_remote_login_js">
-var wpcom_remote_login_extra_auth = '';
-function wpcom_remote_login_remove_dom_node_id( element_id ) {
-	var dom_node = document.getElementById( element_id );
-	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
-}
-function wpcom_remote_login_remove_dom_node_classes( class_name ) {
-	var dom_nodes = document.querySelectorAll( '.' + class_name );
-	for ( var i = 0; i < dom_nodes.length; i++ ) {
-		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
-	}
-}
-function wpcom_remote_login_final_cleanup() {
-	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
-	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
-}
-
-// Watch for messages back from the remote login
-window.addEventListener( "message", function( e ) {
-	if ( e.origin === "https://r-login.wordpress.com" ) {
-		var data = {};
-		try {
-			data = JSON.parse( e.data );
-		} catch( e ) {
-			wpcom_remote_login_final_cleanup();
-			return;
-		}
-
-		if ( data.msg === 'LOGIN' ) {
-			// Clean up the login check iframe
-			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
-
-			var id_regex = new RegExp( /^[0-9]+$/ );
-			var token_regex = new RegExp( /^.*|.*|.*$/ );
-			if (
-				token_regex.test( data.token )
-				&& id_regex.test( data.wpcomid )
-			) {
-				// We have everything we need to ask for a login
-				var script = document.createElement( "script" );
-				script.setAttribute( "id", "wpcom_remote_login_validate" );
-				script.src = '/remote-login.php?wpcom_remote_login=validate'
-					+ '&wpcomid=' + data.wpcomid
-					+ '&token=' + encodeURIComponent( data.token )
-					+ '&host=' + window.location.protocol
-					+ '//' + window.location.hostname
-					+ '&postid=214631'
-					+ '&is_singular=';
-				document.body.appendChild( script );
-			}
-
-			return;
-		}
-
-		// Safari ITP, not logged in, so redirect
-		if ( data.msg === 'LOGIN-REDIRECT' ) {
-			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
-			return;
-		}
-
-		// Safari ITP, storage access failed, remove the request
-		if ( data.msg === 'LOGIN-REMOVE' ) {
-			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
-			var style_zap = document.createElement( 'style' );
-			style_zap.type = 'text/css';
-			style_zap.appendChild( document.createTextNode( css_zap ) );
-			document.body.appendChild( style_zap );
-
-			var e = document.getElementById( 'wpcom_request_access_iframe' );
-			e.parentNode.removeChild( e );
-
-			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
-
-			return;
-		}
-
-		// Safari ITP
-		if ( data.msg === 'REQUEST_ACCESS' ) {
-			console.log( 'request access: safari' );
-
-			// Check ITP iframe enable/disable knob
-			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
-				return;
-			}
-
-			// If we are in a "private window" there is no ITP.
-			var private_window = false;
-			try {
-				var opendb = window.openDatabase( null, null, null, null );
-			} catch( e ) {
-				private_window = true;
-			}
-
-			if ( private_window ) {
-				console.log( 'private window' );
-				return;
-			}
-
-			var iframe = document.createElement( 'iframe' );
-			iframe.id = 'wpcom_request_access_iframe';
-			iframe.setAttribute( 'scrolling', 'no' );
-			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
-			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
-
-			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
-
-			var style = document.createElement( 'style' );
-			style.type = 'text/css';
-			style.id = 'wpcom_request_access_styles';
-			style.appendChild( document.createTextNode( css ) );
-			document.body.appendChild( style );
-
-			document.body.appendChild( iframe );
-		}
-
-		if ( data.msg === 'DONE' ) {
-			wpcom_remote_login_final_cleanup();
-		}
-	}
-}, false );
-
-// Inject the remote login iframe after the page has had a chance to load
-// more critical resources
-window.addEventListener( "DOMContentLoaded", function( e ) {
-	var iframe = document.createElement( "iframe" );
-	iframe.style.display = "none";
-	iframe.setAttribute( "scrolling", "no" );
-	iframe.setAttribute( "id", "wpcom_remote_login_key" );
-	iframe.src = "https://r-login.wordpress.com/remote-login.php"
-		+ "?wpcom_remote_login=key"
-		+ "&origin=aHR0cHM6Ly9hdXRvbWF0dGljLmNvbQ%3D%3D"
-		+ "&wpcomid=54117"
-		+ "&time=1651846999";
-	document.body.appendChild( iframe );
-}, false );
-</script>
-	<script type="text/javascript">
-		/* <![CDATA[ */
-		function addLoadEvent(func) {
-			var oldonload = window.onload;
-			if (typeof window.onload != 'function') {
-				window.onload = func;
-			} else {
-				window.onload = function () {
-					oldonload();
-					func();
-				}
-			}
-		}
-		/* ]]> */
-	</script>
-	<link rel='stylesheet' id='all-css-0-1' href='https://automattic.com/_static/??-eJyNkFtOAzEMRTdExpMiSn8Qa3EyJrjkpTwos3s8RRUtVaf8RLm2zvW14ZCVTbFRbJB9dxwruC7SUHHSKQSf+nHQwwims5/A+GQ/lGdTsMxQ2+xpsLU+gBhxtL5PVGFfIdDESJ7C4nwusseZivLk0M5D4Hgfl965voBuhz8mFTNqGZfIOKfelCs8/Yn9b4uCjaOrN/DQ1clhuZvUQ8br8CvYgSdHTfB6+qtGX+tIljHKmFyoViVv4B5Ue5dZ9Yr7KQPuLGBvKWBrbNVm1Pr+So6SkmvIBVK8EOrNI5c1tJDc0cnXHTf7lQv0Gl709knr53G32e6/AbWl9YU=?cssminify=yes' type='text/css' media='all' />
-<style id='wp-block-library-inline-css'>
-.has-text-align-justify {
-	text-align:justify;
-}
-</style>
-<style id='jetpack-global-styles-frontend-style-inline-css'>
-:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
-</style>
-<script id='media-video-widget-extensions-js-extra'>
-var videopressAjax = {"ajaxUrl":"https:\/\/automattic.wordpress.com\/wp-admin\/admin-ajax.php","bridgeUrl":"https:\/\/automattic.com\/wp-content\/mu-plugins\/videopress\/js\/videopress-token-bridge.js"};
-</script>
-<script src='https://automattic.com/wp-content/mu-plugins/videopress/js/videopress-token-bridge.js?m=1649344881h&#038;ver=wpcom62752f571f8af' id='media-video-widget-extensions-js'></script>
-<script crossorigin='anonymous' type='text/javascript' src='https://automattic.com/_static/??/wp-content/js/mobile-useragent-info.js,/wp-content/js/rlt-proxy.js?m=1637704497j'></script>
-<script type='text/javascript'>
-	window.addEventListener( 'DOMContentLoaded', function() {
-		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
-	} );
-</script>
-<script src='https://automattic.com/wp-content/themes/a8c/automattic-2011/includes/table-of-contents.js?m=1609931367h&#038;ver=6.0-alpha-53047' id='table-of-contents-js'></script>
-<script id='wpcom-actionbar-placeholder-js-extra'>
-var actionbardata = {"siteID":"54117","siteURL":"https:\/\/automattic.com","xhrURL":"https:\/\/automattic.com\/wp-admin\/admin-ajax.php","nonce":"21ef6c862d","isLoggedIn":"","statusMessage":"","subsEmailDefault":"instantly","proxyScriptUrl":"https:\/\/s0.wp.com\/wp-content\/js\/wpcom-proxy-request.js?ver=20211021","shortlink":"https:\/\/wp.me\/Pe4R-TPN","i18n":{"followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar"}};
-</script>
-<script crossorigin='anonymous' type='text/javascript' src='https://automattic.com/_static/??/wp-content/js/mobile-useragent-info.js,/wp-content/js/rlt-proxy.js?m=1637704497j'></script>
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://automattic.wordpress.com/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://automattic.com/wp-includes/wlwmanifest.xml" /> 
-<meta name="generator" content="WordPress.com" />
-<link rel='shortlink' href='https://wp.me/Pe4R-TPN' />
-	<style>
-		@font-face {
-			font-family: Recoleta;
-			font-display: swap;
-			src: url('https://s1.wp.com/i/fonts/recoleta/400.woff2')
-		}
-	</style>
-	<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fautomattic.com%2Fprivacy-notice%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fautomattic.com%2Fprivacy-notice%2F&amp;for=wpcom-auto-discovery" />
-<!-- Jetpack Open Graph Tags -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Privacy Notice for Visitors to Our Users’ Sites" />
-<meta property="og:url" content="https://automattic.com/privacy-notice/" />
-<meta property="og:description" content="Hi there! This Privacy Notice explains how we, at Automattic, process information about the visitors of our users’ websites in connection with the services we provide through WordPress.com, Jetpack…" />
-<meta property="article:published_time" content="2018-05-14T17:39:37+00:00" />
-<meta property="article:modified_time" content="2020-10-13T02:05:10+00:00" />
-<meta property="og:site_name" content="Automattic" />
-<meta property="og:image" content="https://secure.gravatar.com/blavatar/0d6c430459af115394a012d20b6711d6?s=200&#038;ts=1651846999" />
-<meta property="og:image:width" content="200" />
-<meta property="og:image:height" content="200" />
-<meta property="og:image:alt" content="" />
-<meta property="og:locale" content="en_US" />
-<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
-<meta name="twitter:creator" content="@automattic" />
-<meta name="twitter:site" content="@automattic" />
-<meta name="twitter:text:title" content="Privacy Notice for Visitors to Our Users’&nbsp;Sites" />
-<meta name="twitter:image" content="https://secure.gravatar.com/blavatar/0d6c430459af115394a012d20b6711d6?s=240" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:app:name:iphone" content="WordPress" />
-<meta name="twitter:app:id:iphone" content="335703880" />
-<meta name="twitter:app:name:ipad" content="WordPress" />
-<meta name="twitter:app:id:ipad" content="335703880" />
-<meta name="twitter:app:name:googleplay" content="WordPress" />
-<meta name="twitter:app:id:googleplay" content="org.wordpress.android" />
-
-<!-- End Jetpack Open Graph Tags -->
-<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/0d6c430459af115394a012d20b6711d6?s=32" sizes="16x16" />
-<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/0d6c430459af115394a012d20b6711d6?s=32" sizes="16x16" />
-<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/0d6c430459af115394a012d20b6711d6?s=114" />
-<link rel='openid.server' href='https://automattic.com/?openidserver=1' />
-<link rel='openid.delegate' href='https://automattic.com/' />
-<link rel="search" type="application/opensearchdescription+xml" href="https://automattic.com/osd.xml" title="Automattic" />
-<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
-<link rel="canonical" href="https://automattic.com/privacy-notice/" />
-<script type="application/ld+json">
-{"@context":"https:\/\/schema.org","@graph":[{"@type":"Corporation","@id":"https:\/\/automattic.com\/#organization","url":"https:\/\/automattic.com\/","name":"Automattic","legalName":"Automattic, Inc.","foundingDate":"2005-08-01","slogan":"We don\u2019t make software for free, we make it for freedom.","description":"We are the people behind <a href=\"https:\/\/wordpress.com\/\">WordPress.com<\/a>, <a href=\"https:\/\/woocommerce.com\/\">WooCommerce<\/a>, <a href=\"https:\/\/jetpack.com\/\">Jetpack<\/a>, <a href=\"https:\/\/simplenote.com\/\">Simplenote<\/a>, <a href=\"https:\/\/longreads.com\/\">Longreads<\/a>, <a href=\"https:\/\/vaultpress.com\/\">VaultPress<\/a>, <a href=\"https:\/\/akismet.com\/\">Akismet<\/a>, <a href=\"https:\/\/gravatar.com\/\">Gravatar<\/a>, <a href=\"\">Crowdsignal<\/a>, <a href=\"https:\/\/cloudup.com\/\">Cloudup<\/a>, and more. We believe in making the web a better place, and <a href=\"https:\/\/github.com\/Automattic\">we believe in Open Source<\/a>. The vast majority of our work is available under the GPL.","logo":{"@type":"ImageObject","@id":"https:\/\/automattic.com\/#logo","url":"https:\/\/automattic.com\/wp-content\/themes\/a8c\/automattic-2011\/images\/automattic-logo-2x.png","width":552,"height":60,"caption":"Automattic"},"image":{"@id":"https:\/\/automattic.com\/#logo"},"address":{"@type":"PostalAddress","streetAddress":"60 29th Street #343","addressLocality":"San Francisco","addressRegion":"CA","postalCode":"94110","addressCountry":"US"},"founder":{"@type":"Person","@id":"https:\/\/wordpress.com\/schema.org\/author\/5#person","name":"Matt Mullenweg","description":"In 2002 I started contributing to Open Source software, and life has just gotten better from there. Co-founder of WordPress, founder Automattic.","image":{"@type":"ImageObject","@id":"https:\/\/wordpress.com\/schema.org\/author\/5#personimage","url":"https:\/\/secure.gravatar.com\/avatar\/767fc9c115a1b989744c755db47feb60?s=96&d=mm","width":96,"height":96,"caption":"Matt Mullenweg"}},"numberOfEmployees":1979,"sameAs":["https:\/\/twitter.com\/automattic","https:\/\/www.facebook.com\/AutomatticInc","https:\/\/www.linkedin.com\/company\/automattic\/","https:\/\/en.wikipedia.org\/wiki\/Automattic","https:\/\/www.youtube.com\/c\/automattic"],"subOrganization":{"@id":"https:\/\/wordpress.com\/#organization"}},{"@type":"Organization","@id":"https:\/\/wordpress.com\/#organization","url":"https:\/\/wordpress.com\/","name":"WordPress.com","legalName":"Automattic, Inc.","foundingDate":"2005-08-01","slogan":"Build a website, build a movement.","description":"Create a free website or build a blog with ease on WordPress.com. Dozens of free, customizable, mobile-ready designs and themes. Free hosting and support.","logo":{"@type":"ImageObject","@id":"https:\/\/wordpress.com\/#logo","url":"https:\/\/s1.wp.com\/home.logged-out\/images\/wpcom-a-website-that-can.jpg","width":1024,"height":512,"caption":"WordPress.com"},"image":{"@id":"https:\/\/wordpress.com\/#logo"},"address":{"@type":"PostalAddress","streetAddress":"60 29th Street #343","addressLocality":"San Francisco","addressRegion":"CA","postalCode":"94110","addressCountry":"US"},"founder":{"@type":"Person","@id":"https:\/\/wordpress.com\/schema.org\/author\/5#person","name":"Matt Mullenweg","description":"In 2002 I started contributing to Open Source software, and life has just gotten better from there. Co-founder of WordPress, founder Automattic.","image":{"@type":"ImageObject","@id":"https:\/\/wordpress.com\/schema.org\/author\/5#personimage","url":"https:\/\/secure.gravatar.com\/avatar\/767fc9c115a1b989744c755db47feb60?s=96&d=mm","width":96,"height":96,"caption":"Matt Mullenweg"}},"numberOfEmployees":1979,"sameAs":["https:\/\/twitter.com\/wordpressdotcom","https:\/\/www.facebook.com\/WordPresscom","https:\/\/www.instagram.com\/wordpressdotcom\/","https:\/\/www.linkedin.com\/company\/wordpress","https:\/\/www.youtube.com\/WordPressdotcom","https:\/\/www.pinterest.com\/wordpressdotcom\/","https:\/\/en.wikipedia.org\/wiki\/WordPress.com"],"parentOrganization":{"@id":"https:\/\/automattic.com\/#organization"}},{"@type":"WebSite","@id":"https:\/\/automattic.com\/#website","url":"https:\/\/automattic.com\/","name":"Automattic","description":"Making the web a better place","potentialAction":{"@type":"SearchAction","target":"https:\/\/automattic.com\/search\/{search_term_string}\/","query-input":"required name=search_term_string"},"publisher":{"@id":"https:\/\/wordpress.com\/#organization"},"image":{"@id":"https:\/\/automattic.com\/#logo"},"sameAs":["https:\/\/twitter.com\/automattic","https:\/\/www.facebook.com\/AutomatticInc","https:\/\/www.linkedin.com\/company\/automattic\/","https:\/\/en.wikipedia.org\/wiki\/Automattic","https:\/\/www.youtube.com\/c\/automattic"]},{"@type":"BreadcrumbList","@id":"https:\/\/automattic.com\/privacy-notice\/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":0,"item":{"@type":"WebSite","@id":"https:\/\/automattic.com\/#website-breadcrumb","url":"https:\/\/automattic.com\/","name":"Home"}},{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https:\/\/automattic.com\/privacy-notice\/#webpage-breadcrumb","url":"https:\/\/automattic.com\/privacy-notice\/","name":"Privacy Notice for Visitors to Our Users\u2019 Sites \u2014"}}]},{"@type":"ImageObject","@id":"https:\/\/automattic.com\/privacy-notice\/#primaryimage","url":"https:\/\/secure.gravatar.com\/blavatar\/0d6c430459af115394a012d20b6711d6?s=200&ts=1651846999","width":200,"height":200,"caption":"Privacy Notice for Visitors to Our Users\u2019 Sites \u2014"},{"@type":"WebPage","@id":"https:\/\/automattic.com\/privacy-notice\/#webpage","url":"https:\/\/automattic.com\/privacy-notice\/","name":"Privacy Notice for Visitors to Our Users\u2019 Sites \u2014","description":"Making the web a better place","inLanguage":"en","isPartOf":{"@id":"https:\/\/automattic.com\/#website"},"primaryImageOfPage":{"@id":"https:\/\/automattic.com\/privacy-notice\/#primaryimage"},"breadcrumb":{"@id":"https:\/\/automattic.com\/privacy-notice\/#breadcrumbs"},"publisher":{"@id":"https:\/\/wordpress.com\/#organization"},"datePublished":"2018-05-14T17:39:37+0000","dateModified":"2020-10-13T02:05:10+0000"},{"@type":"Article","@id":"https:\/\/automattic.com\/privacy-notice\/#article","headline":"Privacy Notice for Visitors to Our Users\u2019 Sites \u2014","commentCount":0,"keywords":"","datePublished":"2018-05-14T17:39:37+0000","dateModified":"2020-10-13T02:05:10+0000","mainEntityOfPage":{"@id":"https:\/\/automattic.com\/privacy-notice\/#webpage"},"isPartOf":{"@id":"https:\/\/automattic.com\/privacy-notice\/#webpage"},"image":{"@id":"https:\/\/automattic.com\/privacy-notice\/#primaryimage"},"publisher":{"@id":"https:\/\/wordpress.com\/#organization"},"author":{"@id":"https:\/\/wordpress.com\/#organization"}}]}
-</script>
-<meta name="application-name" content="Automattic" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Making the web a better place" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://automattic.com/feed/;icon-uri=https://secure.gravatar.com/blavatar/0d6c430459af115394a012d20b6711d6?s=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="Hi there! This Privacy Notice explains how we, at Automattic, process information about the visitors of our users’ websites in connection with the services we provide through WordPress.com, Jetpack (including WooCommerce Shipping &amp; Tax), IntenseDebate, Crowdsignal.com, and Akismet. Read on! Who’s Who and What This Privacy Notice Covers Let’s talk first about who we are&hellip;" />
-<!-- There is no amphtml version available for this URL. --><!-- Your Google Analytics Plugin is missing the tracking ID -->
-</head>
-
-<body class="page-template page-template-page-templates page-template-table-of-contents page-template-page-templatestable-of-contents-php page page-id-214631 customizer-styles-applied highlander-enabled highlander-light">
-
-<div id="wrapper">
-
-	<header class="header">
-		<h1 class="logo"><a href="/">Automattic</a></h1>
-		<nav>
-			<ol class="menu">
-				<li class="page-item page-item-home "><a href="/">Home</a></li>
-				<li class="page-item page-item-about "><a href="/about/">About Us</a></li>
-				<li class="page-item page-item-news "><a href="/news/">News</a></li>
-				<li class="page-item page-item-jobs "><a href="/work-with-us/">Work With Us</a></li>
-			</ol>
-		</nav>	
-	</header>
-
-<div id="container">
-	<main id="content" class="tier">
-								<h2>Privacy Notice for Visitors to Our Users’&nbsp;Sites</h2>
-			<div class="sticky-container">
-				<div class="primary">
-					<p>Hi there! This Privacy Notice explains how we, at Automattic, process information about the visitors of our users’ websites in connection with the services we provide through WordPress.com, Jetpack (including WooCommerce Shipping &amp; Tax), IntenseDebate, Crowdsignal.com, and Akismet. Read on!</p>
-</section><section id="whoe28099s-who-and-what-this-privacy-notice-covers"><h3 >Who’s Who and What This Privacy Notice Covers</h3>
-<p>Let’s talk first about who we are at Automattic, what we do, and what this Privacy Notice covers.</p>
-<p>We are the folks behind a variety of products and services designed to allow anyone–from bloggers, to small business owners, and enterprises–to create, publish, and manage their own websites:</p>
-<ul>
-<li><a href="https://wordpress.com/">WordPress.com</a> offers the design, features, and support to bring a website to life.</li>
-<li>With <a href="https://jetpack.com/">Jetpack</a>, website owners that host their websites elsewhere can connect those websites to features and tools available through WordPress.com and <a href="https://docs.woocommerce.com/document/woocommerce-services/">WooCommerce Shipping &amp; Tax</a>.</li>
-<li><a href="https://crowdsignal.com/">Crowdsignal</a> helps site owners create quizzes, surveys, and polls that fit their brand and vision.</li>
-<li><a href="https://intensedebate.com/">Intense Debate</a> gives site owners tools to manage comments on their websites.</li>
-<li><a href="https://akismet.com/">Akismet</a> helps keep spam under control by filtering out spam comments&#8211;hundreds of millions, every day!</li>
-</ul>
-<p>To keep things simple, in this Privacy Notice we’ll refer to the users of the services we provide through these products and services&#8211;such as a website’s administrator, contributor, author, or editor&#8211;as our “Users,” and we’ll refer to our Users’ websites as “Sites.” Visitors to those Sites can read published content and interact with the Sites through features such as <a href="https://en.support.wordpress.com/comments/">comments</a>, “<a href="https://en.support.wordpress.com/likes/">likes</a>,” poll/survey responses, and <a href="https://en.support.wordpress.com/following/">follows</a>.</p>
-<p>We put together this Privacy Notice to help our Users understand the information we collect about their Site visitors (a/k/a our Users’ users), and how that happens on their Sites. Our Users are responsible for publishing a privacy policy on their Sites that explains to their visitors how data is collected via the Sites and how that information is used and disclosed.</p>
-<p>This Privacy Notice does not apply to the information we collect about Users and those who visit Automattic’s websites (like automattic.com, wordpress.com, jetpack.com, or akismet.com)&#8211;that’s covered in our <a href="https://automattic.com/privacy/">Privacy Policy</a>.</p>
-<p>Alright, with those introductions out of the way, let’s turn to how we collect, use, and share information about visitors to our Users’ Sites.</p>
-</section><section id="information-we-collect-about-visitors-to-our-userse28099-sites"><h3 >Information We Collect About Visitors to Our Users’ Sites</h3>
-<p>We collect information about visitors to our Users’ Sites in a few different ways&#8211;we collect certain information that the visitors provide to the Site, we collect some information automatically, and we collect any information that our Users provide to us about their visitors.</p>
-</section><section id="information-a-visitor-provides-to-a-site"><h4 ><em>Information a Visitor Provides to a Site</em></h4>
-<p>We’ll start with information that visitors provide directly to a Site, which primarily happens when visitors type into a text field on a Site, like a comment field or a sign-up form. Our Users may also implement other ways to allow Site visitors to provide information directly through their Sites.</p>
-<p>Here are the most common ways in which a visitor directly provides information to a Site:</p>
-<ul>
-<li><strong>Follower and Subscriber Information:</strong> When a visitor signs up to follow or subscribe to a Site using Jetpack or WordPress.com, we collect the sign-up information requested by the Site, which typically includes an email address.</li>
-<li><strong>Site Comments:</strong> When a visitor leaves a comment on a Site, we collect that comment, and other information that the visitor provides along with the comment, such as the visitor’s name and email address.</li>
-<li><strong>Crowdsignal Survey Responses:</strong> When a visitor completes a poll, quiz, or other type of survey prepared by a User via Crowdsignal.com, we collect the visitor’s responses to those surveys, and other information that the survey owner requires for a poll/quiz/survey response, like an e-mail address.</li>
-<li><strong>Order and Shipment Information:</strong> If a visitor orders something (hooray!) from a Site using our store and ecommerce features available through WordPress.com or Jetpack (including WooCommerce Shipping &amp; Tax), we may collect information to process that order, such as credit card and billing information, and an address for shipping the package along to the recipient and calculating applicable taxes. We may also use this information for other purposes on behalf of our Users&#8211;for example, to send marketing and other communications from our Users to their customers, and to provide our User with analytics information about their ecommerce site (e.g., the number of orders from particular geographic areas).</li>
-<li><strong>Other Information Entered on the Site:</strong> We may also collect other information that a visitor enters on the Site&#8211;such as a contact form submission, a search query, or Site registration.</li>
-</ul>
-</section><section id="information-we-automatically-collect-from-the-site"><h4 ><em>Information We Automatically Collect from the Site</em></h4>
-<p>We also automatically collect some information about visitors to a Site. The information we automatically collect depends on which of our services the Site uses. We’ve listed examples below:</p>
-<ul>
-<li><strong>Technical Data from a Visitor&#8217;s Computer and Etcetera:</strong> We collect the information that web browsers, mobile devices, and servers typically make available about visitors to a Site, such as the IP address, browser type, unique device identifiers, language preference, referring site, the date and time of access, operating system, and mobile network information.</li>
-<li><strong>Visitor Interactions:</strong> We collect information about a visitor’s interactions with a Site, including the “<a href="https://en.support.wordpress.com/likes/">likes</a>” and “<a href="https://en.support.wordpress.com/ratings/">ratings</a>” left by visitors to a Site using WordPress.com or Jetpack.</li>
-<li><strong>Location Information:</strong> We may determine the approximate location of a visitor’s device from the IP address. We collect and use this information to, for example, tally for our Users how many people visit their Sites from certain geographic regions. If you’d like, you can read more about our <a href="https://en.support.wordpress.com/stats/">Site Stats</a> feature for WordPress.com sites and Jetpack sites.</li>
-<li><strong>Akismet Commenter Information:</strong> We collect information about visitors who comment on Sites that use our Akismet anti-spam service. The information we collect depends on how the User sets up Akismet for the Site, but typically includes the commenter’s IP address, user agent, referrer, and Site URL (along with other information directly provided by the commenter such as their name, username, email address&#8230;oh, and the comment itself, of course).</li>
-<li><strong>Crowdsignal Response Information:</strong> We collect information about visitors who respond to a Crowdsignal survey. The information that we collect typically includes IP address, browser type, operating system, user agent, and the web page last visited.</li>
-<li><strong>Intense Debate Commenter Information:</strong> We collect information about visitors who comment on Sites that use our Intense Debate service. The information that we collect depends on how the User sets up Intense Debate for the Site, but typically includes the IP address and account information on the Site, along with the comment.</li>
-<li><strong>Jetpack Site Activity:</strong> We collect visitor activities related to the management of the Site, such as login attempts/actions and comment submission and management actions. For more information, please see the <a href="https://jetpack.com/support/privacy/">Jetpack Privacy Center</a>.</li>
-<li><strong>Information from Cookies and Other Technologies:</strong> A cookie is a string of information that a Site stores on a visitor’s computer, and that the visitor’s browser provides to the Site each time the visitor returns. Pixel tags (also called web beacons) are small blocks of code placed on Sites. Automattic uses cookies and other technologies like pixel tags to help identify and track visitors and Site usage, and to deliver targeted ads when ads are enabled for free WordPress.com sites or when ads are enabled on a Site through WordAds or Jetpack Ads (see the “Other Tools” section below for more details). For more information about our use of cookies and other technologies for tracking, including how visitors can control the use of cookies, please see our <a href="https://automattic.com/cookies/">Cookie Policy</a>.</li>
-</ul>
-</section><section id="other-information-provided-by-our-users"><h4 ><em>Other Information Provided by Our Users</em></h4>
-<p>We also collect any other information that our Users provide to us about visitors to their Sites. For example, a User may upload a directory or other information about Site visitors and customers to the “backend” administrative platform for managing the Site.</p>
-</section><section id="how-we-use-visitor-information"><h3 >How We Use Visitor Information</h3>
-<p>We use information about Site visitors in order to provide our Services to our Users and their Sites. Our users may use our Services to, for example, create and manage their Site, sell products and services on their Site, flag and fight comments from spammers, and collect information through polls, quizzes and other surveys.</p>
-<p>In addition to the above, we use some information about Site visitors who are also our Users as described in our <a href="https://automattic.com/privacy/">Privacy Policy</a>.</p>
-<p>We may also use and share information that has been aggregated or reasonably de-identified, so that the information could not reasonably be used to identify any individual. For instance, we may publish aggregate statistics about the use of our services.</p>
-</section><section id="how-we-share-visitor-information"><h3 >How We Share Visitor Information</h3>
-<p>We may share information collected about Site visitors in the limited circumstances spelled out below:</p>
-<ul>
-<li><strong>Subsidiaries, Employees, and Independent Contractors:</strong> We may disclose Site visitor information to our subsidiaries, our employees, and individuals who are our independent contractors that need to know the information in order to help us provide our services to our Users and their Sites, or to process the information on our behalf. We require our subsidiaries, employees, and independent contractors to follow this Privacy Notice for information about visitors that we share with them.</li>
-<li><strong>Third Party Vendors:</strong> We may share Site visitor information with third party vendors who need to know this information in order to provide their services to us. This group includes vendors that help us provide our services to our Users and their Sites. We require vendors to agree to privacy commitments in order to share information with them.</li>
-<li><strong>Legal Requests:</strong> We may disclose Site visitor information in response to a subpoena, court order, or other governmental request. For more information on how we respond to requests for information, please see our <a href="https://en.support.wordpress.com/report-blogs/legal-guidelines/">Legal Guidelines</a>.</li>
-<li><strong>To Protect Rights, Property, and Others:</strong> We may disclose Site visitor information when we believe in good faith that disclosure is reasonably necessary to protect the property or rights of Automattic, our Users, third parties, or the public at large. For example, if we have a good faith belief that there is an imminent danger of death or serious physical injury, we may disclose information related to the emergency without delay.</li>
-<li><strong>Business Transfers:</strong> In connection with any merger, sale of company assets, or acquisition of all or a portion of our business by another company, or in the unlikely event that Automattic goes out of business or enters bankruptcy, Site visitor information would likely be one of the assets that is transferred or acquired by a third party. If any of these events were to happen, this Privacy Notice would continue to apply to Site visitor information and the party receiving this information may continue to use this information, but only consistent with this Privacy Notice.</li>
-<li><strong>Information Shared Publicly:</strong> Information that visitors choose to make public is–you guessed it–disclosed publicly. That means, of course, that information like visitor comments and “likes” are all available to others, including information about the visitor that is displayed in connection with a comment or “like” (such as a visitor’s WordPress.com username and Gravatar). We provide a “firehose” stream of public data (including comments) from Sites to provide that data to firehose subscribers, who may view and analyze the content, but do not have rights to re-publish it publicly. Public information may also be indexed by search engines or used by third parties.</li>
-</ul>
-</section><section id="how-long-we-keep-visitor-information"><h3 >How Long We Keep Visitor Information</h3>
-<p>If we are not legally required to keep it, we generally discard information about Site visitors when no longer needed for the purposes for which we collect and use it on behalf of our users — those purposes which are described in the &#8220;How We Use Visitor Information&#8221; section above.</p>
-<p>For example, we keep the web server logs that record information about a visitor to one of our user’s Sites — such as the visitor’s IP address, browser type, and operating system — for approximately 30 days. We retain the logs for this period of time in order to, among other things, investigate issues if something goes wrong on a user’s Site.</p>
-<p>As another example, when a Site visitor views your Site we use their IP address in order to update your Site Stats with information about their visit, like what country they are in. We keep that IP address for approximately 30 days to give us time to calculate your monthly Site Stats and address any issues with those counts.</p>
-</section><section id="other-tools"><h3 >Other Tools</h3>
-<p>Our Users’ Sites may contain ads from third party ad networks and advertisers, and our Users may integrate other tools and services on their Sites (such as Google Analytics and third party plugins). Please note that this Privacy Notice only covers the collection of information by Automattic, and does not cover the collection by any third party.</p>
-<p>Ad networks and analytics providers may set tracking technologies (like cookies) to collect information about visitors’ use of a Site and across other websites and online services, such as a visitor’s IP address, web browser, mobile network information, pages viewed, time spent on pages, links clicked, and conversion information. This information may be used by those companies to, among other things, analyze and track usage, determine the popularity of certain content, and deliver advertisements that may be more targeted to visitor interests. For more information about how to manage and delete cookies, visit aboutcookies.org, and for more information on interest-based ads, including information about how visitors may be able to opt out of having their web browsing information used for behavioral advertising purposes, please visit <a href="http://www.aboutads.info/choices">aboutads.info/choices</a> (US based) and <a href="http://www.youronlinechoices.eu/">youronlinechoices.eu</a> (EU based).</p>
-</section><section id="other-resources"><h3 >Other Resources</h3>
-<p>You can read more about how our products and services operate on the links at the top of this notice.</p>
-<p>And we’d love it if you follow us on <a href="http://privacy.blog">privacy.blog</a> for more information about privacy and transparency at Automattic.</p>
-</section>				</div>
-				<div class="tertiary">
-					<div class="toc-wrapper">
-						<h3 class="table-of-contents--title">Sections</h3>
-						<button class="table-of-contents--toggle" aria-label="Open table of contents" aria-expanded="false">&#9660;</button>
-						<ul class="table-of-contents"><li><a  href="#whoe28099s-who-and-what-this-privacy-notice-covers">Who’s Who and What This Privacy Notice Covers</a></li><li><a  href="#information-we-collect-about-visitors-to-our-userse28099-sites">Information We Collect About Visitors to Our Users’ Sites</a></li><li><a class="toc-h4" href="#information-a-visitor-provides-to-a-site">Information a Visitor Provides to a Site</a></li><li><a class="toc-h4" href="#information-we-automatically-collect-from-the-site">Information We Automatically Collect from the Site</a></li><li><a class="toc-h4" href="#other-information-provided-by-our-users">Other Information Provided by Our Users</a></li><li><a  href="#how-we-use-visitor-information">How We Use Visitor Information</a></li><li><a  href="#how-we-share-visitor-information">How We Share Visitor Information</a></li><li><a  href="#how-long-we-keep-visitor-information">How Long We Keep Visitor Information</a></li><li><a  href="#other-tools">Other Tools</a></li><li><a  href="#other-resources">Other Resources</a></li></ul>					</div>
-				</div>
-			</div>
-			</main><!-- #content  -->
-</div><!-- #container -->
-
-	<nav class="nav">
-		<div class="contactus"><a href="/contact/">Contact Us</a></div>
-		<div class="diversity"><a href="/diversity-and-inclusion/">Diversity</a></div>
-		<div class="press"><a href="/press/">Press</a></div>
-		<div class="privacy"><a href="/privacy/">Privacy Policy</a></div>
-		<div class="social-links">
-			<div class="twitter"><a class="noticon noticon-twitter" href="https://twitter.com/automattic" target="_blank" aria-label="Twitter"><!-- Twitter --></a></div>
-			<div class="facebook"><a class="noticon noticon-facebook" href="http://www.facebook.com/AutomatticInc" target="_blank" aria-label="Facebook"><!-- Facebook --></a></div>
-			<div class="facebook"><a class="noticon noticon-youtube" href="https://www.youtube.com/c/automattic" target="_blank" aria-label="YouTube"><!-- YouTube --></a></div>
-		</div>
-		<ol class="menu">
-			<li class="page-item "><a href="/">Home</a></li>
-			<li class="page-item "><a href="/about/">About Us</a></li>
-			<li class="page-item "><a href="/news/">News</a></li>
-			<li class="page-item "><a href="/work-with-us/">Work With Us</a></li>
-		</ol>
-	</nav>
-	<footer class="footer">
-		<p class="copyr">&copy; Automattic Inc., purveyors of fine blogging and site-building services since 2005. Thank you for your&nbsp;time.</p>
-	</footer>
-</div><!-- #wrapper -->
-
-<!--  -->
-			<!-- A8C Analytics [start] -->
-			<script type="text/javascript">
-				( function() {
-					'use strict';
-
-					var setupAnalytics = function() {
-						window.a8cAnalyticsConfig = {"cookieBanner":{"version":"1","cssZIndex":50001,"skipBanner":false,"cookieDomain":null,"v1CookieName":"sensitive_pixel_option","v2CookieName":"sensitive_pixel_options","v1Text":"Our websites and dashboards use cookies. By continuing, you agree to their use. <a target=\"_blank\" href=\"https:\/\/automattic.com\/cookies\/\">Learn more<\/a>, including how to control cookies.","v2Text":"We and our partners process your personal data (such as browsing data, IP addresses, cookie information, and other unique identifiers) based on your consent and\/or our legitimate interest to optimize our website, marketing activities, and your user experience.","v2OptionsText":"Your privacy is critically important to us. We and our partners use, store, and process your personal data to optimize: our <strong>website<\/strong> such as by improving security or conducting analytics, <strong>marketing activities<\/strong> to help deliver relevant marketing or content, and your <strong>user experience<\/strong> such as by remembering your account name, language settings, or cart information, where applicable. You can customize your cookie settings below. Learn more in our <a href=\"https:\/\/automattic.com\/privacy\/\" target=\"_blank\">Privacy Policy<\/a> and <a href=\"https:\/\/automattic.com\/cookies\/\" target=\"_blank\">Cookie Policy<\/a>.","v2EssentialOptionText":"<strong>Required:<\/strong> These cookies are essential for our websites and services to perform basic functions and are necessary for us to operate certain features. These include those required to allow registered users to authenticate and perform account-related functions, store preferences set by users such as account name, language, and location, and ensure our services are operating properly.","v2AnalyticsOptionText":"<strong>Analytics:<\/strong> These cookies allow us to optimize performance by collecting information on how users interact with our websites, including which pages are visited most, as well as other analytical data. We use these details to improve how our websites function and to understand how users interact with them. You can opt-out by logging into your account and changing your privacy settings at <a target=\"_blank\" href=\"https:\/\/wordpress.com\/me\/privacy\">https:\/\/wordpress.com\/me\/privacy<\/a>.","v2AdvertisingOptionText":"<strong>Advertising:<\/strong> These cookies are set by us and our advertising partners to provide you with relevant content and to understand that content\u2019s effectiveness. They may be used to collect information about your online activities over time and across different websites to predict your preferences and to display more relevant advertisements to you. These cookies also allow a profile to be built about you and your interests, and enable personalized ads to be shown to you based on your profile.","v1ButtonText":"Got It!","v2CustomizeButtonText":"Customize","v2AcceptAllButtonText":"Accept All","v2AcceptSelectionButtonText":"Accept Selection"},"adminAnalytics":"analytics-wpcom-admin.php","fireAnalyticsOptions":[]};
-					};
-
-					if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-						defQueue.items.push( setupAnalytics );
-					} else {
-						setupAnalytics();
-					}
-				} )();
-			</script>
-
-			
+<!DOCTYPE html><html dir="ltr" lang="en" class="no-js" itemscope itemtype="http://schema.org/Article"><head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app221.us.archive.org';v.server_ms=428;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
 <script type="text/javascript">
-  ( function () {
-		'use strict';
-
-		document.addEventListener( 'a8c-analytics:loaded', function () {
-			var kit = window.a8cAnalytics.kit;
-
-			if ( kit.doNotTrack() ) {
-				return;
-			}
-
-			function fireGoogleAnalytics() {
-				kit.loadGoogleAnalytics();
-				ga( 'create', 'UA-52447-5', 'auto' );
-
-				ga( 'set', 'transport', typeof navigator.sendBeacon === 'function' ? 'beacon' : 'xhr' );
-				ga( 'set', 'anonymizeIp', true );
-
-				ga( 'send', 'pageview' );
-			}
-
-			function fireGoogleAnalyticsFour() {
-				var gtagOptions = { 'anonymize_ip': true };
-				kit.loadGtag( 'G-737CYY5004', gtagOptions );
-			}
-
-			// ------- Fire Normal Pixels -------
-
-						fireGoogleAnalytics();
-			fireGoogleAnalyticsFour( 'analytics' );
-
-			// ------- Fire Sensitive Pixels -------
-
-			/* none for now
-			document.addEventListener( 'a8c-analytics:fire-sensitive-pixels', function () {
-			} );
-			*/
-		} );
-	} )();
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/","20200105133021","https://web.archive.org/","web","/_static/",
+	      "1578231021");
 </script>
-
-			<script type="text/javascript">
-				( function() {
-					'use strict';
-					var currentScript = document.currentScript;
-
-					var setupAnalytics = function() {
-						function getScript() {
-							var script = document.createElement( 'script' );
-							var prev = currentScript || document.getElementsByTagName( 'script' )[ 0 ];
-							script.setAttribute( 'src', "https:\/\/s0.wp.com\/wp-content\/mu-plugins\/a8c-analytics\/a8c-analytics.js?v=1645447154" );
-							script.setAttribute( 'async', true );
-							prev.parentNode.insertBefore( script, prev );
-						}
-
-													getScript();
-											};
-
-					if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
-						defQueue.items.push( setupAnalytics );
-					} else {
-						setupAnalytics();
-					}
-				} )();
-			</script>
-			<!-- A8C Analytics [end] -->
-			<div style="display:none">
-	</div>
-	<div id="actionbar" style="display: none;"
-			class="actnbr-a8c-automattic-2011 actnbr-has-follow">
-		<ul>
-						<li class="actnbr-ellipsis actnbr-hidden">
-				<svg class="gridicon gridicons-ellipsis" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M7 12c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm12-2c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-7 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2z"/></g></svg>				<div class="actnbr-popover tip tip-top-left actnbr-more">
-					<div class="tip-arrow"></div>
-					<div class="tip-inner">
-						<ul>
-									<li class="actnbr-sitename">
-			<a href="https://automattic.com">
-				<img alt='' src='https://secure.gravatar.com/blavatar/0d6c430459af115394a012d20b6711d6?s=50&#038;d=https%3A%2F%2Fs2.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' />				Automattic			</a>
-		</li>
-								<li class="actnbr-folded-customize">
-								<a href="https://automattic.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fautomattic.wordpress.com%2Fprivacy-notice%2F">
-									<svg class="gridicon gridicons-customize" height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z"/></g></svg>									<span>Customize</span>
-								</a>
-							</li>
-																<li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li>
-									<li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fautomattic.com%252Fprivacy-notice%252F">Log in</a></li>
-																	<li class="actnbr-shortlink"><a href="https://wp.me/Pe4R-TPN">Copy shortlink</a></li>
-																	<li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li>
-																	<li class="actnbr-subs">
-										<a href="https://subscribe.wordpress.com/">Manage subscriptions</a>
-									</li>
-														</ul>
-					</div>
-				</div>
-			</li>
-		</ul>
-	</div>
-	
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+<meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="description" content="Scientific American is the essential guide to the most awe-inspiring advances in science and technology, explaining how they change our understanding of the world and shape our lives."><meta><meta name="msapplication-TileImage" content="/public/resources/favicons/favicon-196-f10395ba7ecf07756e4b5a82c4795b61.png"><meta name="referrer" content="unsafe-url"><meta name="com.silverpop.brandeddomains" content="www.pages04.net,www.scientificamerican.com"/><meta name="com.silverpop.cothost" content="pod4.ibmmarketingcloud.com"/><title>These Are the Biggest Climate Questions for the New Decade - Scientific American</title><link rel="apple-touch-icon" sizes="196x196" href="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/favicons/favicon-196-f10395ba7ecf07756e4b5a82c4795b61.png"><link rel="apple-touch-icon" sizes="128x128" href="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/favicons/favicon-128-4b9aa97db8311c4616270d6a8a662eac.png"><link rel="apple-touch-icon" sizes="96x96" href="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/favicons/favicon-96-387ab1daffb7a1698601f6e49da87a1c.png"><link rel="apple-touch-icon" sizes="32x32" href="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/favicons/favicon-32-cadc19705538fdb538db10f2a98c1d46.png"><link rel="apple-touch-icon" sizes="16x16" href="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/favicons/favicon-16-59d034d523b133557208a7c24f448374.png">		<link rel="shortcut icon" href="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/favicons/favicon-4c8c70500bd3f01ae8c38cf7dd2771fe.ico"><meta name="theme-color" content="#093969"/><link rel="stylesheet" type="text/css" rel="preload" href="/web/20200105133021cs_/https://www.scientificamerican.com/public/resources/sa-c798113fa11711e649be374a60d3aee7.css" as="style"/><link rel="stylesheet" type="text/css" rel="preload" href="/web/20200105133021cs_/https://www.scientificamerican.com/public/resources/icons-742382d06c2ee8300dd33b9ae799b010.css" as="style"/><link href="https://web.archive.org/web/20200105133021/https://static.scientificamerican.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://cdn.krxd.net/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://www.googletagservices.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://plugin.mediavoice.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://connect.facebook.net/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://cdn.marphezis.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://ajax.googleapis.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://s3.amazonaws.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://cdn.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://www.googletagmanager.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://www.google-analytics.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://get.s-onetag.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://adservice.google.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://cdn.cookielaw.org/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://logx.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://ads.deliverimp.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://z.moatads.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://a1859010085.cdn.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://tpc.googlesyndication.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://pixel.moatads.com/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://consumer.krxd.net/" rel="preconnect"><link href="https://web.archive.org/web/20200105133021/https://securepubads.g.doubleclick.net/" rel="preconnect"><script>dataLayer = [{"content":{"authorization":{"status":1,"freeToAccess":1,"type":"free_to_air"},"media":[{"source":"https://web.archive.org/web/20200105133021/https://static.scientificamerican.com/sciam/cache/file/443BBF99-EC8A-47E1-8913FC7D9AADD136_source.jpg","mediaID":"443BBF99-EC8A-47E1-8913FC7D9AADD136","type":"image","title":"These Are the Biggest Climate Questions for the New Decade"}],"category":{"contentSubType1":"Climatewire","subjectSubType1":"Climate","subjectType":"Sustainability","contentType":"PartnerArticle"},"updatedAt":"","contentInfo":{"keywords":"Sustainability,Climate","publishedAtDate":"2020-01-04","publishedAtTime":"12:00:00","contentId":"227C6AA8-FDB4-4664-B9AE6E89D94781D7","brand":"Scientific American","publishedAt":1578157200,"author":["Chelsea Harvey","E&E News"],"title":"These Are the Biggest Climate Questions for the New Decade"},"attributes":{"keywords":"","language":"en","wordCount":1954,"subjects":"","copyright":{"native":0,"syndicated":0,"resale":0},"template":"sciam"}},"session":{"createdAt":"","authentication":{"loginStatus":"logged out"},"updatedAt":"","attributes":{},"sessionInfo":{"sessionID":"{{GA populated session ID}}"}},"version":"1.0.0","productsInCart":[],"product":[],"privacy":{},"currency":"","user":[{"sitelicense":{"accessLevel":"","grantBPID":[],"BPID":[],"siteID":[],"isSiteLicenseCustomer":false,"accessReason":""},"licence":[{"category":{"licenceType":""},"licenceInfo":{"licenceName":"","licenceID":""},"attributes":{}}],"updatedAt":"","segment":{"emailSubscriber":0,"isInExtendedSession":false,"appUserMind":0,"registered":0,"siteLicenseCustomer":false,"customer":0,"hasAccess":false,"subscriberMind":0,"logouturl":"?slatAction=public:account.logout","isLoggedIn":false,"emailVerificationError":false,"appUserSA":0,"subscriber":0,"giftRecipient":0,"hasSoftAccess":false,"commented":0,"subscriberSA":0},"profile":[{"profileInfo":{"profileID":""},"attributes":{"recency":{"appLoginSA":"","appLoginMind":"","webLogin":""}}}]}],"page":{"error":{},"pageInfo":{},"category":{"pageType":"single-page"},"attributes":{},"component":[{}]}}];</script>
+<script type="text/javascript" src="/web/20200105133021js_/https://www.scientificamerican.com/core/modules/v1/core_assets/js/mura.min.js?v=7.1.213"></script>
 <script>
-window.addEventListener( "load", function( event ) {
-	var link = document.createElement( "link" );
-	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20210915";
-	link.type = "text/css";
-	link.rel = "stylesheet";
-	document.head.appendChild( link );
-
-	var script = document.createElement( "script" );
-	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20220329";
-	script.defer = true;
-	document.body.appendChild( script );
-} );
+(function(root,config){
+ root.queuedMuraCmds=[];
+ root.deferMuraInit=function(){
+ if(typeof root.Mura != 'undefined' && typeof root.Mura.init == 'function'){
+ root.Mura.init(config);
+ for(var cmd in root.queuedMuraCmds){
+ root.Mura(root.queuedMuraCmds[cmd]);
+ }
+ } else {
+ if(typeof root.Mura != 'function'){
+ root.mura = root.m = root.Mura = function(cmd){root.queuedMuraCmds.push(cmd);};
+ }
+ setTimeout(root.deferMuraInit);
+ }
+ }
+ root.deferMuraInit();
+ }
+)(this,{
+ loginURL:"?display=login",
+ siteid:"sciam",
+ siteID:"sciam",
+ contentid:"227C6AA8-FDB4-4664-B9AE6E89D94781D7",
+ contenthistid:"30A10541-8837-45EB-9ADAF8C3A4E3CF43",
+ ismind:"false",
+ parentid:"5AE0FB1B-26CB-460E-87FC852583F160F6",
+ context:"",
+ nocache:0,
+ assetpath:"/sites/sciam",
+ corepath:"/core",
+ themepath:"/themes/responsive",
+ reCAPTCHALanguage:"en",
+ preloaderMarkup: "",
+ mobileformat: false,
+ windowdocumentdomain: "",
+ layoutmanager:true,
+ type:"Page",
+ subtype:"PartnerArticle",
+ queueObjects: true,
+ rb:{"formrequiredwrapperclass":"","formradiolabelclass":"radio","formresponsewrapperclass":"","formwrapperclass":"well","formbuttoncancellabel":"Cancel","formselectclass":"form-control","formbuttonclass":"btn btn-default","formfileclass":"form-control","formbuttonwrapperclass":"btn-group","formbuttoninnerclass":"","formcheckboxwrapperclass":"","formradiowrapperclass":"","formcheckboxlabelclass":"checkbox","formbuttonnextlclass":"form-nav","forminputclass":"form-control","formradioclass":"","formcheckboxclass":"","formfieldlabelclass":"control-label","formtextareaclass":"form-control","formbuttonbacklabel":"Back","formbuttonsubmitlabel":"Submit","formrequiredlabel":"Required","generalwrapperclass":"well","formbuttonnextlabel":"Next","generalwrapperbodyclass":"","formbuttomsubmitclass":"form-submit btn-primary","formbuttonbackclass":"form-nav","formerrorwrapperclass":"","formbuttoncancelclass":"form-cancel btn-primary pull-right","formwrapperbodyclass":"","formgeneralcontrolclass":"form-control","formfieldwrapperclass":"control-group"},
+ dtExample:"11/10/2018",
+	dtCh:"/",
+	dtFormat:[0,1,2],
+	dtLocale:"en-US",
+ hassoftaccess: false,
+ hashardaccess: false,
+ cookiedomain:".scientificamerican.com",
+ securedomain:"https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/"
+})
 </script>
+<meta property="og:site_name" content="Scientific American"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:title" content="These Are the Biggest Climate Questions for the New Decade"/>
+	<meta property="og:description" content="The 2010s brought major climate science advances, but researchers still want to pin down estimates of Arctic melt and sea level rise"/>
+	<meta property="og:image" content="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/443BBF99-EC8A-47E1-8913FC7D9AADD136.jpg" itemprop="image"/>
+	<meta property="og:image:width" content="790"/>
+	<meta property="og:image:height" content="496"/>
+	
+	
+	<meta property="og:url" content="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/"/>
 
-	<script crossorigin='anonymous' type='text/javascript' src='https://automattic.com/wp-content/mu-plugins/admin-bar/masterbar-tracks.js?m=1649402273h'></script>
-<script type="text/javascript">
-// <![CDATA[
+	
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@sciam">
+	<meta name="twitter:title" content="These Are the Biggest Climate Questions for the New Decade">
+
+
+	
+	
+		<meta name="author" content="Chelsea Harvey,E&amp;E News"/>
+	
+	<meta name="description" content="The 2010s brought major climate science advances, but researchers still want to pin down estimates of Arctic melt and sea level rise">
+	<meta name="keywords" content=""><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://web.archive.org/web/20200105133021/https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PL33XX4');</script><!-- End Google Tag Manager --><meta name="google-site-verification" content="c3vEwQZqsGgDzoxA9EFSJfvsACgCmxZrh1mnt6oodUg"/><meta property="fb:pages" content="340704949293332"/><!--[ if lte IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![ endif]--></head><body class="site-sciam lang-en   leaderboard-top newsletter-promo--active " data-behavior="onetrust"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20200105133021/https%3A//www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20200105133021" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20200105133021*/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" title="See a list of every capture for this URL">17 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">04 Jan 2020 - 14 Dec 2021</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap">Dec</td>
+	    <td class="c" id="displayMonthEl" title="You are here: 13:30:21 Jan 05, 2020">JAN</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200212140124/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" title="12 Feb 2020"><strong>Feb</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><img src="/_static/images/toolbar/wm_tb_prv_off.png" alt="Previous capture" width="14" height="16" border="0" /></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 13:30:21 Jan 05, 2020">05</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200109050808/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" title="05:08:08 Jan 09, 2020"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap">2019</td>
+	    <td class="c" id="displayYearEl" title="You are here: 13:30:21 Jan 05, 2020">2020</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210116112605/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" title="16 Jan 2021"><strong>2021</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20200105133021/http://web.archive.org/screenshot/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/mediacloud)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/mediacloud" target="_new"><span class="wm-title">Media Cloud</span></a></div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/","20200105133021",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT --><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://web.archive.org/web/20200105133021if_/https://www.googletagmanager.com/ns.html?id=GTM-PL33XX4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) --><div id="div-gpt-ad-interstitial-1" class="banner-interstitial"><div id="div-gpt-ad-interstitial-1-child" data-dfp-adcontainer="div-gpt-ad-interstitial-1"></div></div><!--[if IE 8]><![endif]--><!--[if lte IE 9]><div class="browser-update" data-behavior="browser_update"><div class="container"><p class="t_meta"><span class="browser-update__alert"><img src="/public/resources/png/icon__alert-ae613ac2fae0e0da4832a26804bf2b38.png" alt=""></span> We're sorry, your browser is not supported. Please update to a modern browser to view this page. <a href="page/frequently-asked-questions/?tab=about-the-site#what-are-the-technical-specifications-for-using-scientificamericancom" class="browser-update__link">Learn More</a></p><div class="browser-update__close"><a href="#" data-browser-update-close><span class="icon icon__close--black icon--subtle"></span></a></div></div></div><![endif]--><a role="link" arial-label="Skip to main content" class="skipnav" href="#sa_body">Skip to main content</a><div id="scientific-american"><div class="banner banner-leaderboard banner-leaderboard-top" data-banner-leaderboard><div id="div-gpt-ad-top-1"><div id="div-gpt-ad-top-1-child" data-dfp-adcontainer="div-gpt-ad-top-1"></div></div></div><div class="sticky-bounds"><header class="sticky-header" data-behavior="sticky underline_menu_item"><nav class="header" aria-label="main navigation bar"><div class="container flex-container-row--nowrap-vertical-center"><div class="header__left"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="js-header__subscribe-btn medium-down-hide  " data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="HNSB" data-track-ecommerce-promo-name="Navigation Subscribe Button" data-track-ecommerce-promo-creative="mainHeader" data-track-ecommerce-promo-position="1"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn">Subscribe</button></a><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/archive/?magazineFilterID=all" class="js-header__issue-btn medium-down-hide  " data-track="click" data-track-action="click" data-track-label="latestissues-nav" data-track-category="nav"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn--issue">Latest Issues</button></a><button role="button" class="header__menu-btn large-up-hide" class="navbar-burger" aria-label="menu" aria-expanded="false" data-behavior="primary_nav"><span class="icon icon__menu--black">Menu</span></button></div><div class="header__logo" itemtype="http://schema.org/Organization" itemscope itemprop="publisher"><a role="link" itemprop="url" aria-label="Scientific American" href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/" class="icon icon__logo--175"><span itemprop="name">Scientific American</span></a><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://web.archive.org/web/20200105133021/https://static.scientificamerican.com/sciam/assets/Image/newsletter/salogo.png"/></span></div><div class="header__right tooltip-outer"> <ul class="meta-list medium-down-hide"><li class="meta-list__item tx_meta cart__icon"><a aria-label="You have 0 items in your cart" href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/shopping-cart/" data-track="click" data-track-action="cart-button" data-track-label="cart-button" data-track-category="main-header-cart-button">Cart <span class="cart-count cart__icon--dark-grey">0</span></a></li><li class="meta-list__item tx_meta " data-behavior="sign_in_flyout"><button role="button" aria-expanded="false" id="signin-click" class="link signin-click" data-track="click" data-track-action="header-signin-link" data-track-label="header-signin" data-track-category="sign-in-link">Sign In </button><section tabindex="-1" aria-expanded="true" class="signin-flyout" id="signin-flyout"><button tabindex="0" class="icon__close--white" id="signin-flyout__close" aria-label="Close Sign In Flyout" data-track="click" data-track-action="close-signin-flyout-button" data-track-label="close-signin-flyout" data-track-category="main-header-close-signin-flyout-link"></button><span class="signin-flyout__arrow"></span><form class="signin-flyout__form" action="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/my-account/login/?s=1" method="post" data-behavior="csrf_token_update"><input type="hidden" name="slatAction" value="public:account.login"><input type="hidden" name="flyoutlogin" value="true"><input type="hidden" name="sRedirectURL" value="https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/"/><input type="hidden" name="csrf_token" value="74496B5211A11B66BB8C6ED1DCC5187B"/><input type="hidden" name="csrf_token_expires" value="200105082526712"/><label for="emailAddress1" class="signin-flyout__form__label">Email *:</label><input type="text" name="emailAddress" id="emailAddress1" class="signin-flyout__form__input" data-signin-email><label for="password1" class="signin-flyout__form__label">Password *:</label><input type="password" name="password" id="password1" class="signin-flyout__form__input" data-signin-password><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/my-account/forgot-password/" class="signin-flyout__form__forgot" data-track="click" data-track-action="flyout-forgot-password-link" data-track-label="flyout-forgot-password" data-track-category="main-header-flyout-forgot-password-link">Forgot password?</a><button class="btn btn--inverted signin-flyout__form__submit" type="submit" data-signin-submit-btn data-track="click" data-track-action="signin-flyout-button" data-track-label="signin-flyout" data-track-category="main-header-flyout-signin-flyout-button">Login</button><img src="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/loader-eba9d808f62929c2c4c744e562eca7d9.gif" class="signin-flyout__form__loading" alt="Loading" data-signin-loading/></form><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/my-account/register/" class="signin-flyout__register" data-track="click" data-track-action="not-register-flyout-button" data-track-label="not-register-flyout" data-track-category="main-header-flyout-not-register-button">Not yet registered?</a></section></li><li class="meta-list__item meta-list__item--informedLink tx_meta ">|<a tabindex="0" href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2019_sciam_StayInformed_NewsletterSignUp" class="link register-click" data-track="click" data-track-action="header-stay-informed-link" data-track-label="header-stay-informed" data-track-category="stay-informed-link">Stay Informed</a></li></ul><button role="button" aria-label="submit search" class="header__search-btn icon icon__search--black xlarge-hide medium-down-hide  " data-behavior="toggle_open" data-target="search__container">Search</button><a class="large-up-hide" href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="MHNSB" data-track-ecommerce-promo-name="Mobile Navigation Subscribe Button" data-track-ecommerce-promo-creative="mainHeaderMobile" data-track-ecommerce-promo-position="1"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn">Subscribe</button></a></div></div></nav><nav aria-label="main navigation bar" class="primary-nav "><div class="primary-nav__bg large-up-hide"><button type="button" class="primary-nav__close-btn large-up-hide" data-behavior="primary_nav"><span class="icon icon__close--white icon--subtle">Close</span></button></div><div class="container "><div class="search__container container" data-toggle="search__container"><form id="global-search-form" class="search__form" action="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/search/" method="get"><div class="search__form--wrapper"><label for="q" class="hide-label" aria-label="Search"></label><input class="search__input" type="search" name="q" autocomplete="off" placeholder="Search" tabindex="1" aria-label="Search Input" data-behavior="search" data-query=""><button class="search__button icon" type="button" data-behavior="toggle_open" data-target="search__container">Search</button><button class="search__button--close icon icon__close--muted" type="button" data-behavior="toggle_open" data-target="search__container">Close</button></div><button type="submit" class="search__button--submit btn btn--cart">Search</button></form><a href="#advanced-search" class="advanced-search-toggle tx_meta small" style="flex-basis: 100%">Advanced Search</a></div><ul class="primary-nav__list"><li class="primary-nav__list-item" data-title="the-sciences"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/the-sciences/" data-track="click" data-track-label="thesciences-nav" data-track-category="nav" data-track-action="link">The Sciences</a></li><li class="primary-nav__list-item" data-title="mind"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/mind/" data-track="click" data-track-label="mind-nav" data-track-category="nav" data-track-action="link">Mind</a></li><li class="primary-nav__list-item" data-title="health"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/health/" data-track="click" data-track-label="health-nav" data-track-category="nav" data-track-action="link">Health</a></li><li class="primary-nav__list-item" data-title="tech"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/tech/" data-track="click" data-track-label="tech-nav" data-track-category="nav" data-track-action="link"> Tech</a></li><li class="primary-nav__list-item" data-title="sustainability"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/sustainability/" data-track="click" data-track-label="sustainability-nav" data-track-category="nav" data-track-action="link">Sustainability</a></li><li class="primary-nav__list-item" data-title="education"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/education/" data-track="click" data-track-label="education-nav" data-track-category="nav" data-track-action="link">Education</a></li><li class="primary-nav__list-item" data-title="video"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/video/" data-track="click" data-track-label="video-nav" data-track-category="nav" data-track-action="link">Video</a></li><li class="primary-nav__list-item" data-title="podcasts"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/podcasts/" data-track="click" data-track-label="podcasts-nav" data-track-category="nav" data-track-action="link">Podcasts</a></li><li class="primary-nav__list-item" data-title="blogs"><a href="https://web.archive.org/web/20200105133021/https://blogs.scientificamerican.com/" data-track="click" data-track-label="blogs-nav" data-track-category="nav" data-track-action="link">Blogs</a></li><li class="primary-nav__list-item" data-title="store"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/" data-track="click" data-track-label="publications-nav" data-track-category="nav" data-track-action="link">Publications</a></li></ul><ul class="primary-nav__list--drawer-utils large-up-hide"><li class="primary-nav__list-item--btn"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="btn btn--small" data-track="click" data-track-label="stayinformed-nav-mobile" data-track-category="nav" data-track-action="link">Subscribe</a></li><li class="primary-nav__list-item--btn"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/magazine/sa/2020/01-01/" class="btn btn--small" data-track="click" data-track-action="click" data-track-label="currentissue-nav" data-track-category="mobile-nav">Current Issue</a></li><li class="primary-nav__list-item--drawer-utils" style="border-top: 1px solid #e5e5e5; margin-top: 20px"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/shopping-cart/" data-track="click" data-track-label="cart-nav" data-track-category="nav" data-track-action="link">Cart<span class="cart-count cart__icon--dark-grey">0</span></a></li><li class="primary-nav__list-item--drawer-utils"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/my-account/login/" data-track="click" data-track-action="mobile-signin-link" data-track-label="mobile-menu-signin" data-track-category="mobile-sign-in-link">Sign In</a></li><li class="primary-nav__list-item--drawer-utils"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/newsletter-sign-up/" data-track="click" data-track-action="mobile-menu-stay-informed-link" data-track-label="mobile-stay-informed" data-track-category="mobile-stay-informed-link">Stay Informed</a></li></ul><ul class="primary-nav__list--social large-up-hide"></ul></div><div class="search__autocomplete-container"><ul class="search__autocomplete-results-list container"></ul></div></nav><nav class="page-context-nav" data-behavior="page_context_nav" aria-label="page context"><a aria-hidden="true" href="#" class="page-context-nav__back-to-top"><span class="icon icon__uparr--black icon--subtle"></span></a><ul aria-hidden="true" class="tooltip-outer"><li class="page-context-nav__menu-item" data-behavior="toggle_open_tabs" data-target="page-context-nav__share-menu" data-tab-target="share-and-latest">Share</li><li class="page-context-nav__menu-item" data-behavior="toggle_open_tabs" data-target="page-context-nav__latest" data-tab-target="share-and-latest">Latest</li></ul><div data-tab-container="share-and-latest"><div class="page-context-nav__share-menu" data-toggle="page-context-nav__share-menu"><ul><li class="page-context-nav__share-menu-item"><a href="https://web.archive.org/web/20200105133021/https://m.facebook.com/sharer.php?u=https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/"><span class="icon icon__facebook--black"></span></a></li><li class="page-context-nav__share-menu-item"><a href="https://web.archive.org/web/20200105133021/https://twitter.com/intent/tweet?url=https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/?amp;text=These Are the Biggest Climate Questions for the New Decade&amp;via=sciam"><span class="icon icon__twitter--black"></span></a></li><li class="page-context-nav__share-menu-item"><a href="https://web.archive.org/web/20200105133021/http://www.reddit.com/submit?url=https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/"><span class="icon icon__reddit--black"></span></a></li><li class="page-context-nav__share-menu-item"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/email-this-article/?contentid=227C6AA8-FDB4-4664-B9AE6E89D94781D7"><span class="icon icon__mail--black"></span></a></li></ul></div><div class="page-context-nav__latest mura-async-object" data-toggle="page-context-nav__latest" data-object="page-context-nav" data-instanceid="0" data-siteid="sciam" data-contentid="00000000000000000000000000000000001" data-contenthistid=""></div></div></nav></header><main id="sa_body" class="panel main-area    "><div class="mura-region"><div class="mura-region-inherited"></div><div class="mura-region-local"></div></div><article><header class="article-header container "><div class="article-header__inner"><div class="article-header__inner__partner-article"><a href="https://web.archive.org/web/20200105133021/https://www.eenews.net/" target="_blank"><img src="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/F7BED560-0A61-41BB-816892BD8C54F2B4_source.png" alt="Climatewire"></a></div><div class="article-header__inner__category t_tag t_tag--header" itemprop="articleSection"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/climate/">Climate</a></div><h1 class="article-header__title t_article-title" itemprop="headline">These Are the Biggest Climate Questions for the New Decade</h1><p class="t_article-subtitle">The 2010s brought major climate science advances, but researchers still want to pin down estimates of Arctic melt and sea level rise</p><div class="article-header__divider"><ul role="presentation" class="meta-list t_meta"><li class="meta-list__item">By <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/author/chelsea-harvey/">Chelsea Harvey</a>, <a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/author/e-e-news/">E&E; News</a></span></span> on <time itemprop="datePublished" content="January 4, 2020">January 4, 2020</time></li></ul></div></div></header><div class="article-progress" data-behavior="article_progress"><div class="article-progress__bar"></div><div class="article-grid-outer container "><div class="article-grid"><aside class="article-grid__share"><div class="share-box tooltip-outer"><ul class="share-box__inner"><li class="share-box__inner__item"><a href="#" data-sharer-url="http://www.facebook.com/sharer/sharer.php?u=https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" class="share-box__inner__item__link" data-social-provider="Facebook" data-behavior="sharer" data-tooltip-hover data-tooltip-top data-tooltip-width="225" data-tooltip-id="facebook-tooltip"><span class="icon icon__facebook--black"></span></a><div class="tooltip__label">Share on Facebook</div></li><li class="share-box__inner__item"><a href="#" class="share-box__inner__item__link" data-social-provider="Twitter" data-behavior="sharer" data-sharer-url="https://twitter.com/intent/tweet?url=https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/?amp;text=These Are the Biggest Climate Questions for the New Decade&amp;via=sciam" data-tooltip-hover data-tooltip-top data-tooltip-width="208" data-tooltip-id="twitter-tooltip"><span class="icon icon__twitter--black"></span></a><div class="tooltip__label">Share on Twitter</div></li><li class="share-box__inner__item"><a href="#" class="share-box__inner__item__link" data-social-provider="Reddit" data-behavior="sharer" data-sharer-url="http://www.reddit.com/submit?url=https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/" data-tooltip-hover data-tooltip-top data-tooltip-width="208" data-tooltip-id="reddit-tooltip"><span class="icon icon__reddit--black"></span></a><div class="tooltip__label">Share on Reddit</div></li><li class="share-box__inner__item"><a href="#" class="share-box__inner__item__link" data-social-provider="LinkedIn" data-behavior="sharer" data-sharer-url="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/&amp;title=These Are the Biggest Climate Questions for the New Decade&amp;source=ScientificAmerican"><span class="icon icon__linkedin--black"></span></a><div class="tooltip__label">Share on LinkedIn</div></li><li class="share-box__inner__item"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/email-this-article/?contentid=227C6AA8-FDB4-4664-B9AE6E89D94781D7" data-social-provider="Email" class="share-box__inner__item__link" data-tooltip-hover data-tooltip-top data-tooltip-width="141" data-tooltip-id="email-tooltip"><span class="icon icon__mail--black"></span></a><div class="tooltip__label">Share via</div></li><li class="share-box__inner__item"><a href="?print=true" class="share-box__inner__item__link" data-social-provider="Print" data-tooltip-hover data-tooltip-top data-tooltip-width="111" data-tooltip-id="print-tooltip"><span class="icon icon__print--black"></span></a><div class="tooltip__label">Print</div></li></ul></div><div class="mura-region"><div class="mura-region-inherited"></div><div class="mura-region-local"></div></div></aside><section class="article-grid__main"><figure aria-label="media" itemscope="" itemid="https://static.scientificamerican.com/sciam/cache/file/443BBF99-EC8A-47E1-8913FC7D9AADD136_source.jpg?w=590&amp;h=800&amp;30A10541-8837-45EB-9ADAF8C3A4E3CF43" itemprop="image" itemtype="http://schema.org/ImageObject" class="article-media " id="image-1"><div class="article-media__object "><picture><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/443BBF99-EC8A-47E1-8913FC7D9AADD136_source.jpg?w=690&amp;h=930&amp;30A10541-8837-45EB-9ADAF8C3A4E3CF43"><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/443BBF99-EC8A-47E1-8913FC7D9AADD136_source.jpg?w=390&amp;h=520&amp;30A10541-8837-45EB-9ADAF8C3A4E3CF43"><img importance="high" border="0" src="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/443BBF99-EC8A-47E1-8913FC7D9AADD136_source.jpg?w=590&amp;h=800&amp;30A10541-8837-45EB-9ADAF8C3A4E3CF43" alt="These Are the Biggest Climate Questions for the New Decade" itemprop="url"/></picture></div><figcaption itemprop="caption description" class="t_caption">In this aerial view ice lies in a lake formed by meltwater from the Rhone glacier on August 19, 2019 near Obergoms, Switzerland. Credit: <a href="https://web.archive.org/web/20200105133021/https://www.gettyimages.com/detail/news-photo/in-this-aerial-view-ice-lies-in-a-lake-formed-by-meltwater-news-photo/1169686999?adppopup=true" target="_blank">Sean Gallup<em> Getty Images</em></a></figcaption></figure><figure class="aside-banner medium-up-hide"><div id="dfp-right-article-mobile"><div data-behavior="dfp" data-dfp-adname="right" data-dfp-positionname="MPU1" data-dfp-adcontainer="dfp-right-article-mobile" data-dfp-mobileonly="mobile"></div></div><figcaption class="aside-banner__label">Advertisement</figcaption></figure><div class="article-block article-text" data-behavior="newsletter_promo dfp_article_rendering " data-dfp-adword="Advertisement" data-newsletterpromo-text="<p>Sign up for <em>Scientific American</em>&amp;rsquo;s free newsletters.</p>" data-newsletterpromo-image="https://static.scientificamerican.com/sciam/cache/file/458BF87F-514B-44EE-B87F5D531772CF83_source.png" data-newsletterpromo-button-text="Sign Up" data-newsletterpromo-button-link="https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2018_sciam_ArticlePromo_NewsletterSignUp" name="articleBody" itemprop="articleBody"><div class="mura-region mura-region-loose">
+					<div class="mura-region-local"><p>The 2010s were almost certainly the hottest decade on record &mdash; and it showed. The world burned, melted and flooded. Heat waves smashed temperature records around the globe. Glaciers lost ice at accelerating rates. Sea levels continued to swell.</p>
+
+<p>At the same time, scientists have diligently worked to untangle the chaos of a rapidly warming planet.</p>
+
+<p>In the past decade, scientists substantially improved their ability to draw connections between climate change and extreme weather events. They made breakthroughs in their understanding of ice sheets. They raised critical questions about the implications of Arctic warming. They honed their predictions about future climate change.</p>
+
+<p>As another decade begins, scientists say there are more questions to be answered. We asked climate researchers across a variety of disciplines about the biggest priorities and hottest topics for the 2020s. Here's what they said.</p>
+
+<h2>Arctic mysteries</h2>
+
+<p>The Arctic is warming faster than anywhere else on Earth, with temperatures rising at least twice as fast as the global average. Many scientists believe that understanding the consequences of Arctic warming is essential for making accurate predictions about climate change around the world.</p>
+
+<p>Some of these links are straightforward. Melting Arctic ice pouring into the ocean can raise global sea levels. Thawing permafrost can release large amounts of carbon dioxide and methane into the atmosphere, potentially accelerating the rate of global warming.</p>
+
+<p>Others are more contentious.</p>
+
+<p>In the last decade, a growing scientific debate has arisen about the influence of Arctic warming on global climate and weather patterns, particularly in the midlatitudes.</p>
+
+<p>Some observational studies have pointed to a statistical connection between Arctic warming and weather events in places like the United States, Europe and parts of Asia &mdash; for instance, a link between shrinking sea ice and cold winters in Siberia, or Arctic heat waves and extreme winter weather in the United States.</p>
+
+<p>The trouble is models have a hard time capturing the causes driving these connections.</p>
+
+<p>&quot;No one argues that the Arctic meltdown will affect weather patterns, the question is exactly how,&quot; said Arctic climate expert Jennifer Francis, a researcher at Woods Hole Research Center. &quot;So figuring out what's not right in the models will be a major focus. Without realistic models, it's hard to use them to separate Arctic influences from other possible factors.&quot;</p>
+
+<p>Resolving the debate will require &quot;a combination of data and modeling,&quot; according to NASA climatologist Claire Parkinson. Many scientists are already hard at work on this issue.</p>
+
+<p>One ongoing project known as the Polar Amplification Model Intercomparison Project is conducting a series of coordinated model experiments, all using the same standard methods, to investigate the Arctic climate and its connections to the rest of the globe. Experts say these kinds of projects may help explain why modeling studies conducted by different groups with different methods don't always get the same results.</p>
+
+<p>At the same time, improving the way that physical processes are represented in Arctic climate models is also essential, according to Xiangdong Zhang, an Arctic and atmospheric scientist at the University of Alaska, Fairbanks.</p>
+
+<p>Outside that debate, there are still big questions about the Arctic climate to resolve. Scientists know the Arctic is heating up at breakneck speed &mdash; but they're still investigating all the reasons why.</p>
+
+<p>Researchers believe a combination of feedback processes are probably at play. Sea ice and snow help reflect sunlight away from the Earth. As they melt away, they allow more heat to reach the surface, warming the local climate and causing even more melting to occur.</p>
+
+<p>One key question for the coming decade, Zhang said in an email, is &quot;what relative role each of the physical processes plays and how these processes work together&quot; to drive the accelerating warming.</p>
+
+<p>Unraveling these feedbacks will help scientists better predict how fast the Arctic will warm in the future, according to Francis &mdash; and how quickly they should expect its consequences to occur. They include vanishing sea ice, thawing permafrost and melting on the Greenland ice sheet.</p>
+
+<h2>Oceans and ice</h2>
+
+<p>Sea-level rise is one of the most serious consequences of climate change, with the potential to displace millions of people in coastal areas around the world.</p>
+
+<p>At the moment, the world's oceans are rising at an average rate of about 3 millimeters each year. It appears to be speeding up over time. That may not sound like much, but scientists are already documenting an increase in coastal flooding in many places around the world.</p>
+
+<p>Accurately predicting the pace of future sea-level rise is one of the biggest priorities in climate science. And one of the biggest uncertainties about future sea-level rise is the behavior of the Greenland and Antarctic ice sheets, both of which are pouring billions of tons of ice into the ocean each year.</p>
+
+<p>Recent satellite studies have found that ice loss in both places is speeding up. Antarctica is losing about three times as much ice as it was in the 1990s, while losses in Greenland may be as much as seven times higher than they were in previous decades.</p>
+
+<p>Investigating the processes driving the accelerations &mdash; and then using that knowledge to fine-tune predictions of future sea-level rise &mdash; is a key priority for 2020 and beyond, according to Marco Tedesco, an ice sheet expert at Columbia University.</p>
+
+<p>&quot;How do we connect the physical processes that we do understand are creating this acceleration from Greenland and Antarctica, very likely over the next decade, to sea-level rise impacts?&quot; he asked E&amp;E News. &quot;And how do we account for the potential shocks of the things that we cannot anticipate still?&quot;</p>
+
+<p>Some scientists worry that as ice loss continues to speed up in both Greenland and Antarctica, parts of the ice sheets could eventually destabilize and collapse entirely &mdash; leading to catastrophic sea-level rise.</p>
+
+<p>In recent years, scientists have discovered that warm ocean currents are helping to melt some glaciers from the bottom up, both in Greenland and particularly in parts of West Antarctica. Better understanding the relationship between oceans and ice is a key priority for glacier experts, Tedesco said.</p>
+
+<p>At the same time, monitoring the way water melts and moves along the top of the ice is also a major priority. In Greenland, climate-driven changes in the behavior of large air currents like the jet stream may be helping to drive more surface melting.</p>
+
+<p>&quot;The important thing is to understand how Greenland mass loss can be connected to the recent changes in the atmospheric circulation that we are witnessing,&quot; Tedesco said.</p>
+
+<h2>Extreme weather events</h2>
+
+<p>The past decade saw leaps and bounds in a field of climate research known as &quot;attribution science&quot; &mdash; the connection between climate change and extreme weather events.</p>
+
+<p>It was once thought to be impossible, but scientists are now able to estimate the influence of global warming on individual events, like heat waves or hurricanes. In the past few years alone, scientists have found that some events are now occurring that would have been impossible in a world with no human-caused climate change.</p>
+
+<p>As attribution science has advanced, researchers have been able to tackle increasingly complex events, like hurricanes and wildfires, which were previously too complicated to evaluate with any confidence. They've gotten faster, too &mdash; researchers are now able to assess some extreme events nearly in real time.</p>
+
+<p>Some organizations are working to develop sophisticated attribution services, similar to weather services, which would release analyses of extreme events as soon as they occur. The German national weather service; the United Kingdom's Met Office; and the Copernicus program, part of the European Centre for Medium-Range Weather Forecasts, have all begun exploring these kinds of projects.</p>
+
+<p>At the same time, scientists are working to improve their predictions of future extreme events in a warming world.</p>
+
+<p>So far, climate models predict that many extreme weather events will happen more frequently, or will become more severe, as the climate continues to change. Heat waves will be hotter, hurricanes will intensify, heavy rainfall events may happen more frequently in some places, and droughts may be longer in others.</p>
+
+<p>Continuing to improve these kinds of predictions &mdash; and then communicating them in useful ways to communities that will be affected by them &mdash; is a major priority, according to Piers Forster, director of the Priestley International Centre for Climate at the University of Leeds.</p>
+
+<p>There's often great uncertainty when it comes to predicting extreme weather events, he noted &mdash; different climate models sometimes deliver vastly different results. But it can often be both expensive and time-consuming to run the models enough times, and at high enough resolutions, to investigate and narrow these uncertainties.</p>
+
+<p>Tackling this issue is one of the key challenges for climate modeling in the coming years, Forster said, noting that &quot;we need to get clever about how we use models to make projections and how we test them.&quot;</p>
+
+<h2>Projecting the future</h2>
+
+<p>Predicting how much the Earth will warm, given a certain level of greenhouse gas emissions, may seem like the simplest goal of climate modeling. But it's harder than it sounds.</p>
+
+<p>Climate models don't always agree on the Earth's exact sensitivity to greenhouse gas emissions &mdash; although they do tend to fall within a certain range. If global carbon dioxide concentrations were to double, for instance, models from the past decade have tended to predict that the Earth would warm from between 1.5 and 4.5 degrees Celsius.</p>
+
+<p>Scientists around the world are working on a new suite of updated climate models, which will be used to inform future reports produced by the Intergovernmental Panel on Climate Change. But there's one issue that's already raising eyebrows, according to Zeke Hausfather, a climate scientist at the University of California, Berkeley &mdash; so far, the newer models seem to be predicting a much higher climate sensitivity than the older models.</p>
+
+<p>&quot;The high end is much higher,&quot; he told E&amp;E News. &quot;There's a number of models above 4.8 degrees sensitivity and even up to 5.6.&quot;</p>
+
+<p>Only about 20 new models have submitted results; far more will come pouring in before the project is complete. And as Hausfather pointed out, other recent studies have suggested that the Earth's climate sensitivity might actually be narrower than the old models suggested.</p>
+
+<p>But it's something to keep in mind at a time when accurate predictions about future warming are more pressing than ever.</p>
+
+<p>&quot;The fact that some of these models are high is interesting but doesn't necessarily mean we should believe them over other lines of evidence,&quot; Hausfather said. &quot;It just reflects the fact that climate sensitivity is this huge remaining source of uncertainty in our climate projections.&quot;</p>
+
+<p>At the same time, climate modelers are also working to hone their projections in other ways. Models are able to capture increasingly complex processes the more they advance. But there are still a few key areas scientists are focused on improving.</p>
+
+<p>Clouds, for instance, are believed to have a significant influence on the climate system. But they're notoriously difficult to reproduce in climate models. Certain aspects of the carbon cycle are also underrepresented in models, Hausfather noted &mdash; for instance, the way that forests and oceans absorb or release greenhouse gases into the atmosphere.</p>
+
+<p>And scientists are also working to develop more realistic climate scenarios for their modeling projects. In the past, many studies have focused on a &quot;business as usual&quot; climate scenario, which suggests high rates of future greenhouse gas emissions, the continued expansion of coal, and other assumptions about industry and socioeconomics that may no longer be realistic, according to Hausfather.</p>
+
+<p>While global climate action is still significantly lagging when it comes to meeting the goals of the Paris climate agreement, the future may not be as dire as previous business-as-usual climate studies would suggest. Focusing new studies on more realistic scenarios may be more useful to policymakers and communities trying to plan for the future.</p>
+
+<p>&quot;In many ways the range of possible futures is narrowing,&quot; Hausfather said. &quot;As we get closer to 2100 and as the world takes more climate action, the worst-case 4 degrees-plus warming scenarios are a lot less likely.&quot;</p>
+
+<p><em>Reprinted from Climatewire with permission from E&amp;E News. E&amp;E provides daily coverage of essential energy and environmental news at&nbsp;<a href="https://web.archive.org/web/20200105133021/http://www.eenews.net/" target="_blank">www.eenews.net</a>.</em></p></div>
+					</div></div><section class="article-author-container"><h3 class="article-author-container__title">ABOUT THE AUTHOR(S)</h3><section class="article-author"><div class="article-author__main" itemprop="author creator" itemscope="" itemtype="http://schema.org/Person" itemid=""><h4 itemprop="name" class="article-author__name t_body t_body--article">Chelsea Harvey</h4><ul class="article-author__social"></ul><p class="article-author__desc t_body t_body--article"></p><div class="article-author__suggested"><h4 class="article-author__suggested__title">Recent Articles</h4><ul><li><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/a-russian-ice-cap-is-collapsing-it-could-be-a-warning/">A Russian Ice Cap Is Collapsing--It Could Be a Warning</a></li><li><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/millions-of-birds-are-migrating-earlier-because-of-warming/">Millions of Birds Are Migrating Earlier Because of Warming</a></li><li><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/maps-that-peer-below-antarctic-ice-show-precarious-position-of-key-glacier/">Maps That Peer Below Antarctic Ice Show Precarious Position of Key Glacier</a></li></ul></div></div></section><section class="article-author"><div class="article-author__main" itemprop="author creator" itemscope="" itemtype="http://schema.org/Person" itemid=""><h4 itemprop="name" class="article-author__name t_body t_body--article">E&E; News</h4><ul class="article-author__social"></ul><p class="article-author__desc t_body t_body--article"></p><div class="article-author__suggested"><h4 class="article-author__suggested__title">Recent Articles</h4><ul><li><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/ocean-acidification-threatens-the-u-s-economy/">Ocean Acidification Threatens the U.S. Economy</a></li><li><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/to-store-renewable-energy-try-freezing-air/">To Store Renewable Energy, Try Freezing Air</a></li><li><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/fires-and-flood-cap-off-a-decade-of-u-s-disasters/">Fires and Flood Cap Off a Decade of U.S. Disasters</a></li></ul></div></div></section></section></section><aside class="article-grid__aux"><section class="aside-block" id="read-next"><h2 class="aside-block__title"><span>Read This Next</span></h2><div class="aside-block__body"><div class="related-article-group"><div class="related-article-group__item"><a href="https://web.archive.org/web/20200105133021/https://blogs.scientificamerican.com/laelaps/the-time-of-giants/"><section class="related-article"><div tabindex="-1" class="related-article__body"><div class="t_tag">Evolution</div><h3 class="t_small-listing-title">The Time of Giants</h3><p class="t_meta related-article__meta">12 hours ago  —  Riley Black | <a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></div></section></a></div><div class="related-article-group__item"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/these-are-the-biggest-climate-questions-for-the-new-decade/"><section class="related-article"><div tabindex="-1" class="related-article__body"><div class="t_tag">Climate</div><h3 class="t_small-listing-title">These Are the Biggest Climate Questions for the New Decade</h3><p class="t_meta related-article__meta">15 hours ago  —  Chelsea Harvey and E&amp;E News</p></div></section></a></div><div class="related-article-group__item"><a href="https://web.archive.org/web/20200105133021/https://blogs.scientificamerican.com/eye-of-the-storm/the-top-10-weather-and-climate-stories-of-2019/"><section class="related-article"><div tabindex="-1" class="related-article__body"><div class="t_tag">Climate</div><h3 class="t_small-listing-title">The Top 10 Weather and Climate Stories of 2019</h3><p class="t_meta related-article__meta">17 hours ago  —  Jeff Masters | <a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></div></section></a></div><div class="related-article-group__item"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/in-case-you-missed-it31/"><section class="related-article"><div tabindex="-1" class="related-article__body"><div class="t_tag">Policy &amp; Ethics</div><h3 class="t_small-listing-title">In Case You Missed It</h3><p class="t_meta related-article__meta">18 hours ago  —  Sarah Lewin Frasier</p></div></section></a></div><div class="related-article-group__item"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/article/new-particle-accelerator-fits-on-a-silicon-chip/"><section class="related-article"><div tabindex="-1" class="related-article__body"><div class="t_tag">Computing</div><h3 class="t_small-listing-title">New Particle Accelerator Fits on a Silicon Chip</h3><p class="t_meta related-article__meta">19 hours ago  —  Sophie Bushwick</p></div></section></a></div><div class="related-article-group__item"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/podcast/episode/part-of-real-paleo-diet-its-a-tuber/"><section class="related-article"><div tabindex="-1" class="related-article__body"><div class="t_tag">Evolution</div><h3 class="t_small-listing-title">Part of Real Paleo Diet: It's a Tuber</h3><p class="t_meta related-article__meta">January 3, 2020  —  Christopher Intagliata</p></div></section></a></div></div></div></section><div class="sticky-bounds medium-down-hide" data-article-sticky-ad><div class="home-banner" data-behavior="sticky house_ad" data-top-offset="200" data-house-promo="/public/resources/newsletters-a4ee87b05a58358303e629295ea325ea.jpg"><figure class="aside-banner small-hide medium-hide square-ad"><div id="dfp-right-article"><div data-behavior="dfp" data-dfp-adname="right" data-dfp-positionname="MPU1" data-dfp-adcontainer="dfp-right-article" data-dfp-desktoponly="desktop"></div></div><figcaption class="aside-banner__label">Advertisement</figcaption></figure><div class="house__home_ad"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2019_sciam_adblockers_newsletter" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="SPNA" data-track-ecommerce-promo-name="Side Promotion Newsletter Article" data-track-ecommerce-promo-creative="aside-banner-article-page" data-track-ecommerce-promo-position="2"></a></div></div></div><div class="mura-region"><div class="mura-region-inherited"></div><div class="mura-region-local"></div></div></aside></div></div></div></article><section class="footer-banner small-hide" data-footer-banner><div id="dfp-middle-footer" data-behavior="dfp" data-dfp-adname="middle" data-dfp-positionname="LB2" data-dfp-adcontainer="dfp-middle-footer" data-dfp-desktoponly="desktop">	</div></section><section class="container newsletter-subscribe-container"><h2 class="hr-titles"><span>Newsletter</span></h2><div class="newsletter-subscribe"><h2 class="newsletter-subscribe__title">Get smart. Sign up for our email newsletter.</h2><div class="newsletter-subscribe__inner"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2016_sciam_ArticleFooter_NewsletterSignUp&amp;category=subjects/sustainability/climate" class="btn btn--small">Sign Up</a></div></div></section><aside class="tout_subscribe container"><h2 class="tout_subscribe-title">Expertise. Insights. Illumination.</h2><p class="small-hide">Discover world-changing science. Explore our digital archive back to 1845, including articles by more than 150 Nobel Prize winners.</p><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="btn editable-button white" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="HNFSB" data-track-ecommerce-promo-name="Navigation Footer Subscribe Banner" data-track-ecommerce-promo-creative="footerBlueBanner" data-track-ecommerce-promo-position="3">Subscribe Now!</a><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/D3A9EF6F-F20D-4025-8EC3A1254468C14D_source.png?w=220&amp;h=100"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/D3A9EF6F-F20D-4025-8EC3A1254468C14D_source.png?w=420&amp;h=190"/><img aria-hidden="true" src="https://web.archive.org/web/20200105133021im_/https://static.scientificamerican.com/sciam/cache/file/D5AF5187-56F7-4844-9937BFECE4B78D53_source.png?w=385&amp;h=375" alt="Expertise. Insights. Illumination."/></picture></aside></main></div></div><footer id="footer" class="container"><p>Follow us</p><ul class="footer_followUs">			<li class=""><a href="https://web.archive.org/web/20200105133021/https://www.instagram.com/scientific_american/?hl=en" title="instagram" target="_blank" rel="noopener"><span class="icon icon--mid icon__instagram--black">instagram</span></a></li>			<li class="hide"><a href="" title="soundcloud" target="_blank" rel="noopener"><span class="icon icon--mid icon__soundcloud--black">soundcloud</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200105133021/https://www.youtube.com/user/SciAmerican" title="youtube" target="_blank" rel="noopener"><span class="icon icon--mid icon__youtube--black">youtube</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200105133021/https://twitter.com/sciam" title="twitter" target="_blank" rel="noopener"><span class="icon icon--mid icon__twitter--black">twitter</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200105133021/https://www.facebook.com/ScientificAmerican" title="facebook" target="_blank" rel="noopener"><span class="icon icon--mid icon__facebook--black">facebook</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200105133021/http://rss.sciam.com/ScientificAmerican-Global" title="rss" target="_blank" rel="noopener"><span class="icon icon--mid icon__rss--black">rss</span></a></li></ul><div class="footer_arabic"><p>Scientific american arabic</p><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/arabic/">العربية</a></div><div class="panel"><div class="grid"><div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/">Store</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/about-scientific-american/">About</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/pressroom/">Press Room</a></li>
+	</ul>
+</div>
+
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/frequently-asked-questions/">FAQs</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/contact-us/">Contact Us</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/sitemap">Site Map</a></li>
+	</ul>
+</div>
+
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/mediakit/">Advertise</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://partnerships.nature.com/product/nature-research-custom-media/">SA Custom Media</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/terms-of-use/">Terms of Use</a></li>
+	</ul>
+</div>
+
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/privacy-policy/">Privacy Policy</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/use-of-cookies/">Use of Cookies</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/page/international/">International Editions</a></li>
+	</ul>
+</div></div></div><div class="panel"><div class="tx_meta footer_disclosure">Scientific American is part of Springer Nature, which owns or has commercial relations with thousands of scientific publications (many of them can be found at <a href="https://web.archive.org/web/20200105133021/http://www.springernature.com/us" target="_blank" rel="noopener">www.springernature.com/us</a>). Scientific American maintains a strict policy of editorial independence in reporting developments in science to our readers.</div><p class="footer-copyright">&copy; 2020 Scientific American, a Division of Springer Nature America, Inc.</p><p class="footer-copyright">All Rights Reserved.</p></div></footer><a role="link" arial-label="Scroll to top" class="scrolltop" href="#sa_body">Scroll To Top</a>		<script async src="https://web.archive.org/web/20200105133021js_/https://cdn.cookielaw.org/consent/e6551f00-e840-41c1-862f-dd92bad8bf86.js"></script><script>var A17 = window.A17 || {};var dfp	= window.dfp || {};A17.svgSupport = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");A17.browserSpec = (typeof document.querySelectorAll && 'addEventListener' in window && A17.svgSupport) ? "html5" : "html4";var element = document.createElement('x');element.style.cssText = 'pointer-events:auto';(function(){var doc = document.documentElement;var str = " js "+(A17.svgSupport ? " svg" : " no-svg") + (element.style.pointerEvents === 'auto' ? " csspointerevents" : " no-csspointerevents");doc.className = doc.className.replace(/\bno-js\b/,str);})();</script><script src="https://web.archive.org/web/20200105133021js_/https://cdnjs.cloudflare.com/ajax/libs/airbrake-js/1.0.7/client.min.js" crossorigin="anonymous"></script><script type="text/javascript">var airbrake = new airbrakeJs.Client({projectId: 177290,projectKey: 'fde133a285fff2da6ad65f7c374e0d6e'});airbrake.addFilter(function (notice) {notice.context.environment = 'production';return notice;});</script><script src="/web/20200105133021js_/https://www.scientificamerican.com/public/resources/main-277aa3774600bee68b3df7b760171881.js"></script>
+<script>
 (function() {
-try{
-  if ( window.external &&'msIsSiteMode' in window.external) {
-    if (window.external.msIsSiteMode()) {
-      var jl = document.createElement('script');
-      jl.type='text/javascript';
-      jl.async=true;
-      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(jl, s);
-    }
-  }
-}catch(e){}
-})();
-// ]]>
-</script><script src="//stats.wp.com/w.js?63" defer></script> <script type="text/javascript">
-_tkq = window._tkq || [];
-_stq = window._stq || [];
-_tkq.push(['storeContext', {'blog_id':'54117','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
-_stq.push(['view', {'blog':'54117','v':'wpcom','tz':'0','user_id':'0','post':'214631','subd':'automattic'}]);
-_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1lSiYrZXhzUkM5fD1uTDNLUGt6QzVbd3FKb3Q4aWxFU0VMK3ppSG1wamM0bi81JStxN2lKP1pvVnxQRHk3W0d3VEh0SklpNENJfHppaiZjVlFtdzJJS0ovSDNEYllHTGlmZ2N8XWpOY1p2LDE0dlY2QXZlTWtvMV0vVDBzL1U/cWZsMWMycitPXzRtOVNvOFoxa3xaaVpIUkZadm5GclkueXpkQXJqNEVNfmFUQkVyP0tdX21faUM4YjZfUS1CcjRbSHVrTU1rLDZ2RmFpNi9jUyZPXXZ5SmhoT1s4XStJRDBxbGpCS2ppPS5oRWRCX0hmcUZsNy9QQkZrUHVLNTAwOXIuS05ZOHlHUWMmTyVW'}]);
-_stq.push([ 'clickTrackerInit', '54117', '214631' ]);
-	</script>
-<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
-<script defer id="bilmur" data-customproperties="{&quot;logged_in&quot;:&quot;0&quot;,&quot;wptheme&quot;:&quot;a8c\/automattic-2011&quot;}" data-provider="wordpress.com" data-service="simple"  src="/wp-content/js/bilmur.min.js?i=3&m=202218"></script><script>
-if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+		
+		var DFP_id = dfp.adUnit;
+		// For testing
+		//var DFP_id = "/7814368/NativeAdUnit";
 
-	wpcom_mobile_user_agent_info.init();
-	var mobileStatsQueryString = "";
-	
-	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
-		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
-	
-	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
-		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
-	
-	if( wpcom_mobile_user_agent_info.isIPad() )
-		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+		var compiledTemplateHomePopular = "";
+		var compiledTemplateHomeLatest = "";
+		var compiledTemplateHomeAgenda = "";
+		var compiledTemplateTagLatest = "";
+		var compiledTemplateArticleLatest = "";
+		var compiledTemplateVideoLatest = "";
 
-	if( "" != mobileStatsQueryString ) {
-		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+		templates();
+
+		window.NATIVEADS = window.NATIVEADS || {};
+		window.NATIVEADS_QUEUE = window.NATIVEADS_QUEUE || [];
+
+		var q = function() {
+			return window.NATIVEADS_QUEUE;
+		};
+
+		q().push(["setPropertyID", "NA-SCIEAMERLIVE-11237933"]);
+
+		switch (mura.subtype) {
+			case 'Home':
+				
+					q().push(["insertPreview", {
+						label: "HomeLatest",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-latest3')
+						},
+						location: "#latest-news > article.listing:eq(2)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeLatest,
+						onRender: function($element) {
+							var parent = document.getElementById('latest-news');
+							var lastChild = parent.children[5];
+							parent.removeChild(lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+				
+					q().push(["insertPreview", {
+						label: "HomeAgenda",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-agenda4')
+						},
+						location: "#agenda-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeAgenda,
+						onRender: function($element) {
+							var parent = document.getElementById('agenda-latest');
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+			case 'Topic':
+
+				
+					q().push(["insertPreview", {
+						label: "TopicAgenda",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-category')
+						},
+						location: "#agenda-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeAgenda,
+						onRender: function($element) {
+							var parent = document.getElementById('agenda-latest');
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+				
+					q().push(["insertPreview", {
+						label: "HomePopular",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-popular3')
+						},
+						location: ".most-popular__grid > div.grid__col:eq(2)",
+						template: compiledTemplateHomePopular,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('most-popular')[0];
+							var parentBody = parent.children[0];
+							parentBody.removeChild(parentBody.lastChild);
+
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) {}
+					}]);
+				
+
+			break;
+
+
+			case 'Section':
+				
+					q().push(["insertPreview", {
+						label: "TagLatest",
+							unit: {
+								"server": "dfp",
+								"id": DFP_id,
+								"size": "2x2",
+								"targets": renderTagerting('n-tag3')
+							},
+						location: "div.section-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateTagLatest,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('section-latest')[0];
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+
+			case 'Video':
+			case 'VideoSeries':
+				
+					q().push(["insertPreview", {
+						label: "VideoLatest",
+							unit: {
+								"server": "dfp",
+								"id": DFP_id,
+								"size": "2x2",
+								"targets": renderTagerting('n-video')
+							},
+						location: "div.recent-videos-group > div:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateVideoLatest,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('recent-videos-group')[0];
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+
+			case 'Article':
+			case 'PrintArticle':
+			case 'PartnerArticle':
+			case 'BlogPost':
+				
+					q().push(["insertPreview", {
+						label: "ArticleLatest",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-article')
+						},
+						location: "#read-next > div.aside-block__body > div.related-article-group > div:nth-child(1)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateArticleLatest,
+						onRender: function($element) {
+							var parent = document.getElementById('read-next');
+							var parentBody = parent.children[1].children[0];
+							parentBody.removeChild(parentBody.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+		}
+
+		function templates () {
+
+
+
+		compiledTemplateHomePopular = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "\n<div class=\"grid__col large-up-1 medium-1-2\">\n <article class=\"listing-wide\" data-listing-template=\"Home_Popular\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"listing-wide__thumb\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (80) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (210), 'height': (140) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (275), 'height': (183) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor " + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n </a>\n </div>\n <div class=\"listing-wide__inner\">\n <h3 class=\"t_listing-title\">\n <a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a>\n </h3>\n <p class=\"t_body listing-wide__inner__desc\">\n "; if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.summary; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\n </p>\n <div class=\"t_meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</div>\n <div class=\"listing-wide__inner__small-sponsor\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n </div>\n </article>\n</div>"; return buffer; };
+
+		compiledTemplateHomeLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<article class=\"listing listing--with-thumb \" data-listing-count=\"6\" data-listing-template=\"Home\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"t_tag medium-up-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n <div class=\"t_tag small-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n <div class=\"t_thumb listing__thumb \">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (280), 'height': (187) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (690), 'height': (460) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 1024px) and (max-width: 1279px)\" srcset=\""; options = {hash:{ 'width': (450), 'height': (300) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (590), 'height': (393) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n </a>\n </div>\n <h2 class=\"t_small-listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h2>\n <p class=\"t_meta listing__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n</article>"; return buffer; };
+
+		compiledTemplateTagLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "\n<article class=\"listing-wide\" data-listing-template=\"Section\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"listing-wide__thumb\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (80) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (210), 'height': (140) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (275), 'height': (183) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">\n </picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor " + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </a>\n </div>\n <div class=\"listing-wide__inner\">\n <h2 class=\"t_listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h2>\n <p class=\"t_body listing-wide__inner__desc\">\n "; if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.summary; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\n </p>\n <div class=\"t_meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</div>\n <div class=\"listing-wide__inner__small-sponsor\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </div>\n</article>"; return buffer; };
+
+		compiledTemplateHomeAgenda = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<article class=\"listing listing--with-thumb \" data-listing-count=\"4\" data-listing-template=\"Home\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"t_tag medium-up-hide\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n <div class=\"t_thumb listing__thumb \">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (280), 'height': (187) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (690), 'height': (460) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 1024px) and (max-width: 1279px)\" srcset=\""; options = {hash:{ 'width': (450), 'height': (300) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (590), 'height': (393) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor "+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </a>\n </div>\n <h2 class=\"t_small-listing-title\">\n <a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a>\n </h2>\n <p class=\"t_meta listing__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n</article>"; return buffer; };
+
+		compiledTemplateArticleLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<div class=\"related-article-group__item\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <section class=\"related-article\">\n <div class=\"related-article__body\">\n <div class=\"t_tag related-article__thumb__category\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n <h3 class=\"t_small-listing-title\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</h3>\n <p class=\"related-article__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n </div>\n </section>\n </a>\n</div>"; return buffer; };
+
+		compiledTemplateVideoLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<div class=\"grid__col large-1-2 xlarge-1-4 medium-1-2 recent-videos-group__item\">\n	<article class=\"listing--media listing--with-thumb\" data-video-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\" data-video-template=\"related-videos\">\n		<div class=\"t_tag medium-up-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n		<div class=\"t_thumb listing--media__thumb\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\" class=\"icon-overlay\"><span class=\"icon-overlay__icon icon__play--md--white\"></span><span class=\"icon-overlay__icon icon__play--sm--white\"></span><picture><source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (330), 'height': (186) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\"><source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (45) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\"><img src=\""; options = {hash:{ 'width': (275), 'height': (155) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture><div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor \">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div></a>\n		</div>\n		<h3 class=\"t_small-listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h3>\n		<p class=\"t_meta listing--media__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n	</article>\n</div>"; return buffer; };
 	}
-	
+
+	function getFormattedDate(data) {
+		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		var d = new Date(data.pubDate);
+		data.pubDate = monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+
+		if (data.custom.AdType == 'Product'){
+			data.custom.AdType = "sponsor--blue";
+		}
+		else {
+			data.custom.AdType = "";
+		}
+
+		return data;
+	}
+
+})();
+
+(function(d, s, id) {
+ var js, fjs = d.getElementsByTagName(s)[0], p = d.location.protocol;
+ if (d.getElementById(id)) {return;}
+ js = d.createElement(s);
+ js.id = id; js.type = "text/javascript"; js.async = true;
+ js.src = ((p == "https:") ? p : "http:") + "//web.archive.org/web/20200105133021/https://plugin.mediavoice.com/plugin.js";
+ fjs.parentNode.insertBefore(js, fjs);
+})(document, "script", "nativeads-plugin");
+
+
+
+function renderTagerting(pos) {
+	var polarTargeting = JSON.parse(JSON.stringify(dfp.targeting));
+	var ppos = [];
+	if (pos !== 'undefined') {
+		ppos = [pos];
+	}
+
+	polarTargeting['pos'] = ppos;
+	return polarTargeting;
 }
 </script>
-<script type="text/javascript">
-	console.log( 'Ready to wrangle JavaScript? https://automattic.com/work-with-us/' );
+<noscript><div><img src="//web.archive.org/web/20200105133021im_/https://secure-us.imrworldwide.com/cgi-bin/m?ci=us-403331h&amp;cg=0&amp;cc=1&amp;ts=noscript" width="1" height="1" alt=""/></div></noscript><div class="spw"><section class="spw__banner" data-toggle="spw__banner"><div class="container"><div class="banner__header"><p><strong>You have <span id="spw-article-count"></span> free article<span id="article-count-plural">s</span> left.</strong></p><div class="banner__btn--toggle"><label id="spw-toggle-label" for="expand/collapse" data-toggle-label="Hide"><strong></strong></label><button name="expand/collapse" aria-label="expand/collapse Metered Paywall" aria-expanded="false"><span class="icon icon__uparr--black"></span></button></div></div><div class="full-divider"></div><div class="banner__cta flex-container-row--nowrap-center"><picture><source srcset="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/paywall_temp_img-098a5039687a6951d2abc22803855180.jpg"><img src="/web/20200105133021im_/https://www.scientificamerican.com/public/resources/paywall_temp_img-098a5039687a6951d2abc22803855180.jpg" alt="Temp Paywall Img"></picture><div class="flex-container-column"><p class="banner__message">Support our award-winning coverage of advances in science &amp; technology.</p><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="a-btn" id="spw-subscription-options" role="link" title="Subscription Options" aria-label="See Subscription Options" data-track="click" data-track-category="meter-paywall"><button class="btn btn--small btn--cart" name="Subscription Options" role="link" aria-label="See Subscription Options">See Subscription Options</button></a><p>Already a subscriber? <a id="spw-signin-link" href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/my-account/login/?s=1" data-track="click" data-track-category="meter-paywall">Sign in.</a></p></div></div></div></section><section class="spw__modal"><div class="modal__header"><div class="icon icon__logo--lg"></div></div><div class="modal__cta"><div class="flex-container-column--center"><p class="modal__message">Subscribers get more award-winning coverage of advances in science &amp; technology.</p><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/my-account/login/?s=1" class="a-btn" role="link" title="Sign In" aria-label="Sign In" data-track="click" data-track-action="metered-paywall-overlay-signin-link" data-track-label="metered-paywall-overlay-signin" data-track-category="meter-paywall"><button class="btn btn--small btn--cart" name="sign in" aria-label="Sign In">Sign In</button></a><p><a href="https://web.archive.org/web/20200105133021/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="dark-text" role="link" title="Subscription Options" aria-label="See Subscription Options" data-track="click" data-track-action="metered-paywall-overlay-see-subscription-options-button" data-track-label="metered-paywall-overlay-subscription-options" data-track-category="meter-paywall">See Subscription Options</a></p></div></div></section></div></body></html><!--
+     FILE ARCHIVED ON 13:30:21 Jan 05, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:16:06 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
-	var pg = document.location.href;
-
-	function get_cookie( key ) {
-		var pairs = document.cookie.split( '; ' );
-		for ( var i = 0, pair; pair = pairs[ i ] && pairs[ i ].split( '=' ); i++ ) {
-			if ( decodeURIComponent( pair[ 0 ] ) === key ) {
-				return decodeURIComponent( pair[ 1 ] ) || '';
-			}
-		}
-
-		return null;
-	}
-
-	function set_cookie( key, value, options = {} ) {
-		if ( typeof options.expires === 'number' ) {
-			var days = options.expires, t = options.expires = new Date();
-			t.setDate( t.getDate() + days );
-		}
-
-		value = String( value );
-
-		return ( document.cookie = [
-			encodeURIComponent( key ), '=', encodeURIComponent( value ),
-			options.expires ? '; expires=' + options.expires.toUTCString() : '',
-			options.path ? '; path=' + options.path : '',
-			options.domain ? '; domain=' + options.domain : '',
-			options.secure ? '; secure' : ''
-		].join( '' ) );
-	}
-
-	if ( pg.indexOf( 'work-with-us' ) != -1 ) { 	// check on jobs page
-		if ( pg.length > 37 ) { // check if detail page
-
-			var jvct = get_cookie( 'jvct' );
-			if ( typeof( jvct ) === "undefined" ) {
-				jvct = 0;
-			}	else {
-				jvct = parseInt( jvct );
-			}
-			if ( isNaN( jvct ) ) {
-				jvct = 0;
-			}
-
-			jvct = jvct + 1;
-			set_cookie( 'jvct', jvct, { expires: 60, path: '/' } );
-
-			if ( jvct > 3 ) {
-				var nudge = '<div class="jobs-notes-back card"><h4>Hey there!</h4><p>We couldn’t help but notice that you’ve visited this page a few times. It looks like you’re really thinking about working here, huh?</p><p>Give it a shot and apply already!</p></div>';
-				if ( jvct === 1337 ) {
-					nudge = '<div class="jobs-notes-back card"><h4>We saw what you did there!</h4><p>You like poking around in code, huh? Us too — you seem like just the kind of person we’re looking for. Apply already!</p></div>';
-				}
-
-				// display card flipper
-				var sidebar = document.querySelector( '.jobsidebar' );
-				if ( sidebar ) {
-					var wrapped = '<div class="card-container">' + sidebar.outerHTML + '</div>';
-					sidebar.outerHTML = wrapped;
-
-					sidebar = document.querySelector( '.jobsidebar' );
-					var nudgeEl = document.createElement( 'div' );
-					sidebar.appendChild( nudgeEl );
-					nudgeEl.outerHTML = nudge;
-					setTimeout( function() {
-						sidebar.classList.toggle( 'flipped' );
-					}, 1000 );
-					setInterval( function() {
-						sidebar.classList.toggle( 'flipped' );
-					}, 20000 );
-				}
-
-				var notes = document.querySelector( '.jobs-notes' );
-				notes && notes.classList.add( 'card' );
-			}
-		}
-	}
-
-	// check on Systems Wrangler page
-	if ( pg.indexOf( 'systems-wrangler' ) !== -1 ) {
-
-		var init = function () {
-			resizeMap();
-		};
-		// On page load/ready
-		if ( document.readyState === 'loading' ) {
-			document.addEventListener( 'DOMContentLoaded', init );
-		} else {
-			init();
-		}
-
-		var resizeId;
-		// On resize
-		window.addEventListener( 'resize', function () {
-			clearTimeout( resizeId );
-			resizeId = setTimeout( resizeMap, 500 );
-		} );
-
-		function resizeMap() {
-			var jobsList = document.querySelector( '.jobs-list' );
-			var w = jobsList ? jobsList.offsetWidth : 0;
-			var	h = Math.round( w / 2 );
-
-			var iframe = document.querySelector( '.embed-anycast-map iframe' );
-			if ( iframe ) {
-				iframe.setAttribute( 'src', 'https://ac-map.automattic.com/?w=' + w.toString() + 'h=' + h.toString() );
-				iframe.setAttribute( 'width', w );
-				iframe.setAttribute( 'height', h );
-			}
-		}
-	}
-
-	// Load the noticons css async, as they are only used for a few small icons
-	// at the bottom of the page.
-	window.addEventListener( 'load', function( event ) {
-		var noticons = document.createElement( 'link' );
-		noticons.rel = 'stylesheet';
-		noticons.href = 'https://s0.wp.com/i/noticons/noticons.css?ver=20130828';
-		document.head.insertBefore(
-			noticons,
-			document.head.childNodes[ document.head.childNodes.length - 1 ].nextSibling
-		);
-	} );
-</script>
-
-</body>
-</html>
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
 <!--
-	generated 186 seconds ago
-	generated in 0.167 seconds
-	served from batcache in 0.002 seconds
-	expires in 28614 seconds
+playback timings (ms):
+  captures_list: 243.505
+  exclusion.robots: 0.194
+  exclusion.robots.policy: 0.187
+  RedisCDXSource: 33.113
+  esindex: 0.009
+  LoadShardBlock: 186.656 (3)
+  PetaboxLoader3.datanode: 230.238 (4)
+  CDXLines.iter: 21.148 (3)
+  load_resource: 165.189
+  PetaboxLoader3.resolve: 85.472
 -->
