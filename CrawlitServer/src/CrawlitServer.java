@@ -1,11 +1,21 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+
+
+//TODO:
+// - either comma or ; separators
+// - Only document name eg: 6969.html
+// - full example:
+//      ExampleWord,6969.html,420.html,69420.html
+
 
 public class CrawlitServer {
 
@@ -15,6 +25,37 @@ public class CrawlitServer {
     //main method
     public static void main(String[] args) {
         System.out.println("The server started .. ");
+
+        //get access to Files holding the index and the crawled data
+        File indexFile = new File("../Indexer/map.csv");
+        //File UrlListFile = new File("../Indexer/urlList.txt");
+
+        //read the index file
+        Scanner indexScanner = null;
+        try {
+            indexScanner = new Scanner(indexFile);
+        }
+        catch (Exception e) {
+            System.out.println("Error reading index file");
+        }
+        //create a List of index entries
+        List<String> indexList = new ArrayList<String>();
+        int count = 0;
+        while (indexScanner.hasNextLine()) {
+            //add the index entry to the list after removing whitespace and space characters
+            indexList.add(indexScanner.nextLine().replaceAll("\\s+", "").trim());
+            count ++;
+            if (count == 100) {
+                break;
+            }
+        }
+
+        //print first 100 index entries
+        for (int i = 0; i < 100; i++) {
+            System.out.println(indexList.get(i));
+        }
+
+
 
         // Create a new server socket
         ServerSocket serverSocket = null;
@@ -38,6 +79,7 @@ public class CrawlitServer {
 
     public static class CrawlitServerThread extends Thread {
         private final Socket socket;
+
 
         public CrawlitServerThread(Socket socket) {
             this.socket = socket;
