@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+				
+		<!-- title -->
+		<title>Visualizing freely available citation data using VOSviewer</title>
+		
+		<!-- charset -->
+		<!--<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />-->
+		<!-- document -->
+		<!-- 3-5-2022, HdW content-type gewijzigd naar utf-8 ivm incorrecte weergave Lucris publicaties -->
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<!--<meta http-equiv="X-Frame-Options" content="deny" />-->
+		<meta http-equiv="window-target" content="_top">
+			 	    		 <!-- seo -->
+		<meta name="description" content="Today we released version 1.6.6 of our&nbsp;VOSviewer software&nbsp;for constructing and visualizing bibliometric networks. The most important new feature in this version is the support for working with Crossref data. Recently, the&nbsp;Initiative for Open Citations (I4OC)&nbsp;managed to convince a large number of scientific publishers to make the reference lists of publications in their journals freely available through Crossref. Thanks to I4OC, Crossref has become a valuable data source for VOSviewer users. In this blog post, we discuss how users of the new version 1.6.6 of VOSviewer can benefit from Crossref data." />		<meta name="keywords" content="Crossref, I4OC, open data, software, visualization, VOSviewer" />    <meta itemprop="datePublished" value="2017-10-23 15:57:00"/>		<meta itemprop="dateModified" value="2017-10-24 12:02:03"/>		<meta name="robots" 									content="index, follow" />
+		<!-- application -->
+		<meta name="application-name" 				content="CWTS" />
+		<!-- facebook -->
+		<meta property="og:title" content="Visualizing freely available citation data using VOSviewer" />
+		<meta property="og:site_name" 				content="CWTS" />
+		<meta property="og:url" content="https://www.cwts.nl:443/blog?article=n-r2r294" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://www.cwts.nl/media/images/news/d3bd3a9e62160ea6158fe3d3a818deb3.png" />
+		<meta property="og:description" content="Today we released version 1.6.6 of our&nbsp;VOSviewer software&nbsp;for constructing and visualizing bibliometric networks. The most important new feature in this version is the support for working with Crossref data. Recently, the&nbsp;Initiative for Open Citations (I4OC)&nbsp;managed to convince a large number of scientific publishers to make the reference lists of publications in their journals freely available through Crossref. Thanks to I4OC, Crossref has become a valuable data source for VOSviewer users. In this blog post, we discuss how users of the new version 1.6.6 of VOSviewer can benefit from Crossref data." />		<!-- twitter -->
+		<meta name="twitter:title" 						content="Visualizing freely available citation data using VOSviewer" />
+		<meta name="twitter:url" 							content="https://www.cwts.nl:443/blog?article=n-r2r294" />
+		<meta name="twitter:image" content="https://www.cwts.nl/resources/applicationlogo.png" />
+		<meta name="twitter:image:width" content="100" />
+		<meta name="twitter:image:height" content="100" />
+		<meta name="twitter:card" 						content="summary" />
+		<meta name="twitter:site" 						content="@cwtsleiden" />
+		<meta name="twitter:creator" 					content="@cwtsleiden" />
+		<meta name="twitter:description" content="Today we released version 1.6.6 of our&nbsp;VOSviewer software&nbsp;for constructing and visualizing bibliometric networks. The most important new feature in this version is the support for working with Crossref data. Recently, the&nbsp;Initiative for Open Citations (I4OC)&nbsp;managed to convince a large number of scientific publishers to make the reference lists of publications in their journals freely available through Crossref. Thanks to I4OC, Crossref has become a valuable data source for VOSviewer users. In this blog post, we discuss how users of the new version 1.6.6 of VOSviewer can benefit from Crossref data." />
+		<!-- windows -->
+		<meta name="msapplication-TileColor" content="#ffffff"/>
+		<meta name="msapplication-TileImage" content="https://www.cwts.nl/resources/applicationlogo.png"/>
+		<meta name="msapplication-config" content="none" />
+		<!-- generator -->
+		<meta name="generator" content="Applepie 2.8 - a CMS by Waltman Development" />
+		<meta name="developer" content="Steven Waltman" />
+		<!-- favicon -->
+		<link rel="shortcut icon"							href="/resources/favicon.ico" type="image/x-icon" />
+		<link rel="image_src" 								href="https://www.cwts.nl/media/images/news/d3bd3a9e62160ea6158fe3d3a818deb3.png" />
+		<!-- url -->
+		<link rel="canonical" 								href="https://www.cwts.nl:443/blog?article=n-r2r294" />
+				
+		<link href="/applepie_2_8/jquery/jquery-ui-1.12.1/jquery-ui.min.css?v=2019022413a" rel="stylesheet" type="text/css" media="screen" /><link href="/style/core.min.css?v=2019022413a" rel="stylesheet" type="text/css" /><link href="/style/print.min.css?v=2019022413a" rel="stylesheet" type="text/css" media="print"/><link href="/applepie_2_8/shadowbox/shadowbox-3.0/shadowbox.min.css?v=2019022413a" rel="stylesheet" type="text/css" media="screen" /><script type="text/javascript" src="/applepie_2_8/jquery/jquery-3.3.1.min.js?v=2019022413a"></script>
+<script type="text/javascript" src="/applepie_2_8/jquery/jquery-ui-1.12.1/jquery-ui.min.js?v=2019022413a"></script>
+<script type="text/javascript" src="/applepie_2_8/applepie.min.js?v=2019022413a"></script>
+<script type="text/javascript" src="/applepie_topping/topping.min.js?v=2019022413a"></script>
+
+					<script type="text/javascript">
+						if(!window.console) { window.console = {}; 	window.console.log = function(){}; }
+
+						/* no console on live */
+						
+						var console = {};
+						console.info = function(){};
+						console.warn = function(){};
+						console.log = function(){};
+						console.clear = function(){};
+
+						/* now */
+						var domain = "https://www.cwts.nl/";
+					var basepath = "";
+					var toolkit = "applepie_2_8/";
+					var language = "EN";
+
+
+ 
+																							languagecontroller.messages = { "EN" : {"nu" : "now","export xlsx" : "export xlsx","export csv" : "export csv","flip table" : "flip table","react remove" : "Are you sure you want to remove this comment?","not filled" : "This field is required. Please enter a value.","not email" : "Please enter a valid email address","zipcode not complete" : "Zipcode is incomplete","not url" : "Is not a valid url","no match" : "Does not match","read more" : "Read more","read less" : "Close","search" : "search","close" : "Close","over" : "","no selection" : "no selection","username required to send new password" : "Username required to be able to send a new password","not enough chars, requires {0}" : "Not enough characters, requires a minimum of {0}","Delen" : "Share","not accepted" : "Not accepted","session died" : "Your session ended. Possibly you logged in at a different location","Extra instellingen" : "Extra settings","geleden" : "ago","Weet u zeker dat u deze afbeelding wilt verwijderen? De afbeelding wordt op {0} plaatsen gebruikt." : "Are you sure you want to remove this image? This image is being used at {0} places.","regenerate" : "regenerate","redraw" : "redraw","print" : "Print","export png" : "export png","export jpg" : "export jpg","jaar" : "year","export emf" : "export emf","seconde" : "second","minuut" : "minute","minuten" : "minutes","uren" : "hours","uur" : "hour","dagen" : "days","dag" : "day","week" : "week","jaren" : "years","collapse all" : "collapse all","expand all" : "expand all","De volgende link werkt op basis van een identificatienummer en kan altijd gebruikt worden om het item te benaderen: " : "The following link works on an identificationnumber and can always be used to approach the item:","Verwijderen?" : "Remove?","niet mogelijk, dit item bevat unieke eigenschappen." : "not possible, this item might contain specific properties.","hier invoegen" : "insert here","weken" : "weeks","seconden" : "seconds","Geen" : "None","no image found" : "","Tag verwijderen van foto?" : "","no matches found" : "","not allowed filetype" : "","flip list" : "","prev li" : "","next li" : ""} };
+
+
+
+shadowboxcontroller.init({ language: "en" });
+
+
+
+
+var _gaq = _gaq || [];
+					_gaq.push(["_setAccount", "UA-46875364-1"]);
+					
+					_gaq.push(["_trackPageview"]);
+
+					(function() {
+						var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+						ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+						var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+					})();
+
+function updateSize() {
+						w = $(window).width();
+						h = $(window).height();
+						c = "";
+
+						if(w<800) c = "wDXS";
+						else if(w<1000) c = "wDS";
+						else c = "wDL";
+						
+						if(!$("body").hasClass(c)) {
+							$("body")
+								.attr("class", function(i, c) { return c.replace(/\b(wD|hD)\S+/g, ""); })
+								.addClass(c);
+							pagecontroller.positionTiles();
+							gallerycontroller.calibrateGalleries();
+
+							/* store in session */
+							$.ajax({
+								type: "POST", url: "/"+basepath+"do/?incA=window/windowcontroller",
+								data: "action=setScreenSize&value="+c,
+								success: function(response){ }
+							});
+					}	}
+
+$(window).on("load", function(){ windowcontroller.resize(); pagecontroller.positionTiles(); });
+
+
+
+						/* when document ready */
+						$(function() { compensatorcontroller.init();
+windowcontroller.init();
+$(".navigation").burgerize($(".contentmaster"), { "toggle" : true } );
+
+						windowcontroller.resizeFunctions.push(function() { updateSize(); });
+						$(window).trigger("resize").trigger("scroll");
+ });
+
+						/* when in footer */
+						function afterScript() {
+							chartcontroller.init();
+languagecontroller.init({ language : "EN" });
+listcontroller.init();
+notificationcontroller.init();
+pagecontroller.init();
+tablecontroller.init();
+tooltipcontroller.init();
+treecontroller.init();
+interfacecontroller.init();
+menucontroller.markActive(73,1,false);
+
+						}
+					</script>		<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5a785e5f6507d000137b58c7&product=inline-share-buttons' async='async'></script>
+	</head>
+
+	<body class=" wDM">
+		<div id="master"><div class="contentmaster">	
+
+	<!-- header -->
+	<header class="headcontainer">
+		<div class="headcontent">
+			<div class="navigation">
+				<!-- cwts logo -->
+				<div class="logo">
+					<a href="/">
+						<img src="/media/images/style/logos/cwts_logo_complete_white.png" alt="CWTS"/>
+											</a>
+				</div>
+				<div class="logo mini">
+					<a href="/">
+						<img src="/media/images/style/logos/cwts_logo_complete_mini_white.png" alt="CWTS"/>
+											</a>
+				</div>
+
+				<!-- main menu -->
+				<nav class="mainmenu">
+					<ul><li data-mlvl="1"  >
+			<a class="mid"  data-type="menu" data-id="67"  href="/" title="Home" >Home</a></li><li data-mlvl="1"  >
+			<a class="mid"  data-type="menu" data-id="72"  href="/news" title="News" >News</a></li><li data-mlvl="1" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="73"  href="/blog" title="Blog" >Blog</a></li><li data-mlvl="1" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="240"  href="https://www.cwts.nl/seminars/information" title="Seminars" >Seminars</a><ul><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="227"  href="/seminars/announcements" title="Announcements" >Announcements</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="239"  href="/seminars/information" title="Information" >Information</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="245"  href="/seminars/diversity-and-inclusion-in-global-science" title="Diversity and Inclusion in Global Science" >Diversity and Inclusion in Global Science</a></li></ul></li><li data-mlvl="1"  >
+			<a class="mid"  data-type="menu" data-id="82"  href="/people" title="People" >People</a></li><li data-mlvl="1" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="167"  href="/research" title="Research" >Research</a><ul><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="153"  href="/research/cwts-research-program-2017-2022" title="CWTS Research Program 2017-2022" >CWTS Research Program 2017-2022</a></li><li data-mlvl="2" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="152"  href="/research/research-groups" title="Research Groups" >Research Groups</a><ul><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="156"  href="/research/research-groups/quantitative-science-studies" title="Quantitative Science Studies" >Quantitative Science Studies</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="157"  href="/research/research-groups/science-and-evaluation-studies" title="Science and Evaluation Studies" >Science and Evaluation Studies</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="158"  href="/research/research-groups/science-technology-and-innovation-studies" title="Science, Technology, and Innovation Studies" >Science, Technology, and Innovation Studies</a></li></ul></li><li data-mlvl="2" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="212"  href="/research/thematic-hubs" title="Thematic Hubs" >Thematic Hubs</a><ul><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="213"  href="/research/thematic-hubs/academic-careers" title="Academic Careers" >Academic Careers</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="214"  href="/research/thematic-hubs/engagement-and-responsibility-in-ri" title="Engagement and Responsibility in R&amp;I" >Engagement and Responsibility in R&amp;I</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="215"  href="/research/thematic-hubs/open-science" title="Open Science" >Open Science</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="216"  href="/research/thematic-hubs/responsible-evaluation" title="Responsible Evaluation" >Responsible Evaluation</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="231"  href="/research/thematic-hubs/science-in-the-anthropocene" title="Science in the Anthropocene" >Science in the Anthropocene</a></li></ul></li><li data-mlvl="2" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="228"  href="/research/cwts-research-on-covid-19" title="CWTS Research on COVID-19" >CWTS Research on COVID-19</a><ul><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="229"  href="/research/cwts-research-on-covid-19/covid-19-research-on-social-media" title="COVID-19 research on social media" >COVID-19 research on social media</a></li></ul></li><li data-mlvl="2" class=" " >
+			<a class="mid"  data-type="menu" data-id="132"  href="/research/publications" title="Publications" >Publications</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="237"  href="/research/cwts-open-science-policy" title="CWTS Open Science Policy" >CWTS Open Science Policy</a></li></ul></li><li data-mlvl="1" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="88"  href="/education" title="Education" >Education</a><ul><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="220"  href="/education/cwts-scientometrics-summer-school-2022" title="CWTS Scientometrics Summer School 2022" >CWTS Scientometrics Summer School 2022</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="111"  href="/education/visualizing-science-using-vosviewer" title="Visualizing Science Using VOSviewer" >Visualizing Science Using VOSviewer</a></li><li data-mlvl="2" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="147"  href="https://www.cwts.nl/education/bibliometrics-and-scientometrics-for-research-evaluation/bibliometric-course-leiden-nl" title="Bibliometrics and Scientometrics for Research Evaluation" >Bibliometrics and Scientometrics for Research Evaluation</a><ul><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="210"  href="/education/bibliometrics-and-scientometrics-for-research-evaluation/bibliometric-course-leiden-nl" title="Bibliometric course Leiden, NL" >Bibliometric course Leiden, NL</a></li></ul></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="99"  href="/education/tailor-made-training-courses" title="Tailor-made Training Courses" >Tailor-made Training Courses</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="112"  href="/education/master-phd-thesis-supervision" title="Master &amp; PhD Thesis Supervision" >Master &amp; PhD Thesis Supervision</a></li></ul></li><li data-mlvl="1" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="175"  href="https://www.cwts.nl/projects/current-projects" title="Projects" >Projects</a><ul><li data-mlvl="2" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="176"  href="/projects/current-projects" title="Current projects" >Current projects</a><ul><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="226"  href="/projects/current-projects/cherries" title="CHERRIES" >CHERRIES</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="187"  href="/projects/current-projects/fluidknowledge" title="FluidKnowledge" >FluidKnowledge</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="224"  href="/projects/current-projects/gap" title="GAP" >GAP</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="238"  href="/projects/current-projects/igraph" title="igraph" >igraph</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="235"  href="/projects/current-projects/knowledge-ecosystems" title="Knowledge Ecosystems" >Knowledge Ecosystems</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="234"  href="/projects/current-projects/mapping-health-and-well-being-research" title="Mapping health and well-being research" >Mapping health and well-being research</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="183"  href="/projects/current-projects/newhorrizon" title="NewHorrizon" >NewHorrizon</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="233"  href="/projects/current-projects/ripeet" title="RIPEET" >RIPEET</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="185"  href="/projects/current-projects/risis2" title="RISIS2" >RISIS2</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="200"  href="/projects/current-projects/r-quest" title="R-QUEST" >R-QUEST</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="211"  href="/projects/current-projects/sage" title="SAGE" >SAGE</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="243"  href="/projects/current-projects/scistip" title="SciSTIP" >SciSTIP</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="198"  href="/projects/current-projects/sops4ri" title="SOPs4RI" >SOPs4RI</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="244"  href="/projects/current-projects/strings" title="STRINGS" >STRINGS</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="199"  href="/projects/current-projects/supermorri" title="SUPER_MoRRI" >SUPER_MoRRI</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="236"  href="/projects/current-projects/tools-to-advance-research-assessment-tara" title="Tools to Advance Research Assessment (TARA)" >Tools to Advance Research Assessment (TARA)</a></li><li data-mlvl="3"  >
+			<a class="mid"  data-type="menu" data-id="201"  href="/projects/current-projects/u-multirank" title="U-Multirank" >U-Multirank</a></li></ul></li><li data-mlvl="2" class=" mp" >
+			<a class="mid"  data-type="menu" data-id="177"  href="/projects/past-projects" title="Past projects" >Past projects</a><ul><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="186"  href="/projects/past-projects/creatieve-industrie--nwo-kiem" title="Creatieve Industrie - NWO KIEM" >Creatieve Industrie - NWO KIEM</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="179"  href="/projects/past-projects/morri" title="MoRRI" >MoRRI</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="180"  href="/projects/past-projects/keytechktd" title="	KeyTech/KTD " >	KeyTech/KTD </a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="181"  href="/projects/past-projects/knowmak" title="KnowMak" >KnowMak</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="223"  href="/projects/past-projects/kigs" title="KIGS" >KIGS</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="203"  href="/projects/past-projects/nanodata" title="Nanodata" >Nanodata</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="188"  href="/projects/past-projects/open-science-monitor" title="Open Science Monitor" >Open Science Monitor</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="189"  href="/projects/past-projects/opera" title="OPERA" >OPERA</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="184"  href="/projects/past-projects/printeger" title="Printeger" >Printeger</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="204"  href="/projects/past-projects/risis" title="RISIS" >RISIS</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="205"  href="/projects/past-projects/sia-graph-eurostars" title="SIA-graph (Eurostars)" >SIA-graph (Eurostars)</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="196"  href="/projects/past-projects/scistip-bibliometric-identification-of-research-teams-in-africa" title="SciSTIP Bibliometric identification of research teams in Africa" >SciSTIP Bibliometric identification of research teams in Africa</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="195"  href="/projects/past-projects/scistip-social-media-profile-african-researchers" title="SciSTIP  Social Media Profile African Researchers" >SciSTIP  Social Media Profile African Researchers</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="197"  href="/projects/past-projects/scistip-south-african-research-funding-landscapes" title="SciSTIP South African Research Funding Landscapes" >SciSTIP South African Research Funding Landscapes</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="206"  href="/projects/past-projects/ubc-europe" title="UBC Europe" >UBC Europe</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="202"  href="/projects/past-projects/zonmw-optimizing-the-responsible-researcher" title="ZonMw Optimizing the responsible researcher" >ZonMw Optimizing the responsible researcher</a></li><li data-mlvl="3" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="222"  href="/projects/past-projects/safire" title="SAFIRE" >SAFIRE</a></li></ul></li><li data-mlvl="2" class="tooltip-container" >
+			<a class="mid"  data-type="menu" data-id="178"  href="/projects/beopen" title="BeOpen" >BeOpen</a></li></ul></li><li data-mlvl="1"  >
+			<a class="mid"  data-type="menu" data-id="100"  href="/services" title="Services" >Services</a></li></ul>				</nav>
+			</div>
+
+			<!-- super menu -->
+			<nav class="supermenu">
+				<ul><li data-mlvl="1" class="nomobile" >
+			<a class="mid"  data-type="menu" data-id="85"  href="http://www.leiden.edu" title="Leiden University" >Leiden University</a></li><li data-mlvl="1" class="nomobile" >
+			<a class="mid"  data-type="menu" data-id="51"  href="http://www.cwtsbv.nl" title="CWTS B.V." >CWTS B.V.</a></li><li data-mlvl="1" class="nomobile mp" >
+			<a class="mid"  data-type="menu" data-id="50"  title="Other CWTS sites" >Other CWTS sites</a><ul><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="64"  href="http://www.leidenranking.com" title="CWTS Leiden Ranking" >CWTS Leiden Ranking</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="65"  href="http://www.journalindicators.com" title="CWTS Journal Indicators" >CWTS Journal Indicators</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="116"  href="http://www.citnetexplorer.nl" title="CitNetExplorer" >CitNetExplorer</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="75"  href="http://www.vosviewer.com" title="VOSviewer" >VOSviewer</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="221"  href="https://leidenmadtrics.nl/" title="Leiden Madtrics" >Leiden Madtrics</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="218"  href="https://www.cwts.nl/bigpharma" title="Big Pharma" >Big Pharma</a></li></ul></li><li data-mlvl="1"  >
+			<a class="mid"  data-type="menu" data-id="166"  href="/about-cwts" title="About CWTS" >About CWTS</a></li><li data-mlvl="1" class="nomobile" >
+			<a class="mid"  data-type="menu" data-id="113"  href="/about-leiden" title="About Leiden" >About Leiden</a></li><li data-mlvl="1"  >
+			<a class="mid"  data-type="menu" data-id="52"  href="/contact" title="Contact" >Contact</a></li><li data-mlvl="1" class="onlymobile mp" >
+			<a class="mid"  data-type="menu" data-id="136"  title="Links" >Links</a><ul><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="137"  href="http://www.leiden.edu" title="Leiden University" >Leiden University</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="138"  href="http://www.cwtsbv.nl" title="CWTS B.V." >CWTS B.V.</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="139"  href="http://www.leidenranking.com" title="CWTS Leiden Ranking" >CWTS Leiden Ranking</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="140"  href="http://www.journalindicators.com" title="CWTS Journal Indicators" >CWTS Journal Indicators</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="141"  href="http://www.citnetexplorer.nl" title="CitNetExplorer" >CitNetExplorer</a></li><li data-mlvl="2"  >
+			<a class="mid"  data-type="menu" data-id="142"  href="http://www.vosviewer.com" title="VOSviewer" >VOSviewer</a></li></ul></li></ul>			</nav>
+
+			<!-- google card -->
+			<div itemscope itemtype="http://data-vocabulary.org/Organization" class="googlecompany"> 
+		    <span itemprop="fn org name">Centre for Science and Technology Studies</span>
+		    <span itemprop="address" itemscope postal-code itemtype="http://data-vocabulary.org/Address">
+		      <span itemprop="street-address">Centre for Science and Technology Studies</span>
+		      <span itemprop="postal-code">2333AL</span>
+		      <span itemprop="locality">Leiden</span>
+		      <span itemprop="region">Zuid Holland</span>
+		    </span>
+		   	<span itemprop="tel">31715273909</span>
+		    <a itemprop="url" style="display: none;">https://www.cwts.nl/</a>
+		    <span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/Geo">
+			    <meta itemprop="latitude" content="52.168378" />
+			    <meta itemprop="longitude" content="4.475384" />
+        </span>
+			</div>
+		</div>
+	</header>
+	
+	<!-- content -->
+	<section class="centercontainer" data-content="core">
+
+		<!-- actual content -->
+		<div class="centercontent" data-content="content">
+			<!-- content -->
+			<div class="contents">
+				<!-- no script -->
+								<noscript>
+	     	  <div style="text-align:center; padding: 20px; border:red 4px solid; margin-top:3px;">
+	          <p style="color:red;">
+	            For full functionality of this site it is necessary to enable JavaScript.
+	            Here are the <a href="http://www.enable-javascript.com/" target="_blank" style="color:red;">
+	            instructions how to enable JavaScript in your web browser</a>.
+	          </p>
+	       	</div>
+	      </noscript>
+	      	      
+				
+					<div class="page "><div class="row full">
+						<div class="set " data-style="setstyle11" data-set="694">
+							
+						<div class="element " data-element="(element)">
+							<div class="crumblepath article"><ul>
+				<li data-mlvl="1">
+					<a class="mid" data-type="menu" data-id="73" href="https://www.cwts.nl/blog">Blog</a>
+				</li><li class="active">Visualizing freely available citation data using VOSviewer</li></ul></div><h1 class="head1">
+	Blog archive</h1>
+<p>
+	This is the archive of our old blog. Please visit our new <a href="https://leidenmadtrics.nl/" target="_blank">Leiden Madtrics</a> blog.</p>
+
+						</div>
+						</div></div><div class="row full">
+						
+						<div class="set" data-set="(set)" data-style="setstyle23">
+							<div class="element" data-element="(element)">
+								
+				<div class="blogarticle" id="blogarticle"><div class="news">
+						<h1 class="title">Visualizing freely available citation data using VOSviewer</h1>
+						<div class="authors"><a data-anchor="authors">Nees Jan van Eck</a>, <a data-anchor="authors">Ludo Waltman</a></div>
+						<hr />
+						<div class="meta">
+							<div class="date">October 23rd, 2017</div>
+							<div class="comments"><a data-anchor="comments">1 comment</a></div>
+							<div class="tags"><a href="/blog?s=51#tags=Crossref">Crossref</a>, <a href="/blog?s=65#tags=I4OC">I4OC</a>, <a href="/blog?s=80#tags=open data">open data</a>, <a href="/blog?s=49#tags=software">software</a>, <a href="/blog?s=37#tags=visualization">visualization</a>, <a href="/blog?s=2#tags=VOSviewer">VOSviewer</a></div>
+						</div>
+						<hr />
+						<div class="content"><p>
+	Today we released version 1.6.6 of our <a href="http://www.vosviewer.com" target="_blank">VOSviewer software</a> for constructing and visualizing bibliometric networks. The most important new feature in this version is the support for working with Crossref data. Recently, the <a href="https://i4oc.org/" target="_blank">Initiative for Open Citations (I4OC)</a> managed to convince a large number of scientific publishers to make the reference lists of publications in their journals freely available through Crossref. Thanks to I4OC, Crossref has become a valuable data source for VOSviewer users. In this blog post, we discuss how users of the new version 1.6.6 of VOSviewer can benefit from Crossref data.</p>
+<h3 class="head3">
+	Using Crossref data in VOSviewer</h3>
+<p>
+	There are two ways in which VOSviewer supports the use of Crossref data:</p>
+<ul style="list-style-type: decimal">
+	<li class="newsitem " data-news="Visualizing freely available citation data using VOSviewer">
+		A VOSviewer user can provide a set of DOIs to VOSviewer. Using the application programming interface (API) of Crossref, VOSviewer will download data for the corresponding publications.</li>
+	<li>
+		A VOSviewer user can work directly with the Crossref API to download data and can then provide the downloaded data as input to VOSviewer.</li>
+</ul>
+<p>
+	The first approach is the easier one, since it does not require users to work directly with the Crossref API. When users already have DOIs of the publications they would like to analyze (e.g., publications included in their university&rsquo;s research information system), we recommend using the first approach. The second approach is a bit more complex, but it has the advantage of offering much more flexibility. We will now explore the second approach in more detail.</p>
+<h3 class="head3">
+	Downloading data using the Crossref API</h3>
+<p>
+	To demonstrate the use of the Crossref API, we collect data on publications in two scientometric journals, <em>Journal of Informetrics</em> and <em>Scientometrics</em>, in the period 2007-2016. In each API call, data can be obtained for at most 1000 publications. We therefore need to make multiple API calls. We choose to make separate calls for each of the two journals.</p>
+<p>
+	The number of publications in <em>Journal of Informetrics</em> in the period 2007-2016 is below 1000. Data for <em>Journal of Informetrics</em> therefore can be obtained in a single API call. To make this API call, we enter the following URL in a web browser:</p>
+<p>
+	<a href="http://api.crossref.org/works?filter=issn:1751-1577,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000" target="_blank">http://api.crossref.org/works?filter=issn:1751-1577,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000</a></p>
+<p>
+	The URL specifies a request for the Crossref API. The API request includes the ISSN number of <em>Journal of Informetrics</em> (i.e., 1751-1577) as well as the begin date and the end date of the time period that we are interested in. The <strong>rows</strong> parameter in the API request indicates that we would like to receive data for up to 1000 publications. By entering the above URL in a web browser, we make a call to the Crossref API requesting data on all publications in <em>Journal of Informetrics</em> in the period 2007-2016. After waiting for some time, the web browser will present the result of the API call. We save this result in a file called <strong>JOI.json</strong>. This is a so-called JSON file.</p>
+<p>
+	We follow the same approach for <em>Scientometrics</em>. However, <em>Scientometrics</em> is a larger journal, and we therefore need to make three API calls, each of them resulting in data for at most 1000 publications. We use the following URLs:</p>
+<p>
+	<a href="http://api.crossref.org/works?filter=issn:0138-9130,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000" target="_blank">http://api.crossref.org/works?filter=issn:0138-9130,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000</a></p>
+<p>
+	<a href="http://api.crossref.org/works?filter=issn:0138-9130,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000&offset=1000" target="_blank">http://api.crossref.org/works?filter=issn:0138-9130,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000&offset=1000</a></p>
+<p>
+	<a href="http://api.crossref.org/works?filter=issn:0138-9130,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000&offset=2000" target="_blank">http://api.crossref.org/works?filter=issn:0138-9130,from-pub-date:2007-01-01,until-pub-date:2016-12-31&rows=1000&offset=2000</a></p>
+<p>
+	The three API calls are identical except that in the second and the third call we use the <strong>offset</strong> parameter to specify that we want to obtain data for a second and a third batch of publications. We save the results of the API calls in three JSON files.</p>
+<p>
+	We have now given a simple demonstration of the use of the Crossref API. The Crossref API offers many more options. For further information, we refer to the <a href="https://github.com/CrossRef/rest-api-doc" target="_blank">documentation</a> of the API.</p>
+<h3 class="head3">
+	Creating bibliometric visualizations based on Crossref data</h3>
+<p>
+	We first use the downloaded Crossref data to visualize a co-authorship network of researchers in the field of scientometrics. In the <strong>Create Map</strong> wizard in VOSviewer, we choose the option <strong>Create a map based on bibliographic data</strong>. In the second step of the wizard, we go to the <strong>Crossref JSON</strong> tab, where we select the four downloaded JSON files. After choosing to perform a co-authorship analysis, we simply use the default choices in the remaining steps of the wizard. The visualization of the resulting co-authorship network is presented below.</p>
+<p>
+	<a class="SBXimagelink"  rel="shadowbox[serie316N];description=Crossref co-authorship network of scientometric researchers;" href="/media/images/content/d3bd3a9e62160ea6158fe3d3a818deb3_large.png"><img alt="Crossref co-authorship network of scientometric researchers" data-overlay="imageserie" src="/media/images/content/d3bd3a9e62160ea6158fe3d3a818deb3__598.png" style="width:598px;border-width: 1px; border-style: solid; border-color: #ccc;" /></a></p>
+<p>
+	Next, we use our Crossref data to visualize a bibliographic coupling network of publications in the field of scientometrics. Two publications have a bibliographic coupling link if they have one or more references in common. We again choose the option <strong>Create a map based on bibliographic data</strong> in the <strong>Create Map</strong> wizard. After selecting our four JSON files, we choose to perform a bibliographic coupling analysis at the document level. We use the default choices in the remaining steps of the wizard, which means that our bibliographic coupling network includes the 500 publications with the largest number of bibliographic coupling links. The visualization of the network is shown below.</p>
+<p>
+	<a class="SBXimagelink"  rel="shadowbox[serie316N];description=Crossref bibliographic coupling network of scientometric publications;" href="/media/images/content/00a6b6b2a1e9ac31680b4a54f3acb584_large.png"><img alt="Crossref bibliographic coupling network of scientometric publications" data-overlay="imageserie" src="/media/images/content/00a6b6b2a1e9ac31680b4a54f3acb584__598.png" style="width:598px;border-width: 1px; border-style: solid; border-color: #ccc;" /></a></p>
+<p>
+	Examination of the bibliographic coupling network may reveal something unexpected. The 500 publications included in the bibliographic coupling network have all appeared in <em>Scientometrics</em>. The network does not include publications from <em>Journal of Informetrics</em>. This demonstrates an important limitation of Crossref data. Thanks to I4OC, <a href="https://i4oc.org/#publishers" target="_blank">many publishers</a> nowadays make the reference lists of publications in their journals available through Crossref. However, some publishers do not (yet?) participate in I4OC. This is also the case for Elsevier, the publisher of <em>Journal of Informetrics</em>. Because the reference lists of publications in <em>Journal of Informetrics</em> are not available through Crossref, publications from this journal cannot be included in a bibliographic coupling analysis based on Crossref data.</p>
+<h3 class="head3">
+	Large-scale example</h3>
+<p>
+	We have now provided relatively small-scale examples of the use of Crossref data in VOSviewer. It is also possible to use Crossref data at a much larger scale in VOSviewer, but this requires a significant effort in preprocessing the data. To illustrate the large-scale use of Crossref data, we use the data to visualize a citation network of 5000 journals from all fields of science.</p>
+<p>
+	Using the Crossref API, we downloaded data for all publications in the period 1980-2016. The amount of data was very large, and the data therefore needed to be preprocessed before it could be provided as input to VOSviewer. The data was stored in a relational database. Using this database, we identified all journals (as well as conference proceedings and book series) that have at least 100 publications for which a reference list is available. We then constructed the network of citation links between the identified journals. The direction of a citation link was ignored, so no distinction was made between a citation from journal A to journal B and a citation from journal B to journal A. The journal citation network was saved in a VOSviewer network file, and this file was used as input for VOSviewer. In VOSviewer, the 5000 journals with the largest number of citation links with other journals were selected and the citation network of these 5000 journals was visualized. The resulting visualization is presented below. An interactive visualization can be opened in VOSviewer by clicking <a href="http://www.vosviewer.com/vosviewer.php?map=http://www.vosviewer.com/maps/crossref/Crossref_source_citation_map.txt&network=http://www.vosviewer.com/maps/crossref/Crossref_source_citation_network_10000.txt&label_size_variation=0.4&max_n_lines=2000">here</a>.</p>
+<p>
+	<a class="SBXimagelink"  rel="shadowbox[serie316N];description=Crossref citation network of journals;" href="/media/images/content/b515d3b727bc41fe7e858df0ffd062bf_large.png"><img alt="Crossref citation network of journals" data-overlay="imageserie" src="/media/images/content/b515d3b727bc41fe7e858df0ffd062bf__598.png" style="width:598px;border-width: 1px; border-style: solid; border-color: #ccc;" /></a></p>
+<p>
+	The visualization shows a structure of science that is well known from earlier large-scale bibliometric visualizations, which were based on Web of Science or Scopus data. Mathematics, computer science, and engineering journals can be found in the center of the bottom area of the visualization. Journals in the physical sciences are located in the right area of the visualization, while journals in the life and medical sciences can be found in the top area. Finally, social science journals are located in the bottom-left area of the visualization. Some important journals are missing in the visualization. These journals have a publisher that does not participate in I4OC and that does not make the reference lists of publications available through Crossref.</p>
+<h3 class="head3">
+	Conclusion</h3>
+<p>
+	Thanks to <a href="https://i4oc.org/" target="_blank">I4OC</a>, Crossref has become a valuable source of freely available citation data. Crossref citation data can be used for many purposes, including the analysis and visualization of citation networks of journals, researchers, and individual publications. Version 1.6.6 of <a href="http://www.vosviewer.com" target="_blank">VOSviewer</a> provides direct support for the use of Crossref data for visualizing citation networks. We hope that this new functionality of VOSviewer offers a convincing demonstration of the value of freely available citation data. We encourage publishers that do not yet participate in I4OC to <a href="https://i4oc.org/news.html#August2017" target="_blank">join the initiative</a> and to make the reference lists of publications in their journals freely available.</p>
+</div>
+						
+					<div class="sharebox">
+						<span class="st_facebook_hcount st-custom-button" displayText="facebook" data-network="facebook" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?"></span><span class="st_twitter_hcount st-custom-button" displayText="twitter" data-network="twitter" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?"></span><span class="st_linkedin_hcount st-custom-button" displayText="linkedin" data-network="linkedin" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?"></span><span class="st_email_hcount st-custom-button" displayText="email" data-network="email" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?"></span><span class="st_sharethis_hcount st-custom-button" displayText="sharethis" data-network="sharethis" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?"></span>
+					</div>
+
+			    <script type="text/javascript" async src="//ws.sharethis.com/button/buttons.js" onload="stLoad();"></script>
+			    <script type="text/javascript">
+				   	function stLoad() {
+			        stLight.options({ publisher: "d42d1ec8-f0dd-4e3c-9e95-a29c1f5ab259" }); 
+			        
+			      }
+			    </script>
+						<hr />
+						<a class="anchortarget" data-anchortarget="authors" name="authors"></a>
+						<div class="authorsdetails"><div class="biobox">
+					<a class="avatar" href="/people/nees-jan-van-eck">
+						<img src="/media/images/avatars/c81e728d9d4c2f636f067f89cc14862c.jpg" alt="" width="60"/>
+					</a>
+					<h3><a href="/people/nees-jan-van-eck"><span class="prefix">About </span>Nees Jan van Eck</a></h3>
+					<p>
+	Senior researcher and head of ICT. Nees Jan&#39;s research focuses on the development of visualization tools and algorithms, mainly for analyzing the structure and development of science.</p>
+</div><div class="biobox">
+					<a class="avatar" href="/people/ludo-waltman">
+						<img src="/media/images/avatars/e369853df766fa44e1ed0ff613f563bd.png" alt="" width="60"/>
+					</a>
+					<h3><a href="/people/ludo-waltman"><span class="prefix">About </span>Ludo Waltman</a></h3>
+					<p>
+	Professor of Quantitative Science Studies and deputy director of CWTS. Ludo leads the Quantitative Science Studies (QSS) research group. He is coordinator of the CWTS Leiden Ranking and co-developer of the VOSviewer software for bibliometric visualization.</p>
+</div></div>
+						<hr />
+						<a class="anchortarget" data-anchortarget="comments" name="comments"></a>
+						
+								<h3 class="commentstitle">1 comment</h3>
+								<div class="newsreact">
+				<div>
+					<form class="react-form" id="reactform_cs-l4b4n4p4_c-y2v2u2" action="" method="post">
+						<fieldset>
+							<input type="hidden" name="formtype" value="react"/>
+							<input type="hidden" name="reacttype" value="cs-l4b4n4p4"/>
+							<input type="hidden" name="reacttypeid" value="c-y2v2u2"/>
+							<input type="hidden" name="reactparentid" value=""/>
+							<label data-inputcontainer="1">
+								<span>Name:</span>
+								<input type="text" class="textinput" name="inputname" data-defval="First name and last name" data-validation="req" value=""/>
+							</label>
+							<label data-inputcontainer="1">
+								<span>E-mail:</span>
+								<input type="text" class="textinput" name="inputmail" data-defval="email@provider.com" data-validation="req mail" value=""/>
+							</label>
+							<label class="textarealabel" data-inputcontainer="1">
+								<span>Comment:</span>
+								<textarea name="inputreact"></textarea>
+			<label data-inputcontainer="1">
+				<input name="inputnotify" type="checkbox" value="1"/>
+				<span>Notify me of new comments by email</span>
+			</label>
+							<input type="hidden" value="ejJiNDI0dDJjNGM0ODR4Mmg1eTI1NDAzMDMzNGc1eTJpNWM0dTJ6Mmw1YTR3MjEzODRqNTI0dDJtNWU0MjN1Mmk1djR3M3YzZTRzNQ" name="csrf" /><input type="text" name="extra" style="display: none;"/>
+      <div class="g-recaptcha" id="RecaptchaField2376"></div>
+      <script type="text/javascript">
+        if(typeof(CaptchaCallback) == "undefined") {
+          var CaptchaCallback = function() { $.each(CaptchaRender, function(a,b) { b(); }); };
+          var CaptchaRender = { };
+        }
+        CaptchaRender[2376] = function() {
+          grecaptcha.render("RecaptchaField2376", {"sitekey" : "6LfzywITAAAAAC44WzIL_q4Hw_RkXbdgd6lhXNcQ"});
+        };
+      </script>
+      <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=en&onload=CaptchaCallback&render=explicit"></script>
+							<a class="cancelbutton" data-reactcancel="1" style="display: none;">Cancel</a>
+							<button type="submit" class="submitbutton">
+								<a>Submit</a>
+							</button>
+						</fieldset>
+						<div class="formfootnote">Mandatory fields</div>
+					</form>
+				</div>
+				<script type="text/javascript">
+					$(function() {
+						var reactformcontroller_cs_l4b4n4p4_c_y2v2u2 = $.extend(true, {}, formcontroller);
+						reactformcontroller_cs_l4b4n4p4_c_y2v2u2.init({
+							containerElem : $("#reactform_cs-l4b4n4p4_c-y2v2u2")
+						});
+
+						reactcontroller.init({
+							formElem : $("#reactform_cs-l4b4n4p4_c-y2v2u2"),
+							listElem : $("#reactlist_cs-l4b4n4p4_c-y2v2u2")
+						});
+
+						
+					});
+				</script>
+				<div class="react" id="reactlist_cs-l4b4n4p4_c-y2v2u2">
+					<ul>
+				<li data-rcid="c-w223o2">
+					<a name="comments-c-w223o2" class="anchortarget"></a>
+					<div class="react-meta">
+						<span class="react-avatar"><img src="/media/images/avatars/placeholder.png" alt="" width="40"/></span>
+						<span class="react-name">David Shotton</span>
+						<span class="react-date">October 24th, 2017 11:59 am</span>
+					</div>
+					<div class="react-content">Your work provides a clear example of how journal articles from publishers who do not open the reference lists they already deposit to Crossref will increasingly loose visibility in bibliometrics analyses. <br />
+As far as the upcoming generation of scholars is concerned, if it's not openly available on the Web, it does not exist.</div>
+					<div class="react-actions">
+						
+						<span class="react-reply" data-reactanswer="1">Reply</span>
+					</div>
+					
+				</li></ul>
+				</div></div></div></div>
+							</div>
+						</div>
+						<div class="set" data-set="(set)" data-style="setstyle13">
+							<div class="element contentmenucontainer newsfilter" data-element="(element)">
+								
+				<div class="blogfilter" id="blogfilter">
+					<div class="news-search" id="news-search">
+						<span class="icon-search"></span>
+						<input type="text" data-tagseach="value" name="tagsearch" data-defval="search"/>
+					</div>
+					<div class="filtermenu">
+				<ul>
+					<li class="opened activerelated">
+						<a>Recent months</a>
+						<ul>
+							<li>
+					<a class="tag" data-tag="2019-09">
+						<span class="tag-line">September, 2019</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-08">
+						<span class="tag-line">August, 2019</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-06">
+						<span class="tag-line">June, 2019</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-05">
+						<span class="tag-line">May, 2019</span>
+						<span class="tag-count">4</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-03">
+						<span class="tag-line">March, 2019</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-01">
+						<span class="tag-line">January, 2019</span>
+						<span class="tag-count">2</span>
+					</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul>
+					<li class="">
+						<a>All months</a>
+						<ul>
+							<li>
+					<a class="tag" data-tag="2019-09">
+						<span class="tag-line">September, 2019</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-08">
+						<span class="tag-line">August, 2019</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-06">
+						<span class="tag-line">June, 2019</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-05">
+						<span class="tag-line">May, 2019</span>
+						<span class="tag-count">4</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-03">
+						<span class="tag-line">March, 2019</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2019-01">
+						<span class="tag-line">January, 2019</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-11">
+						<span class="tag-line">November, 2018</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-10">
+						<span class="tag-line">October, 2018</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-09">
+						<span class="tag-line">September, 2018</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-08">
+						<span class="tag-line">August, 2018</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-07">
+						<span class="tag-line">July, 2018</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-06">
+						<span class="tag-line">June, 2018</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-05">
+						<span class="tag-line">May, 2018</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-04">
+						<span class="tag-line">April, 2018</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-03">
+						<span class="tag-line">March, 2018</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-02">
+						<span class="tag-line">February, 2018</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2018-01">
+						<span class="tag-line">January, 2018</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2017-10">
+						<span class="tag-line">October, 2017</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2017-09">
+						<span class="tag-line">September, 2017</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2017-05">
+						<span class="tag-line">May, 2017</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2017-04">
+						<span class="tag-line">April, 2017</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2017-03">
+						<span class="tag-line">March, 2017</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-12">
+						<span class="tag-line">December, 2016</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-09">
+						<span class="tag-line">September, 2016</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-08">
+						<span class="tag-line">August, 2016</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-07">
+						<span class="tag-line">July, 2016</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-06">
+						<span class="tag-line">June, 2016</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-05">
+						<span class="tag-line">May, 2016</span>
+						<span class="tag-count">3</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-02">
+						<span class="tag-line">February, 2016</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2016-01">
+						<span class="tag-line">January, 2016</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="2015-11">
+						<span class="tag-line">November, 2015</span>
+						<span class="tag-count">2</span>
+					</a></li>
+						</ul>
+					</li>
+				</ul>
+					<ul>
+						<li class="opened activerelated">
+							<a>Popular tags</a>
+							<ul>
+								<li>
+					<a class="tag" data-tag="impact factor">
+						<span class="tag-line">impact factor</span>
+						<span class="tag-count">8</span>
+					</a></li><li>
+					<a class="tag" data-tag="VOSviewer">
+						<span class="tag-line">VOSviewer</span>
+						<span class="tag-count">7</span>
+					</a></li><li>
+					<a class="tag" data-tag="research evaluation">
+						<span class="tag-line">research evaluation</span>
+						<span class="tag-count">7</span>
+					</a></li><li>
+					<a class="tag" data-tag="Leiden Ranking">
+						<span class="tag-line">Leiden Ranking</span>
+						<span class="tag-count">7</span>
+					</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul>
+						<li data-mlvl="1">
+							<a>All tags</a>
+							<ul>
+								<li>
+					<a class="tag" data-tag="Africa">
+						<span class="tag-line">Africa</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Brexit">
+						<span class="tag-line">Brexit</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="CiteScore">
+						<span class="tag-line">CiteScore</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Crossref">
+						<span class="tag-line">Crossref</span>
+						<span class="tag-count">3</span>
+					</a></li><li>
+					<a class="tag" data-tag="DORA">
+						<span class="tag-line">DORA</span>
+						<span class="tag-count">4</span>
+					</a></li><li>
+					<a class="tag" data-tag="Dimensions">
+						<span class="tag-line">Dimensions</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Elsevier">
+						<span class="tag-line">Elsevier</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Europe PMC">
+						<span class="tag-line">Europe PMC</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="European Union">
+						<span class="tag-line">European Union</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Evaluative Inquiry">
+						<span class="tag-line">Evaluative Inquiry</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Human resources analytics">
+						<span class="tag-line">Human resources analytics</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="I4OC">
+						<span class="tag-line">I4OC</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="IPP">
+						<span class="tag-line">IPP</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Journal of Informetrics">
+						<span class="tag-line">Journal of Informetrics</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Kosovo">
+						<span class="tag-line">Kosovo</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Leiden Ranking">
+						<span class="tag-line">Leiden Ranking</span>
+						<span class="tag-count">7</span>
+					</a></li><li>
+					<a class="tag" data-tag="Leiden algorithm">
+						<span class="tag-line">Leiden algorithm</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Louvain algorithm">
+						<span class="tag-line">Louvain algorithm</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="MNCS">
+						<span class="tag-line">MNCS</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Metric Tide">
+						<span class="tag-line">Metric Tide</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Microsoft Academic">
+						<span class="tag-line">Microsoft Academic</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="MoRRI">
+						<span class="tag-line">MoRRI</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="NIH">
+						<span class="tag-line">NIH</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="OpenCitations">
+						<span class="tag-line">OpenCitations</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="Pasteur�s Quadrant">
+						<span class="tag-line">Pasteur�s Quadrant</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Pharmaceuticals firms">
+						<span class="tag-line">Pharmaceuticals firms</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Prishtina">
+						<span class="tag-line">Prishtina</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="REF">
+						<span class="tag-line">REF</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="RRI">
+						<span class="tag-line">RRI</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="Research Excellence Framework">
+						<span class="tag-line">Research Excellence Framework</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Researcher taxonomy">
+						<span class="tag-line">Researcher taxonomy</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="SNIP">
+						<span class="tag-line">SNIP</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="SUPER_MoRRI">
+						<span class="tag-line">SUPER_MoRRI</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Scopus">
+						<span class="tag-line">Scopus</span>
+						<span class="tag-count">3</span>
+					</a></li><li>
+					<a class="tag" data-tag="Semantic Scholar">
+						<span class="tag-line">Semantic Scholar</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="South America">
+						<span class="tag-line">South America</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="U-Multirank">
+						<span class="tag-line">U-Multirank</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="United Kingdom">
+						<span class="tag-line">United Kingdom</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="VOSviewer">
+						<span class="tag-line">VOSviewer</span>
+						<span class="tag-count">7</span>
+					</a></li><li>
+					<a class="tag" data-tag="Values">
+						<span class="tag-line">Values</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="Web of Science">
+						<span class="tag-line">Web of Science</span>
+						<span class="tag-count">3</span>
+					</a></li><li>
+					<a class="tag" data-tag="Wikidata">
+						<span class="tag-line">Wikidata</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="about">
+						<span class="tag-line">about</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="academic hospital">
+						<span class="tag-line">academic hospital</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="accountable conversations">
+						<span class="tag-line">accountable conversations</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="adjacent possible">
+						<span class="tag-line">adjacent possible</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="algorithmic approach">
+						<span class="tag-line">algorithmic approach</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="assessment guidelines">
+						<span class="tag-line">assessment guidelines</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="author affiliation">
+						<span class="tag-line">author affiliation</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="bias">
+						<span class="tag-line">bias</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="bibliometric indicator">
+						<span class="tag-line">bibliometric indicator</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="bibliometric network">
+						<span class="tag-line">bibliometric network</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="bibliometrics">
+						<span class="tag-line">bibliometrics</span>
+						<span class="tag-count">4</span>
+					</a></li><li>
+					<a class="tag" data-tag="catching-up processes">
+						<span class="tag-line">catching-up processes</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation">
+						<span class="tag-line">citation</span>
+						<span class="tag-count">3</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation analysis">
+						<span class="tag-line">citation analysis</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation cartel">
+						<span class="tag-line">citation cartel</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation data">
+						<span class="tag-line">citation data</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation distribution">
+						<span class="tag-line">citation distribution</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation impact">
+						<span class="tag-line">citation impact</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation metric">
+						<span class="tag-line">citation metric</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation network">
+						<span class="tag-line">citation network</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="citation stacking">
+						<span class="tag-line">citation stacking</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="classification">
+						<span class="tag-line">classification</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="clustering algorithm">
+						<span class="tag-line">clustering algorithm</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="coercive citation">
+						<span class="tag-line">coercive citation</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="color">
+						<span class="tag-line">color</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="color scheme">
+						<span class="tag-line">color scheme</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="contextual focus">
+						<span class="tag-line">contextual focus</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="contextualization">
+						<span class="tag-line">contextualization</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="corporate R&D performance">
+						<span class="tag-line">corporate R&D performance</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="disease burden">
+						<span class="tag-line">disease burden</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="early stage detection">
+						<span class="tag-line">early stage detection</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="ethics">
+						<span class="tag-line">ethics</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="evaluation systems">
+						<span class="tag-line">evaluation systems</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="evaluative inquiry">
+						<span class="tag-line">evaluative inquiry</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="expertise">
+						<span class="tag-line">expertise</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="funding">
+						<span class="tag-line">funding</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="gender">
+						<span class="tag-line">gender</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="gender disparities">
+						<span class="tag-line">gender disparities</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="gender diversity">
+						<span class="tag-line">gender diversity</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="geographic region">
+						<span class="tag-line">geographic region</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="global disease burden">
+						<span class="tag-line">global disease burden</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="h-index">
+						<span class="tag-line">h-index</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="high income country">
+						<span class="tag-line">high income country</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="hyphen">
+						<span class="tag-line">hyphen</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="impact">
+						<span class="tag-line">impact</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="impact factor">
+						<span class="tag-line">impact factor</span>
+						<span class="tag-count">8</span>
+					</a></li><li>
+					<a class="tag" data-tag="indicator">
+						<span class="tag-line">indicator</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="indicators">
+						<span class="tag-line">indicators</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="indicators for social good">
+						<span class="tag-line">indicators for social good</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="integrity">
+						<span class="tag-line">integrity</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="international cooperation">
+						<span class="tag-line">international cooperation</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="journal">
+						<span class="tag-line">journal</span>
+						<span class="tag-count">5</span>
+					</a></li><li>
+					<a class="tag" data-tag="journal metric">
+						<span class="tag-line">journal metric</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="judgment devices">
+						<span class="tag-line">judgment devices</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="knowledge diplomacy">
+						<span class="tag-line">knowledge diplomacy</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="knowledge dynamics">
+						<span class="tag-line">knowledge dynamics</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="low income country">
+						<span class="tag-line">low income country</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="macro level">
+						<span class="tag-line">macro level</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="manipulation">
+						<span class="tag-line">manipulation</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="mean normalized citation score">
+						<span class="tag-line">mean normalized citation score</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="metric">
+						<span class="tag-line">metric</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="micro level">
+						<span class="tag-line">micro level</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="migration">
+						<span class="tag-line">migration</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="misconduct">
+						<span class="tag-line">misconduct</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="misuse">
+						<span class="tag-line">misuse</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="mobility">
+						<span class="tag-line">mobility</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="models">
+						<span class="tag-line">models</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="open access">
+						<span class="tag-line">open access</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="open data">
+						<span class="tag-line">open data</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="peer review">
+						<span class="tag-line">peer review</span>
+						<span class="tag-count">2</span>
+					</a></li><li>
+					<a class="tag" data-tag="performance assessment">
+						<span class="tag-line">performance assessment</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="pharmaceutical industry">
+						<span class="tag-line">pharmaceutical industry</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="public-private research cooperation">
+						<span class="tag-line">public-private research cooperation</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="publication output">
+						<span class="tag-line">publication output</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="qualitative research">
+						<span class="tag-line">qualitative research</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="quality control">
+						<span class="tag-line">quality control</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="quantitative research">
+						<span class="tag-line">quantitative research</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="rainbow">
+						<span class="tag-line">rainbow</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="reference matching">
+						<span class="tag-line">reference matching</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="reflexivity">
+						<span class="tag-line">reflexivity</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="replication">
+						<span class="tag-line">replication</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="research evaluation">
+						<span class="tag-line">research evaluation</span>
+						<span class="tag-count">7</span>
+					</a></li><li>
+					<a class="tag" data-tag="research performance">
+						<span class="tag-line">research performance</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="research quality">
+						<span class="tag-line">research quality</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="responsible metrics">
+						<span class="tag-line">responsible metrics</span>
+						<span class="tag-count">4</span>
+					</a></li><li>
+					<a class="tag" data-tag="science and technology studies">
+						<span class="tag-line">science and technology studies</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="science in Africa">
+						<span class="tag-line">science in Africa</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="scientific breakthrough">
+						<span class="tag-line">scientific breakthrough</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="scientific impact">
+						<span class="tag-line">scientific impact</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="scientific performance">
+						<span class="tag-line">scientific performance</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="scientometric indicator">
+						<span class="tag-line">scientometric indicator</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="scientometrics">
+						<span class="tag-line">scientometrics</span>
+						<span class="tag-count">4</span>
+					</a></li><li>
+					<a class="tag" data-tag="self-citation">
+						<span class="tag-line">self-citation</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="societal impact of research; Area-based connectedness; bibliometric analysis">
+						<span class="tag-line">societal impact of research; Area-based connectedness; bibliometric analysis</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="sociology">
+						<span class="tag-line">sociology</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="software">
+						<span class="tag-line">software</span>
+						<span class="tag-count">3</span>
+					</a></li><li>
+					<a class="tag" data-tag="spatial distance">
+						<span class="tag-line">spatial distance</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="strategic behavior">
+						<span class="tag-line">strategic behavior</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="university">
+						<span class="tag-line">university</span>
+						<span class="tag-count">3</span>
+					</a></li><li>
+					<a class="tag" data-tag="university ranking">
+						<span class="tag-line">university ranking</span>
+						<span class="tag-count">6</span>
+					</a></li><li>
+					<a class="tag" data-tag="university-industry interaction">
+						<span class="tag-line">university-industry interaction</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="versatile methods">
+						<span class="tag-line">versatile methods</span>
+						<span class="tag-count">1</span>
+					</a></li><li>
+					<a class="tag" data-tag="visualization">
+						<span class="tag-line">visualization</span>
+						<span class="tag-count">4</span>
+					</a></li><li>
+					<a class="tag" data-tag="women in science">
+						<span class="tag-line">women in science</span>
+						<span class="tag-count">1</span>
+					</a></li>
+							</ul>
+						</li>
+					</ul></div>
+				</div>
+				<div class="actions">
+						<div class="shareline">
+							<span>Share on: </span>
+					<div class="sharebox">
+						
+								<div class="st_facebook_custom st-custom-button" data-network="facebook" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?">
+									<div class="share-counter">
+										<div class="share-button">Share on facebook</div>
+										<span id="fbcount" class="count"></span>
+									</div>
+								</div>
+								<div class="st_twitter_custom st-custom-button" data-network="twitter" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?">
+									<div class="share-counter">
+										<div class="share-button">Share on twitter</div>
+										<span id="twitcount" class="count"></span>
+									</div>
+								</div>
+								<div class="st_linkedin_custom st-custom-button" data-network="linkedin" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?">
+									<div class="share-counter">
+										<div class="share-button">Share on linkedin</div>
+										<span id="linkedincount" class="count"></span>
+									</div>
+								</div>
+								<div class="st_sharethis_custom st-custom-button" data-network="sharethis" data-url="https://www.cwts.nl:443/blog/article-n-r2r294/?" st_url="https://www.cwts.nl:443/blog/article-n-r2r294/?">
+									<div class="share-counter">
+										<div class="share-button">Share</div>
+										<span id="sharethiscount" class="count"></span>
+									</div>
+								</div>
+					</div>
+
+			    <script type="text/javascript" async src="//ws.sharethis.com/button/buttons.js" onload="stLoad();"></script>
+			    <script type="text/javascript">
+				   	function stLoad() {
+			        stLight.options({ publisher: "d42d1ec8-f0dd-4e3c-9e95-a29c1f5ab259" }); 
+			        
+			      }
+			    </script>
+						</div>
+						<div class="shareline">
+							<span>Subscribe to: </span>
+							<div class="sharebox">
+								<!--<a class="st_rss_custom"	href="https://feedburner.google.com/fb/a/mailverify?uri=cwts/blog&amp;loc=en_US" target="_blank"></a>-->
+								<a class="st_mail_custom"	href="https://www.cwts.nl/do/?rss&t=b" target="_blank"></a>
+							</div>
+						</div></div>
+				
+				<script type="text/javascript">
+					$(function() {
+						var searchformcontroller = $.extend(true, {}, formcontroller);
+						searchformcontroller.init({ containerElem: $("#news-search") });
+					});
+
+					c_newscontroller.init({ type: "blog", refMenu: 73, redirect : "https://www.cwts.nl:443/blog" });
+				</script>
+							</div>
+						</div></div></div>	
+			</div>
+		</div>
+	</section>
+
+	
+	<!-- footer -->
+	<footer class="footcontainer" data-content="outer">
+		<div class="footcontent">
+
+			<!-- leiden univ logo -->
+			<div class="logo">
+				<a href="http://leidenuniv.nl/" alt="Leiden Univ" target="_blank">
+					<img src="/media/images/style/logos/leidenuniv_logo.png" alt=""/>
+				</a>
+			</div>
+
+			<!-- copyright -->
+			<div class="copyright">
+				Copyright &copy; 2022 Centre for Science and Technology Studies, Leiden University, The Netherlands			</div>
+			
+			<!-- legal and other pages -->
+			<nav class="footmenu">
+				<ul><li data-mlvl="1"  >
+			<a class="mid"  data-type="menu" data-id="55"  href="/cookies" title="Cookies" >Cookies</a></li></ul>			</nav>
+		</div>
+	</footer>
+</div>	
+		</div>
+		<script type="text/javascript">
+			afterScript();
+		</script>
+		<a href="http://www.waltmandevelopment.nl" title="Waltman Development" style="position: absolute; left: 1px; bottom: 1px; height: 0px; width: 0px; overflow: hidden;">Build on Applepie CMS by Waltman Development</a>
+	</body>
+</html>
