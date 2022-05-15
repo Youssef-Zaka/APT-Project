@@ -41,14 +41,18 @@ public class CrawlitServer {
         //create a List of index entries
         List<String> indexList = new ArrayList<String>();
         int count = 0;
+
+        //get time before starting to read the index file
+        long startTime = System.currentTimeMillis();
         while (indexScanner.hasNextLine()) {
             //add the index entry to the list after removing whitespace and space characters
             indexList.add(indexScanner.nextLine().replaceAll("\\s+", "").trim());
-            count ++;
-            if (count == 100) {
-                break;
-            }
         }
+        //get time after reading the index file
+        long endTime = System.currentTimeMillis();
+        //calculate the time it took to read the index file
+        long elapsedTime = endTime - startTime;
+        System.out.println("Time to read index file: " + elapsedTime + " milliseconds");
 
         //print first 100 index entries
         for (int i = 0; i < 100; i++) {
