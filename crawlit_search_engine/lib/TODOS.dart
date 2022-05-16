@@ -1,6 +1,5 @@
 /*
 TODO: 
-- Implement Suggestions (back and front end)
 - Highlight snippets of where the search phrase was found (front end)
 - Finish Ranker (backend) > Rank multiple words at the same time not just one, popularity?  
 - make Voice query pretty

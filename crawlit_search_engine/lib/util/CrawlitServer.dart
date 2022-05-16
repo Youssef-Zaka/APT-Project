@@ -11,6 +11,7 @@ class ServerUtil {
   static bool connected = false;
   //a list of urls returned by the server
   static List<String> urls = [];
+  static List<String> suggestions = [];
 
   //Constructor
   ServerUtil() {
@@ -21,6 +22,7 @@ class ServerUtil {
       socket.listen(dataHandler,
           onError: errorHandler, onDone: doneHandler, cancelOnError: false);
       //send a message to the server.
+      socket.writeln('suggestions');
     }).catchError((e) {
       print("Unable to connect: $e");
     });
@@ -45,6 +47,21 @@ class ServerUtil {
 
   //Handles data from the server.
   void dataHandler(data) {
+    if (suggestions.isEmpty) {
+      print('Zaka: prininting in suggestions');
+      //String of received data.
+      String dataString = String.fromCharCodes(data).trim();
+      //if string == [] then urls is empty.
+      if (dataString == "[]" || dataString == "][") {
+        return;
+      }
+      //remove first and last character from the string.
+      dataString = dataString.substring(1, dataString.length - 1);
+      suggestions.addAll(dataString.split(','));
+      print(suggestions);
+      return;
+    }
+
     //String of received data.
     String dataString = String.fromCharCodes(data).trim();
     //if string == [] then urls is empty.

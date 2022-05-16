@@ -10,14 +10,12 @@ import java.util.stream.Collectors;
 import org.tartarus.snowball.ext.englishStemmer;
 
 
-//TODO:
-// - either comma or ; separators
-// - Only document name eg: 6969.html
-// - full example:
-//      ExampleWord,6969.html,420.html,69420.html
+
 
 
 public class CrawlitServer {
+    static List<String> Suggestions = new ArrayList<String>();
+
 
     // The port number on which the server will listen for incoming connections.
     public static final int PORT = 6666;
@@ -31,6 +29,8 @@ public class CrawlitServer {
 
     //main method
     public static void main(String[] args) {
+        Suggestions.add("search engine");
+        Suggestions.add("crawlit");
         System.out.println("The server started .. ");
 
         //get access to Files holding the index and the crawled data
@@ -122,6 +122,8 @@ public class CrawlitServer {
         public void run() {
 
             List<String> list = new ArrayList<>();
+            boolean suggestions = true;
+
 
             try {
                 // Get the input stream from the socket
@@ -132,10 +134,20 @@ public class CrawlitServer {
 
                 while (scanner.hasNextLine()) {
 
-
                     //receive search query
                     String query = scanner.nextLine();
+
+                    if (suggestions) {
+                        //send the suggestions to the client
+                        writer.println(Suggestions + "\n");
+                        suggestions = false;
+                        continue;
+                    }
+                    
                     System.out.println("Received query from client: " + query);
+
+                    //add the query to the list of suggestions
+                    Suggestions.add(query);
 
                     //empty all the elements in the list
                     list.clear();
