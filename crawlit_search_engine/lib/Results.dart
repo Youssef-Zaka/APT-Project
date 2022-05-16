@@ -25,11 +25,14 @@ class Results extends StatelessWidget {
           doc.getElementsByTagName('title').isNotEmpty
               ? title = doc.getElementsByTagName('title')[0].text
               : title = result;
+          title = title.trim();
           //get first paragraph
           String firstParagraph = '';
           if (doc.getElementsByTagName('p').isEmpty) {
             firstParagraph = 'No description';
           }
+
+          firstParagraph = firstParagraph.trim();
           //check if there is a paragraph
           if (doc.getElementsByTagName('p').isNotEmpty) {
             //get all paragraphs
@@ -57,7 +60,7 @@ class Results extends StatelessWidget {
                   child: Text(
                     title,
                     maxLines: 3,
-                    overflow: TextOverflow.fade,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
@@ -68,7 +71,7 @@ class Results extends StatelessWidget {
                 Text(
                   result,
                   maxLines: 1,
-                  overflow: TextOverflow.fade,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: Color.fromARGB(129, 14, 18, 228),
                     fontSize: 16,
@@ -97,7 +100,11 @@ class Results extends StatelessWidget {
   Future<String> request() async {
     final url = Uri.parse(result);
     var response = await http.get(url);
-    return response.body;
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      return ' ';
+    }
   }
 }
 

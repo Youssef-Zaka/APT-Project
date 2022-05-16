@@ -143,13 +143,18 @@ public class CrawlitServer {
                     //Process the query
                     englishStemmer stemmer = new englishStemmer();
                     //trim and remove stop words
-                    List<String> queryWords = Arrays.asList(query.trim().split("\\s+"));
-                    queryWords.removeAll(stopWordsList);
+                    List<String> queryWords = new ArrayList<String>(Arrays.asList(query.toLowerCase().trim().split("\\s+")));
+
+
+                    queryWords.removeIf(word -> stopWordsList.contains(word));
+
 
                     for(int j = 0; j < queryWords.size();j++) {
                         stemmer.setCurrent(queryWords.get(j));
                         if (stemmer.stem()) { //If the word has been Stemmed update the list
                             queryWords.set(j, stemmer.getCurrent());
+                            System.out.println(stemmer.getCurrent());
+
                         }
                     }
 
@@ -169,8 +174,8 @@ public class CrawlitServer {
                     //remove duplicates
                     list = list.stream().distinct().collect(Collectors.toList());
 
-                    //print the list of docs
-                    System.out.println("List of docs: " + list);
+                    //print the list of first 10 docs
+                    System.out.println("First 10 docs: " + list.subList(0, Math.min(10, list.size())));
 
                     //if the list is empty
                     if(list.isEmpty()) {
@@ -179,12 +184,21 @@ public class CrawlitServer {
                     else {
                         //replace each list entry with the url of url list (list)
                         for(int i = 0; i < list.size(); i++) {
-                            list.set(i, urlList.get(Integer.parseInt(list.get(i))));
+                            if (Integer.parseInt(list.get(i)) < urlList.size()) {
+                                list.set(i, urlList.get(Integer.parseInt(list.get(i))));
+                            }
+                            else {
+                                list.remove(i);
+                            }
                         }
                     }
-                    //print what is to be written to the client
-                    System.out.println("Sending list to client: " + list);
-                    writer.println(list);
+                    //print what is to be written to the client, first 10
+                    System.out.println("List to be written to client: " + list.subList(0, Math.min(10, list.size())));
+
+                    //print list size
+                    System.out.println("List size: " + list.size());
+
+                    writer.println(list + "\n");
                 }
             }
             catch (Exception e) {

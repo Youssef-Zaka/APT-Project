@@ -32,70 +32,72 @@ class _SearchScreenState extends State<SearchScreen> {
     textController.text = phrase;
 
     return Scaffold(
-      body: ListView(children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: TextField(
-                onEditingComplete: () async {
-                  if (textController.text.isEmpty) {
-                    return;
-                  }
-                  await crawlit.ServerUtil.query(textController.text);
-                  Navigator.pushNamed(context, '/search',
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 30,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: TextField(
+              onEditingComplete: () async {
+                if (textController.text.isEmpty) {
+                  return;
+                }
+                await crawlit.ServerUtil.query(textController.text).then((_) {
+                  Navigator.popAndPushNamed(context, '/search',
                       arguments: textController.text);
-                },
-                enableSuggestions: true,
-                controller: textController,
-                cursorColor: Colors.red,
-                cursorHeight: 20,
-                decoration: InputDecoration(
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      //open Voice Search
-                      Navigator.popAndPushNamed(context, '/voice');
-                    },
-                    child: const Icon(
-                      Icons.mic,
-                      color: Color.fromARGB(255, 3, 81, 197),
-                    ),
+                });
+              },
+              enableSuggestions: true,
+              controller: textController,
+              cursorColor: Colors.red,
+              cursorHeight: 20,
+              decoration: InputDecoration(
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    //open Voice Search
+                    Navigator.popAndPushNamed(context, '/voice');
+                  },
+                  child: const Icon(
+                    Icons.mic,
+                    color: Color.fromARGB(255, 3, 81, 197),
                   ),
-                  hintText: Strings.search,
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                      width: 1,
-                      color: Colors.red,
-                    ),
+                ),
+                hintText: Strings.search,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(
+                    width: 1,
+                    color: Colors.red,
                   ),
                 ),
               ),
             ),
-            results.isNotEmpty
-                ? Flexible(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Results(result: paginatedResults[index]);
-                          },
-                          itemCount: paginatedResults.length),
-                    ),
-                  )
-                : const NoResults(),
-            const SizedBox(
-              height: 20,
-            ),
-            results.isNotEmpty
-                ? Padding(
+          ),
+          paginatedResults.isNotEmpty
+              ? Flexible(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Results(result: paginatedResults[index]);
+                        },
+                        itemCount: paginatedResults.length),
+                  ),
+                )
+              : const NoResults(),
+          const SizedBox(
+            height: 20,
+          ),
+          paginatedResults.isNotEmpty
+              ? SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: NumberPaginator(
                       initialPage: 0,
@@ -119,11 +121,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         });
                       },
                     ),
-                  )
-                : Container(),
-          ],
-        ),
-      ]),
+                  ),
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 }
@@ -154,62 +156,65 @@ class NoResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Image(
-              image: AssetImage('assets/images/notFound.gif'),
-            ),
-            FittedBox(
-              fit: BoxFit.contain,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 100),
-                child: Text(
-                  'Your search did not return any results.',
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    fontSize: 100,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
+    return Expanded(
+      child: Center(
+        child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Image(
+                image: AssetImage('assets/images/notFound.gif'),
+              ),
+              FittedBox(
+                fit: BoxFit.contain,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 100),
+                  child: Text(
+                    'Your search did not return any results.',
+                    overflow: TextOverflow.fade,
+                    style: TextStyle(
+                      fontSize: 100,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            FittedBox(
-              fit: BoxFit.contain,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: BulletText(
-                    text: 'Make sure that all words are spelled correctly.'),
+              SizedBox(
+                height: 20,
               ),
-            ),
-            FittedBox(
-              fit: BoxFit.contain,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: BulletText(text: 'Try different keywords.'),
+              FittedBox(
+                fit: BoxFit.contain,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: BulletText(
+                      text: 'Make sure that all words are spelled correctly.'),
+                ),
               ),
-            ),
-            FittedBox(
-              fit: BoxFit.contain,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: BulletText(text: 'Try more general keywords.'),
+              FittedBox(
+                fit: BoxFit.contain,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: BulletText(text: 'Try different keywords.'),
+                ),
               ),
-            ),
-            FittedBox(
-              fit: BoxFit.contain,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: BulletText(text: 'Try fewer keywords.'),
+              FittedBox(
+                fit: BoxFit.contain,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: BulletText(text: 'Try more general keywords.'),
+                ),
               ),
-            ),
-          ],
+              FittedBox(
+                fit: BoxFit.contain,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: BulletText(text: 'Try fewer keywords.'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

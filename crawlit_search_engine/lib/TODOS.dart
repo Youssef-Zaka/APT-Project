@@ -1,8 +1,9 @@
 /*
 TODO: 
-- Implement Suggestions 
-- Highlight snippets of where the search phrase was found
-- Remove \n from Server list
-- Remove recents
-- make it pretty
+- Implement Suggestions (back and front end)
+- Highlight snippets of where the search phrase was found (front end)
+- Finish Ranker (backend) > Rank multiple words at the same time not just one, popularity?  
+- make Voice query pretty
+- build for release
+- if timeavailable == true, make it prettier
 */

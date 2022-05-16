@@ -30,29 +30,34 @@ class ServerUtil {
   //The urls will be added to the urls list.
   //The urls list will be returned.
   static Future<List<String>> query(String userQuery) async {
-    urls.clear();
     //check if socket is connected.
     if (connected) {
+      urls.clear();
       //send the query to the server.
       socket.writeln(userQuery);
-      await Future.delayed(const Duration(milliseconds: 200));
-      print(urls);
+
+      await Future.delayed(const Duration(milliseconds: 700));
+
       return urls;
     }
-    //if socket is not connected, wait for 5 seconds and try again.
-    await Future.delayed(const Duration(milliseconds: 50));
-    return query(userQuery);
+    return urls;
   }
 
   //Handles data from the server.
   void dataHandler(data) {
     //String of received data.
     String dataString = String.fromCharCodes(data).trim();
+    //if string == [] then urls is empty.
+    if (dataString == "[]" || dataString == "][") {
+      return;
+    }
     //remove first and last character from the string.
     dataString = dataString.substring(1, dataString.length - 1);
     //remove all the whitespace characters from the string.
     dataString = dataString.replaceAll(RegExp(r'\s+'), '');
-    urls = dataString.split(',');
+    urls.addAll(dataString.split(','));
+    //print urls count.
+    print('zaka: ' + urls.length.toString());
   }
 
   //Handles errors from the server.
