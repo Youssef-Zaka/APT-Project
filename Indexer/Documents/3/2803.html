@@ -1,708 +1,543 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
-<head>
-  <title>[2112.08352] Textless Speech-to-Speech Translation on Real Data</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<!DOCTYPE html><html dir="ltr" lang="en" class="no-js"><head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app210.us.archive.org';v.server_ms=332;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.scientificamerican.com/health/","20200107075754","https://web.archive.org/","web","/_static/",
+	      "1578383874");
 </script>
-  <meta name="citation_title" content="Textless Speech-to-Speech Translation on Real Data"/>
-  <meta name="citation_author" content="Lee, Ann"/>
-  <meta name="citation_author" content="Gong, Hongyu"/>
-  <meta name="citation_author" content="Duquenne, Paul-Ambroise"/>
-  <meta name="citation_author" content="Schwenk, Holger"/>
-  <meta name="citation_author" content="Chen, Peng-Jen"/>
-  <meta name="citation_author" content="Wang, Changhan"/>
-  <meta name="citation_author" content="Popuri, Sravya"/>
-  <meta name="citation_author" content="Pino, Juan"/>
-  <meta name="citation_author" content="Gu, Jiatao"/>
-  <meta name="citation_author" content="Hsu, Wei-Ning"/>
-  <meta name="citation_date" content="2021/12/15"/>
-  <meta name="citation_online_date" content="2021/12/15"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2112.08352"/>
-  <meta name="citation_arxiv_id" content="2112.08352"/>
-  <meta name="citation_abstract" content=" We present a textless speech-to-speech translation (S2ST) system that can
-translate speech from one language into another language and can be built
-without the need of any text data. Different from existing work in the
-literature, we tackle the challenge in modeling multi-speaker target speech and
-train the systems with real-world S2ST data. The key to our approach is a
-self-supervised unit-based speech normalization technique, which finetunes a
-pre-trained speech encoder with paired audios from multiple speakers and a
-single reference speaker to reduce the variations due to accents, while
-preserving the lexical content. With only 10 minutes of paired data for speech
-normalization, we obtain on average 3.2 BLEU gain when training the S2ST model
-on the \vp~S2ST dataset, compared to a baseline trained on un-normalized speech
-target. We also incorporate automatically mined S2ST data and show an
-additional 2.0 BLEU gain. To our knowledge, we are the first to establish a
-textless S2ST technique that can be trained with real-world data and works for
-multiple language pairs.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2112.08352"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Textless Speech-to-Speech Translation on Real Data"/>
-    <meta name="twitter:description" content="We present a textless speech-to-speech translation (S2ST) system that can
-translate speech from one language into another language and can be built
-without the need of any text data. Different..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="Textless Speech-to-Speech Translation on Real Data"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2112.08352v1"/>
-    <meta property="og:description" content="We present a textless speech-to-speech translation (S2ST) system that can
-translate speech from one language into another language and can be built
-without the need of any text data. Different from existing work in the
-literature, we tackle the challenge in modeling multi-speaker target speech and
-train the systems with real-world S2ST data. The key to our approach is a
-self-supervised unit-based speech normalization technique, which finetunes a
-pre-trained speech encoder with paired audios from multiple speakers and a
-single reference speaker to reduce the variations due to accents, while
-preserving the lexical content. With only 10 minutes of paired data for speech
-normalization, we obtain on average 3.2 BLEU gain when training the S2ST model
-on the \vp~S2ST dataset, compared to a baseline trained on un-normalized speech
-target. We also incorporate automatically mined S2ST data and show an
-additional 2.0 BLEU gain. To our knowledge, we are the first to establish a
-textless S2ST technique that can be trained with real-world data and works for
-multiple language pairs."/>
-</head>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+<meta charset="utf-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="description" content="Scientific American is the essential guide to the most awe-inspiring advances in science and technology, explaining how they change our understanding of the world and shape our lives."><meta itemprop="name" content="Scientific American" itemprop="description" content="Scientific American is the essential guide to the most awe-inspiring advances in science and technology, explaining how they change our understanding of the world and shape our lives."><meta name="msapplication-TileImage" content="/public/resources/favicons/favicon-196-f10395ba7ecf07756e4b5a82c4795b61.png"><meta name="referrer" content="unsafe-url"><meta name="com.silverpop.brandeddomains" content="www.pages04.net,www.scientificamerican.com"/><meta name="com.silverpop.cothost" content="pod4.ibmmarketingcloud.com"/><title>Health - Scientific American</title><link rel="apple-touch-icon" sizes="196x196" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-196-f10395ba7ecf07756e4b5a82c4795b61.png"><link rel="apple-touch-icon" sizes="128x128" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-128-4b9aa97db8311c4616270d6a8a662eac.png"><link rel="apple-touch-icon" sizes="96x96" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-96-387ab1daffb7a1698601f6e49da87a1c.png"><link rel="apple-touch-icon" sizes="32x32" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-32-cadc19705538fdb538db10f2a98c1d46.png"><link rel="apple-touch-icon" sizes="16x16" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-16-59d034d523b133557208a7c24f448374.png">		<link rel="shortcut icon" href="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/favicons/favicon-4c8c70500bd3f01ae8c38cf7dd2771fe.ico"><meta name="theme-color" content="#093969"/><link rel="stylesheet" type="text/css" rel="preload" href="/web/20200107075754cs_/https://www.scientificamerican.com/public/resources/sa-c798113fa11711e649be374a60d3aee7.css" as="style"/><link rel="stylesheet" type="text/css" rel="preload" href="/web/20200107075754cs_/https://www.scientificamerican.com/public/resources/icons-742382d06c2ee8300dd33b9ae799b010.css" as="style"/><link href="https://web.archive.org/web/20200107075754/https://static.scientificamerican.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.krxd.net/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://www.googletagservices.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://plugin.mediavoice.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://connect.facebook.net/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.marphezis.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://ajax.googleapis.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://s3.amazonaws.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://www.googletagmanager.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://www.google-analytics.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://get.s-onetag.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://adservice.google.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://cdn.cookielaw.org/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://logx.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://ads.deliverimp.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://z.moatads.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://a1859010085.cdn.optimizely.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://tpc.googlesyndication.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://pixel.moatads.com/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://consumer.krxd.net/" rel="preconnect"><link href="https://web.archive.org/web/20200107075754/https://securepubads.g.doubleclick.net/" rel="preconnect"><link rel="canonical" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/health-and-medicine/"><script>dataLayer = [{"content":{"authorization":{"status":1,"freeToAccess":1,"type":"free_to_air"},"category":{"contentSubType1":"Topic","subjectSubType1":"","subjectType":"Health","contentType":"Topic"},"updatedAt":"","contentInfo":{"keywords":"","publishedAtDate":"","publishedAtTime":"","contentId":"6E74B817-B6CA-46AF-B20B8683EFCAD26F","brand":"Scientific American","publishedAt":"","author":[],"title":"Health"},"attributes":{"keywords":"","language":"en","subjects":"","copyright":{"native":0,"syndicated":0,"resale":0},"template":"sciam"}},"session":{"createdAt":"","authentication":{"loginStatus":"logged out"},"updatedAt":"","attributes":{},"sessionInfo":{"sessionID":"{{GA populated session ID}}"}},"version":"1.0.0","productsInCart":[],"product":[],"privacy":{},"currency":"","user":[{"sitelicense":{"accessLevel":"","grantBPID":[],"BPID":[],"siteID":[],"isSiteLicenseCustomer":false,"accessReason":""},"licence":[{"category":{"licenceType":""},"licenceInfo":{"licenceName":"","licenceID":""},"attributes":{}}],"updatedAt":"","segment":{"emailSubscriber":0,"isInExtendedSession":false,"appUserMind":0,"registered":0,"siteLicenseCustomer":false,"customer":0,"hasAccess":false,"subscriberMind":0,"logouturl":"?slatAction=public:account.logout","isLoggedIn":false,"emailVerificationError":false,"appUserSA":0,"subscriber":0,"giftRecipient":0,"hasSoftAccess":false,"commented":0,"subscriberSA":0},"profile":[{"profileInfo":{"profileID":""},"attributes":{"recency":{"appLoginSA":"","appLoginMind":"","webLogin":""}}}]}],"page":{"error":{},"pageInfo":{},"category":{"pageType":"single-page"},"attributes":{},"component":[{}]}}];</script>
+<script type="text/javascript" src="/web/20200107075754js_/https://www.scientificamerican.com/core/modules/v1/core_assets/js/mura.min.js?v=7.1.213"></script>
+<script>
+(function(root,config){
+ root.queuedMuraCmds=[];
+ root.deferMuraInit=function(){
+ if(typeof root.Mura != 'undefined' && typeof root.Mura.init == 'function'){
+ root.Mura.init(config);
+ for(var cmd in root.queuedMuraCmds){
+ root.Mura(root.queuedMuraCmds[cmd]);
+ }
+ } else {
+ if(typeof root.Mura != 'function'){
+ root.mura = root.m = root.Mura = function(cmd){root.queuedMuraCmds.push(cmd);};
+ }
+ setTimeout(root.deferMuraInit);
+ }
+ }
+ root.deferMuraInit();
+ }
+)(this,{
+ loginURL:"?display=login",
+ siteid:"sciam",
+ siteID:"sciam",
+ contentid:"6E74B817-B6CA-46AF-B20B8683EFCAD26F",
+ contenthistid:"BB379108-B8D4-4559-8954EDF540C93512",
+ ismind:"false",
+ parentid:"6E74B817-B6CA-46AF-B20B8683EFCAD26F",
+ context:"",
+ nocache:0,
+ assetpath:"/sites/sciam",
+ corepath:"/core",
+ themepath:"/themes/responsive",
+ reCAPTCHALanguage:"en",
+ preloaderMarkup: "",
+ mobileformat: false,
+ windowdocumentdomain: "",
+ layoutmanager:true,
+ type:"Folder",
+ subtype:"Topic",
+ queueObjects: true,
+ rb:{"formrequiredwrapperclass":"","formradiolabelclass":"radio","formresponsewrapperclass":"","formwrapperclass":"well","formbuttoncancellabel":"Cancel","formselectclass":"form-control","formbuttonclass":"btn btn-default","formfileclass":"form-control","formbuttonwrapperclass":"btn-group","formbuttoninnerclass":"","formcheckboxwrapperclass":"","formradiowrapperclass":"","formcheckboxlabelclass":"checkbox","formbuttonnextlclass":"form-nav","forminputclass":"form-control","formradioclass":"","formcheckboxclass":"","formfieldlabelclass":"control-label","formtextareaclass":"form-control","formbuttonbacklabel":"Back","formbuttonsubmitlabel":"Submit","formrequiredlabel":"Required","generalwrapperclass":"well","formbuttonnextlabel":"Next","generalwrapperbodyclass":"","formbuttomsubmitclass":"form-submit btn-primary","formbuttonbackclass":"form-nav","formerrorwrapperclass":"","formbuttoncancelclass":"form-cancel btn-primary pull-right","formwrapperbodyclass":"","formgeneralcontrolclass":"form-control","formfieldwrapperclass":"control-group"},
+ dtExample:"11/10/2018",
+	dtCh:"/",
+	dtFormat:[0,1,2],
+	dtLocale:"en-US",
+ hassoftaccess: false,
+ hashardaccess: false,
+ cookiedomain:".scientificamerican.com",
+ securedomain:"https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/"
+})
+</script>
+<meta property="og:site_name" content="Scientific American"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:title" content="Health"/>
+	<meta property="og:description" content=""/>
+	<meta property="og:image" content="https://web.archive.org/web/20200107075754im_/http://www.scientificamerican.com/themes/responsive/images/global/logo400x400.jpg" itemprop="image"/>
+	<meta property="og:image:width" content="790"/>
+	<meta property="og:image:height" content="496"/>
+	
+	
+	<meta property="og:url" content="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/subjects/health-and-medicine/"/>
 
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
+	
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@sciam">
+	<meta name="twitter:title" content="Health">
+
+
+	
+	
+	<meta name="description" content="">
+	<meta name="keywords" content=""><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://web.archive.org/web/20200107075754/https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PL33XX4');</script><!-- End Google Tag Manager --><meta name="google-site-verification" content="c3vEwQZqsGgDzoxA9EFSJfvsACgCmxZrh1mnt6oodUg"/><meta property="fb:pages" content="340704949293332"/><!--[ if lte IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![ endif]--></head><body class="site-sciam lang-en   leaderboard-top newsletter-promo--active " data-behavior="onetrust"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20200107075754/https%3A//www.scientificamerican.com/health/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
   </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.scientificamerican.com/health/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20200107075754" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20200107075754*/https://www.scientificamerican.com/health/" title="See a list of every capture for this URL">1,004 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">11 Dec 2004 - 11 May 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20191205131025/https://www.scientificamerican.com/health/" title="05 Dec 2019"><strong>Dec</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 07:57:54 Jan 07, 2020">JAN</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200208201853/https://www.scientificamerican.com/health/" title="08 Feb 2020"><strong>Feb</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200105085712/https://www.scientificamerican.com/health/" title="08:57:12 Jan 05, 2020"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 07:57:54 Jan 07, 2020">07</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200108081814/https://www.scientificamerican.com/health/" title="08:18:14 Jan 08, 2020"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20190106153551/https://www.scientificamerican.com/health/" title="06 Jan 2019"><strong>2019</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 07:57:54 Jan 07, 2020">2020</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210115080226/https://www.scientificamerican.com/health/" title="15 Jan 2021"><strong>2021</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20200107075754/http://web.archive.org/screenshot/https://www.scientificamerican.com/health/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/health/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/health/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
       </div>
     </div>
   </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/webwidecrawl);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/webwidecrawl" target="_new"><span class="wm-title">Internet Archive</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  The Internet Archive discovers and captures web pages through many different web crawls.
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
+At any given time several distinct crawls are running, some for months, and some every day or longer.
 
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
+View the web archive through the <a href="http://archive.org/web/web.php">Wayback Machine</a>.
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/liveweb)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/liveweb" target="_new"><span class="wm-title">Live Web Proxy Crawls</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Content crawled via the <a href="http://archive.org/web/web.php">Wayback Machine</a> Live Proxy mostly by the Save Page Now feature on web.archive.org.
+<br><br>
+Liveweb proxy is a component of Internet Archive’s wayback machine project. The liveweb proxy captures the content of a web page in real time, archives it into a ARC or WARC file and returns the ARC/WARC record back to the wayback machine to process. The recorded ARC/WARC file becomes part of the wayback machine in due course of time.
+<br>
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/health/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.scientificamerican.com/health/","20200107075754",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT --><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://web.archive.org/web/20200107075754if_/https://www.googletagmanager.com/ns.html?id=GTM-PL33XX4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) --><div id="div-gpt-ad-interstitial-1" class="banner-interstitial"><div id="div-gpt-ad-interstitial-1-child" data-dfp-adcontainer="div-gpt-ad-interstitial-1"></div></div><!--[if IE 8]><![endif]--><!--[if lte IE 9]><div class="browser-update" data-behavior="browser_update"><div class="container"><p class="t_meta"><span class="browser-update__alert"><img src="/public/resources/png/icon__alert-ae613ac2fae0e0da4832a26804bf2b38.png" alt=""></span> We're sorry, your browser is not supported. Please update to a modern browser to view this page. <a href="page/frequently-asked-questions/?tab=about-the-site#what-are-the-technical-specifications-for-using-scientificamericancom" class="browser-update__link">Learn More</a></p><div class="browser-update__close"><a href="#" data-browser-update-close><span class="icon icon__close--black icon--subtle"></span></a></div></div></div><![endif]--><a role="link" arial-label="Skip to main content" class="skipnav" href="#sa_body">Skip to main content</a><div id="scientific-american"><div class="banner banner-leaderboard banner-leaderboard-top" data-banner-leaderboard><div id="div-gpt-ad-top-1"><div id="div-gpt-ad-top-1-child" data-dfp-adcontainer="div-gpt-ad-top-1"></div></div></div><div class="sticky-bounds"><header class="sticky-header" data-behavior="sticky underline_menu_item"><nav class="header" aria-label="main navigation bar"><div class="container flex-container-row--nowrap-vertical-center"><div class="header__left"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/health-medicine/" class="js-header__subscribe-btn medium-down-hide  " data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="HNSB" data-track-ecommerce-promo-name="Navigation Subscribe Button" data-track-ecommerce-promo-creative="mainHeader" data-track-ecommerce-promo-position="1"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn">Subscribe</button></a><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/archive/?magazineFilterID=all" class="js-header__issue-btn medium-down-hide  " data-track="click" data-track-action="click" data-track-label="latestissues-nav" data-track-category="nav"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn--issue">Latest Issues</button></a><button role="button" class="header__menu-btn large-up-hide" class="navbar-burger" aria-label="menu" aria-expanded="false" data-behavior="primary_nav"><span class="icon icon__menu--black">Menu</span></button></div><div class="header__logo" itemtype="http://schema.org/Organization" itemscope itemprop="publisher"><a role="link" itemprop="url" aria-label="Scientific American" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/" class="icon icon__logo--175"><span itemprop="name">Scientific American</span></a><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://web.archive.org/web/20200107075754/https://static.scientificamerican.com/sciam/assets/Image/newsletter/salogo.png"/></span></div><div class="header__right tooltip-outer"> <ul class="meta-list medium-down-hide"><li class="meta-list__item tx_meta cart__icon"><a aria-label="You have 0 items in your cart" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/shopping-cart/" data-track="click" data-track-action="cart-button" data-track-label="cart-button" data-track-category="main-header-cart-button">Cart <span class="cart-count cart__icon--dark-grey">0</span></a></li><li class="meta-list__item tx_meta " data-behavior="sign_in_flyout"><button role="button" aria-expanded="false" id="signin-click" class="link signin-click" data-track="click" data-track-action="header-signin-link" data-track-label="header-signin" data-track-category="sign-in-link">Sign In </button><section tabindex="-1" aria-expanded="true" class="signin-flyout" id="signin-flyout"><button tabindex="0" class="icon__close--white" id="signin-flyout__close" aria-label="Close Sign In Flyout" data-track="click" data-track-action="close-signin-flyout-button" data-track-label="close-signin-flyout" data-track-category="main-header-close-signin-flyout-link"></button><span class="signin-flyout__arrow"></span><form class="signin-flyout__form" action="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/?s=1" method="post" data-behavior="csrf_token_update"><input type="hidden" name="slatAction" value="public:account.login"><input type="hidden" name="flyoutlogin" value="true"><input type="hidden" name="sRedirectURL" value="https://www.scientificamerican.com/health-and-medicine/"/><input type="hidden" name="csrf_token" value="A1BF8984C4EAE62B55635BCC61DC675A"/><input type="hidden" name="csrf_token_expires" value="200107055755402"/><label for="emailAddress1" class="signin-flyout__form__label">Email *:</label><input type="text" name="emailAddress" id="emailAddress1" class="signin-flyout__form__input" data-signin-email><label for="password1" class="signin-flyout__form__label">Password *:</label><input type="password" name="password" id="password1" class="signin-flyout__form__input" data-signin-password><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/forgot-password/" class="signin-flyout__form__forgot" data-track="click" data-track-action="flyout-forgot-password-link" data-track-label="flyout-forgot-password" data-track-category="main-header-flyout-forgot-password-link">Forgot password?</a><button class="btn btn--inverted signin-flyout__form__submit" type="submit" data-signin-submit-btn data-track="click" data-track-action="signin-flyout-button" data-track-label="signin-flyout" data-track-category="main-header-flyout-signin-flyout-button">Login</button><img src="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/loader-eba9d808f62929c2c4c744e562eca7d9.gif" class="signin-flyout__form__loading" alt="Loading" data-signin-loading/></form><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/register/" class="signin-flyout__register" data-track="click" data-track-action="not-register-flyout-button" data-track-label="not-register-flyout" data-track-category="main-header-flyout-not-register-button">Not yet registered?</a></section></li><li class="meta-list__item meta-list__item--informedLink tx_meta ">|<a tabindex="0" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2019_sciam_StayInformed_NewsletterSignUp" class="link register-click" data-track="click" data-track-action="header-stay-informed-link" data-track-label="header-stay-informed" data-track-category="stay-informed-link">Stay Informed</a></li></ul><button role="button" aria-label="submit search" class="header__search-btn icon icon__search--black xlarge-hide medium-down-hide  " data-behavior="toggle_open" data-target="search__container">Search</button><a class="large-up-hide" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/health-medicine/" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="MHNSB" data-track-ecommerce-promo-name="Mobile Navigation Subscribe Button" data-track-ecommerce-promo-creative="mainHeaderMobile" data-track-ecommerce-promo-position="1"><button type="button" role="button" aria-label="subscribe" class="header__subscribe-btn">Subscribe</button></a></div></div></nav><nav aria-label="main navigation bar" class="primary-nav "><div class="primary-nav__bg large-up-hide"><button type="button" class="primary-nav__close-btn large-up-hide" data-behavior="primary_nav"><span class="icon icon__close--white icon--subtle">Close</span></button></div><div class="container "><div class="search__container container" data-toggle="search__container"><form id="global-search-form" class="search__form" action="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/search/" method="get"><div class="search__form--wrapper"><label for="q" class="hide-label" aria-label="Search"></label><input class="search__input" type="search" name="q" autocomplete="off" placeholder="Search" tabindex="1" aria-label="Search Input" data-behavior="search" data-query=""><button class="search__button icon" type="button" data-behavior="toggle_open" data-target="search__container">Search</button><button class="search__button--close icon icon__close--muted" type="button" data-behavior="toggle_open" data-target="search__container">Close</button></div><button type="submit" class="search__button--submit btn btn--cart">Search</button></form><a href="#advanced-search" class="advanced-search-toggle tx_meta small" style="flex-basis: 100%">Advanced Search</a></div><ul class="primary-nav__list"><li class="primary-nav__list-item" data-title="the-sciences"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/the-sciences/" data-track="click" data-track-label="thesciences-nav" data-track-category="nav" data-track-action="link">The Sciences</a></li><li class="primary-nav__list-item" data-title="mind"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/mind/" data-track="click" data-track-label="mind-nav" data-track-category="nav" data-track-action="link">Mind</a></li><li class="primary-nav__list-item" data-title="health"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/health/" data-track="click" data-track-label="health-nav" data-track-category="nav" data-track-action="link">Health</a></li><li class="primary-nav__list-item" data-title="tech"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/tech/" data-track="click" data-track-label="tech-nav" data-track-category="nav" data-track-action="link"> Tech</a></li><li class="primary-nav__list-item" data-title="sustainability"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/sustainability/" data-track="click" data-track-label="sustainability-nav" data-track-category="nav" data-track-action="link">Sustainability</a></li><li class="primary-nav__list-item" data-title="education"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/education/" data-track="click" data-track-label="education-nav" data-track-category="nav" data-track-action="link">Education</a></li><li class="primary-nav__list-item" data-title="video"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/" data-track="click" data-track-label="video-nav" data-track-category="nav" data-track-action="link">Video</a></li><li class="primary-nav__list-item" data-title="podcasts"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcasts/" data-track="click" data-track-label="podcasts-nav" data-track-category="nav" data-track-action="link">Podcasts</a></li><li class="primary-nav__list-item" data-title="blogs"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/" data-track="click" data-track-label="blogs-nav" data-track-category="nav" data-track-action="link">Blogs</a></li><li class="primary-nav__list-item" data-title="store"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/" data-track="click" data-track-label="publications-nav" data-track-category="nav" data-track-action="link">Publications</a></li></ul><ul class="primary-nav__list--drawer-utils large-up-hide"><li class="primary-nav__list-item--btn"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/health-medicine/" class="btn btn--small" data-track="click" data-track-label="stayinformed-nav-mobile" data-track-category="nav" data-track-action="link">Subscribe</a></li><li class="primary-nav__list-item--btn"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/" class="btn btn--small" data-track="click" data-track-action="click" data-track-label="currentissue-nav" data-track-category="mobile-nav">Current Issue</a></li><li class="primary-nav__list-item--drawer-utils" style="border-top: 1px solid #e5e5e5; margin-top: 20px"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/shopping-cart/" data-track="click" data-track-label="cart-nav" data-track-category="nav" data-track-action="link">Cart<span class="cart-count cart__icon--dark-grey">0</span></a></li><li class="primary-nav__list-item--drawer-utils"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/" data-track="click" data-track-action="mobile-signin-link" data-track-label="mobile-menu-signin" data-track-category="mobile-sign-in-link">Sign In</a></li><li class="primary-nav__list-item--drawer-utils"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/newsletter-sign-up/" data-track="click" data-track-action="mobile-menu-stay-informed-link" data-track-label="mobile-stay-informed" data-track-category="mobile-stay-informed-link">Stay Informed</a></li></ul><ul class="primary-nav__list--social large-up-hide"></ul></div><div class="search__autocomplete-container"><ul class="search__autocomplete-results-list container"></ul></div></nav></header><main id="sa_body" class="panel main-area    "><div class="mura-region"><div class="mura-region-inherited"></div><div class="mura-region-local"></div></div><div class="newsletter-promo container"><div class="newsletter-promo__img"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/3FEAC26E-149C-4FDC-977666D8F3DBAD91_source.png" alt="newsletter promo image"></div><div class="newsletter-promo__body"><p><p>Sign up for our&nbsp;free newsletters.</p></p></div><div class="newsletter-promo__cta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2018_sciam_HomePromo_NewsletterSignUp"><button class="btn btn--small">Sign Up</button></a></div></div><header class="landing-header container "><h1 class="landing-header__title">Health</h1><nav class="landing-header__nav" aria-label="subcategories"><div class="landing-header__nav__switch"><a class="topic-list-switch" href="#topic-list" data-behavior="toggle">Select Topic <span class="icon icon__ddarr--black"></span></a></div><ul class="header-topic-list landing-header__nav__list" id="topic-list">  <li class="landing-header__nav__list__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/biotech/" data-track="click" data-track-action="link" data-track-label="Biotech-subnav" data-track-category="subnav">Biotech</a></li>  <li class="landing-header__nav__list__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/medicine/" data-track="click" data-track-action="link" data-track-label="Medicine-subnav" data-track-category="subnav">Medicine</a></li>  <li class="landing-header__nav__list__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/public-health/" data-track="click" data-track-action="link" data-track-label="Public Health-subnav" data-track-category="subnav">Public Health</a></li>  <li class="landing-header__nav__list__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/the-body/" data-track="click" data-track-action="link" data-track-label="The Body-subnav" data-track-category="subnav">The Body</a></li>  <li class="landing-header__nav__list__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/wellness/" data-track="click" data-track-action="link" data-track-label="Wellness-subnav" data-track-category="subnav">Wellness</a></li> </ul></nav></header><div class="landing-main"><div class="container tablet--listing-container"><section data-primary-nav-context-home class="latest-articles-outer grid  topic-page"><div class="latest-articles grid__col large-up-1-4 medium-1-2 small-hide" data-tabs-content="latest-news" id="agenda-latest"><article class="listing listing--with-thumb" data-listing-count="2" data-listing-template="Topic" data-listing-title="Public Health Depends on Reproducible Research"><div class="t_tag listing--category">Public Health</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/public-health-depends-on-reproducible-research/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=590&amp;h=393&amp;fit=crop" alt="Public Health Depends on Reproducible Research"/></picture></a><div class="t_tag listing__thumb__category small-hide">Public Health</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/public-health-depends-on-reproducible-research/">Public Health Depends on Reproducible Research</a></h2><p class="listing-feature__summary" style="display: none">To fight emerging microbial threats, scientists need to work with materials they can count on</p><p class="t_meta listing__meta">January 3, 2020  —  Cara Wilder | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></article><article class="listing listing--with-thumb" data-listing-count="3" data-listing-template="Topic" data-listing-title="We Should Ban All Menthol-Flavored Nicotine Products"><div class="t_tag listing--category">Public Health</div><div class="t_thumb listing__thumb medium-up-hide"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/we-should-ban-all-menthol-flavored-nicotine-products/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=590&amp;h=393&amp;fit=crop" alt="We Should Ban All Menthol-Flavored Nicotine Products"/></picture></a><div class="t_tag listing__thumb__category small-hide">Public Health</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/we-should-ban-all-menthol-flavored-nicotine-products/">We Should Ban All Menthol-Flavored Nicotine Products</a></h2><p class="listing-feature__summary" style="display: none"><span style="background:white">It&rsquo;s not just for health: there&rsquo;s also a social justice issue</span></p><p class="t_meta listing__meta">January 2, 2020  —  Phoenix A. Matthews | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></article><article class="listing listing--with-thumb" data-listing-count="4" data-listing-template="Topic" data-listing-title="Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians"><div class="t_tag listing--category">Biotech</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/google-ai-tool-can-pinpoint-breast-cancer-better-than-clinicians/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=590&amp;h=393&amp;fit=crop" alt="Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians"/></picture></a><div class="t_tag listing__thumb__category small-hide">Biotech</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/google-ai-tool-can-pinpoint-breast-cancer-better-than-clinicians/">Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians</a></h2><p class="listing-feature__summary" style="display: none">The software detected cancers at higher rates than radiologists, with fewer false positives</p><p class="t_meta listing__meta">January 2, 2020  —  Erin Brodwin and STAT</p></article></div><div class="grid__col large-up-2-4 medium-2-2 " data-tabs-id="jump-links" data-tabs-content="featured"><article class="listing-feature " data-listing-count="1" data-listing-template="Topic" data-listing-title="Cause of Wuhan's Mysterious Pneumonia Cases Still Unknown, Chinese Officials Say"><div class="listing-thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/cause-of-wuhans-mysterious-pneumonia-cases-still-unknown-chinese-officials-say/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/A2D25F63-64F3-4F55-864E72F500C7CD91.jpg?w=280&amp;h=187&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/A2D25F63-64F3-4F55-864E72F500C7CD91.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/A2D25F63-64F3-4F55-864E72F500C7CD91.jpg?w=450&amp;h=300&amp;fit=crop"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/A2D25F63-64F3-4F55-864E72F500C7CD91.jpg?w=590&amp;h=393&amp;fit=crop" alt="Cause of Wuhan's Mysterious Pneumonia Cases Still Unknown, Chinese Officials Say"/></picture></a><div class="listing-thumb__category t_tag">Public Health</div></div><div class="listing-feature__inner"><h1 class="t_feature-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/cause-of-wuhans-mysterious-pneumonia-cases-still-unknown-chinese-officials-say/">Cause of Wuhan&rsquo;s Mysterious Pneumonia Cases Still Unknown, Chinese Officials Say</a></h1><p class="listing-feature__summary t_body">The virus has sickened 59 people so far but does not appear to be transmitting among humans</p><p class="listing-feature__meta t_meta">January 6, 2020 —  Helen Branswell and STAT</p></div></article><article class="listing listing--with-thumb" data-listing-count="2" data-listing-template="Topic" data-listing-title="Public Health Depends on Reproducible Research"><div class="t_tag listing--category">Public Health</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/public-health-depends-on-reproducible-research/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/8F7751FF-0A2C-4B34-9882EA5F4E107F58.jpg?w=590&amp;h=393&amp;fit=crop" alt="Public Health Depends on Reproducible Research"/></picture></a><div class="t_tag listing__thumb__category small-hide">Public Health</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/public-health-depends-on-reproducible-research/">Public Health Depends on Reproducible Research</a></h2><p class="listing-feature__summary" style="display: none">To fight emerging microbial threats, scientists need to work with materials they can count on</p><p class="t_meta listing__meta">January 3, 2020  —  Cara Wilder | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></article><article class="listing listing--with-thumb" data-listing-count="3" data-listing-template="Topic" data-listing-title="We Should Ban All Menthol-Flavored Nicotine Products"><div class="t_tag listing--category">Public Health</div><div class="t_thumb listing__thumb medium-up-hide"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/we-should-ban-all-menthol-flavored-nicotine-products/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2.jpg?w=590&amp;h=393&amp;fit=crop" alt="We Should Ban All Menthol-Flavored Nicotine Products"/></picture></a><div class="t_tag listing__thumb__category small-hide">Public Health</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/we-should-ban-all-menthol-flavored-nicotine-products/">We Should Ban All Menthol-Flavored Nicotine Products</a></h2><p class="listing-feature__summary" style="display: none"><span style="background:white">It&rsquo;s not just for health: there&rsquo;s also a social justice issue</span></p><p class="t_meta listing__meta">January 2, 2020  —  Phoenix A. Matthews | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></article><article class="listing listing--with-thumb" data-listing-count="4" data-listing-template="Topic" data-listing-title="Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians"><div class="t_tag listing--category">Biotech</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/google-ai-tool-can-pinpoint-breast-cancer-better-than-clinicians/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A.jpg?w=590&amp;h=393&amp;fit=crop" alt="Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians"/></picture></a><div class="t_tag listing__thumb__category small-hide">Biotech</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/google-ai-tool-can-pinpoint-breast-cancer-better-than-clinicians/">Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians</a></h2><p class="listing-feature__summary" style="display: none">The software detected cancers at higher rates than radiologists, with fewer false positives</p><p class="t_meta listing__meta">January 2, 2020  —  Erin Brodwin and STAT</p></article></div><div id="latest-news" class="grid__col large-up-1-4 medium-1-2 latest-news" data-tabs-id="jump-links" data-tabs-content="latest" data-listing-type="latest-news"><article class="listing listing--with-thumb" data-listing-count="1" data-listing-template="Topic" data-listing-title="Self-Tracking Your 2020 Resolutions"><div class="t_tag listing--category">Behavior &amp; Society</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/self-tracking-your-2020-resolutions/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/AC39FF39-1ADF-4507-8EF0D3F47C7CAB1F.jpg?w=280&amp;h=187&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/AC39FF39-1ADF-4507-8EF0D3F47C7CAB1F.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/AC39FF39-1ADF-4507-8EF0D3F47C7CAB1F.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/AC39FF39-1ADF-4507-8EF0D3F47C7CAB1F.jpg?w=590&amp;h=393&amp;fit=crop" alt="Self-Tracking Your 2020 Resolutions"/></picture></a><div class="t_tag listing__thumb__category small-hide">Behavior &amp; Society</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/self-tracking-your-2020-resolutions/">Self-Tracking Your 2020 Resolutions</a></h2><p class="listing-feature__summary" style="display: none">What you need to know before getting that new gadget</p><p class="t_meta listing__meta">January 2, 2020  —  Enrique Rueda and Karla Erickson | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></article><article class="listing listing--with-thumb" data-listing-count="2" data-listing-template="Topic" data-listing-title="Doctors and Suicide"><div class="t_tag listing--category">Mental Health</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/doctors-and-suicide/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/B9DA5370-7DAF-4C85-A0BDC70AA64A99D2.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/B9DA5370-7DAF-4C85-A0BDC70AA64A99D2.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/B9DA5370-7DAF-4C85-A0BDC70AA64A99D2.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/B9DA5370-7DAF-4C85-A0BDC70AA64A99D2.jpg?w=590&amp;h=393&amp;fit=crop" alt="Doctors and Suicide"/></picture></a><div class="t_tag listing__thumb__category small-hide">Mental Health</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/doctors-and-suicide/">Doctors and Suicide</a></h2><p class="listing-feature__summary" style="display: none">The rate among students, residents and physicians is significantly higher than average&mdash;but so-called wellness initiatives can help</p><p class="t_meta listing__meta">December 31, 2019  —  Jeannie Aschkenasy | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></p></article><article class="listing listing--with-thumb" data-listing-count="3" data-listing-template="Topic" data-listing-title="CRISPR Babies Scientist Sentenced to 3 Years in Prison"><div class="t_tag listing--category">Medicine</div><div class="t_thumb listing__thumb medium-up-hide"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/crispr-babies-scientist-sentenced-to-3-years-in-prison/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/87D76700-2B8C-4D71-9C8B8514CEEDDC10.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/87D76700-2B8C-4D71-9C8B8514CEEDDC10.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/87D76700-2B8C-4D71-9C8B8514CEEDDC10.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/87D76700-2B8C-4D71-9C8B8514CEEDDC10.jpg?w=590&amp;h=393&amp;fit=crop" alt="CRISPR Babies Scientist Sentenced to 3 Years in Prison"/></picture></a><div class="t_tag listing__thumb__category small-hide">Medicine</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/crispr-babies-scientist-sentenced-to-3-years-in-prison/">CRISPR Babies Scientist Sentenced to 3 Years in Prison</a></h2><p class="listing-feature__summary" style="display: none"><font face="Calibri"><font>A Chinese Court jailed He Jiankui for an &ldquo;illegal medical practice&rdquo; in editing embryos&rsquo; DNA </font></font></p><p class="t_meta listing__meta">December 30, 2019  —  Andrew Joseph and STAT</p></article><article class="listing listing--with-thumb" data-listing-count="4" data-listing-template="Topic" data-listing-title="Good News for Dogs with Cancer"><div class="t_tag listing--category">Medicine</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/good-news-for-dogs-with-cancer/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9B9F56BA-35DA-4F32-80EBE523AF0CB2B6.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9B9F56BA-35DA-4F32-80EBE523AF0CB2B6.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9B9F56BA-35DA-4F32-80EBE523AF0CB2B6.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9B9F56BA-35DA-4F32-80EBE523AF0CB2B6.jpg?w=590&amp;h=393&amp;fit=crop" alt="Good News for Dogs with Cancer"/></picture></a><div class="t_tag listing__thumb__category small-hide">Medicine</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/good-news-for-dogs-with-cancer/">Good News for Dogs with Cancer</a></h2><p class="listing-feature__summary" style="display: none">New therapies for beloved pets are getting developed in hopes of treating humans as well</p><p class="t_meta listing__meta">December 30, 2019  —  Amy Sutherland</p></article><article class="listing listing--with-thumb" data-listing-count="5" data-listing-template="Topic" data-listing-title="Low-Income Baltimore Blocks Host Bigger, More Dangerous Mosquitoes  "><div class="t_tag listing--category">Environment</div><div class="t_thumb listing__thumb "><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/low-income-baltimore-blocks-host-bigger-more-dangerous-mosquitoes/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/535070C6-0C1E-4EC5-92343DDA26C597F8.jpg?w=80&amp;h=80&amp;fit=crop"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/535070C6-0C1E-4EC5-92343DDA26C597F8.jpg?w=690&amp;h=460&amp;fit=crop"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/535070C6-0C1E-4EC5-92343DDA26C597F8.jpg?w=450&amp;h=300"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/535070C6-0C1E-4EC5-92343DDA26C597F8.jpg?w=590&amp;h=393&amp;fit=crop" alt="Low-Income Baltimore Blocks Host Bigger, More Dangerous Mosquitoes  "/></picture></a><div class="t_tag listing__thumb__category small-hide">Environment</div></div><h2 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/low-income-baltimore-blocks-host-bigger-more-dangerous-mosquitoes/">Low-Income Baltimore Blocks Host Bigger, More Dangerous Mosquitoes  </a></h2><p class="listing-feature__summary" style="display: none">Tiger mosquitoes thrive in abandoned urban buildings</p><p class="t_meta listing__meta">December 30, 2019  —  Melinda Wenner Moyer</p></article><p class="spotlight__related__cta t_meta"><a href="/web/20200107075754/https://www.scientificamerican.com/section/lateststories">View All Stories</a></p></div></section></div><section class="most-popular-outer container " data-tabs-id="jump-links" data-tabs-content="popular"><h2 class="hr-titles "><span>Most Popular</span></h2><div class="sticky-bounds"><div class="grid"><div class="grid__col large-up-2-3 most-popular"><div class="grid most-popular__grid"><div class="grid__col large-up-1 medium-1-2"><article class="listing-wide" data-listing-count="1" data-listing-template="Article_Popular" data-listing-title="Good News for Dogs with Cancer"><div class="listing-wide__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/good-news-for-dogs-with-cancer/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9B9F56BA-35DA-4F32-80EBE523AF0CB2B6_agenda.jpg?w=80&amp;h=80&amp;fit=crop"><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9B9F56BA-35DA-4F32-80EBE523AF0CB2B6_agenda.jpg?w=210&amp;h=140&amp;fit=crop"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/9B9F56BA-35DA-4F32-80EBE523AF0CB2B6_agenda.jpg?w=275&amp;h=183&amp;fit=crop" alt="Good News for Dogs with Cancer"></picture><div class="t_tag listing-wide__thumb__category ">Medicine</div></a></div><div class="listing-wide__inner"><h3 class="t_listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/good-news-for-dogs-with-cancer/">Good News for Dogs with Cancer</a></h3>	<p class="t_body listing-wide__inner__desc">New therapies for beloved pets are getting developed in hopes of treating humans as well</p><div class="t_meta">December 30, 2019  —  Amy Sutherland</div></div></article></div><div class="grid__col large-up-1 medium-1-2"><article class="listing-wide" data-listing-count="2" data-listing-template="PartnerArticle_Popular" data-listing-title="CRISPR Babies Scientist Sentenced to 3 Years in Prison"><div class="listing-wide__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/crispr-babies-scientist-sentenced-to-3-years-in-prison/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/87D76700-2B8C-4D71-9C8B8514CEEDDC10_agenda.jpg?w=80&amp;h=80&amp;fit=crop"><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/87D76700-2B8C-4D71-9C8B8514CEEDDC10_agenda.jpg?w=210&amp;h=140&amp;fit=crop"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/87D76700-2B8C-4D71-9C8B8514CEEDDC10_agenda.jpg?w=275&amp;h=183&amp;fit=crop" alt="CRISPR Babies Scientist Sentenced to 3 Years in Prison"></picture><div class="t_tag listing-wide__thumb__category ">Medicine</div></a></div><div class="listing-wide__inner"><h3 class="t_listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/crispr-babies-scientist-sentenced-to-3-years-in-prison/">CRISPR Babies Scientist Sentenced to 3 Years in Prison</a></h3>	<p class="t_body listing-wide__inner__desc"><font face="Calibri"><font>A Chinese Court jailed He Jiankui for an &ldquo;illegal medical practice&rdquo; in editing embryos&rsquo; DNA </font></font></p><div class="t_meta">December 30, 2019  —  Andrew Joseph and STAT</div></div></article></div><div class="grid__col large-up-1 medium-1-2"><article class="listing-wide" data-listing-count="3" data-listing-template="BlogPost_Popular" data-listing-title="Doctors and Suicide"><div class="listing-wide__thumb"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/doctors-and-suicide/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/B9DA5370-7DAF-4C85-A0BDC70AA64A99D2_agenda.jpg?w=80&amp;h=80&amp;fit=crop"><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/B9DA5370-7DAF-4C85-A0BDC70AA64A99D2_agenda.jpg?w=210&amp;h=140&amp;fit=crop"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/B9DA5370-7DAF-4C85-A0BDC70AA64A99D2_agenda.jpg?w=275&amp;h=183&amp;fit=crop" alt="Doctors and Suicide"></picture><div class="t_tag listing-wide__thumb__category ">Mental Health</div></a></div><div class="listing-wide__inner"><h3 class="t_listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/doctors-and-suicide/">Doctors and Suicide</a></h3>	<p class="t_body listing-wide__inner__desc">The rate among students, residents and physicians is significantly higher than average&mdash;but so-called wellness initiatives can help</p><div class="t_meta">December 31, 2019  —  Jeannie Aschkenasy | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></div></div></article></div><div class="grid__col large-up-1 medium-1-2"><article class="listing-wide" data-listing-count="4" data-listing-template="BlogPost_Popular" data-listing-title="Behind the Scenes of a Radical New Cancer Cure"><div class="listing-wide__thumb"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/behind-the-scenes-of-a-radical-new-cancer-cure/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/3E7817EF-5009-43BB-AC5A8AEEFE1812FB_agenda.jpg?w=80&amp;h=80&amp;fit=crop"><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/3E7817EF-5009-43BB-AC5A8AEEFE1812FB_agenda.jpg?w=210&amp;h=140&amp;fit=crop"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/3E7817EF-5009-43BB-AC5A8AEEFE1812FB_agenda.jpg?w=275&amp;h=183&amp;fit=crop" alt="Behind the Scenes of a Radical New Cancer Cure"></picture><div class="t_tag listing-wide__thumb__category ">Medicine</div></a></div><div class="listing-wide__inner"><h3 class="t_listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/behind-the-scenes-of-a-radical-new-cancer-cure/">Behind the Scenes of a Radical New Cancer Cure</a></h3>	<p class="t_body listing-wide__inner__desc">I&rsquo;ve now treated several patients with the new cancer gene therapy called CAR-T, but there&rsquo;s still a lot to learn</p><div class="t_meta">November 9, 2019  —  Ilana Yurkiewicz | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></div></div></article></div><div class="grid__col large-up-1 medium-1-2"><article class="listing-wide" data-listing-count="5" data-listing-template="BlogPost_Popular" data-listing-title="We Should Ban All Menthol-Flavored Nicotine Products"><div class="listing-wide__thumb"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/we-should-ban-all-menthol-flavored-nicotine-products/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2_agenda.jpg?w=80&amp;h=80&amp;fit=crop"><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2_agenda.jpg?w=210&amp;h=140&amp;fit=crop"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/blogs/cache/file/1C22B5D8-C587-4FD4-8E16EBA10C264CD2_agenda.jpg?w=275&amp;h=183&amp;fit=crop" alt="We Should Ban All Menthol-Flavored Nicotine Products"></picture><div class="t_tag listing-wide__thumb__category ">Public Health</div></a></div><div class="listing-wide__inner"><h3 class="t_listing-title"><a href="https://web.archive.org/web/20200107075754/https://blogs.scientificamerican.com/observations/we-should-ban-all-menthol-flavored-nicotine-products/">We Should Ban All Menthol-Flavored Nicotine Products</a></h3>	<p class="t_body listing-wide__inner__desc"><span style="background:white">It&rsquo;s not just for health: there&rsquo;s also a social justice issue</span></p><div class="t_meta">January 2, 2020  —  Phoenix A. Matthews | <a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/section/opinion/" class="opinion-label"> Opinion</a></div></div></article></div><div class="grid__col large-up-1 medium-1-2"><article class="listing-wide" data-listing-count="6" data-listing-template="PartnerArticle_Popular" data-listing-title="Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians"><div class="listing-wide__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/google-ai-tool-can-pinpoint-breast-cancer-better-than-clinicians/"><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A_agenda.jpg?w=80&amp;h=80&amp;fit=crop"><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A_agenda.jpg?w=210&amp;h=140&amp;fit=crop"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5CAC360-5D23-43A2-BDEBA87935E0468A_agenda.jpg?w=275&amp;h=183&amp;fit=crop" alt="Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians"></picture><div class="t_tag listing-wide__thumb__category ">Biotech</div></a></div><div class="listing-wide__inner"><h3 class="t_listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/article/google-ai-tool-can-pinpoint-breast-cancer-better-than-clinicians/">Google AI Tool Can Pinpoint Breast Cancer Better Than Clinicians</a></h3>	<p class="t_body listing-wide__inner__desc">The software detected cancers at higher rates than radiologists, with fewer false positives</p><div class="t_meta">January 2, 2020  —  Erin Brodwin and STAT</div></div></article></div></div></div><div class="grid__col large-up-1-3"><div class="most-popular__topics-ad"><div class="home-banner" data-behavior="sticky house_ad" data-top-offset="200" data-house-promo="/public/resources/newsletters-a4ee87b05a58358303e629295ea325ea.jpg"><figure class="banner banner-square square-ad"><div id="dfp-right-home"><div data-behavior="dfp" data-dfp-adname="right" data-dfp-positionname="MPU1" data-dfp-adcontainer="dfp-right-home"></div></div><figcaption class="aside-banner__label">Advertisement</figcaption></figure><div class="house__home_ad"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/newsletter-sign-up/?origincode=2019_sciam_adblockers_newsletter" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="SPNH" data-track-ecommerce-promo-name="Side Promotion Newsletter Home" data-track-ecommerce-promo-creative="aside-banner-home-page" data-track-ecommerce-promo-position="4"></a></div></div></div></div></div></div></section><aside class="tout_current-issue" data-listing-template="Topic" data-listing-type="Current Issue" data-issue-date="Dec 2019"><div class="tout_current-issue__inner container"><h2 class="t_current-issue-title">Current Issue <span class="icon icon__key--white icon--mid key-icon"></span></h2><div class="tout_current-issue__main container"><div class="tout_current-issue__volume"><div class="t_issue-label medium-down-hide">Dec 2019</div><div class="tout_current-issue__volume__cell medium-down-hide"><div class="t_issue-label">Issue</div><div class="t_issue-num tout_current-issue__volume__num">No 6</div></div><div class="tout_current-issue__volume__cell medium-down-hide"><div class="t_issue-label">Volume<br/>I</div></div></div><div class="tout_current-issue__cover"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/"><picture><source media="(min-width: 1024px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/24A99262-4660-487C-8102B5320A29EBA2_cover.jpg?w=340"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/24A99262-4660-487C-8102B5320A29EBA2_cover.jpg?w=340" alt="Scientific American Health &amp; Medicine, Volume 1, Issue 6"/></picture></a></div><div class="large-up-hide">Dec 2019</div><div class="tout_current-issue__content"><ul><li class="tout_current-issue__content__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/"><div class="t_small-listing-title"><span class="tout_current-issue__content__item__hellip">Rethinking Herd Immunity</span></div></a></li><li class="tout_current-issue__content__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/"><div class="t_small-listing-title"><span class="tout_current-issue__content__item__hellip">Stem Cells 2 Go</span></div></a></li><li class="tout_current-issue__content__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/"><div class="t_small-listing-title"><span class="tout_current-issue__content__item__hellip">As CBD Skyrockets in Popularity, Scientists Scramble to Understand How It's Metabolized</span></div></a></li><li class="tout_current-issue__content__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/"><div class="t_small-listing-title"><span class="tout_current-issue__content__item__hellip">Discovery of Molecular Switch for How Cells Use Oxygen Wins 2019 Nobel Prize in Medicine</span></div></a></li><li class="tout_current-issue__content__item"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/"><div class="t_small-listing-title"><span class="tout_current-issue__content__item__hellip">Why U.S. Officials Investigating Mysterious Vaping Deaths Are Focusing on Flavorings</span></div></a></li></ul></div></div><div class="tout_current-issue__button"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/magazine/health-medicine/2019/12-01/" class="btn btn--blue" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="HOSB" data-track-ecommerce-promo-name="Offer Subscribe Banner" data-track-ecommerce-promo-creative="middleBlueBanner" data-track-ecommerce-promo-position="2">Get the issue</a></div></div></aside><section class="container"><h2 class="hr-titles"><span>Special Report</span></h2><div class="tout-feature-outer" data-listing-title="Turning DNA into Drugs" data-listing-template="Topic" data-listing-type="featured-one-up"><picture><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/61CEF301-87AE-481F-BAF2BB7B17C87119_source.jpg?w=690&amp;h=400"/><source media="(min-width: 1024px) and (max-width: 1279px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/61CEF301-87AE-481F-BAF2BB7B17C87119_source.jpg?w=930&amp;h=375"/><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/61CEF301-87AE-481F-BAF2BB7B17C87119_source.jpg?w=280&amp;h=175"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/61CEF301-87AE-481F-BAF2BB7B17C87119_source.jpg?w=1220&amp;h=490" alt="Turning DNA into Drugs"/></picture><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/report/turning-dna-into-drugs/"><div class="tout-feature special-report"><div class="tout-feature__mid"><div class="tout-feature__inner"><h3 class="tout-feature__title">Turning DNA into Drugs</h3><p class="tout-feature__summary small-hide">Life&rsquo;s master molecule has been&nbsp;transformed into therapies that tackle&nbsp;the roots of human illness</p><div class="tout-feature__meta small-hide"></div></div></div></div></a></div></section><section class="container video-grid-outer"><h2 class="hr-titles"><span>Videos</span></h2><div class="grid"><div class="grid__col large-1-2 xlarge-1-2 medium-1-1"><article class="listing--media-feature" data-listing-type="video-landing" data-listing-count="1" data-listing-template="Topic" data-listing-title="An Auditory Expert Hopes to Replace Lost Hearing Cells"><div class="t_thumb listing-thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/an-auditory-expert-hopes-to-replace-lost-hearing-cells1/" class="icon-overlay"><span class="icon-overlay__icon icon__play--lg--white"></span><picture><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/1B805747-9317-4AEE-8A66CF4D23C7C219.jpeg?w=690&amp;h=380"><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/1B805747-9317-4AEE-8A66CF4D23C7C219_agenda.jpeg?w=450&amp;h=253"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/1B805747-9317-4AEE-8A66CF4D23C7C219_agenda.jpeg?w=450&amp;h=253" alt="An Auditory Expert Hopes to Replace Lost Hearing Cells"></picture><div class="t_tag listing-thumb__category">Medicine</div></a><div class="t_meta t_meta--time">4:02</div></div><h3 class="t_feature-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/an-auditory-expert-hopes-to-replace-lost-hearing-cells1/"><span class="underline">An Auditory Expert Hopes to Replace Lost Hearing Cells</span></a></h3><p class="t_body">A. James Hudspeth, winner of the 2018 Kavli&nbsp;Prize in Neuroscience, spoke with&nbsp; Scientific American editor emerita&nbsp;Mariette DiChristina about his efforts to regenerate lost or damaged inner-ear cells that make hearing possible...</p><p class="t_meta">6 hours ago</p></article></div><div class="grid__col large-1-2 xlarge-1-2 medium-1-1"><div class="grid"><div class="grid__col xlarge-1-2 large-1-2 medium-1-2"><article class="listing--media listing--with-thumb video-item " data-listing-type="video-landing" data-listing-count="2" data-listing-template="Topic" data-listing-title="Blood, Rats and Anticoagulants: The Story of Warfarin"><div class="t_tag medium-up-hide">Medicine</div><div class="t_thumb listing--media__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/blood-rats-and-anticoagulants-the-story-of-warfarin/" class="icon-overlay"><span class="icon-overlay__icon icon__play--md--white"></span><span class="icon-overlay__icon icon__play--sm--white"></span><picture><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/3BB70E10-DA24-4DA2-8381887DE2469590_agenda.jpg?w=330&amp;h=186"/><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/3BB70E10-DA24-4DA2-8381887DE2469590_agenda.jpg?w=80&amp;h=45"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/3BB70E10-DA24-4DA2-8381887DE2469590_agenda.jpg?w=275&amp;h=154" alt="Blood, Rats and Anticoagulants: The Story of Warfarin"/></picture><div class="t_tag listing--media__thumb__category small-hide">Medicine</div></a><div class="t_meta t_meta--time">2:55</div></div><h3 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/blood-rats-and-anticoagulants-the-story-of-warfarin/"><span class="underline">Blood, Rats and Anticoagulants: The Story of Warfarin</span></a></h3><p class="t_meta listing--media__meta">March 16, 2018</p></article></div><div class="grid__col xlarge-1-2 large-1-2 medium-1-2"><article class="listing--media listing--with-thumb video-item " data-listing-type="video-landing" data-listing-count="3" data-listing-template="Topic" data-listing-title="What Is a Skin Allergy?"><div class="t_tag medium-up-hide">The Body</div><div class="t_thumb listing--media__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/what-is-a-skin-allergy/" class="icon-overlay"><span class="icon-overlay__icon icon__play--md--white"></span><span class="icon-overlay__icon icon__play--sm--white"></span><picture><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/FDA0A8CD-6DB3-4764-9BD1BE9D757C0AFC_agenda.jpg?w=330&amp;h=186"/><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/FDA0A8CD-6DB3-4764-9BD1BE9D757C0AFC_agenda.jpg?w=80&amp;h=45"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/FDA0A8CD-6DB3-4764-9BD1BE9D757C0AFC_agenda.jpg?w=275&amp;h=154" alt="What Is a Skin Allergy?"/></picture><div class="t_tag listing--media__thumb__category small-hide">The Body</div></a><div class="t_meta t_meta--time">2:22</div></div><h3 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/what-is-a-skin-allergy/"><span class="underline">What Is a Skin Allergy?</span></a></h3><p class="t_meta listing--media__meta">August 28, 2017</p></article></div><div class="grid__col xlarge-1-2 large-1-2 medium-1-2"><article class="listing--media listing--with-thumb video-item video-item--with-border" data-listing-type="video-landing" data-listing-count="4" data-listing-template="Topic" data-listing-title="Why Do Allergies Make You Sneeze?"><div class="t_tag medium-up-hide">The Body</div><div class="t_thumb listing--media__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/why-do-allergies-make-you-sneeze/" class="icon-overlay"><span class="icon-overlay__icon icon__play--md--white"></span><span class="icon-overlay__icon icon__play--sm--white"></span><picture><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/54B03948-E3F1-475B-882DB044FC320F73_agenda.jpg?w=330&amp;h=186"/><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/54B03948-E3F1-475B-882DB044FC320F73_agenda.jpg?w=80&amp;h=45"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/54B03948-E3F1-475B-882DB044FC320F73_agenda.jpg?w=275&amp;h=154" alt="Why Do Allergies Make You Sneeze?"/></picture><div class="t_tag listing--media__thumb__category small-hide">The Body</div></a><div class="t_meta t_meta--time">3:28</div></div><h3 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/why-do-allergies-make-you-sneeze/"><span class="underline">Why Do Allergies Make You Sneeze?</span></a></h3><p class="t_meta listing--media__meta">June 12, 2017</p></article></div><div class="grid__col xlarge-1-2 large-1-2 medium-1-2"><article class="listing--media listing--with-thumb video-item video-item--with-border" data-listing-type="video-landing" data-listing-count="5" data-listing-template="Topic" data-listing-title="Indoor Plants Can Clean Your Air"><div class="t_tag medium-up-hide">Public Health</div><div class="t_thumb listing--media__thumb"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/indoor-plants-can-clean-your-air/" class="icon-overlay"><span class="icon-overlay__icon icon__play--md--white"></span><span class="icon-overlay__icon icon__play--sm--white"></span><picture><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D3AFAAF3-0050-4B80-9C661FED0448FD51_agenda.jpg?w=330&amp;h=186"/><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D3AFAAF3-0050-4B80-9C661FED0448FD51_agenda.jpg?w=80&amp;h=45"/><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D3AFAAF3-0050-4B80-9C661FED0448FD51_agenda.jpg?w=275&amp;h=154" alt="Indoor Plants Can Clean Your Air"/></picture><div class="t_tag listing--media__thumb__category small-hide">Public Health</div></a><div class="t_meta t_meta--time">2:14</div></div><h3 class="t_small-listing-title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/video/indoor-plants-can-clean-your-air/"><span class="underline">Indoor Plants Can Clean Your Air</span></a></h3><p class="t_meta listing--media__meta">December 27, 2016</p></article></div></div></div></div></section><div class="banner container banner-leaderboard"><div id="dfp-middle-5"><div data-behavior="dfp" data-dfp-adname="middle" data-dfp-positionname="" data-dfp-adcontainer="dfp-middle-5"></div></div></div><div class="podcasts container"><h2 class="hr-titles"><span>Podcasts</span></h2><div class="podcasts-header" data-podcast-type="featured-podcast" data-template-type="Topic" data-podcast-title="Flaky Scalps Have a Unique Fungal Microbiome"><div class="podcasts-header__icon small-hide"><img src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/484FA146-8892-477F-B38D18775563CC9E_small.jpg" alt="Flaky Scalps Have a Unique Fungal Microbiome"></div><div class="t_tag podcasts-header__tag">60-Second Science</div><h3 class="t_feature-title podcasts-header__title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/flaky-scalps-have-a-unique-fungal-microbiome/">Flaky Scalps Have a Unique Fungal Microbiome</a></h3><br/><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/flaky-scalps-have-a-unique-fungal-microbiome/#transcripts-body" class="t_meta underlined_text t_small" aria-label="Flaky Scalps Have a Unique Fungal Microbiome transcript">Full Transcript</a></div><div class="podcasts-media podcasts__media" data-podcast-type="featured-podcast" data-template-type="Topic" data-podcast-title="Flaky Scalps Have a Unique Fungal Microbiome"><div class="player player-audio" data-behavior="plyr"><audio controls preload="none"><source src="https://web.archive.org/web/20200107075754im_/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=2E2D38CA-A647-42B0-9EF541ABFFD57EAE" type="audio/mp3"><a href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=2E2D38CA-A647-42B0-9EF541ABFFD57EAE">Download</a></audio></div><a href="#" class="podcast-download" data-behavior="info_tooltip" data-tooltip-id="podcast-feature-download"><span class="icon icon__download--black icon--subtle"></span></a><div id="podcast-feature-download" class="info-tooltip info-tooltip--small">Download MP3<span class="info-tooltip__arrow"></span></div></div><div class="podcasts__main podcasts__main--snip"><div class="grid__col large-1-2 xlarge-1-2 medium-1-2 small-no-pad" data-podcast-type="gridded-podcast" data-template-type="Topic" data-podcast-title="Rain Forest Dwellers and Urbanites Have Consistently Different Microbiomes" data-podcast-count="2"><section data-behavior="plyr_switch" class="podcasts-listing podcasts-listing--recent tooltip-outer"><div class="podcasts-listing__download"><a data-behavior="info_tooltip" data-tooltip-bounds-id="podcast-group" data-tooltip-id="podcast-rain-forest-dwellers-and-urbanites-have-consistently-different-microbiomes" href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=25E1D807-030E-4021-8E0B7251C71176B4"><span class="icon icon__download--black icon--subtle"></span></a></div><div class="podcasts-listing__control" data-plyr-switch-play-toggle><span class="icon"></span></div><div class="podcasts-listing__main"><h3 class="podcasts-listing__title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/rain-forest-dwellers-and-urbanites-have-consistently-different-microbiomes/"><span class="underline">Rain Forest Dwellers and Urbanites Have Consistently Different Microbiomes</span></a></h3><div class="t_meta podcasts-listing__meta"><span>60-Second Science - December 4, 2019 - By Eliene Augenbraun</span><span class="podcasts-listing__meta__time">02:34</span></div><br/><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/rain-forest-dwellers-and-urbanites-have-consistently-different-microbiomes/#transcripts-body" class="t_meta underlined_text t_small" aria-label="Rain Forest Dwellers and Urbanites Have Consistently Different Microbiomes transcript">Full Transcript</a><div class="podcasts-listing__player player player-audio player-audio-inline" data-plyr-switch-player data-behavior="plyr"><audio controls preload="none"><!-- Audio files --><source src="https://web.archive.org/web/20200107075754im_/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=25E1D807-030E-4021-8E0B7251C71176B4" type="audio/mp3"><!-- Fallback for browsers that don't support the <audio> element --><a href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=25E1D807-030E-4021-8E0B7251C71176B4">Download</a></audio></div></div><div id="podcast-rain-forest-dwellers-and-urbanites-have-consistently-different-microbiomes" class="info-tooltip info-tooltip--small">Download MP3 <span class="info-tooltip__arrow"></span></div></section></div><div class="grid__col large-1-2 xlarge-1-2 medium-1-2 small-no-pad" data-podcast-type="gridded-podcast" data-template-type="Topic" data-podcast-title="Ick Factor Is High Hurdle for Recycled Drinking Water" data-podcast-count="3"><section data-behavior="plyr_switch" class="podcasts-listing podcasts-listing--recent tooltip-outer"><div class="podcasts-listing__download"><a data-behavior="info_tooltip" data-tooltip-bounds-id="podcast-group" data-tooltip-id="podcast-ick-factor-is-high-hurdle-for-recycled-drinking-water" href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=F4B12E31-7774-4508-985DE890478C3EAC"><span class="icon icon__download--black icon--subtle"></span></a></div><div class="podcasts-listing__control" data-plyr-switch-play-toggle><span class="icon"></span></div><div class="podcasts-listing__main"><h3 class="podcasts-listing__title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/ick-factor-is-high-hurdle-for-recycled-drinking-water/"><span class="underline">Ick Factor Is High Hurdle for Recycled Drinking Water</span></a></h3><div class="t_meta podcasts-listing__meta"><span>60-Second Science - November 24, 2019 - By Susanne Bard</span><span class="podcasts-listing__meta__time">02:56</span></div><br/><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/ick-factor-is-high-hurdle-for-recycled-drinking-water/#transcripts-body" class="t_meta underlined_text t_small" aria-label="Ick Factor Is High Hurdle for Recycled Drinking Water transcript">Full Transcript</a><div class="podcasts-listing__player player player-audio player-audio-inline" data-plyr-switch-player data-behavior="plyr"><audio controls preload="none"><!-- Audio files --><source src="https://web.archive.org/web/20200107075754im_/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=F4B12E31-7774-4508-985DE890478C3EAC" type="audio/mp3"><!-- Fallback for browsers that don't support the <audio> element --><a href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=F4B12E31-7774-4508-985DE890478C3EAC">Download</a></audio></div></div><div id="podcast-ick-factor-is-high-hurdle-for-recycled-drinking-water" class="info-tooltip info-tooltip--small">Download MP3 <span class="info-tooltip__arrow"></span></div></section></div><div class="grid__col large-1-2 xlarge-1-2 medium-1-2 small-no-pad" data-podcast-type="gridded-podcast" data-template-type="Topic" data-podcast-title="Air Pollution: An Unclear and Present Danger" data-podcast-count="4"><section data-behavior="plyr_switch" class="podcasts-listing podcasts-listing--recent tooltip-outer"><div class="podcasts-listing__download"><a data-behavior="info_tooltip" data-tooltip-bounds-id="podcast-group" data-tooltip-id="podcast-air-pollution-an-unclear-and-present-danger" href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=6EB10933-60BF-472F-A80B2C7E6A462AC9"><span class="icon icon__download--black icon--subtle"></span></a></div><div class="podcasts-listing__control" data-plyr-switch-play-toggle><span class="icon"></span></div><div class="podcasts-listing__main"><h3 class="podcasts-listing__title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/air-pollution-an-unclear-and-present-danger/"><span class="underline">Air Pollution: An Unclear and Present Danger</span></a></h3><div class="t_meta podcasts-listing__meta"><span>Science Talk - November 21, 2019 - By Steve Mirsky</span><span class="podcasts-listing__meta__time">37:15</span></div><br/><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/air-pollution-an-unclear-and-present-danger/#transcripts-body" class="t_meta underlined_text t_small" aria-label="Air Pollution: An Unclear and Present Danger transcript">Full Transcript</a><div class="podcasts-listing__player player player-audio player-audio-inline" data-plyr-switch-player data-behavior="plyr"><audio controls preload="none"><!-- Audio files --><source src="https://web.archive.org/web/20200107075754im_/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=6EB10933-60BF-472F-A80B2C7E6A462AC9" type="audio/mp3"><!-- Fallback for browsers that don't support the <audio> element --><a href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=6EB10933-60BF-472F-A80B2C7E6A462AC9">Download</a></audio></div></div><div id="podcast-air-pollution-an-unclear-and-present-danger" class="info-tooltip info-tooltip--small">Download MP3 <span class="info-tooltip__arrow"></span></div></section></div><div class="grid__col large-1-2 xlarge-1-2 medium-1-2 small-no-pad" data-podcast-type="gridded-podcast" data-template-type="Topic" data-podcast-title="Aversion to Broccoli May Have Genetic Roots" data-podcast-count="5"><section data-behavior="plyr_switch" class="podcasts-listing podcasts-listing--recent tooltip-outer"><div class="podcasts-listing__download"><a data-behavior="info_tooltip" data-tooltip-bounds-id="podcast-group" data-tooltip-id="podcast-aversion-to-broccoli-may-have-genetic-roots" href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=46E29762-AA47-4265-88AB1EF86BAD1DD3"><span class="icon icon__download--black icon--subtle"></span></a></div><div class="podcasts-listing__control" data-plyr-switch-play-toggle><span class="icon"></span></div><div class="podcasts-listing__main"><h3 class="podcasts-listing__title"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/aversion-to-broccoli-may-have-genetic-roots/"><span class="underline">Aversion to Broccoli May Have Genetic Roots</span></a></h3><div class="t_meta podcasts-listing__meta"><span>60-Second Science - November 12, 2019 - By Christopher Intagliata</span><span class="podcasts-listing__meta__time">01:57</span></div><br/><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/podcast/episode/aversion-to-broccoli-may-have-genetic-roots/#transcripts-body" class="t_meta underlined_text t_small" aria-label="Aversion to Broccoli May Have Genetic Roots transcript">Full Transcript</a><div class="podcasts-listing__player player player-audio player-audio-inline" data-plyr-switch-player data-behavior="plyr"><audio controls preload="none"><!-- Audio files --><source src="https://web.archive.org/web/20200107075754im_/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=46E29762-AA47-4265-88AB1EF86BAD1DD3" type="audio/mp3"><!-- Fallback for browsers that don't support the <audio> element --><a href="https://web.archive.org/web/20200107075754/https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=46E29762-AA47-4265-88AB1EF86BAD1DD3">Download</a></audio></div></div><div id="podcast-aversion-to-broccoli-may-have-genetic-roots" class="info-tooltip info-tooltip--small">Download MP3 <span class="info-tooltip__arrow"></span></div></section></div></div><div class="podcasts__btn" data-podcast-type="more-podcasts" data-template-type="Topic"><a href="/web/20200107075754/https://www.scientificamerican.com/podcasts/" class="btn btn--inverted">More Podcasts</a></div></div><aside class="tout_subscribe container"><h2 class="tout_subscribe-title">Expertise. Insights. Illumination.</h2><p class="small-hide">Discover world-changing science. Explore our digital archive back to 1845, including articles by more than 150 Nobel Prize winners.</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="btn editable-button white" data-track-ecommerce="promo_click" data-track-ecommerce-promo-id="HNFSB" data-track-ecommerce-promo-name="Navigation Footer Subscribe Banner" data-track-ecommerce-promo-creative="footerBlueBanner" data-track-ecommerce-promo-position="3">Subscribe Now!</a><picture><source media="(max-width: 767px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D3A9EF6F-F20D-4025-8EC3A1254468C14D_source.png?w=220&amp;h=100"/><source media="(min-width: 768px) and (max-width: 1023px)" srcset="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D3A9EF6F-F20D-4025-8EC3A1254468C14D_source.png?w=420&amp;h=190"/><img aria-hidden="true" src="https://web.archive.org/web/20200107075754im_/https://static.scientificamerican.com/sciam/cache/file/D5AF5187-56F7-4844-9937BFECE4B78D53_source.png?w=385&amp;h=375" alt="Expertise. Insights. Illumination."/></picture></aside></main></div></div><footer id="footer" class="container"><p>Follow us</p><ul class="footer_followUs">			<li class=""><a href="https://web.archive.org/web/20200107075754/https://www.instagram.com/scientific_american/?hl=en" title="instagram" target="_blank" rel="noopener"><span class="icon icon--mid icon__instagram--black">instagram</span></a></li>			<li class="hide"><a href="" title="soundcloud" target="_blank" rel="noopener"><span class="icon icon--mid icon__soundcloud--black">soundcloud</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/https://www.youtube.com/user/SciAmerican" title="youtube" target="_blank" rel="noopener"><span class="icon icon--mid icon__youtube--black">youtube</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/https://twitter.com/sciam" title="twitter" target="_blank" rel="noopener"><span class="icon icon--mid icon__twitter--black">twitter</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/https://www.facebook.com/ScientificAmerican" title="facebook" target="_blank" rel="noopener"><span class="icon icon--mid icon__facebook--black">facebook</span></a></li>			<li class=""><a href="https://web.archive.org/web/20200107075754/http://rss.sciam.com/ScientificAmerican-Global" title="rss" target="_blank" rel="noopener"><span class="icon icon--mid icon__rss--black">rss</span></a></li></ul><div class="footer_arabic"><p>Scientific american arabic</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/arabic/">العربية</a></div><div class="panel"><div class="grid"><div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/">Store</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/about-scientific-american/">About</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/pressroom/">Press Room</a></li>
+	</ul>
+</div>
 
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2112.08352
-  </div>
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/frequently-asked-questions/">FAQs</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/contact-us/">Contact Us</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/sitemap">Site Map</a></li>
+	</ul>
+</div>
 
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/mediakit/">Advertise</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://partnerships.nature.com/product/nature-research-custom-media/">SA Custom Media</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/terms-of-use/">Terms of Use</a></li>
+	</ul>
+</div>
 
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
+<div class="grid__col small-first-col">
+	<ul class="footer-links">
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/privacy-policy/">Privacy Policy</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/use-of-cookies/">Use of Cookies</a></li>
+		<li class="footer-links__item t_meta"><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/page/international/">International Editions</a></li>
+	</ul>
+</div></div></div><div class="panel"><div class="tx_meta footer_disclosure">Scientific American is part of Springer Nature, which owns or has commercial relations with thousands of scientific publications (many of them can be found at <a href="https://web.archive.org/web/20200107075754/http://www.springernature.com/us" target="_blank" rel="noopener">www.springernature.com/us</a>). Scientific American maintains a strict policy of editorial independence in reporting developments in science to our readers.</div><p class="footer-copyright">&copy; 2020 Scientific American, a Division of Springer Nature America, Inc.</p><p class="footer-copyright">All Rights Reserved.</p></div></footer><a role="link" arial-label="Scroll to top" class="scrolltop" href="#sa_body">Scroll To Top</a>		<script async src="https://web.archive.org/web/20200107075754js_/https://cdn.cookielaw.org/consent/e6551f00-e840-41c1-862f-dd92bad8bf86.js"></script><script>var A17 = window.A17 || {};var dfp	= window.dfp || {};A17.svgSupport = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");A17.browserSpec = (typeof document.querySelectorAll && 'addEventListener' in window && A17.svgSupport) ? "html5" : "html4";var element = document.createElement('x');element.style.cssText = 'pointer-events:auto';(function(){var doc = document.documentElement;var str = " js "+(A17.svgSupport ? " svg" : " no-svg") + (element.style.pointerEvents === 'auto' ? " csspointerevents" : " no-csspointerevents");doc.className = doc.className.replace(/\bno-js\b/,str);})();</script><script src="https://web.archive.org/web/20200107075754js_/https://cdnjs.cloudflare.com/ajax/libs/airbrake-js/1.0.7/client.min.js" crossorigin="anonymous"></script><script type="text/javascript">var airbrake = new airbrakeJs.Client({projectId: 177290,projectKey: 'fde133a285fff2da6ad65f7c374e0d6e'});airbrake.addFilter(function (notice) {notice.context.environment = 'production';return notice;});</script><script src="/web/20200107075754js_/https://www.scientificamerican.com/public/resources/main-277aa3774600bee68b3df7b760171881.js"></script>
+<script>
+(function() {
+		
+		var DFP_id = dfp.adUnit;
+		// For testing
+		//var DFP_id = "/7814368/NativeAdUnit";
 
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
+		var compiledTemplateHomePopular = "";
+		var compiledTemplateHomeLatest = "";
+		var compiledTemplateHomeAgenda = "";
+		var compiledTemplateTagLatest = "";
+		var compiledTemplateArticleLatest = "";
+		var compiledTemplateVideoLatest = "";
 
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2112.08352"
-        dc:identifier="/abs/2112.08352"
-        dc:title="Textless Speech-to-Speech Translation on Real Data"
-        trackback:ping="/trackback/2112.08352" />
-    </rdf:RDF>
+		templates();
+
+		window.NATIVEADS = window.NATIVEADS || {};
+		window.NATIVEADS_QUEUE = window.NATIVEADS_QUEUE || [];
+
+		var q = function() {
+			return window.NATIVEADS_QUEUE;
+		};
+
+		q().push(["setPropertyID", "NA-SCIEAMERLIVE-11237933"]);
+
+		switch (mura.subtype) {
+			case 'Home':
+				
+					q().push(["insertPreview", {
+						label: "HomeLatest",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-latest3')
+						},
+						location: "#latest-news > article.listing:eq(2)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeLatest,
+						onRender: function($element) {
+							var parent = document.getElementById('latest-news');
+							var lastChild = parent.children[5];
+							parent.removeChild(lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+				
+					q().push(["insertPreview", {
+						label: "HomeAgenda",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-agenda4')
+						},
+						location: "#agenda-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeAgenda,
+						onRender: function($element) {
+							var parent = document.getElementById('agenda-latest');
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+			case 'Topic':
+
+				
+					q().push(["insertPreview", {
+						label: "TopicAgenda",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-category')
+						},
+						location: "#agenda-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateHomeAgenda,
+						onRender: function($element) {
+							var parent = document.getElementById('agenda-latest');
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+
+				
+					q().push(["insertPreview", {
+						label: "HomePopular",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-popular3')
+						},
+						location: ".most-popular__grid > div.grid__col:eq(2)",
+						template: compiledTemplateHomePopular,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('most-popular')[0];
+							var parentBody = parent.children[0];
+							parentBody.removeChild(parentBody.lastChild);
+
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) {}
+					}]);
+				
+
+			break;
+
+
+			case 'Section':
+				
+					q().push(["insertPreview", {
+						label: "TagLatest",
+							unit: {
+								"server": "dfp",
+								"id": DFP_id,
+								"size": "2x2",
+								"targets": renderTagerting('n-tag3')
+							},
+						location: "div.section-latest > article:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateTagLatest,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('section-latest')[0];
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+
+			case 'Video':
+			case 'VideoSeries':
+				
+					q().push(["insertPreview", {
+						label: "VideoLatest",
+							unit: {
+								"server": "dfp",
+								"id": DFP_id,
+								"size": "2x2",
+								"targets": renderTagerting('n-video')
+							},
+						location: "div.recent-videos-group > div:nth-child(3)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateVideoLatest,
+						onRender: function($element) {
+							var parent = document.getElementsByClassName('recent-videos-group')[0];
+							parent.removeChild(parent.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+
+			case 'Article':
+			case 'PrintArticle':
+			case 'PartnerArticle':
+			case 'BlogPost':
+				
+					q().push(["insertPreview", {
+						label: "ArticleLatest",
+						unit: {
+							"server": "dfp",
+							"id": DFP_id,
+							"size": "2x2",
+							"targets": renderTagerting('n-article')
+						},
+						location: "#read-next > div.aside-block__body > div.related-article-group > div:nth-child(1)",
+						infoText: "",
+						infoButtonText: "",
+						template: compiledTemplateArticleLatest,
+						onRender: function($element) {
+							var parent = document.getElementById('read-next');
+							var parentBody = parent.children[1].children[0];
+							parentBody.removeChild(parentBody.lastChild);
+						},
+						onFill: function(data) {
+							getFormattedDate(data);
+						},
+						onError: function(error) { }
+					}]);
+				
+			break;
+		}
+
+		function templates () {
+
+
+
+		compiledTemplateHomePopular = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "\n<div class=\"grid__col large-up-1 medium-1-2\">\n <article class=\"listing-wide\" data-listing-template=\"Home_Popular\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"listing-wide__thumb\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (80) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (210), 'height': (140) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (275), 'height': (183) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor " + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n </a>\n </div>\n <div class=\"listing-wide__inner\">\n <h3 class=\"t_listing-title\">\n <a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a>\n </h3>\n <p class=\"t_body listing-wide__inner__desc\">\n "; if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.summary; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\n </p>\n <div class=\"t_meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</div>\n <div class=\"listing-wide__inner__small-sponsor\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n </div>\n </article>\n</div>"; return buffer; };
+
+		compiledTemplateHomeLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<article class=\"listing listing--with-thumb \" data-listing-count=\"6\" data-listing-template=\"Home\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"t_tag medium-up-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n <div class=\"t_tag small-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n <div class=\"t_thumb listing__thumb \">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (280), 'height': (187) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (690), 'height': (460) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 1024px) and (max-width: 1279px)\" srcset=\""; options = {hash:{ 'width': (450), 'height': (300) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (590), 'height': (393) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n </a>\n </div>\n <h2 class=\"t_small-listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h2>\n <p class=\"t_meta listing__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n</article>"; return buffer; };
+
+		compiledTemplateTagLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "\n<article class=\"listing-wide\" data-listing-template=\"Section\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"listing-wide__thumb\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (80) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (210), 'height': (140) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (275), 'height': (183) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">\n </picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor " + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </a>\n </div>\n <div class=\"listing-wide__inner\">\n <h2 class=\"t_listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h2>\n <p class=\"t_body listing-wide__inner__desc\">\n "; if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.summary; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\n </p>\n <div class=\"t_meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</div>\n <div class=\"listing-wide__inner__small-sponsor\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </div>\n</article>"; return buffer; };
+
+		compiledTemplateHomeAgenda = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<article class=\"listing listing--with-thumb \" data-listing-count=\"4\" data-listing-template=\"Home\" data-listing-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <div class=\"t_tag medium-up-hide\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n <div class=\"t_thumb listing__thumb \">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <picture>\n <source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (280), 'height': (187) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (690), 'height': (460) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <source media=\"(min-width: 1024px) and (max-width: 1279px)\" srcset=\""; options = {hash:{ 'width': (450), 'height': (300) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\">\n <img src=\""; options = {hash:{ 'width': (590), 'height': (393) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture>\n <div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor "+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.AdType)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n </a>\n </div>\n <h2 class=\"t_small-listing-title\">\n <a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a>\n </h2>\n <p class=\"t_meta listing__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n</article>"; return buffer; };
+
+		compiledTemplateArticleLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<div class=\"related-article-group__item\">\n <a href=\""; if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\">\n <section class=\"related-article\">\n <div class=\"related-article__body\">\n <div class=\"t_tag related-article__thumb__category\">"+ escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +"</div>\n <h3 class=\"t_small-listing-title\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</h3>\n <p class=\"related-article__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n </div>\n </section>\n </a>\n</div>"; return buffer; };
+
+		compiledTemplateVideoLatest = function (Handlebars,depth0,helpers,partials,data) { this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {}; var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;function program1(depth0,data) { var buffer = "", stack1; buffer += "— " + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)); return buffer; } buffer += "<div class=\"grid__col large-1-2 xlarge-1-4 medium-1-2 recent-videos-group__item\">\n	<article class=\"listing--media listing--with-thumb\" data-video-title=\""; if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); } else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; } buffer += escapeExpression(stack1) + "\" data-video-template=\"related-videos\">\n		<div class=\"t_tag medium-up-hide\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n		<div class=\"t_thumb listing--media__thumb\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\" class=\"icon-overlay\"><span class=\"icon-overlay__icon icon__play--md--white\"></span><span class=\"icon-overlay__icon icon__play--sm--white\"></span><picture><source media=\"(min-width: 768px) and (max-width: 1023px)\" srcset=\""; options = {hash:{ 'width': (330), 'height': (186) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\"><source media=\"(max-width: 767px)\" srcset=\""; options = {hash:{ 'width': (80), 'height': (45) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\"><img src=\""; options = {hash:{ 'width': (275), 'height': (155) },data:data}; buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" alt=\""; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\"></picture><div class=\"listing-wide__thumb__category listing-wide__thumb__sponsor \">" + escapeExpression(((stack1 = ((stack1 = depth0.custom),stack1 == null || stack1 === false ? stack1 : stack1.Eyebrow)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div></a>\n		</div>\n		<h3 class=\"t_small-listing-title\"><a href=\""; if (stack2 = helpers.link) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.link; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "\">"; if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + "</a></h3>\n		<p class=\"t_meta listing--media__meta\">"; if (stack2 = helpers.pubDate) { stack2 = stack2.call(depth0, {hash:{},data:data}); } else { stack2 = depth0.pubDate; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; } buffer += escapeExpression(stack2) + " "; stack2 = helpers['if'].call(depth0, ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}); if(stack2 || stack2 === 0) { buffer += stack2; } buffer += "</p>\n	</article>\n</div>"; return buffer; };
+	}
+
+	function getFormattedDate(data) {
+		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		var d = new Date(data.pubDate);
+		data.pubDate = monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+
+		if (data.custom.AdType == 'Product'){
+			data.custom.AdType = "sponsor--blue";
+		}
+		else {
+			data.custom.AdType = "";
+		}
+
+		return data;
+	}
+
+})();
+
+(function(d, s, id) {
+ var js, fjs = d.getElementsByTagName(s)[0], p = d.location.protocol;
+ if (d.getElementById(id)) {return;}
+ js = d.createElement(s);
+ js.id = id; js.type = "text/javascript"; js.async = true;
+ js.src = ((p == "https:") ? p : "http:") + "//web.archive.org/web/20200107075754/https://plugin.mediavoice.com/plugin.js";
+ fjs.parentNode.insertBefore(js, fjs);
+})(document, "script", "nativeads-plugin");
+
+
+
+function renderTagerting(pos) {
+	var polarTargeting = JSON.parse(JSON.stringify(dfp.targeting));
+	var ppos = [];
+	if (pos !== 'undefined') {
+		ppos = [pos];
+	}
+
+	polarTargeting['pos'] = ppos;
+	return polarTargeting;
+}
+</script>
+<noscript><div><img src="//web.archive.org/web/20200107075754im_/https://secure-us.imrworldwide.com/cgi-bin/m?ci=us-403331h&amp;cg=0&amp;cc=1&amp;ts=noscript" width="1" height="1" alt=""/></div></noscript><div class="spw"><section class="spw__banner" data-toggle="spw__banner"><div class="container"><div class="banner__header"><p><strong>You have <span id="spw-article-count"></span> free article<span id="article-count-plural">s</span> left.</strong></p><div class="banner__btn--toggle"><label id="spw-toggle-label" for="expand/collapse" data-toggle-label="Hide"><strong></strong></label><button name="expand/collapse" aria-label="expand/collapse Metered Paywall" aria-expanded="false"><span class="icon icon__uparr--black"></span></button></div></div><div class="full-divider"></div><div class="banner__cta flex-container-row--nowrap-center"><picture><source srcset="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/paywall_temp_img-098a5039687a6951d2abc22803855180.jpg"><img src="/web/20200107075754im_/https://www.scientificamerican.com/public/resources/paywall_temp_img-098a5039687a6951d2abc22803855180.jpg" alt="Temp Paywall Img"></picture><div class="flex-container-column"><p class="banner__message">Support our award-winning coverage of advances in science &amp; technology.</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="a-btn" id="spw-subscription-options" role="link" title="Subscription Options" aria-label="See Subscription Options" data-track="click" data-track-category="meter-paywall"><button class="btn btn--small btn--cart" name="Subscription Options" role="link" aria-label="See Subscription Options">See Subscription Options</button></a><p>Already a subscriber? <a id="spw-signin-link" href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/?s=1" data-track="click" data-track-category="meter-paywall">Sign in.</a></p></div></div></div></section><section class="spw__modal"><div class="modal__header"><div class="icon icon__logo--lg"></div></div><div class="modal__cta"><div class="flex-container-column--center"><p class="modal__message">Subscribers get more award-winning coverage of advances in science &amp; technology.</p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/my-account/login/?s=1" class="a-btn" role="link" title="Sign In" aria-label="Sign In" data-track="click" data-track-action="metered-paywall-overlay-signin-link" data-track-label="metered-paywall-overlay-signin" data-track-category="meter-paywall"><button class="btn btn--small btn--cart" name="sign in" aria-label="Sign In">Sign In</button></a><p><a href="https://web.archive.org/web/20200107075754/https://www.scientificamerican.com/store/subscribe/scientific-american-magazine/" class="dark-text" role="link" title="Subscription Options" aria-label="See Subscription Options" data-track="click" data-track-action="metered-paywall-overlay-see-subscription-options-button" data-track-label="metered-paywall-overlay-subscription-options" data-track-category="meter-paywall">See Subscription Options</a></p></div></div></section></div></body></html><!--
+     FILE ARCHIVED ON 07:57:54 Jan 07, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:14:00 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
 -->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computation and Language</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2112.08352</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 15 Dec 2021]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>Textless Speech-to-Speech Translation on Real Data</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Lee%2C+A">Ann Lee</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Gong%2C+H">Hongyu Gong</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Duquenne%2C+P">Paul-Ambroise Duquenne</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Schwenk%2C+H">Holger Schwenk</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Chen%2C+P">Peng-Jen Chen</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Wang%2C+C">Changhan Wang</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Popuri%2C+S">Sravya Popuri</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Pino%2C+J">Juan Pino</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Gu%2C+J">Jiatao Gu</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Hsu%2C+W">Wei-Ning Hsu</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2112.08352">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  We present a textless speech-to-speech translation (S2ST) system that can
-translate speech from one language into another language and can be built
-without the need of any text data. Different from existing work in the
-literature, we tackle the challenge in modeling multi-speaker target speech and
-train the systems with real-world S2ST data. The key to our approach is a
-self-supervised unit-based speech normalization technique, which finetunes a
-pre-trained speech encoder with paired audios from multiple speakers and a
-single reference speaker to reduce the variations due to accents, while
-preserving the lexical content. With only 10 minutes of paired data for speech
-normalization, we obtain on average 3.2 BLEU gain when training the S2ST model
-on the \vp~S2ST dataset, compared to a baseline trained on un-normalized speech
-target. We also incorporate automatically mined S2ST data and show an
-additional 2.0 BLEU gain. To our knowledge, we are the first to establish a
-textless S2ST technique that can be trained with real-world data and works for
-multiple language pairs.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata"><tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computation and Language (cs.CL)</span>; Artificial Intelligence (cs.AI); Machine Learning (cs.LG); Audio and Speech Processing (eess.AS)</td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2112.08352">arXiv:2112.08352</a> [cs.CL]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2112.08352v1">arXiv:2112.08352v1</a> [cs.CL]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2112.08352">https://doi.org/10.48550/arXiv.2112.08352</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
-</div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Wei-Ning Hsu [<a href="/show-email/9bda8300/2112.08352">view email</a>]
-      <br/><strong>[v1]</strong>
-Wed, 15 Dec 2021 18:56:35 UTC (19,090 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2112.08352" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2112.08352" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license">(<a href="http://arxiv.org/licenses/nonexclusive-distrib/1.0/" title="Rights to this article">license</a>)</div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CL</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2112.08352&amp;function=prev&amp;context=cs.CL"
-         accesskey="p" title="previous in cs.CL (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2112.08352&amp;function=next&amp;context=cs.CL" accesskey="n"
-         title="next in cs.CL (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CL/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CL/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CL/2112">2112</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2112.08352?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-        <a class="subclass" href="/abs/2112.08352?context=cs.AI">cs.AI</a><br class="is-hidden-mobile">
-        
-      
-        <a class="subclass" href="/abs/2112.08352?context=cs.LG">cs.LG</a><br class="is-hidden-mobile">
-        
-      
-        <a href="/abs/2112.08352?context=eess">eess</a><br class="is-hidden-mobile">
-        
-      
-        <a class="subclass" href="/abs/2112.08352?context=eess.AS">eess.AS</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2112.08352">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2112.08352" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2112.08352" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2112.html#abs-2112-08352" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2112-08352" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Ann%20Lee" title="DBLP author search">Ann Lee</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Hongyu%20Gong" title="DBLP author search">Hongyu Gong</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Holger%20Schwenk" title="DBLP author search">Holger Schwenk</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Peng-Jen%20Chen" title="DBLP author search">Peng-Jen Chen</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Changhan%20Wang" title="DBLP author search">Changhan Wang</a>
-    
-      <div class="list">&hellip;</div>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
-
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.08352%26description%3DTextless+Speech-to-Speech+Translation+on+Real+Data&amp;v=c60a401e"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.08352&amp;v=3c086c39"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.08352%26title%3DTextless+Speech-to-Speech+Translation+on+Real+Data&amp;v=6ff1a7ef"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.08352&amp;v=c97e9bf1"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
-
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
-
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2112.08352" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
-
-      </div>
-    </main>
-
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
-</body>
-
-</html>
+<!--
+playback timings (ms):
+  captures_list: 114.1
+  exclusion.robots: 0.232
+  exclusion.robots.policy: 0.225
+  cdx.remote: 0.065
+  esindex: 0.008
+  LoadShardBlock: 61.818 (3)
+  PetaboxLoader3.datanode: 71.804 (4)
+  CDXLines.iter: 16.485 (3)
+  load_resource: 202.358
+  PetaboxLoader3.resolve: 137.603
+-->

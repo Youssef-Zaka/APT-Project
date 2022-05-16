@@ -1,385 +1,867 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<!-- new favicon config and versions by realfavicongenerator.net -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://static.arxiv.org/static/base/0.17.4.post2/images/icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://static.arxiv.org/static/base/0.17.4.post2/images/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://static.arxiv.org/static/base/0.17.4.post2/images/icons/favicon-16x16.png">
-<link rel="manifest" href="https://static.arxiv.org/static/base/0.17.4.post2/images/icons/site.webmanifest">
-<link rel="mask-icon" href="https://static.arxiv.org/static/base/0.17.4.post2/images/icons/safari-pinned-tab.svg" color="#b31b1b">
-<link rel="shortcut icon" href="https://static.arxiv.org/static/base/0.17.4.post2/images/icons/favicon.ico">
-<meta name="msapplication-TileColor" content="#b31b1b">
-<meta name="msapplication-config" content="images/icons/browserconfig.xml">
-<meta name="theme-color" content="#b31b1b">
-<!-- end favicon config -->
-<title>Search | arXiv e-print repository</title>
-<script defer src="https://static.arxiv.org/static/base/0.17.4.post2/fontawesome-free-5.11.2-web/js/all.js"></script>
-<link rel="stylesheet" href="https://static.arxiv.org/static/base/0.17.4.post2/css/arxivstyle.css" />
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    messageStyle: "none",
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true,
-      ignoreClass: '.*',
-      processClass: 'mathjax.*'
-    },
-    TeX: {
-        extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js"],
-        noErrors: {
-          inlineDelimiters: ["$","$"],
-          multiLine: false,
-          style: {
-            "font-size": "normal",
-            "border": ""
-          }
-        }
-    },
-    "HTML-CSS": { availableFonts: ["TeX"] }
-  });
+<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
+
+<!-- def.1 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title> Search</title>
+
+
+
+<meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- sh.1 -->
+<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
+<link rel="alternate" type="application/rss+xml" title="Purdue e-Pubs Feed" href="/recent.rss">
+
+<!--[if IE]>
+<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
+<![endif]-->
+<!-- end sh.1 -->
+<link rel="stylesheet" href="/assets/cgi/css/search/query.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/assets/cgi/css/global-alert.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/assets/cgi/css/global/utils.css" type="text/css" media="screen">
+
+
+<!-- stripped inline yui3-seed -->
+<script type="text/javascript" src="/assets/scripts/bepress-init.pack.js"></script>
+<script type="text/javascript">
+			Bepress.cgiUrlBase = '';
+		</script>
+<script src="/assets/cgi/js/spinner.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/search/solr.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/search/query-screen.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/statsDispatcher.pack.js" type="text/javascript"></script>
+<script src="/assets/footnoteLinks.js" type="text/javascript"></script>
+<script type="text/javascript">
+YUI({
+}).use('bepress.search.queryscreen', 'node', 'datatype', function(Y){
+	
+	Y.on( 'domready', function () {
+
+		var fieldSelects, rowList, advContextNode, queryScreen, facetTypes, i;
+
+		
+		Y.bepress.search.solr.setAllowedFields( {"document_type":1,"author_lname":1,"publication_title":1,"subject":1,"author":1,"corporate_author":1,"text":1,"author_fname":1,"abstract":1,"title":1,"publication":1,"collected_from_sw":1,"institution":1} );
+		
+		queryScreen = new Y.bepress.search.QueryScreen( {
+			
+			errors: {
+				searchFailure:        "We're sorry, we were unable to process your search request. "
+				                    + "This may have been a temporary problem, please wait a few moments "
+				                    + "and try again.<br/>	(Error: {errmsg})"
+				, nothingEntered:     "Please enter a search term first"
+				, invalidDateEntered: "You entered '{errmsg}', but that doesn't look like a date to me."
+				, parseError:         "The advanced search form does not support this syntax: {errmsg}"
+				, syntaxNotSupported: "The advanced search form does not support this syntax. {errmsg}"
+				, timeout:            "Your search request has timed out. Please wait a moment and try again."
+				, emptyExport:        "No results matched your search."
+				, dateFormat:         "{errmsg} format is MM/DD/YYYY."
+			}
+
+			
+			, templates: {
+				resultsTemplate: {
+						download: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+		<span class="download {downloadFormat}"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Download<\/a><\/span>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+						, metadata: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+						, external: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+		<span class="download"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Link to Full Text<\/a><\/span>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+					}
+				, resultsHeaderTemplate:         '<div id="results-wrapper">\
+<div class="query">\
+		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
+<\/div>\
+<div id="results-sub-header" class="query">\
+	<span class="grid_6">Showing <strong>{count}<\/strong> out of <strong>{numFound}<\/strong> results. Starting at result <strong>{start}<\/strong>.<\/span>	\
+	<form id="save_search" class="grid_6 alpha omega" method="POST" action="\/do\/search\/save_search" >\
+			<a href="{saveUrl}" id="save-search-submit"><span><i class="icon-save"><\/i> Save this search<\/span><\/a>\
+			<span><a href="\/cgi\/notification.cgi" id="my-searches"><i class="icon-search"><\/i> My saved searches<\/a><\/span>\
+	<\/form>\
+<\/div>\
+<\/div>\
+'
+				, resultsExportedHeaderTemplate: '<div id="results-wrapper">\
+<div class="query">\
+		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
+<\/div>\
+<div id="results-sub-header" class="query">\
+		<span class="grid_6">Exported <strong>{count}<\/strong> results.<\/span>	\
+<\/div>\
+<\/div>\
+'
+				, resultsFooterTemplate:         '<div class="pagination query">\
+	<p class="grid_12">\
+		<span class="fl">\
+			<a id="first-page" class="{firstClass}" href="#query-results" title="First Page">&laquo; First<\/a>\
+			<a id="previous-page" class="{previousClass}" href="#query-results" title="Previous Page">&lt; Prev<\/a>\
+		<\/span>\
+		<span class="fr">\
+			<a id="next-page" class="{nextClass}" href="#query-results" title="Next Page">Next &gt;<\/a>\
+			<a id="last-page" class="{lastClass}" href="#query-results" title="Last Page">Last &raquo;<\/a>\
+		<\/span>\
+	<\/p>\
+<\/div>\
+\
+'
+				, rowTemplate:                   '<div class="row query">\
+  <p id="p{rownum}">\
+    <span class="fr">\
+      <input type="image" value="Delete" alt="Delete row {rownum}" name="del_row_{rownum}" src="\/assets\/query_minus.gif" class="hidden control-delete-row">\
+      <input type="image" value="Add" alt="Add row {rownum}" name="add_row_{rownum}" src="\/assets\/cgi\/images\/global\/add.png" class="control-add-row">	\
+    <\/span>\
+    <span class="grid_2">\
+      <select name="op_{rownum}" class="op-sel">\
+        <option value="AND">AND<\/option>\
+          <option value="OR">OR<\/option>\
+          <option value="NOT">NOT<\/option>\
+      <\/select>\
+    <\/span>\
+	<label for="field_{rownum}">Choose type<\/label>\
+		<span class="grid_3">\
+			<select name="field_{rownum}" id="field_{rownum}" class="field-sel">\
+                \
+                    <option value="text:">All Fields<\/option>\
+                \
+                    <option value="abstract:">Abstract<\/option>\
+                \
+                    <option value="subject:">Subject<\/option>\
+                \
+                    <option value="author:">Author<\/option>\
+                \
+                    <option value="institution:">Institution<\/option>\
+                \
+                    <option value="title:">Title<\/option>\
+                \
+                    <option value="document_type:">Document Type<\/option>\
+                \
+                    <option value="publication_title:">Publication<\/option>\
+                			<\/select>\
+		<\/span>\
+    <label for="value_{rownum}">Search term {rownum}<\/label>\
+		<span class="grid_6"><input type="text" id="value_{rownum}" name="value_{rownum}" value="" class="term">\
+		<\/span>	\
+		<br class="clear" \/>\
+	<\/p>\
+<\/div>\
+'
+				, facetLinkTemplate:             '	<li><a href="#" class="facet-{facetType}">{facetLabel}<\/a> ({facetCount})<\/li>\
+'
+				, facetMoreLink:                 '	<li class="dropdown">\
+		<div id="more-{facetType}" class="more-container"><ul><\/ul><\/div>\
+		<div name="{facetType}" class="collapse" id="{facetType}-links">\
+			<span class="more" name="{facetType}"><a href="#" name="{facetType}">More &darr;<\/a><\/span><span class="fewer hidden" name="{facetType}"><a href="#" name="{facetType}">Fewer &uarr;<\/a><\/span>\
+		<\/div>\
+	<\/li>\
+'
+				, facetSectionTemplate:          '<dl class="facet">\
+  <dt>{label}<\/dt>\
+  <dd>\
+    <ul>\
+    <\/ul>\
+  <\/dd>\
+<\/dl>\
+'
+			}
+
+			
+			, elements: {
+				resultsHeaderEl:  Y.one('#results-header')
+				, resultsListEl:	  Y.one('#results-list')
+				, resultsFooterEl:  Y.one('#results-footer')
+				, errorEl:		  Y.one('#global-alert')
+				, basicSearchEl:	  Y.one('#basic-search')
+				, advancedSearchEl: Y.one('#advanced-search')
+				, facetsEl:         Y.one('#results-facets')
+			}
+
+			
+			, enabledFacets: {
+				
+					"discipline": "Discipline",
+				
+					"download_type": "File Type",
+				
+					"publication_facet": "Publication",
+				
+					"publication_type": "Publication Type",
+				
+					"publication_year": "Publication Year",
+				
+					"subject_facet": "Keyword"
+				
+			}
+
+			, historyAPI:		  !!(window.history && history.pushState)
+
+						, selectedForm: 'advanced-search'
+						
+						, authenticated: false
+						
+		});
+
+		
+			queryScreen.addRow( { showAddCtl: true, showDelCtl: false } );
+		
+		
+		rowList = Y.one('#rows');
+		rowList.delegate( ['change', 'keyup'], queryScreen.updateSearchPreview, '#rows', queryScreen );
+		
+		
+		Y.one( '#simple-search')
+			.on('keypress', queryScreen.behaveOnKeyPress, queryScreen);
+		Y.one( '#advanced-search')
+			.delegate( 'keypress', queryScreen.behaveOnKeyPress, 'input[type=text]', queryScreen);
+
+		        rowList.delegate('click', function(e){
+            queryScreen.addRow();
+            e.preventDefault();
+           }, '.control-add-row', Y
+        );
+		
+		rowList.delegate('click', function(e){
+			queryScreen.deleteRow(e.currentTarget);
+			queryScreen.updateSearchPreview();
+			e.preventDefault();
+		   }, '.control-delete-row', Y
+		);
+
+		
+		Y.one('#switch-to-advanced').on('click', function(e){
+			queryScreen.switchToAdvanced();
+			e.preventDefault();
+		});
+		Y.one('#switch-to-basic').on('click', function(e){
+			queryScreen.switchToBasic();
+			e.preventDefault();
+		});
+
+		
+		advContextNode = Y.one('#advanced-context');
+		if ( advContextNode ) {
+			
+			advContextNode.on( 'change', function(e){
+				queryScreen.updateAvailableFormats();
+			});
+			
+			queryScreen.updateAvailableFormats();
+		}
+
+		
+		Y.one('#do-search').on('click', function(e){
+			queryScreen.submitForm(e.currentTarget.get('form'));
+			e.preventDefault();
+		} );
+		Y.one('#do-search-advanced').on('click', function(e){
+			queryScreen.submitForm(e.currentTarget.get('form'));
+			e.preventDefault();
+		} );
+		
+				Y.one('#show-search').on('click', function() {
+			queryScreen.showSearchForm();
+		});
+		Y.one('#hide-search').on('click', function() {
+			queryScreen.shrinkSearchForm();
+		});
+
+		// is there a more YUIish way to do this?
+		if(queryScreen.historyAPI) {
+			window.onpopstate = function(ev) {
+				// Y.log('popstate -- location: '+document.location+', state: '+JSON.stringify(ev.state));
+				queryScreen.handlePopState(ev.state);
+			};
+		}
+
+		
+		Y.one('#do-search').removeAttribute('disabled');
+		Y.one('#switch-to-advanced').removeAttribute('disabled');
+		Y.all('.add-row').removeAttribute('disabled');
+		
+		
+		queryScreen.setSearchContainerHeights();
+		
+		Y.one('#advanced-search').addClass('query-shrinker');
+		Y.one('#basic-search').addClass('query-shrinker');
+
+		
+		
+				
+		
+
+		
+		
+				
+				
+				
+			Y.one('#clear-discipline-facet').on('click', function() {
+				queryScreen.clearFacet('discipline');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-download_type-facet').on('click', function() {
+				queryScreen.clearFacet('download_type');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_facet-facet').on('click', function() {
+				queryScreen.clearFacet('publication_facet');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_type-facet').on('click', function() {
+				queryScreen.clearFacet('publication_type');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_year-facet').on('click', function() {
+				queryScreen.clearFacet('publication_year');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-subject_facet-facet').on('click', function() {
+				queryScreen.clearFacet('subject_facet');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+
+	} );
+});
 </script>
-<script src='//static.arxiv.org/MathJax-2.7.3/MathJax.js'></script>
-<script src="https://static.arxiv.org/static/base/0.17.4.post2/js/notification.js"></script>
+<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"Search:query_screen","businessUnit":"els:rp:st"},"visitor":{}};</script>
 
-    
-  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/bulma-tooltip.min.css" />
-  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/search.css" />
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-    crossorigin="anonymous"></script>
 
-  <script src="https://static.arxiv.org/static/search/0.5.6/js/fieldset.js"></script>
-  <style>
-  radio#cf-customfield_11400 {
-    display: none;
-  }
-  </style>
-  <script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-tqqyqk/b/20/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=3b3dcb4c"></script>
 
-    <script type="text/javascript">
-    window.ATL_JQ_PAGE_PROPS =  {
-    	"triggerFunction": function(showCollectorDialog) {
-    		//Requires that jQuery is available!
-    		$("#feedback-button").click(function(e) {
-    			e.preventDefault();
-    			showCollectorDialog();
-    		});
-    	},
-      fieldValues: {
-        "components": ["16000"],  // Search component.
-        "versions": ["14260"],  // Release search-0.5.6
-        "customfield_11401": window.location.href
-      }
-    };
-    </script>
 
-  </head>
-  <body>
+</head>
+<body class="legacy search">
+<!-- FILE /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen --><!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
+<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
+
+<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
   
   
-  <header><a href="#main-container" class="is-sr-only">Skip to main content</a>
-    
-    <!-- contains Cornell logo and sponsor statement -->
-<div class="attribution level is-marginless" role="banner">
-  <div class="level-left">
-    <a class="level-item" href="https://cornell.edu/"><img src="https://static.arxiv.org/static/base/0.17.4.post2/images/cornell-reduced-white-SMALL.svg" alt="Cornell University" width="200" aria-label="logo" /></a>
-  </div>
-  <div class="level-right is-marginless"><p class="sponsors level-item is-marginless"><a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br /> the Simons Foundation and member institutions.</a></p></div>
+  <nav class="nav-collapse">
+    <ul>
+      <li class="menu-item active device-fixed-width"><a href="https://docs.lib.purdue.edu" title="Home" data-scroll >Home</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/communities.html" title="Browse" data-scroll >Browse Collections</a></li>
+      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/about.html" title="About" data-scroll >About</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
+<!--<![endif]-->
+<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen (cont) -->
+
+
+
+<div id="purdue">
+	<div id="container">
+		<a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
+
+					
+			<div id="header">
+				<a href="https://docs.lib.purdue.edu" id="banner_link" title="Purdue e-Pubs" >
+					<img id="banner_image" alt="Purdue e-Pubs" width='980' height='127' src="/assets/md5images/0ef023a18cb347526fa389886bca42cb.png">
+				</a>	
+				
+					<a href="http://www.lib.purdue.edu/" id="logo_link" title="Purdue University" >
+						<img id="logo_image" alt="Purdue University" width='404' height='127' src="/assets/md5images/256521ebbdbbd9ed12c3870e899829ec.png">
+					</a>	
+				
+			</div>
+					
+			<div id="navigation">
+				<!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://docs.lib.purdue.edu" title="Home" ><span>Home</span></a></li><li id="tabtwo"><a href="https://docs.lib.purdue.edu/about.html" title="About" ><span>About</span></a></li><li id="tabthree"><a href="https://www.lib.purdue.edu/repositories/epubs/about" title="FAQ" ><span>FAQ</span></a></li><li id="tabfour"><a href="https://docs.lib.purdue.edu/cgi/myaccount.cgi?context=" title="My Account" ><span>My Account</span></a></li></ul></div>
+
+
+<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen (cont) -->
+			</div>
+		
+
+		<div id="wrapper">
+			<div id="content">
+				<div id="main" class="text">
+
+
+<div id="template_query_data" value=""></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="global-alert" class="hidden info">
 </div>
-<!-- contains arXiv identity and search bar -->
-<div class="identity level is-marginless">
-  <div class="level-left">
-    <div class="level-item">
-      <a class="arxiv" href="https://arxiv.org/" aria-label="arxiv-logo">
-        <img src="https://static.arxiv.org/static/base/0.17.4.post2/images/arxiv-logo-one-color-white.svg" aria-label="logo" alt="arxiv logo" width="85" style="width:85px;"/>
-      </a>
-    </div>
-  </div>
-  
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-</div> <!-- closes identity -->
 
-<div class="container">
-    <div class="user-tools is-size-7 has-text-right has-text-weight-bold" role="navigation" aria-label="User menu">
-      <a href="https://arxiv.org/login">Login</a>
-    </div>
+<div id="query-wrapper">
+
+	<div id="show-search-container" class="query tr">
+		<a href="#" id="show-search" class="hidden">Show Search</a>
+		<a href="#" id="hide-search" class="hidden">Hide Search</a>
+	</div>
+	<div id="basic-search" class="hidden">
+		<form id="basic-search-form" method="GET" action="/do/search/"> 
+			<fieldset class="query">
+				<legend>Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
+				<label for="simple-search" class="hidden">Search </label>
+				<span class="grid_7"><input name="q" id="simple-search" type="text" value=""></span>
+				<span class="grid_4">
+					<button type="submit" name="query" value="Search" id="do-search" class="white medium">Search</button>
+					<a href="#" id="switch-to-advanced">Advanced</a>
+				</span>
+				<div class="clear"></div>
+				<input type="hidden" name="start" class="start-input" value="0">
+				<input type="hidden" name="context" id="basic-context" value="119483">
+				
+					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
+				
+							</fieldset>
+		</form>
+	</div>
+
+	<div id="advanced-search">
+		<form method="GET" action="/do/search/">
+			<fieldset>
+				<legend>Advanced Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
+				<label for="search-string" class="hidden">Feedback</label>
+				<input type="hidden" name="start" class="start-input" value="0">
+				
+					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
+				
+				
+				<div class="query">
+					<input type="text" name="q" id="search-string" class="grid_12 alpha omega" onFocus="return" readonly="readonly" value="">
+				</div>
+				<div class="clear"></div>
+					
+				<div class="query">
+					<div id="rows">			
+							
+					</div> <!-- end rows -->
+				</div>		
+			</fieldset>
+			<div class="query">
+				
+					<div id="search-filters">
+<span class="grid_3 prefix_2 alpha tc">
+	<label for="peer-reviewed">
+	<input type="checkbox" name="peer_reviewed" value="1" id="peer-reviewed"> 
+	Peer-reviewed only</label>
+</span>
 </div>
-    
-  </header>
-  <main class="container" id="main-container">
-    
 
+<span class="grid_2">
+	<label for="start-date">Date range:</label>
+</span>
+<span class="grid_2">
+        <input type="text" id="start-date" name="start_date" value="">
+</span>
+<label for="end-date" class="hidden">End Date:</label>
+<span class="grid_2">
+        <input type="text" id="end-date" name="end_date" value="">
+</span>
 
-    
-  <div class="level is-marginless">
-    <div class="level-left">
-      <h1 class="title is-clearfix">
-    
-        Showing 1&ndash;1 of 1 results for author: <span class="mathjax">Trokhymovych, M</span>
-    
-</h1>
-    </div>
-    <div class="level-right is-hidden-mobile">
-      <!-- feedback for mobile is moved to footer -->
-      <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
-      <button class="button is-small" id="feedback-button">Feedback?</button>
-    </div>
-  </div>
-    <div class="content">
-      
-  <form method="GET" action="/search/cs"  aria-role="search">
-    
-      Searching in archive <strong>cs</strong>. <a href="/search/?searchtype=author&amp;query=Trokhymovych%2C+M">Search in all archives.</a>
-    
+						
+				<div class="clear"></div>
+<p class="limit-search">
+		<label for="advanced-context" class="grid_2 prefix_5">
+			Limit search to:
+		</label>
+		<span class="grid_4">
+			<select name="context" id="advanced-context">
+				
+										<option value="119483" selected="selected">Purdue e-Pubs</option>
+									
+										<option value="1">All Repositories</option>
+												</select>
+	</span>
+</p>
 
-    
-    <div class="field has-addons-tablet">
-      <div class="control is-expanded">
-        <label for="query" class="hidden-label">Search term or terms</label>
-        
-          <input class="input is-medium" id="query" name="query" placeholder="Search term..." type="text" value="Trokhymovych, M">
-        
-        
-      </div>
-      <div class="select control is-medium">
-        <label class="is-hidden" for="searchtype">Field</label>
-        <select class="is-medium" id="searchtype" name="searchtype"><option value="all">All fields</option><option value="title">Title</option><option selected value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
-      </div>
-      <div class="control">
-          <button class="button is-link is-medium">Search</button>
-      </div>
-    </div>
-    <div class="field">
-      <div class="control is-size-7">
-        
-        <label class="radio">
-          <input checked id="abstracts-0" name="abstracts" type="radio" value="show"> Show abstracts
-        </label>
-        
-        <label class="radio">
-          <input id="abstracts-1" name="abstracts" type="radio" value="hide"> Hide abstracts
-        </label>
-        
-      </div>
-    </div>
-    <div class="is-clearfix" style="height: 2.5em"> 
-      <div class="is-pulled-right">
-        
-        <a href="/search/advanced?terms-0-term=Trokhymovych%2C+M&amp;terms-0-field=author&amp;size=50&amp;order=-announced_date_first">Advanced Search</a>
-        
-      </div>
-    </div>
-    <input type="hidden" name="order" value="-announced_date_first">
-    <input type="hidden" name="size" value="50">
-  </form>
+				<div class="clear"></div>
+<p class="sort-options">
+	<span class="grid_2 prefix_5">Sort by:</span>
+	<span class="grid_4">
+		<label for="sort-score">
+			<input type="radio" name="sort" id="sort-score" value="score" checked="checked"> Relevance
+		</label> 
+		<label for="sort-date">
+			<input type="radio" name="sort" id="sort-date" value="date_desc"> Publication Date
+		</label>
+	</span>
+</p>
 
-  
+				<div class="clear"></div>
+<p class="pick-format">
+		<label for="results-format" class="grid_2 prefix_5">
+			Format:
+		</label>
+		<span class="grid_4">
+			<select name="format" id="results-format">
+								<option value="json">links</option>
+								<option value="refer">Bibliography Export</option>
+							</select>
+	</span>
+</p>
 
-  
-      
-<div class="level breathe-horizontal">
-  <div class="level-left">
-    <form method="GET" action="/search/">
-      <div style="display: none;">
-        
-          
-            <select id="searchtype" name="searchtype"><option value="all">All fields</option><option value="title">Title</option><option selected value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
-          
-        
-          
-            <input id="query" name="query" type="text" value="Trokhymovych, M">
-          
-        
-          
-        
-          
-        
-          
-            <ul id="abstracts"><li><input checked id="abstracts-0" name="abstracts" type="radio" value="show"> <label for="abstracts-0">Show abstracts</label></li><li><input id="abstracts-1" name="abstracts" type="radio" value="hide"> <label for="abstracts-1">Hide abstracts</label></li></ul>
-          
-        
-      </div>
-      <div class="box field is-grouped is-grouped-multiline level-item">
-        <div class="control">
-          <span class="select is-small">
-            <select id="size" name="size"><option value="25">25</option><option selected value="50">50</option><option value="100">100</option><option value="200">200</option></select>
-          </span>
-          <label for="size">results per page</label>.
-        </div>
-        <div class="control">
-          <label for="order">Sort results by</label>
-          <span class="select is-small">
-            <select id="order" name="order"><option selected value="-announced_date_first">Announcement date (newest first)</option><option value="announced_date_first">Announcement date (oldest first)</option><option value="-submitted_date">Submission date (newest first)</option><option value="submitted_date">Submission date (oldest first)</option><option value="">Relevance</option></select>
-          </span>
-        </div>
-        <div class="control">
-          <button class="button is-small is-link">Go</button>
-        </div>
-      </div>
-    </form>
-  </div>
+				<div style="display:none;visibility:hidden;height:1px"><iframe id="export-frame" style="display:none;visibility:hidden;height:1px"></iframe></div>
+				<div class="clear"></div>
+				<span class="grid_12 tr">				
+				<button type="submit" value="Search" name="search" id="do-search-advanced" class="fr white medium">Search</button>
+
+				<a href="#" id="switch-to-basic">Basic</a>
+				</span>
+				<br class="clear" />
+			</div>
+			<div class="clear"></div>
+
+		</form>	
+	</div> <!-- advanced search -->
+</div><!-- query-wrapper -->
+
+<div id="query-results">
+
+<div class="query">
+<div class="grid_12" id="info-pane">
+<div id="results-header">
+		<div class="clear"></div>		
+	</div>
+<br class="clear" />
 </div>
-      
 
+<div class="grid_3" id="facet-pane">
 
-
-
-<ol class="breathe-horizontal" start="1"> 
-
-
-  <li class="arxiv-result">
-    <div class="is-marginless">
-      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2109.00835">arXiv:2109.00835</a>
-        <span>&nbsp;[<a href="https://arxiv.org/pdf/2109.00835">pdf</a>, <a href="https://arxiv.org/format/2109.00835">other</a>]&nbsp;</span>
-      </p>
-      <div class="tags is-inline-block">
-        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Computers and Society">cs.CY</span>
-        </div>
-      
-    </div>
-    
-    <p class="title is-5 mathjax">
-      
-        WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia
-      
-    </p>
-    <p class="authors">
-      <span class="search-hit">Authors:</span>
-      
-      <a href="/search/cs?searchtype=author&amp;query=Trokhymovych%2C+M">Mykola Trokhymovych</a>, 
-      
-      <a href="/search/cs?searchtype=author&amp;query=Saez-Trumper%2C+D">Diego Saez-Trumper</a>
-      
-    </p>
-    
-    <p class="abstract mathjax">
-      <span class="has-text-black-bis has-text-weight-semibold">Abstract</span>:
-      <span class="abstract-short has-text-grey-dark mathjax" id="2109.00835v1-abstract-short" style="display: inline;">
-        With the growth of fake news and disinformation, the NLP community has been working to assist humans in fact-checking. However, most academic research has focused on model accuracy without paying attention to resource efficiency, which is crucial in real-life scenarios. In this work, we review the State-of-the-Art datasets and solutions for Automatic Fact-checking and test their applicability in p&hellip;
-        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2109.00835v1-abstract-full').style.display = 'inline'; document.getElementById('2109.00835v1-abstract-short').style.display = 'none';">&#9661; More</a>
-      </span>
-      <span class="abstract-full has-text-grey-dark mathjax" id="2109.00835v1-abstract-full" style="display: none;">
-        With the growth of fake news and disinformation, the NLP community has been working to assist humans in fact-checking. However, most academic research has focused on model accuracy without paying attention to resource efficiency, which is crucial in real-life scenarios. In this work, we review the State-of-the-Art datasets and solutions for Automatic Fact-checking and test their applicability in production environments. We discover overfitting issues in those models, and we propose a data filtering method that improves the model&#39;s performance and generalization. Then, we design an unsupervised fine-tuning of the Masked Language models to improve its accuracy working with Wikipedia. We also propose a novel query enhancing method to improve evidence discovery using the Wikipedia Search API. Finally, we present a new fact-checking system, the \textit{WikiCheck} API that automatically performs a facts validation process based on the Wikipedia knowledge base. It is comparable to SOTA solutions in terms of accuracy and can be used on low-memory CPU instances.
-        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2109.00835v1-abstract-full').style.display = 'none'; document.getElementById('2109.00835v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
-      </span>
-    </p>
-    
-
-    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 2 September, 2021; 
-      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> September 2021.
-      
-    </p>
-    
-
-    
-
-    
-  </li>
-
-</ol>
-
-
-  
-
-
-      <div class="is-hidden-tablet">
-        <!-- feedback for mobile only -->
-        <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
-        <button class="button is-small" id="feedback-button">Feedback?</button>
-      </div>
-    </div>
-
-  </main>
-  <footer>
-    
-    <div class="columns is-desktop" role="navigation" aria-label="Secondary">
-  <!-- MetaColumn 1 -->
-  <div class="column">
-    <div class="columns">
-      <div class="column">
-        <ul class="nav-spaced">
-          <li><a href="https://arxiv.org/about">About</a></li>
-          <li><a href="https://arxiv.org/help">Help</a></li>
-        </ul>
-      </div>
-      <div class="column">
-        <ul class="nav-spaced">
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-            <a href="https://arxiv.org/help/contact"> Contact</a>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-            <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div> <!-- end MetaColumn 1 -->
-  <!-- MetaColumn 2 -->
-  <div class="column">
-    <div class="columns">
-      <div class="column">
-        <ul class="nav-spaced">
-          <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-          <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div class="column sorry-app-links">
-        <ul class="nav-spaced">
-          <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-          <li>
-            <p class="help">
-              <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-              Get status notifications via
-              <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-              or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-            </p>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div> <!-- end MetaColumn 2 -->
+	<p id="selected-facets">
+				<span id="selected-discipline-facet" class="hidden">
+			<a class="close" id="clear-discipline-facet"><i>&times;</i>
+			 <strong id="selected-discipline-facet-label"></strong></a>
+		</span>
+				<span id="selected-download_type-facet" class="hidden">
+			<a class="close" id="clear-download_type-facet"><i>&times;</i>
+			 <strong id="selected-download_type-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_facet-facet" class="hidden">
+			<a class="close" id="clear-publication_facet-facet"><i>&times;</i>
+			 <strong id="selected-publication_facet-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_type-facet" class="hidden">
+			<a class="close" id="clear-publication_type-facet"><i>&times;</i>
+			 <strong id="selected-publication_type-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_year-facet" class="hidden">
+			<a class="close" id="clear-publication_year-facet"><i>&times;</i>
+			 <strong id="selected-publication_year-facet-label"></strong></a>
+		</span>
+				<span id="selected-subject_facet-facet" class="hidden">
+			<a class="close" id="clear-subject_facet-facet"><i>&times;</i>
+			 <strong id="selected-subject_facet-facet-label"></strong></a>
+		</span>
+		
+	</p>
+<br class="clear" />
+	<div id="results-facets" class="hidden"></div>
 </div>
-    
-  </footer>
-  </body>
-</html>
+<div class="grid_9" id="result-pane">
+	
+	<div id="results-list">
+		<div class="clear"></div>
+	</div>
+	<div id="results-footer"></div>
+</div>
+<br class="clear" />
+</div>
+
+<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
+	<div class="verticalalign">&nbsp;</div>
+	<div class="clear">&nbsp;</div>
+
+</div>
+
+	<div id="sidebar" role="complementary">
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc --><h2>Search</h2>
+
+
+	
+<form method='get' action='https://docs.lib.purdue.edu/do/search/' id="sidebar-search">
+	<label for="search" accesskey="4">
+		Enter search terms:
+	</label>
+		<div>
+			<span class="border">
+				<input type="text" name='q' class="search" id="search">
+			</span> 
+			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
+		</div>
+	<label for="context" style="display:none;">
+		Select context to search:
+	</label> 
+		<div>
+			<span class="border">
+				<select name="fq" id="context">
+					
+					
+					
+					
+					<option value='virtual_ancestor_link:"https://docs.lib.purdue.edu"'>in this repository</option>
+					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
+				</select>
+			</span>
+		</div>
+</form>
+
+<p class="advanced">
+	
+	
+		<a href="https://docs.lib.purdue.edu/do/search/advanced/?fq=virtual_ancestor_link:%22https://docs.lib.purdue.edu%22" >
+			Advanced Search
+		</a>
+	
+</p>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
+	<ul id="side-notify">
+		<li class="notify">
+			<a href="https://docs.lib.purdue.edu/announcements.html" title="Email or RSS Notifications" >
+				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
+			</a>
+		</li>
+	</ul>
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
+
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_sidebar_custom_middle_7_8.inc -->
+
+
+<div id="sb-custom-middle">
+    <h2 class="sb-custom-title">Links</h2>
+    <ul class="sb-custom-ul">
+        <li class="sb-custom-li"><a href="http://www.lib.purdue.edu/" title="Purdue Libraries" >Purdue Libraries</a></li>
+        <li class="sb-custom-li"><a href="http://docs.lib.purdue.edu/thepress" title="Purdue University Press Journals" >Purdue University Press Journals</a></li>
+    </ul>
+</div><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
+
+
+
+
+	<ul id="side-author">
+	
+		
+		<li class="submit">
+			<a href="https://docs.lib.purdue.edu/submit_research.html" title="Submit Research" >
+				Submit Research
+			</a>
+		</li>
+		<li>
+			<a href="https://docs.lib.purdue.edu/addendum.pdf" >
+				Author Addendum
+			</a>
+		</li>
+	
+	</ul>
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc --><h2>Browse</h2>
+<ul id="side-browse">
+
+
+<li class="collections"><a href="https://docs.lib.purdue.edu/communities.html" title="Browse by Collections" >Collections</a></li>
+<li class="discipline-browser"><a href="https://docs.lib.purdue.edu/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
+<li class="author"><a href="https://docs.lib.purdue.edu/authors.html" title="Browse by Author" >Authors</a></li>
+
+
+</ul>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lower_7_8.inc (cont) -->
+	
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
+	
+
+
+
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+	<div class="verticalalign">&nbsp;</div>
+	</div>
+
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
+	
+	
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
+
+<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
+	<em>Digital Commons</em>
+</a>
+
+</div>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
+	<p>
+		<a href="https://docs.lib.purdue.edu" title="Home page" accesskey="1" >Home</a> | 
+		<a href="https://docs.lib.purdue.edu/about.html" title="About" >About</a> | 
+		<a href="https://docs.lib.purdue.edu/faq.html" title="FAQ" >FAQ</a> | 
+		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
+		<a href="https://docs.lib.purdue.edu/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
+	</p>
+	<p>
+	
+	
+		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
+	
+		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
+	</p> 
+	
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+
+</div>
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_analytics.inc --><script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5499681-9");
+pageTracker._trackPageview();
+} catch(err) {}</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+
+<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>

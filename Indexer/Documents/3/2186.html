@@ -1,1697 +1,890 @@
+
 <!DOCTYPE html>
-<!--
-Building Peace in the minds of men and women
-Construire la paix dans l'esprit des hommes et des femmes
-Construir la paz en la mente de los hombres y de las mujeres
-Нести мир в сознание мужчин и женщин
-بناء السلام في عقول الرجال والنساء
-于人之思想中构建和平
--->
-<html  lang="en"  style="height:100%;" id="htmlEl">
-	<head>
+<html lang="en">
+<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
+
+<!-- def.1 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title> Search</title>
+
+
+
+<meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- sh.1 -->
+<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
+<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
+<link rel="alternate" type="application/rss+xml" title="Site Feed" href="/recent.rss">
+
+
+<!--[if IE]>
+<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
+<![endif]-->
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<!-- end sh.1 -->
+<link rel="stylesheet" href="/assets/cgi/css/search/query.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/assets/cgi/css/global-alert.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/assets/cgi/css/global/utils.css" type="text/css" media="screen">
+
+
+<!-- stripped inline yui3-seed -->
+<script type="text/javascript" src="/assets/scripts/bepress-init.pack.js"></script>
+<script type="text/javascript">
+			Bepress.cgiUrlBase = '';
+		</script>
+<script src="/assets/cgi/js/spinner.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/search/solr.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/search/query-screen.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/statsDispatcher.pack.js" type="text/javascript"></script>
+<script src="/assets/footnoteLinks.js" type="text/javascript"></script>
+<script type="text/javascript">
+YUI({
+}).use('bepress.search.queryscreen', 'node', 'datatype', function(Y){
+	
+	Y.on( 'domready', function () {
+
+		var fieldSelects, rowList, advContextNode, queryScreen, facetTypes, i;
+
+		
+		Y.bepress.search.solr.setAllowedFields( {"document_type":1,"author_lname":1,"publication_title":1,"subject":1,"author":1,"corporate_author":1,"text":1,"author_fname":1,"abstract":1,"title":1,"publication":1,"collected_from_sw":1,"institution":1} );
+		
+		queryScreen = new Y.bepress.search.QueryScreen( {
+			
+			errors: {
+				searchFailure:        "We're sorry, we were unable to process your search request. "
+				                    + "This may have been a temporary problem, please wait a few moments "
+				                    + "and try again.<br/>	(Error: {errmsg})"
+				, nothingEntered:     "Please enter a search term first"
+				, invalidDateEntered: "You entered '{errmsg}', but that doesn't look like a date to me."
+				, parseError:         "The advanced search form does not support this syntax: {errmsg}"
+				, syntaxNotSupported: "The advanced search form does not support this syntax. {errmsg}"
+				, timeout:            "Your search request has timed out. Please wait a moment and try again."
+				, emptyExport:        "No results matched your search."
+				, dateFormat:         "{errmsg} format is MM/DD/YYYY."
+			}
+
+			
+			, templates: {
+				resultsTemplate: {
+						download: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+		<span class="download {downloadFormat}"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Download<\/a><\/span>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+						, metadata: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+						, external: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+		<span class="download"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Link to Full Text<\/a><\/span>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+					}
+				, resultsHeaderTemplate:         '<div id="results-wrapper">\
+<div class="query">\
+		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
+<\/div>\
+<div id="results-sub-header" class="query">\
+	<span class="grid_6">Showing <strong>{count}<\/strong> out of <strong>{numFound}<\/strong> results. Starting at result <strong>{start}<\/strong>.<\/span>	\
+	<form id="save_search" class="grid_6 alpha omega" method="POST" action="\/do\/search\/save_search" >\
+			<a href="{saveUrl}" id="save-search-submit"><span><i class="icon-save"><\/i> Save this search<\/span><\/a>\
+			<span><a href="\/cgi\/notification.cgi" id="my-searches"><i class="icon-search"><\/i> My saved searches<\/a><\/span>\
+	<\/form>\
+<\/div>\
+<\/div>\
+'
+				, resultsExportedHeaderTemplate: '<div id="results-wrapper">\
+<div class="query">\
+		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
+<\/div>\
+<div id="results-sub-header" class="query">\
+		<span class="grid_6">Exported <strong>{count}<\/strong> results.<\/span>	\
+<\/div>\
+<\/div>\
+'
+				, resultsFooterTemplate:         '<div class="pagination query">\
+	<p class="grid_12">\
+		<span class="fl">\
+			<a id="first-page" class="{firstClass}" href="#query-results" title="First Page">&laquo; First<\/a>\
+			<a id="previous-page" class="{previousClass}" href="#query-results" title="Previous Page">&lt; Prev<\/a>\
+		<\/span>\
+		<span class="fr">\
+			<a id="next-page" class="{nextClass}" href="#query-results" title="Next Page">Next &gt;<\/a>\
+			<a id="last-page" class="{lastClass}" href="#query-results" title="Last Page">Last &raquo;<\/a>\
+		<\/span>\
+	<\/p>\
+<\/div>\
+\
+'
+				, rowTemplate:                   '<div class="row query">\
+  <p id="p{rownum}">\
+    <span class="fr">\
+      <input type="image" value="Delete" alt="Delete row {rownum}" name="del_row_{rownum}" src="\/assets\/query_minus.gif" class="hidden control-delete-row">\
+      <input type="image" value="Add" alt="Add row {rownum}" name="add_row_{rownum}" src="\/assets\/cgi\/images\/global\/add.png" class="control-add-row">	\
+    <\/span>\
+    <span class="grid_2">\
+      <select name="op_{rownum}" class="op-sel">\
+        <option value="AND">AND<\/option>\
+          <option value="OR">OR<\/option>\
+          <option value="NOT">NOT<\/option>\
+      <\/select>\
+    <\/span>\
+	<label for="field_{rownum}">Choose type<\/label>\
+		<span class="grid_3">\
+			<select name="field_{rownum}" id="field_{rownum}" class="field-sel">\
+                \
+                    <option value="text:">All Fields<\/option>\
+                \
+                    <option value="abstract:">Abstract<\/option>\
+                \
+                    <option value="subject:">Subject<\/option>\
+                \
+                    <option value="author:">Author<\/option>\
+                \
+                    <option value="institution:">Institution<\/option>\
+                \
+                    <option value="title:">Title<\/option>\
+                \
+                    <option value="document_type:">Document Type<\/option>\
+                \
+                    <option value="publication_title:">Publication<\/option>\
+                			<\/select>\
+		<\/span>\
+    <label for="value_{rownum}">Search term {rownum}<\/label>\
+		<span class="grid_6"><input type="text" id="value_{rownum}" name="value_{rownum}" value="" class="term">\
+		<\/span>	\
+		<br class="clear" \/>\
+	<\/p>\
+<\/div>\
+'
+				, facetLinkTemplate:             '	<li><a href="#" class="facet-{facetType}">{facetLabel}<\/a> ({facetCount})<\/li>\
+'
+				, facetMoreLink:                 '	<li class="dropdown">\
+		<div id="more-{facetType}" class="more-container"><ul><\/ul><\/div>\
+		<div name="{facetType}" class="collapse" id="{facetType}-links">\
+			<span class="more" name="{facetType}"><a href="#" name="{facetType}">More &darr;<\/a><\/span><span class="fewer hidden" name="{facetType}"><a href="#" name="{facetType}">Fewer &uarr;<\/a><\/span>\
+		<\/div>\
+	<\/li>\
+'
+				, facetSectionTemplate:          '<dl class="facet">\
+  <dt>{label}<\/dt>\
+  <dd>\
+    <ul>\
+    <\/ul>\
+  <\/dd>\
+<\/dl>\
+'
+			}
+
+			
+			, elements: {
+				resultsHeaderEl:  Y.one('#results-header')
+				, resultsListEl:	  Y.one('#results-list')
+				, resultsFooterEl:  Y.one('#results-footer')
+				, errorEl:		  Y.one('#global-alert')
+				, basicSearchEl:	  Y.one('#basic-search')
+				, advancedSearchEl: Y.one('#advanced-search')
+				, facetsEl:         Y.one('#results-facets')
+			}
+
+			
+			, enabledFacets: {
+				
+					"discipline": "Discipline",
+				
+					"download_type": "File Type",
+				
+					"publication_facet": "Publication",
+				
+					"publication_type": "Publication Type",
+				
+					"publication_year": "Publication Year",
+				
+					"subject_facet": "Keyword"
+				
+			}
+
+			, historyAPI:		  !!(window.history && history.pushState)
+
+						, selectedForm: 'basic-search'
+						
+						, authenticated: false
+						
+		});
+
+		
+			queryScreen.addRow( { showAddCtl: true, showDelCtl: false } );
+		
+		
+		rowList = Y.one('#rows');
+		rowList.delegate( ['change', 'keyup'], queryScreen.updateSearchPreview, '#rows', queryScreen );
+		
+		
+		Y.one( '#simple-search')
+			.on('keypress', queryScreen.behaveOnKeyPress, queryScreen);
+		Y.one( '#advanced-search')
+			.delegate( 'keypress', queryScreen.behaveOnKeyPress, 'input[type=text]', queryScreen);
+
+		        rowList.delegate('click', function(e){
+            queryScreen.addRow();
+            e.preventDefault();
+           }, '.control-add-row', Y
+        );
+		
+		rowList.delegate('click', function(e){
+			queryScreen.deleteRow(e.currentTarget);
+			queryScreen.updateSearchPreview();
+			e.preventDefault();
+		   }, '.control-delete-row', Y
+		);
+
+		
+		Y.one('#switch-to-advanced').on('click', function(e){
+			queryScreen.switchToAdvanced();
+			e.preventDefault();
+		});
+		Y.one('#switch-to-basic').on('click', function(e){
+			queryScreen.switchToBasic();
+			e.preventDefault();
+		});
+
+		
+		advContextNode = Y.one('#advanced-context');
+		if ( advContextNode ) {
+			
+			advContextNode.on( 'change', function(e){
+				queryScreen.updateAvailableFormats();
+			});
+			
+			queryScreen.updateAvailableFormats();
+		}
+
+		
+		Y.one('#do-search').on('click', function(e){
+			queryScreen.submitForm(e.currentTarget.get('form'));
+			e.preventDefault();
+		} );
+		Y.one('#do-search-advanced').on('click', function(e){
+			queryScreen.submitForm(e.currentTarget.get('form'));
+			e.preventDefault();
+		} );
+		
+				Y.one('#show-search').on('click', function() {
+			queryScreen.showSearchForm();
+		});
+		Y.one('#hide-search').on('click', function() {
+			queryScreen.shrinkSearchForm();
+		});
+
+		// is there a more YUIish way to do this?
+		if(queryScreen.historyAPI) {
+			window.onpopstate = function(ev) {
+				// Y.log('popstate -- location: '+document.location+', state: '+JSON.stringify(ev.state));
+				queryScreen.handlePopState(ev.state);
+			};
+		}
+
+		
+		Y.one('#do-search').removeAttribute('disabled');
+		Y.one('#switch-to-advanced').removeAttribute('disabled');
+		Y.all('.add-row').removeAttribute('disabled');
+		
+		
+		queryScreen.setSearchContainerHeights();
+		
+		Y.one('#advanced-search').addClass('query-shrinker');
+		Y.one('#basic-search').addClass('query-shrinker');
+
+		
 		
 				
-				<meta name="author" content="UNESCO World Heritage Centre">
-				<meta name="og:site_name" content="UNESCO World Heritage Centre">
+		
+
+		
+		
+				queryScreen.submitForm(Y.one('#'+queryScreen.selectedForm).one('form'));
 				
-				<link rel="manifest" href="http://whc.unesco.org/site.webmanifest?v=wAXNOnQoNn">
 				
-				<link rel="shortcut icon" href="http://whc.unesco.org/favicon.ico">
-				<meta name="msapplication-TileColor" content="#2d89ef">
 				
-				<meta name="theme-color" content="#ffffff">
-				<link rel="alternate" type="application/rss+xml" title="RSS News" href="http://whc.unesco.org/en/news/rss"/>
-				<link rel="alternate" type="application/rss+xml" title="RSS Events" href="http://whc.unesco.org/en/events/rss"/>
-				<link rel="alternate" type="application/rss+xml" title="RSS Sites" href="http://whc.unesco.org/en/list/rss"/>
-				<link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
-				<link href="https://stats.g.doubleclick.net" rel="preconnect" crossorigin>
-			
-			<meta name="MobileOptimized" content="width">
-			<meta name="HandheldFriendly" content="true">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<link rel="preconnect" href="https://fonts.gstatic.com">
-			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" />
-			<link rel="stylesheet" media="all" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" />
-			<link rel="stylesheet" media="screen" href="/assets/stylesheets/unesco_style.css?20220404"  />
-			
-			
-			<script type="text/javascript">
-				language="en";
-			</script>
-			
-				<meta property="fb:app_id" content="100681356685569" />
-				<link rel="search" type="application/opensearchdescription+xml" title="WHC" href="http://whc.unesco.org/pg_opensearch.cfm" />
-				<meta name="description" content="UNESCO World Heritage Centre" />
-				<meta name="keywords" content="UNESCO, World Heritage,Heritage,Patrimoine,Patrimoine mondial,Convention,1972" />
-			<style>.content-article > p:first-child {font-size: 1.25rem;font-weight: 300;}</style><style>body{overflow:unset !important;}.x-box-div .x-body{background-color:unset !important}</style>
-    <link href="/javascript/ext-6.2.0-app-all/resources/UnescoApp-all.css?20220331" rel="stylesheet" type="text/css" media="screen" />
-    
-				<link rel="canonical" href="https://whc.unesco.org/en/news/2400" />
-				<link rel="alternate" hreflang="fr" href="https://whc.unesco.org/fr/actualites/2400" />
-				<link rel="alternate" hreflang="en" href="https://whc.unesco.org/en/news/2400" />
-				<title>Call for proposals: Legacy Landscapes Fund - UNESCO World Heritage Centre</title>
-				<meta name="title" content="Call for proposals: Legacy Landscapes Fund" />
-			<meta property="og:image" content="http://whc.unesco.org/uploads/thumbs/news_2400-1200-630-20220201110915.jpg" />
-		<meta name="twitter:image" content="http://whc.unesco.org/uploads/thumbs/news_2400-1200-630-20220201110915.jpg" />
-		<link rel="image_src" href="http://whc.unesco.org/uploads/thumbs/news_2400-1200-630-20220201110915.jpg" />
-		<meta property="og:description" content="Legacy&#x20;Landscapes&#x20;Fund&#x20;&#x28;LLF&#x29;&#x20;has&#x20;announced&#x20;its&#x20;first&#x20;open&#x20;call&#x20;for&#x20;proposals.&#xd;&#xa;The&#x20;open&#x20;call&#x20;is&#x20;from&#x20;31&#x20;January&#x20;2022&#x20;-&#x20;30&#x20;April&#x20;2022.For&#x20;detailed&#x20;information,&#x20;please&#x20;make&#x20;sure&#x20;to&#x20;carefully&#x20;read&#x20;all&#x20;documents&#x20;&#x20;..." />
-		<meta property="og:title" content="Call&#x20;for&#x20;proposals&#x3a;&#x20;Legacy&#x20;Landscapes&#x20;Fund" />
-		<meta property="og:url" content="http://whc.unesco.org/en/news/2400/" />
-		<meta name="twitter:url" content="http://whc.unesco.org/en/news/2400/" />
-		</head>
+			Y.one('#clear-discipline-facet').on('click', function() {
+				queryScreen.clearFacet('discipline');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-download_type-facet').on('click', function() {
+				queryScreen.clearFacet('download_type');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_facet-facet').on('click', function() {
+				queryScreen.clearFacet('publication_facet');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_type-facet').on('click', function() {
+				queryScreen.clearFacet('publication_type');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_year-facet').on('click', function() {
+				queryScreen.clearFacet('publication_year');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-subject_facet-facet').on('click', function() {
+				queryScreen.clearFacet('subject_facet');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
 
-<body class="x-whc lang-en" id="bodyEl" style="height: 100%; " >
-	<noscript>Your browser does not support JavaScript.</noscript>
-	
-    <header class="header px-0  bg-primary position-relative is-border">
-        <nav class="navbar closing container" role="navigation" aria-label="Main">
-            <div class="navbar_logo pl-3 pl-xxl-0">
-                <a href="/">
-                    <img src="/assets/images/logo.svg" alt="UNESCO logo">
-                </a>
-                <a href="/" class="navbar_baseline">
-                    World Heritage Convention
-                </a>
-            </div>
-            <div class="navbar_burger bg-blue2">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="navbar_wrapper">
-                
-       <ul class="navbar_top">
-        
-        <li >
-            <a href="/en/donation" class="text-orangeLight font-weight-bold">Help preserve sites<span class="linearize-level-2-none"> now</span>!</a>
-        </li>
-        <li>
-            <a href="https://www.unesco.org" class="button-galaxy">Explore UNESCO</a>
-        </li>
-        
-                 <li>
-                    <div class="dropdown">
-                        <a class="dropdown-toggle text-white d-block" href="#" data-toggle="dropdown" id="dropdownMenuLang" aria-expanded="false">English</a>
-                        <div class="dropdown-menu dropdown-menu-responsive dropdown-menu-lg-right" aria-labelledby="dropdownMenuLang" style="max-width:200px;min-width: 120px;">
-                            <ul class="language-switcher-language-url pl-1">
-                                <li hreflang="en" class="en is-active">
-                                    <div class="language-link is-active small-lg text-xs-white text-lg-dark" hreflang="en">English</div>
-                                </li>
-                                <li hreflang="fr" class="fr">
-                                    <a href="/fr/actualites/2400/" class="language-link text-lg-dark small-lg" hreflang="fr">Français</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            
-    
-    <li>
-        <a class="text-white" href="/en/register/" id="menuLogin-link">Login</a>
-        
-
-  </li>
-
-</ul>
+	} );
+});
+</script>
+<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"Search:query_screen","businessUnit":"els:rp:st"},"visitor":{}};</script>
 
 
-                <div class="navbar_nav">
-                    <ul class="navbar_menu">
-                        <li>
-                            <a href="/en/about" class="navbar_menu-item is-expanded">Our expertise</a>
-                            <div class="navbar_submenu">
-                                <div class="submenu_wrapper row">
-                                    <!--  -->
-                                    <div class="col-12 col-md-6 col-lg-3 mb-3">
-                                        <div class="nav-item font-weight-bold"><a href="/en/about/" class="nav-link text-white">About World Heritage</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/news/">News</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/events/">Events</a></div>
-                                        <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/convention/">The Convention</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/conventiontext/">Convention Text</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/guidelines/">Operational Guidelines</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/compendium/">Policy Compendium</a></div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-3 mb-3">
-                                        <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/governingbodies/">Governing Bodies</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/ga/">The General Assembly</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/committee/">The Committee</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/decisions/">Resolutions / Decisions</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/sessions/">Sessions since 1977</a></div>
-                                        <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/statesparties/">The States Parties</a></div>
-                                        <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/advisorybodies/">The Advisory Bodies</a></div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-3 mb-3">
-                                        <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/funding/">Funding</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/world-heritage-fund/">World Heritage Fund</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/fr/regulationsfinancieres/">Financial regulations</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/intassistance/">International Assistance</a></div>
-                                        <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/emblem/">The Emblem</a></div>
-                                        
-                                        <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/faq/">Questions and answers</a></div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-3">
-                                        <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/world-heritage-centre/">The Centre</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/employment/">Employment &amp; Internships</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/whoswho/">Who's Who / Contacts</a></div>
-                                        
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/director/">Director of the World Heritage Centre</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/africa/">Africa</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/arabstates/">Arab States</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/asia-pacific/">Asia & Pacific</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/eur-na/">Europe & North America</a></div>
-                                        <div class="nav-item"><a class="nav-link text-white" href="/en/lac/">Latin America and the Caribbean</a></div>
-                                        
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="/en/list/" class="navbar_menu-item is-expanded text-nowrap">The List</a>
-                            <div class="navbar_submenu">
-                                <div class="submenu_wrapper row">
-                                    
-                        <div class="col-12 col-md-6 col-lg-3 mb-3">
-                            <div class="nav-item font-weight-bold"><a href="/en/globalstrategy/" class="nav-link  text-white">Global Strategy</a></div>
-                            <div class="nav-item"><a href="/en/criteria/" class="nav-link text-white">Criteria</a></div>
-                            <div class="nav-item"><a href="/en/upstreamprocess/" class="nav-link text-white">Upstream Process</a></div>
-                            <div class="nav-item"><a href="/en/tentativelists/" class="nav-link text-white">Tentative Lists</a></div>
-                            <div class="nav-item"><a href="/en/nominations/" class="nav-link text-white">World Heritage List Nominations</a></div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3 mb-3">
-                            <div class="nav-item font-weight-bold"><a href="/en/list/" class="nav-link text-white">World Heritage List</a></div>
-                            <div class="nav-item"><a href="/en/newproperties/" class="nav-link text-white">New Inscribed Properties</a></div>
-                            <div class="nav-item"><a href="/en/interactive-map/" class="nav-link text-white">Interactive Map</a></div>
-                            
-                            <div class="nav-item font-weight-bold mt-3"><a href="/en/158/" class="nav-link text-white">World Heritage in Danger</a></div>
-                            <div class="nav-item"><a href="/en/danger/" class="nav-link text-white">The List in Danger</a></div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3 mb-3">
-                            <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/118/">Reporting & Monitoring</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/soc/">State of Conservation</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/periodicreporting/">Periodic Reporting</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/prcycle3/">Questionnaires 2018-2024</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/pr-questionnaire/">Questionnaires 2008-2015</a></div>
-                            
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/reactive-monitoring/">Reactive Monitoring</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/factors/">List of factors affecting the properties</a></div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="nav-item font-weight-bold"><a href="/en/107/" class="nav-link text-white">Success Stories</a></div>
-                            <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/canopy/">World Heritage Canopy: Heritage Solutions for Sustainable Futures</a></div>
-                            <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/casestudies/">Examples of the Convention at work</a></div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <a href="/en/activities/" class="navbar_menu-item is-expanded">Activities</a>
-                <div class="navbar_submenu">
-                    <div class="submenu_wrapper row">
-                        <div class="col-12 col-lg-3 mb-3">
-                            <p class="text-white h5 mx-3">
-                                The World Heritage Centre is at the forefront of the international community’s efforts to protect and preserve.
-                            </p>
-                            <a class="btn btn-blue2 mt-2 mx-3 mb-4" href="/en/activities/">Browse all activities</a>
-                        </div>
-                        <div class="col-12 col-lg-3 mb-3">
-                            <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/activities/">Featured Activities</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/culture2030indicators/">Indicators Culture|2030</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/cities/">World Heritage Cities Programme</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/hul/">Recommendation on the Historic Urban Landscape</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/culturallandscape/">Cultural Landscapes</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/capacity-building/">Capacity Building</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/category2centres/">Category 2 Centres</a></div>
-                        </div>
-                        <div class="col-12 col-lg-3 mb-3">
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/natural-world-heritage/">Natural World Heritage</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/climatechange/">Climate Change and World Heritage</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/marine-programme/">World Heritage Marine Programme</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/cawhfi/">Central Africa World Heritage Forest Initiative (CAWHFI)</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/disaster-risk-reduction/">Reducing Disasters Risks at World Heritage Properties</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/activities/496/">World Heritage and Indigenous Peoples</a></div>
-                        </div>
-                        <div class="col-12 col-lg-3 mb-3">
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/wheducation/">World Heritage Education Programme</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/whvolunteers/">World Heritage Volunteers Initiative</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/sustainabledevelopment/">World Heritage and Sustainable Development</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/tourism/">World Heritage and Sustainable Tourism Programme</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/sids/">World Heritage Programme for Small Island Developing States (SIDS) </a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/religious-sacred-heritage/">Initiative on Heritage of Religious Interest</a></div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <a href="/en/partnerships" class="navbar_menu-item is-expanded">Partnerships</a>
-                <div class="navbar_submenu">
-                    <div class="submenu_wrapper row">
-                        <div class="col-12 col-lg-3 ">
-                            <p class="h4 text-white mx-3">
-                                World Heritage partnerships for conservation
-                            </p>
-                            <p class="text-white mx-3">Ensuring that World Heritage sites sustain their outstanding universal value is an increasingly challenging mission in today’s complex world, where sites are vulnerable to the effects of uncontrolled urban development, unsustainable tourism practices, neglect, natural calamities, pollution, political instability, and conflict.</p>
-                            <p class="mx-3">
-                                <a class="btn btn-blue2 btn-sm mt-2" href="/en/partners/">Our Partners</a>
-                                
-                                <a class="btn bg-orange btn-sm mt-2" href="/en/donation/">Donate</a>
-                            </p>
-                        </div>
-                        <div class="col-12 col-lg-9 ">
-                            <ul class="submenu_card">
-                                <li>
-                                    <a href="/en/partnerships/" class="card card-overlay">
-                                        <img src="https://whc.unesco.org/document/128912/t=3by2sm" alt="partnerships" class="w-100" />
-                                        <span>Partnerships</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/en/marketplace/" class="card card-overlay">
-                                        <img src="https://whc.unesco.org/document/190295/t=3by2sm" alt="marketplace" class="w-100" />
-                                        <span>Marketplace</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/en/partners/" class="card card-overlay">
-                                        <img src="https://whc.unesco.org/document/128241/t=3by2sm" alt="" class="w-100" />
-                                        <span>Our Partners</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/en/donation/" class="card card-overlay">
-                                        <img src="https://whc.unesco.org/document/190344/t=3by2sm" alt="Donate" class="w-100" />
-                                        <span>Donate</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <a href="/en/publications/" class="navbar_menu-item is-expanded">Publications</a>
-                <div class="navbar_submenu">
-                    <div class="submenu_wrapper row">
-                        <div class="col-12 col-lg-3 mb-3">
-                            <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/publications/">Publications</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/series/">Paper Series</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/urbannotebooks/">Urban Notebooks</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/176/">Brochures &amp; Info kits</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/resourcemanuals/">Resource Manuals</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/othermaterials/">Other materials</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/newsletter/">Newsletter</a></div>
-                            <!-- <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/281/">Group Tools</a></div> -->
-                        </div>
-                        <div class="col-12 col-lg-3 mb-3">
-                            
-                            <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/review/">Review</a></div>
-                            <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/map/">Wall Map</a></div>
-                            <div class="nav-item font-weight-bold mt-3"><a class="nav-link text-white" href="/en/documents/">Documents</a></div>
-                        </div>
-                        <div class="col-12 col-lg-3 mb-3">
-                            <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/resources/">Resources</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/search/">Search</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/glossary/">Glossary</a></div>
-                            
-                        </div>
-                        <div class="col-12 col-lg-3 mb-3">
-                            
-                            <div class="nav-item font-weight-bold"><a class="nav-link text-white" href="/en/disclaimer/">About this Website</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/disclaimer/">Terms / Policies</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/syndication/">Syndication</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/sitemap/">Site Map</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/typography/">Design System</a></div>
-                            <div class="nav-item"><a class="nav-link text-white" href="/en/219/">Useful Websites</a></div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </li>
-            <li>
-                <a data-toggle="collapse" href="#multiSearch" role="button" aria-expanded="false" aria-controls="multiSearch" class="py-lg-0 mb-lg-0 mb-3" aria-label="Search" title="Search"><span class="d-inline d-lg-none">Search</span> <span class="material-icons-sharp ml-2 ml-lg-0 big">search</span></a>
-            </li>
-        </ul>
-    </div>
-</div>
-</nav>
-<nav class="navbar_sticky">
-    <div class="navbar_sticky-wrapper container p-0">
-        <div class="navbar_logo py-2 pl-2 pl-sm-2">
-            <a href="/">
-                <img src="/assets/images/logo.svg" alt="UNESCO Logo">
-            </a>
-            <a href="/" class="navbar_baseline d-none d-lg-block ">
-                 World Heritage Convention
-            </a>
-        </div>
-        <div class="navbar_sticky-content">
-            <!--  <a href="/" class="button-galaxy">Explore UNESCO</a> -->
-        </div>
-    </div>
-</nav>
-<div class="collapse multi-collapse bg-light fixed-top vh-100" id="multiSearch">
-    <form action="/en/search/" method="get" name="search" id="searchForm" class="container p-2 py-lg-5 h-100">
-        <div class="text-right px-2 py-3 w-100">
-            <a data-toggle="collapse" href="#multiSearch" role="button" aria-expanded="false" aria-controls="multiSearch" class="round round-md bg-white text-gray4 material-icons-sharp">close</a>
-        </div>
-        <div class="d-flex align-items-center h-100">
-            <div class="form-row align-items-center justify-content-center p-2 py-lg-5 w-100">
-                <div class="col-12 col-lg-6">
-                    <input type="text" name="criteria" id="searchbar" class="form-control form-control-lg rounded-lg mb-2 mb-lg-0" placeholder="Search" aria-label="Search" />
-                </div>
-                <div class="col-12 col-lg-auto">
-                    <button class="btn btn-lg btn-primary" type="submit"  aria-label="search button">Search<span class="ml-1 material-icons-sharp ">search</span></button>
-                </div>
-                <div class="col-12 col-lg-auto ">
-                    <p class="pt-4 px-4">Take advantage of the search to browse through the World Heritage Centre information.</p>
-                </div>
-            </div>
-        </div>
-    </form>
-    
-</div>
+
+
+</head>
+<body class="legacy search">
+<!-- FILE /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen --><!-- This is the mobile navbar file. Do not delete or move from the top of header.pregen -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
+<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
+
+<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
+  
+  
+  <nav class="nav-collapse">
+    <ul>
+      <li class="menu-item active device-fixed-width"><a href="https://newprairiepress.org" title="Home" data-scroll >Home</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/communities.html" title="Browse" data-scroll >Browse Journals</a></li>
+      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/about.html" title="About" data-scroll >About</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
+    </ul>
+  </nav>
 </header>
 
-		<main>
-			
-      <div class="bg-primary py-3">
-        <div class="container pb-4">
-         <div class="d-flex justify-content-end justify-content-md-between align-items-center">
-          <div class="breadcrumb p-0 m-0 small d-none d-md-flex">
-            <a href="/en/" class="breadcrumb-item  text-white"> World Heritage Convention</a>
-            <a href="/en/news/" class="breadcrumb-item  text-white active" aria-current="page">News</a>
-          </div>
-          <div>
-            
-<div class="ml-auto pl-4 my-2 text-nowrap">
-	
-    <div class="dropdown d-inline-block">
-     <a class="round bg-gray2 text-dark" type="button" id="shareMenuButton" data-toggle="dropdown" aria-expanded="false"  onclick="if(typeof ga != 'undefined'){ga('send','event', 'whc-button-share', 'whc-button', 'whc-button-share-en-82');}"><span class="icon-share icon" data-toggle="tooltip" title="Share"></span></a>
-     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="shareMenuButton">
-       <a class="dropdown-item" href="/pg_friendly_print.cfm?cid=82&id=2400&&" title="print" id="print_button" target="_blank" onclick="if(typeof ga != 'undefined'){ga('send','event','whc-button-print', 'whc-button', 'whc-button-print-en-82');}">Print</a>
-       
-       <div class="dropdown-divider"></div>
-       <h6 class="dropdown-header">Share on social media</h6>
-       
-       <a class="dropdown-item" href="#" onclick="javascript:window.open('https://www.facebook.com/sharer/sharer.php?t=World%20Heritage%20Centre&u=http%3A%2F%2Fwhc%2Eunesco%2Eorg','fb',' width=400,height=480,location=0,menubar=1,scrollbars=no,toolbar=1')">Facebook</a>
-       <a class="dropdown-item" href="#"  onclick="javascript:window.open('https://twitter.com/intent/tweet?via=UNESCO&counturl=http://whc.unesco.org&text=World%20Heritage%20Centre&url=http%3A%2F%2Fwhc%2Eunesco%2Eorg','fb',' width=400,height=480,location=0,menubar=0,scrollbars=no,toolbar=no')">Twitter</a>
-       <div class="dropdown-divider"></div>
-       <h6 class="dropdown-header">UNESCO social media</h6>
-       <a class="dropdown-item" href="https://www.facebook.com/unesco">Facebook</a>
-       <a class="dropdown-item" href="https://www.youtube.com/unesco">Youtube</a>
-       <a class="dropdown-item" href="https://www.twitter.com/unesco">Twitter</a>
-       <div class="dropdown-divider"></div>
-       <a class="dropdown-item" href="/en/syndication" target="_blank">RSS World Heritage</a>
-       <div class="dropdown-divider"></div>
-       <a class="dropdown-item" href="/en/disclaimer/">Terms / Policies</a>
-       <a class="dropdown-item" href="/en/syndication/">Syndication</a>
-     </div>
-   </div>
-   
-   
+<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
+<!--<![endif]-->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
+<div id="npp">
+<div id="container"><a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
+
+<div id="header">
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_logo.inc -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
+<div id="pagetitle">
+
+<h1><a href="https://newprairiepress.org" title="New Prairie Press" >New Prairie Press</a></h1>
+</div>
+</div><div id="navigation"><!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://newprairiepress.org" title="home" ><span>home</span></a></li><li id="tabtwo"><a href="https://newprairiepress.org/about.html" title="about" ><span>about</span></a></li><li id="tabthree"><a href="https://newprairiepress.org/cgi/myaccount.cgi?context=" title="my account" ><span>my account</span></a></li><li id="tabfour"><a href="https://newprairiepress.org" title="Home" ><span>Home</span></a></li></ul></div>
+
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) --></div>
+
+
+
+<div id="wrapper">
+<div id="content">
+<div id="main" class="text">
+
+
+<div id="template_query_data" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="global-alert" class="hidden info">
 </div>
 
-          </div>
-        </div>
-        <div class="row ">
-          <div class="col-12 ">
-            <div class="h1 text-white">News</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-	<form action="/en/news/" method="get" name="progsearch" id="progsearch" >
-		
-		<input name="action" type="hidden" value="list" />
-		<div class="bg-light">
-			<div class="container py-2">
-				<div class="row">
-					<div class="col-12 col-md-8 col-lg-8 ">
-						
-							<div class="form-row my-0">
-								<div class="col-8 col-lg-5">
-									<div class="input-group">
-										<input placeholder="News Search" name="pattern" id="pattern" type="text" class="form-control">
-										<div class="input-group-append">
-											<button class="btn btn-secondary" type="submit" value="Search" >
-												<span class="material-icons-sharp" data-toggle="tooltip" title="News Search">search</span>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="col-4">
-									<div class="btn btn-outline-secondary collapsed" data-toggle="collapse" data-target="#collapseFilterW" aria-expanded="false" aria-controls="collapseFilterW" >
-										<span class="material-icons-sharp" data-toggle="tooltip" title="Filter your search">tune</span> Filter
-									</div>
-								</div>
-							</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="collapse" id="collapseFilterW">
-			<div class="py-4 border-bottom">
-				<div class="container  ">
-					<div class="row ">
-						<div class="col-12 col-md-6 col-lg-5">
-							<div class="card card-body bg-none border mb-3">
-								<div class="form-group">
-									<label >Date</label>
-									
-			<span class="input-group">
-				
-			<input type="text" name="dateStart" id="dateStart" class="inputdate form-control" ext:qtitle="Date picker" data-qtip="Date format: dd/mm/yyyy" placeholder="from..."/>
-		
-			<span class="input-group-append">
-				<span class="input-group-text">
-			
-				<img src="/graphics/icons/calendar.png" id="dateStart_trigger"
-				style="cursor: pointer;"
-				height="16" width="16"
-				ext:qtitle="Date picker"
-				data-qtip="Date format: dd/mm/yyyy"
-				/>
-			
-		</span>
-		</span>
-</span>
-		
-								</div>
-								<div class="form-group">
-									
-			<span class="input-group">
-				
-			<input type="text" name="dateEnd" id="dateEnd" class="inputdate form-control" ext:qtitle="Date picker" data-qtip="Date format: dd/mm/yyyy" placeholder="To..."/>
-		
-			<span class="input-group-append">
-				<span class="input-group-text">
-			
-				<img src="/graphics/icons/calendar.png" id="dateEnd_trigger"
-				style="cursor: pointer;"
-				height="16" width="16"
-				ext:qtitle="Date picker"
-				data-qtip="Date format: dd/mm/yyyy"
-				/>
-			
-		</span>
-		</span>
-</span>
-		
-								</div>
-							</div>
-							
-						</div>
-						<div class="col-12 col-md-6 col-lg-5">
-							<div class="card card-body bg-none border mb-3">
-								<div class="form-group">
-									<label>Country</label>
-									
-<div id="boxselect_D85DBD4C-9160-4469-05B9B11A71BA9E99" class="x-box-div"></div>
+<div id="query-wrapper">
 
-	<input type="hidden" id="boxselectval_D85DBD4C-9160-4469-05B9B11A71BA9E99" name="id_states" value="" />
-
-								</div>
-								<div class="form-group">
-									<label>Sites</label>
-									
-<div id="boxselect_D85DBD4F-FB36-4DFF-570A71C2492F68EA" class="x-box-div"></div>
-
-	<input type="hidden" id="boxselectval_D85DBD4F-FB36-4DFF-570A71C2492F68EA" name="id_sites" value="" />
-
-								</div>
-								<div class="form-group">
-									<label>Region</label>
-									
-<div id="boxselect_D85DBD52-CEB0-471C-CEAAEE79E0434420" class="x-box-div"></div>
-
-	<input type="hidden" id="boxselectval_D85DBD52-CEB0-471C-CEAAEE79E0434420" name="id_region" value="" />
-
-								</div>
-							</div>
-							<div class="card card-body bg-none border mb-3">
-								<div class="form-group">
-									<label>Keywords</label>
-									
-<div id="boxselect_D85DBD54-BCB4-9EF6-5050E17262D2C012" class="x-box-div"></div>
-
-	<input type="hidden" id="boxselectval_D85DBD54-BCB4-9EF6-5050E17262D2C012" name="id_keywords" value="" />
-
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="">
-						<button class="btn btn-primary" type="submit" value="Search" >
-							Search
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
-
-  <div id="content" >
-    
-	<div class="container">
-		<div class="row">
-			<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-7  mb-4 mt-5">
-				
-					<h1 class="display-2 text-break" property="name">
-						Call for proposals: Legacy Landscapes Fund
-					</h1>
-				
-			</div>
-		</div>
-		
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 order-lg-1 mb-4 mt-lg-4">
-					
-		<div class="tag tag-outline-gray mb-2 mr-1"> Monday, 31 January 2022 
-				<span class="text-muted">at 17:00</span>
-			
-		</div>
-	
-		<div class="tag tag-outline-gray mb-2 mr-1">
-			<span class="material-icons-sharp">access_time</span>
-			1 min read
-		</div>
-	
-				</div>
-				
-				<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-7  order-lg-0">
-					
-                    <figure class=" figure icaption w-100" style="">
-                        <a href="/include/tool_image_bootstrap.cfm?id=191553" class="lightbox" property="image"> 
-                                    <picture>
-                                        
-                                          <img src="/uploads/thumbs/news_2400-890-520-20220201110915.jpg" class="unveil icaption-img img-fluid w-100 border" title="&copy;"  style="" />
-                                      </picture>
-                                  
-                                </a>
-                            
-                        </figure>
-                        
-                    
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6  order-lg-0 content-article">
-					<p><a href="https://legacylandscapes.org/">Legacy Landscapes Fund (LLF)</a> has announced its <a href="https://legacylandscapes.org/resources/call-for-proposals/">first open call for proposals</a>.</p>
-<p><strong>The open call is from 31 January 2022 - 30 April 2022.</strong><br />For detailed information, please make sure to carefully read all documents accessible below.</p>
-<p><img class="w-100" src="https://whc.unesco.org/document/191552" border="0" alt="" /><br />Process of LLF Call for Proposals 2022</p>
-<h2>What LLF funds and How to Apply</h2>
-<p>Download the Call announcement here: <br /><a href="https://legacylandscapes.org/wp-content/uploads/2022/01/February2022-call-for-proposals.docx">https://legacylandscapes.org/wp-content/uploads/2022/01/February2022-call-for-proposals.docx</a><br /><br />Find the Grant programme guide here: <br /><a href="https://legacylandscapes.org/wp-content/uploads/2022/01/2022grant_program_guide-final.docx">https://legacylandscapes.org/wp-content/uploads/2022/01/2022grant_program_guide-final.docx</a><br /><br />Find the Glossary here: <br /><a href="https://legacylandscapes.org/wp-content/uploads/2022/01/2022glossaryfinal.docx">https://legacylandscapes.org/wp-content/uploads/2022/01/2022glossaryfinal.docx</a></p>
-<h2>Templates</h2>
-<p><a href="https://legacylandscapes.org/wp-content/uploads/2022/01/2022template.docx">Concept note</a><br /><a href="https://legacylandscapes.org/wp-content/uploads/2022/01/2022Budget.table_.xlsx">Budget</a><br /><a href="https://legacylandscapes.org/wp-content/uploads/2022/01/2022logframe.doc">Logical Framework</a></p>
-<p>LLF will hold open Q&amp;A sessions about the application process for the 2022 Call for Proposals in February and March. Sessions are voluntary, but LLF encourages eligible grantees to participate. As of the end of February, there will be a revolving Q&amp;A document available.</p>
-<p><a class="btn btn-primary mb-2 button" href="https://forms.office.com/Pages/ResponsePage.aspx?id=OEO6hJg2ukWjeLiRN1N4PJCxsxbhbmtAkje3tWfKExFUMUtUQ004WDBGUDhaUUVSVzdFUTdTN1FSUC4u&amp;wdLOR=cDD56DC46-6F9C-43A3-9F9B-D96D74B25823"> Register Here</a></p>
-<h2 id="contact">Contact</h2>
-<p>For any questions and inquiries regarding this call, please contact <a href="mailto:proposals@legacylandscapes.org">proposals@legacylandscapes.org</a></p>
-				</div>
-			</div>
-		
-		<div class="row">
-			<div class="col-12 ">
-				
-	<div class="border-top mt-4 pt-4">
-		
-		<div class="tag tag-outline-gray mb-2 mr-1"> Monday, 31 January 2022 
-				<span class="text-muted">at 17:00</span>
-			
-		</div>
-	
-		<div class="tag tag-outline-gray mb-2 mr-1">
-			<span class="material-icons-sharp">access_time</span>
-			1 min read
-		</div>
-	
+	<div id="show-search-container" class="query tr">
+		<a href="#" id="show-search" class="hidden">Show Search</a>
+		<a href="#" id="hide-search" class="hidden">Hide Search</a>
 	</div>
-	
-			</div>
-		</div>
-		
-  </div>
+	<div id="basic-search">
+		<form id="basic-search-form" method="GET" action="/do/search/"> 
+			<fieldset class="query">
+				<legend>Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
+				<label for="simple-search" class="hidden">Search </label>
+				<span class="grid_7"><input name="q" id="simple-search" type="text" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;"></span>
+				<span class="grid_4">
+					<button type="submit" name="query" value="Search" id="do-search" class="white medium">Search</button>
+					<a href="#" id="switch-to-advanced">Advanced</a>
+				</span>
+				<div class="clear"></div>
+				<input type="hidden" name="start" class="start-input" value="0">
+				<input type="hidden" name="context" id="basic-context" value="4521219">
+				
+					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
+				
+							</fieldset>
+		</form>
+	</div>
 
+	<div id="advanced-search" class="hidden">
+		<form method="GET" action="/do/search/">
+			<fieldset>
+				<legend>Advanced Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
+				<label for="search-string" class="hidden">Feedback</label>
+				<input type="hidden" name="start" class="start-input" value="0">
+				
+					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
+				
+				
+				<div class="query">
+					<input type="text" name="q" id="search-string" class="grid_12 alpha omega" onFocus="return" readonly="readonly" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;">
+				</div>
+				<div class="clear"></div>
+					
+				<div class="query">
+					<div id="rows">			
+							
+					</div> <!-- end rows -->
+				</div>		
+			</fieldset>
+			<div class="query">
+				
+					<span class="grid_2 prefix_5"><label for="start-date">Date range:</label></span>
+<span class="grid_2">
+	<input type="text" id="start-date" name="start_date" placeholder="MM/DD/YYYY" value="">
+</span>
+<label for="end-date" class="hidden">End Date:</label> 
+<span class="grid_2">
+	<input type="text" id="end-date" name="end_date" placeholder="MM/DD/YYYY" value="">
+</span>
+
+						
+				<div class="clear"></div>
+<p class="limit-search">
+		<label for="advanced-context" class="grid_2 prefix_5">
+			Limit search to:
+		</label>
+		<span class="grid_4">
+			<select name="context" id="advanced-context">
+				
+										<option value="4521219" selected="selected">New Prairie Press</option>
+									
+										<option value="1">All Repositories</option>
+												</select>
+	</span>
+</p>
+
+				<div class="clear"></div>
+<p class="sort-options">
+	<span class="grid_2 prefix_5">Sort by:</span>
+	<span class="grid_4">
+		<label for="sort-score">
+			<input type="radio" name="sort" id="sort-score" value="score" checked="checked"> Relevance
+		</label> 
+		<label for="sort-date">
+			<input type="radio" name="sort" id="sort-date" value="date_desc"> Publication Date
+		</label>
+	</span>
+</p>
+
+				<div class="clear"></div>
+<p class="pick-format">
+		<label for="results-format" class="grid_2 prefix_5">
+			Format:
+		</label>
+		<span class="grid_4">
+			<select name="format" id="results-format">
+								<option value="json">links</option>
+								<option value="refer">Bibliography Export</option>
+							</select>
+	</span>
+</p>
+
+				<div style="display:none;visibility:hidden;height:1px"><iframe id="export-frame" style="display:none;visibility:hidden;height:1px"></iframe></div>
+				<div class="clear"></div>
+				<span class="grid_12 tr">				
+				<button type="submit" value="Search" name="search" id="do-search-advanced" class="fr white medium">Search</button>
+
+				<a href="#" id="switch-to-basic">Basic</a>
+				</span>
+				<br class="clear" />
+			</div>
+			<div class="clear"></div>
+
+		</form>	
+	</div> <!-- advanced search -->
+</div><!-- query-wrapper -->
+
+<div id="query-results">
+
+<div class="query">
+<div class="grid_12" id="info-pane">
+<div id="results-header">
+		<div class="clear"></div>		
+	</div>
+<br class="clear" />
+</div>
+
+<div class="grid_3" id="facet-pane">
+
+	<p id="selected-facets">
+				<span id="selected-discipline-facet" class="hidden">
+			<a class="close" id="clear-discipline-facet"><i>&times;</i>
+			 <strong id="selected-discipline-facet-label"></strong></a>
+		</span>
+				<span id="selected-download_type-facet" class="hidden">
+			<a class="close" id="clear-download_type-facet"><i>&times;</i>
+			 <strong id="selected-download_type-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_facet-facet" class="hidden">
+			<a class="close" id="clear-publication_facet-facet"><i>&times;</i>
+			 <strong id="selected-publication_facet-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_type-facet" class="hidden">
+			<a class="close" id="clear-publication_type-facet"><i>&times;</i>
+			 <strong id="selected-publication_type-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_year-facet" class="hidden">
+			<a class="close" id="clear-publication_year-facet"><i>&times;</i>
+			 <strong id="selected-publication_year-facet-label"></strong></a>
+		</span>
+				<span id="selected-subject_facet-facet" class="hidden">
+			<a class="close" id="clear-subject_facet-facet"><i>&times;</i>
+			 <strong id="selected-subject_facet-facet-label"></strong></a>
+		</span>
+		
+	</p>
+<br class="clear" />
+	<div id="results-facets" class="hidden"></div>
+</div>
+<div class="grid_9" id="result-pane">
+	
+	<div id="results-list">
+		<div class="clear"></div>
+	</div>
+	<div id="results-footer"></div>
+</div>
+<br class="clear" />
+</div>
+
+<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
+	<div class="verticalalign">&nbsp;</div>
+	<div class="clear">&nbsp;</div>
 
 </div>
 
-	</main>
-	
-	<footer id="footer" class="bg-grey">
-		<div class="footer-wrapper"><div class="row "><div class="col-lg-12"><div class="footer-top"><img width="" height="" src="https://whc.unesco.org/document/189928" alt="logo" loading="lazy" style="width:150px;"></div></div><div class="col-lg-12"><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 small"><div class="col"><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/sessions/">Committee sessions</a><a class="nav-link text-dark" href="/en/documents/">Statutory Documents</a><a class="nav-link text-dark" href="/en/decisions/">Committee decisions</a><a class="nav-link text-dark" href="/en/sessions/">More sessions...</a><a class="nav-link text-dark" href="/en/sessions/45COM/">45<sup>th</sup> session (postponed)</a><a class="nav-link text-dark" href="/en/sessions/44COM/">44<sup>th</sup> session (2021)</a><a class="nav-link text-dark" href="/en/sessions/15EXTCOM/">15<sup>th</sup> Extraordinary session (2021)</a><a class="nav-link text-dark" href="/en/sessions/43COM/">43<sup>rd</sup> session (2019)</a><a class="nav-link text-dark" href="/en/sessions/42COM/">42<sup>nd</sup> session (2018)</a></p></div><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/ga">General Assembly</a><a class="nav-link text-dark" href="/en/sessions/23GA">23<sup>rd</sup> GA UNESCO Paris (2021)</a><a class="nav-link text-dark" href="/en/sessions/22GA">22<sup>nd</sup> GA UNESCO Paris (2019)</a></p></div><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/about/" >About World Heritage</a><a class="nav-link text-dark" href="/en/convention/">The Convention</a><a class="nav-link text-dark" href="/en/conventiontext/">Convention Text </a><a class="nav-link text-dark" href="/en/compendium/">Policy Compendium </a><a class="nav-link text-dark" href="/en/guidelines/">Operational Guidelines </a><a class="nav-link text-dark" href="/en/emblem/">The Emblem</a><a class="nav-link text-dark" href="/en/statesparties/">The States Parties</a><a class="nav-link text-dark" href="/en/advisorybodies/">The Advisory Bodies</a><a class="nav-link text-dark" href="/en/world-heritage-centre/">The Centre</a><a class="nav-link text-dark" href="/en/employment/">Employment &amp; Internships</a><a class="nav-link text-dark" href="/en/whoswho/">Who's Who</a></p></div></div><div class="col"><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/list/">The List</a><a class="nav-link text-dark" href="/en/list/">World Heritage List</a><a class="nav-link text-dark" href="/en/danger/">World Heritage in Danger</a><a class="nav-link text-dark" href="/en/newproperties/">New Inscriptions </a><a class="nav-link text-dark" href="/en/criteria/">Criteria for Selection</a><a class="nav-link text-dark" href="/en/tentativelists/">Tentative Lists</a><a class="nav-link text-dark" href="/en/nominations/">World Heritage List Nominations</a></p></div><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/118/">Reporting &amp; Monitoring</a><a class="nav-link text-dark" href="/en/soc/">State of Conservation (SOC)</a><a class="nav-link text-dark" href="/en/periodicreporting/">Periodic Reporting</a><a class="nav-link text-dark" href="/en/prcycle3/">Questionnaires 2018-2024</a><a class="nav-link text-dark" href="/en/pr-questionnaire/">Questionnaires 2008-2015</a><a class="nav-link text-dark" href="/en/173/">Reactive Monitoring</a><a class="nav-link text-dark" href="/en/africa/">Africa</a><a class="nav-link text-dark" href="/en/arabstates/">Arab States</a><a class="nav-link text-dark" href="/en/asia-pacific/">Asia &amp; Pacific</a><a class="nav-link text-dark" href="/en/lac/">Latin America and the Caribbean</a><a class="nav-link text-dark" href="/en/eur-na/">Europe and North America</a></p></div></div><div class="col"><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/partnerships/">Partnerships</a><a class="nav-link text-dark" href="/en/become-partner/">Become a Partner</a><a class="nav-link text-dark" href="/en/rolepartenaires/">What Partners Do</a><a class="nav-link text-dark" href="/en/partners/">Our Partners</a></p></div><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/activities/" class="nav-link text-dark">Activities</a><a class="nav-link text-dark" href="/en/activities/" class="nav-link text-dark">All our activities</a><a class="nav-link text-dark" href="/en/volunteer/" class="nav-link text-dark">Volunteer</a><a class="nav-link text-dark" href="/en/281/" class="nav-link text-dark">Group Tools</a></p></div><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/publications/">Publications</a><a class="nav-link text-dark" href="/en/review/">World Heritage Review</a><a class="nav-link text-dark" href="/en/series/">Series</a><a class="nav-link text-dark" href="/en/resourcemanuals/">Resource Manuals</a><a class="nav-link text-dark" href="/en/map/">World Heritage wall map</a><a class="nav-link text-dark" href="/en/publications/">More publications ...</a></p></div></div><div class="col"><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="/en/funding/">Funding</a><a class="nav-link text-dark" href="/en/world-heritage-fund/">World Heritage Fund</a><a class="nav-link text-dark" href="/en/intassistance">International Assistance</a></p></div><div class="border-top pt-3"><p><a class="nav-link text-dark font-weight-bold" href="#"><strong>More</strong></a><a class="nav-link text-dark" href="/en/contacts/">Contacts</a><a class="nav-link text-dark" href="/en/sitemap/">Site Map</a><a class="nav-link text-dark" href="/en/register">Become a member</a><a class="nav-link text-orange font-weight-bold" href="/en/donation/"><strong>Donate Now!</strong></a></p></div><div class="border-top pt-3"></div></div></div></div><div class="col-lg-12"><div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 small"><div class="col-lg-3"><div class="border-top pt-3"><a class="nav-link text-dark" href="https://fr.unesco.org/logopatronage">UNESCO Name &amp; Logo</a><a class="nav-link text-dark" href="https://fr.unesco.org/feedback/contactez-nous">FAQ</a><a class="nav-link text-dark" href="https://en.unesco.org/scamalert" class="nav-link">Scam alert</a><a class="nav-link text-dark" href="https://fr.unesco.org/about-us/ios/report-fraud-corruption-abuse">Report fraud, abuse, misconduct</a></div></div><div class="col-lg-3"><div class="border-top pt-3"><a class="nav-link text-dark" href="https://fr.unesco.org/news/gestion-environnementale">Environmental and Social Policies</a><a class="nav-link text-dark" href="https://fr.unesco.org/about-us/procedure104">Protection of human rights (Procedure 104)</a><a class="nav-link text-dark" href="https://opendata.unesco.org/fr/">Transparency Portal</a></div></div><div class="col-lg-3"><div class="border-top pt-3"><a class="nav-link text-dark" href="https://fr.unesco.org/this-site/access-to-information-policy">Information Policy</a><a class="nav-link text-dark" href="https://fr.unesco.org/this-site/our-online-privacy-policy">Privacy Policy</a></div></div><div class="col-lg-3"><div class="border-top pt-3"><a class="nav-link text-dark" href="https://www.facebook.com/unesco" aria-label="facebook.com/unesco">Facebook</a><a class="nav-link text-dark" href="https://instagram.com/unesco/" aria-label="instagram.com/unesco/">Instagram</a><a class="nav-link text-dark" href="https://twitter.com/unesco/"  aria-label="twitter.com/unesco_fr/">Twitter</a><a class="nav-link text-dark" href="https://www.youtube.com/user/unesco"  aria-label="youtube.com/user/unesco">Youtube</a><a class="nav-link text-dark" href="https://www.linkedin.com/company/unesco" aria-label="linkedin.com">Linkedin</a><a class="nav-link text-dark" href="/en/syndication" aria-label="syndication">Syndication RSS</a></div></div></div></div></div>
-			<div class="small border-top pt-3 mt-3">
-				
-			
-					<nav aria-label="breadcrumb" class="d-none d-lg-block">
-						<ol class="breadcrumb px-0 mb-0">
-							<li class="breadcrumb-item"><a href="http://www.unesco.org" >UNESCO</a></li>
-							<li class="breadcrumb-item"><a href="http://www.unesco.org/culture">Culture</a></li>
-							<li class="breadcrumb-item"><a href="/">World Heritage Centre</a></li>
-							<li class="breadcrumb-item"><a href="/en/35/">News & Events</a></li><li class="breadcrumb-item active"><a href="/en/news/">News</a></li>
-						</ol>
-					</nav>
-				
-			<p>
-				<a href="/en/disclaimer/" class="d-block">&copy; UNESCO World Heritage Centre 1992-2022</a>
-				
-			</p>
-			
-			<div class="modal lightboxIframe" id="lightboxIframe" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-				<div class="modal-dialog p-0 m-0 w-100 h-100 mw-100 rounded-0">
-					<div class="modal-content rounded-0 h-100 w-100 mw-100 border-0">
-						
-						<iframe src="" frameborder="0" width="100%" height="100%" class="p-0 m-0"></iframe>
-					</div>
-				</div>
-			</div>
-			
-			<div class="modal contactIframe" id="contactIframe" tabindex="-1" role="dialog" aria-labelledby="contactIframeModalLabel" aria-hidden="true">
-				<div class="modal-dialog p-0 m-0 w-100 h-100 mw-100 rounded-0">
-					<div class="modal-content rounded-0 h-100 w-100 mw-100 border-0">
-						
-						<iframe src="" frameborder="0" width="100%" height="100%" class="p-0 m-0"></iframe>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	</footer>
+	<div id="sidebar" role="complementary">
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
 
-	<div id="back-top"><a href="#top" aria-label="Back to top"><span class="back-top-text">top</span></a></div>
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc -->
+
+
 	
-	
-					<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<form method='get' action='https://newprairiepress.org/do/search/' id="sidebar-search">
+	<label for="search" accesskey="4">
+		Enter search terms:
+	</label>
+		<div>
+			<span class="border">
+				<input type="text" name='q' class="search" id="search">
+			</span> 
+			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
+		</div>
+	<label for="context" style="display:none;">
+		Select context to search:
+	</label> 
+		<div>
+			<span class="border">
+				<select name="fq" id="context">
 					
-					<script src="/assets/scripts/vendor/slick.min.js"></script>
-					<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-					<script src="/assets/scripts/app.js"></script>
-					<script src="/assets/scripts/unesco-whc.js?20220414" defer="defer"></script>
-					<script src="/javascript/sorttable2_bootstrap.js" defer="defer"></script>
 					
-				
-            <div class="modal" id="alertLogin" tabindex="-1" aria-labelledby="alertLoginLabel" aria-hidden="false" >
-                <div class="modal-dialog modal-dialog-centered ">
-                    <div class="modal-content bg-light">
-                        <div class="modal-header border-bottom-0">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body ">
-                            <div class="px-3">
-                              
-	<form name="login_form" class="" method="post" action="http://whc.unesco.org/pg.cfm?cid=82&l=en&id=2400&&" enctype="multipart/form-data">
-		
-		
-		<input placeholder="username" aria-label="username" type="text" class="form-control text" name="username" maxlength="40" width="18"  value=""  />
-		<input aria-label="Password" type="password" width="18" name="password" class="form-control text mt-1 " maxlength="40" size="16" value="" placeholder="Password"  />
-		
-		<div class="mt-1" >
-			<input aria-label="Remember me" type="checkbox" name="rememberme" id="rememberMe" checked="true" />
-			<label for="rememberMe">remember my profile</label>
+					
+					
+					<option value='virtual_ancestor_link:"https://newprairiepress.org"'>in this repository</option>
+					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
+				</select>
+			</span>
 		</div>
-		<div class="buttons mt-1">
-			<button class="btn bg-primary small_button plain_button button_padding" type="submit" name='SUBMITlog' value="Submit" title="Submit" style="color:white">
-				Login&nbsp;
-			</button>
-		</div>
-		<input type="hidden" name="l" value="en" />
-		<input type="hidden" name="cid_origin" value="82" />
-		
-			<input type="hidden" name="query_string_origin" value="&#x2f;en&#x2f;news&#x2f;2400" />
-		
-	</form>
+</form>
+
+<p class="advanced">
 	
-		<a href="/en/82/msg=forgotlogin">Forgot your username or password?</a>
 	
-			<br/>
-			<a href="/en/register/">Become a member</a>
+		<a href="https://newprairiepress.org/do/search/advanced/?fq=virtual_ancestor_link:%22https://newprairiepress.org%22" >
+			Advanced Search
+		</a>
+	
+</p>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
+	<ul id="side-notify">
+		<li class="notify">
+			<a href="https://newprairiepress.org/announcements.html" title="Email or RSS Notifications" >
+				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
+			</a>
+		</li>
+	</ul>
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
+
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_middle_7_8.inc -->
+
+
+<div id="sb-custom-middle">
+	<h2 class="sb-custom-title">Our Publications</h2>
+		<ul class="sb-custom-ul">
+			<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/journals.html" >
+					Journals
+				</a>
+			</li>
+			<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/conferences" title="Conference Proceedings" >
+					Conferences				</a>
+			</li>
+				<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/monographs" >
+					Monographs</a>
+			</li>
+			<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/specpubs" >Special Publications</a>
+			</li>
+		</ul>
+		<h2>Featured Collections</h2>
+<ul id="links">
+	<li><a href="https://newprairiepress.org/featured.html" title="" >Student Publications</a></li>
+</ul>
+<h2>Links for Editors</h2>
+<ul id="links">
+	<li><a href="https://newprairiepress.org/about.html#scope" title="" >Our Services</a></li>
+	<li><a href="https://newprairiepress.org/about.html#policies" title="" >Policies</a></li>
+	<li><a href="https://newprairiepress.org/about.html#copyright" title="" >Copyright</a></li>
+</div>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc -->
+<ul id="side-browse">
+
+
+<li class="collections"><a href="https://newprairiepress.org/communities.html" title="Browse by Journals" >Journals</a></li>
+<li class="discipline-browser"><a href="https://newprairiepress.org/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
+<li class="author"><a href="https://newprairiepress.org/authors.html" title="Browse by Author" >Authors</a></li>
+
+
+</ul>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
+
+
+
+
+	<ul id="side-author">
 		
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      
-        <script>
-            $('#multiSearch').on('show.bs.collapse', function () {
-                $('html').css('overflow','hidden');
-            });
-            $('#multiSearch').on('hidden.bs.collapse', function () {
-                $('html').css('overflow','');
-            });
-            $(document).keyup(function(e) {
-     if (e.key === "Escape") { /* escape key maps to keycode `27`*/
-         $('#multiSearch').collapse('hide');
-     }
- });
-</script>
-<script>Ext = {scopeCss: true};</script>
-    <script type="text/javascript" src="http://whc.unesco.org/javascript/ext-6.2.0-app-all/app.js?20220331"></script>
-        <script>
-            Ext.onReady(
-                function() {
-                    /* fix issue with window centered with extjs 6.2*/
-                    Ext.define('Ext.overrides.window.Window', {
-                        override: 'Ext.window.Window',
-                        onShow: function () {
-                            this.callParent(arguments);
-                            this.center();
-                        },
-                        initComponent: function () {
-                            this.on('render', function () {
-                                this.center();
-                            });
-                            this.callParent(arguments);
-                        },
-                        center: function () {
-                            var me = this,
-                            top = window.pageYOffset || document.documentElement.scrollTop,
-                            left = window.pageXOffset || document.documentElement.scrollLeft,
-                            size = Ext.Element.getViewSize();
-                            var newX = left + (size.width - me.getWidth()) / 2;
-                            var newY = top + (size.height - me.getHeight()) / 2;
-                            me.setXY([newX, newY]);
-                        }
-                    });
-                });
-            </script>
-        
-			<script type="text/javascript">
-				Ext.onReady(function()
-				{
-					Ext.get('dateStart_trigger').on('click',function(){
-						var datepcik = Ext.create('Ext.menu.DatePicker', {
-							closable :false,
-							listeners:
-							{'render':function(control){
-								var actualdate = Ext.Date.parse(Ext.get('dateStart').dom.value, 'j/m/Y');
-								if(actualdate ){
-									control.picker.setValue(actualdate);
-								}
-							}},
-							handler: function(dp, date){
-							Ext.get('dateStart').set({'value':Ext.Date.format(date, 'j/m/Y')});
-							/*Ext.get('dateStart').dom.value = Ext.Date.format(date, 'j/m/Y');*/
-       						/*Ext.Msg.alert('Date Selected', 'You selected ' + Ext.Date.format(date, 'M j, Y'));*/
-       					}
-       				});
-						datepcik.showBy(Ext.get('dateStart_trigger'));
-					});
-
-				});
-
-	</script>
-
-			<script type="text/javascript">
-				Ext.onReady(function()
-				{
-					Ext.get('dateEnd_trigger').on('click',function(){
-						var datepcik = Ext.create('Ext.menu.DatePicker', {
-							closable :false,
-							listeners:
-							{'render':function(control){
-								var actualdate = Ext.Date.parse(Ext.get('dateEnd').dom.value, 'j/m/Y');
-								if(actualdate ){
-									control.picker.setValue(actualdate);
-								}
-							}},
-							handler: function(dp, date){
-							Ext.get('dateEnd').set({'value':Ext.Date.format(date, 'j/m/Y')});
-							/*Ext.get('dateEnd').dom.value = Ext.Date.format(date, 'j/m/Y');*/
-       						/*Ext.Msg.alert('Date Selected', 'You selected ' + Ext.Date.format(date, 'M j, Y'));*/
-       					}
-       				});
-						datepcik.showBy(Ext.get('dateEnd_trigger'));
-					});
-
-				});
-
-	</script>
-
-				<script type="text/javascript" defer="defer">
-					Ext.onReady(function() {
-						Ext.Loader.setConfig({
-							enabled	: true,
-							paths	: {
-								app:'/app'
-							}
-						});
-						/* Data*/
-						Ext.define('app.model.selector_D85DBD4C-9160-4469-05B9B11A71BA9E99', {
-							extend: 'Ext.data.Model',
-							fields: [
-							{type: 'string', name: 'id', mapping:'id'},
-							{type: 'string', name: 'name', mapping:'name'},
-							{type: 'string', name: 'val', mapping:'val'},
-							{type: 'string',name: 'category', mapping:'category'},
-							{type: 'string',name: 'tip', mapping:'tip'},
-							{type: 'string',name: 'description', mapping:'description'}
-							],
-							sorters: {property: 'category'},
-							proxy: {
-								type: 'ajax',
-								actionMethods :{
-									create: 'POST',
-									read: 'POST',
-									update: 'POST',
-									destroy: 'POST'
-								},
-								url: '/include/lib_selector_json.cfm?list_name=statesIso',
-								extraParams:{
-									list_selected:"",
-									list_filter:"",
-									l:"en"
-									
-								},
-								reader: {
-									type: 'json',
-									rootProperty: 'result',
-									totalProperty: 'totalcount'
-								}
-							}
-						});
-						/*	Override to fix bug with pagination in EXT 5.1.0 https://www.sencha.com/forum/showthread.php?299443 */
-						Ext.define('WTCOMBO', {
-							override: 'Ext.form.field.ComboBox',
-							onBindStore: function(store, initial) {
-								this.callParent(arguments);
-								/* Deselect on container click is not required if paging toolbar exists*/
-								this.pickerSelectionModel.deselectOnContainerClick = false;
-							},
-							/* if the fromComponent owner is picker then do not collapse boundlist. */
-							onFocusLeave: function(e) {
-								var me = this;
-								if (e.fromComponent.activeOwner && e.fromComponent.activeOwner.id == this.picker.id) {
-									return;
-								}
-								me.collapse();
-								me.callParent([e]);
-							}
-						});
-						/* override to get label with HTML*/
-						if (!Ext.ClassManager.isCreated("Private.ui.TagFieldHtmlLabel")) {
-							Ext.define("Private.ui.TagFieldHtmlLabel", {
-								extend: 'Ext.form.field.Tag',
-								alias: 'widget.tagfieldhtmllabel',
-								/* TODO EXT UPGRADE. WHEN UPGRADING FROM 6.2.1 update this*/
-								getMultiSelectItemMarkup: function() {
-									var me = this,
-									childElCls = (me._getChildElCls && me._getChildElCls()) || '';
-									/* hook for rtl cls*/
-									if (!me.multiSelectItemTpl) {
-										if (!me.labelTpl) {
-											me.labelTpl = '{' + me.displayField + '}';
-										}
-										me.labelTpl = me.lookupTpl('labelTpl');
-										if (me.tipTpl) {
-											me.tipTpl = me.lookupTpl('tipTpl');
-										}
-										me.multiSelectItemTpl = new Ext.XTemplate([
-											'<tpl for=".">',
-												'<li data-selectionIndex="{[xindex - 1]}" data-recordId="{internalId}" role="presentation" class="' + me.tagItemCls + childElCls,
-												'<tpl if="this.isSelected(values)">',
-													' ' + me.tagSelectedCls,
-												'</tpl>',
-												'{%',
-												'values = values.data;',
-												'%}',
-												me.tipTpl ? '" data-qtip="{[this.getTip(values)]}">' : '">',
-												'<div role="presentation" class="' + me.tagItemTextCls + '">{[this.getItemLabel(values)]}</div>',
-												'<div role="presentation" class="' + me.tagItemCloseCls + childElCls + '"></div>',
-											'</li>',
-										'</tpl>',
-										{
-											isSelected: function(rec) {
-												return me.selectionModel.isSelected(rec);
-											},
-											getItemLabel: function(values) {
-												/* UPGRADE - removed htmlEncode here*/
-												return me.labelTpl.apply(values);
-											},
-											getTip: function(values) {
-												return Ext.String.htmlEncode(me.tipTpl.apply(values));
-											},
-											strict: true
-										}
-										]);
-									}
-									if (!me.multiSelectItemTpl.isTemplate) {
-										me.multiSelectItemTpl = this.lookupTpl('multiSelectItemTpl');
-									}
-									return me.multiSelectItemTpl.apply(me.valueCollection.getRange());
-								}
-							});
-						}
-						/* Create the combobox */
-						var tag = Ext.create('Private.ui.TagFieldHtmlLabel', {
-							store: Ext.create('Ext.data.Store',{
-								autoLoad :false,
-								autoSync: false,
-								
-									pageSize: 400,
-								
-								remoteSort: false,
-								remoteFilter: true,
-								id:'store_D85DBD4C-9160-4469-05B9B11A71BA9E99',
-								name:'',
-								model: 'app.model.selector_D85DBD4C-9160-4469-05B9B11A71BA9E99',
-								listeners : {
-									'load' : function(store, records, successful, operation, eOpts) {
-										store.getProxy().setExtraParam( 'list_selected', '' );
-										store.getProxy().setExtraParam( 'list_filter', '' );
-									}
-								}
-							}),
-							autoLoadOnValue:false,
-							listeners: {
-								beforerender:function(field, newValue, eOpts){
-									
-								},
-								change: function(field, newValue, oldValue) {
-									document.getElementById('boxselectval_D85DBD4C-9160-4469-05B9B11A71BA9E99').value = newValue;
-									this.inputEl.dom.value='';
-								}
-								,select: function(combo,record,eOpts){
-									/*if(this.getPicker().isVisible()){this.getPicker().alignTo(combo);}*/
-									
-								}
-							},
-							/*value : [""],*/
-							emptyText: '',
-							queryMode: 'remote',
-							scrollable : true,
-							forceSelection: false,
-							queryDelay : 300,
-							pageSize: true,
-							displayField: 'name',
-							valueField: 'val',
-							delimiter : ',',
-							minChars : 1,
-							submitValue  : false,
-							width:'100%',
-							cls:'',
-							style:'',
-							padding:'',
-							contentPaddingProperty:'' ,
-							editable:true,
-							selectOnFocus:true,
-							/*triggerAction: 'all',*/
-							
-							renderTo: 'boxselect_D85DBD4C-9160-4469-05B9B11A71BA9E99',
-							id:'idboxselect_D85DBD4C-9160-4469-05B9B11A71BA9E99',
-							anchor:'95%',
-							tipTpl: new Ext.XTemplate('{tip}'),
-							labelTpl: Ext.create('Ext.XTemplate','<tpl for=".">','{name}','</tpl>'),
-							
-								multiSelect: true,
-							
-							listConfig: {
-								tpl: new Ext.XTemplate(
-									'<ul class="x-list-plain">' +
-										'{% var lastcategory="",Category=values["category"]%}' +
-										'<tpl for=".">' +
-											'{% Category=values["category"]%}' +
-											/* Only show region headers when there are more than 10 choices*/
-											'{% if ( this.store.getCount() > 5 && Category !== lastcategory) {  %}' +
-											'{% lastcategory = values["category"];  %}' +
-											'<li class="x-grid-group-hd x-grid-group-title">{category}</li>' +
-											'{%  } %}'+
-											'<li class="x-boundlist-item" data-qtip="{tip}">' +
-												'{name}' +
-												' <span class="small text-muted">{description}</span>' +
-											'</li>'+
-										'</tpl>'+
-									'</ul>'
-									),
-								
-								typeahead : false,
-								minChars: 1
-							}
-						});
-						
-				tag.inputEl.dom.removeAttribute('name');
-				});
-</script>
-
-				<script type="text/javascript" defer="defer">
-					Ext.onReady(function() {
-						Ext.Loader.setConfig({
-							enabled	: true,
-							paths	: {
-								app:'/app'
-							}
-						});
-						/* Data*/
-						Ext.define('app.model.selector_D85DBD4F-FB36-4DFF-570A71C2492F68EA', {
-							extend: 'Ext.data.Model',
-							fields: [
-							{type: 'string', name: 'id', mapping:'id'},
-							{type: 'string', name: 'name', mapping:'name'},
-							{type: 'string', name: 'val', mapping:'val'},
-							{type: 'string',name: 'category', mapping:'category'},
-							{type: 'string',name: 'tip', mapping:'tip'},
-							{type: 'string',name: 'description', mapping:'description'}
-							],
-							sorters: {property: 'category'},
-							proxy: {
-								type: 'ajax',
-								actionMethods :{
-									create: 'POST',
-									read: 'POST',
-									update: 'POST',
-									destroy: 'POST'
-								},
-								url: '/include/lib_selector_json.cfm?list_name=sites',
-								extraParams:{
-									list_selected:"",
-									list_filter:"",
-									l:"en"
-									
-								},
-								reader: {
-									type: 'json',
-									rootProperty: 'result',
-									totalProperty: 'totalcount'
-								}
-							}
-						});
-						/*	Override to fix bug with pagination in EXT 5.1.0 https://www.sencha.com/forum/showthread.php?299443 */
-						Ext.define('WTCOMBO', {
-							override: 'Ext.form.field.ComboBox',
-							onBindStore: function(store, initial) {
-								this.callParent(arguments);
-								/* Deselect on container click is not required if paging toolbar exists*/
-								this.pickerSelectionModel.deselectOnContainerClick = false;
-							},
-							/* if the fromComponent owner is picker then do not collapse boundlist. */
-							onFocusLeave: function(e) {
-								var me = this;
-								if (e.fromComponent.activeOwner && e.fromComponent.activeOwner.id == this.picker.id) {
-									return;
-								}
-								me.collapse();
-								me.callParent([e]);
-							}
-						});
-						/* override to get label with HTML*/
-						if (!Ext.ClassManager.isCreated("Private.ui.TagFieldHtmlLabel")) {
-							Ext.define("Private.ui.TagFieldHtmlLabel", {
-								extend: 'Ext.form.field.Tag',
-								alias: 'widget.tagfieldhtmllabel',
-								/* TODO EXT UPGRADE. WHEN UPGRADING FROM 6.2.1 update this*/
-								getMultiSelectItemMarkup: function() {
-									var me = this,
-									childElCls = (me._getChildElCls && me._getChildElCls()) || '';
-									/* hook for rtl cls*/
-									if (!me.multiSelectItemTpl) {
-										if (!me.labelTpl) {
-											me.labelTpl = '{' + me.displayField + '}';
-										}
-										me.labelTpl = me.lookupTpl('labelTpl');
-										if (me.tipTpl) {
-											me.tipTpl = me.lookupTpl('tipTpl');
-										}
-										me.multiSelectItemTpl = new Ext.XTemplate([
-											'<tpl for=".">',
-												'<li data-selectionIndex="{[xindex - 1]}" data-recordId="{internalId}" role="presentation" class="' + me.tagItemCls + childElCls,
-												'<tpl if="this.isSelected(values)">',
-													' ' + me.tagSelectedCls,
-												'</tpl>',
-												'{%',
-												'values = values.data;',
-												'%}',
-												me.tipTpl ? '" data-qtip="{[this.getTip(values)]}">' : '">',
-												'<div role="presentation" class="' + me.tagItemTextCls + '">{[this.getItemLabel(values)]}</div>',
-												'<div role="presentation" class="' + me.tagItemCloseCls + childElCls + '"></div>',
-											'</li>',
-										'</tpl>',
-										{
-											isSelected: function(rec) {
-												return me.selectionModel.isSelected(rec);
-											},
-											getItemLabel: function(values) {
-												/* UPGRADE - removed htmlEncode here*/
-												return me.labelTpl.apply(values);
-											},
-											getTip: function(values) {
-												return Ext.String.htmlEncode(me.tipTpl.apply(values));
-											},
-											strict: true
-										}
-										]);
-									}
-									if (!me.multiSelectItemTpl.isTemplate) {
-										me.multiSelectItemTpl = this.lookupTpl('multiSelectItemTpl');
-									}
-									return me.multiSelectItemTpl.apply(me.valueCollection.getRange());
-								}
-							});
-						}
-						/* Create the combobox */
-						var tag = Ext.create('Private.ui.TagFieldHtmlLabel', {
-							store: Ext.create('Ext.data.Store',{
-								autoLoad :false,
-								autoSync: false,
-								
-									pageSize: 400,
-								
-								remoteSort: false,
-								remoteFilter: true,
-								id:'store_D85DBD4F-FB36-4DFF-570A71C2492F68EA',
-								name:'',
-								model: 'app.model.selector_D85DBD4F-FB36-4DFF-570A71C2492F68EA',
-								listeners : {
-									'load' : function(store, records, successful, operation, eOpts) {
-										store.getProxy().setExtraParam( 'list_selected', '' );
-										store.getProxy().setExtraParam( 'list_filter', '' );
-									}
-								}
-							}),
-							autoLoadOnValue:false,
-							listeners: {
-								beforerender:function(field, newValue, eOpts){
-									
-								},
-								change: function(field, newValue, oldValue) {
-									document.getElementById('boxselectval_D85DBD4F-FB36-4DFF-570A71C2492F68EA').value = newValue;
-									this.inputEl.dom.value='';
-								}
-								,select: function(combo,record,eOpts){
-									/*if(this.getPicker().isVisible()){this.getPicker().alignTo(combo);}*/
-									
-								}
-							},
-							/*value : [""],*/
-							emptyText: '',
-							queryMode: 'remote',
-							scrollable : true,
-							forceSelection: false,
-							queryDelay : 300,
-							pageSize: true,
-							displayField: 'name',
-							valueField: 'val',
-							delimiter : ',',
-							minChars : 1,
-							submitValue  : false,
-							width:'100%',
-							cls:'',
-							style:'',
-							padding:'',
-							contentPaddingProperty:'' ,
-							editable:true,
-							selectOnFocus:true,
-							/*triggerAction: 'all',*/
-							
-							renderTo: 'boxselect_D85DBD4F-FB36-4DFF-570A71C2492F68EA',
-							id:'idboxselect_D85DBD4F-FB36-4DFF-570A71C2492F68EA',
-							anchor:'95%',
-							tipTpl: new Ext.XTemplate('{tip}'),
-							labelTpl: Ext.create('Ext.XTemplate','<tpl for=".">','{name}','</tpl>'),
-							
-								multiSelect: true,
-							
-							listConfig: {
-								tpl: new Ext.XTemplate(
-									'<ul class="x-list-plain">' +
-										'{% var lastcategory="",Category=values["category"]%}' +
-										'<tpl for=".">' +
-											'{% Category=values["category"]%}' +
-											/* Only show region headers when there are more than 10 choices*/
-											'{% if ( this.store.getCount() > 5 && Category !== lastcategory) {  %}' +
-											'{% lastcategory = values["category"];  %}' +
-											'<li class="x-grid-group-hd x-grid-group-title">{category}</li>' +
-											'{%  } %}'+
-											'<li class="x-boundlist-item" data-qtip="{tip}">' +
-												'{name}' +
-												' <span class="small text-muted">{description}</span>' +
-											'</li>'+
-										'</tpl>'+
-									'</ul>'
-									),
-								
-								typeahead : false,
-								minChars: 1
-							}
-						});
-						
-				tag.inputEl.dom.removeAttribute('name');
-				});
-</script>
-
-				<script type="text/javascript" defer="defer">
-					Ext.onReady(function() {
-						Ext.Loader.setConfig({
-							enabled	: true,
-							paths	: {
-								app:'/app'
-							}
-						});
-						/* Data*/
-						Ext.define('app.model.selector_D85DBD52-CEB0-471C-CEAAEE79E0434420', {
-							extend: 'Ext.data.Model',
-							fields: [
-							{type: 'string', name: 'id', mapping:'id'},
-							{type: 'string', name: 'name', mapping:'name'},
-							{type: 'string', name: 'val', mapping:'val'},
-							{type: 'string',name: 'category', mapping:'category'},
-							{type: 'string',name: 'tip', mapping:'tip'},
-							{type: 'string',name: 'description', mapping:'description'}
-							],
-							sorters: {property: 'category'},
-							proxy: {
-								type: 'ajax',
-								actionMethods :{
-									create: 'POST',
-									read: 'POST',
-									update: 'POST',
-									destroy: 'POST'
-								},
-								url: '/include/lib_selector_json.cfm?list_name=regions',
-								extraParams:{
-									list_selected:"",
-									list_filter:"",
-									l:"en"
-									
-								},
-								reader: {
-									type: 'json',
-									rootProperty: 'result',
-									totalProperty: 'totalcount'
-								}
-							}
-						});
-						/*	Override to fix bug with pagination in EXT 5.1.0 https://www.sencha.com/forum/showthread.php?299443 */
-						Ext.define('WTCOMBO', {
-							override: 'Ext.form.field.ComboBox',
-							onBindStore: function(store, initial) {
-								this.callParent(arguments);
-								/* Deselect on container click is not required if paging toolbar exists*/
-								this.pickerSelectionModel.deselectOnContainerClick = false;
-							},
-							/* if the fromComponent owner is picker then do not collapse boundlist. */
-							onFocusLeave: function(e) {
-								var me = this;
-								if (e.fromComponent.activeOwner && e.fromComponent.activeOwner.id == this.picker.id) {
-									return;
-								}
-								me.collapse();
-								me.callParent([e]);
-							}
-						});
-						/* override to get label with HTML*/
-						if (!Ext.ClassManager.isCreated("Private.ui.TagFieldHtmlLabel")) {
-							Ext.define("Private.ui.TagFieldHtmlLabel", {
-								extend: 'Ext.form.field.Tag',
-								alias: 'widget.tagfieldhtmllabel',
-								/* TODO EXT UPGRADE. WHEN UPGRADING FROM 6.2.1 update this*/
-								getMultiSelectItemMarkup: function() {
-									var me = this,
-									childElCls = (me._getChildElCls && me._getChildElCls()) || '';
-									/* hook for rtl cls*/
-									if (!me.multiSelectItemTpl) {
-										if (!me.labelTpl) {
-											me.labelTpl = '{' + me.displayField + '}';
-										}
-										me.labelTpl = me.lookupTpl('labelTpl');
-										if (me.tipTpl) {
-											me.tipTpl = me.lookupTpl('tipTpl');
-										}
-										me.multiSelectItemTpl = new Ext.XTemplate([
-											'<tpl for=".">',
-												'<li data-selectionIndex="{[xindex - 1]}" data-recordId="{internalId}" role="presentation" class="' + me.tagItemCls + childElCls,
-												'<tpl if="this.isSelected(values)">',
-													' ' + me.tagSelectedCls,
-												'</tpl>',
-												'{%',
-												'values = values.data;',
-												'%}',
-												me.tipTpl ? '" data-qtip="{[this.getTip(values)]}">' : '">',
-												'<div role="presentation" class="' + me.tagItemTextCls + '">{[this.getItemLabel(values)]}</div>',
-												'<div role="presentation" class="' + me.tagItemCloseCls + childElCls + '"></div>',
-											'</li>',
-										'</tpl>',
-										{
-											isSelected: function(rec) {
-												return me.selectionModel.isSelected(rec);
-											},
-											getItemLabel: function(values) {
-												/* UPGRADE - removed htmlEncode here*/
-												return me.labelTpl.apply(values);
-											},
-											getTip: function(values) {
-												return Ext.String.htmlEncode(me.tipTpl.apply(values));
-											},
-											strict: true
-										}
-										]);
-									}
-									if (!me.multiSelectItemTpl.isTemplate) {
-										me.multiSelectItemTpl = this.lookupTpl('multiSelectItemTpl');
-									}
-									return me.multiSelectItemTpl.apply(me.valueCollection.getRange());
-								}
-							});
-						}
-						/* Create the combobox */
-						var tag = Ext.create('Private.ui.TagFieldHtmlLabel', {
-							store: Ext.create('Ext.data.Store',{
-								autoLoad :false,
-								autoSync: false,
-								
-									pageSize: 400,
-								
-								remoteSort: false,
-								remoteFilter: true,
-								id:'store_D85DBD52-CEB0-471C-CEAAEE79E0434420',
-								name:'',
-								model: 'app.model.selector_D85DBD52-CEB0-471C-CEAAEE79E0434420',
-								listeners : {
-									'load' : function(store, records, successful, operation, eOpts) {
-										store.getProxy().setExtraParam( 'list_selected', '' );
-										store.getProxy().setExtraParam( 'list_filter', '' );
-									}
-								}
-							}),
-							autoLoadOnValue:false,
-							listeners: {
-								beforerender:function(field, newValue, eOpts){
-									
-								},
-								change: function(field, newValue, oldValue) {
-									document.getElementById('boxselectval_D85DBD52-CEB0-471C-CEAAEE79E0434420').value = newValue;
-									this.inputEl.dom.value='';
-								}
-								,select: function(combo,record,eOpts){
-									/*if(this.getPicker().isVisible()){this.getPicker().alignTo(combo);}*/
-									
-								}
-							},
-							/*value : [""],*/
-							emptyText: '',
-							queryMode: 'remote',
-							scrollable : true,
-							forceSelection: false,
-							queryDelay : 300,
-							pageSize: true,
-							displayField: 'name',
-							valueField: 'val',
-							delimiter : ',',
-							minChars : 1,
-							submitValue  : false,
-							width:'100%',
-							cls:'',
-							style:'',
-							padding:'',
-							contentPaddingProperty:'' ,
-							editable:true,
-							selectOnFocus:true,
-							/*triggerAction: 'all',*/
-							
-							renderTo: 'boxselect_D85DBD52-CEB0-471C-CEAAEE79E0434420',
-							id:'idboxselect_D85DBD52-CEB0-471C-CEAAEE79E0434420',
-							anchor:'95%',
-							tipTpl: new Ext.XTemplate('{tip}'),
-							labelTpl: Ext.create('Ext.XTemplate','<tpl for=".">','{name}','</tpl>'),
-							
-								multiSelect: true,
-							
-							listConfig: {
-								tpl: new Ext.XTemplate(
-									'<ul class="x-list-plain">' +
-										'{% var lastcategory="",Category=values["category"]%}' +
-										'<tpl for=".">' +
-											'{% Category=values["category"]%}' +
-											/* Only show region headers when there are more than 10 choices*/
-											'{% if ( this.store.getCount() > 5 && Category !== lastcategory) {  %}' +
-											'{% lastcategory = values["category"];  %}' +
-											'<li class="x-grid-group-hd x-grid-group-title">{category}</li>' +
-											'{%  } %}'+
-											'<li class="x-boundlist-item" data-qtip="{tip}">' +
-												'{name}' +
-												' <span class="small text-muted">{description}</span>' +
-											'</li>'+
-										'</tpl>'+
-									'</ul>'
-									),
-								
-								typeahead : false,
-								minChars: 1
-							}
-						});
-						
-				tag.inputEl.dom.removeAttribute('name');
-				});
-</script>
-
-				<script type="text/javascript" defer="defer">
-					Ext.onReady(function() {
-						Ext.Loader.setConfig({
-							enabled	: true,
-							paths	: {
-								app:'/app'
-							}
-						});
-						/* Data*/
-						Ext.define('app.model.selector_D85DBD54-BCB4-9EF6-5050E17262D2C012', {
-							extend: 'Ext.data.Model',
-							fields: [
-							{type: 'string', name: 'id', mapping:'id'},
-							{type: 'string', name: 'name', mapping:'name'},
-							{type: 'string', name: 'val', mapping:'val'},
-							{type: 'string',name: 'category', mapping:'category'},
-							{type: 'string',name: 'tip', mapping:'tip'},
-							{type: 'string',name: 'description', mapping:'description'}
-							],
-							sorters: {property: 'category'},
-							proxy: {
-								type: 'ajax',
-								actionMethods :{
-									create: 'POST',
-									read: 'POST',
-									update: 'POST',
-									destroy: 'POST'
-								},
-								url: '/include/lib_selector_json.cfm?list_name=keywords',
-								extraParams:{
-									list_selected:"",
-									list_filter:"",
-									l:"en"
-									
-								},
-								reader: {
-									type: 'json',
-									rootProperty: 'result',
-									totalProperty: 'totalcount'
-								}
-							}
-						});
-						/*	Override to fix bug with pagination in EXT 5.1.0 https://www.sencha.com/forum/showthread.php?299443 */
-						Ext.define('WTCOMBO', {
-							override: 'Ext.form.field.ComboBox',
-							onBindStore: function(store, initial) {
-								this.callParent(arguments);
-								/* Deselect on container click is not required if paging toolbar exists*/
-								this.pickerSelectionModel.deselectOnContainerClick = false;
-							},
-							/* if the fromComponent owner is picker then do not collapse boundlist. */
-							onFocusLeave: function(e) {
-								var me = this;
-								if (e.fromComponent.activeOwner && e.fromComponent.activeOwner.id == this.picker.id) {
-									return;
-								}
-								me.collapse();
-								me.callParent([e]);
-							}
-						});
-						/* override to get label with HTML*/
-						if (!Ext.ClassManager.isCreated("Private.ui.TagFieldHtmlLabel")) {
-							Ext.define("Private.ui.TagFieldHtmlLabel", {
-								extend: 'Ext.form.field.Tag',
-								alias: 'widget.tagfieldhtmllabel',
-								/* TODO EXT UPGRADE. WHEN UPGRADING FROM 6.2.1 update this*/
-								getMultiSelectItemMarkup: function() {
-									var me = this,
-									childElCls = (me._getChildElCls && me._getChildElCls()) || '';
-									/* hook for rtl cls*/
-									if (!me.multiSelectItemTpl) {
-										if (!me.labelTpl) {
-											me.labelTpl = '{' + me.displayField + '}';
-										}
-										me.labelTpl = me.lookupTpl('labelTpl');
-										if (me.tipTpl) {
-											me.tipTpl = me.lookupTpl('tipTpl');
-										}
-										me.multiSelectItemTpl = new Ext.XTemplate([
-											'<tpl for=".">',
-												'<li data-selectionIndex="{[xindex - 1]}" data-recordId="{internalId}" role="presentation" class="' + me.tagItemCls + childElCls,
-												'<tpl if="this.isSelected(values)">',
-													' ' + me.tagSelectedCls,
-												'</tpl>',
-												'{%',
-												'values = values.data;',
-												'%}',
-												me.tipTpl ? '" data-qtip="{[this.getTip(values)]}">' : '">',
-												'<div role="presentation" class="' + me.tagItemTextCls + '">{[this.getItemLabel(values)]}</div>',
-												'<div role="presentation" class="' + me.tagItemCloseCls + childElCls + '"></div>',
-											'</li>',
-										'</tpl>',
-										{
-											isSelected: function(rec) {
-												return me.selectionModel.isSelected(rec);
-											},
-											getItemLabel: function(values) {
-												/* UPGRADE - removed htmlEncode here*/
-												return me.labelTpl.apply(values);
-											},
-											getTip: function(values) {
-												return Ext.String.htmlEncode(me.tipTpl.apply(values));
-											},
-											strict: true
-										}
-										]);
-									}
-									if (!me.multiSelectItemTpl.isTemplate) {
-										me.multiSelectItemTpl = this.lookupTpl('multiSelectItemTpl');
-									}
-									return me.multiSelectItemTpl.apply(me.valueCollection.getRange());
-								}
-							});
-						}
-						/* Create the combobox */
-						var tag = Ext.create('Private.ui.TagFieldHtmlLabel', {
-							store: Ext.create('Ext.data.Store',{
-								autoLoad :false,
-								autoSync: false,
-								
-									pageSize: 400,
-								
-								remoteSort: false,
-								remoteFilter: true,
-								id:'store_D85DBD54-BCB4-9EF6-5050E17262D2C012',
-								name:'',
-								model: 'app.model.selector_D85DBD54-BCB4-9EF6-5050E17262D2C012',
-								listeners : {
-									'load' : function(store, records, successful, operation, eOpts) {
-										store.getProxy().setExtraParam( 'list_selected', '' );
-										store.getProxy().setExtraParam( 'list_filter', '' );
-									}
-								}
-							}),
-							autoLoadOnValue:false,
-							listeners: {
-								beforerender:function(field, newValue, eOpts){
-									
-								},
-								change: function(field, newValue, oldValue) {
-									document.getElementById('boxselectval_D85DBD54-BCB4-9EF6-5050E17262D2C012').value = newValue;
-									this.inputEl.dom.value='';
-								}
-								,select: function(combo,record,eOpts){
-									/*if(this.getPicker().isVisible()){this.getPicker().alignTo(combo);}*/
-									
-								}
-							},
-							/*value : [""],*/
-							emptyText: '',
-							queryMode: 'remote',
-							scrollable : true,
-							forceSelection: false,
-							queryDelay : 300,
-							pageSize: true,
-							displayField: 'name',
-							valueField: 'val',
-							delimiter : ',',
-							minChars : 1,
-							submitValue  : false,
-							width:'100%',
-							cls:'',
-							style:'',
-							padding:'',
-							contentPaddingProperty:'' ,
-							editable:true,
-							selectOnFocus:true,
-							/*triggerAction: 'all',*/
-							
-							renderTo: 'boxselect_D85DBD54-BCB4-9EF6-5050E17262D2C012',
-							id:'idboxselect_D85DBD54-BCB4-9EF6-5050E17262D2C012',
-							anchor:'95%',
-							tipTpl: new Ext.XTemplate('{tip}'),
-							labelTpl: Ext.create('Ext.XTemplate','<tpl for=".">','{name}','</tpl>'),
-							
-								multiSelect: true,
-							
-							listConfig: {
-								tpl: new Ext.XTemplate(
-									'<ul class="x-list-plain">' +
-										'{% var lastcategory="",Category=values["category"]%}' +
-										'<tpl for=".">' +
-											'{% Category=values["category"]%}' +
-											/* Only show region headers when there are more than 10 choices*/
-											'{% if ( this.store.getCount() > 5 && Category !== lastcategory) {  %}' +
-											'{% lastcategory = values["category"];  %}' +
-											'<li class="x-grid-group-hd x-grid-group-title">{category}</li>' +
-											'{%  } %}'+
-											'<li class="x-boundlist-item" data-qtip="{tip}">' +
-												'{name}' +
-												' <span class="small text-muted">{description}</span>' +
-											'</li>'+
-										'</tpl>'+
-									'</ul>'
-									),
-								
-								typeahead : false,
-								minChars: 1
-							}
-						});
-						
-				tag.inputEl.dom.removeAttribute('name');
-				});
-</script>
-
-			<script>
-				$('.lightbox').on('click',function(e){
-					e.preventDefault();
-					let iframeSrc=$(this).attr('href');
-					$('.lightboxIframe').on('shown.bs.modal',function(){
-						$(this).find('iframe').attr('src',iframeSrc)
-					})
-					$('.lightboxIframe').on('hidden.bs.modal',function(){
-						$(this).find('iframe').attr('src','')
-					})
-					$('#lightboxIframe').modal({keyboard: true,show:true});
-				}
-				);
-
-				$('.contactButton').on('click',function(e){
-					e.preventDefault();
-					let keywordValue=$(this).attr('keyword');
-						$('.contactIframe').on('shown.bs.modal',function(){
-					$(this).find('iframe').attr('src',"/include/tool_contact_bootstrap.cfm"+"?keyword="+keywordValue)
-				});
-						$('.contactIframe').on('hidden.bs.modal',function(){
-						$(this).find('iframe').attr('src','')
-					})
-					$('#contactIframe').modal({keyboard: true,show:true});
-				});
-			</script>
+		<li class="submit">
+			<a href="https://newprairiepress.org/submit_research.html" title="Submissions" >
+				Submissions
+			</a>
+		</li>
 		
-<script type='text/javascript' defer='defer'>$('#menuLogin-link').click(function(ev){ev.preventDefault();$('#alertLogin').modal('show');});</script>
+<li><a href="https://newprairiepress.org/contact_us.html" title="Contact Us" >Contact Us</a></li>
 
-<div id="map-win" class="x-hidden"></div>
-<div class="clear"></div>
+	</ul>
 
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-6025718-3', 'auto',{"cookieDomain":".unesco.org"}); 
 
-ga('send', 'pageview');
-</script>
 
-</body>
-</html> 
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
+	
+
+
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/twitter_badge.inc --><div id="twitter-badge">
+<a class="twitter-timeline" href="https://twitter.com/NewPrairiePress" data-widget-id="368524012336316418" data-chrome="transparent" width="220" height="400" >Tweets by @NewPrairiePress</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div><!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
+	
+
+
+
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+	<div class="verticalalign">&nbsp;</div>
+	</div>
+
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
+	
+	
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
+
+<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
+	<em>Digital Commons</em>
+</a>
+
+</div>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
+	<p>
+		<a href="https://newprairiepress.org" title="Home page" accesskey="1" >Home</a> | 
+		<a href="https://newprairiepress.org/about.html" title="About" >About</a> | 
+		<a href="https://newprairiepress.org/faq.html" title="FAQ" >FAQ</a> | 
+		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
+		<a href="https://newprairiepress.org/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
+	</p>
+	<p>
+	
+	
+		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
+	
+		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
+	</p> 
+	
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+
+</div>
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_analytics.inc --><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42891787-24', 'newprairiepress.org');
+  ga('send', 'pageview');
+
+</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+
+<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>

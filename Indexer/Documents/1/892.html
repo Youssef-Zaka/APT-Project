@@ -1,613 +1,552 @@
- <!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1"/>
-        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-        <meta http-equiv="cache-control" content="no-cache,no-store"/>
-        <meta http-equiv="pragma" content="no-cache"/>
-        <meta http-equiv="expires" content="-1"/>
-        <meta name='mswebdialog-title' content='Connecting to UNESCO authentication service'/>
-
-        <title>Sign In</title>
-        <script type='text/javascript'>
-//<![CDATA[
-function LoginErrors(){this.userNameFormatError = 'Enter your user ID in the format \u0026quot;domain\\user\u0026quot; or \u0026quot;user@domain\u0026quot;.'; this.passwordEmpty = 'Enter your password.'; this.passwordTooLong = 'Password is too long (\u0026gt; 128 characters).';}; var maxPasswordLength = 128;
-//]]>
-</script>
-
-<script type='text/javascript'>
-//<![CDATA[
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-function InputUtil(errTextElementID, errDisplayElementID) {
-
-    if (!errTextElementID)  errTextElementID = 'errorText'; 
-    if (!errDisplayElementID)  errDisplayElementID = 'error'; 
-
-    this.hasFocus = false;
-    this.errLabel = document.getElementById(errTextElementID);
-    this.errDisplay = document.getElementById(errDisplayElementID);
-};
-InputUtil.prototype.canDisplayError = function () {
-    return this.errLabel && this.errDisplay;
-}
-InputUtil.prototype.checkError = function () {
-    if (!this.canDisplayError){
-        throw new Error ('Error element not present');
-    }
-    if (this.errLabel && this.errLabel.innerHTML) {
-        this.errDisplay.style.display = '';        
-        var cause = this.errLabel.getAttribute('for');
-        if (cause) {
-            var causeNode = document.getElementById(cause);
-            if (causeNode && causeNode.value) {
-                causeNode.focus();
-                this.hasFocus = true;
-            }
-        }
-    }
-    else {
-        this.errDisplay.style.display = 'none';
-    }
-};
-InputUtil.prototype.setInitialFocus = function (input) {
-    if (this.hasFocus) return;
-    var node = document.getElementById(input);
-    if (node) {
-        if ((/^\s*$/).test(node.value)) {
-            node.focus();
-            this.hasFocus = true;
-        }
-    }
-};
-InputUtil.prototype.setError = function (input, errorMsg) {
-    if (!this.canDisplayError) {
-        throw new Error('Error element not present');
-    }
-    input.focus();
-
-    if (errorMsg) {
-        this.errLabel.innerHTML = errorMsg;
-    }
-    this.errLabel.setAttribute('for', input.id);
-    this.errDisplay.style.display = '';
-};
-InputUtil.makePlaceholder = function (input) {
-    var ua = navigator.userAgent;
-
-    if (ua != null && 
-        (ua.match(/MSIE 9.0/) != null || 
-         ua.match(/MSIE 8.0/) != null ||
-         ua.match(/MSIE 7.0/) != null)) {
-        var node = document.getElementById(input);
-        if (node) {
-            var placeholder = node.getAttribute("placeholder");
-            if (placeholder != null && placeholder != '') {
-                var label = document.createElement('input');
-                label.type = "text";
-                label.value = placeholder;
-                label.readOnly = true;
-                label.style.position = 'absolute';
-                label.style.borderColor = 'transparent';
-                label.className = node.className + ' hint';
-                label.tabIndex = -1;
-                label.onfocus = function () { this.nextSibling.focus(); };
-
-                node.style.position = 'relative';
-                node.parentNode.style.position = 'relative';
-                node.parentNode.insertBefore(label, node);
-                node.onkeyup = function () { InputUtil.showHint(this); };
-                node.onblur = function () { InputUtil.showHint(this); };
-                node.style.background = 'transparent';
-
-                node.setAttribute("placeholder", "");
-                InputUtil.showHint(node);
-            }
-        }
-    }
-};
-InputUtil.focus = function (inputField) {
-    var node = document.getElementById(inputField);
-    if (node) node.focus();
-};
-InputUtil.hasClass = function(node, clsName) {
-    return node.className.match(new RegExp('(\\s|^)' + clsName + '(\\s|$)'));
-};
-InputUtil.addClass = function(node, clsName) {
-    if (!this.hasClass(node, clsName)) node.className += " " + clsName;
-};
-InputUtil.removeClass = function(node, clsName) {
-    if (this.hasClass(node, clsName)) {
-        var reg = new RegExp('(\\s|^)' + clsName + '(\\s|$)');
-        node.className = node.className.replace(reg, ' ');
-    }
-};
-InputUtil.showHint = function (node, gotFocus) {
-    if (node.value && node.value != '') {
-        node.previousSibling.style.display = 'none';
-    }
-    else {
-        node.previousSibling.style.display = '';
-    }
-};
-InputUtil.updatePlaceholder = function (input, placeholderText) {
-    var node = document.getElementById(input);
-    if (node) {
-        var ua = navigator.userAgent;
-        if (ua != null &&
-            (ua.match(/MSIE 9.0/) != null ||
-            ua.match(/MSIE 8.0/) != null ||
-            ua.match(/MSIE 7.0/) != null)) {
-            var label = node.previousSibling;
-            if (label != null) {
-                label.value = placeholderText;
-            }
-        }
-        else {
-            node.placeholder = placeholderText;
-        }
-    }
-};
-
-//]]>
-</script>
-
-
-        
-        <link rel="stylesheet" type="text/css" href="/adfs/portal/css/style.css?id=3B1A0C704CDAE8ECD48AA8F0D50409D981CEF21D7AE6DC85B0797D270101B151" /><style>.illustrationClass {background-image:url(/adfs/portal/illustration/illustration.png?id=0AB803EBFEA78F936437E54F4DC97B9D9AC40C5FE7CE488669DE6F732B808373);}</style>
-
-    </head>
-    <body dir="ltr" class="body">
-    <div id="noScript" style="position:static; width:100%; height:100%; z-index:100">
-        <h1>JavaScript required</h1>
-        <p>JavaScript is required. This web browser does not support JavaScript or JavaScript in this web browser is not enabled.</p>
-        <p>To find out if your web browser supports JavaScript or to enable JavaScript, see web browser help.</p>
-    </div>
-    <script type="text/javascript" language="JavaScript">
-         document.getElementById("noScript").style.display = "none";
-    </script>
-    <div id="fullPage">
-        <div id="brandingWrapper" class="float">
-            <div id="branding"></div>
-        </div>
-        <div id="contentWrapper" class="float">
-            <div id="content">
-                <div id="header">
-                    <h4>UNESCO authentication service</h4>
-                </div>
-                <main>
-                    <div id="workArea">
-                        
-    <div id="authArea" class="groupMargin">
-        
-        
-        
-    <div id="loginArea">        
-        <div id="loginMessage" class="groupMargin">Sign in</div>
-
-        <form method="post" id="loginForm" autocomplete="off" novalidate="novalidate" onKeyPress="if (event && event.keyCode == 13) Login.submitLoginRequest();" action="/adfs/ls/?SAMLRequest=jVNdj9owEHy%2FX4HyDvngOMCCSGm4tkgUIuD60JfK2Js7S4mdep2D%2B%2Fd1HDiiqkdrRYqynp3dnZ3MkJZFRZLavMgt%2FKoBzV3PnlNZSCTucu7VWhJFUSCRtAQkhpFd8m1FokFAKq2MYqrw%2Fki7nUURQRuhZJu2XMy9zfpxtfmyXP%2FMRwcaPTDOD9OHaBgxNs2DcJjTkMM0nEyCCZ1OhmO4b1O%2Fg0bLM%2FcsbRvJtHoVHPTaVp17T%2BvHXbo5l0GsYSnRUGlsQhBF%2FWBkn304JsMpuR%2F9aHELq4KQ1DjeF2MqJL6PBqNBLQGZGij97FOeo1%2Bg%2F17UyfBJSC7k8%2B3pDy0Iydf9Putnm92%2BJUkuqqRKYl2C3oF%2BFQyetqtrHyC7XTRS%2B6yFe7FjmTUx4mbVcdMG13VFi3GzKj7zu7dXfEUauZaLTBWCvbl4cz4rXVLz8TThIHQRwfu5gxIoqSgSzjUgeu88SVGoY6qBGrsSo2vwen7cKX62HnBnRDu%2BgZPppaqsqBbYrAFOlJnzhNcpu%2FC0sK7aQh7fNB4jrMHZcGZfR6UvkvyV6n%2FL5WAN5wxDqMWANIK1n0e7a3XEfxZpAR8oEd9drrs%2Favwb&RelayState=user&SigAlg=http%3A%2F%2Fwww.w3.org%2F2001%2F04%2Fxmldsig-more%23rsa-sha256&Signature=XBiG09qrnlRwNaUZ4TAv%2B%2BBnEpe1r5%2Fq3%2F8UnstRqeeJsnwP6a7iOxFS1h%2FyVtZwGtpUZby5UFwey2JlKzk7oNLYPPBne%2FPd7Tml94Ok3uu%2F72A%2F6ULH49m6jdT8WPiZPFiQMZh9hVCTAwqxueKa7LHx95FVchSEoCd38OocIgw7RE0m6tSF7rW8tVOR5OY%2BKisyEwH2hyhq07waCGkU%2FPv4Ojq7X%2FbjG%2FDUgNsAEpko5rGC2puisodIIqLblRllpMhbBdFwBvB3vMqglamfHJ%2B%2BFifteOvQV%2Fz4MikhskCxyHZiumu8zILpuSozDuSgr0%2FBglGsukQPWARBWSiESg%3D%3D&client-request-id=d6ac58cf-06ba-4448-231b-0080120000fb" >
-            <div id="error" class="fieldMargin error smallText">
-                <span id="errorText" for="" aria-live="assertive" role="alert"></span>
-            </div>
-
-            <div id="formsAuthenticationArea">
-                <div id="userNameArea">
-                    <label id="userNameInputLabel" for="userNameInput" class="hidden">User Account</label>
-                    <input id="userNameInput" name="UserName" type="email" value="" tabindex="1" class="text fullWidth"
-                        spellcheck="false" placeholder="someone@example.com" autocomplete="off"/>
-                </div>
-
-                <div id="passwordArea">
-                    <label id="passwordInputLabel" for="passwordInput" class="hidden">Password</label>
-                    <input id="passwordInput" name="Password" type="password" tabindex="2" class="text fullWidth"
-                        placeholder="Password" autocomplete="off"/>
-                </div>
-                <div id="kmsiArea" style="display:none">
-                    <input type="checkbox" name="Kmsi" id="kmsiInput" value="true" tabindex="3" />
-                    <label for="kmsiInput">Keep me signed in</label>
-                </div>
-                <div id="submissionArea" class="submitMargin">
-                    <span id="submitButton" class="submit" tabindex="4" role="button"
-                        onKeyPress="if (event && event.keyCode == 32) Login.submitLoginRequest();"
-                        onclick="return Login.submitLoginRequest();">Sign in</span>
-                </div>
-            </div>
-            <input id="optionForms" type="hidden" name="AuthMethod" value="FormsAuthentication"/>
-        </form>
-
-             <div id="authOptions">
-         <form id="options" method="post" action="https://sts2.unesco.org:443/adfs/ls/?SAMLRequest=jVNdj9owEHy%2FX4HyDvngOMCCSGm4tkgUIuD60JfK2Js7S4mdep2D%2B%2Fd1HDiiqkdrRYqynp3dnZ3MkJZFRZLavMgt%2FKoBzV3PnlNZSCTucu7VWhJFUSCRtAQkhpFd8m1FokFAKq2MYqrw%2Fki7nUURQRuhZJu2XMy9zfpxtfmyXP%2FMRwcaPTDOD9OHaBgxNs2DcJjTkMM0nEyCCZ1OhmO4b1O%2Fg0bLM%2FcsbRvJtHoVHPTaVp17T%2BvHXbo5l0GsYSnRUGlsQhBF%2FWBkn304JsMpuR%2F9aHELq4KQ1DjeF2MqJL6PBqNBLQGZGij97FOeo1%2Bg%2F17UyfBJSC7k8%2B3pDy0Iydf9Putnm92%2BJUkuqqRKYl2C3oF%2BFQyetqtrHyC7XTRS%2B6yFe7FjmTUx4mbVcdMG13VFi3GzKj7zu7dXfEUauZaLTBWCvbl4cz4rXVLz8TThIHQRwfu5gxIoqSgSzjUgeu88SVGoY6qBGrsSo2vwen7cKX62HnBnRDu%2BgZPppaqsqBbYrAFOlJnzhNcpu%2FC0sK7aQh7fNB4jrMHZcGZfR6UvkvyV6n%2FL5WAN5wxDqMWANIK1n0e7a3XEfxZpAR8oEd9drrs%2Favwb&RelayState=user&SigAlg=http%3A%2F%2Fwww.w3.org%2F2001%2F04%2Fxmldsig-more%23rsa-sha256&Signature=XBiG09qrnlRwNaUZ4TAv%2B%2BBnEpe1r5%2Fq3%2F8UnstRqeeJsnwP6a7iOxFS1h%2FyVtZwGtpUZby5UFwey2JlKzk7oNLYPPBne%2FPd7Tml94Ok3uu%2F72A%2F6ULH49m6jdT8WPiZPFiQMZh9hVCTAwqxueKa7LHx95FVchSEoCd38OocIgw7RE0m6tSF7rW8tVOR5OY%2BKisyEwH2hyhq07waCGkU%2FPv4Ojq7X%2FbjG%2FDUgNsAEpko5rGC2puisodIIqLblRllpMhbBdFwBvB3vMqglamfHJ%2B%2BFifteOvQV%2Fz4MikhskCxyHZiumu8zILpuSozDuSgr0%2FBglGsukQPWARBWSiESg%3D%3D&client-request-id=d6ac58cf-06ba-4448-231b-0080120000fb">
-             <script type="text/javascript">
-                function SelectOption(option) {
-                    var w = document.getElementById('waitingWheelDiv');
-                    if(w) w.style.display = 'inline';
-                    var i = document.getElementById('optionSelection');
-                    i.value = option;
-                    document.forms['options'].submit();
-                    return false;
-                }
-             </script>
-             <input id="optionSelection" type="hidden" name="AuthMethod" />
-             <input id="userNameInputOptionsHolder" name="UserName" value="" type="hidden"/>
-             <div id='authOptionLinks' class='groupMargin'><div id="waitingWheelDiv" style="display: none;"><div id="WaitingWheel">
-    <!-- NOTE: This style portion is identical to cookie pull page, they are not in shared css file because of legacy dependancies for custom themes-->
-    <!-- CSS for small "waiting" wheel -->
-    <style>
-        #floatingCirclesG {
-            position: relative;
-            width: 125px;
-            height: 125px;
-            margin: auto;
-            transform: scale(0.4);
-            -o-transform: scale(0.4);
-            -ms-transform: scale(0.4);
-            -webkit-transform: scale(0.4);
-            -moz-transform: scale(0.4);
-        }
-
-        .f_circleG {
-            position: absolute;
-            height: 22px;
-            width: 22px;
-            border-radius: 12px;
-            -o-border-radius: 12px;
-            -ms-border-radius: 12px;
-            -webkit-border-radius: 12px;
-            -moz-border-radius: 12px;
-            animation-name: f_fadeG;
-            -o-animation-name: f_fadeG;
-            -ms-animation-name: f_fadeG;
-            -webkit-animation-name: f_fadeG;
-            -moz-animation-name: f_fadeG;
-            animation-duration: 1.2s;
-            -o-animation-duration: 1.2s;
-            -ms-animation-duration: 1.2s;
-            -webkit-animation-duration: 1.2s;
-            -moz-animation-duration: 1.2s;
-            animation-iteration-count: infinite;
-            -o-animation-iteration-count: infinite;
-            -ms-animation-iteration-count: infinite;
-            -webkit-animation-iteration-count: infinite;
-            -moz-animation-iteration-count: infinite;
-            animation-direction: normal;
-            -o-animation-direction: normal;
-            -ms-animation-direction: normal;
-            -webkit-animation-direction: normal;
-            -moz-animation-direction: normal;
-        }
-
-        #frotateG_01 {
-            left: 0;
-            top: 51px;
-            animation-delay: 0.45s;
-            -o-animation-delay: 0.45s;
-            -ms-animation-delay: 0.45s;
-            -webkit-animation-delay: 0.45s;
-            -moz-animation-delay: 0.45s;
-        }
-
-        #frotateG_02 {
-            left: 15px;
-            top: 15px;
-            animation-delay: 0.6s;
-            -o-animation-delay: 0.6s;
-            -ms-animation-delay: 0.6s;
-            -webkit-animation-delay: 0.6s;
-            -moz-animation-delay: 0.6s;
-        }
-
-        #frotateG_03 {
-            left: 51px;
-            top: 0;
-            animation-delay: 0.75s;
-            -o-animation-delay: 0.75s;
-            -ms-animation-delay: 0.75s;
-            -webkit-animation-delay: 0.75s;
-            -moz-animation-delay: 0.75s;
-        }
-
-        #frotateG_04 {
-            right: 15px;
-            top: 15px;
-            animation-delay: 0.9s;
-            -o-animation-delay: 0.9s;
-            -ms-animation-delay: 0.9s;
-            -webkit-animation-delay: 0.9s;
-            -moz-animation-delay: 0.9s;
-        }
-
-        #frotateG_05 {
-            right: 0;
-            top: 51px;
-            animation-delay: 1.05s;
-            -o-animation-delay: 1.05s;
-            -ms-animation-delay: 1.05s;
-            -webkit-animation-delay: 1.05s;
-            -moz-animation-delay: 1.05s;
-        }
-
-        #frotateG_06 {
-            right: 15px;
-            bottom: 15px;
-            animation-delay: 1.2s;
-            -o-animation-delay: 1.2s;
-            -ms-animation-delay: 1.2s;
-            -webkit-animation-delay: 1.2s;
-            -moz-animation-delay: 1.2s;
-        }
-
-        #frotateG_07 {
-            left: 51px;
-            bottom: 0;
-            animation-delay: 1.35s;
-            -o-animation-delay: 1.35s;
-            -ms-animation-delay: 1.35s;
-            -webkit-animation-delay: 1.35s;
-            -moz-animation-delay: 1.35s;
-        }
-
-        #frotateG_08 {
-            left: 15px;
-            bottom: 15px;
-            animation-delay: 1.5s;
-            -o-animation-delay: 1.5s;
-            -ms-animation-delay: 1.5s;
-            -webkit-animation-delay: 1.5s;
-            -moz-animation-delay: 1.5s;
-        }
-
-        @keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-o-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-ms-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-webkit-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-
-        @-moz-keyframes f_fadeG {
-            0% {
-                background-color: rgb(47, 146, 212);
-            }
-
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
-        }
-    </style>
-
-    <!-- Div containing small "waiting" wheel -->
-    <div id="floatingCirclesG">
-        <div class="f_circleG" id="frotateG_01"></div>
-        <div class="f_circleG" id="frotateG_02"></div>
-        <div class="f_circleG" id="frotateG_03"></div>
-        <div class="f_circleG" id="frotateG_04"></div>
-        <div class="f_circleG" id="frotateG_05"></div>
-        <div class="f_circleG" id="frotateG_06"></div>
-        <div class="f_circleG" id="frotateG_07"></div>
-        <div class="f_circleG" id="frotateG_08"></div>
-    </div>
-</div></div></div>
-         </form>
-      </div>
-
-        <div id="introduction" class="groupMargin">
-                                 
-        </div>
-
-        <script type="text/javascript">
-        //<![CDATA[
-
-            function Login() {
-            }
-
-            Login.userNameInput = 'userNameInput';
-            Login.passwordInput = 'passwordInput';
-
-            Login.initialize = function () {
-
-                var u = new InputUtil();
-
-                u.checkError();
-                u.setInitialFocus(Login.userNameInput);
-                u.setInitialFocus(Login.passwordInput);
-            }();
-
-            Login.submitLoginRequest = function () { 
-                var u = new InputUtil();
-                var e = new LoginErrors();
-
-                var userName = document.getElementById(Login.userNameInput);
-                var password = document.getElementById(Login.passwordInput);
-
-                if (!userName.value || !userName.value.match('[@\\\\]')) {
-                    u.setError(userName, e.userNameFormatError);
-                    return false;
-                }
-
-                if (!password.value) {
-                    u.setError(password, e.passwordEmpty);
-                    return false;
-                }
-
-                if (password.value.length > maxPasswordLength) {
-                    u.setError(password, e.passwordTooLong);
-                    return false;
-                }
-
-                document.forms['loginForm'].submit();
-                return false;
-            };
-
-            InputUtil.makePlaceholder(Login.userNameInput);
-            InputUtil.makePlaceholder(Login.passwordInput);
-        //]]>
-        </script>
-    </div>
-
-    </div>
-
-                    </div>
-                </main>
-                <div id="footerPlaceholder"></div>
-            </div>
-            <footer id="footer">
-                <div id="footerLinks" class="floatReverse">
-                    <div><span id="copyright">&#169; 2018 Microsoft</span></div>
-                </div>
-            </footer>
-        </div>     
-    </div>
-    <script type='text/javascript'>
-//<![CDATA[
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-
-// This file contains several workarounds on inconsistent browser behaviors that administrators may customize.
-"use strict";
-
-// iPhone email friendly keyboard does not include "\" key, use regular keyboard instead.
-// Note change input type does not work on all versions of all browsers.
-if (navigator.userAgent.match(/iPhone/i) != null) {
-    var emails = document.querySelectorAll("input[type='email']");
-    if (emails) {
-        for (var i = 0; i < emails.length; i++) {
-            emails[i].type = 'text';
-        }
-    }
-}
-
-// In the CSS file we set the ms-viewport to be consistent with the device dimensions, 
-// which is necessary for correct functionality of immersive IE. 
-// However, for Windows 8 phone we need to reset the ms-viewport's dimension to its original
-// values (auto), otherwise the viewport dimensions will be wrong for Windows 8 phone.
-// Windows 8 phone has agent string 'IEMobile 10.0'
-if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-    var msViewportStyle = document.createElement("style");
-    msViewportStyle.appendChild(
-        document.createTextNode(
-            "@-ms-viewport{width:auto!important}"
-        )
-    );
-    msViewportStyle.appendChild(
-        document.createTextNode(
-            "@-ms-viewport{height:auto!important}"
-        )
-    );
-    document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
-}
-
-// If the innerWidth is defined, use it as the viewport width.
-if (window.innerWidth && window.outerWidth && window.innerWidth !== window.outerWidth) {
-    var viewport = document.querySelector("meta[name=viewport]");
-    viewport.setAttribute('content', 'width=' + window.innerWidth + ', initial-scale=1.0, user-scalable=1');
-}
-
-// Gets the current style of a specific property for a specific element.
-function getStyle(element, styleProp) {
-    var propStyle = null;
-
-    if (element && element.currentStyle) {
-        propStyle = element.currentStyle[styleProp];
-    }
-    else if (element && window.getComputedStyle) {
-        propStyle = document.defaultView.getComputedStyle(element, null).getPropertyValue(styleProp);
-    }
-
-    return propStyle;
-}
-
-// The script below is used for downloading the illustration image 
-// only when the branding is displaying. This script work together
-// with the code in PageBase.cs that sets the html inline style
-// containing the class 'illustrationClass' with the background image.
-var computeLoadIllustration = function () {
-    var branding = document.getElementById("branding");
-    var brandingDisplay = getStyle(branding, "display");
-    var brandingWrapperDisplay = getStyle(document.getElementById("brandingWrapper"), "display");
-
-    if (brandingDisplay && brandingDisplay !== "none" &&
-        brandingWrapperDisplay && brandingWrapperDisplay !== "none") {
-        var newClass = "illustrationClass";
-
-        if (branding.classList && branding.classList.add) {
-            branding.classList.add(newClass);
-        } else if (branding.className !== undefined) {
-            branding.className += " " + newClass;
-        }
-        if (window.removeEventListener) {
-            window.removeEventListener('load', computeLoadIllustration, false);
-            window.removeEventListener('resize', computeLoadIllustration, false);
-        }
-        else if (window.detachEvent) {
-            window.detachEvent('onload', computeLoadIllustration);
-            window.detachEvent('onresize', computeLoadIllustration);
-        }
-    }
-};
-
-if (window.addEventListener) {
-    window.addEventListener('resize', computeLoadIllustration, false);
-    window.addEventListener('load', computeLoadIllustration, false);
-}
-else if (window.attachEvent) {
-    window.attachEvent('onresize', computeLoadIllustration);
-    window.attachEvent('onload', computeLoadIllustration);
-}
-
-// Function to change illustration image. Usage example below.
-function SetIllustrationImage(imageUri) {
-    var illustrationImageClass = '.illustrationClass {background-image:url(' + imageUri + ');}';
-
-    var css = document.createElement('style');
-    css.type = 'text/css';
-
-    if (css.styleSheet) css.styleSheet.cssText = illustrationImageClass;
-    else css.appendChild(document.createTextNode(illustrationImageClass));
-
-    document.getElementsByTagName("head")[0].appendChild(css);
-}
-
-// Example to change illustration image on HRD page after adding the image to active theme:
-// PSH> Set-AdfsWebTheme -TargetName <activeTheme> -AdditionalFileResource @{uri='/adfs/portal/images/hrd.jpg';path='.\hrd.jpg'}
-//
-//if (typeof HRD != 'undefined') {
-//    SetIllustrationImage('/adfs/portal/images/hrd.jpg');
-//}
-//]]>
-</script>
-
-
-    </body>
-</html> 
-
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>Code of Conduct - MediaWiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"84a8dfd1-fcbc-4b6c-8711-9a3051f4343c","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Code_of_Conduct","wgTitle":"Code of Conduct","wgCurRevisionId":5164980,"wgRevisionId":5164980,"wgArticleId":470563,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Community policies"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Code_of_Conduct","wgRelevantArticleId":470563,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgRestrictionEdit":["autoconfirmed"],"wgRestrictionMove":["autoconfirmed"],
+"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","pageVariantFallbacks":"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"nearby":true,"watchlist":true,"tagline":false},"wgWMESchemaEditAttemptStepOversample":false,"wgWMEPageLength":10000,"wgNoticeProject":"mediawiki","wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgULSCurrentAutonym":"English","wgInternalRedirectTargetUrl":"/wiki/Code_of_Conduct","wgEditSubmitButtonLabelPublish":true,"wgTranslatePageTranslation":"source","wgCentralAuthMobileDomain":false,"wgDiscussionToolsFeaturesEnabled":{"replytool":true,"newtopictool":true,"sourcemodetoolbar":true,"topicsubscription":false,"autotopicsub":false},"wgDiscussionToolsFallbackEditMode":"visual","wgULSPosition":"personal","wgULSisCompactLinksEnabled":true,"wgWikibaseItemId":"Q45161493","wgSiteNoticeId":"2.3"};RLSTATE={"skins.vector.user.styles":"ready","ext.gadget.site-styles":"ready","ext.gadget.CharInsertButtons":"ready",
+"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","skins.vector.user":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","ext.translate":"ready","ext.translate.tag.languages":"ready","ext.discussionTools.init.styles":"ready","mediawiki.ui.button":"ready","skins.vector.styles":"ready","skins.vector.icons":"ready","mediawiki.ui.icon":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.wikimediaBadges":"ready","ext.translate.edit.documentation.styles":"ready","ext.uls.pt":"ready","wikibase.client.init":"ready","ext.dismissableSiteNotice.styles":"ready"};RLPAGEMODULES=["mediawiki.action.view.redirect","site","mediawiki.page.ready","mediawiki.toc","skins.vector.js","skins.vector.es6","mmv.head","mmv.bootstrap.autostart","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.centralNotice.geoIP","ext.centralNotice.startUp",
+"ext.translate.pagetranslation.uls","ext.translate.edit.documentation","ext.gadget.site","ext.gadget.tabbedwindow","ext.gadget.Edittools","ext.centralauth.centralautologin","ext.discussionTools.init","ext.uls.compactlinks","ext.uls.interface","ext.dismissableSiteNotice"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1i9g4",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.discussionTools.init.styles%7Cext.dismissableSiteNotice.styles%7Cext.translate%2CwikimediaBadges%7Cext.translate.edit.documentation.styles%7Cext.translate.tag.languages%7Cext.uls.pt%7Cext.visualEditor.desktopArticleTarget.noscript%7Cmediawiki.ui.button%2Cicon%7Cskins.vector.icons%2Cstyles%7Cwikibase.client.init&amp;only=styles&amp;skin=vector-2022"/>
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector-2022"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.gadget.CharInsertButtons%2Csite-styles&amp;only=styles&amp;skin=vector-2022"/>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector-2022"/>
+<meta name="generator" content="MediaWiki 1.39.0-wmf.10"/>
+<meta name="referrer" content="origin"/>
+<meta name="referrer" content="origin-when-crossorigin"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta property="og:title" content="Code of Conduct - MediaWiki"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="//upload.wikimedia.org"/>
+<link rel="alternate" media="only screen and (max-width: 720px)" href="//m.mediawiki.org/wiki/Code_of_Conduct"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/mediawiki.png"/>
+<link rel="shortcut icon" href="/static/favicon/mediawiki.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="MediaWiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//www.mediawiki.org/w/api.php?action=rsd"/>
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://www.mediawiki.org/wiki/Code_of_Conduct"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
+</head>
+<body class="ext-discussiontools-replytool-enabled ext-discussiontools-newtopictool-enabled ext-discussiontools-sourcemodetoolbar-enabled skin-vector skin-vector-search-vue mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Code_of_Conduct rootpage-Code_of_Conduct skin-vector-2022 action-view"><div class="mw-page-container vector-layout-legacy">
+	<span id="top-page"></span>
+	<a class="mw-jump-link" href="#content">Jump to content</a>
+	<div class="mw-page-container-inner ">
+
+<input
+	type="checkbox"
+	id="mw-sidebar-checkbox"
+	class="mw-checkbox-hack-checkbox"
+	checked>
+
+<header class="mw-header">
+	<label
+		id="mw-sidebar-button"
+		class="mw-checkbox-hack-button mw-ui-icon mw-ui-button mw-ui-quiet mw-ui-icon-element"
+		for="mw-sidebar-checkbox"
+		role="button"
+		aria-controls="mw-panel"
+		data-event-name="ui.sidebar"
+		tabindex="0"
+		title="Main menu">
+		<span>Toggle sidebar</span>
+	</label>
+	
+<a href="/wiki/MediaWiki" class="mw-logo">
+	<img class="mw-logo-icon" src="/static/images/mobile/copyright/mediawiki.svg" alt=""
+		aria-hidden="true" height="50" width="50">
+	<span class="mw-logo-container">
+		<img class="mw-logo-wordmark" alt="MediaWiki"
+			src="/static/images/mobile/copyright/mediawiki-wordmark-en.svg" style="width: 7.5em; height: 1.125em;">
+	</span>
+</a>
+
+	
+<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-collapses  vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+	<a href="/wiki/Special:Search"
+	
+		
+		
+		
+		title="Search MediaWiki [f]"
+		accesskey="f"
+		class="mw-ui-button mw-ui-quiet mw-ui-icon mw-ui-icon-element mw-ui-icon-wikimedia-search search-toggle">
+		<span>Search</span>
+	</a>
+	
+	<div>
+		<form action="/w/index.php" id="searchform"
+			class="vector-search-box-form">
+			<div id="simpleSearch"
+				class="vector-search-box-inner"
+				 data-search-loc="header-moved">
+				<input class="vector-search-box-input"
+					 type="search" name="search" placeholder="Search MediaWiki" aria-label="Search MediaWiki" autocapitalize="sentences" title="Search MediaWiki [f]" accesskey="f" id="searchInput"
+				/>
+				<input type="hidden" name="title" value="Special:Search"/>
+				<input id="mw-searchButton"
+					 class="searchButton mw-fallbackSearchButton" type="submit" name="fulltext" title="Search the pages for this text" value="Search" />
+				<input id="searchButton"
+					 class="searchButton" type="submit" name="go" title="Go to a page with this exact name if it exists" value="Go" />
+			</div>
+		</form>
+	</div>
+</div>
+
+	<div class="vector-user-links">
+	
+<nav id="p-personal-more" class="mw-portlet mw-portlet-personal-more vector-menu vector-user-menu-more" aria-labelledby="p-personal-more-label" role="navigation" 
+	 >
+	<label id="p-personal-more-label" aria-label="" class="vector-menu-heading"   aria-hidden="true">
+		<span class="vector-menu-heading-label">User links</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-uls" class="user-links-collapsible-item mw-list-item active"><a href="#" class="uls-trigger mw-ui-button mw-ui-quiet"><span class="mw-ui-icon mw-ui-icon-wikimedia-language"></span> <span>English</span></a></li>
+	<li id="p-createaccount" class="user-links-collapsible-item">
+		<a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Code+of+Conduct" class="mw-ui-button mw-ui-quiet" title="You are encouraged to create an account and log in; however, it is not mandatory"><span>Create account</span></a>
+	</li>
+</ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-personal" class="mw-portlet mw-portlet-personal vector-user-menu vector-user-menu-logged-out vector-menu vector-menu-dropdown" aria-labelledby="p-personal-label" role="navigation"  title="More options"
+	 >
+	<input type="checkbox"
+		id="p-personal-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-personal"
+		class="vector-menu-checkbox" aria-labelledby="p-personal-label" />
+	<label id="p-personal-label" aria-label="" class="vector-menu-heading  mw-ui-button mw-ui-quiet mw-ui-icon mw-ui-icon-element mw-ui-icon-wikimedia-ellipsis"   aria-hidden="true">
+		<span class="vector-menu-heading-label">Personal tools</span>
+	</label>
+	<div class="vector-menu-content">
+		<div class="vector-user-menu-create-account"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Code+of+Conduct" class="user-links-collapsible-item vector-menu-content-item mw-ui-icon mw-ui-icon-before mw-ui-icon-wikimedia-userAdd" title="You are encouraged to create an account and log in; however, it is not mandatory"><span>Create account</span></a></div>
+<div class="vector-user-menu-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Code+of+Conduct" class="vector-menu-content-item vector-menu-content-item-login mw-ui-icon mw-ui-icon-before mw-ui-icon-wikimedia-logIn" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o"><span>Log in</span></a></div>
+<div class="vector-user-menu-anon-editor">
+	<p>
+		Pages for logged out editors <a href="/wiki/Help:Introduction" aria-label="Learn more about editing"><span>learn more</span></a>
+	</p>
+</div>
+
+		<ul class="vector-menu-content-list"><li id="pt-anontalk" class="mw-list-item"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n"><span>Talk</span></a></li><li id="pt-anoncontribs" class="mw-list-item"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y"><span>Contributions</span></a></li></ul>
+		
+	</div>
+</nav>
+
+</div>
+
+</header>
+
+<div class="mw-workspace-container">
+	<div id="mw-navigation">
+		<div id="mw-head">
+			<div class="mw-article-toolbar-container">
+				<div id="left-navigation">
+					
+<nav id="p-namespaces" class="mw-portlet mw-portlet-namespaces vector-menu vector-menu-tabs" aria-labelledby="p-namespaces-label" role="navigation" 
+	 >
+	<label id="p-namespaces-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">Namespaces</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Code_of_Conduct" title="View the content page [c]" accesskey="c"><span>Page</span></a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Code_of_Conduct" rel="discussion" title="Discussion about the content page [t]" accesskey="t"><span>Discussion</span></a></li></ul>
+		
+	</div>
+</nav>
+
+					
+<nav id="p-variants" class="mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-variants-label" role="navigation" 
+	 >
+	<input type="checkbox"
+		id="p-variants-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-variants"
+		class="vector-menu-checkbox" aria-labelledby="p-variants-label" />
+	<label id="p-variants-label" aria-label="Change language variant" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">English</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
+
+				</div>
+				<div id="right-navigation">
+					
+<nav id="p-views" class="mw-portlet mw-portlet-views vector-menu vector-menu-tabs" aria-labelledby="p-views-label" role="navigation" 
+	 >
+	<label id="p-views-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">Views</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-view" class="selected mw-list-item"><a href="/wiki/Code_of_Conduct"><span>Read</span></a></li><li id="ca-viewsource" class="mw-list-item"><a href="/w/index.php?title=Code_of_Conduct&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e"><span>View source</span></a></li><li id="ca-history" class="mw-list-item"><a href="/w/index.php?title=Code_of_Conduct&amp;action=history" title="Past revisions of this page [h]" accesskey="h"><span>View history</span></a></li></ul>
+		
+	</div>
+</nav>
+
+					
+<nav id="p-cactions" class="mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown vector-has-collapsible-items" aria-labelledby="p-cactions-label" role="navigation"  title="More options"
+	 >
+	<input type="checkbox"
+		id="p-cactions-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-cactions"
+		class="vector-menu-checkbox" aria-labelledby="p-cactions-label" />
+	<label id="p-cactions-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">More</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-more-view" class="selected vector-more-collapsible-item mw-list-item"><a href="/wiki/Code_of_Conduct"><span>Read</span></a></li><li id="ca-more-viewsource" class="vector-more-collapsible-item mw-list-item"><a href="/w/index.php?title=Code_of_Conduct&amp;action=edit"><span>View source</span></a></li><li id="ca-more-history" class="vector-more-collapsible-item mw-list-item"><a href="/w/index.php?title=Code_of_Conduct&amp;action=history"><span>View history</span></a></li></ul>
+		
+	</div>
+</nav>
+
+				</div>
+			</div>
+		</div>
+		
+
+<div id="mw-panel" class="mw-sidebar">
+	
+<nav id="p-navigation" class="mw-portlet mw-portlet-navigation vector-menu vector-menu-portal portal" aria-labelledby="p-navigation-label" role="navigation" 
+	 >
+	<label id="p-navigation-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">Navigation</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-mainpage-description" class="mw-list-item"><a href="/wiki/MediaWiki" icon="home" title="Visit the main page [z]" accesskey="z"><span>Main page</span></a></li><li id="n-mw-download" class="mw-list-item"><a href="/wiki/Download"><span>Get MediaWiki</span></a></li><li id="n-mw-extensions" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Category:Extensions"><span>Get extensions</span></a></li><li id="n-blog-text" class="mw-list-item"><a href="//techblog.wikimedia.org/"><span>Tech blog</span></a></li><li id="n-mw-contribute" class="mw-list-item"><a href="/wiki/Special:MyLanguage/How_to_contribute"><span>Contribute</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+	
+<nav id="p-support" class="mw-portlet mw-portlet-support vector-menu vector-menu-portal portal" aria-labelledby="p-support-label" role="navigation" 
+	 >
+	<label id="p-support-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">Support</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-help" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Help:Contents" icon="help" title="The place to find out"><span>User help</span></a></li><li id="n-mw-faq" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Manual:FAQ"><span>FAQ</span></a></li><li id="n-mw-manual" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Manual:Contents"><span>Technical manual</span></a></li><li id="n-mw-supportdesk" class="mw-list-item"><a href="/wiki/Project:Support_desk"><span>Support desk</span></a></li><li id="n-mw-communication" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Communication"><span>Communication</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-development" class="mw-portlet mw-portlet-development vector-menu vector-menu-portal portal" aria-labelledby="p-development-label" role="navigation" 
+	 >
+	<label id="p-development-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">Development</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-mw-bugtracker" class="mw-list-item"><a href="/wiki/Special:MyLanguage/Phabricator"><span>Bug tracker</span></a></li><li id="n-phpdoc" class="mw-list-item"><a href="//doc.wikimedia.org/mediawiki-core/master/php/"><span>Code docs</span></a></li><li id="n-mw-repo-browse" class="mw-list-item"><a href="https://phabricator.wikimedia.org/diffusion/MW/"><span>Code repository</span></a></li><li id="n-svn-statistics" class="mw-list-item"><a href="/wiki/Development_statistics"><span>Statistics</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-MediaWiki.org" class="mw-portlet mw-portlet-MediaWiki_org vector-menu vector-menu-portal portal" aria-labelledby="p-MediaWiki.org-label" role="navigation" 
+	 >
+	<label id="p-MediaWiki.org-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">MediaWiki.org</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-portal" class="mw-list-item"><a href="/wiki/Project:Help" title="About the project, what you can do, where to find things"><span>Community portal</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" icon="recentChanges" title="A list of recent changes in the wiki [r]" accesskey="r"><span>Recent changes</span></a></li><li id="n-mw-translate" class="mw-list-item"><a href="/wiki/Special:LanguageStats"><span>Translate content</span></a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" icon="die" title="Load a random page [x]" accesskey="x"><span>Random page</span></a></li><li id="n-mw-discussion" class="mw-list-item"><a href="/wiki/Project:Village_Pump"><span>Village pump</span></a></li><li id="n-Sandboxlink-portlet-label" class="mw-list-item"><a href="/wiki/Project:Sandbox"><span>Sandbox</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-tb" class="mw-portlet mw-portlet-tb vector-menu vector-menu-portal portal" aria-labelledby="p-tb-label" role="navigation" 
+	 >
+	<label id="p-tb-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">Tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Code_of_Conduct" title="A list of all wiki pages that link here [j]" accesskey="j"><span>What links here</span></a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Code_of_Conduct" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k"><span>Related changes</span></a></li><li id="t-upload" class="mw-list-item"><a href="//commons.wikimedia.org/wiki/Special:UploadWizard" title="Upload files [u]" accesskey="u"><span>Upload file</span></a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li><li id="t-permalink" class="mw-list-item"><a href="/w/index.php?title=Code_of_Conduct&amp;oldid=5164980" title="Permanent link to this revision of the page"><span>Permanent link</span></a></li><li id="t-info" class="mw-list-item"><a href="/w/index.php?title=Code_of_Conduct&amp;action=info" title="More information about this page"><span>Page information</span></a></li><li id="t-cite" class="mw-list-item"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Code_of_Conduct&amp;id=5164980&amp;wpFormIdentifier=titleform" title="Information on how to cite this page"><span>Cite this page</span></a></li><li id="t-wikibase" class="mw-list-item"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q45161493" title="Link to connected data repository item [g]" accesskey="g"><span>Wikidata item</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-coll-print_export" class="mw-portlet mw-portlet-coll-print_export vector-menu vector-menu-portal portal" aria-labelledby="p-coll-print_export-label" role="navigation" 
+	 >
+	<label id="p-coll-print_export-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">Print/export</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="coll-create_a_book" class="mw-list-item"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Code+of+Conduct"><span>Create a book</span></a></li><li id="coll-download-as-rl" class="mw-list-item"><a href="/w/index.php?title=Special:DownloadAsPdf&amp;page=Code_of_Conduct&amp;action=show-download-screen"><span>Download as PDF</span></a></li><li id="t-print" class="mw-list-item"><a href="/w/index.php?title=Code_of_Conduct&amp;printable=yes" title="Printable version of this page [p]" accesskey="p"><span>Printable version</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-lang" class="mw-portlet mw-portlet-lang vector-menu vector-menu-portal portal" aria-labelledby="p-lang-label" role="navigation" 
+	 >
+	<label id="p-lang-label" aria-label="" class="vector-menu-heading "   aria-hidden="true">
+		<span class="vector-menu-heading-label">In other languages</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-add wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q45161493#sitelinks-wikipedia" title="Add interlanguage links" class="wbc-editpage">Add links</a></span></div>
+	</div>
+</nav>
+
+	
+</div>
+
+	</div>
+	<div class="mw-table-of-contents-container mw-sticky-header-element">
+		
+	</div>
+	<div class="mw-content-container">
+<main id="content" class="mw-body" role="main">
+	<a id="top"></a>
+	<div id="siteNotice"><!-- CentralNotice --><div id="mw-dismissablenotice-anonplace"></div><script>(function(){var node=document.getElementById("mw-dismissablenotice-anonplace");if(node){node.outerHTML="\u003Cdiv class=\"mw-dismissable-notice\"\u003E\u003Cdiv class=\"mw-dismissable-notice-close\"\u003E[\u003Ca tabindex=\"0\" role=\"button\"\u003Edismiss\u003C/a\u003E]\u003C/div\u003E\u003Cdiv class=\"mw-dismissable-notice-body\"\u003E\u003Cdiv id=\"localNotice\"\u003E\u003Cdiv class=\"sitenotice\" lang=\"en\" dir=\"ltr\"\u003E\u003Cdiv class=\"center\"\u003E\u003Ca href=\"/wiki/Wikimedia_Hackathon_2022\" title=\"Wikimedia Hackathon 2022\"\u003EWikimedia Hackathon 2022\u003C/a\u003E will be held \u003Ci\u003Eonline\u003C/i\u003E May 20-22, 2022.\u003C/div\u003E\u003C/div\u003E\u003C/div\u003E\u003C/div\u003E\u003C/div\u003E";}}());</script></div>
+
+	<div class="mw-indicators">
+	</div>
+	<h1 id="firstHeading" class="firstHeading mw-first-heading">Code of Conduct</h1>
+
+
+	<div id="bodyContent" class="vector-body">
+			<div id="siteSub" class="noprint">From mediawiki.org</div>
+		<div id="contentSub"></div>
+		<div id="contentSub2"></div>
+		
+		<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div class="mw-pt-translate-header noprint nomobile" dir="ltr" lang="en"><a href="/w/index.php?title=Special:Translate&amp;group=page-Code+of+Conduct&amp;action=page&amp;filter=" title="Special:Translate">Translate this page</a></div><div class="mw-parser-output"><div class="mw-pt-languages noprint" lang="en" dir="ltr"><div class="mw-pt-languages-label">Other languages:</div><ul class="mw-pt-languages-list"><li><a href="/wiki/Code_of_Conduct/de" class="mw-pt-progress mw-pt-progress--complete" title="Verhaltensregeln (100% translated)" lang="de" dir="ltr">Deutsch</a></li>
+<li><span class="mw-pt-languages-ui mw-pt-languages-selected mw-pt-progress mw-pt-progress--complete" lang="en" dir="ltr">English</span></li>
+<li><a href="/wiki/Code_of_Conduct/nl" class="mw-pt-progress mw-pt-progress--stub" title="Code of Conduct (10% translated)" lang="nl" dir="ltr">Nederlands</a></li>
+<li><a href="/wiki/Code_of_Conduct/tr" class="mw-pt-progress mw-pt-progress--complete" title="Davranış Kodu (83% translated)" lang="tr" dir="ltr">Türkçe</a></li>
+<li><a href="/wiki/Code_of_Conduct/da" class="mw-pt-progress mw-pt-progress--low" title="Adfærdskodeks (34% translated)" lang="da" dir="ltr">dansk</a></li>
+<li><a href="/wiki/Code_of_Conduct/es" class="mw-pt-progress mw-pt-progress--high" title="Código de conducta (74% translated)" lang="es" dir="ltr">español</a></li>
+<li><a href="/wiki/Code_of_Conduct/fr" class="mw-pt-progress mw-pt-progress--complete" title="Code de conduite (100% translated)" lang="fr" dir="ltr">français</a></li>
+<li><a href="/wiki/Code_of_Conduct/hr" class="mw-pt-progress mw-pt-progress--high" title="Pravila ponašanja (72% translated)" lang="hr" dir="ltr">hrvatski</a></li>
+<li><a href="/wiki/Code_of_Conduct/ia" class="mw-pt-progress mw-pt-progress--stub" title="Codice de comportamento (7% translated)" lang="ia" dir="ltr">interlingua</a></li>
+<li><a href="/wiki/Code_of_Conduct/it" class="mw-pt-progress mw-pt-progress--complete" title="Codice di Condotta (93% translated)" lang="it" dir="ltr">italiano</a></li>
+<li><a href="/wiki/Code_of_Conduct/pl" class="mw-pt-progress mw-pt-progress--high" title="Code of Conduct/pl (71% translated)" lang="pl" dir="ltr">polski</a></li>
+<li><a href="/wiki/Code_of_Conduct/pt" class="mw-pt-progress mw-pt-progress--med" title="Código de Conduta (43% translated)" lang="pt" dir="ltr">português</a></li>
+<li><a href="/wiki/Code_of_Conduct/pt-br" class="mw-pt-progress mw-pt-progress--complete" title="Código de Conduta (86% translated)" lang="pt-BR" dir="ltr">português do Brasil</a></li>
+<li><a href="/wiki/Code_of_Conduct/sv" class="mw-pt-progress mw-pt-progress--stub" title="Uppförandekod (14% translated)" lang="sv" dir="ltr">svenska</a></li>
+<li><a href="/wiki/Code_of_Conduct/cs" class="mw-pt-progress mw-pt-progress--complete" title="Etický kodex (100% translated)" lang="cs" dir="ltr">čeština</a></li>
+<li><a href="/wiki/Code_of_Conduct/ru" class="mw-pt-progress mw-pt-progress--complete" title="Кодекс поведения (100% translated)" lang="ru" dir="ltr">русский</a></li>
+<li><a href="/wiki/Code_of_Conduct/ar" class="mw-pt-progress mw-pt-progress--high" title="مدونة قواعد السلوك (69% translated)" lang="ar" dir="rtl">العربية</a></li>
+<li><a href="/wiki/Code_of_Conduct/awa" class="mw-pt-progress mw-pt-progress--stub" title="आचार संहिता (12% translated)" lang="awa" dir="ltr">अवधी</a></li>
+<li><a href="/wiki/Code_of_Conduct/hi" class="mw-pt-progress mw-pt-progress--low" title="आचार संहिता (31% translated)" lang="hi" dir="ltr">हिन्दी</a></li>
+<li><a href="/wiki/Code_of_Conduct/bn" class="mw-pt-progress mw-pt-progress--stub" title="আচরণবিধি (3% translated)" lang="bn" dir="ltr">বাংলা</a></li>
+<li><a href="/wiki/Code_of_Conduct/ta" class="mw-pt-progress mw-pt-progress--high" title="நடத்தை விதிமுறை (76% translated)" lang="ta" dir="ltr">தமிழ்</a></li>
+<li><a href="/wiki/Code_of_Conduct/te" class="mw-pt-progress mw-pt-progress--med" title="ప్రవర్తనా నియమావళి (41% translated)" lang="te" dir="ltr">తెలుగు</a></li>
+<li><a href="/wiki/Code_of_Conduct/kn" class="mw-pt-progress mw-pt-progress--complete" title="ನೀತಿಸಂಹಿತೆ (90% translated)" lang="kn" dir="ltr">ಕನ್ನಡ</a></li>
+<li><a href="/wiki/Code_of_Conduct/th" class="mw-pt-progress mw-pt-progress--low" title="จรรยาบรรณ (34% translated)" lang="th" dir="ltr">ไทย</a></li>
+<li><a href="/wiki/Code_of_Conduct/zh" class="mw-pt-progress mw-pt-progress--high" title="行为准则 (69% translated)" lang="zh" dir="ltr">中文</a></li>
+<li><a href="/wiki/Code_of_Conduct/ja" class="mw-pt-progress mw-pt-progress--complete" title="行動規範 (98% translated)" lang="ja" dir="ltr">日本語</a></li>
+<li><a href="/wiki/Code_of_Conduct/ko" class="mw-pt-progress mw-pt-progress--stub" title="행동 강령 (2% translated)" lang="ko" dir="ltr">한국어</a></li></ul></div>
+<table role="navigation" class="vertical-navbox nowraplinks" style="float: right; clear: right; background-color: #f8f9fa; border: 1px solid #a2a9b1; width:22em; margin: 0.5em 0 1em 1em; padding: 0.2em; border-spacing: 0.4em 0; text-align: center; line-height: 1.4em; font-size: 88%;" cellpadding="0"><tbody><tr>
+<th class="" style="padding-top: 0.2em; ;">Code of Conduct for<br/>Wikimedia Technical Spaces</th>
+</tr><tr>
+<td class="" style="padding-bottom: 0.2em; ;">
+<b><a href="/wiki/Special:MyLanguage/Code_of_Conduct" title="Special:MyLanguage/Code of Conduct">Principles</a></b><span style="display:none"><a class="mw-selflink selflink"> </a></span></td>
+</tr><tr>
+<td class="" style="padding-bottom: 0.2em; ;">
+<b><a href="/wiki/Special:MyLanguage/Code_of_Conduct#Report_a_problem" title="Special:MyLanguage/Code of Conduct">Report a problem</a></b><span style="display:none"><a href="/wiki/Code_of_Conduct#Report_a_problem" title="Code of Conduct"> </a></span></td>
+</tr><tr>
+<td class="" style="padding-bottom: 0.2em; ;">
+<a href="/wiki/Special:MyLanguage/Code_of_Conduct/Cases" title="Special:MyLanguage/Code of Conduct/Cases">Handling cases</a><span style="display:none"><a href="/wiki/Code_of_Conduct/Cases" title="Code of Conduct/Cases"> </a></span></td>
+</tr><tr>
+<td class="" style="padding-bottom: 0.2em; ;">
+<a href="/wiki/Special:MyLanguage/Code_of_Conduct/Committee" title="Special:MyLanguage/Code of Conduct/Committee">Committee</a><span style="display:none"><a href="/wiki/Code_of_Conduct/Committee" title="Code of Conduct/Committee"> </a></span> (<a href="/wiki/Special:MyLanguage/Code_of_Conduct/Committee/Members" title="Special:MyLanguage/Code of Conduct/Committee/Members">members</a><span style="display:none"><a href="/wiki/Code_of_Conduct/Committee/Members" title="Code of Conduct/Committee/Members"> </a></span>)</td>
+</tr><tr>
+<td class="" style="padding-bottom: 0.2em; ;">
+<a href="/wiki/Special:MyLanguage/Code_of_Conduct/Amendments" title="Special:MyLanguage/Code of Conduct/Amendments">Amendments</a><span style="display:none"><a href="/wiki/Code_of_Conduct/Amendments" title="Code of Conduct/Amendments"> </a></span></td>
+</tr><tr>
+<td class="" style="padding-bottom: 0.2em; ;">
+<a href="/wiki/Special:MyLanguage/Code_of_Conduct/FAQ" title="Special:MyLanguage/Code of Conduct/FAQ">FAQ</a><span style="display:none"><a href="/wiki/Code_of_Conduct/FAQ" title="Code of Conduct/FAQ"> </a></span></td>
+</tr><tr>
+<td style="text-align: right; font-size: 115%;"><style data-mw-deduplicate="TemplateStyles:r4692751">.mw-parser-output .navbar{display:inline;font-size:88%;font-weight:normal}.mw-parser-output .navbar ul{display:inline;white-space:nowrap}.mw-parser-output .navbar li{word-spacing:-0.125em}.mw-parser-output .navbox .navbar{display:block;font-size:100%}.mw-parser-output .navbox-title .navbar{float:left;text-align:left;margin-right:0.5em;width:6em}</style><span class="noprint plainlinks navbar" style=""><small><span style="white-space:nowrap;word-spacing:-.12em;"><a href="/wiki/Template:Code_of_Conduct" title="Template:Code of Conduct"><span style="" title="View this template">v</span></a><span style=""> <b>·</b> </span><a class="external text" href="https://www.mediawiki.org/wiki/Template_talk:Code_of_Conduct"><span style="" title="Discuss this template">d</span></a><span style=""> <b>·</b> </span><a class="external text" href="https://www.mediawiki.org/w/index.php?title=Template:Code_of_Conduct&amp;action=edit"><span style="" title="Edit this template">e</span></a></span></small></span></td>
+</tr>
+</tbody></table>
+<style data-mw-deduplicate="TemplateStyles:r4760021">.mw-parser-output table.ambox{margin:0 10%;border:1px solid #a2a9b1;border-left:10px solid #36c;background-color:#fbfbfb;box-sizing:border-box}.mw-parser-output table.ambox+table.ambox,.mw-parser-output table.ambox+link+table.ambox,.mw-parser-output table.ambox+style+table.ambox{margin-top:-1px}.mw-parser-output .ambox td.mbox-empty-cell{border:none;padding:0;width:1px}.mw-parser-output .ambox th.mbox-text,.mw-parser-output .ambox td.mbox-text{border:none;padding:0.25em 0.5em;width:100%}.mw-parser-output .ambox td.mbox-image{padding:2px 0 2px 0.5em}.mw-parser-output .ambox td.mbox-imageright{padding:2px 0.5em 2px 0}.mw-parser-output table.ambox-notice{border-left-color:#36c}.mw-parser-output table.ambox-speedy{background-color:#fee7e6}.mw-parser-output table.ambox-delete,.mw-parser-output table.ambox-speedy{border-left-color:#b32424}.mw-parser-output table.ambox-content{border-left-color:#f28500}.mw-parser-output table.ambox-style{border-left-color:#fc3}.mw-parser-output table.ambox-move{border-left-color:#9932cc}.mw-parser-output table.ambox-protection{border-left-color:#a2a9b1}html body.mediawiki .mw-parser-output .ambox.mbox-small{clear:right;float:right;margin:4px 0 4px 1em;box-sizing:border-box;width:238px;font-size:88%;line-height:1.25em}html body.mediawiki .mw-parser-output .ambox.mbox-small-left{margin:4px 1em 4px 0;box-sizing:border-box;overflow:hidden;width:238px;border-collapse:collapse;font-size:88%;line-height:1.25em}</style><table class="plainlinks metadata plainlinks ambox ambox-notice" role="presentation"><tbody><tr><td class="mbox-image"><div style="width:52px"><span typeof="mw:Image"><span><img alt="OOjs UI icon check-constructive.svg" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f6/OOjs_UI_icon_check-constructive.svg/30px-OOjs_UI_icon_check-constructive.svg.png" decoding="async" width="30" height="30" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f6/OOjs_UI_icon_check-constructive.svg/45px-OOjs_UI_icon_check-constructive.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f6/OOjs_UI_icon_check-constructive.svg/60px-OOjs_UI_icon_check-constructive.svg.png 2x" data-file-width="20" data-file-height="20"/></span></span></div></td><td class="mbox-text"><div class="mbox-text-span">This page documents a community policy for Wikimedia technical spaces.</div></td></tr></tbody></table>
+<p>This is a <b>code of conduct for Wikimedia technical spaces</b>.
+It applies both within physical spaces, such as Wikimedia technical events and Wikimedia technical presentations in other events, and virtual spaces (MediaWiki.org, <a href="https://wikitech.wikimedia.org/wiki/" class="extiw" title="wikitech:">wikitech.wikimedia.org</a>, <a href="/wiki/Special:MyLanguage/Phabricator" title="Special:MyLanguage/Phabricator">Phabricator</a>, <a href="/wiki/Special:MyLanguage/Gerrit" title="Special:MyLanguage/Gerrit">Gerrit Code Review</a>, <a href="https://meta.wikimedia.org/wiki/Mailing_lists/Overview#MediaWiki_and_technical" class="extiw" title="m:Mailing lists/Overview">technical mailing lists</a>, <a href="https://meta.wikimedia.org/wiki/IRC/Channels#MediaWiki_and_technical" class="extiw" title="m:IRC/Channels">technical IRC channels</a>, <a href="/wiki/Special:MyLanguage/Etherpad" title="Special:MyLanguage/Etherpad">Etherpad</a>, and other development-oriented spaces operated by the Wikimedia Foundation).
+</p>
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Principles"><span class="tocnumber">1</span> <span class="toctext">Principles</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Unacceptable_behavior"><span class="tocnumber">2</span> <span class="toctext">Unacceptable behavior</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Report_a_problem"><span class="tocnumber">3</span> <span class="toctext">Report a problem</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Attribution_and_re-use"><span class="tocnumber">4</span> <span class="toctext">Attribution and re-use</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Principles" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Principles&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Principles"></span>Principles<span data-mw-comment-end="h-Principles"></span></span></h2>
+<p>In the interest of fostering an open and welcoming community, we are committed to making participation in Wikimedia technical projects a respectful and harassment-free experience for everyone, regardless of gender, gender identity and expression, sex, sexual orientation, disability, neuroatypicality, physical appearance, body size, race, ethnicity, national origin, age, political affiliation, or religion.
+</p><p>Technical skills and community status make no difference to the right to be respected and the obligation to respect others.
+Newcomers and other contributors with limited experience in our community deserve a welcoming attitude and constructive feedback.
+Prolific contributions and technical expertise are not a justification for lower standards of behavior.
+</p>
+<h2><span class="mw-headline" id="Unacceptable_behavior" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Unacceptable_behavior&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Unacceptable_behavior"></span>Unacceptable behavior<span data-mw-comment-end="h-Unacceptable_behavior"></span></span></h2>
+<p>Harassment and other types of inappropriate behavior are unacceptable in all public and private Wikimedia technical spaces.
+Examples include but are not limited to:
+</p>
+<ul><li>Personal attacks, violence, threats of violence, threats of legal action, or deliberate intimidation.</li>
+<li>Offensive, derogatory, or discriminatory comments.</li>
+<li>Gratuitous or off-topic use of sexual language or imagery.</li>
+<li>Inappropriate or unwanted attention, touching, or physical contact (sexual or otherwise).</li>
+<li>Inappropriate or unwanted public or private communication, following, or any form of stalking.</li>
+<li>Unwanted photography or recording.</li>
+<li>Disclosure of a person's identity or other private information without their consent. Disclosure of some identifying information is not consent to disclose other identifying information.</li>
+<li>Inappropriate or unwanted publication of private communication. Publishing or reporting private communication or personally identifying information for the purposes of reporting harassment (as explained here) and/or in the case of whistleblowing, is acceptable.</li>
+<li>Harming the discussion or community with methods such as sustained disruption, interruption, or blocking of community collaboration (i.e. trolling).</li>
+<li>Discrimination, particularly against marginalized and otherwise underrepresented groups. Targeted outreach to such groups is allowed and encouraged.</li>
+<li>Using the code of conduct system for purposes other than reporting genuine violations of the code of conduct (e.g., retaliating against a reporter or victim by filing a report claiming their response was harassment).</li>
+<li>Attempting to circumvent a decision of the <a href="/wiki/Special:MyLanguage/Code_of_Conduct/Committee" title="Special:MyLanguage/Code of Conduct/Committee">Committee</a>, e.g. unblocking someone during a period the Committee banned them.</li></ul>
+<p><span id="Report_a_problem"></span>
+</p>
+<h2><span class="mw-headline" id="Report_a_problem" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Report_a_problem&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Report_a_problem"></span>Report a problem<span data-mw-comment-end="h-Report_a_problem"></span></span></h2>
+<dl><dd><i><b>In case of threats of harm and other urgent situations</b>, notify the relevant authorities first (if possible) and <a href="https://foundation.wikimedia.org/wiki/Requests_for_user_information_procedures_%26_guidelines#Emergency_Requests" class="extiw" title="wmf:Requests for user information procedures &amp; guidelines">email the Wikimedia Foundation</a> via emergency<span class="nowrap"><span typeof="mw:Image"><span><img alt="@" src="//upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/15px-At_sign.svg.png" decoding="async" width="15" height="15" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/23px-At_sign.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/30px-At_sign.svg.png 2x" data-file-width="145" data-file-height="145"/></span></span></span>wikimedia.org (<a href="https://meta.wikimedia.org/wiki/Special:MyLanguage/Threats_of_harm" class="extiw" title="m:Special:MyLanguage/Threats of harm">more information</a>).</i></dd></dl>
+<p>People who experience or observe unacceptable behavior are encouraged to follow any of these steps:
+</p>
+<ol><li>Ask the person who is behaving unacceptably to stop. Make them aware of this Code of Conduct.</li>
+<li>If you are at an event, report the problem to the event organizers, or a designated contact.</li>
+<li>Report the problem directly to the <a href="/wiki/Special:MyLanguage/Code_of_Conduct/Committee" title="Special:MyLanguage/Code of Conduct/Committee">Code of Conduct Committee</a> via <b>techconduct<span class="nowrap"><span typeof="mw:Image"><span><img alt="@" src="//upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/15px-At_sign.svg.png" decoding="async" width="15" height="15" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/23px-At_sign.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/30px-At_sign.svg.png 2x" data-file-width="145" data-file-height="145"/></span></span></span>wikimedia.org</b>. You can also send a report to the Committee if you reported an incident elsewhere but were not satisfied with the response.</li></ol>
+<p>Reports can be as short as a notification with a link, but more information will help us understand what is happening. You can include:
+</p>
+<ul><li>Your contact information (e.g. Wikimedia and Phabricator usernames), if you want to identify yourself.</li>
+<li>Your account of the incident:
+<ul><li>Where and when it happened.</li>
+<li>A description of the unacceptable behavior.</li>
+<li>Who was involved and who saw it happen.</li>
+<li>Whether the incident is ongoing.</li></ul></li>
+<li>Any additional information that will help us fully understand the problem, such as previous incidents or special circumstances.</li>
+<li>Links to public records of the incident, if any.</li>
+<li>Screenshots showing what exactly happened.</li></ul>
+<p>Reports are processed confidentially. For more information, see <a href="/wiki/Special:MyLanguage/Code_of_Conduct/Committee#Confidentiality" title="Special:MyLanguage/Code of Conduct/Committee">Confidentiality</a>.
+</p><p>Go to <a href="/wiki/Special:MyLanguage/Code_of_Conduct/Cases" title="Special:MyLanguage/Code of Conduct/Cases">Code of Conduct/Cases</a> to learn about how reports to the Committee are processed.
+</p>
+<h2><span class="mw-headline" id="Attribution_and_re-use" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-Attribution_and_re-use&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-Attribution_and_re-use"></span>Attribution and re-use<span data-mw-comment-end="h-Attribution_and_re-use"></span></span></h2>
+<p>This Code of Conduct is adapted from the <a rel="nofollow" class="external text" href="http://contributor-covenant.org">Contributor Covenant</a> (<a rel="nofollow" class="external text" href="https://github.com/CoralineAda/contributor_covenant/blob/490540137a39fa746a1708a2188015b12b17249b/CODE_OF_CONDUCT.md">revision 49054013</a>), the jQuery Code of Conduct (<a rel="nofollow" class="external text" href="https://github.com/jquery/jquery.org/commit/9177788605c1846c14326ed0074f1bafac480dbd">revision 91777886</a>), the <a rel="nofollow" class="external text" href="https://github.com/todogroup/opencodeofconduct">Open Code of Conduct</a> (<a rel="nofollow" class="external text" href="https://github.com/todogroup/opencodeofconduct/blob/gh-pages/index.md">v1.0</a>), and the <a rel="nofollow" class="external text" href="https://web.archive.org/web/20180707014644/http://citizencodeofconduct.org/">Citizen Code of Conduct</a>, along with the WMF <a href="https://foundation.wikimedia.org/wiki/Friendly_space_policy" class="extiw" title="wmf:Friendly space policy">Friendly space policy</a>.
+</p><p>Text from the Contributor Covenant and the jQuery Code of Conduct is used under the <a rel="nofollow" class="external text" href="https://github.com/CoralineAda/contributor_covenant/blob/master/LICENSE">MIT License</a> (Contributor Covenant has changed its license to CC BY 4.0 now).
+The text from the Open Code of Conduct is used under a <a rel="nofollow" class="external text" href="https://github.com/todogroup/opencodeofconduct/blob/gh-pages/LICENSE">Creative Commons Attribution license</a>.
+The text from the Citizen Code of Conduct is used under a <a rel="nofollow" class="external text" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Share-alike Attribution</a> license.
+The overall text is under MediaWiki.org's standard license (<a rel="nofollow" class="external text" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>).
+</p><p>We value each other's contributions and each contributor's commitment to making our technical spaces friendly spaces for everyone. We encourage other projects to adopt and adapt this code of conduct regardless of whether they use Wikimedia technical infrastructure.
+</p>
+<h2><span class="mw-headline" id="See_also" data-mw-comment="{&quot;type&quot;:&quot;heading&quot;,&quot;level&quot;:0,&quot;id&quot;:&quot;h-See_also&quot;,&quot;replies&quot;:[],&quot;headingLevel&quot;:2,&quot;placeholderHeading&quot;:false,&quot;name&quot;:&quot;h-&quot;}"><span data-mw-comment-start="" id="h-See_also"></span>See also<span data-mw-comment-end="h-See_also"></span></span></h2>
+<style data-mw-deduplicate="TemplateStyles:r4942944">.mw-parser-output .tpl-tracked{background-color:#EAECF0;border:1px solid #72777D;border-radius:2px;font-size:85%;margin-bottom:1em;padding:0.5em;text-align:center;width:12em}.mw-parser-output .tpl-tracked.float-left{float:left;clear:left;margin-right:1em}.mw-parser-output .tpl-tracked.float-right{float:right;clear:right;margin-left:1em}.mw-parser-output .tpl-tracked .status{color:black;font-weight:bold;text-transform:uppercase}.mw-parser-output .tpl-tracked .status.resolved{color:green}</style><div class="tpl-tracked plainlinks mw-trackedTemplate float-right">Tracked in <a href="https://phabricator.wikimedia.org/" class="extiw" title="phabricator:">Phabricator</a><br/><b><a href="https://phabricator.wikimedia.org/T90908" class="extiw" title="phabricator:T90908"><span class="trakfab-T90908">Task T90908</span></a></b><br/><span class="status"></span></div>
+<ul><li><a href="/wiki/Special:MyLanguage/Code_of_Conduct/FAQ" title="Special:MyLanguage/Code of Conduct/FAQ">Code of Conduct/FAQ</a><span style="display:none"><a href="/wiki/Code_of_Conduct/FAQ" title="Code of Conduct/FAQ"> </a></span></li>
+<li><a href="/wiki/Special:MyLanguage/Bug_management/Phabricator_etiquette" title="Special:MyLanguage/Bug management/Phabricator etiquette">Bug management/Phabricator etiquette</a><span style="display:none"><a href="/wiki/Bug_management/Phabricator_etiquette" title="Bug management/Phabricator etiquette"> </a></span></li>
+<li><a href="https://meta.wikimedia.org/wiki/Special:MyLanguage/Harassment_policies" class="extiw" title="m:Special:MyLanguage/Harassment policies">m:Harassment policies</a></li>
+<li><a href="https://foundation.wikimedia.org/wiki/Friendly_space_policy" class="extiw" title="wmf:Friendly space policy">wmf:Friendly space policy</a> and <a href="https://meta.wikimedia.org/wiki/Special:MyLanguage/Grants:Friendly_space_expectations" class="extiw" title="m:Special:MyLanguage/Grants:Friendly space expectations">m:Grants:Friendly space expectations</a></li>
+<li><a href="https://foundation.wikimedia.org/wiki/Terms_of_Use#4._Refraining_from_Certain_Activities" class="extiw" title="wmf:Terms of Use">wmf:Terms of Use#4. Refraining from Certain Activities</a></li>
+<li><a href="https://meta.wikimedia.org/wiki/Special:MyLanguage/Mailing_lists/Guidelines" class="extiw" title="m:Special:MyLanguage/Mailing lists/Guidelines">m:Mailing lists/Guidelines</a></li>
+<li><a href="https://meta.wikimedia.org/wiki/Special:MyLanguage/Community_Capacity_Development/Conflict_management" class="extiw" title="m:Special:MyLanguage/Community Capacity Development/Conflict management">m:Community Capacity Development/Conflict management</a></li>
+<li><a href="https://foundation.wikimedia.org/wiki/Code_of_conduct_policy" class="extiw" title="wmf:Code of conduct policy">Code of Conduct policy</a> for all Wikimedia Foundation staff and members of its Board of Trustees</li>
+<li><a href="/wiki/Special:MyLanguage/Expected_behavior" title="Special:MyLanguage/Expected behavior">Expected behavior</a><span style="display:none"><a href="/wiki/Expected_behavior" title="Expected behavior"> </a></span></li>
+<li><a href="https://meta.wikimedia.org/wiki/Special:MyLanguage/Code_of_conduct" class="extiw" title="m:Special:MyLanguage/Code of conduct">m:Code of conduct</a>, related links</li>
+<li><a href="/wiki/Special:MyLanguage/Code_of_Conduct/Meetings" title="Special:MyLanguage/Code of Conduct/Meetings">Public meeting notes related to the CoC</a></li>
+<li><a href="/wiki/Special:MyLanguage/Code_of_Conduct/Committee/Tenure_April2018/Resolution_regarding_CoC_presence_on_MediaWiki" title="Special:MyLanguage/Code of Conduct/Committee/Tenure April2018/Resolution regarding CoC presence on MediaWiki">Tenure in April 2018 - Resolution regarding CoC presence on MediaWiki</a></li></ul>
+<!-- 
+NewPP limit report
+Parsed by mw1441
+Cached time: 20220508214434
+Cache expiry: 1814400
+Reduced expiry: false
+Complications: []
+DiscussionTools time usage: 0.020 seconds
+CPU time usage: 0.443 seconds
+Real time usage: 0.561 seconds
+Preprocessor visited node count: 1634/1000000
+Post‐expand include size: 14065/2097152 bytes
+Template argument size: 4039/2097152 bytes
+Highest expansion depth: 16/100
+Expensive parser function count: 5/500
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 7409/5000000 bytes
+Lua time usage: 0.051/10.000 seconds
+Lua memory usage: 1534960/52428800 bytes
+Number of Wikibase entities loaded: 0/400
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  199.945      1 -total
+ 48.77%   97.512      1 Template:Code_of_Conduct
+ 46.06%   92.097      1 Template:Sidebar
+ 25.55%   51.094      1 Template:Community_policy
+ 23.63%   47.256     10 Template:Ll
+ 23.46%   46.905      1 Template:Mbox
+ 16.50%   32.996     14 Template:Pagelang
+ 13.60%   27.199      4 Template:Dir
+ 12.48%   24.948      1 Template:Navbar
+  9.93%   19.855     20 Template:Translatable
+-->
+
+<!-- Saved in parser cache with key mediawikiwiki:pcache:idhash:470563-0!canonical and timestamp 20220508214434 and revision id 5164980. Serialized with JSON.
+ -->
+</div><noscript><img src="//www.mediawiki.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript>
+<div class="printfooter">Retrieved from "<a dir="ltr" href="https://www.mediawiki.org/w/index.php?title=Code_of_Conduct&amp;oldid=5164980">https://www.mediawiki.org/w/index.php?title=Code_of_Conduct&amp;oldid=5164980</a>"</div></div>
+		<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/wiki/Category:Community_policies" title="Category:Community policies">Community policies</a></li></ul></div></div>
+	</div>
+
+
+</main>
+
+	</div> 
+</div> 
+
+<div class="mw-workspace-container mw-footer-container">
+	<div class="mw-content-container">
+		
+<footer id="footer" class="mw-footer" role="contentinfo" >
+	<ul id="footer-info">
+	<li id="footer-info-lastmod"> This page was last edited on 13 April 2022, at 21:54.</li>
+	<li id="footer-info-copyright">Text is available under the <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>;
+additional terms may apply.
+See <a href="https://foundation.wikimedia.org/wiki/Terms_of_Use">Terms of Use</a> for details.</li>
+</ul>
+
+	<ul id="footer-places">
+	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+	<li id="footer-places-about"><a href="/wiki/Project:About" title="Project:About">About MediaWiki.org</a></li>
+	<li id="footer-places-disclaimer"><a href="/wiki/Project:General_disclaimer" title="Project:General disclaimer">Disclaimers</a></li>
+	<li id="footer-places-wm-codeofconduct"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Code_of_Conduct">Code of Conduct</a></li>
+	<li id="footer-places-mobileview"><a href="//m.mediawiki.org/w/index.php?title=Code_of_Conduct&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+	<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/www.mediawiki.org">Statistics</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Cookie_statement">Cookie statement</a></li>
+</ul>
+
+	<ul id="footer-icons" class="noprint">
+	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/"><img src="/static/images/footer/wikimedia-button.png" srcset="/static/images/footer/wikimedia-button-1.5x.png 1.5x, /static/images/footer/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation" loading="lazy" /></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/"><img src="/static/images/footer/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/footer/poweredby_mediawiki_132x47.png 1.5x, /static/images/footer/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a></li>
+</ul>
+
+</footer>
+
+	</div>
+</div>
+	</div> 
+</div> 
+
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"discussiontools":{"limitreport-timeusage":"0.020"},"limitreport":{"cputime":"0.443","walltime":"0.561","ppvisitednodes":{"value":1634,"limit":1000000},"postexpandincludesize":{"value":14065,"limit":2097152},"templateargumentsize":{"value":4039,"limit":2097152},"expansiondepth":{"value":16,"limit":100},"expensivefunctioncount":{"value":5,"limit":500},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":7409,"limit":5000000},"entityaccesscount":{"value":0,"limit":400},"timingprofile":["100.00%  199.945      1 -total"," 48.77%   97.512      1 Template:Code_of_Conduct"," 46.06%   92.097      1 Template:Sidebar"," 25.55%   51.094      1 Template:Community_policy"," 23.63%   47.256     10 Template:Ll"," 23.46%   46.905      1 Template:Mbox"," 16.50%   32.996     14 Template:Pagelang"," 13.60%   27.199      4 Template:Dir"," 12.48%   24.948      1 Template:Navbar","  9.93%   19.855     20 Template:Translatable"]},"scribunto":{"limitreport-timeusage":{"value":"0.051","limit":"10.000"},"limitreport-memusage":{"value":1534960,"limit":52428800}},"cachereport":{"origin":"mw1441","timestamp":"20220508214434","ttl":1814400,"transientcontent":false}}});});</script>
+<script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"Code of Conduct","url":"https:\/\/www.mediawiki.org\/wiki\/Code_of_Conduct","sameAs":"http:\/\/www.wikidata.org\/entity\/Q45161493","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q45161493","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"Wikimedia Foundation, Inc.","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2015-07-16T21:29:03Z","dateModified":"2022-04-13T21:54:11Z","headline":"community code of conduct from MediaWiki"}</script><script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"Code of Conduct","url":"https:\/\/www.mediawiki.org\/wiki\/Code_of_Conduct","sameAs":"http:\/\/www.wikidata.org\/entity\/Q45161493","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q45161493","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"Wikimedia Foundation, Inc.","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2015-07-16T21:29:03Z","dateModified":"2022-04-13T21:54:11Z","headline":"community code of conduct from MediaWiki"}</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":146,"wgHostname":"mw1328"});});</script>
+</body>
+</html>
