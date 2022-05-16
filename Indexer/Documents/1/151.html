@@ -1,678 +1,1121 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
+
+
+	
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="en">
 <head>
-  <title>[2011.00997] Analyzing Wikidata Transclusion on English Wikipedia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">	
+<meta name="citation_journal_title" content="Transactions of the American Mathematical Society">
+<meta name="citation_journal_abbrev" content="Trans. Amer. Math. Soc.">
+<meta name="citation_abstract_html_url" content="https://www.ams.org/tran/1959-092-01/S0002-9947-1959-0126377-3/">
+<meta name="citation_pdf_url" content="https://www.ams.org/tran/1959-092-01/S0002-9947-1959-0126377-3/S0002-9947-1959-0126377-3.pdf">
+<meta name="citation_issn" content="0002-9947">
+<meta name="citation_issn" content="1088-6850">
+<meta name="citation_author" content="Axt, Paul">
+<meta name="citation_title" content="On a subrecursive hierarchy and primitive recursive degrees">
+<meta name="citation_publication_date" content="1959">
+<meta name="citation_volume" content="92">
+<meta name="citation_issue" content="1">
+<meta name="citation_firstpage" content="85">
+<meta name="citation_lastpage" content="105">
+<meta name="citation_doi" content="10.1090/S0002-9947-1959-0126377-3">
+<meta name="citation_reference" content="citation_author=Kleene, Stephen Cole; citation_title=Introduction to metamathematics; citation_publisher=D. Van Nostrand Co., Inc., New York, N. Y.; citation_publication_date=1952">
+<meta name="citation_reference" content="citation_author=Kleene, S. C.; citation_title=Arithmetical predicates and function quantifiers; citation_journal_title=Trans. Amer. Math. Soc.; citation_issn=0002-9947; citation_publication_date=1955; citation_volume=79; citation_firstpage=312; citation_lastpage=340; citation_doi=10.2307/1993033">
+<meta name="citation_reference" content="citation_author=Kleene, S. C.; citation_title=On the forms of the predicates in the theory of constructive ordinals. II; citation_journal_title=Amer. J. Math.; citation_issn=0002-9327; citation_publication_date=1955; citation_volume=77; citation_firstpage=405; citation_lastpage=428; citation_doi=10.2307/2372632">
+<meta name="citation_reference" content="citation_author=Kleene, S. C.; citation_title=Extension of an effectively generated class of functions by enumeration; citation_journal_title=Colloq. Math.; citation_issn=0010-1354; citation_publication_date=1958; citation_volume=6; citation_firstpage=67; citation_lastpage=78; citation_doi=10.4064/cm-6-1-67-78">
+<meta name="citation_reference" content="citation_author=Kleene, S. C.; citation_author=Post, Emil L.; citation_title=The upper semi-lattice of degrees of recursive unsolvability; citation_journal_title=Ann. of Math. (2); citation_issn=0003-486X; citation_publication_date=1954; citation_volume=59; citation_firstpage=379; citation_lastpage=407; citation_doi=10.2307/1969708">
+<meta name="citation_reference" content="citation_author=Péter, Rózsa; citation_title=Rekursive Funktionen; citation_publisher=Akademischer Verlag, Budapest; citation_publication_date=1951; citation_firstpage=206">
 
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<title>AMS :: Transactions of the American Mathematical Society</title>
+
+
+
+
+<style>
+#alertMesssage {
+width: 600px;
+margin-right: auto;
+margin-left: auto;
+margin-bottom: 25px;
+}
+
+#alertBackground {
+background: #930;
+}
+#importantUpdate {
+background: #000;
+text-transform: uppercase;
+color: #FFF;
+font-size: 13px;
+font-weight: bold;
+padding: 10px;
+border: 1px solid #000;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+#importantMessage {
+color: #000;
+font-size: 13px;
+padding-right: 10px;
+padding-left: 10px;
+background-color: #F1EC0E;
+border: 1px solid #ccc;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+#importantMessage a:link {
+color: #000;
+background: transparent;
+text-decoration: none;
+}
+
+#importantMessage a:link {
+color: #000;
+background: transparent;
+text-decoration: none;
+}
+
+#importantMessage a:visited {
+color: #000;
+background: transparent;
+text-decoration: none;
+}
+
+#importantMessage a:hover {
+color: #000;
+background: transparent;
+text-decoration: underline;
+}
+
+#importantMessage a:active {
+color: #000;
+background: transparent;
+text-decoration: underline;
+}
+
+.subnav a:link {
+	display: block;
+	margin: 0px 0px 5px;
+	padding: 0px;
+}
+.addlpointers a:link {
+	display: table-cell;
+	padding: 5px;
+	margin-right: 5px;
+	border-right: 1px solid #CCC;
+}
+.addlpointers a:link:last-of-type {
+    border-right: 1px solid #fff;
+} 
+dt {
+	font-size: 1.3em !important;	
+}
+dd {
+	font-size: 1.1em !important;		
+}
+/*
+.well a:link {
+	display: inline;
+	padding: 5px;
+	margin-right: 5px;
+	border-right: 1px solid #CCC;
+}
+.well a:link:last-of-type {
+    border-right: 1px solid #fff;
+} 
+*/
+</style>
+
+
+
+<!-- Alert javascript -->
+
+<!-- Beginning of stylesheet and JavaScript stuff for Journals framework. -->
+<link href="/css/journals/responsive/allJournals.css" rel="stylesheet" type="text/css" />
+<!--     <link href="/css/journals/responsive/journalsResponsive.css" rel="stylesheet" type="text/css" />  -->
+<link href="/css/journals/responsive/tran.css" rel="stylesheet" type="text/css" />
+
+<!-- Added CSS file. MHS -->
+<link href="/css/journals2022.css" rel="stylesheet" type="text/css" />
+<!-- Added CSS file. MHS -->
+
+<script src="/js/ajax.js" type="text/javascript"></script>
+<script type="text/javascript">
+var addPairingListener = true;
+var testForPairingInst = true;
+var showCurrentPairingInfo = true;
+var doPairing = false;
 </script>
-  <meta name="citation_title" content="Analyzing Wikidata Transclusion on English Wikipedia"/>
-  <meta name="citation_author" content="Johnson, Isaac"/>
-  <meta name="citation_date" content="2020/11/02"/>
-  <meta name="citation_online_date" content="2020/11/02"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2011.00997"/>
-  <meta name="citation_arxiv_id" content="2011.00997"/>
-  <meta name="citation_abstract" content=" Wikidata is steadily becoming more central to Wikipedia, not just in
-maintaining interlanguage links, but in automated population of content within
-the articles themselves. It is not well understood, however, how widespread
-this transclusion of Wikidata content is within Wikipedia. This work presents a
-taxonomy of Wikidata transclusion from the perspective of its potential impact
-on readers and an associated in-depth analysis of Wikidata transclusion within
-English Wikipedia. It finds that Wikidata transclusion that impacts the content
-of Wikipedia articles happens at a much lower rate (5%) than previous
-statistics had suggested (61%). Recommendations are made for how to adjust
-current tracking mechanisms of Wikidata transclusion to better support metrics
-and patrollers in their evaluation of Wikidata transclusion.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2011.00997"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Analyzing Wikidata Transclusion on English Wikipedia"/>
-    <meta name="twitter:description" content="Wikidata is steadily becoming more central to Wikipedia, not just in
-maintaining interlanguage links, but in automated population of content within
-the articles themselves. It is not well..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="Analyzing Wikidata Transclusion on English Wikipedia"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2011.00997v1"/>
-    <meta property="og:description" content="Wikidata is steadily becoming more central to Wikipedia, not just in
-maintaining interlanguage links, but in automated population of content within
-the articles themselves. It is not well understood, however, how widespread
-this transclusion of Wikidata content is within Wikipedia. This work presents a
-taxonomy of Wikidata transclusion from the perspective of its potential impact
-on readers and an associated in-depth analysis of Wikidata transclusion within
-English Wikipedia. It finds that Wikidata transclusion that impacts the content
-of Wikipedia articles happens at a much lower rate (5%) than previous
-statistics had suggested (61%). Recommendations are made for how to adjust
-current tracking mechanisms of Wikidata transclusion to better support metrics
-and patrollers in their evaluation of Wikidata transclusion."/>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/ams/amspairing.js"></script>
+           <link rel="alternate" type="application/rss+xml" title="Transactions of the American Mathematical Society" href="/rss/tran.rss" />
+<!-- End of stylesheet and JavaScript stuff for Journals framework -->
+
+   
+   <!-- Theming the browser's address bar to match our brand's colors provides a more immersive user experience -->
+<meta name="theme-color" content="#0057b8"/>
+
+<!-- START - Facebook Open Graph, Google+ and Twitter Card Tags -->
+
+    <!-- Open Graph general (Facebook & Pinterest & LinkedIn) -->
+
+<meta property="og:title" content="American Mathematical Society" />
+<meta property="og:description" content="Advancing research. Creating connections." />
+<meta property="og:image" content="https://www.ams.org/images/Logo-Stacked.gif" link rel="image_src" type="image/png" />
+
+<meta property="og:image:width" content="800" />
+<meta property="og:image:height" content="400" />
+<meta property="og:image:alt" content="American Mathematical Society" />
+<meta property="og:site_name" content="American Mathematical Society">
+<meta property="article:publisher" content="https://www.facebook.com/amermathsoc" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@amermathsoc">
+<meta name="twitter:title" content="American Mathematical Society">
+<meta name="twitter:description" content="Advancing research. Creating connections.">
+<meta name="twitter:image" content="https://www.ams.org/images/Logo-Stacked.gif">
+<meta property="og:image:width" content="800" />
+<meta property="og:image:height" content="400" />
+<meta name="twitter:image:alt" content="American Mathematical Society">
+<!-- END - Facebook Open Graph, Google+ and Twitter Card Tags-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "url": "http://www.ams.org",
+  "logo": "https://www.ams.org/images/content/logo.png",
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "telephone": "+1-800-321-4267",
+    "faxNumber": "+1-401-455-4000",
+    "contactType": "Customer Service",
+    "productSupported": "Corporate Operations",
+    "contactOption": "TollFree",
+    "areaServed": "Worldwide"
+  },
+  
+  {
+    "@type": "ContactPoint",
+    "telephone": "+1-919-515-7863",
+    "faxNumber": "+1-919-515-7896",
+    "contactType": "Customer Service", 
+    "productSupported": "American Mathematical Society: Office of the Secretary (Governance)",
+    "areaServed": [
+      "US"      
+    ],
+    "availableLanguage": [
+      "English"
+    ]
+  },
+  {
+    "@type": "ContactPoint",
+    "telephone": "+1-734-996-5250",
+    "faxNumber": "+1-734-996-2916",
+    "contactType": "Technical Support", 
+    "productSupported": "American Mathematical Society: MathSciNet and Mathematical Reviews",
+    "areaServed": [
+      "Worldwide"      
+    ],
+    "availableLanguage": [
+      "English"
+    ]
+  },
+  {
+    "@type": "ContactPoint",
+    "telephone": "+1-202-588-1100",
+    "faxNumber": "+1-202-588-1853",
+    "contactType": "Customer Service",
+    "productSupported": "American Mathematical Society: Office of Government Relations (Advocacy, Science Policy)",    
+    "contactOption": "TollFree",
+    "areaServed": [
+      "US"
+    ]
+  }]
+}
+</script>
+
+
+<!-- Favorites Icons -->
+<link rel="shortcut icon" type="image/x-icon" href="https://www.ams.org/images/Logo-Favicon.png">
+<link rel="icon" type="image/x-icon" href="https://www.ams.org/images/Logo-Favicon.png">
+<link rel="icon" type="image/png" href="https://www.ams.org/images/Logo-Favicon.png">
+
+
+<!-- rss feed for feed readers -->
+<link rel="alternate" type="application/rss+xml" title="AMS News" href="https://www.ams.org/cgi-bin/content/news_items.cgi?rss=1" />
+
+<!-- Prefetch -->
+<link rel="dns-prefetch" href="https://maxcdn.bootstrapcdn.com" />
+<link rel="dns-prefetch" href="https://ajax.googleapis.com" />
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+<!-- Preconnect for google fonts - speed up font load -->
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
+<!-- Typography -->
+<link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i&amp;subset=latin-ext" as="font" crossorigin>
+<link href="/fontawesome/css/all.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet" crossorigin>
+<!-- Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Slidenav CSS -->
+<link  href="/css/2018_slidenav.css" rel="stylesheet preload" as="style">
+
+<!-- 2018 Redesign -->
+<link href="/css/2018_website.css" rel="stylesheet preload" as="style">
+
+<!-- Bootstrap accessibility -->
+<link href="/css/bootstrap-accessibility.css" rel="stylesheet preload" as="style">
+
+
+<!-- jQuery then Bootstrap -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+<script src="/js/sharethis-fix.js"></script>
+
+<!-- Initiate slide-in navigation  -->
+<script>
+/* Set the width of the side navigation to 300px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "300px";
+}
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+
+<!-- Placed by txm 26 Nov 2018 Hotjar Tracking Code for https://www.ams.org/ -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1104779,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/cookieconsent.min.css" />
+<script src="/js/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#edeff5",
+      "text": "#838391"
+    },
+    "button": {
+      "background": "#4b81e8"
+    }
+  },
+  "theme": "classic",
+  "position": "bottom-right",
+  "content": {
+    "message": "This website uses cookies to ensure you get the best experience on our website.",
+    "href": "/privacy",
+    "dismiss": "Okay",
+    "link": "Learn more"
+  }
+})});
+</script>
+
+
+<!-- google tag manager code inserted by txm on 14 nov 2019 -->
+<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PQJKQL');</script>
+  <!-- End Google Tag Manager -->
+  <!--end tag manager from txm-->
+
+  <script>
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-2791151-1', 'auto', {'allowLinker': true });
+ga('require', 'linker');
+ga('linker:autoLink', ['www.ams.org','bookstore.ams.org','ebus.ams.org']);
+ga('set', 'hostname', 'www.ams.org');
+ga('require', 'linkid');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+
+function amsTrackEvent (category, action, label) {
+	ga('send', 'event', category, action, label);
+}
+
+function amsTrackPageview (page) {
+	ga('send', 'pageview', page);
+}
+
+function amsAddTracking () {
+	var contentDiv = document.getElementById('amsContentDiv');
+	if (!contentDiv) return 0;
+	var aTags = contentDiv.getElementsByTagName('A');
+	for (i = 0; i < aTags.length; i++) {
+		var url = aTags[i].href;
+		url = url.replace(/.*ams.org/,'');
+		if (url.match(/\.htm(l)?$/i) || ! url.match(/\./) ) { 
+			continue;	
+		}
+		if (document.addEventListener) {
+			aTags[i].addEventListener('click', function () { amsTrackPageview(url) }, false);
+		}
+		else {
+			aTags[i].attachEvent('onclick', function () { amsTrackPageview(url) });
+		}
+	}
+}
+
+if (window.addEventListener)
+    window.addEventListener('load', amsAddTracking, false);
+else if (window.attachEvent)
+    window.attachEvent('onload', amsAddTracking);
+
+</script>
+
+
+  
+
+<!-- google search script -->
+<script>
+  (function() {
+    var cx = '006070101833274801941:dcorgy__oqo';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+
+
+ window.onload = function(){
+	 	var googleSearchBox = document.getElementById('gsc-i-id1');
+	 	if (googleSearchBox) {
+	 		googleSearchBox.style.backgroundImage = '';
+                	googleSearchBox.placeholder = 'Search the AMS';
+		}
+        };
+
+</script>
+<!-- / google search script -->
+
+<!-- share this GDPR compliant script -->
+<script src="//platform-api.sharethis.com/js/sharethis.js#property=598c93d1e2587a001253a011&product=gdpr-compliance-tool"></script>
+<!-- end share this GDPR compliant script -->
+
+<!--<script src="/js/bootstrap-accessibility.js"></script>-->
 </head>
+<body>
+<input type="hidden" id="ams_class_id" value="1" />
+<!--google tag manager code inserted by txm 19 Nov 2019-->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQJKQL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
-  </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
-      </div>
-    </div>
-  </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+<!-- top navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light slide">
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
-
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
-
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2011.00997
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2011.00997"
-        dc:identifier="/abs/2011.00997"
-        dc:title="Analyzing Wikidata Transclusion on English Wikipedia"
-        trackback:ping="/trackback/2011.00997" />
-    </rdf:RDF>
--->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computers and Society</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2011.00997</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 2 Nov 2020]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>Analyzing Wikidata Transclusion on English Wikipedia</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Johnson%2C+I">Isaac Johnson</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2011.00997">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  Wikidata is steadily becoming more central to Wikipedia, not just in
-maintaining interlanguage links, but in automated population of content within
-the articles themselves. It is not well understood, however, how widespread
-this transclusion of Wikidata content is within Wikipedia. This work presents a
-taxonomy of Wikidata transclusion from the perspective of its potential impact
-on readers and an associated in-depth analysis of Wikidata transclusion within
-English Wikipedia. It finds that Wikidata transclusion that impacts the content
-of Wikipedia articles happens at a much lower rate (5%) than previous
-statistics had suggested (61%). Recommendations are made for how to adjust
-current tracking mechanisms of Wikidata transclusion to better support metrics
-and patrollers in their evaluation of Wikidata transclusion.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata">
-        <tr>
-          <td class="tablecell label">Comments:</td>
-          <td class="tablecell comments mathjax">Accepted to 1st Wikidata Workshop at ISWC 2020</td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computers and Society (cs.CY)</span></td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2011.00997">arXiv:2011.00997</a> [cs.CY]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2011.00997v1">arXiv:2011.00997v1</a> [cs.CY]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2011.00997">https://doi.org/10.48550/arXiv.2011.00997</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
+<div class="text-center">
+<a href="/" aria-label="Link to homepage"><img src="/images/logo-mobile-ams-320x88.png" alt="AMS" class="center-block hidden-md hidden-lg"></a>
 </div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Isaac Johnson [<a href="/show-email/9db444e6/2011.00997">view email</a>]
-      <br/><strong>[v1]</strong>
-Mon, 2 Nov 2020 14:16:42 UTC (27 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2011.00997" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2011.00997" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CY</div>
 
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2011.00997&amp;function=prev&amp;context=cs.CY"
-         accesskey="p" title="previous in cs.CY (accesskey p)">&lt;&nbsp;prev</a>
+
+<!-- slide in nav -->
+<div class="col-xs-3 col-sm-3 col-md-3" role="navigation" aria-label="navigation"> 
+<!-- Use any element to open the sidenav --> 
+<div class="clearfix"><br></div>
+<div onclick="openNav()"> 
+<p class="menuicon"><i class="fa fa-bars menuicon" aria-hidden="true"></i> Menu</p>
+<!--img src="/images/content/menu.png" alt="Open navigation" title="View navigation menu" class="menuicon"-->
+</div> 
+<div id="mySidenav" class="sidenav AMS_blue"> <a href="javascript:void(0)" class="closebtn closelogo" onclick="closeNav()">
+<img src="/images/content/menu-close.png" alt="Close navigation panel" title="Close navigation menu" class="hidden-xs hidden-sm">
+<img src="/images/content/menu-close_small.png" alt="Close navigation panel" title="Close navigation menu" class="visible-xs visible-sm">
+</a>
+  <div id="navprimary" class="slide">
+    <h3>Sections</h3>
+    <a href="/"><i class="fa fa-home" aria-hidden="true"></i> AMS Home</a> 
+    <a href="/publications">Publications</a>
+    <a href="/membership">Membership</a>
+    <a href="/meetings">Meetings &amp; Conferences</a>
+    <a href="/publicoutreach">News &amp; Public Outreach</a>
+    <a href="/notices">Notices of the AMS</a>   
+    <a href="/profession">The Profession</a> 
+    <a href="/programs">Programs</a> 
+    <a href="/policy">Government Relations</a> 
+<a href="/education">Education</a>
+	<a href="/support-ams">Giving to the AMS</a> 
+    <a href="/about">About the AMS</a> 
+    </div>
+  <div id="navsecondary" class="slide hidden-md hidden-lg">
+    <h3>Services</h3>
+    <a href="/mathscinet">MathSciNet<sup>&reg;</sup></a> 
+    <a href="/member-directory">Member Directory</a> 
+    <a href="/bookstore">Bookstore</a> 
+    <a href="/journals">Journals</a> 
+    <a href="/employment-services">Employment Services</a> 
+    <a href="/support-ams">Giving to the AMS</a> 
+    </div>
+</div>
+ 
+</div>
+<!-- / slide in nav -->
+
+
+<!-- Logo -->  
+<div class="hidden-xs hidden-xs col-md-5 text-center"> 
+<a href="/" aria-label="Link to homepage"><img src="/images/content/logo.png" alt="AMS Logo" class="img-responsive hidden-xs hidden-sm"></a>
+</div>
+<!-- / Logo -->
+
+<!-- Commerce and search area -->
+<div class="col-xs-9 col-sm-9 col-md-4">
+ 
+<!-- Commerce -->
+
+<span id="accountDiv"></span>
+
+
+<script src="/js/ajax.js" type="text/javascript"></script>
+<script type="text/javascript">
+function loadAccount () {
+	makeRequest('/cgi-bin/content/account_header.cgi', 'accountDiv');
+	//makeRequest('https://prsdev.ams.org/ebus/AccountHeader.aspx', 'accountDiv');
+}
+
+if (window.addEventListener)
+	window.addEventListener('load', loadAccount, false); 
+else if (window.attachEvent)
+	window.attachEvent('onload', loadAccount);
+</script>
+
+<!-- / Commerce -->
+
+<!-- Search -->
+<div class="googlesearch pull-right col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-1" id="searchbox" role="search">
+<gcse:searchbox-only></gcse:searchbox-only>
+</div>
+<!-- / search -->
+
+</div>
+<!-- / Commerce and search -->
+
+<!-- Popular links -->
+<div class="col-md-12 AMS_gray">
+<nav aria-label="Products and Services" class="hidden-xs hidden-sm text-center mainchoices">
+<a href="https://bookstore.ams.org" title="AMS Bookstore">Bookstore</a>
+<a href="https://mathscinet.ams.org/" title="MathSciNet is an electronic publication offering access to a carefully maintained and easily searchable database of reviews">MathSciNet<sup>&reg;</sup></a>
+<a href="/meetings" title="Meetings and Conferences">Meetings</a>
+<a href="/journals" title="AMS peer-reviewed journals">Journals</a>
+<a href="/membership" title="Welcome to your AMS Membership Headquarters">Membership</a>
+<a href="/employment-services" title="Helping you manage a major job search">Employment Services</a>
+<a href="/support-ams" title="AMS Development Office">Giving to the AMS</a>
+<a href="/about" title="Learn about the AMS">About the AMS</a>
+</nav>
+</div>
+
+<!-- / Popular links -->
+
+</nav>
+
+  
+
+<!-- begin main journals content -->
+
+
+
+
+
+<div class="container">
+<div class="row">
+
+<script>
+if (window.addEventListener)
+        window.addEventListener('load', showAlert, false);
+else if (window.attachEvent)
+        window.attachEvent('onload', showAlert);
+
+function showAlert() {
+//Enter the start & end dates & times you would want the message to appear by modifying the startTime and endTime variables below using this format
+//new Date(YYYY, MM, DD, HH, MM, SS, 0)
+//Note that for MM January is 00, February is 01, March is 02, etc. 
+
+    var startTime = new Date(2022, 04, 05, 15, 00, 00, 00);
+    var endTime = new Date(2022, 04, 10, 09, 00, 00, 00);
+    var timeNow = new Date();
+    var x = document.getElementById('alertDiv');
+    if (x && timeNow > startTime  && timeNow < endTime) {
+        x.style.display = "inline-block";
+    } 
+}
+</script>
+<!-- Do not change the properties of this div unless you want to change the styling -->
+
+<div class="alert alert-info alert-dismissible alertDiv col-md-12" role="alert" id="alertDiv" style="display:none;">
+
+<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+<p class="text-centered">Next Tuesday, May 10th between 5am and 7am the AMS website will be undergoing routine maintenance and may be unavailable during those hours.</p>
+
+</div>
+
+<!-- this is the end div -->
+
+</div>
+<div class="row" id="journals_logo_row">
+<div class="col-md-4">
+<table width="150" border="0" cellpadding="5" cellspacing="5">
+  <tr><th align="center" scope="col">
+      <a href="/pairing/pair_my_device.html"><img src="/images/remote-access-icon.png" alt="Remote Access" class="img-responsive"></a>
+</th>  
+    <td rowspan="2" align="center" scope="col">
+        <img src="/publications/journals/images/journal.cover.tran.gif" alt="Transactions of the American Mathematical Society" class="img-responsive">
+    </td>
+  </tr>
+    <tr>
+    <td align="center"><img src="/publications/journals/images/open-access-green-icon.png" alt="Green Open Access" class="img-responsive"></td>
+  </tr>
+  
+</table>
+
+
+</div>
+<div class="col-md-4 text-center">
+<p class="text-center">
+  <a href="/journals/tran"><img src="/publications/journals/images/tran-mh-b.gif" alt="Transactions of the American Mathematical Society" class="img-responsive" style="display:inline-block" /></a>
+</p>
+
+<p class="text-center issn">     ISSN 1088-6850(online)      ISSN 0002-9947(print) 
+  
+</p>
+</div>
+<div class="col-md-4 text-right subnav"> 
+  <a href="/publications/journals">Journals Home</a>
+  <a href="/epubsearch">Search</a>
+  <a href="/cgi-bin/click_access/inquiry.pl">My Subscriptions</a>
+  <a href="/publications/journals/subscriberinfo">Subscribe</a>
+</div>
+</div>
+
+
+
+<div class="row">
+  <span id='amsPairingInfoSection' class='currentPairingInfo'>
+    <span id='currentAmsPairingInfo' style='display:none;'>
+      <br />Your device is paired with
+      <span name='amsInstitutionName'></span><br />for
+         another <span name="amsPairingDaysLeft"></span>&nbsp;days.
     </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2011.00997&amp;function=next&amp;context=cs.CY" accesskey="n"
-         title="next in cs.CY (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CY/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CY/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CY/2011">2011</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2011.00997?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
+  </span>
+</div>
+
+
+  
+
+
+
+
+   
+<div class="row">
+ <div class="well text-center">
+
+ <div id="nav_cgi" >
+ <script type="text/javascript" src="/journals/javascript/tran_nav.js"></script>
+    
+       <a href="/cgi-bin/mstrack/accepted_papers/tran">
+       Articles in press</a> | 
+    
+    
+       <a href="/jourcgi/jrnl_toolbar_nav/tran_recent">
+        Recently published articles</a> | 
+    
+    
+       <a href="javascript: goto_most_recent_tran()">
+       Most recent  issue</a>
+    
+    
+        | 
+      <a href="/jourcgi/jrnl_toolbar_nav/tran_all">
+      All  issues : 
+                  1900 &ndash; Present     </a>
+    
+  </div>
+
+ </div> 
+</div>
+
+
+<div id="mainContent">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/journals/javascript/references.js" type="text/javascript"></script>
+<script async src="/js/mj.js"></script>
+    <script type="text/javascript" src="/journals/javascript/tran_nav.js"></script>
+    
+  <div class="row">
+    <div class="well text-center" id="navCell">
+            <div align="center"><a href="/tran/1959-091-03/">Previous issue</a>
+| <a href="/tran/1959-092-01/">This issue</a>
+| <a href="javascript: goto_most_recent_tran()">Most recent issue</a>
+| <a href="/jourcgi/jrnl_toolbar_nav/tran_all">All issues (1900&ndash;Present)</a>
+| <a href="/tran/1959-092-02/">Next issue</a>
+| <a href="/tran/1959-092-01/S0002-9947-1959-0107600-8/">Previous article</a>
+| <a href="/cgi-bin/mstrack/accepted_papers?jrnl=tran">Articles in press</a>
+| <a href="/tran/0000-000-00/">Recently published articles</a>
+| <a href="/tran/1959-092-01/S0002-9947-1959-0107765-8/">Next article</a></div>
+    </div>
+  </div>
+
+<div class="row" id="journals_main_div">
+ <div class="col-xs-12 col-md-10 col-md-offset-1">
+
+  <div class="row">
+   <div class="col-md-4">        <a href="https://www.copyright.com/openurl.do?issn=1088-6850&WT.mc.it=American%20Mathematical%20Society" target="_blank">
+        <img src="/journals/images/rightslink/request-permissions.gif" alt="Request Permissions" /></a>   </div>
+   <div class="col-md-4">&nbsp;</div>    <div class="col-md-4 text-right">         &nbsp;
+   </div>   </div> 
+<p class="articleTitle">&nbsp;</p>
+<p class="articleTitle">On a subrecursive hierarchy and primitive recursive degrees</p>
+
+<p align="left">
+
+
+<br />
+<span class="bibDataTag">Author:</span>
+<a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Axt%2C%20Paul">Paul Axt</a>
+
+
+<br />
+<span class="bibDataTag">Journal:</span>
+Trans. Amer. Math. Soc. <strong>92</strong> (1959), 85-105
+
+<br />
+<span class="bibDataTag">MSC:</span>
+Primary 02.70
+
+<br />
+<span class="bibDataTag">DOI:</span>
+https://doi.org/10.1090/S0002-9947-1959-0126377-3
+
+<br />
+<span class="bibDataTag">MathSciNet review:</span>
+<a href = "https://www.ams.org/mathscinet-getitem?mr=126377">0126377</a>
+<br />
+<a href = "S0002-9947-1959-0126377-3.pdf">Full-text PDF</a>  <span class="freeJournalArticle">Free Access</span><script type="text/javascript" src="/journals/javascript/chorus_prelude.js"></script>
+<script type="text/javascript">
+// set variables here to help to decide whether the article is free,
+// whether it is funded, and whether there is an AM available
+var freeMarker     = " <span class="freeJournalArticle">Free Access</span>";
+var articleFunders = [];
+var postDate       = "";
+var issueYear      = "1959";
+</script>
+<span id="chorus_main_element" style="display:none" >
+<br />
+</span>
+<script type="text/javascript" src="/journals/javascript/chorus.js"></script>
+
+        <p class="localNavBox"><a href = "#References">References</a> |
+<a href = "#Similar">Similar Articles</a> |
+<a href = "#Additional">Additional Information</a>
+<span id="link"></span>
+</p>
+        </p>
+        <form action="">
+        <p align="left" class="abstractSubHead">
+        <a name="References" id="References">References</a>
+        [Enhancements
+         <input type="radio" onclick = "javascript: toggle_references('enhanced')" name="reference_type" value="on" checked>On
+         <input type="radio" onclick = "javascript: toggle_references('plain')" name="reference_type" value="off">Off]
+        (<a href="/journals/references.html">What's this?</a>)
+        </p>
+        </form>
+
+        <div id="EnhancedReferences" align="left" style="display: block">
+        <span class="references"><ul class="journalsReferenceList">
+<LI src='1'><a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Kleene%2C%20Stephen%20Cole">Stephen Cole Kleene</a>, <em>Introduction to metamathematics</em>, D. Van Nostrand Co., Inc., New York, N. Y., 1952. <a href="https://www.ams.org/mathscinet-getitem?mr=0051790">MR <strong>0051790</strong></a>
+</li>
+
+
+<LI src='1'><a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Kleene%2C%20S.%20C.">S. C. Kleene</a>, <a href = "/tran/1955-079-02/S0002-9947-1955-0070594-4/" class="amsJournalReferenceTitle"><em>Arithmetical predicates and function quantifiers</em></a>, <a href = "/tran/">Trans. Amer. Math. Soc.</a> <a href = "/tran/1955-079-02/"><strong>79</strong></a> (1955), 312–340. <a href="https://www.ams.org/mathscinet-getitem?mr=70594">MR <strong>70594</strong></a>, DOI <a href="/tran/1955-079-02/S0002-9947-1955-0070594-4/">https://doi.org/10.1090/S0002-9947-1955-0070594-4</a>
+</li>
+
+
+<LI src='1'><a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Kleene%2C%20S.%20C.">S. C. Kleene</a>, <em>On the forms of the predicates in the theory of constructive ordinals. II</em>, Amer. J. Math. <strong>77</strong> (1955), 405–428. <a href="https://www.ams.org/mathscinet-getitem?mr=70595">MR <strong>70595</strong></a>, DOI <a href="https://doi.org/10.2307/2372632">https://doi.org/10.2307/2372632</a>
+</li>
+
+
+<LI src='1'><a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Kleene%2C%20S.%20C.">S. C. Kleene</a>, <em>Extension of an effectively generated class of functions by enumeration</em>, Colloq. Math. <strong>6</strong> (1958), 67–78. <a href="https://www.ams.org/mathscinet-getitem?mr=118672">MR <strong>118672</strong></a>, DOI <a href="https://doi.org/10.4064/cm-6-1-67-78">https://doi.org/10.4064/cm-6-1-67-78</a>
+</li>
+
+
+<LI src='1'><a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Kleene%2C%20S.%20C.">S. C. Kleene</a> and <a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Post%2C%20Emil%20L.">Emil L. Post</a>, <em>The upper semi-lattice of degrees of recursive unsolvability</em>, Ann. of Math. (2) <strong>59</strong> (1954), 379–407. <a href="https://www.ams.org/mathscinet-getitem?mr=61078">MR <strong>61078</strong></a>, DOI <a href="https://doi.org/10.2307/1969708">https://doi.org/10.2307/1969708</a>
+</li>
+
+
+<LI src='1'><a href="https://www.ams.org/mathscinet/search/authors.html?authorName=Peter%2C%20Rozsa">Rózsa Péter</a>, <em>Rekursive Funktionen</em>, Akademischer Verlag, Budapest, 1951 (German). <a href="https://www.ams.org/mathscinet-getitem?mr=0044467">MR <strong>0044467</strong></a>
+</li>
+
+
+</ul>        </span>
+        </div>
+
+        <div id="PlainReferences" align="left" style="display: none">
+        <span class="references"><ul class="journalsReferenceList">
+<span reftype="0">
+S. C. Kleene, <em>Introduction to metamathematics</em>, New York and Toronto, Van Nostrand, Amsterdam, North Holland Publishing Co. and Groningen, Noordhoff, 1952, 10+550 pp.
+</span>
+<span reftype="0">
+---, <em>Arithmetical predicates and function quantifiers</em>, Trans. Amer. Math. Soc. vol. 79 (1955) pp. 312-340.
+</span>
+<span reftype="0">
+---, <em>On the forms of the predicates in the theory of constructive ordinals</em> (second paper), Amer. J. Math. vol. 77 (1955) pp. 405-428.
+</span>
+<span reftype="0">
+---, <em>Extension of an effectively generated class of functions by enumeration</em>, forthcoming in Coll. Math. (Wrocław) vol. 6.
+</span>
+<span reftype="0">
+S. C. Kleene and Emil L. Post, <em>The upper semi-lattice of degrees of recursive unsolvability</em>, Ann. of Math. vol. 59 (1954) pp. 379-407.
+</span>
+<span reftype="0">
+R. Péter, <em>Rekursive Funktionen</em>, Budapest, Akademischer Verlag, 1951, 206 pp.
+</span>
+</ul>        </span>
+        </div>    <hr noshade="noshade" width="200" align="left" class="journalHr" />
+    <p align="left" class="abstractSubHead">
+    <a name="Similar" id="Similar">Similar Articles</a>
+    </p>
+
+    <p align="left">
+    Retrieve articles in <em>Transactions of the American Mathematical Society</em>
+    with MSC:
+    <a href="/joursearch/servlet/DoSearch?f1=msc&v1=02.70&jrnl=one&onejrnl=tran">02.70</a>
+
+    <p align="left">Retrieve articles in all journals
+    with MSC:
+    <a href="/joursearch/servlet/DoSearch?f1=msc&v1=02.70">02.70</a>
+<p></p>
+<hr noshade="noshade" width="200" align="left" class="journalHr" />
+<p align="left">
+<a name="Additional" id="Additional" class="abstractSubHead">
+Additional Information
+</a>
+
+
+<br />
+
+
+<br />
+<a href="/jourhtml/abstracthelp.html#addinfo">Article copyright:</a>
+&copy; Copyright 1959
+American Mathematical Society
+</p> 
+ </div> </div>      
+  <div class="row">
+    <div class="well text-center" id="navCell">
+            <div align="center"><a href="/tran/1959-091-03/">Previous issue</a>
+| <a href="/tran/1959-092-01/">This issue</a>
+| <a href="javascript: goto_most_recent_tran()">Most recent issue</a>
+| <a href="/jourcgi/jrnl_toolbar_nav/tran_all">All issues (1900&ndash;Present)</a>
+| <a href="/tran/1959-092-02/">Next issue</a>
+| <a href="/tran/1959-092-01/S0002-9947-1959-0107600-8/">Previous article</a>
+| <a href="/cgi-bin/mstrack/accepted_papers?jrnl=tran">Articles in press</a>
+| <a href="/tran/0000-000-00/">Recently published articles</a>
+| <a href="/tran/1959-092-01/S0002-9947-1959-0107765-8/">Next article</a></div>
     </div>
   </div>
   
-    </div>
 
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
+</div>
+
+</div>
+
+   
+  <!--Footer-->
+<section id="pagefooter">
+  <div> <a href="/"><img src="/images/content/footer-line.png" alt="American Mathematical Society" class="img-responsive"></a>
+  </div>
+  
+  <footer id="footer">
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4><a href="/publications" aria-label="Publications"><i class="fal fa-book fa-lg" aria-hidden="true"></i> Publications</a></h4>
       <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2011.00997">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2011.00997" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2011.00997" target="_blank" rel="noopener">Semantic Scholar</a></li>
+        <li><a href="/bookstore/">Bookstore</a></li>
+        <li><a href="/ebooks">eBook Collections</a></li>
+        <li><a href="/mathscinet/">MathSciNet</a></li>
+        <li><a href="/journals/">Journals</a></li>
       </ul>
-      <div style="clear:both;"></div>
     </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2011.html#abs-2011-00997" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2011-00997" title="DBLP bibtex record">bibtex</a>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4><a href="/membership/membership" aria-label="Membership"><i class="fal fa-user fa-lg"></i> Membership</a></h4>
+      <ul>
+        <li><a href="https://ebus.ams.org/ebus/Membership/JoinAMS.aspx">Join the AMS</a></li>
+        <li><a href="/renew">Renew your membership</a></li>
+        <li><a href="/institutional">Institutional membership</a></li>
+        <li><a href="/member-directory">Member Directory</a></li>
+      </ul>
     </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4><a href="/meetings" aria-label="Meetings"><i class="fal fa-users fa-lg"></i> Meetings &amp; Conferences</a></h4>
+      <ul>
+        <li><a href="/national">National</a></li>
+        <li><a href="/international-index">International</a></li>
+        <li><a href="/sectional-index">Sectional</a></li>
+        <li><a href="/amsconf">AMS Conferences</a></li>
+      </ul>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4><a href="/publicoutreach" aria-label="Public Outreach"><i class="fal fa-tv fa-lg"></i> News &amp; Public Outreach</a></h4>
+      <ul>
+        <li><a href="/news?class_id=1&expand=1&type=news">News</a></li>
+        <li><a href="https://www.ams.org/mathmedia/">Math in the Media</a></li>
+        <li><a href="/mathimagery/">Mathematical Imagery</a></li>
+        <li><a href="/mathmoments">Mathematical Moments</a></li>
+      </ul>
+    </div>
+    <div class="clearfix hidden-xs hidden-sm">&nbsp;</div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4> <a href="/profession" aria-label="Profession"><i class="far fa-briefcase fa-lg"></i>  The Profession</a></h4>
+      <ul>
+        <li><a href="/employment-services">Employment Services</a></li>
+        <li><a href="/emp-survey">Data on the Profession</a></li>
+        <li><a href="/ams-fellows">Fellows of the AMS</a></li>
+        <li><a href="/prizes">Prizes and Awards</a></li>
+      </ul>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4><a href="/programs" aria-label="Programs"><i class="fal fa-fast-forward fa-lg"></i> Programs</a></h4>
+      <ul>
+        <li><a href="/mrc">Mathematics Research Communities</a></li>
+        <li><a href="/travel-grants">Travel Grants</a></li>
+        <li><a href="/ams-fellowships">AMS Fellowships</a></li>
+        <li><a href="/students">Programs for Students</a></li>
+      </ul>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4><a href="/government" aria-label="Government Relations"><i class="fal fa-handshake-alt fa-lg"></i> Government Relations</a></h4>
+      <ul>
+<li><a href="/dc-mission">Our mission</a> </li>
+  <li><a href="/dc-collaborations">Collaborations and position statements</a> </li>
+  <li><a href="/dc-budgetprimer">Appropriations Process Primer</a> </li>
+  <li><a href="/dc-outreach">Congressional briefings and exhibitions</a></li>
+      </ul>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+      <h4><a href="/about" aria-label="About Us"><i class="fas fa-info-square fa-lg"></i> About the AMS</a></h4>
+      <ul>
+	  <li><a href="/governance">Governance</a></li>
+	  <li><a href="/ams-jobs">Jobs at AMS</a></li>
+        <li><a href="/contact/reach">Contact Us</a></li>
+        <li><a href="/custserv">Help and FAQ</a></li>
+      </ul>
+    </div> 
+    <div class="clearfix">&nbsp;</div>
     
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Isaac%20Johnson" title="DBLP author search">Isaac Johnson</a>
+    <p class="h5 text-center notiblogbull">
+    <a href="https://www.ams.org/notices">Notices of the AMS</a> 
+    &middot;
+    <a href="https://www.ams.org/bull">Bulletin of the AMS</a>
+    </p>
+    <p class="h5 text-center socialicons">
+    <!--https://fontawesome.com/how-to-use/on-the-web/other-topics/accessibility-->
+    <a href="https://www.facebook.com/amermathsoc" title="Facebook" aria-label="Facebook"><i aria-hidden="true" class="fab fa-facebook-square fa-lg" title="Facebook"></i></a>
+    <span class="sr-only">Facebook</span> 
+    <a href="https://twitter.com/amermathsoc" title="Twitter" aria-label="Twitter"><i aria-hidden="true" class="fab fa-twitter-square fa-lg" title="Twitter"></i></a>
+    <span class="sr-only">Twitter</span> 
+    <a href="https://www.linkedin.com/company/51001/" title="LinkedIn" aria-label="LinkedIn"><i aria-hidden="true" class="fab fa-linkedin fa-lg" title="LinkedIn"></i></a>
+    <span class="sr-only">LinkedIn</span> 
+    <a href="https://instagram.com/amermathsoc" title="Instagram" aria-label="Instagram"><i aria-hidden="true" class="fab fa-instagram fa-lg" title="Instagram"></i></a>
+    <span class="sr-only">InstaGram</span> 
+    <a href="https://www.youtube.com/amermathsoc" title="YouTube" aria-label="YouTube"><i aria-hidden="true" class="fab fa-youtube-square fa-lg" title="YouTube"></i></a>
+    <span class="sr-only">YouTube</span>
+    </p>
     
+    <div class="col-md-12 col-sm-12 text-center">
+      <p>American Mathematical Society &middot; 
+      <a href="https://goo.gl/maps/ZvJdkQEC79p" title="Google map 201 Charles Street Providence, Rhode Island">201 Charles Street Providence, Rhode Island 02904-2213</a> &middot; 
+      <a href="tel:401-455-4000">401-455-4000</a> or <a href="tel:800-321-4267">800-321-4267</a></p>
+<p><small>AMS, American Mathematical Society, the tri-colored AMS logo, and Advancing research, Creating connections, are trademarks and services marks of the American Mathematical Society and registered in the U.S. Patent and Trademark Office.</small></p>
+	<p> &copy; <a href="/copyright">Copyright</a> 
+	  <script>
+    var now = new Date();
+        document.write(now.getFullYear());
+          </script>, American Mathematical Society &middot; <a href="/privacy">Privacy Statement</a> &middot; <a href="/tou">Terms of Use</a> &middot; <a href="/accessibility"> Accessibility</a></p>
     </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
+    <!--/div-->
+  </footer>
+</section>
+<!--/Footer--> 
+<!-- google tag manager code inserted by txm on 14 nov 2019 -->
+<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PQJKQL');</script>
+  <!-- End Google Tag Manager -->
+  <!--end tag manager from txm-->
 
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
+  <script>
 
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2011.00997%26description%3DAnalyzing+Wikidata+Transclusion+on+English+Wikipedia&amp;v=54ff0f4a"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2011.00997&amp;v=0e7b67c1"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2011.00997%26title%3DAnalyzing+Wikidata+Transclusion+on+English+Wikipedia&amp;v=aebf2c37"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2011.00997&amp;v=9fed5b5b"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-2791151-1', 'auto', {'allowLinker': true });
+ga('require', 'linker');
+ga('linker:autoLink', ['www.ams.org','bookstore.ams.org','ebus.ams.org']);
+ga('set', 'hostname', 'www.ams.org');
+ga('require', 'linkid');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+
+function amsTrackEvent (category, action, label) {
+	ga('send', 'event', category, action, label);
+}
+
+function amsTrackPageview (page) {
+	ga('send', 'pageview', page);
+}
+
+function amsAddTracking () {
+	var contentDiv = document.getElementById('amsContentDiv');
+	if (!contentDiv) return 0;
+	var aTags = contentDiv.getElementsByTagName('A');
+	for (i = 0; i < aTags.length; i++) {
+		var url = aTags[i].href;
+		url = url.replace(/.*ams.org/,'');
+		if (url.match(/\.htm(l)?$/i) || ! url.match(/\./) ) { 
+			continue;	
+		}
+		if (document.addEventListener) {
+			aTags[i].addEventListener('click', function () { amsTrackPageview(url) }, false);
+		}
+		else {
+			aTags[i].attachEvent('onclick', function () { amsTrackPageview(url) });
+		}
+	}
+}
+
+if (window.addEventListener)
+    window.addEventListener('load', amsAddTracking, false);
+else if (window.attachEvent)
+    window.attachEvent('onload', amsAddTracking);
+
+</script>
 
 
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
+  <link rel="stylesheet" type="text/css" href="/css/cookieconsent.min.css" />
+<script src="/js/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#edeff5",
+      "text": "#838391"
+    },
+    "button": {
+      "background": "#4b81e8"
+    }
+  },
+  "theme": "classic",
+  "position": "bottom-right",
+  "content": {
+    "message": "This website uses cookies to ensure you get the best experience on our website.",
+    "href": "/privacy",
+    "dismiss": "Okay",
+    "link": "Learn more"
+  }
+})});
+</script>
+</body></html>
 
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2011.00997" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
-
-      </div>
-    </main>
-
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
   
-</body>
 
-</html>
+
+

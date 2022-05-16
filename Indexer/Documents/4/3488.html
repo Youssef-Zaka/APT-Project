@@ -1,686 +1,1400 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
-<head>
-  <title>[2109.00835] WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="lte9 lte8 lte7 oldie" dir="ltr" lang="en-gb"><![endif]-->
+<!--[if IE 7]><html class="lte9 lte8 lte7" dir="ltr" lang="en-gb"><![endif]-->
+<!--[if IE 8]><html class="lte9 lte8" dir="ltr" lang="en-gb"><![endif]-->
+<!--[if IE 9]><html class="lte9" dir="ltr" lang="en-gb"><![endif]-->
+<!--[if gt IE 9]><!--><html dir="ltr" lang="en-gb"><!--<![endif]-->
+<head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app204.us.archive.org';v.server_ms=539;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.cambridgeassessment.org.uk/","20210213073328","https://web.archive.org/","web","/_static/",
+	      "1613201608");
 </script>
-  <meta name="citation_title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"/>
-  <meta name="citation_author" content="Trokhymovych, Mykola"/>
-  <meta name="citation_author" content="Saez-Trumper, Diego"/>
-  <meta name="citation_date" content="2021/09/02"/>
-  <meta name="citation_online_date" content="2021/09/02"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2109.00835"/>
-  <meta name="citation_arxiv_id" content="2109.00835"/>
-  <meta name="citation_abstract" content=" With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model&#39;s performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2109.00835"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API..."/>
-    <meta name="twitter:description" content="With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2109.00835v1"/>
-    <meta property="og:description" content="With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model&#39;s performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances."/>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+
+    <meta charset="utf-8"/>
+    <link class="head_Data_Layer"/>
+    
+                                                    <!-- start Google Tag Manager - Script Section -->
+                                                <script>(function(w, d, s, l, i) {w[l] = w[l] || [];w[l].push({'gtm.start':new Date().getTime(),event: 'gtm.js'});
+                                                                var f = d.getElementsByTagName(s)[0],j = d.createElement(s),dl = l != 'dataLayer' ? '&l=' + l : '';j.async = true;
+                                                                j.src ='https://web.archive.org/web/20210213073328/https://www.googletagmanager.com/gtm.js?id=' + i + dl;f.parentNode.insertBefore(j, f);})
+                                                                (window, document, 'script', 'dataLayer', 'GTM-WGLKFN');
+                                                </script>
+                                                <!-- End Google Tag Manager - Script Section  -->
+   
+    <link class="custom_Script"/>
+    
+    <title>
+        The University's international exams group | Cambridge Assessment
+    </title>
+<meta name="description" content="Established over 150 years ago, Cambridge Assessment operates and manages the University's three exam boards and carries out leading-edge and operational research on assessment in education. We are a not for profit organisation."/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="prev" href="#"/>
+    <link rel="next" href="#"/>
+    <link rel="icon" href="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/assets/img/favicon.ico"/>
+    <link rel="stylesheet" media="screen" href="/web/20210213073328cs_/https://www.cambridgeassessment.org.uk/css/local-publication.css?v=0.3"/>
+    <link rel="stylesheet" media="screen" href="/web/20210213073328cs_/https://www.cambridgeassessment.org.uk/css/local-business.css?v=0.1"/>
+    <link rel="stylesheet" media="screen" href="/web/20210213073328cs_/https://www.cambridgeassessment.org.uk/assets/css/style.css?v=1.3"/>
+    <link rel="stylesheet" media="print" href="/web/20210213073328cs_/https://www.cambridgeassessment.org.uk/assets/css/print.css?v=0.1"/>
+    
+    <!--[if (IE 7)|(IE 8)]><script type="text/javascript" src="/assets/js/vendor/respond/respond.min.js"></script>
+<![endif]-->
+    <script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/vendor/modernizr/modernizr.custom.min.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/vendor/jquery/1.11.3/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/jwplayer.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/vendor/Site24x7/RUM1monitoring.js"></script>
+<script type="text/javascript">jwplayer.key='TXhpYTkFgt3jE9QBW5pL9rde2scY7C+eZ+7tLyAdQLc='</script>
+
+    
+    <link rel="apple-touch-icon" href="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/images/icons/apple-touch-icon.png">
+    <script type="application/ld+json">
+    {
+	"@context": "https://web.archive.org/web/20210213073328/http://schema.org",
+	"@type": "EducationalOrganization",
+	"name": "Cambridge Assessment",
+	"address": {
+	"@type": "PostalAddress",
+		"streetAddress": "The Triangle, Shaftesbury Avenue",
+		"addressLocality": "Cambridge",
+		"addressRegion": "Cambridgeshire",
+		"addressCountry": "United Kingdom",
+		"postalCode": "CB2 8EA"
+	},
+	"contactPoint": {
+		"@type": "ContactPoint",
+		"telephone": "+44 (0)1223 553311",
+		"contactType" : "customer support"
+	},
+	"url":"https://web.archive.org/web/20210213073328/http://www.cambridgeassessment.org.uk/",
+	"logo": "https://web.archive.org/web/20210213073328/http://www.cambridgeassessment.org.uk/Images/Cambridge-Assessment_primary-logo.svg",
+	"sameAs" : [ 
+	"https://web.archive.org/web/20210213073328/https://twitter.com/Cam_Assessment",
+	"https://web.archive.org/web/20210213073328/https://www.linkedin.com/company/cambridge-assessment",
+	"https://web.archive.org/web/20210213073328/https://www.facebook.com/CambridgeAssessment/",
+	"https://web.archive.org/web/20210213073328/https://www.youtube.com/user/CambridgeAssessment1"
+	]
+    }
+    </script>
+        	<script type="text/javascript">
+		          (function() {
+						var cx = '015306828578951525741:aahd_pne9z8';
+						var gcse = document.createElement('script');
+						gcse.type = 'text/javascript';
+						gcse.async = true;
+						gcse.src = 'https://web.archive.org/web/20210213073328/https://cse.google.com/cse.js?cx=' + cx;
+						var s = document.getElementsByTagName('script')[0];
+						s.parentNode.insertBefore(gcse, s);
+					  })();
+			</script>
+
+
+
 </head>
-
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
+<body id="anchor-top" class="landing-page "><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20210213073328/https%3A//www.cambridgeassessment.org.uk/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
   </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.cambridgeassessment.org.uk/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20210213073328" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20210213073328*/https://www.cambridgeassessment.org.uk/" title="See a list of every capture for this URL">993 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">06 Aug 2005 - 13 May 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20210107105642/https://www.cambridgeassessment.org.uk/" title="07 Jan 2021"><strong>Jan</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 07:33:28 Feb 13, 2021">FEB</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210315184125/http://www.cambridgeassessment.org.uk/" title="15 Mar 2021"><strong>Mar</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20210126124530/https://www.cambridgeassessment.org.uk/" title="12:45:30 Jan 26, 2021"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 07:33:28 Feb 13, 2021">13</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210216152029/https://www.cambridgeassessment.org.uk/" title="15:20:29 Feb 16, 2021"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200201035544/http://www.cambridgeassessment.org.uk:80/" title="01 Feb 2020"><strong>2020</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 07:33:28 Feb 13, 2021">2021</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20220214081347/https://cambridgeassessment.org.uk/" title="14 Feb 2022"><strong>2022</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20210213073328/http://web.archive.org/screenshot/https://www.cambridgeassessment.org.uk/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20210213073328/https://www.cambridgeassessment.org.uk/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20210213073328/https://www.cambridgeassessment.org.uk/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
       </div>
     </div>
   </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/twitteroutlinks)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/twitteroutlinks" target="_new"><span class="wm-title">Twitter Outlinks</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  This is a Collection of URLs (and Outlinked URLs) extracted from a random feed of 1% of all Tweets.<div><br></div><div><br></div>
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20210213073328/https://www.cambridgeassessment.org.uk/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.cambridgeassessment.org.uk/","20210213073328",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+                                                                     <!-- start Google Tag Manager - No Script Section -->
+                                                                <!-- Google Tag Manager -->
+                                                                <noscript><iframe src="https://web.archive.org/web/20210213073328if_/https://www.googletagmanager.com/ns.html?id=GTM-WGLKFN" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+                                                                <!-- End Google Tag Manager - Script Section  -->
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
+    <form method="post" action="#" id="ctl00" class="global-form">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUINDIxNjQzNDAPZBYCZg9kFgJmD2QWAgIBDxYCHgRUZXh0BUFUaGUgVW5pdmVyc2l0eSdzIGludGVybmF0aW9uYWwgZXhhbXMgZ3JvdXAgfCBDYW1icmlkZ2UgQXNzZXNzbWVudGRksQ3X80xcmjiS7w9YZwc8NKS0n24="/>
+</div>
 
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
+<div class="aspNetHidden">
 
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2109.00835
-  </div>
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="90059987"/>
+</div>
+    <a class="skip-link" href="#anchor-main">Skip to main content</a>
 
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
+<div class="header-tray">
+    <div class="header-tray_container">
+    <div class="header-tray_wrap">
+    <p class="header-tray_location">
+    <a title="View related sites" href="#anchor-other-sites" class="anchor--in-page header-tray_location-link">
+        View related sites
+    </a>
+</p>
+    <div class="header-tray_right-links">
+<ul class="header-tray_list header-tray_list--first">
+            <li>
+                <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/contact-us/index.aspx" title="Contact us" class="link--internal header-tray_icon--contact-us">Contact us</a>            </li>
+    </ul><ul class="header-tray_list header-tray_list--second">
+            <li>
+                <a title="Facebook" target="_blank" href=" https://www.facebook.com/CambridgeAssessment/" class="link--external header-tray_icon--facebook">Facebook</a>
+            </li>
+            <li>
+                <a title="Twitter" target="_blank" href="https://web.archive.org/web/20210213073328/https://twitter.com/Cam_Assessment" class="link--external header-tray_icon--twitter">Twitter</a>
+            </li>
+            <li>
+                <a title="LinkedIn" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.linkedin.com/company/cambridge-assessment?trk=hb_tab_compy_id_162868" class="link--external header-tray_icon--linkedin">LinkedIn</a>
+            </li>
+            <li>
+                <a title="Youtube" target="_blank" href="https://web.archive.org/web/20210213073328/https://www.youtube.com/user/CambridgeAssessment1" class="link--external header-tray_icon--youtube">Youtube</a>
+            </li>
+            <li>
+                <a title="Instagram" target="_blank" href=" https://www.instagram.com/cambridgeassessment/" class="link--external header-tray_icon--instagram">Instagram</a>
+            </li>
+    </ul>    </div>
+</div>
+</div>
+</div><header class="header" role="banner">
+   <div class="header_wrap">
+<p class="logo">
+    <a data-target="#" title="Cambridge Assessment" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/" class="anchor--in-page ">
+            <span>Cambridge Assessment</span></a>
+</p>
 
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
+<div class="google-search-container">
+		<gcse:searchbox-only resultsurl="/search/GCSearch.aspx"></gcse:searchbox-only>
+</div>
+
+   </div>
+<div class="navigation">
+        <h2 class="hidden" id="navigation_heading"></h2>
+        <nav aria-labelledby="navigation_heading" role="navigation">
+    <ul class="navigation_list">
+<li class="navigation_item navigation_item--child">
+	<a title="" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/" class="anchor--linked-content--external">Home</a>
+	
+</li><li class="navigation_item navigation_item--child">
+	<a title="About us" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/" class="anchor--linked-content--external">About us</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="About us" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/" class="anchor--linked-content--external">About us</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-1">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/who-we-are/index.aspx" title="Who we are" class="anchor--linked-content--internal"><span>Who we are</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/who-we-are/index.aspx" title="Who we are" class="anchor--linked-content--internal">Who we are</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/who-we-are/our-structure/index.aspx" title="Our structure" class="link--internal "><span>Our structure</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/who-we-are/our-values/index.aspx" title="Our values" class="link--internal "><span>Our values</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/who-we-are/our-leadership/index.aspx" title="Our leadership" class="link--internal "><span>Our leadership</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/who-we-are/our-heritage/index.aspx" title="Our heritage" class="link--internal "><span>Our heritage</span></a></li>				</ul>
+			</div>
+		</div>
+							</li>
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/what-we-do/index.aspx" title="What we do" class="anchor--linked-content--internal"><span>What we do</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/what-we-do/index.aspx" title="What we do" class="anchor--linked-content--internal">What we do</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/what-we-do/assessment/index.aspx" title="Assessment" class="link--internal "><span>Assessment</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/what-we-do/consultancy/index.aspx" title="Consultancy" class="link--internal "><span>Consultancy</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/what-we-do/case-studies/index.aspx" title="Case studies" class="link--internal "><span>Case studies</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/what-we-do/partnerships/index.aspx" title="Partnerships" class="link--internal "><span>Partnerships</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/professional-development/index.aspx" title="Your learning" class="link--internal "><span>Your learning</span></a></li>				</ul>
+			</div>
+		</div>
+							</li>
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/cambridge-approach/index.aspx" title="A Cambridge Approach to..." class="anchor--linked-content--internal"><span>A Cambridge Approach to...</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/cambridge-approach/index.aspx" title="A Cambridge Approach to..." class="anchor--linked-content--internal">A Cambridge Approach to...</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a title="Assessment" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/cambridge-approach/assessment/" class="link--external ">
+			<span>Assessment</span>
+		</a></li><li><a title="Improving Education" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/cambridge-approach/improving-education/" class="link--external ">
+			<span>Improving Education</span>
+		</a></li><li><a title="Textbooks" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/cambridge-approach/textbooks/" class="link--external ">
+			<span>Textbooks</span>
+		</a></li>				</ul>
+			</div>
+		</div>
+							</li>
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/index.aspx" title="Our exam boards" class="anchor--linked-content--internal"><span>Our exam boards</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/index.aspx" title="Our exam boards" class="anchor--linked-content--internal">Our exam boards</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/cambridge-english/index.aspx" title="Cambridge Assessment English" class="link--internal "><span>Cambridge Assessment English</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/cambridge-international/index.aspx" title="Cambridge Assessment International Education" class="link--internal "><span>Cambridge Assessment International Education</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/ocr/index.aspx" title="Oxford, Cambridge and RSA (OCR)" class="link--internal "><span>Oxford, Cambridge and RSA (OCR)</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/cambridge-assessment-admissions-testing/index.aspx" title="Cambridge Assessment Admissions Testing" class="link--internal "><span>Cambridge Assessment Admissions Testing</span></a></li>				</ul>
+			</div>
+		</div>
+							</li>
+            </ul>             
+</div>
                 </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
         </div>
-      </div><!-- /end mobile-header -->
-    </header>
+    </div>
+</li><li class="navigation_item navigation_item--child">
+	<a title="Insights" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/" class="anchor--linked-content--external">Insights</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="Insights" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/" class="anchor--linked-content--external">Insights</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+<figure>
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/transforming-teaching-practice-through-enhanced-assessment-expertise/" class="submenu-items"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/Making%20waves%20-%20featured%20image%20-%20730%20365.jpg" class="image--small " alt="School blazer, face mask and backpack hanging on a coat hook"/></a>    <figcaption>
+				<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/transforming-teaching-practice-through-enhanced-assessment-expertise/">Making Waves: Transforming teaching practice through enhanced assessment expertise</a>		
+    </figcaption>
+</figure></div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+<figure>
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/curriculum-choices-and-the-pandemic-curriculum-watch-topic-four/" class="submenu-items"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/covid-watch-blog-4-getty-730-365%20-%20featured.jpg" class="image--small " alt="School blazer, face mask and backpack hanging on a coat hook"/></a>    <figcaption>
+				<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/curriculum-choices-and-the-pandemic-curriculum-watch-topic-four/">Covid-19 Curriculum Watch 4: Curriculum choices and the pandemic</a>		
+    </figcaption>
+</figure></div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li></li>            </ul>             
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/" class="anchor--linked-content--internal megamenu-cta-btn"><span>View all Insights</span></a>
+</div>
+                </div>
+        </div>
+    </div>
+</li><li class="navigation_item navigation_item--child">
+	<a title="News" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/" class="anchor--linked-content--external">News</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="News" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/" class="anchor--linked-content--external">News</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/details/view/taking-music-qualification-linked-with-higher-achievement/" title="Taking a music qualification linked with higher achievement" class="link--internal "><span>Taking a music qualification linked with higher achievement</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/details/view/shape-education-shortlisted-for-oscars-of-education/" title="SHAPE Education shortlisted for 'Oscars of education'" class="link--internal "><span>SHAPE Education shortlisted for 'Oscars of education'</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/details/view/interpreting-pisa-understanding-national-educational-improvement/" title="Interpreting PISA - Understanding national educational improvement" class="link--internal "><span>Interpreting PISA - Understanding national educational improvement</span></a></li>            </ul>             
+</div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/media-contacts/index.aspx" title="Media contacts" class="link--internal "><span>Media contacts</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/podcast-gallery/index.aspx" title="Podcast gallery" class="link--internal "><span>Podcast gallery</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/video-gallery/index.aspx" title="Video gallery " class="link--internal "><span>Video gallery</span></a></li>            </ul>             
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/index.aspx" title="View all news" class="anchor--linked-content--internal megamenu-cta-btn"><span>View all news</span></a></div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <h3><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/index.aspx" title="Our publications" class="anchor--linked-content--internal">Our publications</a></h3>
+            <ul class="navigation--space">		
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/annual-review/index.aspx" title="Annual Review" class="link--internal "><span>Annual Review</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/achieve/index.aspx" title="Achieve" class="link--internal "><span>Achieve</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/research-matters/index.aspx" title="Research Matters" class="link--internal "><span>Research Matters</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/research-notes/index.aspx" title="Research Notes" class="link--internal "><span>Research Notes</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/subscribe/index.aspx" title="Subscribe" class="link--internal "><span>Subscribe</span></a></li>            </ul>             
+</div>
+                </div>
+        </div>
+    </div>
+</li><li class="navigation_item navigation_item--child">
+	<a title="Events and training" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/" class="anchor--linked-content--external">Events and training</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="Events and training" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/" class="anchor--linked-content--external">Events and training</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a title="All events and training courses" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/" class="link--external ">
+			<span>All events and training courses</span>
+		</a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/past-events/index.aspx" title="Past events and training courses" class="link--internal "><span>Past events and training courses</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/about-our-events/index.aspx" title="About our events and courses" class="link--internal "><span>About our events and courses</span></a></li>            </ul>             
+</div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/assessment-practitioner-workshops/index.aspx" title="Assessment practitioner workshops" class="link--internal "><span>Assessment practitioner workshops</span></a></li><li><a title="Bespoke training" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/bespoke-training-solutions/" class="link--external ">
+			<span>Bespoke training</span>
+		</a></li><li><a title="Conferences" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/index.aspx?filter=keyword:133|109240|#events-listing" class="link--external ">
+			<span>Conferences</span>
+		</a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/leadership-programmes/index.aspx" title="Leadership programmes" class="link--internal "><span>Leadership programmes</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/online-courses/index.aspx" title="Online courses" class="link--internal "><span>Online courses</span></a></li><li><a title="Postgraduate Certificate" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/pgca/" class="link--external ">
+			<span>Postgraduate Certificate</span>
+		</a></li><li><a title="Seminars" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/index.aspx?filter=keyword:133|109247|#events-listing" class="link--external ">
+			<span>Seminars</span>
+		</a></li>            </ul>             
+</div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+<figure>
+    <img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/a102-promo-310x160.jpg" class="image--small " alt="Man working at a laptop"/>
+    <figcaption>
+		<h3 style="margin-top:10px;"><a class="no-icon" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/a102-introducing-assessment-practice/">A102: Introducing Assessment Practice</a></h3>
+<p>An online course that will guide you through the practicalities of producing and delivering assessment, and to describe and explain important related issues.</p>
+    </figcaption>
+</figure></div>
+                </div>
+        </div>
+    </div>
+</li><li class="navigation_item navigation_item--child">
+	<a title="The Assessment Network" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/" class="anchor--linked-content--external">The Assessment Network</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="The Assessment Network" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/" class="anchor--linked-content--external">The Assessment Network</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/cpd-accredited-training/index.aspx" title="CPD accredited" class="link--internal "><span>CPD accredited</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/assessment-practitioner-workshops/index.aspx" title="Assessment practitioner workshops" class="link--internal "><span>Assessment practitioner workshops</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/online-courses/index.aspx" title="Online courses" class="link--internal "><span>Online courses</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/bespoke-training-solutions/index.aspx" title="Bespoke training" class="link--internal "><span>Bespoke training</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/your-cpd-programme/index.aspx" title="Build your own CPD programme" class="link--internal "><span>Build your own CPD programme</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/professional-framework/index.aspx" title="Professional learning framework" class="link--internal "><span>Professional learning framework</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/leadership-programmes/index.aspx" title="Leadership programmes" class="link--internal "><span>Leadership programmes</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/sign-up/index.aspx" title="Sign up for our mailing lists" class="link--internal "><span>Sign up for our mailing lists</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/join-the-assessment-network/index.aspx" title="Join the Assessment Network" class="link--internal "><span>Join the Assessment Network</span></a></li>            </ul>             
+</div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a title="Postgraduate Certificate" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/pgca/" class="link--external ">
+			<span>Postgraduate Certificate</span>
+		</a></li><li><a title="A101: Introducing the Principles of Assessment" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/a101-assessment-training/" class="link--external ">
+			<span>A101: Introducing the Principles of Assessment</span>
+		</a></li><li><a title="A102: Introducing Assessment Practice" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/a102-introducing-assessment-practice/" class="link--external ">
+			<span>A102: Introducing Assessment Practice</span>
+		</a></li><li><a title="A103: Introducing Data Literacy" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/a103-introducing-data-literacy/" class="link--external ">
+			<span>A103: Introducing Data Literacy</span>
+		</a></li><li><a title="A104: Psychometrics in Educational Assessment" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/a104-psychometrics-in-educational-assessment/" class="link--external ">
+			<span>A104: Psychometrics in Educational Assessment</span>
+		</a></li>            </ul>             
+</div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+<figure>
+    <img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/a101-promo-310x160.jpg" class="image--small " alt="Girl working at a laptop"/>
+    <figcaption>
+		<h3 style="margin-top:10px;"><a class="no-icon" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/a101-assessment-training/">A101: Introducing the Principles of Assessment</a></h3>
+<p>An online course that provides a thorough, accessible grounding in the principles of assessment.</p>
+    </figcaption>
+</figure></div>
+                </div>
+        </div>
+    </div>
+</li><li class="navigation_item navigation_item--child">
+	<a title="Our research" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/" class="anchor--linked-content--external">Our research</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="Our research" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/" class="anchor--linked-content--external">Our research</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-1">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/index.aspx" title="Areas of expertise" class="anchor--linked-content--internal"><span>Areas of expertise</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/index.aspx" title="Areas of expertise" class="anchor--linked-content--internal">Areas of expertise</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/assessment-design/index.aspx" title="Assessment design" class="link--internal "><span>Assessment design</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/evaluation-of-assessment/index.aspx" title="Evaluation of assessment" class="link--internal "><span>Evaluation of assessment</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/examination-statistics/index.aspx" title="Examination statistics" class="link--internal "><span>Examination statistics</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/e-assessment/index.aspx" title="E-assessment" class="link--internal "><span>E-assessment</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/impact-of-assessment/index.aspx" title="Impact of assessment" class="link--internal "><span>Impact of assessment</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/marking/index.aspx" title="Marking" class="link--internal "><span>Marking</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/psychology-of-assessment/index.aspx" title="Psychology of assessment" class="link--internal "><span>Psychology of assessment</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/research-methods/index.aspx" title="Research methods" class="link--internal "><span>Research methods</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/standards/index.aspx" title="Standards" class="link--internal "><span>Standards</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/vocational-assessment/index.aspx" title="Vocational assessment" class="link--internal "><span>Vocational assessment</span></a></li>				</ul>
+			</div>
+		</div>
+							</li>
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/index.aspx" title=" Archives and heritage" class="anchor--linked-content--internal"><span> Archives and heritage</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/index.aspx" title=" Archives and heritage" class="anchor--linked-content--internal">Archives and heritage</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/access-to-the-archives/index.aspx" title="Access to the archives" class="link--internal "><span>Access to the archives</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/whats-in-the-archives/index.aspx" title="What's in the archives?" class="link--internal "><span>What's in the archives?</span></a></li>								<li class="navigation_item--child is_sub_menu">
+									<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/index.aspx" title="Past exam material" class="anchor--linked-content--internal"><span>Past exam material</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/index.aspx" title="Past exam material" class="anchor--linked-content--internal">Past exam material</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/biology/index.aspx" title="Biology" class="link--internal "><span>Biology</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/chemistry/index.aspx" title="Chemistry" class="link--internal "><span>Chemistry</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/english/index.aspx" title="English" class="link--internal "><span>English</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/french/index.aspx" title="French" class="link--internal "><span>French</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/history/index.aspx" title="History" class="link--internal "><span>History</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/maths/index.aspx" title="Maths" class="link--internal "><span>Maths</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/physics/index.aspx" title="Physics" class="link--internal "><span>Physics</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/past-exam-material/science/index.aspx" title="Sciences" class="link--internal "><span>Sciences</span></a></li>				</ul>
+			</div>
+		</div>
+								</li>
+				</ul>
+			</div>
+		</div>
+							</li>
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/index.aspx" title="All published resources" class="anchor--linked-content--internal"><span>All published resources</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/index.aspx" title="All published resources" class="anchor--linked-content--internal">All published resources</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/journal-papers-and-book-chapters/index.aspx" title="Journal papers and book chapters" class="link--internal "><span>Journal papers and book chapters</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/conference-papers/index.aspx" title="Conference papers" class="link--internal "><span>Conference papers</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/statistical-reports/index.aspx" title="Statistics reports" class="link--internal "><span>Statistics reports</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/research-matters/index.aspx" title="Research Matters" class="link--internal "><span>Research Matters</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/factsheets/index.aspx" title="Factsheets" class="link--internal "><span>Factsheets</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/research-notes/index.aspx" title="Research Notes" class="link--internal "><span>Research Notes</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/studies-in-language-testing/index.aspx" title="Studies in Language Testing" class="link--internal "><span>Studies in Language Testing</span></a></li><li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/all-published-resources/research-reports/index.aspx" title="Research reports" class="link--internal "><span>Research reports</span></a></li>				</ul>
+			</div>
+		</div>
+							</li>
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-4">
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/our-research-team/index.aspx" title="Our research team" class="anchor--linked-content--internal"><span>Our research team</span></a>		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/our-research-team/index.aspx" title="Our research team" class="anchor--linked-content--internal">Our research team</a>        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+								<li class="navigation_item--child is_sub_menu">
+									<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/data-bytes/index.aspx" title="Data Bytes" class="anchor--linked-content--internal"><span>Data Bytes</span></a>								</li>
+								<li class="navigation_item--child is_sub_menu">
+									<figure>
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/data-bytes/popularity-of-a-level-subjects-among-university-students/index.aspx" class="submenu-items"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/data-bytes-popularity-a-levels-featured.png" class="image--small " alt="Graph of popularity of A level subjects among university students"/></a>    <figcaption>
+				<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/data-bytes/popularity-of-a-level-subjects-among-university-students/index.aspx">Popularity of A level subjects among university students</a>		
+    </figcaption>
+</figure>
+								</li>
+								<li class="navigation_item--child is_sub_menu">
+									<figure>
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/data-bytes/which-gcse-subjects-are-most-pisa-like/index.aspx" class="submenu-items"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/data-bytes-pisa-gcse-featured.png" class="image--small " alt="Correlation between performance at GCSE and the four PISA domains"/></a>    <figcaption>
+				<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/data-bytes/which-gcse-subjects-are-most-pisa-like/index.aspx">Which GCSE subjects are most PISA-like?</a>		
+    </figcaption>
+</figure>
+								</li>
+				</ul>
+			</div>
+		</div>
+							</li>
+            </ul>             
+</div>
+                </div>
+        </div>
+    </div>
+</li><li class="navigation_item navigation_item--child">
+	<a title="Blogs" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs" class="anchor--linked-content--external">Blogs</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="Blogs" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs" class="anchor--linked-content--external">Blogs</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+<figure>
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/how-apprentices-are-building-the-future/" class="submenu-items"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/NAW%20blog%20image%202%20-%20featured.jpg" class="image--small " alt="Data Science apprentice presenting a project"/></a>    <figcaption>
+				<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/how-apprentices-are-building-the-future/">How apprentices are building the future - Our people</a>		
+    </figcaption>
+</figure></div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+<figure>
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/why-choose-an-apprenticeship/" class="submenu-items"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/why-choose-an-apprenticeship-featured.jpg" class="image--small " alt="Cartoon of girl with jetpack on her back"/></a>    <figcaption>
+				<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/why-choose-an-apprenticeship/">Why choose an apprenticeship? - Our people</a>		
+    </figcaption>
+</figure></div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a title="Community - Watch, listen to and learn more on Twitter, Facebook, Instagram, YouTube and LinkedIn" href="https://web.archive.org/web/20210213073328/http://www.cambridgeassessment.org.uk/community/" class="link--external ">
+			<span>Community - Watch, listen to and learn more on Twitter, Facebook, Instagram, YouTube and LinkedIn</span>
+		</a></li>            </ul>             
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs" class="anchor--linked-content--internal megamenu-cta-btn"><span>View all blogs</span></a>
+</div>
+                </div>
+        </div>
+    </div>
+</li><li class="navigation_item navigation_item--child">
+	<a title="Careers" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/" class="anchor--linked-content--external">Careers</a>
+	<div class="navigation_mega-menu navigation_mega-menu--child">
+            <div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="Careers" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/" class="anchor--linked-content--external">Careers</a>
+        </p>
+    </div>
+        <div class="yui3-g">
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a title="Our people" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/content/Our-People/" class="link--external ">
+			<span>Our people</span>
+		</a></li><li><a title="Our benefits" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/content/Our-Benefits/" class="link--external ">
+			<span>Our benefits</span>
+		</a></li><li><a title="Our places" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/content/Our-Places/" class="link--external ">
+			<span>Our places</span>
+		</a></li><li><a title="Early careers" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/content/Early-Careers/" class="link--external ">
+			<span>Early careers</span>
+		</a></li><li><a title="Diversity and inclusion" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/content/Inclusion-and-Diversity/" class="link--external ">
+			<span>Diversity and inclusion</span>
+		</a></li><li><a title="Our five-star recruitment promise" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/content/Our-five-star-recruitment-promise/" class="link--external ">
+			<span>Our five-star recruitment promise</span>
+		</a></li>            </ul>             
+</div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+							<li class="navigation_item--child is_sub_menu yui3-u-1 yui3-u-sm-1-1">
+								<a href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/All-Jobs/1406001/" class="anchor--linked-content--internal"><span>Current Opportunities</span></a>
+		<div class="navigation_mega-menu--child">
+			<div class="navigation_section">
+        <p class="navigation_section-link">
+            <a title="Current Opportunities" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/All-Jobs/1406001/" class="anchor--linked-content--external">Current Opportunities</a>
+        </p>
+    </div>
+			<div class="navigation_group">
+				<ul class="navigation--space">
+<li><a title="Administration and customer service" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Administration-and-Customer-Services/1405901/" class="link--external ">
+			<span>Administration and customer service</span>
+		</a></li><li><a title="Assessment and Research" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Assessment-and-Research/1406101/" class="link--external ">
+			<span>Assessment and Research</span>
+		</a></li><li><a title="Business System &amp; Projects" target="_blank" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Business-Systems-and-Projects/1406201/" class="link--external ">
+			<span>Business System &amp; Projects</span>
+		</a></li><li><a title="Education, Educational Projects and Contract Management" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Education%2C-Educational-Projects-and-Contract-Management/1406301/" class="link--external ">
+			<span>Education, Educational Projects and Contract Management</span>
+		</a></li><li><a title="Facilities and catering" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Facilities-and-Catering/1406401/" class="link--external ">
+			<span>Facilities and catering</span>
+		</a></li><li><a title="HR, Finance and Legal" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/HR%2C-Finance-and-Legal/1406501/" class="link--external ">
+			<span>HR, Finance and Legal</span>
+		</a></li><li><a title="International" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/International/1406601/" class="link--external ">
+			<span>International</span>
+		</a></li><li><a title="Sales, Marketing &amp; Publishing" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Sales%2C-Marketing-&amp;-Publishing/1406801/" class="link--external ">
+			<span>Sales, Marketing &amp; Publishing</span>
+		</a></li><li><a title="Senior Management" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Senior-Management/1406901/" class="link--external ">
+			<span>Senior Management</span>
+		</a></li><li><a title="Technology" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/IT/1406701/" class="link--external ">
+			<span>Technology</span>
+		</a></li><li><a title="Warehousing &amp; distribution" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/go/Warehousing-&amp;-Distribution/1407001/" class="link--external ">
+			<span>Warehousing &amp; distribution</span>
+		</a></li>				</ul>
+			</div>
+		</div>
+							</li>
+            </ul>             
+</div>
+                </div>
+                <div class="navigation_group yui3-u-1 yui3-u-sm-1-3">
+                    <div class="yui3-c">
+            <ul class="navigation--space">		
+<li><a title=" Join our talent community" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/talentcommunity/subscribe/" class="link--external ">
+			<span>Join our talent community</span>
+		</a></li>            </ul>             
+</div>
+                </div>
+        </div>
+    </div>
+</li><li class="navigation_item remove--tablet-large">
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/contact-us/index.aspx" title="Contact us" class="link--internal "><span>Contact us</span></a>    
+</li></ul>
+</nav>
+    </div></header>
 
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2109.00835"
-        dc:identifier="/abs/2109.00835"
-        dc:title="WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia"
-        trackback:ping="/trackback/2109.00835" />
-    </rdf:RDF>
+<main id="anchor-main" class="home-page" role="main">
+	<div class="banner">
+			<h1 class="header-content">Cambridge Assessment</h1>
+			<div class="carousel carousel--wide">
+				<ul class="slides carousel_list carousel_random_on">
+							<li class="carousel_item">								
+									<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/naw-carousel-2.jpg" alt="Cartoon drawing of a woman flying through clouds with a jet pack on her back"/>
+									<div class="carousel_caption">
+										<div class="banner_container carousel_sheild_center   carousel_sheild_mob_out carousel_caption_center"><div style="color: rgb(255, 255, 255);">
+<p><br/></p>
+<p style="text-align: center; font-weight: 500; font-family: 'Bliss Pro', Arial, sans-serif; font-style: normal;">Learn more about <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/" target="_blank" style="color: rgb(255, 255, 255);">apprenticeships at Cambridge Assessment</a> &amp; listen to our podcast on <a href="https://web.archive.org/web/20210213073328/https://www.cambridgeassessment.org.uk/news/audio/view/assessing-apprenticeships/" target="_blank" style="color: rgb(255, 255, 255);">assessment in apprenticeships</a></p>
+</div></div>
+									</div>
+							</li>
+				</ul>
+			</div>
+	</div>	<div class="banner bg--white">
+        <div class="banner_container">
+			<div class="banner bg--white">
+		<div class="banner_container">
+			<section class="section">
+				<div class="panel panel--expert-assessment">
+						<header class="panel__header">
+							<h2>A brighter future for our learners</h2>
+						</header>
+						<div class="panel__body">
+							<p>We provide world-class qualifications, and education programmes that give learners the confidence to demonstrate and fulfil their potential.</p>
+						</div>
+				</div>
+				<div class="yui3-g equal-heights">
+							<div class="yui3-u-1 yui3-u-sm-1-2 yui3-u-lg-1-3">
+								<div class="yui3-c">
+									<div class="panel panel--business-group panel--business-1">
+                                                                            <!-- For Three Business Colors -->
+										<div class="panel__header">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/cambridge-english/index.aspx" class="image-link"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/SVG_logos_500x125_Cambridge_Assessment_English.svg" alt="Cambridge Assessment English logo"/></a>	</div>
+										<div class="panel__body">
+		<p>For all learners and teachers of English language</p>
+</div>
+									</div>
+								</div>
+							</div>
+							<div class="yui3-u-1 yui3-u-sm-1-2 yui3-u-lg-1-3">
+								<div class="yui3-c">
+									<div class="panel panel--business-group panel--business-2">
+                                                                            <!-- For Three Business Colors -->
+										<div class="panel__header">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/ocr/index.aspx" class="image-link"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/SVG_logos_500x125_OCR.svg" alt="OCR logo"/></a>	</div>
+										<div class="panel__body">
+		<p>For UK learners in schools, colleges and training</p>
+</div>
+									</div>
+								</div>
+							</div>
+							<div class="yui3-u-1 yui3-u-sm-1-2 yui3-u-lg-1-3">
+								<div class="yui3-c">
+									<div class="panel panel--business-group panel--business-3">
+                                                                            <!-- For Three Business Colors -->
+										<div class="panel__header">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/cambridge-international/index.aspx" class="image-link"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/SVG_logos_500x125_Cambridge_Assessment_International_Education.svg" alt="Cambridge Assessment International Education logo"/></a>	</div>
+										<div class="panel__body">
+		<p>For all learners and teachers of international education programmes</p>
+</div>
+									</div>
+								</div>
+							</div>
+							<div class="yui3-u-1 yui3-u-sm-1-2 yui3-u-lg-1-3">
+								<div class="yui3-c">
+									<div class="panel panel--business-group panel--business-1">
+                                                                            <!-- For Three Business Colors -->
+										<div class="panel__header">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/our-exam-boards/cambridge-assessment-admissions-testing/index.aspx" class="image-link"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/SVG_logos_500x125_Cambridge_Assessment_Admissions_Testing.svg" alt="Cambridge Assessment Admissions Testing logo"/></a>	</div>
+										<div class="panel__body">
+		<p>Discover potential using our admissions tests</p>
+</div>
+									</div>
+								</div>
+							</div>
+							<div class="yui3-u-1 yui3-u-sm-1-2 yui3-u-lg-1-3">
+								<div class="yui3-c">
+									<div class="panel panel--business-group panel--business-2">
+                                                                            <!-- For Three Business Colors -->
+										<div class="panel__header">
+				<a href="https://web.archive.org/web/20210213073328/https://www.cem.org/" target="_blank" class="image-link"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/SVG_logos_500x125_CEM.svg" alt="CEM logo"/></a>
+	</div>
+										<div class="panel__body">
+		<p>Leading provider of assessments to improve teaching and learning</p>
+</div>
+									</div>
+								</div>
+							</div>
+							<div class="yui3-u-1 yui3-u-sm-1-2 yui3-u-lg-1-3">
+								<div class="yui3-c">
+									<div class="panel panel--business-group panel--business-3">
+                                                                            <!-- For Three Business Colors -->
+										<div class="panel__header">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/index.aspx" class="image-link"><img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/SVG_logos_500x125_Cambridge_Assessment_Network.svg" alt="Cambridge Assessment Network logo"/></a>	</div>
+										<div class="panel__body">
+		<p>Professional development for the assessment community</p>
+</div>
+									</div>
+								</div>
+							</div>
+				</div>
+			</section>
+		</div>
+	</div>		</div>
+	</div>
+	<div class="banner bg--orange">
+        <div class="banner_container">
+		<section class="section">
+                <div class="panel panel--content">
+                        <header class="panel__header">
+			    <h2>We deliver expert assessment</h2>
+                        </header>
+                        <div class="panel__body">
+			    <p class="writeup">Our leading-edge assessments unlock the power of education for every learner. As a department of the University of Cambridge, we are at the forefront of education.</p>
+                        </div>
+                </div>
+	</section>		</div>
+	</div>
+	<div class="banner bg--green">
+		<div class="banner_container">
+			<div class="banner bg--green">
+		<div class="banner_container">
+			<section class="section">
+                                <div class="panel panel--authoritative-voice">
+                                                <header class="panel__header">
+						    <h2>Influencing education all over the world</h2>
+                                                </header>
+                                                <div class="panel__body">
+						    <p class="writeup">Our unique research capability informs assessment and education worldwide.</p>
+                                                </div>
+                                </div>
+				<div class="yui3-g equal-heights">
+<div class="yui3-u-1 yui3-u-sm-1-3">
+		<div class="yui3-c">
+			<div class="panel listing-panel">
+<header class="panel__header">
+	<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/index.aspx" title="Insights" class="anchor--linked-content--internal">Insights</a>	</h3>
+</header>				<div class="panel__body">
+			<ul class="listing-panel_list no-bullets">
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/curriculum-choices-and-the-pandemic-curriculum-watch-topic-four/"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/covid-watch-blog-4-getty-730-365.jpg" alt="School blazer, face mask and backpack hanging on a coat hook"/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/curriculum-choices-and-the-pandemic-curriculum-watch-topic-four/">Covid-19 Curriculum Watch 4: Curriculum choices and the pandemic</a>					</li>
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/learning-access-resources-and-assessment-guidance-during-covid-19-pandemic-topic-three/"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/Covid-timeline-3-01.jpg" alt="Timeline from January to September 2020 and the impact of Covid-19 on schools being closed across the four UK nations and the approaches to teaching and learning during that time "/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/learning-access-resources-and-assessment-guidance-during-covid-19-pandemic-topic-three/">Covid-19 Curriculum Watch 3: Learning access, resources, and assessment guidance during the pandemic</a>					</li>
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/uk-changes-to-assessment-during-covid-19-pandemic-topic-two/"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/curriculum-watch-blog-2-resized.jpg" alt="Empty exam desks"/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/details/view/uk-changes-to-assessment-during-covid-19-pandemic-topic-two/">Covid-19 Curriculum Watch 2: Changes to assessment in response to the pandemic</a>					</li>
+			</ul>
+</div>
+					<footer class="panel__footer">
+						<p><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/insights/index.aspx">View all Insights</a></p>
+					</footer>
+			</div>
+		</div>
+	</div><div class="yui3-u-1 yui3-u-sm-1-3">
+		<div class="yui3-c">
+			<div class="panel listing-panel">
+<header class="panel__header">
+	<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/index.aspx" title="Blogs" class="anchor--linked-content--internal">Blogs</a>	</h3>
+</header>				<div class="panel__body">
+			<ul class="listing-panel_list no-bullets">
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/why-choose-an-apprenticeship/"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/Kerrie%20blog%20image.jpg" alt="Cartoon of girl with jetpack "/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/why-choose-an-apprenticeship/">Why choose an apprenticeship? - Our people</a>					</li>
+					<li class="listing-item">
+						
+						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/how-apprentices-are-building-the-future/">How apprentices are building the future - Our people</a>					</li>
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/online-resources-for-teachers-and-students-2021/"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/online%20teaching%20and%20learning%20-%20blog.jpg" alt="Teacher recording online lesson"/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/online-resources-for-teachers-and-students-2021/">Our latest online resources for teachers and students</a>					</li>
+			</ul>
+</div>
+					<footer class="panel__footer">
+						<p><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/index.aspx">View all blogs</a></p>
+					</footer>
+			</div>
+		</div>
+	</div><div class="yui3-u-1 yui3-u-sm-1-3">
+		<div class="yui3-c">
+			<div class="panel listing-panel">
+<header class="panel__header">
+	<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/index.aspx" title="Our research" class="anchor--linked-content--internal">Our research</a>	</h3>
+</header>				<div class="panel__body">
+			<ul class="listing-panel_list no-bullets">
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/data-bytes/index.aspx"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/changes-in-as-level-provision-730.jpg" alt="graph"/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/data-bytes/index.aspx">Data Bytes</a>					</li>
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/index.aspx"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/areas-of-expertise-hp-papers.jpg" alt="research papers"/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/areas-of-expertise/index.aspx">Areas of expertise</a>					</li>
+					<li class="listing-item">
+						
+							<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/index.aspx"><figure class="img-container">
+							<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/ucles-hp-border.jpg" alt=""/>  
+                                                        </figure></a>						
+								<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/archives-and-heritage/index.aspx">Archives &amp; Heritage</a>					</li>
+			</ul>
+</div>
+					<footer class="panel__footer">
+						<p><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/index.aspx">Our research</a></p>
+					</footer>
+			</div>
+		</div>
+	</div>				</div>
+			</section>
+		</div>
+	</div>		</div>
+	</div>
+	<div class="banner bg--white">
+        <div class="banner_container">
+			<section class="section">
+                <div class="panel panel--content">
+                        <header class="panel__header">
+			    <h2>Making a difference for every learner</h2>
+                        </header>
+                        <div class="panel__body">
+			    <p class="writeup">Our learners receive qualifications that are recognised globally. We make a real and lasting difference to the lives of millions of learners around the world. We are a not-for-profit organisation.</p>
+                        </div>
+                </div>
+	</section>		</div>
+	</div>
+	<div class="banner bg--blue">
+     <div class="banner_container">
+            <section class="section">	<div class="panel panel--connected-community">
+                        <header class="panel__header">
+			    <h2 class="margin-bottom--half">Connecting with the global education community</h2>
+                        </header>
+                        <div class="panel__body">
+			    <p>We run an international learning community that helps develop professional competencies and provides a wealth of training.</p>
+                        </div>
+        </div>	<div class="yui3-g equal-heights">
+		<div class="yui3-u-1 yui3-u-sm-1-3">
+		<div class="yui3-c">
+			<div class="panel">
+<header class="panel__header">
+	<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/index.aspx" title="Events and training" class="anchor--linked-content--internal">Events and training</a>	</h3>
+</header>				<div class="panel__body">
+						<ul class="flex-list">
+									<li>
+										<time class="event-date event-date--calendar" datetime="2021-30-14">
+											<span class="event-date--day">14</span>
+											<span class="event-date--month">Jan</span>
+											<span class="event-date--year">Jan</span>
+										</time>
+										<div>
+										<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/details/view/designing-mcqs-with-impact/">Designing multiple-choice question (MCQ) assessments with impact</a>														<p class="event-panel_location">Online</p>
+										</div>
+									</li>
+									<li>
+										<time class="event-date event-date--calendar" datetime="2021-00-21">
+											<span class="event-date--day">21</span>
+											<span class="event-date--month">Jan</span>
+											<span class="event-date--year">Jan</span>
+										</time>
+										<div>
+										<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/details/view/launch-of-the-digital-education-futures-initiative-at-cambridge/">Launch of the Digital Education Futures Initiative at Cambridge</a>														<p class="event-panel_location">Online</p>
+										</div>
+									</li>
+									<li>
+										<time class="event-date event-date--calendar" datetime="2021-00-09">
+											<span class="event-date--day">9</span>
+											<span class="event-date--month">Feb</span>
+											<span class="event-date--year">Feb</span>
+										</time>
+										<div>
+										<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/details/view/how-do-personality-traits-affect-teacher-trainee-retention/">How do personality traits affect teacher trainee retention?</a>														<p class="event-panel_location">Online</p>
+										</div>
+									</li>
+						</ul>
+				</div>
+					<footer class="panel__footer">
+						<p><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/index.aspx">View all events and training</a></p>
+					</footer>
+			</div>
+		</div>
+	</div>		
+
+<div class="yui3-u-1 yui3-u-sm-1-3">
+	<div class="yui3-c">
+		<div class="panel">
+			<header class="panel__header">
+				<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+					<a href="https://web.archive.org/web/20210213073328/https://twitter.com/Cam_Assessment" title="Twitter" class="anchor--linked-content--internal">Twitter</a>
+				</h3>
+			</header>
+			<div class="panel__body">
+				
+					<ul class="fa-ul">
+						
+							<li class="arrow_box">
+								<i class="fa-li fa fa-twitter fa-2x twitter-feed" aria-hidden="true"></i>
+								
+									<p class="no-bottom-margin">
+									    <a href="https://web.archive.org/web/20210213073328/https://twitter.com/Cam_Assessment" target="_blank">@Cam_Assessment</a>
+									</p>
+								
+								<p class="no-bottom-margin">RT <a href="https://web.archive.org/web/20210213073328/http://twitter.com/eAssess">@eAssess</a>: The first in a series of podcasts from Cambridge Assessment Network focusing on different aspects and forms of <a href="https://web.archive.org/web/20210213073328/https://twitter.com/search?q=%23assessments">#assessments</a>. <a href="https://web.archive.org/web/20210213073328/http://twitter.com/">@</a>…</p>
+							</li>
+						
+							<li class="arrow_box">
+								<i class="fa-li fa fa-twitter fa-2x twitter-feed" aria-hidden="true"></i>
+								
+									<p class="no-bottom-margin">
+									    <a href="https://web.archive.org/web/20210213073328/https://twitter.com/Cam_Assessment" target="_blank">@Cam_Assessment</a>
+									</p>
+								
+								<p class="no-bottom-margin">RT <a href="https://web.archive.org/web/20210213073328/http://twitter.com/CambridgeInt">@CambridgeInt</a>: The latest update for <a href="https://web.archive.org/web/20210213073328/https://twitter.com/search?q=%23CambridgeSchools">#CambridgeSchools</a> is now live on our website at➡️<a href="https://web.archive.org/web/20210213073328/https://t.co/nFx1xDGQVn">https://t.co/nFx1xDGQVn</a>
+
+This update was emailed d…</p>
+							</li>
+						
+					</ul>
+				
+			</div>
+			
+				<footer class="panel__footer">
+					<p><a href="https://web.archive.org/web/20210213073328/https://twitter.com/Cam_Assessment" target="_self">View all tweets</a></p>
+				</footer>
+			
+		</div>
+	</div>
+</div>		
+    <div class="yui3-u-1 yui3-u-sm-1-3">
+        <div class="yui3-c">
+            <div class="panel">
+                <header class="panel__header">
+                    <h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+                        
+                            <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/index.aspx" title="News" class="anchor--linked-content--internal">News</a>
+                        
+                    </h3>
+                </header>
+                <div class="panel__body">
+                    <ul class="flex-list">
+                        <li>
+		<time class="news-date news-date--calendar" datetime="2021-00-22">
+			<span class="news-date--day">22</span>
+			<span class="news-date--month">Jan</span>
+			<span class="news-date--year">Jan</span>
+		</time>
+		<div>
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/details/view/virtual-event-marks-the-launch-of-digital-education-initiative/">Virtual event marks the launch of a digital education initiative</a>		</div>
+	</li>
+                        <li>
+		<time class="news-date news-date--calendar" datetime="2020-16-24">
+			<span class="news-date--day">24</span>
+			<span class="news-date--month">Dec</span>
+			<span class="news-date--year">Dec</span>
+		</time>
+		<div>
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/details/view/looking-forward-to-working-with-you-in-2021/">Looking forward to working with you in 2021</a>		</div>
+	</li>
+                        <li>
+		<time class="news-date news-date--calendar" datetime="2020-41-14">
+			<span class="news-date--day">14</span>
+			<span class="news-date--month">Dec</span>
+			<span class="news-date--year">Dec</span>
+		</time>
+		<div>
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/details/view/taking-music-qualification-linked-with-higher-achievement/">Taking a music qualification linked with higher achievement</a>		</div>
+	</li>
+                        
+                    </ul>
+                </div>
+                <footer class="panel__footer">
+                    
+                        <p><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/index.aspx">View all news</a></p>
+                    
+                </footer>
+            </div>
+        </div>
+    </div>
+	</div>
+	</div>
+    </div>
+</div>	<div class="banner bg--white">
+		<div class="banner_container">
+			<div class="banner bg--white">
+        <div class="banner_container">
+			<section class="section">
+                                <div class="panel panel--influencing-education">
+                                                <header class="panel__header">
+						    <h2>Support and learning for teachers</h2>
+                                                </header>
+                                                <div class="panel__body">
+						    <p>We support and learn from the global education community, offering a wide range of research-led education programmes, from specialist training events to seminars and online resources.</p>
+                                                </div>
+                                </div>
+				<div class="yui3-g equal-heights">
+<div class="yui3-u-1 yui3-u-sm-1-3">
+		<div class="yui3-c">
+			<div class="panel">
+<header class="panel__header">
+	<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+				<a href="https://web.archive.org/web/20210213073328/http://www.cambridgemaths.org/" title="Cambridge Mathematics" class="anchor--linked-content--internal" target="_blank">Cambridge Mathematics</a>
+	</h3>
+</header>				<div class="panel__body">
+		<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/cambridge-mathematics-home.jpg" alt="Teacher talking with a young pupil"/>
+			<p>Cambridge Mathematics is committed to championing and securing a world class mathematics education for all students from 5 – 19 years old.</p>
+</div>
+			</div>
+		</div>
+	</div><div class="yui3-u-1 yui3-u-sm-1-3">
+		<div class="yui3-c">
+			<div class="panel">
+<header class="panel__header">
+	<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/index.aspx" title="The Network" class="anchor--linked-content--internal">The Network</a>	</h3>
+</header>				<div class="panel__body">
+		<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/Network-landing-page-image-800-365.jpg" alt="Woman in a training session"/>
+			<ul class="no-bullets">
+						<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/details/view/a101-assessment-training/">A101: Introducing the Principles of Assessment</a></li>
+						<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/events/details/view/a102-introducing-assessment-practice/">A102: Introducing Assessment Practice</a></li>
+						<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/professional-development/index.aspx">Your learning</a></li>
+						<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/bespoke-training-solutions/index.aspx">Bespoke training</a></li>
+			</ul>
+</div>
+			</div>
+		</div>
+	</div><div class="yui3-u-1 yui3-u-sm-1-3">
+		<div class="yui3-c">
+			<div class="panel">
+<header class="panel__header">
+	<h3 class="heading-2 heading-2--anchor--linked-content panel--heading-font">
+			<a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/index.aspx" title="Our publications" class="anchor--linked-content--internal">Our publications</a>	</h3>
+</header>				<div class="panel__body">
+		<img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/42-23657608--407-x-204.jpg" alt="Woman studying in library"/>
+			<ul class="no-bullets">
+						<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/achieve/index.aspx">Achieve</a></li>
+						<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/research-matters/index.aspx">Research Matters</a></li>
+						<li><a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/news/our-publications/annual-review/index.aspx">Annual Review</a></li>
+			</ul>
+</div>
+			</div>
+		</div>
+	</div>				</div>
+			</section>
+		</div>
+	</div>		</div>
+	</div>
+	<div class="banner bg--purple opportunity">
+		<div class="banner_container">
+			<div class="banner bg--purple opportunity">
+		<div class="banner_container">
+			<section class="section">
+                                <div class="panel panel--opportunity">
+                                                <div class="panel__body">
+						    <p>We research, create, and deliver world-class assessments securely to over 170 countries, supported by leading-edge technology and a global team of more than 2,500 people.</p>
+                                                </div>
+                                </div>
+				<div class="yui3-g equal-heights">
+				</div>
+			</section>
+		</div>
+	</div>		</div>
+	</div>
+</main>
+
+<footer class="footer" role="contentinfo"> 
+            <div class="footer_wrap">
+   <div class="footer-tray_social-icons">
+   <ul class="footer-tray_list">
+              <li>
+                    <a title="Facebook" target="_blank" href=" https://www.facebook.com/CambridgeAssessment/" class="link--external footer-tray_icon--facebook">Facebook</a>
+              </li>
+              <li>
+                    <a title="Twitter" target="_blank" href="https://web.archive.org/web/20210213073328/https://twitter.com/Cam_Assessment" class="link--external footer-tray_icon--twitter">Twitter</a>
+              </li>
+              <li>
+                    <a title="LinkedIn" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.linkedin.com/company/cambridge-assessment?trk=hb_tab_compy_id_162868" class="link--external footer-tray_icon--linkedin">LinkedIn</a>
+              </li>
+              <li>
+                    <a title="Youtube" target="_blank" href="https://web.archive.org/web/20210213073328/https://www.youtube.com/user/CambridgeAssessment1" class="link--external footer-tray_icon--youtube">Youtube</a>
+              </li>
+              <li>
+                    <a title="Instagram" target="_blank" href=" https://www.instagram.com/cambridgeassessment/" class="link--external footer-tray_icon--instagram">Instagram</a>
+              </li>
+   </ul>
+</div>
+<div class="footer_container-wrap footer_container-wrap--borders yui3-g">
+<div class="footer_container yui3-u-1 yui3-u-sm-1-3">
+    <div class="yui3-c">
+                <p class="footer_header">Useful links </p>
+<ul class="footer_container__list">
+<li class="footer_container__list-item">
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/the-network/index.aspx" title="The Network" class="link--internal "><span>The Network</span></a></li><li class="footer_container__list-item">
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/our-research/index.aspx" title="Our research" class="link--internal "><span>Our research</span></a></li><li class="footer_container__list-item">
+    <a title="Blogs" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/blogs/" class="link--external ">
+			<span>Blogs</span>
+		</a>
+</li><li class="footer_container__list-item">
+    <a title="Careers" href="https://web.archive.org/web/20210213073328/https://careers.cambridgeassessment.org.uk/" class="link--external ">
+			<span>Careers</span>
+		</a>
+</li><li class="footer_container__list-item">
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/about-us/gender-pay-gap/index.aspx" title="Gender pay gap" class="link--internal "><span>Gender pay gap</span></a></li><li class="footer_container__list-item">
+    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/contact-us/index.aspx" title="Contact us" class="link--internal "><span>Contact us</span></a></li>    </ul>    </div>
+</div><div class="footer_container yui3-u-1 yui3-u-sm-1-3">
+    <div class="yui3-c">
+                <p class="footer_header">Proud to be part of the University of Cambridge </p>
+<p>We are at the forefront of education. We support teachers, schools and governments around the world to unlock the power of education for every learner.</p>    </div>
+</div><div class="footer_container yui3-u-1 yui3-u-sm-1-3">
+    <div class="yui3-c">
+<a title="Cambridge Assessment home" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/" class="link--external footer_link--img">
+        <img src="/web/20210213073328im_/https://www.cambridgeassessment.org.uk/Images/cambridge-assessment-logo-footer.png" class="image--small " alt="Cambridge Assessment Logo"/>
+    </a>    </div>
+</div></div><p class="footer_tray-location">
+    <a title="View Related Sites" href="#anchor-other-sites" class="anchor--in-page footer_tray-location-link">
+    View Related Sites
+</a>
+</p><div class="tray-dropdown tray-dropdown--thirds" id="anchor-other-sites">
+<div class="tray-dropdown_group">
+	<ul class="tray-dropdown_group__list">
+<li class="tray-dropdown_group__list-item">
+    <strong>Our exam boards</strong>
+</li><li class="tray-dropdown_group__list-item">
+    <a title="Cambridge Assessment English" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.cambridgeenglish.org/" class="link--external">
+            <span class="tray-dropdown_link">
+                Cambridge Assessment English
+                <span class="icon--external-link">
+Cambridge Assessment English            </span>
+            </span>
+        </a>
+</li><li class="tray-dropdown_group__list-item">
+    <a title="Cambridge Assessment International Education" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.cambridgeinternational.org/" class="link--external">
+            <span class="tray-dropdown_link">
+                Cambridge Assessment International Education
+                <span class="icon--external-link">
+Cambridge Assessment International Education            </span>
+            </span>
+        </a>
+</li><li class="tray-dropdown_group__list-item">
+    <a title="Oxford, Cambridge and RSA (OCR) Examinations" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.ocr.org.uk/" class="link--external">
+            <span class="tray-dropdown_link">
+                Oxford, Cambridge and RSA (OCR) Examinations
+                <span class="icon--external-link">
+Oxford, Cambridge and RSA (OCR) Examinations            </span>
+            </span>
+        </a>
+</li>    </ul>
+</div><div class="tray-dropdown_group">
+	<ul class="tray-dropdown_group__list">
+<li class="tray-dropdown_group__list-item">
+    <a title="Cambridge Mathematics" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.cambridgemaths.org/" class="link--external">
+            <span class="tray-dropdown_link">
+                Cambridge Mathematics
+                <span class="icon--external-link">
+            </span>
+            </span>
+        </a>
+</li><li class="tray-dropdown_group__list-item">
+    <a title="Cambridge Assessment Admissions Testing" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.admissionstestingservice.org/" class="link--external">
+            <span class="tray-dropdown_link">
+                Cambridge Assessment Admissions Testing
+                <span class="icon--external-link">
+            </span>
+            </span>
+        </a>
+</li>    </ul>
+</div></div><div class="footer_utility">
+        <p>© UCLES <script language="javascript" type="text/javascript">
+
+ var today = new Date()
+ var year = today.getFullYear()
+ document.write(year)
+</script></p>
+    <nav role="navigation">
+        <ul>
+                <li>
+                    <a title="Sitemap" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/footer/sitemap/index.aspx" class="link--external ">
+			<span>Sitemap</span>
+		</a>
+                </li>
+                <li>
+                    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/footer/accessibility-and-standards/index.aspx" title="Accessibility and Standards" class="link--internal "><span>Accessibility and Standards</span></a>                </li>
+                <li>
+                    <a title="Data Protection" href="/web/20210213073328/https://www.cambridgeassessment.org.uk/footer/data-protection/index.aspx" class="link--external ">
+			<span>Data Protection</span>
+		</a>
+                </li>
+                <li>
+                    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/footer/use-of-cookies/index.aspx" title="Use of Cookies" class="link--internal "><span>Use of Cookies</span></a>                </li>
+                <li>
+                    <a title="Statement on Modern Slavery" target="_blank" href="https://web.archive.org/web/20210213073328/http://www.registrarysoffice.admin.cam.ac.uk/governance-and-strategy/anti-slavery-and-anti-trafficking" class="link--external ">
+			<span>Statement on Modern Slavery</span>
+		</a>
+                </li>
+                <li>
+                    <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/footer/terms-and-conditions/index.aspx" title="Terms and Conditions" class="link--internal "><span>Terms and Conditions</span></a>                </li>
+        </ul>
+    </nav>
+<a title="Back to top" href="#anchor-top" class="anchor--in-page footer_back-to-top">
+    Back to top
+</a></div></div>
+        </footer><div class="cc-cookies display-none">
+We use cookies. By clicking any link on this page you are giving your consent for us to                <a href="/web/20210213073328/https://www.cambridgeassessment.org.uk/footer/use-of-cookies/index.aspx" title="Read about our cookies policy">set cookies</a>                <a href="#accept" class="cc-cookie-accept">Accept</a>
+</div></form>
+        
+        <script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/vendor/jquery-ui/1.11.4/jquery-ui.min.js?v=0.1"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/vendor/accessible-mega-menu/jquery-accessibleMegaMenu--modified.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/vendor/jquery.clickable/jquery.clickable.min.js?v=0.1"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/vendor/flexslider/jquery.flexslider-modified-min.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/jquery.fancybox--modified.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/eventCarousel.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/dropdown.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/accordian.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/sitemap-accordion.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/browser.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/imagemapster.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.responsive-table.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.multi-media.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.navigation-state.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.dropdown-link-selector.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.accordion.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.ajax-loading.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.video-z-index-fix.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/jquery.ui.touch-punch.js"></script>
+<script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/assets/js/init.js?v=1.0"></script>
+
+        <script type="text/javascript" src="/web/20210213073328js_/https://www.cambridgeassessment.org.uk/js/ucles.jquery.cached-autocomplete.js"></script>
+
+        
+    </body>
+</html><!--
+     FILE ARCHIVED ON 07:33:28 Feb 13, 2021 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:23:42 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
 -->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computers and Society</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2109.00835</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 2 Sep 2021]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>WikiCheck: An end-to-end open source Automatic Fact-Checking API based on Wikipedia</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Trokhymovych%2C+M">Mykola Trokhymovych</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Saez-Trumper%2C+D">Diego Saez-Trumper</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2109.00835">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  With the growth of fake news and disinformation, the NLP community has been
-working to assist humans in fact-checking. However, most academic research has
-focused on model accuracy without paying attention to resource efficiency,
-which is crucial in real-life scenarios. In this work, we review the
-State-of-the-Art datasets and solutions for Automatic Fact-checking and test
-their applicability in production environments. We discover overfitting issues
-in those models, and we propose a data filtering method that improves the
-model's performance and generalization. Then, we design an unsupervised
-fine-tuning of the Masked Language models to improve its accuracy working with
-Wikipedia. We also propose a novel query enhancing method to improve evidence
-discovery using the Wikipedia Search API. Finally, we present a new
-fact-checking system, the \textit{WikiCheck} API that automatically performs a
-facts validation process based on the Wikipedia knowledge base. It is
-comparable to SOTA solutions in terms of accuracy and can be used on low-memory
-CPU instances.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata"><tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computers and Society (cs.CY)</span></td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2109.00835">arXiv:2109.00835</a> [cs.CY]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2109.00835v1">arXiv:2109.00835v1</a> [cs.CY]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2109.00835">https://doi.org/10.48550/arXiv.2109.00835</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
-</div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Diego Saez-Trumper [<a href="/show-email/12a895fd/2109.00835">view email</a>]
-      <br/><strong>[v1]</strong>
-Thu, 2 Sep 2021 10:45:07 UTC (5,621 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2109.00835" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2109.00835" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CY</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2109.00835&amp;function=prev&amp;context=cs.CY"
-         accesskey="p" title="previous in cs.CY (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2109.00835&amp;function=next&amp;context=cs.CY" accesskey="n"
-         title="next in cs.CY (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CY/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CY/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CY/2109">2109</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2109.00835?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2109.00835">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2109.00835" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2109.00835" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2109.html#abs-2109-00835" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2109-00835" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Diego%20S%C3%A1ez-Trumper" title="DBLP author search">Diego Sáez-Trumper</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
-
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835%26description%3DWikiCheck%3A+An+end-to-end+open+source+Automatic+Fact-Checking+API+based+on+Wikipedia&amp;v=d13a24f6"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835&amp;v=d98a6ef1"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835%26title%3DWikiCheck%3A+An+end-to-end+open+source+Automatic+Fact-Checking+API+based+on+Wikipedia&amp;v=b90eb72e"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2109.00835&amp;v=065950b4"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
-
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
-
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2109.00835" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
-
-      </div>
-    </main>
-
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
-</body>
-
-</html>
+<!--
+playback timings (ms):
+  captures_list: 363.106
+  exclusion.robots: 0.253
+  exclusion.robots.policy: 0.242
+  cdx.remote: 0.081
+  esindex: 0.009
+  LoadShardBlock: 307.766 (3)
+  PetaboxLoader3.resolve: 194.078 (2)
+  PetaboxLoader3.datanode: 73.737 (4)
+  CDXLines.iter: 22.041 (3)
+  load_resource: 154.542
+-->

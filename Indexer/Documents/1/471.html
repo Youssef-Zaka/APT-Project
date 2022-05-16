@@ -1,708 +1,1495 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
-<head>
-  <title>[2112.01868v1] A Large Scale Study of Reader Interactions with Images on Wikipedia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+        <script>
+(function(w, d) {
+	w.adthrive = w.adthrive || {};
+	w.adthrive.cmd = w.adthrive.cmd || [];
+	w.adthrive.plugin = 'adthrive-ads-1.0.40-manual';
+	w.adthrive.host = 'ads.adthrive.com';
+	w.adthrive.threshold = Math.floor(Math.random() * 100 + 1);
+	var s = d.createElement('script');
+	s.async = true;
+	s.referrerpolicy='no-referrer-when-downgrade';
+	s.src = 'https://' + w.adthrive.host + '/sites/61575e8e934c48ea554b3caa/ads.min.js?referrer=' + w.encodeURIComponent(w.location.href) + '&threshold='+w.adthrive.threshold;
+	var n = d.getElementsByTagName('script')[0];
+	n.parentNode.insertBefore(s, n);
+})(window, document);
 </script>
-  <meta name="citation_title" content="A Large Scale Study of Reader Interactions with Images on Wikipedia"/>
-  <meta name="citation_author" content="Rama, Daniele"/>
-  <meta name="citation_author" content="Piccardi, Tiziano"/>
-  <meta name="citation_author" content="Redi, Miriam"/>
-  <meta name="citation_author" content="Schifanella, Rossano"/>
-  <meta name="citation_date" content="2021/12/03"/>
-  <meta name="citation_online_date" content="2021/12/03"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2112.01868"/>
-  <meta name="citation_arxiv_id" content="2112.01868"/>
-  <meta name="citation_abstract" content=" Wikipedia is the largest source of free encyclopedic knowledge and one of the
-most visited sites on the Web. To increase reader understanding of the article,
-Wikipedia editors add images within the text of the article&#39;s body. However,
-despite their widespread usage on web platforms and the huge volume of visual
-content on Wikipedia, little is known about the importance of images in the
-context of free knowledge environments. To bridge this gap, we collect data
-about English Wikipedia reader interactions with images during one month and
-perform the first large-scale analysis of how interactions with images happen
-on Wikipedia. First, we quantify the overall engagement with images, finding
-that one in 29 pageviews results in a click on at least one image, one order of
-magnitude higher than interactions with other types of article content. Second,
-we study what factors associate with image engagement and observe that clicks
-on images occur more often in shorter articles and articles about visual arts
-or transports and biographies of less well-known people. Third, we look at
-interactions with Wikipedia article previews and find that images help support
-reader information need when navigating through the site, especially for more
-popular pages. The findings in this study deepen our understanding of the role
-of images for free knowledge and provide a guide for Wikipedia editors and web
-user communities to enrich the world&#39;s largest source of encyclopedic
-knowledge.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2112.01868"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="A Large Scale Study of Reader Interactions with Images on Wikipedia"/>
-    <meta name="twitter:description" content="Wikipedia is the largest source of free encyclopedic knowledge and one of the
-most visited sites on the Web. To increase reader understanding of the article,
-Wikipedia editors add images within..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="A Large Scale Study of Reader Interactions with Images on Wikipedia"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2112.01868v1"/>
-    <meta property="og:description" content="Wikipedia is the largest source of free encyclopedic knowledge and one of the
-most visited sites on the Web. To increase reader understanding of the article,
-Wikipedia editors add images within the text of the article&#39;s body. However,
-despite their widespread usage on web platforms and the huge volume of visual
-content on Wikipedia, little is known about the importance of images in the
-context of free knowledge environments. To bridge this gap, we collect data
-about English Wikipedia reader interactions with images during one month and
-perform the first large-scale analysis of how interactions with images happen
-on Wikipedia. First, we quantify the overall engagement with images, finding
-that one in 29 pageviews results in a click on at least one image, one order of
-magnitude higher than interactions with other types of article content. Second,
-we study what factors associate with image engagement and observe that clicks
-on images occur more often in shorter articles and articles about visual arts
-or transports and biographies of less well-known people. Third, we look at
-interactions with Wikipedia article previews and find that images help support
-reader information need when navigating through the site, especially for more
-popular pages. The findings in this study deepen our understanding of the role
-of images for free knowledge and provide a guide for Wikipedia editors and web
-user communities to enrich the world&#39;s largest source of encyclopedic
-knowledge."/>
-</head>
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="referrer" content="unsafe-url">
+    <meta property="fb:app_id" content="178450008855735">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://merriam-webster.com/assets">
+    <link rel="preconnect" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://telemetry.art19.com">
+    <link rel="dns-prefetch" href="https://entitlements.jwplayer.com">
 
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
-  </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
-      </div>
+        
+        <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WW4KHXF');</script>
+    <!-- End Google Tag Manager -->
+
+                      
+              <title>Infinite Definition &amp; Meaning - Merriam-Webster</title>
+              <meta name="description" content="The meaning of INFINITE is extending indefinitely : endless. How to use infinite in a sentence.">
+              <link rel="canonical" href="https://www.merriam-webster.com/dictionary/infinite" />
+            
+                                            <link rel="search" type="application/opensearchdescription+xml" href="/opensearch/dictionary.xml" title="Merriam-Webster Dictionary" />
+    
+              
+<script type="application/ld+json">
+[{
+	"@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Definition of infinite",
+    "url": "https://www.merriam-webster.com/dictionary/infinite",
+    "description": "Definition of 'infinite' by Merriam-Webster",
+    "isPartOf": {
+    	"@id":"https://www.merriam-webster.com/#website"}
+            ,"relatedLink": [
+                            "https://www.merriam-webster.com/dictionary/in%20someone%27s%20%28infinite%29%20wisdom"                    ]
+    },
+{
+	"@context": "https://schema.org",
+    "@type":"WebSite",
+    "@id":"https://www.merriam-webster.com/#website",
+    "url": "https://www.merriam-webster.com",
+    "name": "Merriam-Webster Dictionary",
+    "potentialAction": {
+    	"@type": "SearchAction",
+    	"target": "https://www.merriam-webster.com/dictionary/{search_term_string}?utm_campaign=sd&utm_medium=serp&utm_source=jsonld",
+    	"query-input": "required name=search_term_string"}
+},
+{
+	"@context": "https://schema.org",
+	"@type":["DefinedTermSet","Book"],
+	"@id":"https://www.merriam-webster.com",
+	"name": "Dictionary by Merriam-Webster"
+},
+{
+	"@context":"https://schema.org",
+	"@type": "DefinedTerm",
+    "@id": "https://www.merriam-webster.com/dictionary/infinite",
+    "name": "infinite",
+    "inDefinedTermSet": "https://www.merriam-webster.com/"
+}
+            ,{
+        "@context":"https://schema.org",
+        "@type": "AudioObject",
+        "contentURL": "https://media.merriam-webster.com/audio/prons/en/us/mp3/i/infini01.mp3",
+        "description":"How to pronounce infinite (audio)",
+        "encodingFormat":"audio/mpeg",
+        "name":"infini01.mp3"
+    }
+]
+</script>    
+                              <meta property="og:title" content="Definition of INFINITE" />
+                                <meta property="og:image" content="https://merriam-webster.com/assets/mw/static/social-media-share/mw-logo-245x245@1x.png" />
+                                  <meta property="og:url" content="https://www.merriam-webster.com/dictionary/infinite" />
+                                <meta property="og:description" content="extending indefinitely : endless; immeasurably or inconceivably great or extensive : inexhaustible; subject to no limitation or external determination… See the full definition" />
+                                <meta property="og:aria-text" content="Post the Definition of infinite to Facebook" />
+                    
+                                      <meta name="twitter:title" content="Definition of INFINITE" />
+                                                    <meta name="twitter:image" content="https://merriam-webster.com/assets/mw/static/social-media-share/mw-logo-245x245@1x.png" />
+                                                    <meta name="twitter:url" content="https://www.merriam-webster.com/dictionary/infinite" />
+                                                    <meta name="twitter:description" content="extending indefinitely : endless; immeasurably or inconceivably great or extensive : inexhaustible… See the full definition" />
+                                                                  <meta name="twitter:card" content="summary" />
+                                                    <meta name="twitter:site" content="@MerriamWebster" />
+                                                    <meta name="twitter:aria-text" content="Share the Definition of infinite on Twitter" />
+                              
+        <link rel="icon" href="/favicon.svg">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#305f7a">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
+
+            
+                              <!-- Playfair, 700, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Playfair, 700, italic, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu5DRmFqWF_g.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Playfair, 400, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, latin-ext -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFW50bf8pkAp6a.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, italic, latin-ext -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Xdc1GAK6bt6o.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, italic, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Zdc1GAK6b.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 700, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOUuhpKKSTjw.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 700, italic, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhrIqOxjaPX.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Minimize the following css -->
+<style type="text/css" media="screen, print">
+/* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Udc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0ddc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Vdc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0adc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Wdc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Xdc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Zdc1GAK6b.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhmIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhvIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhnIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhoIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhkIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhlIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhrIqOxjaPX.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFWJ0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFUZ0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFWZ0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFVp0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFWp0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFW50bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOX-hpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOVuhpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOXuhpKKSTj5PW.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOUehpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOXehpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOXOhpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOUuhpKKSTjw.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu4DRmFqWF_ljR.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* vietnamese */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu6zRmFqWF_ljR.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu6jRmFqWF_ljR.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu5DRmFqWF_g.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTjYgEM86xRbPQ.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* vietnamese */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTPYgEM86xRbPQ.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTLYgEM86xRbPQ.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lWoe5j5hNKe1_w.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* vietnamese */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lWEe5j5hNKe1_w.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lWAe5j5hNKe1_w.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+</style>          
+                                      <link rel="stylesheet" href="https://merriam-webster.com/assets/mw/dist/compiled/css/style-dsp-redesign-definitions.c724d77d58de9ee75e2e.css" media="screen">
+            
+    
+                                      <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://merriam-webster.com/assets/mw/dist/compiled/css/style-dsp-redesign-definitions-defer.ad5d4ce4a1782dba8842.css">
+            
+        
+    <script>!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);</script>
+        <script>var googletag=googletag||{};googletag.cmd=googletag.cmd||[];</script>
+    <script>
+      googletag.cmd.push(function() {
+          googletag.pubads().setTagForChildDirectedTreatment(0);
+          googletag.pubads().setTagForUnderAgeOfConsent(0);
+      });
+    </script>
+            <script>window.disableAllAds = true;</script>
+        <style type="text/css">.abl {display:none!important;}</style>    
+      
+        <script>window.mwdata={"importModules":[],"search":"infinite","statusRefreshTime":600,"gaSiteId":"UA-296234-25","gtagSlots":[],"cat":"MA-4","fbAppId":"178450008855735","fbSdkReady":false,"processAds":false,"fbSdkQueue":[],"assetsDomain1":"https://merriam-webster.com/assets","assetsDomain2":"https://merriam-webster.com/assets","svgPath":"","assetsDomain3":"https://media2.merriam-webster.com","pronsDomain":"https://media.merriam-webster.com","ssoDomainFront":"https://sso.merriam-webster.com","contentSource":"OWL","contentType1":null,"contentType2":null,"contentType3":null,"taxon":null,"userSearch":"infinite","partialMatch":"false","jwkey":"zw1JPzyqv2DcY1xJTZncAt9HKaUKLEztLQFMqw==","jwPlayerPath":"https://merriam-webster.com/assets/mw/jwplayer-8.10.3/","gaNoTrackOnLoad":false,"gaSpecialTracking":null,"gaSpecialTrackingWord":null,"ref":"dictionary","canonicalURL":"https://www.merriam-webster.com/dictionary/infinite"};window.mwdata.partialURL=location.pathname;</script>
+                
+          
+    
+          
+            <script defer src="https://merriam-webster.com/assets/mw/dist/compiled/js/js-dsp-redesign-definitions.10a9134fe3fe9c98ada0.js"></script>
+      
+      <script src="https://www.googleoptimize.com/optimize.js?id=OPT-N8CP5K8"></script>
+
+  </head>
+  <body class='no-touch definitions-page dictionary-lookup'>
+      <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WW4KHXF"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="outer-container">
+      <div class="main-container">
+                <div class="menu-filler"></div>
+<header class="shrinkheader">
+  <div class="container navbar">
+    <a href="/" class="logo-cnt">
+      <img class="svg" src="/images/svg/mw-logo--color.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+    </a>
+    <div class="since1828-cnt">
+      <span class="since1828-text">SINCE</span> <span class="since1828-num">1828</span>
+    </div>
+    <a rel="nofollow" href="/settings" aria-label="Settings" class="nav-username ul-username ul-logged-in-show"></a>
+    <div class="nav-btn-cnt menu-toggle">
+      <img class="svg" src="/images/svg/menu-toggle.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+    </div>
+    <div class="nav-search-btn mob-search-btn">
+      <span class="search-icon">
+        <img width="26px" height="29px" class="svg" src="/images/svg/search.svg" alt="Search Icon" aria-hidden="true">
+      </span>
+    </div>  
+
+    <div class="search-cnt">
+      <nav class="link-bar">
+        <div class="link-bar-l" role="navigation">
+          <a class="link-bar-l__link" href="/word-games">GAMES & QUIZZES</a>
+          <a class="link-bar-l__link" href="/thesaurus">THESAURUS</a>
+          <a class="link-bar-l__link" href="/word-of-the-day">WORD OF THE DAY</a>
+          <a class="link-bar-l__link" href="/words-at-play">FEATURES</a>
+          <li class="link-bar-l__link link-bar-l__link__dropdown">SHOP 
+            <span class="link-bar-l__link__dropdown__arrow"><b role="presentation"></b></span>                             
+            <div class="link-bar-l__dropdown">
+                <a 
+                href="/reviews?utm_source=mw&utm_medium=referral&utm_campaign=nav" target="_blank" rel="noopener noreferrer"
+                class="link-bar-l__dropdown__link">Buying Guide <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+                <a 
+                href="https://shop.merriam-webster.com/?utm_source=mwsite&utm_medium=nav&utm_content=header" target="_blank" rel="noopener noreferrer"
+                class="link-bar-l__dropdown__link">M-W Books <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+            </div>
+          </li>
+          <a class="link-bar-l__link" target="_blank" rel="noopener noreferrer" href="https://unabridged.merriam-webster.com/subscriber/register/p1">JOIN MWU</a>
+        </div>      
+        <div class="link-bar-r ul-login-menu">
+          <ul class="ul-login-links">
+            <li class="ul-logged-in-show ul-logged-in-menu">
+              <a rel="nofollow" class="ul-link-settings" aria-label="Settings" href="/settings"><div class="ul-username"></div>
+                <span class="ul-up-down">
+                  <img width="12px" height="8px" class="svg" src="/images/svg/ul-icon-up-down.svg" alt="Up Down" aria-hidden="true">
+                </span>
+              </a>
+              <div class="ul-loggedin-links">
+                <a rel="nofollow" class="ul-favorites" href="/saved-words">
+                  <img class="svg" src="/images/svg/ul-icon-wordlist.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+                  <span class="on-user-logged-in">MY WORDS</span><span class="on-user-logged-out">MY WORDS</span>
+                </a>
+                <a rel="nofollow" class="ul-recents" href="recents">
+                  <span class="ul-recents-icon">
+                    <img width="18px" height="18px" class="svg" src="/images/svg/ul-icon-recents.svg" alt="Recents Icon" aria-hidden="true">
+                  </span>
+                  <span>RECENTS</span>
+                </a>
+                <a rel="nofollow" aria-label="Settings" href="/settings">settings</a>
+                <a rel="nofollow" class="ul-sign-out" href="/logout">log out</a>
+              </div>              
+            </li>
+            <li class="ul-logged-out-show"><a rel="nofollow" href="/login">LOG IN</a></li>
+            <li class="ul-logged-out-show"><a rel="nofollow" href="/register">REGISTER</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <form class="container s-frm clearfix" id="mw-search-frm" action="/dictionary">              
+        <div class="s-term-cnt border-box">
+          <button class="search-bar-submit" aria-label="Search">
+            <img class="svg" src="/images/svg/search-bar--submit.svg" alt="Search Bar Submit Icon" aria-hidden="true">
+          </button>
+          <input aria-label="Search term" name="s" id="s-term" class="s-term" type="text" value="infinite" autocapitalize="off" spellcheck="false" autocorrect="off" autocomplete="off" />
+          <div class="clear-term-cnt" id="clear-term-cnt">
+            <img class="svg" src="/images/svg/search--clear.svg" alt="Clear Search Icon" aria-hidden="true">
+          </div>
+          <div class="nav-search-btn desk-search-btn">
+            <span class="search-icon">
+              <img width="26px" height="29px" class="svg" src="/images/svg/search.svg" alt="Search Icon" aria-hidden="true">
+            </span>
+          </div>                
+        </div>
+                <div id="mw-search-tabs" class="header-search-tabs  search-dictionary">
+          <div class="button dictionary-tab  active" data-search-url="/dictionary" data-ref="dictionary"><span class="search-ref">dictionary</span></div>
+          <div class="button thesaurus-tab " data-search-url="/thesaurus" data-ref="thesaurus"><span class="search-ref">thesaurus</span></div>
+        </div>
+        <div id="mw-autocomplete" class="s-autocomplete border-box"></div>
+      </form>
     </div>
   </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+</header>
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
-
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
+    <div id="menu-mob-cnt" class="menu-mob-cnt ul-login-menu">
+      <div class="menu-mob-inner">
+      <div class="menu-mob-header">
+          <div class="ul-login-links ul-logged-out-show">
+              <img class="svg menu-mob-logo" src="/images/svg/mw-logo--white.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+              <a class="ul-button hoverable" rel="nofollow" href="/login">
+                  <span class="ul-action-text">Log in</span>
+              </a>
+              <a class="ul-button hoverable" rel="nofollow" href="/register">
+                  <span class="ul-action-text">Sign Up</span>
+              </a>
+          </div>
+          <div class="ul-login-links ul-logged-in-show">
+              <div class="ul-links-header">Hello,<br/>
+                  <a rel="nofollow" class="ul-link-username" aria-label="Settings" href="/settings"><span class="ul-username ul-username-mob"></span></a>      
+              </div>
+          </div>
       </div>
+      <div class="mob-nav">
+          <a class="mob-nav__link" href="/word-games">Games & Quizzes</a>
+          <a class="mob-nav__link" href="/thesaurus">Thesaurus</a>
+          <a class="mob-nav__link" href="/word-of-the-day">Word of the Day</a>
+          <a class="mob-nav__link" href="/words-at-play">Features</a>
+          <a class="mob-nav__link" href="/reviews?utm_source=mw&utm_medium=referral&utm_campaign=nav">Buying Guide <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+          <a class="mob-nav__link" href="https://shop.merriam-webster.com/?utm_source=mwsite&utm_medium=nav&utm_content=header" target="_blank" rel="noopener noreferrer">M-W Books <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+          <a class="mob-nav__link l-wap" target="_blank" rel="noopener noreferrer" href="https://unabridged.merriam-webster.com/subscriber/register/p1">Join MWU</a>
+      </div>
+      <ul class="ul-login-links-mob">
+          <li class="ul-login-link-mob">
+              <a rel="nofollow" class="ul-favorites" href="/saved-words">
+                  <span class="ul-word-list-icon">
+                      <img class="svg" src="/images/svg/ul-icon-wordlist.svg" alt="Word List Icon" aria-hidden="true">
+                  </span>
+                  <span class="on-user-logged-in">My Words</span><span class="on-user-logged-out">My Words</span>
+              </a>
+          </li>
+          <li class="ul-login-link-mob mob-nav__link ul-logged-in-show" style="border-top: 1px solid #97bece;">
+              <a href="/recents" class="ul-recents-link" id="ul-recents-link">
+                  <span class="ul-recents-icon">
+                      <img width="18px" height="18px" class="svg" src="/images/svg/ul-icon-recents.svg" alt="Recents Icon" aria-hidden="true">
+                  </span>
+                  View Recents
+              </a>
+          </li>
+          <li class="ul-login-link-mob mob-nav__link ul-logged-in-show l-wap">
+              <a class="ul-account" rel="nofollow" aria-label="Settings" href="/settings">
+              <span class="ul-account-icon">
+                  <img width="18px" height="18px" class="svg" src="/images/svg/ul-icon-account.svg" alt="Account Icon" aria-hidden="true">
+              </span>
+              Account
+              </a>
+          </li>
+      </ul>
+      <a class="ul-sign-out ul-button ul-logged-in-show hoverable" rel="nofollow" href="/logout">
+          <span class="ul-action-text">Log Out</span>
+      </a>
+      </div>
+  </div>
+  <div class="close-trigger" id="menu-mob-close-trigger" aria-label="close trigger">
+      <img class="svg" src="/images/svg/mob-menu-close.svg" alt="Mobile Menu Close Icon" aria-hidden="true">
+  </div>
+  <div class="menu-mob-underlay" id="menu-mob-underlay"></div>                    
+                                <div class="container mt-3"><div class="cafemedia-ad-slot-top"></div></div>
+          
+                    
 
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
+
+
+
+
+<div id="definition-wrapper" class="container" data-word-click='enabled'>
+    <div class="row">
+        <div class="left-content col-lg-7 col-xl-8" id="left-content">
+                                                                        
+                        
+                                                                        
+                                                                                                
+                                                                                                                        
+                                            <span href="#" data-hom="1" class="anchor-name ga-track-hom" id="h1-anchor"></span>
+    
+    
+<div class="row entry-header">
+    <div class="col-12">
+                <h1 class="hword">infinite</h1>
+
+                 <span class="fl"><!--
+    --><a class="important-blue-link" href="/dictionary/adjective">adjective</a><!--
+--></span>            </div>
+    <!-- Save to list Button -->
+            <div class="col-12 save-to-list">
+          <a id="save-to-list-link" href="/saved-words" data-ref="dictionary" data-word="infinite">
+            <span class="ul-add-icon ul-icon">
+              <svg class="ul-word-list-icon" width="14px" height="19px" viewBox="0 0 14 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="WordList" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+  <rect id="RectFill" class="rect-fill" x="1" y="1" width="12" height="9" r="0" rx="0" ry="0" stroke="none"></rect>
+  <polygon id="Path-10" fill="#97bece" points="1 8 13 8 13 17 7 12.6775391 1 17"></polygon>
+  <polygon id="Path-11" stroke="#fff" stroke-width="1.5" points="1 1 13 1 13 17 6.98357563 12.2587174 1 17"></polygon>
+	</g>
+</svg>            </span>
+            <span id="save-to-list-txt">Save Word</span>
+          </a>
+        </div>
+    </div>
+
+<div class="ul-must-login-def">
+  <div id="save-word-login-html"></div></div>
+
+<div class="row entry-attr">
+    <div class="col">
+                          
+                <span class="word-syllables">in·&#8203;fi·&#8203;nite</span>
+    
+                            <span class="prs">
+            <span class="syl-break">|</span>            <span class="first-slash">\</span><span class="pr"> ˈin-fə-nət</span>    <a class="play-pron hw-play-pron" data-lang="en_us" data-file="infini01" data-dir="i" href="/dictionary/infinite?pronunciation&lang=en_us&dir=i&amp;file=infini01" data-url="https://www.merriam-webster.com/dictionary/infinite?pronunciation&lang=en_us&dir=i&amp;file=infini01" data-title="How to pronounce infinite (audio)" title="How to pronounce infinite (audio)">
+        <img class="svg" src="/images/svg/audio.svg" alt="How to pronounce infinite (audio)">
+    </a>
+            <span class="last-slash">\</span>
+        </span>
+              </div>
+</div>
+
+    
+      
+          
+  
+    
         
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2112.01868v1
+            
+    <div id="dictionary-entry-1">
+                
+                    <div class="row vg-header">
+                <div class="col">
+                                                        <h2 class="">Definition of <em>infinite</em></h2><p class="entryNumbers">&nbsp;(Entry 1 of 2)</p>                                </div>
+            </div>
+        
+                
+                
+                                                    
+<div class="vg">
+                    <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-1"><span class="num">1</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>extending indefinitely <strong class="mw_t_bc">: </strong><a href = "/dictionary/endless" class = 'mw_t_sx'><span class='text-uppercase'>endless</span></a></span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents"><span class="mw_t_sp"><span class="mw_t_wi">infinite</span> space</span></span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+              <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-2"><span class="num">2</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>immeasurably or inconceivably great or extensive <strong class="mw_t_bc">: </strong><a href = "/dictionary/inexhaustible" class = 'mw_t_sx'><span class='text-uppercase'>inexhaustible</span></a></span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents"><span class="mw_t_sp"><span class="mw_t_wi">infinite</span> patience</span></span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+              <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-3"><span class="num">3</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>subject to no limitation or external determination</span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+              <div class="sb has-num has-let">
+      <span class="sb-0">
+              <div class="sense has-sn">
+
+            <span class="sn sense-4 a"><span class="num">4</span><span class="letter">a</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>extending beyond, lying beyond, or being greater than any preassigned finite value however large</span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents"><span class="mw_t_sp"><span class="mw_t_wi">infinite</span> number of positive numbers</span></span>         
+      
+
+        </span>
+
+      </div>          </span>
+      <span class="sb-1">
+              <div class="sense has-sn">
+
+            <span class="sn sense-b"><span class="letter">b</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>extending to <a href = "/dictionary/infinity" class = 'mw_t_a_link'>infinity</a></span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents"><span class="mw_t_sp"><span class="mw_t_wi">infinite</span> plane surface</span></span>         
+      
+
+        </span>
+
+      </div>          </span>
+      <span class="sb-2">
+              <div class="sense has-sn">
+
+            <span class="sn sense-c"><span class="letter">c</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>characterized by an infinite number of elements or terms</span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents">an <span class="mw_t_wi">infinite</span> set</span>             <span class="ex-sent   t no-aq sents">an <span class="mw_t_wi">infinite</span> series</span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+            </div>
+                    
+                
+                
+                        
+                
+                
+                
+                    </div>
+                            
+                                                                    
+                                                                                                                        
+                                            <span href="#" data-hom="2" class="anchor-name anchor-spacer ga-track-hom" id="h2-anchor"></span>
+    
+    
+<div class="row entry-header">
+    <div class="col-12">
+                <p class="hword">infinite</p>
+
+                 <span class="fl"><!--
+    --><a class="important-blue-link" href="/dictionary/noun">noun</a><!--
+--></span>            </div>
+    <!-- Save to list Button -->
+    </div>
+
+
+
+    
+      
+          
+  
+    
+        
+            
+    <div id="dictionary-entry-2">
+                
+                    <div class="row vg-header">
+                <div class="col">
+                                                        <p class="hword2">Definition of <em>infinite</em>&nbsp;(Entry 2 of 2)</p>                                </div>
+            </div>
+        
+                
+                
+                                                    
+<div class="vg">
+                    <div class="sb no-sn">
+      <span class="sb-0">
+              <div class="sense no-subnum">
+
+              <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>something that is infinite (as in extent, duration, or number)</span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+            </div>
+                    
+                
+                
+                        
+                
+                
+                
+                    </div>
+                            
+                                                                                                                                                                                                                                                                                                                                                                                
+
+                        
+                        
+                                                    <div class="wgt-incentive-anchors">
+  <div class="anchor-list">
+                    <a href="#other-words" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="UROs: infinite" data-link=".uro-module-anchor" data-hash="other-words">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Other Words from <em>infinite</em>
+        </a>
+                            <a href="#synonyms" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Synonym Antonym Guide: infinite" data-link=".thesaurus-synonyms-module-anchor" data-hash="synonyms">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Synonyms & Antonyms        </a>
+                              <a href="#examples" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Examples: infinite" data-link=".examples-module-anchor" data-hash="examples">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            More Example Sentences          </a>
+                            <a href="#related-phrases" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Related Phrases: infinite" data-link=".related-phrases-module-anchor" data-hash="related-phrases">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Phrases Containing <em>infinite</em>
+        </a>
+                    <a href="#learn-more" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Learn More: infinite" data-link=".learn-more-module-anchor" data-hash="learn-more">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Learn More About <em>infinite</em>
+        </a>
+  </div>
+</div>
+                    <span id="anchor-seporator"></span>
+                                                 
+            
+                        
+
+                                        <div id="other-words-anchor" class="widget uros uro-module-anchor">
+                    <h2>Other Words from <em>infinite</em></h2>
+                                                <p class="function-label">Adjective</p>
+
+<div class="uro">
+                          <span class="ure">infiniteness</span>
+                          <span class="fl">noun</span>
+              </div>
+<div class="uro">
+  </div>
+<div class="uro">
+  </div>
+                                    </div> 
+            
+            
+                                        <div id="synonyms-anchor" class="widget synonyms_list thesaurus-synonyms-module-anchor">
+                    <h2>Synonyms & Antonyms for <em>infinite</em></h2>
+                                                                        <p class="function-label">Synonyms: Adjective</p>
+
+<ul class="mw-list"><li><a href="/dictionary/bottomless">bottomless</a>, </li><li><a href="/dictionary/boundless">boundless</a>, </li><li><a href="/dictionary/endless">endless</a>, </li><li><a href="/dictionary/fathomless">fathomless</a>, </li><li><a href="/dictionary/horizonless">horizonless</a>, </li><li><a href="/dictionary/illimitable">illimitable</a>, </li><li><a href="/dictionary/immeasurable">immeasurable</a>, </li><li><a href="/dictionary/immensurable">immensurable</a>, </li><li><a href="/dictionary/indefinite">indefinite</a>, </li><li><a href="/dictionary/limitless">limitless</a>, </li><li><a href="/dictionary/measureless">measureless</a>, </li><li><a href="/dictionary/unbounded">unbounded</a>, </li><li><a href="/dictionary/unfathomable">unfathomable</a>, </li><li><a href="/dictionary/unlimited" class="syn-last">unlimited</a></li></ul>                                                                                                                                                        
+                                                                                                        <p class="function-label">Antonyms: Adjective</p>
+
+<ul class="mw-list"><li><a href="/dictionary/bounded">bounded</a>, </li><li><a href="/dictionary/circumscribed">circumscribed</a>, </li><li><a href="/dictionary/confined">confined</a>, </li><li><a href="/dictionary/definite">definite</a>, </li><li><a href="/dictionary/finite">finite</a>, </li><li><a href="/dictionary/limited">limited</a>, </li><li><a href="/dictionary/restricted" class="syn-last">restricted</a></li></ul>                                                                        
+                    <a class="widget-button thesaurus" href="/thesaurus/infinite">Visit the Thesaurus for More&nbsp;<img class="svg double-arrows" src="/images/svg/double-arrows-transparent.svg"></a>
+                </div>           
+            
+                                                
+                        
+                                                <div id="examples-anchor" class="widget example_sentences examples-module-anchor">
+                        <h2>Examples of <em>infinite</em> in a Sentence</h2>
+                                                    <div class="in-sentences">
+                                                                                                            <span class="ex-header function-label">Adjective</span>
+    <!--1/2 => Quotes-->
+    
+    <!--2/2 => Extra Examples-->
+                            
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        an <em class="mw_t_it">infinite</em> series of numbers    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        She has <em class="mw_t_it">infinite</em> patience when she's dealing with children.    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        There seemed to be an <em class="mw_t_it">infinite</em> number of possibilities.    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        an <em class="mw_t_it">infinite</em> variety of choices    </span>
+  
+                                                                                                                                                      
+                                                            </div>
+                        
+                                                    <div id="example-hr"  class=""></div>
+                        
+                           
+                            <div class="on-web read-more-content-hint-container">
+                                                                                                            <span class="ex-header function-label">Recent Examples on the Web: Adjective</span>
+
+    <span class="ex-sent sents" data-example-id="13363168">
+        <span class="t has-aq">The number of details that can be processed seems <em>infinite</em>, but seeing only limited parts of data can mislead teams into making wrong decisions.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Rohit Amarnath, <em>Forbes</em>, 2 May 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13363169">
+        <span class="t has-aq">While crab and tomatoes are the two ingredients nearly all cooks agree on, cioppino still has <em>infinite </em>variations.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>New York Times</em>, 2 May 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13363170">
+        <span class="t has-aq">But treasure narratives have <em>infinite </em>powers of regeneration.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>Washington Post</em>, 2 May 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13363171">
+        <span class="t has-aq">There’s an <em>infinite </em>number of solutions to this three-body problem, says astrophysicist Neil Cornish, who studies gravitational waves at Montana State University in Bozeman, Montana, and wrote an explanation of Lagrange points for NASA.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Manasee Wagh, <em>Popular Mechanics</em>, 29 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13363172">
+        <span class="t has-aq">Plus, the surrounding region offers practically <em>infinite </em>outdoor recreation.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            J.d. Simkins, <em>Sunset Magazine</em>, 27 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13363173">
+        <span class="t has-aq">But Maguire differs from most fashion lovers by channeling her passion for good finds into a professional outlet (instead of an <em>infinite </em>online cart).</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Halie Lesavage, <em>Harper's BAZAAR</em>, 26 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13363174">
+        <span class="t has-aq">This, Swed conjectures, opens it up to an <em>infinite </em>number of interpretations, the most recent of which Swed found extraordinary.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Jessica Geltstaff Writer, <em>Los Angeles Times</em>, 23 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13363175">
+        <span class="t has-aq">Our sense of fulfillment, learning, and growth must be found in the work itself, of equitably rebuilding a system, and then attempting the <em>infinite </em>task of maintaining its equitableness.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Isis Dallis, <em>Quartz</em>, 21 Apr. 2022        	</span>
+        </span>
+    </span>
+                                                                                                                                                                                                                    <span class="ex-header function-label">Recent Examples on the Web: Noun</span>
+
+    <span class="ex-sent sents" data-example-id="13067031">
+        <span class="t has-aq">Well, by tapping into all the <em>infinite </em>Evelyns out there, of course, and doing battle with a mysterious, cross-dimensional warlord.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            David Sims, <em>The Atlantic</em>, 25 Mar. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="12959772">
+        <span class="t has-aq">The relationship between dimensions is key to calculus, as is the relationship from the finite to the <em>infinite</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Caroline Delbert, <em>Popular Mechanics</em>, 7 Mar. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="12755481">
+        <span class="t has-aq">The challenge was to find ways of bounding the <em>infinite</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>New York Times</em>, 31 Jan. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="12343063">
+        <span class="t has-aq">Praise the <em>infinite</em>, nameless tellers of tales swaying from the poplar’s limbs.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Michael Palmer, <em>Harper’s Magazine </em>, 4 Jan. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="11577729">
+        <span class="t has-aq">Both companies make classic Dutch ovens that have a near-<em>infinite </em>lifespan and are often handed down through generations.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Paul Stephen, <em>San Antonio Express-News</em>, 6 Oct. 2021        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="11363612">
+        <span class="t has-aq">Themes begin to emerge for the viewer who discovers duality, blurred borders and materiality recycled into the <em>infinite</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            John Zotos, <em>Dallas News</em>, 8 Sep. 2021        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="11363613">
+        <span class="t has-aq">One case taken up by Friedman and Stanley concerned a family of graphs, each with an <em>infinite </em>— though countable — number of vertices.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>Quanta Magazine</em>, 10 Aug. 2021        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="11257742">
+        <span class="t has-aq">Can there actually be such a thing as an <em>infinite </em>set?</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Martin Goldstern, <em>Scientific American</em>, 16 Aug. 2021        	</span>
+        </span>
+    </span>
+                                                                                                                                        <a class="read-more-content-hint-toggler" href="javascript:void(0)"><span class="read-more-content-hint-toggler-btn">See More</span><span class="read-more-content-hint-icon"></span></a>
+                                                            </div>
+                            <p class="disclaimer">
+                                These example sentences are selected automatically from various online news sources to reflect current usage of the word 'infinite.' Views expressed in the examples do not represent the opinion of Merriam-Webster or its editors. <a href="/contact-us?ref=freshexamples&hw=infinite&url=https%3A%2F%2Fwww.merriam-webster.com%2Fdictionary%2Finfinite">Send us feedback</a>.
+                            </p>
+                                            </div>
+                
+                                                    <div id="related-phrases-anchor" class="widget related-phrases-module-anchor">
+                        <h2>Phrases Containing <em>infinite</em></h2>
+                        <div class="related-phrases-dictionary">
+                            <div class="related-phrases-list-container">
+        <div class="mw-grid-table-list ">
+  <ul class="d-flex flex-wrap align-items-baseline row">
+          <li class="related-phrases-list-item col-6 col-lg-4"><a class="pb-4 pr-4 d-block" href="/dictionary/in%20someone%27s%20%28infinite%29%20wisdom"><span class="syl">in someone's (infinite) wisdom</span></a></li>
+      </ul>
+  </div>    </div>
+
+    <div class="related-phrases-list-container-xs"> 
+        <div class="mw-grid-table-list ">
+  <ul class="d-flex flex-wrap align-items-baseline row">
+          <li class="related-phrases-list-item col-6 col-lg-4"><a class="pb-4 pr-4 d-block" href="/dictionary/in%20someone%27s%20%28infinite%29%20wisdom"><span class="syl">in someone's (infinite) wisdom</span></a></li>
+      </ul>
+  </div>    </div>                        </div>
+                    </div>
+                
+                                                                        <div id="first-known-anchor" class="widget firstknown-list">
+                        <h2>First Known Use of <em>infinite</em></h2>
+                                                        <p class="function-label">Adjective</p>
+<p class="ety-sl" data-entry-id="1">14th century, in the meaning defined at <a href="#h1">sense 1</a></p>                                                        <p class="function-label">Noun</p>
+<p class="ety-sl" data-entry-id="2">15th century, in the meaning defined <a href="#h2">above</a></p>                                            </div>
+                
+                                                      
+                    <div id="etymology-anchor" class="widget etymology-list">
+                        <h2>History and Etymology for <em>infinite</em></h2>
+                                                        <p class="function-label">Adjective</p>
+
+                        <p class="et">
+                Middle English <em class="mw_t_it">infynyt,</em> borrowed from Anglo-French &amp; Latin; Anglo-French <em class="mw_t_it">infinit,</em> borrowed from Latin<em class="mw_t_it"> infīnītus</em> &quot;indefinite, having no limit, endless,&quot; from <em class="mw_t_it">in-</em> <a href = "/dictionary/in-#etymology" class = 'mw_t_et_link'>in- <span class='text-lowercase'>entry</span> 1</a> + <em class="mw_t_it">fīnītus</em> &quot;specific, definite, having bounds or limits&quot;  — more at <a href = "/dictionary/finite#etymology" class = 'mw_t_mat'>finite</a>            </p>
+                                                        </div>
+                
+                                                                                              
+                                
+                                <div id="learn-more-anchor" class="heavy-break learn-more-module-anchor"></div>
+                <div class="widget learn_more">
+                    <h2 class="learn-more-header">Learn More About <em>infinite</em></h2>
+                    <div class="light-break"></div>
+                    <div id="social-sidebar-container" class="row">
+                        
+        <div id="share-anchor" class="col-md-6">
+        <p class="hword2">Share <em>infinite</em></p>
+        <div class="row">
+            <div class="col">
+                <a href="#" class="fb share-link" data-share-url="https://www.merriam-webster.com/dictionary/infinite" data-share-image="https://merriam-webster.com/assets/mw/static/social-media-share/mw-logo-245x245@1x.png" data-share-title="Definition of INFINITE" data-share-description="extending indefinitely : endless; immeasurably or inconceivably great or extensive : inexhaustible; subject to no limitation or external determination… See the full definition">
+                  <span class="aria-text">Post the Definition of infinite to Facebook</span>
+                  <img class="svg" src="/images/svg/facebook.svg" alt="Facebook">
+                </a>
+
+                <a href="#" class="twitter share-link" data-share-url="https://www.merriam-webster.com/dictionary/infinite" data-share-text="This is the @MerriamWebster definition of 'infinite'">
+                    <span class="aria-text">Share the Definition of infinite on Twitter</span>
+                    <img class="svg" src="/images/svg/twitter.svg" alt="Twitter">
+                </a>
+            </div>
+        </div>
+    </div>
+                                                    <div id="time-traveler-anchor" class="col-md-6">
+                                <p class="hword2">Time Traveler for <em>infinite</em></p>
+                                <a href="/time-traveler/14th-century?src=learn-more-timetraveler" class="time-traveler">
+                                    <img class="svg" src="/images/svg/time-traveler.svg" alt="Time Traveler">
+                                </a>
+                                <h2 class="hword4">The first known use of <em>infinite</em> was 
+                                in the 14th century</h2>
+                                <p><a class="see-more" href="/time-traveler/14th-century?src=defrecirc-timetraveler-etycard">See more words from the same century</a></p>
+                            </div>
+                                            </div>
+
+                    
+                    
+                    
+                    
+
+                    <div id="browse-dictionary" class="row">
+                        <div id="near-entries-anchor" class="col-md-6">
+                            <h2>Dictionary Entries Near <em>infinite</em></h2>
+                                                        <p>
+                    <a class="b-link" data-ind="4" href="/dictionary/infin">infin</a>
+                </p>
+                <p class='active'>
+                    <span class="b-link hw-text" data-ind="5">infinite</span>
+                </p>
+                <p>
+                    <a class="b-link" data-ind="6" href="/dictionary/infinite%20canon">infinite canon</a>
+                </p>
+                
+    <a class="widget-button hoverable see-more-browse" href="/browse/dictionary/i/18">See More Nearby Entries&nbsp;<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 20 20" version="1.1" class="svg double-arrows">
+    <g class="Button_DoubleArrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g class="Icon/Button/DoubleArrow" transform="translate(0.000000, -2.000000)" fill="#ffffff">
+            <path class="outline Oval-2" d="M10,20 C14.418278,20 18,16.418278 18,12 C18,7.581722 14.418278,4 10,4 C5.581722,4 2,7.581722 2,12 C2,16.418278 5.581722,20 10,20 Z M10,22 C4.4771525,22 0,17.5228475 0,12 C0,6.4771525 4.4771525,2 10,2 C15.5228475,2 20,6.4771525 20,12 C20,17.5228475 15.5228475,22 10,22 Z" fill-rule="nonzero"></path>
+            <path class="logo »" d="M14.5324998,12.5078125 L11.6340623,16.046875 L9.92312479,15.1171875 L12.0949998,12.3984375 L9.92312479,9.6796875 L11.6340623,8.75 L14.5324998,12.3046875 L14.5324998,12.5078125 Z M10.5793748,12.5078125 L7.68093729,16.046875 L5.96999979,15.1171875 L8.14187479,12.3984375 L5.96999979,9.6796875 L7.68093729,8.75 L10.5793748,12.3046875 L10.5793748,12.5078125 Z"></path>
+        </g>
+    </g>
+</svg></a>
+                        </div>
+
+                        
+                                                                                                                                    <div id="statistics-anchor" class="col-md-6">
+                                    <h2>Statistics for <em>infinite</em></h2>
+                                    <div class="pop-update-wrapper">
+                                          <p class="function-title">Last Updated</p>
+  <p class="update-date">7 May 2022</p>
+                                                                                    <div id="popularity-block-wrapper" class="hidden">
+                                                <span class="subheader-sm function-title">Look-up Popularity</span>
+                                                <p id="popularity-block" class="popularity-block"></p>
+                                            </div>
+                                                                             </div>
+                                </div>
+                                                    
+                                                    <div id="cite-anchor" class="col-md-6">
+                                <p class="hword2">Cite this Entry</p>
+                                <p id="citationText">&ldquo;Infinite.&rdquo; <em>Merriam-Webster.com Dictionary</em>, Merriam-Webster, https://www.merriam-webster.com/dictionary/infinite. Accessed 14 May. 2022.</p>
+
+
+                            <div class="custom-select-wrapper">
+                                <div class="citation-select">
+                                    <div class="custom-select__trigger"><span class="custom-select-placeholder"><b>Style:</b> MLA</span>
+                                        <div class="custom-select-arrow"></div>
+                                    </div>
+                                    <div class="custom-options">
+                                        <span class="custom-option selected" data-value="mla" width="16" height="16" data-attr="&ldquo;Infinite.&rdquo; <em>Merriam-Webster.com Dictionary</em>, Merriam-Webster, https://www.merriam-webster.com/dictionary/infinite. Accessed 14 May. 2022.">MLA<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                        <span class="custom-option" data-value="chicago" width="16" height="16" data-attr="<em>Merriam-Webster.com Dictionary</em>, s.v. &ldquo;infinite,&rdquo; accessed May 14, 2022, https://www.merriam-webster.com/dictionary/infinite.">Chicago<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                        <span class="custom-option" data-value="apa" width="16" height="16" data-attr="Merriam-Webster. (n.d.).  Infinite. In <em>Merriam-Webster.com dictionary</em>. Retrieved May 14, 2022, from https://www.merriam-webster.com/dictionary/infinite">APA<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                        <span class="custom-option" width="16" height="16" data-value="mw" data-attr="&ldquo;infinite,&rdquo; <em>Merriam-Webster.com Dictionary</em>, https://www.merriam-webster.com/dictionary/infinite. Accessed 5/14/2022.">Merriam-Webster<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        
+                    </div>
+                </div>
+                <div class="heavy-break bottom"></div>
+                
+                                    <div class="open-web-comments-definition-container">
+                        <div id="open-web-comments-widget"></div>
+<script>
+
+setTimeout(    
+    () => {
+
+        // Get the script container.
+        var container = document.getElementById("open-web-comments-widget");
+        
+        // Add the header.
+        var header = document.createElement("div");
+        header.className = "open-web-comments-header";
+        header.innerHTML = '<div class="primary-header">Seen & Heard</div>';
+        header.innerHTML += '<div class="secondary-header"><span>People are talking about</span></div>';
+        container.parentNode.insertBefore(header, container);
+
+        // Add the div for the openweb comments.
+        var openwebDiv = document.createElement("div");
+        openwebDiv.className = "pitc-div";
+        openwebDiv.setAttribute("data-spotim-module", "pitc");
+        container.parentNode.insertBefore(openwebDiv, container);  
+
+        // Create the openweb tag.
+        var openwebScript = document.createElement("script");
+        openwebScript.type = "text/javascript";
+        openwebScript.src = "https://launcher.spot.im/spot/sp_704FKM73";
+        openwebScript.setAttribute("data-spotim-module", "spotim-launcher");
+        openwebScript.setAttribute("data-post-id", "owl:infinite");
+        openwebScript.setAttribute("data-post-url", "http://www.merriam-webster.com/dictionary/infinite");
+        openwebScript.setAttribute("data-messages-count", "3");
+        container.appendChild(openwebScript);
+    },
+    // 5000
+);
+
+</script>                    </div>
+                
+                                                                                                                                                                                                                                                                                                                                <div class="heavy-break"></div>
+                                <div class="widget more_defs">
+                                <p id="more-definitions-anchor" class="hword2 more-defs-header">More Definitions for <em>infinite</em></p>
+                                <div class="light-break"></div>
+                                                             
+
+                                                        
+                                                                                                                        
+                                                                                                                                            <span id="kidsdictionary-anchor"></span>
+                                                                                    
+                
+    
+<div class="row entry-header">
+    <div class="col-12">
+                <p class="hword">infinite</p>
+
+                 <span class="fl"><!--
+    --><span class="important-blue-link">adjective</span><!--
+--></span>            </div>
+    <!-- Save to list Button -->
+    </div>
+
+
+<div class="row entry-attr">
+    <div class="col">
+                          
+                <span class="word-syllables">in·&#8203;fi·&#8203;nite</span>
+    
+                            <span class="prs">
+            <span class="syl-break">|</span>            <span class="first-slash">\</span><span class="pr"> ˈin-fə-nət</span>    <a class="play-pron hw-play-pron" data-lang="en_us" data-file="infini01" data-dir="i" href="/dictionary/infinite?pronunciation&lang=en_us&dir=i&amp;file=infini01" data-url="https://www.merriam-webster.com/dictionary/infinite?pronunciation&lang=en_us&dir=i&amp;file=infini01" data-title="How to pronounce infinite (audio)" title="How to pronounce infinite (audio)">
+        <img class="svg" src="/images/svg/audio.svg" alt="How to pronounce infinite (audio)">
+    </a>
+            <span class="last-slash">\</span>
+        </span>
+              </div>
+</div>
+
+    
+      
+          
+  
+    
+        
+            
+    <div id="elementary-entry-1">
+                
+                    <div class="row vg-header">
+                <div class="col">
+                                    <h2>Kids Definition of <em>infinite</em></h2><p class="entryNumbers"></p>                                </div>
+            </div>
+        
+                
+                
+                                                    
+<div class="vg">
+                    <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-1"><span class="num">1</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>having no limits of any kind</span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents">the <em class="mw_t_it">infinite</em> universe</span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+              <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-2"><span class="num">2</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>seeming to be without limits</span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents">She took <em class="mw_t_it">infinite</em> care when handling chemicals.</span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+            </div>
+                    
+                
+                
+                        
+                
+                
+                
+                    </div>
+                                    
+                                                                                                    <div class="widget uros other-uros">
+                                        <p class="hword2">Other Words from <em>infinite</em></p>
+                                                                                                                                    
+<div class="uro">
+                          <span class="ure">infinitely</span>
+                          <span class="fl">adverb</span>
+                           <span class="ex-sent  first-child t no-aq sents">He is <em class="mw_t_it">infinitely</em> patient.    </span>        </div>
+                                    </div> 
+                                                                
+                                                                                            
+                                                        <!-- Adding $refName !== $ref because supplemental definition entries can now be displayed as secondary and this prevents duplicate origins -->
+                            
+                                                                                        <div class="heavy-break entry"></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                                        
+
+                                            </div>
+                                                    
+                                            <div class="widget more-from">
+          <p class="hword2">More from Merriam-Webster on <em>infinite</em></p>        
+                
+                
+                
+                  <p>Nglish: <a href="http://www.nglish.com/spanish/infinite" rel="noopener" target="_blank">Translation of <em>infinite</em> for Spanish Speakers</a></p>
+                
+                  <p>Britannica English: <a href="http://arabic.britannicaenglish.com/infinite" rel="noopener" target="_blank">Translation of <em>infinite</em> for Arabic Speakers</a></p>
+                
+          </div>
+                
+                                                     
+        </div> 
+
+
+
+                <div id="definition-right-rail" class="right-rail col-lg-5 col-xl-4">
+          <div class="fixed-wrapper non-sticky" id="definition-fixed-wrapper">
+                                        <div class="cafemedia-ad-slot-right1 mt-0"></div>
+            
+            
+                            <div class="wotd-side wgt-side wgt-wod-side top-location">
+  
+  <h4 class="wotd-side__title margin-t-0p9375em">
+    <a href="/word-of-the-day">WORD OF THE DAY</a>
+  </h4>
+  
+  <div class="wotd-side__divider margin-t-0p625em"></div>
+  
+  <div class="wotd-side__headword-wrapper">
+    <h4 class="wotd-side__headword">
+      <a href="/word-of-the-day">verdant</a>
+    </h4>
+    <a class="wotd-side__headword__pron  play-pron" data-lang="en_us" data-dir="v" data-file="verdan01" href="javascript:void(0)" title="Listen to the pronunciation of verdant">
+      <img class="svg" alt="Listen to the pronunciation of verdant" src="/images/svg/audio.svg">
+    </a>
   </div>
 
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
+  <p class="wotd-side__link">
+    <a href="/word-of-the-day">See Definitions and Examples</a> &raquo;
+  </p>
+  
+  <div class="wotd-side__subscribe">
+    <p class="wotd-side__subscribe__lead">Get Word of the Day daily email!</p>
+    <form class="js-wod-subscribe-frm wotd-side__subscribe__form" action="/word-of-the-day" method="post">
+      <input type="submit" class="wod-submit wotd-side__subscribe__form__submit" name="wod-submit" value="SUBSCRIBE">
+      <input type="text" class="wod-subscribe wotd-side__subscribe__form__input" name="wod-subscribe" placeholder="Your email address" aria-label="Subscribe to Word of the Day">
     </form>
   </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2112.01868"
-        dc:identifier="/abs/2112.01868"
-        dc:title="A Large Scale Study of Reader Interactions with Images on Wikipedia"
-        trackback:ping="/trackback/2112.01868" />
-    </rdf:RDF>
--->
-<div id="abs-outer">
   
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computers and Society</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2112.01868v1</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 3 Dec 2021]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>A Large Scale Study of Reader Interactions with Images on Wikipedia</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Rama%2C+D">Daniele Rama</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Piccardi%2C+T">Tiziano Piccardi</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Redi%2C+M">Miriam Redi</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Schifanella%2C+R">Rossano Schifanella</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2112.01868v1">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  Wikipedia is the largest source of free encyclopedic knowledge and one of the
-most visited sites on the Web. To increase reader understanding of the article,
-Wikipedia editors add images within the text of the article's body. However,
-despite their widespread usage on web platforms and the huge volume of visual
-content on Wikipedia, little is known about the importance of images in the
-context of free knowledge environments. To bridge this gap, we collect data
-about English Wikipedia reader interactions with images during one month and
-perform the first large-scale analysis of how interactions with images happen
-on Wikipedia. First, we quantify the overall engagement with images, finding
-that one in 29 pageviews results in a click on at least one image, one order of
-magnitude higher than interactions with other types of article content. Second,
-we study what factors associate with image engagement and observe that clicks
-on images occur more often in shorter articles and articles about visual arts
-or transports and biographies of less well-known people. Third, we look at
-interactions with Wikipedia article previews and find that images help support
-reader information need when navigating through the site, especially for more
-popular pages. The findings in this study deepen our understanding of the role
-of images for free knowledge and provide a guide for Wikipedia editors and web
-user communities to enrich the world's largest source of encyclopedic
-knowledge.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata">
-        <tr>
-          <td class="tablecell label">Comments:</td>
-          <td class="tablecell comments mathjax">29 pages, 12 figures, final version to be published in EPJ Data Science</td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computers and Society (cs.CY)</span></td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2112.01868">arXiv:2112.01868</a> [cs.CY]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2112.01868v1">arXiv:2112.01868v1</a> [cs.CY]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2112.01868">https://doi.org/10.48550/arXiv.2112.01868</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
 </div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Daniele Rama [<a href="/show-email/923e6f1c/2112.01868">view email</a>]
-      <br/><strong>[v1]</strong>
-Fri, 3 Dec 2021 12:02:59 UTC (20,396 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2112.01868v1" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2112.01868v1" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-nc-sa-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CY</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2112.01868&amp;function=prev&amp;context=cs.CY"
-         accesskey="p" title="previous in cs.CY (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2112.01868&amp;function=next&amp;context=cs.CY" accesskey="n"
-         title="next in cs.CY (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CY/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CY/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CY/2112">2112</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2112.01868?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
+                                                  <!-- Sidebar games widget -->
+              <div class="wgt-side wgt-games-side">
   
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2112.01868">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2112.01868" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2112.01868" target="_blank" rel="noopener">Semantic Scholar</a></li>
+  <h4 class="jc-wgt-title-type1">
+    <a href="/word-games">Test Your Vocabulary</a>
+  </h4>
+  
+  <div class="jc-under-tline-type2 margin-t-0p625em margin-b-1p375em"></div>
+      <p class="lead">Which Word Does Not Belong?</p>
+    <div class="wgt-games-side-items">
+    
+    <div class="wgts-quiz-with-answers">
+      <ul class="wgts-quiz-question">
+        <li class="wgts-quiz-image">
+          <div class="thumbnail">
+          <span class="lazyload-container ratio-4-3"><img data-sizes="auto" alt="one green toy robot amidst many red toy robots" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-side-widget/one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-side-widget" data-ret-pref="one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-side-widget/one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-side-widget/one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503@2x.jpg 2x" pair-id="4371" image-id="4369" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></div>
+        </li>
+        <li class="lead">Which of these words does <em>not</em> mean "nonsense"?</li>
       </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2112.html#abs-2112-01868" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2112-01868" title="DBLP bibtex record">bibtex</a>
+      <div class="content">
+        <ul class="quiz-answer-list">
+          <li>
+                                      <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8942">sagacity</a>
+                                      <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8944">blatherskite</a>
+                        </li><li>              <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8945">folderol</a>
+                                      <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8943">bunkum</a>
+                    </li>
+        </ul>  
+      </div>
     </div>
     
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Daniele%20Rama" title="DBLP author search">Daniele Rama</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Tiziano%20Piccardi" title="DBLP author search">Tiziano Piccardi</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Miriam%20Redi" title="DBLP author search">Miriam Redi</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Rossano%20Schifanella" title="DBLP author search">Rossano Schifanella</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
-
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.01868%26description%3DA+Large+Scale+Study+of+Reader+Interactions+with+Images+on+Wikipedia&amp;v=4baf0c51"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.01868&amp;v=3c27cfc1"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.01868%26title%3DA+Large+Scale+Study+of+Reader+Interactions+with+Images+on+Wikipedia&amp;v=d7391269"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2112.01868&amp;v=45eaf0bb"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
-
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
-
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
+    <div class="wgts-quiz">
+      <div class="thumbnail"><span class="lazyload-container ratio-4-3"><img data-sizes="auto" alt="How Strong Is Your Vocabulary?" data-src="https://merriam-webster.com/assets/mw/static/images/old-quizzes/vocabulary/80x60@1x.jpg" data-dim="80x60" data-srcset="https://merriam-webster.com/assets/mw/static/images/old-quizzes/vocabulary/80x60@1x.jpg 1x, https://merriam-webster.com/assets/mw/static/images/old-quizzes/vocabulary/80x60@2x.jpg 2x" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></div>
+      <div class="content">
+        <p class="blurb">Test your vocabulary with our 10-question quiz!</p>
+        <a class="to-quiz" href="/word-games/vocabulary-quiz">TAKE THE QUIZ</a>
       </div>
     </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2112.01868" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
-
-      </div>
-    </main>
-
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
   
-</body>
 
+
+    <div class="wgts-quiz last">
+      <div class="thumbnail"><span class="lazyload-container ratio-4-3"><img data-sizes="auto" alt="Universal Daily Crossword" data-src="https://merriam-webster.com/assets/mw/static/images/games/crosswords/universal-daily-crossword/204x153@1x.jpg" data-srcset="https://merriam-webster.com/assets/mw/static/images/games/crosswords/universal-daily-crossword/204x153@1x.jpg 1x, https://merriam-webster.com/assets/mw/static/images/games/crosswords/universal-daily-crossword/204x153@2x.jpg 2x" data-dim="204x153" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></span></div>
+      <div class="content">
+        <p class="blurb"><!--
+        -->A daily challenge for crossword fanatics.<!--
+        --></p>
+        <a class="to-quiz" href="/word-games/universal-daily-crossword">TAKE THE QUIZ</a>
+      </div>
+    </div>
+    
+  </div>
+</div>                            
+                          </div>
+        </div>
+        
+      </div>
+      
+
+          
+<div id="subscribe-unabridged" class="clearfix">
+  <div class="header">Love words? Need even more definitions?</div>
+  <p class="teaser">Subscribe to America's largest dictionary and get thousands more definitions and advanced search&mdash;ad free!</p>
+  <a class="subscribe-btn" rel="noopener" target="_blank" href="https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU">Merriam-Webster unabridged</a>
+</div>
+    
+ </div>
+
+
+  <div class="additional-content-area">
+    <div class="additional-items additional-items-widget">
+  <span class="items__header">Words at Play</span>
+  <ul>
+      <li>
+        <a class="item-card" href="&#x2F;words-at-play&#x2F;bird-sounds">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="fish crow calling" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/fish%20crow%20calling-9255-48e26d810fa74895194f9b19f74c85de@1x.jpg" data-caption="Fish Crow (Corvus ossifragus)" data-credit="Drew Chaney - Cornell Lab of Ornithology" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="fish crow calling-9255-48e26d810fa74895194f9b19f74c85de" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/fish%20crow%20calling-9255-48e26d810fa74895194f9b19f74c85de@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/fish%20crow%20calling-9255-48e26d810fa74895194f9b19f74c85de@2x.jpg 2x" pair-id="9257" image-id="9255" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">What a Hoot!</span>
+            <p class="mell-gr235"><span>15 bird sounds, and the birds who make them</span></p>
+          </div>
+        </a>
+    </li>
+      <li>
+        <a class="item-card" href="&#x2F;words-at-play&#x2F;beautiful-useless-obscure-words-volume-2">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="two goats" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/two%20goats-8845-9a56589d95e0e9498a48666160ff6a5a@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="two goats-8845-9a56589d95e0e9498a48666160ff6a5a" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/two%20goats-8845-9a56589d95e0e9498a48666160ff6a5a@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/two%20goats-8845-9a56589d95e0e9498a48666160ff6a5a@2x.jpg 2x" pair-id="8847" image-id="8845" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Great Big List of Beautiful &amp; Useless Words</span>
+            <p class="mell-gr235"><span>Along with their degrees of usefulness</span></p>
+          </div>
+        </a>
+    </li>
+      <li>
+        <a class="item-card" href="&#x2F;topics&#x2F;difference-between">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="alt 5a37e26cd8123" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6@2x.jpg 2x" pair-id="4640" image-id="4638" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">What's the Difference?</span>
+            <p class="mell-gr235"><span>Words that shouldn't be used interchangeably</span></p>
+          </div>
+        </a>
+    </li>
+      <li>
+        <a class="item-card" href="&#x2F;words-at-play&#x2F;top-10-words-you-didnt-know-vol-2">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="words for things you didnt know have names vol 2 eyeshine" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/words%20for%20things%20you%20didnt%20know%20have%20names%20vol%202%20eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="words for things you didnt know have names vol 2 eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/words%20for%20things%20you%20didnt%20know%20have%20names%20vol%202%20eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/words%20for%20things%20you%20didnt%20know%20have%20names%20vol%202%20eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6@2x.jpg 2x" pair-id="401" image-id="401" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Words For Things You Didn't Know Have Names</span>
+            <p class="mell-gr235"><span>When 'thingamajig' and 'thingamabob' just won't do</span></p>
+          </div>
+        </a>
+    </li>
+    </ul>
+</div>    <div class="additional-items additional-items-widget">
+  <span class="items__header">Ask the Editors</span>
+  <ul>   
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;ending-a-sentence-with-a-preposition">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="video ending a sentence with a preposition" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-ending-a-sentence-with-a-preposition-1156@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="video-ending-a-sentence-with-a-preposition-1156" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-ending-a-sentence-with-a-preposition-1156@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-ending-a-sentence-with-a-preposition-1156@2x.jpg 2x" pair-id="1158" image-id="1156" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">Ending a Sentence with a Preposition</span>
+          <p class="mell-gr235"><span>An old-fashioned rule we can no longer put up with.</span></p>
+        </div>
+      </a>
+    </li>
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;intensive-intents-and-purposes-eggcorn-video">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="person studying illustration" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/person%20studying%20illustration-7779-81d9394ee7c8538073da0765d0b7f345@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="person studying illustration-7779-81d9394ee7c8538073da0765d0b7f345" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/person%20studying%20illustration-7779-81d9394ee7c8538073da0765d0b7f345@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/person%20studying%20illustration-7779-81d9394ee7c8538073da0765d0b7f345@2x.jpg 2x" pair-id="7781" image-id="7779" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">'All Intensive Purposes' or 'All Intents and Purposes'?</span>
+          <p class="mell-gr235"><span>We're intent on clearing it up</span></p>
+        </div>
+      </a>
+    </li>
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;mispronunciations-that-may-be-fine">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="video mischievous nulcear library mispronunciations" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-mischievous-nulcear-library-mispronunciations-1147@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="video-mischievous-nulcear-library-mispronunciations-1147" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-mischievous-nulcear-library-mispronunciations-1147@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-mischievous-nulcear-library-mispronunciations-1147@2x.jpg 2x" pair-id="1149" image-id="1147" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">'Mispronunciations' That May Be Fine</span>
+          <p class="mell-gr235"><span>'Mischievous,' 'nuclear,' and other words to pron...</span></p>
+        </div>
+      </a>
+    </li>
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;why-did-yankee-doodle-call-a-feather-macaroni">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="cartoon-of-british-nobility" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913@2x.jpg 2x" pair-id="7374" image-id="7372" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">Why Did Yankee Doodle Call a Feather 'Macaroni'?</span>
+          <p class="mell-gr235"><span>What's with his feathered cap?</span></p>
+        </div>
+      </a>
+    </li>
+    </ul>
+</div>    <div class="additional-items additional-items-widget">
+  <span class="items__header">Word Games</span>
+   <ul> 
+            <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;fears-quiz">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="clown-mask" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/clown-mask-9275-15a58ff13ded2a19afd4a9f4a667283c@1x.jpg" data-caption="Clown mask" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="clown-mask-9275-15a58ff13ded2a19afd4a9f4a667283c" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/clown-mask-9275-15a58ff13ded2a19afd4a9f4a667283c@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/clown-mask-9275-15a58ff13ded2a19afd4a9f4a667283c@2x.jpg 2x" pair-id="9277" image-id="9275" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Face Your Fears</span>
+            <p class="mell-gr235"><span>Don&#039;t be scared to answer these questions about f...</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+                <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;acronym-quiz">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="asap street sign" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/asap%20street%20sign-9256-dd994583afbea22abfc4047fb74a8b8c@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="asap street sign-9256-dd994583afbea22abfc4047fb74a8b8c" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/asap%20street%20sign-9256-dd994583afbea22abfc4047fb74a8b8c@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/asap%20street%20sign-9256-dd994583afbea22abfc4047fb74a8b8c@2x.jpg 2x" pair-id="9258" image-id="9256" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Figure Out These Acronyms ASAP</span>
+            <p class="mell-gr235"><span>You don&#039;t have to be a NASA engineer to get these...</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+                <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;ntt-herbs-and-spices">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="a table filled with colorful herbs and spices" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/a%20table%20filled%20with%20colorful%20herbs%20and%20spices-8896-fb730a52b1a44c1ee6b7b82769a7254b@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="a table filled with colorful herbs and spices-8896-fb730a52b1a44c1ee6b7b82769a7254b" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/a%20table%20filled%20with%20colorful%20herbs%20and%20spices-8896-fb730a52b1a44c1ee6b7b82769a7254b@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/a%20table%20filled%20with%20colorful%20herbs%20and%20spices-8896-fb730a52b1a44c1ee6b7b82769a7254b@2x.jpg 2x" pair-id="8898" image-id="8896" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Name Those Herbs and Spices</span>
+            <p class="mell-gr235"><span>How many do you know?</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+                <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;vocabulary-quiz">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="how strong is your vocabulary" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/how%20strong%20is%20your%20vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="how strong is your vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/how%20strong%20is%20your%20vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/how%20strong%20is%20your%20vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e@2x.jpg 2x" pair-id="7853" image-id="7851" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">How Strong Is Your Vocabulary?</span>
+            <p class="mell-gr235"><span>The faster you answer, the higher your score</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+        </ul>
+</div>   </div>
+
+
+
+<script>window.mwdata.firstHwFound="infinite";window.mwdata.time="1652547162";window.mwdata.rp=encodeURIComponent("dictionary");window.mwdata.usp=encodeURIComponent("infinite");window.mwdata.esid=encodeURIComponent("mp-esid-627fde5a3dff3");</script>
+                    
+<footer class="global-footer ">
+  <div class="footer-mast clearfix">
+    <div class="mw-logo-section lazyload">
+      <a href="/" class="footer-logo">Merriam Webster</a>
+    </div>
+    <div class="footer-mast-content clearfix">
+      <div class="footer-subscribe-block">
+        <div class="footer-subscribe-msg">
+          <p>Learn a new word every day. Delivered to your inbox!</p>
+        </div>
+        <form data-medium="footer" class="footer-subscribe js-wod-subscribe-frm">
+          <input class="footer-subscribe-field" type="text" name="email" value="" aria-label="Sign up for Merriam-Webster's Word of the Day newsletter" placeholder="Your email address">
+          <input class="footer-subscribe-button" type="submit" name="submit" aria-label="Subscribe" value="SUBSCRIBE">
+          <input class="footer-subscribe-button hidden arrow" type="submit" name="submit" value="&gt;">
+        </form>
+      </div>
+      <div class="footer-dictionaries">
+        <p>OTHER MERRIAM-WEBSTER DICTIONARIES</p>
+        <div class="other-dictionaries">
+          <ul>
+            <li><a href="https://unabridged.merriam-webster.com/">MERRIAM-WEBSTER'S UNABRIDGED DICTIONARY</a></li>
+            <li><a href="https://scrabble.merriam.com/">SCRABBLE<sup>&reg;</sup> WORD FINDER</a></li>
+            <li><a href="https://dictionaryapi.com/">MERRIAM-WEBSTER DICTIONARY API</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.nglish.com/spanish/en/">NGLISH - SPANISH-ENGLISH TRANSLATION</a></li>
+            <li><a href="https://arabic.britannicaenglish.com/en/">BRITANNICA ENGLISH - ARABIC TRANSLATION</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="follow-us lazyload">
+        <p>FOLLOW US</p>
+        <div class="follow-links">
+          <ul>
+            <li><a href="https://www.facebook.com/merriamwebster" rel="noopener" target="_blank" class="social-link social-fb">Facebook</a></li>
+            <li><a href="https://twitter.com/merriamwebster" rel="noopener" target="_blank" class="social-link social-tw">Twitter</a></li>
+            <li><a href="https://www.youtube.com/user/MerriamWebsterOnline" rel="noopener" target="_blank" class="social-link social-play">YouTube</a></li>
+            <li><a href="https://www.instagram.com/merriamwebster/" rel="noopener" target="_blank" class="social-link social-ig">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-foot clearfix footer-oa cafemedia-footer-foot">
+    <div class="footer-foot-content clearfix">
+          <ul class="footer-menu browse-dictionary">
+        <li><a href="/browse/dictionary/a">Browse the Dictionary:</a></li>
+        <li><a href="/browse/dictionary/a">a</a></li>
+        <li><a href="/browse/dictionary/b">b</a></li>
+        <li><a href="/browse/dictionary/c">c</a></li>
+        <li><a href="/browse/dictionary/d">d</a></li>
+        <li><a href="/browse/dictionary/e">e</a></li>
+        <li><a href="/browse/dictionary/f">f</a></li>
+        <li><a href="/browse/dictionary/g">g</a></li>
+        <li><a href="/browse/dictionary/h">h</a></li>
+        <li><a href="/browse/dictionary/i">i</a></li>
+        <li><a href="/browse/dictionary/j">j</a></li>
+        <li><a href="/browse/dictionary/k">k</a></li>
+        <li><a href="/browse/dictionary/l">l</a></li>
+        <li><a href="/browse/dictionary/m">m</a></li>
+        <li><a href="/browse/dictionary/n">n</a></li>
+        <li><a href="/browse/dictionary/o">o</a></li>
+        <li><a href="/browse/dictionary/p">p</a></li>
+        <li><a href="/browse/dictionary/q">q</a></li>
+        <li><a href="/browse/dictionary/r">r</a></li>
+        <li><a href="/browse/dictionary/s">s</a></li>
+        <li><a href="/browse/dictionary/t">t</a></li>
+        <li><a href="/browse/dictionary/u">u</a></li>
+        <li><a href="/browse/dictionary/v">v</a></li>
+        <li><a href="/browse/dictionary/w">w</a></li>
+        <li><a href="/browse/dictionary/x">x</a></li>
+        <li><a href="/browse/dictionary/y">y</a></li>
+        <li><a href="/browse/dictionary/z">z</a></li>
+        <li><a href="/browse/dictionary/0">0-9</a></li>
+      </ul>
+     
+
+      <ul class="footer-menu">
+        <li><a href="/">Home <span class="rborder"></span></a></li>
+        <li><a href="/help">Help <span class="rborder"></span></a></li>
+        <li><a href="/about-us">About Us <span class="rborder"></span></a></li>
+        <li><a href="https://shop.merriam-webster.com/?utm_source=mwsite&utm_medium=nav&utm_content=footer">Shop <span class="rborder"></span></a></li>
+        <li><a href="/advertising">Advertising Info <span class="rborder"></span></a></li>
+        <li><a href="https://www.dictionaryapi.com/" rel="noopener" target="_blank">Dictionary API <span class="rborder"></span></a></li>
+        <li><a href="/contact-us">Contact Us <span class="rborder"></span></a></li>
+        <li><a href="https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_JOINMWU" rel="noopener" target="_blank">Join MWU <span class="rborder"></span></a></li>
+        <li><a href="/video">Videos <span class="rborder"></span></a></li>
+        <li><a href="/words-at-play/word-of-the-year">Word of the Year <span class="rborder"></span></a></li>
+        <li><a href="/vocabulary/see-all">Vocabulary Resources <span class="rborder"></span></a></li>                
+        <li><a href="/legal">Law Dictionary <span class="rborder"></span></a></li>
+        <li><a href="/medical">Medical Dictionary <span class="rborder"></span></a></li>
+        <li><a href="/privacy-policy">Privacy Policy <span class="rborder"></span></a></li>
+                <li class="last"><a href="/terms-of-use">Terms of Use</span></a></li>
+              </ul>
+
+      <ul class="footer-menu">
+        <li><a href="/browse/thesaurus/a">Browse the Thesaurus <span class="rborder"></span></a></li>
+        <li><a href="/browse/medical/a">Browse the Medical Dictionary<span class="rborder"></span></a></li>
+        <li class="last"><a href="/browse/legal/a">Browse the Legal Dictionary</a></li>
+      </ul>
+            <p class="copyright">© 2022 Merriam-Webster, Incorporated</p>
+    </div>
+  </div>
+</footer>
+      </div>
+    </div>
+            
+        
+      </body>
 </html>

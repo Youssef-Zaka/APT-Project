@@ -1,689 +1,4539 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!doctype html>
 
-<head>
-  <title>[2201.05125] GradMax: Growing Neural Networks using Gradient Information</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
+<html data-ytrk-page="TOPIC PAGINATED MEDIUM" lang="en" class="ui-unknown0 ui-unknown">
 
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#"><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app224.us.archive.org';v.server_ms=388;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.britannica.com/science/soil-mechanics","20191209154903","https://web.archive.org/","web","/_static/",
+	      "1575906543");
 </script>
-  <meta name="citation_title" content="GradMax: Growing Neural Networks using Gradient Information"/>
-  <meta name="citation_author" content="Evci, Utku"/>
-  <meta name="citation_author" content="van Merriënboer, Bart"/>
-  <meta name="citation_author" content="Unterthiner, Thomas"/>
-  <meta name="citation_author" content="Vladymyrov, Max"/>
-  <meta name="citation_author" content="Pedregosa, Fabian"/>
-  <meta name="citation_date" content="2022/01/13"/>
-  <meta name="citation_online_date" content="2022/02/23"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2201.05125"/>
-  <meta name="citation_arxiv_id" content="2201.05125"/>
-  <meta name="citation_abstract" content=" The architecture and the parameters of neural networks are often optimized
-independently, which requires costly retraining of the parameters whenever the
-architecture is modified. In this work we instead focus on growing the
-architecture without requiring costly retraining. We present a method that adds
-new neurons during training without impacting what is already learned, while
-improving the training dynamics. We achieve the latter by maximizing the
-gradients of the new weights and find the optimal initialization efficiently by
-means of the singular value decomposition (SVD). We call this technique
-Gradient Maximizing Growth (GradMax) and demonstrate its effectiveness in
-variety of vision tasks and architectures.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2201.05125"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="GradMax: Growing Neural Networks using Gradient Information"/>
-    <meta name="twitter:description" content="The architecture and the parameters of neural networks are often optimized
-independently, which requires costly retraining of the parameters whenever the
-architecture is modified. In this work we..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="GradMax: Growing Neural Networks using Gradient Information"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2201.05125v2"/>
-    <meta property="og:description" content="The architecture and the parameters of neural networks are often optimized
-independently, which requires costly retraining of the parameters whenever the
-architecture is modified. In this work we instead focus on growing the
-architecture without requiring costly retraining. We present a method that adds
-new neurons during training without impacting what is already learned, while
-improving the training dynamics. We achieve the latter by maximizing the
-gradients of the new weights and find the optimal initialization efficiently by
-means of the singular value decomposition (SVD). We call this technique
-Gradient Maximizing Growth (GradMax) and demonstrate its effectiveness in
-variety of vision tasks and architectures."/>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <meta name="p:domain_verify" content="5247c07bac63b6b3250f68cfe355c9a2"/>
+
+    <meta property="fb:pages" content="74442380906"/>
+
+    <meta name="description" content="Soil mechanics, the study of the physical properties and utilization of soils, especially used in planning foundations for structures and subgrades for highways. The first scientific study of soil mechanics was undertaken by French physicist Charles-Augustin de Coulomb, who published a theory of "/>
+
+    <meta name="keywords" content="Soil mechanics, encyclopedia, encyclopeadia, britannica, article"/>
+
+    <link rel="canonical" href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics"/>
+    <script type="text/javascript" data-type="Init Mendel">
+
+    $UI = {};
+
+    Mendel = {
+        "adsLibraries" : {},
+		"config" : {
+			"page": "Topic",
+			"videoPlayerId": "RVHVXRYp",
+			"currentUrl": "https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics",
+			"sharedUrl": "https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics",
+			"userInfo": { "type": "ANONYMOUS"
+			           ,"userId": ""
+			           ,"currency": "USD"
+			           ,"country": "US"
+			           ,"bcomId": "-8184984771682862536"
+				       ,"hasAds": true
+					   ,"testVersion": "B"
+				       ,"mvst": {"PHONE_GISTED_LEG":"FALSE"}
+			           ,"requiresConsent": false
+			},
+			"isLoggedInAsUser": false,
+			"analytics": {  "gaId": "UA-6636134-11" },
+			"isMobile": false,
+			"isTablet": false,
+			"isPhone": false,
+
+			
+			"gaExtraDimensions": {"3":"false"},
+			
+			"adInfo": {"accountId":"15510053","refreshTimer":60,"refreshMaxCount":12,"catfishTimeout":null,"catfishEnabled":false,"extraGptParameters":{"ARTICLE":"552695","CAT":"science technology,science math","TEMPLATE":"2"},"logAds":false,"phoneCatfishRefreshTimer":null,"phoneCatfishRefreshMaxCount":null},
+			
+			"a9Id": "3022",
+			
+			"mendelCookieName": "__mendel",
+			"mendelCookie": {"pagesViewed":523,"articleCatfishShown":true,"surveyShown":false},
+			
+
+			"autocompleteToSearchPage": false,"topicUrl": "/science/soil-mechanics"
+        ,"freeTopicReason": "PERMANENT_FREE_TOPIC"
+        ,"topicId": 552695
+	    ,"template": "DESKTOP"
+	    ,"type": "CORE"
+	    ,"hasEditMode": false        
+		,"hasToc": false,"infiniteScrollList": [{"p":1,"t":552695},{"p":1,"t":564152},{"p":1,"t":50672},{"p":1,"t":278250},{"p":1,"t":528756},{"p":1,"t":588545},{"p":1,"t":253458},{"p":1,"t":327897},{"p":1,"t":496896},{"p":13,"t":552611},{"p":9,"t":211272},{"p":16,"t":371907},{"p":10,"t":486231},{"p":8,"t":101285},{"p":14,"t":553306},{"p":7,"t":458757}]
+        ,"sequence": 1
+        ,"topics": {}
+		}
+    };
+
+	</script>
+
+<script type="text/javascript">
+	Mendel.marketingContents = [{"id":123,"name":"HEADER_SUBSCRIPTION_DESKTOP2","selector":"#fake"},{"id":18,"name":"CF_TEST2","selector":"#cf-test2","method":"before"}];
+	</script>
+<meta property="fb:app_id" content="1887621861548296"/>
+
+	<meta name="twitter:card" content="summary_large_image"/>
+	<meta name="twitter:site" content="@britannica"/>
+	<meta name="twitter:image" content="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/mendel/resources/eb-thistle-social-image.jpg"/>
+	<meta name="twitter:description" content="Soil mechanics, the study of the physical properties and utilization of soils, especially used in planning foundations for structures and subgrades for highways. The first scientific study of soil mechanics was undertaken by French physicist Charles-Augustin de Coulomb, who published a theory of "/>
+
+	<meta property="og:type" content="ARTICLE"/>
+	<meta property="og:title" content="Soil mechanics"/>
+	<meta property="og:description" content="Soil mechanics, the study of the physical properties and utilization of soils, especially used in planning foundations for structures and subgrades for highways. The first scientific study of soil mechanics was undertaken by French physicist Charles-Augustin de Coulomb, who published a theory of "/>
+	<meta property="og:site_name" content="Encyclopedia Britannica"/>
+	<meta property="og:url" content="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics"/>
+	<meta property="og:image" content="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/mendel/resources/eb-thistle-social-image.jpg"/>
+	<meta property="og:image:type" content="image/jpeg"/>
+
+	<script type="text/javascript" data-type="init opengraph">
+	Mendel.openGraph = {"type":"ARTICLE","title":"Soil mechanics","description":"Soil mechanics, the study of the physical properties and utilization of soils, especially used in planning foundations for structures and subgrades for highways. The first scientific study of soil mechanics was undertaken by French physicist Charles-Augustin de Coulomb, who published a theory of ","imageUrl":"https://web.archive.org/web/20191209154903/https://cdn.britannica.com/mendel/resources/eb-thistle-social-image.jpg","imageType":"image/jpeg","pageUrl":"https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics"}</script>
+
+<title>Soil mechanics | Britannica</title>
+
+    <link rel="stylesheet" href="https://web.archive.org/web/20191209154903cs_/https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,700,700i&amp;display=swap">
+<link rel="stylesheet" href="https://web.archive.org/web/20191209154903cs_/https://fonts.googleapis.com/css?family=Cinzel&amp;text=ENCYCLOPÆDIA BRITANNICA&amp;display=swap">
+<link rel="stylesheet" href="https://web.archive.org/web/20191209154903cs_/https://fonts.googleapis.com/icon?family=Material+Icons"><link href="/web/20191209154903cs_/https://www.britannica.com/resources/css/libs/reset.css" rel="stylesheet"/>
+    <link href="/web/20191209154903cs_/https://www.britannica.com/resources/dist/mendel-css.css?v=3.25.10" rel="stylesheet"/>
+    <link href="/web/20191209154903cs_/https://www.britannica.com/resources/dist/topic-page.css?v=3.25.10" rel="stylesheet"/>
+    <link href="/web/20191209154903cs_/https://www.britannica.com/resources/css/fontello/css/mendel-icons.css" rel="stylesheet"/>
+
+    <script type="text/javascript">
+        if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+    </script>
+
+	<script src="https://web.archive.org/web/20191209154903js_/https://cdn.digitru.st/prod/1/digitrust.min.js"></script>
+<script type="text/javascript">
+   try {
+    DigiTrust.initialize({
+         member: "MXoMW59N2l",
+         site: "XNlcB44GhM"
+         },
+         function (digiTrustResult) {
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         }
+    );
+   }
+   catch (e) {}
+ </script>
+
+<script type="text/javascript" data-type="googletags">
+
+	var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+
+    
+
+	Mendel.config.ads = [
+			
+					{ adUnit: '/15510053/EB_B/DESKTOP', pos: '72890BOT', size: [728,90], sizes: [ 728,90] ,divId: 'div-gpt-ad-73bc2382-9cc8-4614-9c1a-c73cab5fd8fe' },
+					{ adUnit: '/15510053/EB_B/DESKTOP', pos: '72890TOP', size: [728,90], sizes: [ [728,90], [970,250] ] ,divId: 'div-gpt-ad-461c0f88-7cb6-43f0-9b04-4922ca5f3147' },
+					{ adUnit: '/15510053/EB_B/DESKTOP', pos: '300250MID2', size: [300,250], sizes: [ 300,250] ,divId: 'div-gpt-ad-6d91ebcd-574a-4918-bcd9-85ce5f04e456' },
+					{ adUnit: '/15510053/EB_B/DESKTOP', pos: '300250BOT', size: [300,250], sizes: [ 300,250] ,divId: 'div-gpt-ad-66ac85e5-b743-4b46-a208-b9575a764dca' },
+					{ adUnit: '/15510053/EB_B/DESKTOP', pos: '300600FLEX', size: [300,600], sizes: [ 300,600] ,divId: 'div-gpt-ad-3a2f880e-cbd5-4aab-8783-1f91a9f3f45b' },
+					{ adUnit: '/15510053/EB_B/DESKTOP', pos: '300250TOP', size: [300,250], sizes: [ 300,250] ,divId: 'div-gpt-ad-2f6fdacb-a4e4-48df-8a02-e8521e20d95e' }
+	];
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+<script async src="//web.archive.org/web/20191209154903js_/https://js-sec.indexww.com/ht/htw-britannica.js" type="text/javascript"></script>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	window.Adomik = window.Adomik || {};
+	Adomik.randomAdGroup = function() {
+		var rand = Math.random();
+		switch (false) {
+		case !(rand < 0.09): return "ad_ex" + (Math.floor(100 * rand));
+		case !(rand < 0.10): return "ad_bc";
+		default: return "ad_opt";
+		}
+	};
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<script async="async" src="https://web.archive.org/web/20191209154903js_/https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" data-type="init GPT slots">
+
+    var googletagSlots = [];
+
+    googletag.cmd.push(function() {
+
+        
+
+                googletagSlots[ '73bc2382-9cc8-4614-9c1a-c73cab5fd8fe' ] = googletag.defineSlot('/15510053/EB_B/DESKTOP', [ 728,90],'div-gpt-ad-73bc2382-9cc8-4614-9c1a-c73cab5fd8fe');
+                if ( googletagSlots[ '73bc2382-9cc8-4614-9c1a-c73cab5fd8fe' ] != null ) { 
+                    googletagSlots[ '73bc2382-9cc8-4614-9c1a-c73cab5fd8fe' ]
+                    
+                        .setTargeting('POS',['72890BOT'])
+                    .setTargeting('ad_group', Adomik.randomAdGroup()).setTargeting('ad_h', ( new Date ).getUTCHours().toString() )
+                    .setTargeting( 'PAGELOAD', 'REFRESH0' )
+	                
+                            .setTargeting( 'ARTICLE',['552695'])
+                        
+                            .setTargeting( 'CAT',['science technology,science math'])
+                        
+                            .setTargeting( 'TEMPLATE',['2'])
+                        
+                    .addService(googletag.pubads());
+
+                }
+
+	        
+
+                googletagSlots[ '461c0f88-7cb6-43f0-9b04-4922ca5f3147' ] = googletag.defineSlot('/15510053/EB_B/DESKTOP', [ [728,90], [970,250] ],'div-gpt-ad-461c0f88-7cb6-43f0-9b04-4922ca5f3147');
+                if ( googletagSlots[ '461c0f88-7cb6-43f0-9b04-4922ca5f3147' ] != null ) { 
+                    googletagSlots[ '461c0f88-7cb6-43f0-9b04-4922ca5f3147' ]
+                    
+                        .setTargeting('POS',['72890TOP'])
+                    .setTargeting('ad_group', Adomik.randomAdGroup()).setTargeting('ad_h', ( new Date ).getUTCHours().toString() )
+                    .setTargeting( 'PAGELOAD', 'REFRESH0' )
+	                
+                            .setTargeting( 'ARTICLE',['552695'])
+                        
+                            .setTargeting( 'CAT',['science technology,science math'])
+                        
+                            .setTargeting( 'TEMPLATE',['2'])
+                        
+                    .addService(googletag.pubads());
+
+                }
+
+	        
+
+                googletagSlots[ '6d91ebcd-574a-4918-bcd9-85ce5f04e456' ] = googletag.defineSlot('/15510053/EB_B/DESKTOP', [ 300,250],'div-gpt-ad-6d91ebcd-574a-4918-bcd9-85ce5f04e456');
+                if ( googletagSlots[ '6d91ebcd-574a-4918-bcd9-85ce5f04e456' ] != null ) { 
+                    googletagSlots[ '6d91ebcd-574a-4918-bcd9-85ce5f04e456' ]
+                    
+                        .setTargeting('POS',['300250MID2'])
+                    .setTargeting('ad_group', Adomik.randomAdGroup()).setTargeting('ad_h', ( new Date ).getUTCHours().toString() )
+                    .setTargeting( 'PAGELOAD', 'REFRESH0' )
+	                
+                            .setTargeting( 'ARTICLE',['552695'])
+                        
+                            .setTargeting( 'CAT',['science technology,science math'])
+                        
+                            .setTargeting( 'TEMPLATE',['2'])
+                        
+                    .addService(googletag.pubads());
+
+                }
+
+	        
+
+                googletagSlots[ '66ac85e5-b743-4b46-a208-b9575a764dca' ] = googletag.defineSlot('/15510053/EB_B/DESKTOP', [ 300,250],'div-gpt-ad-66ac85e5-b743-4b46-a208-b9575a764dca');
+                if ( googletagSlots[ '66ac85e5-b743-4b46-a208-b9575a764dca' ] != null ) { 
+                    googletagSlots[ '66ac85e5-b743-4b46-a208-b9575a764dca' ]
+                    
+                        .setTargeting('POS',['300250BOT'])
+                    .setTargeting('ad_group', Adomik.randomAdGroup()).setTargeting('ad_h', ( new Date ).getUTCHours().toString() )
+                    .setTargeting( 'PAGELOAD', 'REFRESH0' )
+	                
+                            .setTargeting( 'ARTICLE',['552695'])
+                        
+                            .setTargeting( 'CAT',['science technology,science math'])
+                        
+                            .setTargeting( 'TEMPLATE',['2'])
+                        
+                    .addService(googletag.pubads());
+
+                }
+
+	        
+
+                googletagSlots[ '3a2f880e-cbd5-4aab-8783-1f91a9f3f45b' ] = googletag.defineSlot('/15510053/EB_B/DESKTOP', [ 300,600],'div-gpt-ad-3a2f880e-cbd5-4aab-8783-1f91a9f3f45b');
+                if ( googletagSlots[ '3a2f880e-cbd5-4aab-8783-1f91a9f3f45b' ] != null ) { 
+                    googletagSlots[ '3a2f880e-cbd5-4aab-8783-1f91a9f3f45b' ]
+                    
+                        .setTargeting('POS',['300600FLEX'])
+                    .setTargeting('ad_group', Adomik.randomAdGroup()).setTargeting('ad_h', ( new Date ).getUTCHours().toString() )
+                    .setTargeting( 'PAGELOAD', 'REFRESH0' )
+	                
+                            .setTargeting( 'ARTICLE',['552695'])
+                        
+                            .setTargeting( 'CAT',['science technology,science math'])
+                        
+                            .setTargeting( 'TEMPLATE',['2'])
+                        
+                    .addService(googletag.pubads());
+
+                }
+
+	        
+
+                googletagSlots[ '2f6fdacb-a4e4-48df-8a02-e8521e20d95e' ] = googletag.defineSlot('/15510053/EB_B/DESKTOP', [ 300,250],'div-gpt-ad-2f6fdacb-a4e4-48df-8a02-e8521e20d95e');
+                if ( googletagSlots[ '2f6fdacb-a4e4-48df-8a02-e8521e20d95e' ] != null ) { 
+                    googletagSlots[ '2f6fdacb-a4e4-48df-8a02-e8521e20d95e' ]
+                    
+                        .setTargeting('POS',['300250TOP'])
+                    .setTargeting('ad_group', Adomik.randomAdGroup()).setTargeting('ad_h', ( new Date ).getUTCHours().toString() )
+                    .setTargeting( 'PAGELOAD', 'REFRESH0' )
+	                
+                            .setTargeting( 'ARTICLE',['552695'])
+                        
+                            .setTargeting( 'CAT',['science technology,science math'])
+                        
+                            .setTargeting( 'TEMPLATE',['2'])
+                        
+                    .addService(googletag.pubads());
+
+                }
+
+	        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+googletag.pubads().setTargeting('dc_ref',['https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics']);googletag.pubads().setTargeting('PAGE',[523]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	    googletag.pubads().disableInitialLoad();
+	    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	    googletag.pubads().enableSingleRequest();
+        googletag.pubads().enableAsyncRendering();
+        googletag.enableServices();
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  });
+</script>
+
+<script type="text/javascript" data-type="Amazon a9">
+
+	var a9Slots = [];
+
+	!function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function(){q("f",arguments)},setDisplayBids:function(){},targetingKeys:function(){return[]},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}("apstag",window,document,"script","//web.archive.org/web/20191209154903/https://c.amazon-adsystem.com/aax2/apstag.js");
+
+	var p = {
+		pubID: '3022',
+		adServer: 'googletag',
+		bidTimeout: 2e3
+	};
+
+	apstag.init( p );
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	if ( Mendel.config.ads && Mendel.config.ads.length > 0 ) {
+
+        for (var i = 0; i < Mendel.config.ads.length; i++) {
+            a9Slots.push({slotID: Mendel.config.ads[i].divId, slotName: Mendel.config.ads[i].adUnit, sizes: Mendel.config.ads[i].sizes});
+        }
+
+        apstag.fetchBids({slots: a9Slots}, function() {
+            googletag.cmd.push(function () {
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                apstag.setDisplayBids();
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                googletag.pubads().refresh();
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            });
+        });
+	}
+
+</script>
+<script src="https://web.archive.org/web/20191209154903js_/https://eb-com.videoplayerhub.com/videoplayer.js"></script>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" async="async" src="/web/20191209154903js_/https://www.britannica.com/resources/js/libs/prebid2.9.0.js"></script>
+
+	<script type="text/javascript">
+
+	window.pbjs = window.pbjs || {};
+    pbjs.que = pbjs.que || [];
+
+	Mendel.config.prebidDFPId = '15510053/EB_B/video_pre';
+
+	Mendel.config.prebidInfo = {
+
+		code: 'EBVIDEO',
+		mediaTypes: {
+	 	    video: {
+	 	        playerSize: [640,480],
+		        context: 'instream'
+	        }
+		},
+		bids: [
+			{
+				bidder: 'appnexus',
+				params: {
+				    placementId: '14597402',
+					video: {
+				        skippable: true,
+						maxduration: 15,
+						playback_method: ['click_to_play']
+					}
+				}
+			},
+			{
+				bidder: 'pubmatic',     
+				params: {
+					publisherId: '157732',
+					adSlot: '1791028@640x480',
+					video: {
+						mimes: ['video/mp4','application/javascript'],
+						api: [2],
+						skippable: true,
+						playbackmethod: [3],
+						protocols: [2,3,5,6],
+						linearity: 1,
+						placement: 1,
+						w: 640,
+						h: 480,
+						minduration: 1,
+						maxduration: 15,
+						startdelay: 0
+					}
+				}
+			},
+			{
+			    bidder: 'openx',
+				params: {
+					unit: '540532182',
+					delDomain: 'merriamwebster-d.openx.net',
+					openrtb: {
+						imp: [{
+							video: {
+								mimes: ['video/mp4','application/javascript']
+							}
+						}]
+					}
+				}
+			},
+			{
+				bidder: 'oneVideo',
+				params: {
+					video: {
+						playerWidth: 480,
+						playerHeight: 640,
+						mimes: ['video/mp4', 'application/javascript'],
+						protocols: [2,5],
+						api: [2],
+						delivery: [2]
+					},
+					site: {
+						id: 1,
+						page: 'https://web.archive.org/web/20191209154903/https://www.britannica.com'
+					},
+					pubId: 'MerriamWebster'
+				}
+			}
+		]
+	};
+
+	</script>
+<script>
+	            dataLayer = [];
+            </script>
+		   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" data-name="google_tags_manager">
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		       '//web.archive.org/web/20191209154903/https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		   })(window,document,'script','dataLayer','GTM-5W6NC8');
+		   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" data-name="facebook_pixel">
+		
+	!function(f,b,e,v,n,t,s)
+	{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+	if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+	n.queue=[];t=b.createElement(e);t.async=!0;
+	t.src=v;s=b.getElementsByTagName(e)[0];
+	s.parentNode.insertBefore(t,s)}(window,document,'script',
+	'https://web.archive.org/web/20191209154903/https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init', '154643575315468');
+	fbq('track', 'PageView');
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+<script id="ns_script_dc" data-key="12ca4747-8e80-4a36-b550-dc239c18b954" data-e="5" src="//web.archive.org/web/20191209154903js_/https://includemodal.global.ssl.fastly.net/sp.js" type="text/javascript" async></script>
 </head>
 
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
+<body data-leg="B" class="new-topic topic-desktop first-page-true user-ANONYMOUS  md-desktop     leg-b"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20191209154903/https%3A//www.britannica.com/science/soil-mechanics"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
   </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.britannica.com/science/soil-mechanics" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20191209154903" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20191209154903*/https://www.britannica.com/science/soil-mechanics" title="See a list of every capture for this URL">11 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">28 Jun 2015 - 19 Mar 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20150905103133/http://www.britannica.com/science/soil-mechanics" title="05 Sep 2015"><strong>Sep</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 15:49:03 Dec 09, 2019">DEC</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200807070803/https://www.britannica.com/science/soil-mechanics" title="07 Aug 2020"><strong>Aug</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20150905103133/http://www.britannica.com/science/soil-mechanics" title="10:31:33 Sep 05, 2015"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 15:49:03 Dec 09, 2019">09</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200103111745/https://www.britannica.com/science/soil-mechanics" title="11:17:45 Jan 03, 2020"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20150905103133/http://www.britannica.com/science/soil-mechanics" title="05 Sep 2015"><strong>2015</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 15:49:03 Dec 09, 2019">2019</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210503210150/https://www.britannica.com/science/soil-mechanics" title="03 May 2021"><strong>2021</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20191209154903/http://web.archive.org/screenshot/https://www.britannica.com/science/soil-mechanics"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
       </div>
     </div>
   </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/wikipedia-eventstream)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/wikipedia-eventstream" target="_new"><span class="wm-title">Wikipedia Eventstream</span></a></div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.britannica.com/science/soil-mechanics","20191209154903",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" data-name="informizely" id="_informizely_script_tag">
+		
+var IzWidget = IzWidget || {};
+(function (d)
+{ var scriptElement = d.createElement('script'); scriptElement.type = 'text/javascript'; scriptElement.async = true; scriptElement.src = "https://web.archive.org/web/20191209154903/https://insitez.blob.core.windows.net/site/f780f33e-a610-4ac2-af81-3eb184037547.js"; var node = d.getElementById('_informizely_script_tag'); node.parentNode.insertBefore(scriptElement, node); }
+)(document);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+<noscript><iframe src="//web.archive.org/web/20191209154903if_/https://www.googletagmanager.com/ns.html?id=GTM-5W6NC8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<noscript>
+	<img height="1" width="1" src="https://web.archive.org/web/20191209154903im_/https://www.facebook.com/tr?id=154643575315468&amp;ev=PageView&amp;noscript=1"/>
+</noscript>
+
+		<main>
+
+    <div class="md-page-wrapper">
+
+        <header class="md-header hidden-xs">
+    <div class="grid no-gutter">
+
+        <div class="grid-xs-shrink md-header-thistle">
+            <a href="/web/20191209154903/https://www.britannica.com/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/mendel/250-anniversary/thistle-gradient-half.png" alt="250 thistle logo"/>
+</a>
         </div>
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
 
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
+        <div class="grid-xs" data-layout="column">
 
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2201.05125
-  </div>
 
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
+            <div class="md-header-top-row grid no-gutter">
 
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
+                <div class="grid-xs middle-xs">
+                    <a href="/web/20191209154903/https://www.britannica.com/" class="font-logotype">ENCYCLOPÆDIA BRITANNICA</a>
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/mendel/250-anniversary/eb-mendel-anniversary-11-13-18-a2-resized.png" alt="250 thistle logo" class="md-250-logo ml-10 visible-lg visible-md"/>
+</div>
+
+
+                <div class="grid-xs-shrink" data-layout="row">
+                    <div class="md-header-subscribe has-callout">
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+	
+
+
+
+
+
+
+<div class="marketing-HEADER_SUBSCRIPTION_DESKTOP marketing-content" data-marketing-id="HEADER_SUBSCRIPTION_DESKTOP"><a href="https://web.archive.org/web/20191209154903/https://subscription.britannica.com/subscribe?partnerCode=BP_GN_Articles_USD_B" target="_blank">
+   SUBSCRIBE
+   <div class="md-header-subscribe-callout text-center ui-hidden">
+       <img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/marketing/hp_blackfriday_rollover.jpg" alt="Subscribe!"/>
+   </div>
+</a></div>
+
+</div>
+                        <div class="md-header-user-actions text-center">
+                        <a href="#" class="login-link">Log In &middot; Join</a>
+                            </div>
                 </div>
-              </form>
             </div>
 
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
+
+            <div class="md-header-bottom-row grid no-gutter md-header-gradient">
+
+
+                <div class="grid-xs middle-xs">
+                    <ul class="md-header-menu">
+                        <li><a href="/web/20191209154903/https://www.britannica.com/stories/demystified">Demystified</a></li>
+                        <li><a href="/web/20191209154903/https://www.britannica.com/quiz/browse">Quizzes</a></li>
+                        <li><a href="/web/20191209154903/https://www.britannica.com/stories/wtfact">#WTFact</a></li>
+                        <li><a href="/web/20191209154903/https://www.britannica.com/list/browse">Lists</a></li>
+                        <li><a href="/web/20191209154903/https://www.britannica.com/on-this-day">On This Day</a></li>
+                        <li><a href="/web/20191209154903/https://www.britannica.com/biographies">Biographies</a></li>
+                        <li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="marketing-NAVBAR marketing-content" data-marketing-id="NAVBAR"><a href="/web/20191209154903/https://www.britannica.com/explore">Explore</a></span>
+
+</li>
+                    </ul>
+                </div>
+
+
+                <div class="grid-xs-shrink" data-layout="row">
+                    <div class="md-header-pinned-subscription md-header-subscribe has-callout hidden-xs hidden-sm mr-10">
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+	
+
+
+
+
+
+
+<div class="marketing-HEADER_SUBSCRIPTION_DESKTOP marketing-content" data-marketing-id="HEADER_SUBSCRIPTION_DESKTOP"><a href="https://web.archive.org/web/20191209154903/https://subscription.britannica.com/subscribe?partnerCode=BP_GN_Articles_USD_B" target="_blank">
+   SUBSCRIBE
+   <div class="md-header-subscribe-callout text-center ui-hidden">
+       <img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/marketing/hp_blackfriday_rollover.jpg" alt="Subscribe!"/>
+   </div>
+</a></div>
+
+</div>
+                        <div class="md-header-search middle-xs">
+                        <span class="visible-lg mr-5">Search Britannica</span>
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="search"></em>
+	
+	
+
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="md-search-box-backdrop ui-hidden"></div>
+    <div class="md-search-box ui-hidden-opacity text-center">
+        <form method="get" action="/web/20191209154903/https://www.britannica.com/search" id="header-search" class="md-search-form grid-xs-offset-16 grid-xs-66 middle-xs my-40 mb-lg-0">
+    <div class="search-box">
+        <label class="sr-only" for="header-search-query">Search</label>
+        <input name="query" id="header-search-query" placeholder="Search Britannica..." class="md-form-control search-query" maxlength="200" autocomplete="off"/>
+        <button class="search-submit md-button md-primary middle-xs" type="submit" disabled><span class="sr-only">Click here to search</span> <em class="material-icons" data-icon="search"></em></button>
+        </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="marketing-INSIGHTS_SEARCHBOX_DRIVER marketing-content" data-marketing-id="INSIGHTS_SEARCHBOX_DRIVER"><div class="md-chrome-extension-promo text-center mx-lg-75">
+    <a class="pb-10 pt-10" target="_blank" href="https://web.archive.org/web/20191209154903/https://www.britannica.com/insights">
+       <span class="text-black">Fact-checked results at the top of your browser search.</span>
+       <img src="https://web.archive.org/web/20191209154903im_/https://safe.britannica.com/safeimages/britannica_insights_small.jpg" alt="Chrome store logo"/>
+       Britannica Insights       
+    </a>
+</div>
+</div>
+
+</div>
+</header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="content" class="md-content">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md-article-container template-desktop">
+			<article class="article-content content" data-topic-id="552695">
+
+            <script type="application/json" class="topic-json">
+   {
+       "552695": {
+            "url": "/science/soil-mechanics",
+            "shareUrl": "https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil-mechanics",
+            "title": "Soil mechanics",
+            "documentGroup": "TOPIC PAGINATED MEDIUM"
+            
+                ,"gaExtraDimensions": {"3":"false"}
+       }
+   }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="toolbar-ad">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+		
+		<div style="min-width: 728px; min-height: 90px" data-info="{&quot;tagName&quot;:&quot;DESKTOP&quot;,&quot;divId&quot;:&quot;461c0f88-7cb6-43f0-9b04-4922ca5f3147&quot;,&quot;pos&quot;:&quot;TOP&quot;,&quot;desktopSize&quot;:{&quot;width&quot;:728,&quot;height&quot;:90},&quot;desktopSizeLarge&quot;:{&quot;width&quot;:970,&quot;height&quot;:250},&quot;desktopBlocktroughId&quot;:&quot;5b28671e33-187&quot;}" data-targeting="{&quot;ARTICLE&quot;:&quot;552695&quot;,&quot;CAT&quot;:&quot;science technology,science math&quot;,&quot;TEMPLATE&quot;:&quot;2&quot;}" data-pos="TOP" id="div-gpt-ad-461c0f88-7cb6-43f0-9b04-4922ca5f3147" class="google-ad-iframe ui-hide-on-modal header-ad middle-xs center-xs TOP">
+			<script>googletag.cmd.push( function() { googletag.display( 'div-gpt-ad-461c0f88-7cb6-43f0-9b04-4922ca5f3147' ); } );</script>
+		</div>
+		
+			
+			
+				<span class="btx" data-id="5b28671e33-187">
+				<span class="bt-uid-tg" uid="5b28671e33-187" style="display:none !important"></span>
+				</span>
+			
+		
+		
+	
+
+</div>
+
+
+<div class="topic-toolbar flex middle-xs ad-true">
+
+	<div class="grid no-gutter">
+
+		
+		
+		
+
+		<div class="toc-toggle-panel grid-xs-shrink pl-5 pl-sm-20 middle-xs between-xs">
+			
+
+			
+			
+			
+
+			
+		</div>
+
+		
+		
+		
+
+		
+			<div class="grid-xs d-none d-lg-flex center-xs layout-column pl-20">
+				<div class="font-18 text-truncate">Soil mechanics</div>
+				
+	        </div>
+		
+
+		
+		
+		
+
+		<div class="grid-xs grid-lg-shrink end-xs middle-xs pr-10 pr-sm-0">
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button class="pill-button qa-article-button mr-10 active">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="description"></em>
+	
+	
+
+
+	
+	
+		<span class="d-sm-inline d-none">
+			Article
+		</span>
+	
+</button>
+
+
+
+
+			
+			
+		</div>
+
+		
+		
+		
+
+		
+			<div class="article-tools grid-xs-shrink d-none d-sm-flex end-xs">
+				<div class="wrapper d-flex end-xs">
+
+					
+
+						
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button class="popover-button toolbar-info js-trigger-info-modal layout-column p-5 text-uppercase text-blue-dark font-10 text-600 middle-xs">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="info"></em>
+	
+	
+
+
+	Info
+</button>
+
+
+
+						
+
+						
+							
+								
+								
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="popover-button toolbar-print d-lg-flex layout-column p-5 text-uppercase text-blue-dark font-10 text-600 middle-xs" href="/web/20191209154903/https://www.britannica.com/print/article/552695" target="_blank">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="print"></em>
+	
+	
+
+
+	Print
+</a>
+
+
+
+							
+						
+
+						
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button class="popover-button toolbar-cite layout-column p-5 text-uppercase text-blue-dark font-10 text-600 middle-xs" data-popover=".citation-popover" data-popover-url="/ajax/topic/552695/cite">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="bookmark"></em>
+	
+	
+
+
+	Cite
+</button>
+
+
+
+							<div class="citation-popover md-popover"></div>
+						
+
+						
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button class="popover-button toolbar-feedback layout-column p-5 text-uppercase text-blue-dark font-10 text-600 middle-xs" data-popover=".feedback-popover">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="chat"></em>
+	
+	
+
+
+	Feedback
+</button>
+
+
+
+							<div class="feedback-popover md-popover text-left">
+	 <div class="popover-body">
+
+         <form method="post" action="/web/20191209154903/https://www.britannica.com/submission/feedback/552695">
+             <div class="title">Feedback</div>
+			 <label for="feedback">
+				Corrections? Updates? Omissions? Let us know if you have suggestions to improve this article
+			     (requires login).
+			 </label>
+
+	         <div class="type-menu">
+	         <label for="feedback-type">Select feedback type:</label>
+	         <select id="feedback-type" class="md-form-control" name="feedbackTypeId" required>
+		         <option value="" selected="selected">Select a type (Required)</option>
+		         <option value="1">Factual Correction</option>
+		         <option value="2">Spelling/Grammar Correction</option>
+		         <option value="3">Link Correction</option>
+		         <option value="4">Additional Information</option>
+		         <option value="5">Other</option>
+	         </select>
+	         </div>
+
+	         <textarea id="feedback" class="form-control" name="feedback" maxlength="3000" required></textarea>
+
+ 			 <div class="text-center gutter-bottom">
+				 <button class="md-button md-primary" type="submit">Submit Feedback</button>
+			 </div>
+		 </form>
+
+         <div class="success-messaging ui-hidden">
+             <div class="title">Thank you for your feedback</div>
+             <p>Our editors will review what you’ve submitted and determine whether to revise the article.</p>
+             <a class="promo" href="https://web.archive.org/web/20191209154903/http://corporate.britannica.com/publishing-partner-program/" target="_blank">
+                 Join <strong>Britannica's Publishing Partner Program</strong> and our community of experts to gain a global audience for your work!
+             </a>
+         </div>
+
+	 </div>
+
+ </div>
+						
+
+					
+
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button class="popover-button toolbar-share layout-column p-5 text-uppercase text-blue-dark font-10 text-600 middle-xs" data-popover=".share-popover">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="share"></em>
+	
+	
+
+
+	Share
+</button>
+
+
+
+					<div class="share-popover md-popover text-left">
+   <div class="popover-body">
+	   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+    
+    
+
+
+
+    
+    
+    
+        
+    
+
+
+
+
+
+
+<div class="md-social-toolbar-circle center-xs inverted blue-border pt-15 start-xs" data-value="share" title="Soil mechanics" data-url="https://web.archive.org/web/20191209154903oe_/https://www.britannica.com/science/soil-mechanics">
+    
+        <div class="share-label grid-xs">SHARE</div>
+    
+    
+        <a class="ui-icon-facebook center-xs middle-xs" data-provider="facebook" href="https://web.archive.org/web/20191209154903/https://www.facebook.com/BRITANNICA/" target="_blank"><span>Facebook</span></a>
+    
+    
+        <a class="ui-icon-twitter center-xs middle-xs" data-provider="twitter" href="https://web.archive.org/web/20191209154903/https://twitter.com/britannica" target="_blank"><span>Twitter</span></a>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+</div>
+</div>
+
+				</div>
+			</div>
+		
+
+	</div>
+</div>
+
+<div class="grid no-gutter">
+
+	            <div class="grid-xs">
+
+                    <div class="infinite-pagination-container container">
+
+	                    <h1>Soil mechanics</h1>
+
+<div class="md-byline">
+
+	<div class="last-updated">
+			<a data-type="accordion-link" href="#accordion-article-history" rel="nofollow">See Article History</a>
+			</div>
+	</div>
+<div class="grid gutter-right">
+
+    <div class="grid-sm">
+
+	    <!--[BEFORE-ARTICLE]--><section id="ref1" data-level="1"><p><strong><span id="ref77709"></span>Soil mechanics</strong>,   the study of the physical properties and utilization of soils, especially used in planning foundations for structures and subgrades for highways.</p><!--[P1]--><!--[AM1]--><span id="AM1"></span><span id="MOD1"></span><p>The first scientific study of <a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil" class="md-crosslink autoxref">soil</a> <a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/mechanics" class="md-crosslink autoxref">mechanics</a> was undertaken by French physicist <span id="ref77710"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/biography/Charles-Augustin-de-Coulomb" class="md-crosslink">Charles-Augustin de Coulomb</a>, who published a theory of earth <a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/pressure" class="md-crosslink autoxref">pressure</a> in 1773. Coulomb’s work and a theory of earth masses published by Scottish engineer William <span id="ref77711"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/biography/William-John-Macquorn-Rankine" class="md-crosslink"></a>Rankine in 1857 are still primary tools used to quantify <span id="ref77712"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/geostress" class="md-crosslink"></a>earth stresses. These theories have been <a href="https://web.archive.org/web/20191209154903/https://www.merriam-webster.com/dictionary/amended" class="md-dictionary-link md-dictionary-tt-off" data-term="amended">amended</a> in the 20th century to take into account the influence of <span id="ref77713"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/cohesion" class="md-crosslink">cohesion</a>, a more recently discovered property of soils that causes them to behave somewhat differently under <a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/stress-physics" class="md-crosslink autoxref">stress</a> than Rankine and Coulomb predicted.</p><!--[P2]--><!--[AM2]--><span id="AM2"></span><!--[MOD2]--><span id="MOD2"></span><p>Soil is a natural <a href="https://web.archive.org/web/20191209154903/https://www.merriam-webster.com/dictionary/aggregate" class="md-dictionary-link md-dictionary-tt-off" data-term="aggregate">aggregate</a> of mineral particles, sometimes including organic constituents; it has solid, liquid, and gaseous phases. How the soil of a given site will support the stresses put upon it by the weight of structures, or how it will respond to movement in the course of construction, depends upon six properties—<span id="ref77714"></span>internal friction (the resistance of a soil mass to sliding, inversely related to the amount of moisture in the soil and thus greater in sands and <a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/gravel" class="md-crosslink autoxref">gravel</a> than clays) and cohesion (molecular attraction between soil particles, much higher in clays than sands or silt), both of which lessen the tendency of soils to shear, or slide along planes; <span id="ref77715"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/compressibility" class="md-crosslink">compressibility</a> (the degree to which soil may be made denser by various means including tamping and vibration, and thus able to support greater loads); <span id="ref77716"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/elasticity-physics" class="md-crosslink">elasticity</a> (the ability of soil to reexpand after being compressed); <span id="ref77717"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/permeability-geology" class="md-crosslink">permeability</a> (the degree to which a soil will conduct a flow of water); and <span id="ref77718"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/capillarity" class="md-crosslink">capillarity</a> (the degree to which water is drawn upward from the normal water table).</p><!--[P3]--><!--[AM3]--><div class="ora-tv-container"><span id="ora_6d60dbd4-6685-480c-9c7f-e0d496d8fbec"></span></div><span id="AM3"></span><!--[MOD3]--><span id="MOD3"></span><p>The thoroughness of soil surveys at a given site depends on the size of the project to be carried out. Visual examination of the surface may <a href="https://web.archive.org/web/20191209154903/https://www.merriam-webster.com/dictionary/suffice" class="md-dictionary-link md-dictionary-tt-off" data-term="suffice">suffice</a> in some cases. Soil characteristics generally vary more rapidly vertically (with depth) than horizontally. Subsurface examination techniques include trench-digging, boring (to test resistance as well as to obtain samples), and pumping subsurface matter to the surface with water. Seismic testing (measuring the speed with which shock waves generated by explosives are transmitted through the ground) and measurement of the <a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/resistance-electronics" class="md-crosslink autoxref">electrical resistance</a> of the soil also yield information helpful in the evaluation of soil. Grain size and plastic properties of samples taken from the site are measured in a laboratory. Occasionally data obtained from previous studies of soils near the site are useful.</p><!--[P4]--><!--[AM4]--><span id="AM4"></span><div class="marketing-INLINE_SUBSCRIPTION marketing-content" data-marketing-id="INLINE_SUBSCRIPTION"><div class="inline-subscription mb-30 mx-sm-50 text-center">
+Get unlimited access to all of Britannica’s trusted content.
+<a href="https://web.archive.org/web/20191209154903/https://subscription.britannica.com/subscribe?partnerCode=BP_House_USD_B" class="cta">Subscribe Today</a>
+</div></div><span id="MOD4"></span><p><span id="ref77719"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/foundation-construction" class="md-crosslink">Foundations</a> <span id="ref77720"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/construction" class="md-crosslink"></a>are designed to convey the weight of a structure to the ground underneath and around it. Stress distribution that is not properly matched to the characteristics of the soil may result in structural failure through shearing of the soil or uneven settling. Spread foundations may be either of the <span id="ref77721"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/spread-footing" class="md-crosslink">spread footing</a> (made with wide bases placed directly beneath the load-bearing beams or walls), <span id="ref77722"></span>mat (consisting of slabs, usually of <a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/reinforced-concrete" class="md-crosslink autoxref">reinforced concrete</a>, which underlie the entire area of a building), or floating types. A <span id="ref77723"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/floating-foundation" class="md-crosslink">floating foundation</a> consists of boxlike rigid structures set at such a depth below ground that the weight of the soil removed to place it equals the weight of the building; thus, once the building is completed, the soil under it will bear the same weight it bore before excavation was begun. Deep foundations may be <span id="ref77724"></span>end-bearing piles (which convey all the weight put on them end-to-end, from the building above to the bedrock on which they are set), <span id="ref77725"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/friction-pile" class="md-crosslink">friction piles</a> (which transfer some of the pressure put on them to the soil around them, through friction or adhesion along the surface where pile sides interface with soil), or <span id="ref77726"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/caisson" class="md-crosslink">caissons</a> (extra-large piles cast in place in an excavation, rather than prefabricated and sunk).</p><!--[P5]--><!--[AM5]--><div style="width:300px; height:250px" class="inline-ad" id="div-gpt-ad-6d91ebcd-574a-4918-bcd9-85ce5f04e456" data-info="{&quot;tagName&quot;:&quot;DESKTOP&quot;,&quot;divId&quot;:&quot;6d91ebcd-574a-4918-bcd9-85ce5f04e456&quot;,&quot;pos&quot;:&quot;MID2&quot;,&quot;desktopSize&quot;:{&quot;width&quot;:300,&quot;height&quot;:250}}" data-targeting="{&quot;ARTICLE&quot;:&quot;552695&quot;,&quot;CAT&quot;:&quot;science technology,science math&quot;,&quot;TEMPLATE&quot;:&quot;2&quot;}"><script>googletag.cmd.push( function() { googletag.display('div-gpt-ad-6d91ebcd-574a-4918-bcd9-85ce5f04e456'); } );</script></div><span id="AM5"></span><!--[MOD5]--><span id="MOD5"></span><p><span id="ref77727"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/hillslope" class="md-crosslink">Slopes</a> stay in place because the downward pull of gravity is countered by forces of cohesion and friction between particles. Various changes may upset the balance between these forces, precipitating a slide; in particular, an increase in the amount of water borne in the soil of a slope may drastically reduce cohesion and friction. The stability of slopes is graded such that 1.0 indicates forces exactly balanced, 2.0 signifies that the forces of stability are twice as great as those tending toward movement, etc. A slope with a reading of less than 1.0 is collapsing. The banks of dams, highway cuts, and railway cuts are designed to certain standards of stability as measured by this scale. Stability may be increased by draining, gradient leveling, compacting, or reinforcing the slope with injections of cement. In <span id="ref77728"></span><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/technology/dam-engineering" class="md-crosslink">dam</a> construction an impermeable core is used to prevent excess seepage of water from lowering stability, while the slopes consist of permeable material that buffers the weight of water along the dam.</p><!--[P6]--><!--[AM6]--><span id="AM6"></span><!--[MOD6]--><span id="MOD6"></span><p>Soil mechanics, by examination of the subgrade of roads and highways, helps to determine which type of pavement (rigid or flexible) will last longer. The study of soil characteristics is also used to decide the most suitable method for excavating underground tunnels.</p><!--[P7]--><!--[AM7]--><span id="AM7"></span><!--[MOD7]--><span id="MOD7"></span></section>
+
+
+
+
+
+
+<!--[END-OF-CONTENT]--><div class="md-learn-more extra-content" data-module="learn-more" data-value="learn-more">
+
+        <h2>Learn More <span>in these related Britannica articles:</span></h2>
+        <ul>
+
+            <li class="entry">
+                    <a href="/web/20191209154903/https://www.britannica.com/technology/tunnel/Tunneling-techniques#ref671192">
+                        <div class="image-wrapper text-center">
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        <img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/s:180x120,c:crop/45/3645-004-B3D6202A/Tunnel-terminology.jpg" alt="Tunnel terminology."/>
+    
+
+</div>
+                        <div class="title line-clamp"><strong>tunnels and underground excavations: Rock support</strong></div>
+                        <div class="description line-clamp">Terzaghi, the founder of soil mechanics, and Josef Stini, a pioneer in engineering geology. The support load is greatly increased by factors weakening the rock mass, particularly blasting damage. Furthermore, if a delay in placing support allows the zone of rock loosening to propagate upward (<e>i.e.,</e> rock falls from…</div>
+                    </a>
+                </li>
+
+            <li class="entry">
+                    <a href="/web/20191209154903/https://www.britannica.com/science/mechanics-of-solids/Continuum-plasticity-theory#ref611572">
+                        <div class="image-wrapper text-center">
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        <img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/s:180x120,c:crop/01/2501-004-36E343DA/position-vector-velocity-v-material-point-element.jpg" alt="Figure 1: The position vector  x  and the velocity vector  v  of a material point, the body force fdV acting on an element dV of volume, and the surface force TdS acting on an element dS of surface in a Cartesian coordinate system 1, 2, 3 (see text)."/>
+    
+
+</div>
+                        <div class="title line-clamp"><strong>mechanics of solids: Continuum plasticity theory</strong></div>
+                        <div class="description line-clamp">…on the frictional yielding of soils under shear and normal stress has been mentioned; yielding denotes the occurrence of large shear deformations without significant increase in applied stress. His results were used to explain the pressure of soils against retaining walls and footings in the work of the French mathematician…</div>
+                    </a>
+                </li>
+
+            <li class="entry">
+                    <a href="/web/20191209154903/https://www.britannica.com/technology/harbor/Sea-works-for-transportation#ref592914">
+                        <div class="image-wrapper text-center">
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        <img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/s:180x120,c:crop/84/114584-004-E624BA53/Yachting-harbour-Lorient-France.jpg" alt="Lorient"/>
+    
+
+</div>
+                        <div class="title line-clamp"><strong>harbours and sea works: Gravity walls</strong></div>
+                        <div class="description line-clamp">In particularly unfavourable or unstable soils, accidents caused by collapse of the excavation were not unknown.…</div>
+                    </a>
+                </li>
+
+            </ul>
+
+    </div><div class="marketing-TOPIC_NEWSLETTER_MODULE marketing-content" data-marketing-id="TOPIC_NEWSLETTER_MODULE"><div class="newsletter-c odt-newsletter-form ">
+    <div class="md-demystified-promo-slim md-alternate">
+        <div class="md-flag">
+	    <img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/marketing/newsletter-icon-white-SM.png" alt="newsletter icon"/>
+        </div>
+	<div class="gutter-right">
+	    <div class="md-flag-offset pt-10">
+	         <div class="md-heading-2  text-uppercase text-primary">
+		    History at your fingertips			
+                </div>
+	    </div>
+     	    <div class="form-container">
+                <div class="newsletter-form-container">
+
+    <form class="newsletter-form" method="post" action="/web/20191209154903/https://www.britannica.com/newsletter-subscription/EB_ON_THIS_DAY">
+
+		<div class="my-10">Sign up here to see what happened <span class="text-600 text-purple">On This Day</span>, every day in your inbox!</div>
+        <div class="newsletter-form-inner-wrap">
+            <div class="newsletter-form-email-wrap">
+                <input type="email" name="email" class="form-control" placeholder="Email address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+            </div>
+
+            <div class="newsletter-form-submit-wrap">
+                <input type="submit" class="md-button md-primary md-button-sm" value="Submit"/>
+            </div>
+        </div> 
+        
+        <div class="mt-15">By signing up, you agree to our <a href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/privacy-policy" target="_blank">Privacy Notice</a>.</div>
+        <input type="hidden" name="source" value="Bio"/><input type="hidden" name="campaign" value="Mendel"/><input type="hidden" name="medium" value="box"/></form>
+
+    <div class="md-subscribed hidden">
+       <div class="my-10">Thank you for subscribing!</div>
+       <div>Be on the lookout for your Britannica newsletter to get trusted stories delivered right to your inbox.</div>
+    </div>
+
+</div>	
+            </div>
+        </div>
+    </div>
+</div>
+</div><!--[AFTER-ARTICLE]-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+    <aside class="grid-xs-da-300" data-page="1">
+
+        <div class="rr-module rr-module-1">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+	
+
+
+
+
+
+
+<div class="marketing-RIGHT_RAIL_MODULE marketing-content" data-marketing-id="RIGHT_RAIL_MODULE"><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/explore/space" target="_blank">
+	<img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/marketing/space/Space-2-SpaceJunk-300x90_1.jpg" alt="SpaceNext50" class="mb-30"/>
+</a></div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="rr-module rr-module-2">
+                <div style="min-width: 300px; min-height: 250px" data-info="{&quot;tagName&quot;:&quot;DESKTOP&quot;,&quot;divId&quot;:&quot;2f6fdacb-a4e4-48df-8a02-e8521e20d95e&quot;,&quot;pos&quot;:&quot;TOP&quot;,&quot;desktopSize&quot;:{&quot;width&quot;:300,&quot;height&quot;:250},&quot;desktopBlocktroughId&quot;:&quot;5b28670719-187&quot;}" data-targeting="{&quot;ARTICLE&quot;:&quot;552695&quot;,&quot;CAT&quot;:&quot;science technology,science math&quot;,&quot;TEMPLATE&quot;:&quot;2&quot;}" data-pos="TOP" id="div-gpt-ad-2f6fdacb-a4e4-48df-8a02-e8521e20d95e" class="google-ad-iframe ui-hide-on-modal  middle-xs center-xs TOP">
+			<script>googletag.cmd.push( function() { googletag.display( 'div-gpt-ad-2f6fdacb-a4e4-48df-8a02-e8521e20d95e' ); } );</script>
+		</div>
+		
+			
+			
+				<span class="btx" data-id="5b28670719-187">
+				<span class="bt-uid-tg" uid="5b28670719-187" style="display:none !important"></span>
+				</span>
+
+<div class="md-events-box md-content-module-right imars-xml-OTHER_INFO">
+    <div class="fact-box">
+        <div class="title">Soil mechanics</div>
+<div class="fact-box-details md-striped">
+			<dl data-label="key people"><dt class="fact-list">key people</dt><dd><ul><li><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/biography/Karl-Anton-von-Terzaghi">Karl Terzaghi</a></li></ul></dd></dl> <dl data-label="related topics"><dt class="fact-list">related topics</dt><dd><ul><li><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/mechanics">Mechanics</a></li> <li><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/soil">Soil</a></li> <li><a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/science/consolidation-soil-mechanics">Consolidation</a></li></ul></dd></dl></div>
+
+        </div>
+
+
+    </div>
+
+</div><div class="rr-module rr-module-3">
+                <div class="md-content-module-right right-rail-ad">
+
+	<div style="min-width: 300px; min-height: 250px" data-info="{&quot;tagName&quot;:&quot;DESKTOP&quot;,&quot;divId&quot;:&quot;66ac85e5-b743-4b46-a208-b9575a764dca&quot;,&quot;pos&quot;:&quot;BOT&quot;,&quot;desktopSize&quot;:{&quot;width&quot;:300,&quot;height&quot;:250},&quot;desktopBlocktroughId&quot;:&quot;5b2866624d-187&quot;}" data-targeting="{&quot;ARTICLE&quot;:&quot;552695&quot;,&quot;CAT&quot;:&quot;science technology,science math&quot;,&quot;TEMPLATE&quot;:&quot;2&quot;}" data-pos="BOT" id="div-gpt-ad-66ac85e5-b743-4b46-a208-b9575a764dca" class="google-ad-iframe ui-hide-on-modal  middle-xs center-xs BOT">
+			<script>googletag.cmd.push( function() { googletag.display( 'div-gpt-ad-66ac85e5-b743-4b46-a208-b9575a764dca' ); } );</script>
+		</div>
+		
+			
+			
+				<span class="btx" data-id="5b2866624d-187">
+				<span class="bt-uid-tg" uid="5b2866624d-187" style="display:none !important"></span>
+				</span>
+
+</div></div><div class="rr-module rr-module-4">
+                <div class="md-content-module-right right-rail-ad">
+
+	<div style="min-width: 300px; min-height: 600px" data-info="{&quot;tagName&quot;:&quot;DESKTOP&quot;,&quot;divId&quot;:&quot;3a2f880e-cbd5-4aab-8783-1f91a9f3f45b&quot;,&quot;pos&quot;:&quot;FLEX&quot;,&quot;desktopSize&quot;:{&quot;width&quot;:300,&quot;height&quot;:600},&quot;desktopBlocktroughId&quot;:&quot;5b28668232-187&quot;}" data-targeting="{&quot;ARTICLE&quot;:&quot;552695&quot;,&quot;CAT&quot;:&quot;science technology,science math&quot;,&quot;TEMPLATE&quot;:&quot;2&quot;}" data-pos="FLEX" id="div-gpt-ad-3a2f880e-cbd5-4aab-8783-1f91a9f3f45b" class="google-ad-iframe ui-hide-on-modal  middle-xs center-xs FLEX">
+			<script>googletag.cmd.push( function() { googletag.display( 'div-gpt-ad-3a2f880e-cbd5-4aab-8783-1f91a9f3f45b' ); } );</script>
+		</div>
+		
+			
+			
+				<span class="btx" data-id="5b28668232-187">
+				<span class="bt-uid-tg" uid="5b28668232-187" style="display:none !important"></span>
+				</span>
+
+</div></div></aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+		
+		<div style="min-width: 728px; min-height: 90px" data-info="{&quot;tagName&quot;:&quot;DESKTOP&quot;,&quot;divId&quot;:&quot;73bc2382-9cc8-4614-9c1a-c73cab5fd8fe&quot;,&quot;pos&quot;:&quot;BOT&quot;,&quot;desktopSize&quot;:{&quot;width&quot;:728,&quot;height&quot;:90},&quot;desktopBlocktroughId&quot;:&quot;5b28667921-187&quot;}" data-targeting="{&quot;ARTICLE&quot;:&quot;552695&quot;,&quot;CAT&quot;:&quot;science technology,science math&quot;,&quot;TEMPLATE&quot;:&quot;2&quot;}" data-pos="BOT" id="div-gpt-ad-73bc2382-9cc8-4614-9c1a-c73cab5fd8fe" class="google-ad-iframe ui-hide-on-modal grid-break middle-xs center-xs BOT">
+			<script>googletag.cmd.push( function() { googletag.display( 'div-gpt-ad-73bc2382-9cc8-4614-9c1a-c73cab5fd8fe' ); } );</script>
+		</div>
+		
+			
+			
+				<span class="btx" data-id="5b28667921-187">
+				<span class="bt-uid-tg" uid="5b28667921-187" style="display:none !important"></span>
+				</span>
+			
+		
+		
+	
+</div></div>
+
+
+                    </div>
+
+            </div>
+
+            <div class="md-additional-info-modal p-10">
+			    <div class="header p-15">
+			        <div class="font-18 lh-lg">Soil mechanics</div>
+			        <div class="text-uppercase font-12">Additional Information</div>
+			    </div>
+			    <div class="body px-15 pb-25">
+			        <div class="blue-border mt-25">
+			            <div class="md-info-accordion">
+
+		<h2 class="md-accordion-item-title no-ad sticky-events" id="accordion-more-about" data-additional-content-id="11">
+				<a href="#" data-url="/web/20191209154903/https://www.britannica.com/ajax/topic/552695/additional-content/11">More About</a>
+			</h2>
+			<div class="md-accordion-item-content content accordion-additional-content">
+				</div>
+		<h2 class="md-accordion-item-title no-ad sticky-events" id="accordion-external-websites">
+				<a href="#">External Websites</a>
+			</h2>
+			<div class="md-accordion-item-content content accordion-websites md-loaded">
+				<div class="md-websites-ebk-title">Britannica Websites</div>
+        <div class="md-websites-ebk-subtitle">Articles from Britannica Encyclopedias for elementary and high school students.</div>
+
+        <ul class="bps-topic-web-sites">
+            <li><a class="external" href="https://web.archive.org/web/20191209154903/https://kids.britannica.com/students/article/Soil-mechanics/336849" target="_blank">Soil mechanics - Student Encyclopedia (Ages 11 and up)</a></li>
+            </ul>
+
+    </div>
+		<h2 class="md-accordion-item-title no-ad sticky-events" id="accordion-article-history">
+				<a href="#" data-url="/web/20191209154903/https://www.britannica.com/ajax/topic/552695/history">Article History</a>
+			</h2>
+			<div class="md-accordion-item-content content accordion-history">
+				</div>
+		</div>
+
+</div>
+			    </div>
+			</div>
+
+		</article></div>
+
+		<button class="js-load-next-article md-button md-primary layout-column text-uppercase pb-0 px-100 my-50 mx-auto">
+				Load Next Article
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons md-36" data-icon="keyboard_arrow_down"></em>
+	
+	
+
+</button>
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons js-loading-article-spinner ui-spin middle-xs center-xs text-blue font-36 d-none my-50" data-icon="brightness_low"></em>
+	
+	
+
+<div class="infinite-end p-5 text-center bg-green text-white d-none">
+				<em class="material-icons" data-icon="check"></em>
+			</div></div>
+
+    </div>
+
+</main>
+
+    <script type="text/javascript">
+!function(n){if(!window.cnx){window.cnx={},window.cnx.cmd=[];var t=n.createElement('iframe');t.display='none',t.onload=function(){var n=t.contentWindow.document;c=n.createElement('script'),c.src='//web.archive.org/web/20191209154903/https://cd.connatix.com/connatix.player.js',c.setAttribute('async','1'),c.setAttribute('type','text/javascript'),n.body.appendChild(c)},n.head.appendChild(t)}}(document);
+</script><div id="abDet">
+        <div class="adBanner"></div>
+    </div>
+
+    <footer id="md-footer" class="footer-wrapper hide-on-edit">
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="footer-bck">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+	
+
+
+
+
+
+
+<div class="marketing-FOOTER_NEWSLETTER marketing-content" data-marketing-id="FOOTER_NEWSLETTER"><div class="md-footer-newsletter-form pt-10 mb-30 mx-15 mx-sm-120">
+   <div class="font-18">
+      <strong>Inspire your inbox &ndash;</strong>
+      Sign up for daily fun facts about this day in history, updates, and special offers.
+   </div>
+   <div class="p-30">
+      <div class="newsletter-form-container">
+
+    <form class="newsletter-form" method="post" action="/web/20191209154903/https://www.britannica.com/newsletter-subscription/EB_ON_THIS_DAY">
+
+        <div class="form-group grid no-gutter center-xs">
+            <div class="grid-sm-50 grid-xs-100">
+                <input type="email" name="email" class="form-control font-18 p-10" placeholder="Enter your email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+            </div>
+            <div class="grid-sm-shrink grid-xs-100">
+                <button type="submit" class="md-button md-primary" style="width: 100%;">Subscribe</button>
+            </div>
+        </div>
+        <div class="text-white pt-30 text-opacity">
+            By signing up for this email, you are agreeing to news, offers, and information from Encyclopaedia Britannica.<br>
+            Click here to view our <a class="text-white text-underscore" href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/privacy-policy" target="_blank" rel="nofollow">Privacy Notice</a>. Easy unsubscribe links are provided in every email.
+        </div>
+
+        <input type="hidden" name="source" value="Footer"/><input type="hidden" name="campaign" value="Mendel"/><input type="hidden" name="medium" value="Box"/></form>
+
+    <div class="md-subscribed hidden text-white">
+       <div class="my-10">Thank you for subscribing!</div>
+       <div>Be on the lookout for your Britannica newsletter to get trusted stories delivered right to your inbox.</div>
+    </div>
+
+</div>
+   </div>
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+    
+    
+
+
+
+    
+    
+    
+        
+    
+
+
+
+
+
+
+<div class="md-social-toolbar-circle center-xs colored" data-value="connect">
+    
+        <div class="share-label hidden-xs">Stay Connected</div>
+    
+    
+        <a class="ui-icon-facebook center-xs middle-xs" data-provider="facebook" href="https://web.archive.org/web/20191209154903/https://www.facebook.com/BRITANNICA/" target="_blank"><span>Facebook</span></a>
+    
+    
+        <a class="ui-icon-twitter center-xs middle-xs" data-provider="twitter" href="https://web.archive.org/web/20191209154903/https://twitter.com/britannica" target="_blank"><span>Twitter</span></a>
+    
+    
+        <a class="ui-icon-youtube-play center-xs middle-xs" data-provider="youtube" href="https://web.archive.org/web/20191209154903/https://www.youtube.com/c/encyclopaediabritannica" target="_blank"><span>YouTube</span></a>
+    
+    
+        <a class="ui-icon-instagram center-xs middle-xs" data-provider="instagram" href="https://web.archive.org/web/20191209154903/https://www.instagram.com/britannica/" target="_blank"><span>Instagram</span></a>
+    
+    
+    
+        <a class="ui-icon-pinterest center-xs middle-xs" data-provider="pinterest" href="https://web.archive.org/web/20191209154903/https://www.pinterest.com/britannica/" target="_blank"><span>Pinterest</span></a>
+    
+    
+        <a class="ui-icon center-xs middle-xs" href="https://web.archive.org/web/20191209154903/https://cloud.email.britannica.com/PreferenceCenter" title="Newsletters" target="_blank">
+            <em class="material-icons" data-icon="drafts"><span>Newsletters</span></em>
+        </a>
+    
+    
+</div>
+
+<br/>
+            <ul class="md-footer-slim">
+            <li><a href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/" target="_blank">About Us</a></li>
+            <li><a href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/privacy-policy" target="_blank" rel="nofollow">About Our Ads</a></li>
+            <li><a href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/publishing-partner-program/" target="_blank" rel="nofollow">Partner Program</a></li>
+            <li><a href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/contact/" target="_blank" rel="nofollow">Contact Us</a></li>
+            <li><a href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/privacy-policy" target="_blank" rel="nofollow">Privacy Notice</a></li>
+            <li><a href="https://web.archive.org/web/20191209154903/https://corporate.britannica.com/termsofuse.html" target="_blank" rel="nofollow">Terms of Use</a></li>
+        </ul>
+        <br/>
+        &copy;2019 Encyclop&aelig;dia Britannica, Inc.
+    </div>
+
+</footer>
+<div class="navigation-bar flex middle-xs visible-xs">
+    <div class="grid no-gutter">
+
+        <div class="main-tools visible-xs grid-xs">
+            <div data-layout-xs="row">
+                <div class="md-logo md-nav-item middle-xs d-none d-flex-sm">
+                    <a href="/web/20191209154903/https://www.britannica.com/">
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/mendel/250-anniversary/thistle-gradient-half.png" alt="250 thistle logo"/>
+</a>
+                </div>
+
+                <div class="md-nav-item menu" data-popover=".menu-popover">
                     
-                    <li><a href="https://arxiv.org/login">Login</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="menu"></em>
+	
+	
+
+<div class="title hidden-xs">Menu</div>
+                </div>
+
+                <div class="middle-xs">
+                    <a href="/web/20191209154903/https://www.britannica.com/" class="font-logotype d-none-sm text-white font-22">
+                        BRITANNICA
+                    </a>
+                </div>
+
+                <div class="menu-popover md-popover text-left" data-clear="true">
+                    <div class="popover-body">
+                        <ul>
+                            <li><a href="/web/20191209154903/https://www.britannica.com/">Home</a></li>
+                            <li><a class="dem" href="/web/20191209154903/https://www.britannica.com/stories/demystified">Demystified</a></li>
+                            <li><a href="/web/20191209154903/https://www.britannica.com/quiz/browse">Quizzes</a></li>
+                            <li><a href="/web/20191209154903/https://www.britannica.com/stories/wtfact">#WTFact</a></li>
+                            <li><a href="/web/20191209154903/https://www.britannica.com/list/browse">Lists</a></li>
+                            <li><a href="/web/20191209154903/https://www.britannica.com/on-this-day">On This Day</a></li>
+                            <li><a href="/web/20191209154903/https://www.britannica.com/biographies">Biographies</a></li>
+                            <li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="marketing-NAVBAR marketing-content" data-marketing-id="NAVBAR"><a href="/web/20191209154903/https://www.britannica.com/explore">Explore</a></span>
+
+</li>
+                            <li>
+                                <hr>
+                            </li>
+                            <li><strong><a href="#" class="login-link">Login</a></strong></li>
+                                    <li><strong><a href="#" class="signup-link">Join</a></strong></li>
+                                </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="additional-tools grid-xs-shrink center-xs middle-xs">
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="md-nav-item modal-search">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="search"></em>
+	
+	
+
+<div class="navigation-modal-search ui-hidden text-left">
+                    <div class="search-area grid no-gutter middle-xs p-10">
+                        <div class="grid-xs-shrink">
+                            <span class="search">
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="search"></em>
+	
+	
+
+</span>
+                        </div>
+                        <div class="grid-xs">
+                            <form action="/web/20191209154903/https://www.britannica.com/search">
+                                <label class="sr-only" for="navbar-search-mobile">Search</label>
+                                <input name="query" class="form-control" id="navbar-search-mobile" placeholder="Search Britannica...">
+                            </form>
+                        </div>
+                        <div class="grid-xs-shrink">
+                            <span class="close">
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		<em class="material-icons " data-icon="close"></em>
+	
+	
+
+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loginbox-dialog" class="ui-hidden">
+	<div class="mobile-loginbox-dialog-close">×</div>
+    <div id="loginbox-dialog-iframe-container"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+		
+	
+
+
+
+
+
+
+<div class="marketing-SLIDER marketing-slider" data-marketing-id="SLIDER" data-name="SLIDER" data-duration="14"><button class="close-btn material-icons p-10">close</button><style>
+.marketing-slider .close-btn {
+  color: white;
+}
+
+.marketing-slider .preview {
+    background-color: #064566;
+    color: white;
+
+}
+
+.marketing-slider .preview .orange-circle {
+    background-color: #064566;
+    border-radius: 100%;
+    height: 250px;
+    position: absolute;
+    right: 180px;
+    top: -80px;
+    width: 250px;
+}
+
+.marketing-slider .preview .orange-circle img {
+    opacity: 0.7;
+    width: 130px;
+}
+
+.marketing-slider .offer .md-button-gradient {
+   font-size: 12px;
+   background:#F87307; 
+}
+
+</style>
+
+<div class="preview">
+
+<div class="p-15 pl-80">
+   Are we living through a mass extinction? 
+   <div class="orange-circle end-xs middle-xs">
+      <img loading="lazy" src="https://web.archive.org/web/20191209154903im_/https://cdn.britannica.com/marketing/thistle-white.svg" class="mt-50 mr-15"/>
+   </div>
+</div>
+
+</div><div class="offer">
+
+<div>
+<a href="https://web.archive.org/web/20191209154903/https://www.britannica.com/explore/savingearth/postcards-from-the-6th-mass-extinction/" target="_blank">
+   <img src="https://web.archive.org/web/20191209154903im_/https://safe.britannica.com/safeimages/Audio_Series_Slider.jpg" alt="The 6th Mass Extinction"/>
+</a>
+</div>
+
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="//web.archive.org/web/20191209154903js_/https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write('<script src="/resources/js/libs/jquery-3.4.1.min.js"><\/script>');</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" data-name="vwo">
+		
+var _vwo_clicks = 30;
+var _vwo_code=(function(){
+var account_id=331471,
+settings_tolerance=2000,
+library_tolerance=2500,
+use_existing_jquery=false,
+f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);this.load('//web.archive.org/web/20191209154903/https://dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+<script type="text/javascript" src="https://web.archive.org/web/20191209154903js_/https://a.optmnstr.com/app/js/api.min.js" data-account="62791" data-user="55795" async></script>
+<script src="//web.archive.org/web/20191209154903js_/https://content.jwplatform.com/libraries/RVHVXRYp.js"></script>
+<script src="https://web.archive.org/web/20191209154903js_/https://middycdn-a.akamaihd.net/bootstrap/bootstrap.js" id="browsi-tag" data-pubkey="merriamwebster" data-sitekey="britannica"></script><script type="text/javascript" data-type="Init Mendel Code Splitting">
+              (function() {
+                $.ajax({
+                  dataType: 'script',
+                  cache: true,
+                  url: '/resources/dist/topic-page.js?v=3.25.10'
+                });
+              })();
+            </script>
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" data-name="google_gtag_script" src="https://web.archive.org/web/20191209154903js_/https://www.googletagmanager.com/gtag/js?id=UA-6636134-11" async>
+		
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" data-name="google_analytics">
+		
+        function gaPageLoad(pathname, documentLocation) {
+            var pathname = pathname || location.pathname;
+            var documentLocation = documentLocation || document.querySelector('html').getAttribute('data-ytrk-page');
+
+            if (documentLocation) {
+                documentLocation = documentLocation.replace(/ /g, '/');
+                window.dataLayer = window.dataLayer || [];
+
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+
+                gtag('js', new Date());
+
+                gtag('set', {
+                    'dimension1': 'ANONYMOUS',
+                    'dimension2': 'B',
                     
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
+                            'dimension3': 'false',
+                        
+                });
 
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2201.05125"
-        dc:identifier="/abs/2201.05125"
-        dc:title="GradMax: Growing Neural Networks using Gradient Information"
-        trackback:ping="/trackback/2201.05125" />
-    </rdf:RDF>
--->
-<div id="abs-outer">
-  
+                gtag('config', 'UA-6636134-11', {
+                    'page_path': documentLocation + pathname + decodeURI(location.search),
+                    'link_attribution': true,
+                });
+                
 
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Machine Learning</h1>
-    </div>
 
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2201.05125</strong> (cs)
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+        }
+
+        gaPageLoad();
     
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
+	</script>
 
+<script type="text/javascript">
+    EBStat={accountId:-1,host:'www.britannica.com',domain:'www.britannica.com'};
+    </script>
 
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 13 Jan 2022 (<a href="https://arxiv.org/abs/2201.05125v1">v1</a>), last revised 23 Feb 2022 (this version, v2)]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>GradMax: Growing Neural Networks using Gradient Information</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Evci%2C+U">Utku Evci</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=van+Merri%C3%ABnboer%2C+B">Bart van Merriënboer</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Unterthiner%2C+T">Thomas Unterthiner</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Vladymyrov%2C+M">Max Vladymyrov</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Pedregosa%2C+F">Fabian Pedregosa</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2201.05125">Download PDF</a>
-  
-
-  
     
 
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  The architecture and the parameters of neural networks are often optimized
-independently, which requires costly retraining of the parameters whenever the
-architecture is modified. In this work we instead focus on growing the
-architecture without requiring costly retraining. We present a method that adds
-new neurons during training without impacting what is already learned, while
-improving the training dynamics. We achieve the latter by maximizing the
-gradients of the new weights and find the optimal initialization efficiently by
-means of the singular value decomposition (SVD). We call this technique
-Gradient Maximizing Growth (GradMax) and demonstrate its effectiveness in
-variety of vision tasks and architectures.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata">
-        <tr>
-          <td class="tablecell label">Comments:</td>
-          <td class="tablecell comments mathjax">ICLR 2022</td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Machine Learning (cs.LG)</span>; Computer Vision and Pattern Recognition (cs.CV)</td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2201.05125">arXiv:2201.05125</a> [cs.LG]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2201.05125v2">arXiv:2201.05125v2</a> [cs.LG]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2201.05125">https://doi.org/10.48550/arXiv.2201.05125</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Journal&nbsp;reference:</td>
-          <td class="tablecell jref">International Conference on Learning Representations, 2022</td>
-        </tr>
-        </table>
-    </div>
-  </div>
-</div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Utku Evci [<a href="/show-email/5d9ca5b7/2201.05125">view email</a>]
-      <br/>
-  <strong><a href="/abs/2201.05125v1">[v1]</a></strong>
-  Thu, 13 Jan 2022 18:30:18 UTC (5,069 KB)<br/><strong>[v2]</strong>
-Wed, 23 Feb 2022 00:42:09 UTC (5,069 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2201.05125" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2201.05125" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.LG</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2201.05125&amp;function=prev&amp;context=cs.LG"
-         accesskey="p" title="previous in cs.LG (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2201.05125&amp;function=next&amp;context=cs.LG" accesskey="n"
-         title="next in cs.LG (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.LG/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.LG/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.LG/2201">2201</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2201.05125?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-        <a class="subclass" href="/abs/2201.05125?context=cs.CV">cs.CV</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2201.05125">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2201.05125" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2201.05125" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2201.html#abs-2201-05125" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2201-05125" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Utku%20Evci" title="DBLP author search">Utku Evci</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Max%20Vladymyrov" title="DBLP author search">Max Vladymyrov</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Thomas%20Unterthiner" title="DBLP author search">Thomas Unterthiner</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Bart%20van%20Merri%C3%ABnboer" title="DBLP author search">Bart van Merriënboer</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Fabian%20Pedregosa" title="DBLP author search">Fabian Pedregosa</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
-
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.05125%26description%3DGradMax%3A+Growing+Neural+Networks+using+Gradient+Information&amp;v=d2357273"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.05125&amp;v=b7f57a40"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.05125%26title%3DGradMax%3A+Growing+Neural+Networks+using+Gradient+Information&amp;v=3fd03c71"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.05125&amp;v=513cced3"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
-
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
 
 
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
-
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
 
 
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
 
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
 
-  </div>
-</div>
-<!-- END LABS AREA -->
 
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2201.05125" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
 
-      </div>
-    </main>
 
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" data-name="webstats">
+		
+            ( function() {
+                $.ajax( { dataType: 'script', cache: true, url: '//web.archive.org/web/20191209154903/https://www.britannica.com/webstats/mendelstats.js?v=1' } )
+                 .done( function() {
+                     try {writeStat(null,{accountId:-1,hostnameOverride:'www.britannica.com',domain:'www.britannica.com', json:''});}
+                     catch(err){}
+                 } );
+            })();
+            
+	</script>
+
 </body>
+</html><!--
+     FILE ARCHIVED ON 15:49:03 Dec 09, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:13:42 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
-</html>
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 259.927
+  exclusion.robots: 0.404
+  exclusion.robots.policy: 0.386
+  RedisCDXSource: 1.232
+  esindex: 0.016
+  LoadShardBlock: 220.935 (3)
+  PetaboxLoader3.resolve: 212.367 (4)
+  PetaboxLoader3.datanode: 46.48 (4)
+  CDXLines.iter: 33.541 (3)
+  load_resource: 110.654
+-->

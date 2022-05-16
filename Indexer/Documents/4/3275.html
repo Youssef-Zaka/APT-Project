@@ -1,883 +1,1695 @@
 <!DOCTYPE html>
-<html class="logged-out-marketing-header-candidate" lang="en">
-<head prefix="og: http://ogp.me/ns#">
-<meta charset="utf-8">
-<title>mwtitle/src/php.rs · mwtitle-0.1.0 · mwbot-rs / mwbot · GitLab</title>
-<link rel="preload" href="/assets/application_utilities-87eb4cb090918257fc7d9862c047538ec6ea994b55759ccbe7d959bd73137b73.css" as="style" type="text/css" nonce="cSo89VmXc32WQhjqFo7ofQ==">
-<link rel="preload" href="/assets/application-65e2df8ed011fa750c4d6a7be6f58560637c7569c4533e56a606d6b367c1373e.css" as="style" type="text/css" nonce="cSo89VmXc32WQhjqFo7ofQ==">
-<link rel="preload" href="/assets/highlight/themes/white-6352e0f5eb4851393faf9b9b85a5e6177a64d4062840e9a3a1db5b9e3da8a007.css" as="style" type="text/css" nonce="cSo89VmXc32WQhjqFo7ofQ==">
-<link crossorigin="" href="https://snowplow.trx.gitlab.net" rel="preconnect">
-
-<meta content="IE=edge" http-equiv="X-UA-Compatible">
-
-<link rel="prefetch" href="/assets/webpack/monaco.98205d1e.chunk.js">
-<link rel="shortcut icon" type="image/png" href="/assets/favicon-72a2cad5025aa931d6ea56c3201d1f18e68a8cd39788c7c80d5b2b82aa5143ef.png" id="favicon" data-original-href="/assets/favicon-72a2cad5025aa931d6ea56c3201d1f18e68a8cd39788c7c80d5b2b82aa5143ef.png" />
-<style>
-@keyframes blinking-dot{0%{opacity:1}25%{opacity:0.4}75%{opacity:0.4}100%{opacity:1}}@keyframes blinking-scroll-button{0%{opacity:0.2}50%{opacity:1}100%{opacity:0.2}}@keyframes gl-spinner-rotate{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}body.ui-indigo{--gl-theme-accent: #6666c4}body.ui-indigo .navbar-gitlab{background-color:#292961}body.ui-indigo .navbar-gitlab .navbar-collapse{color:#d1d1f0}body.ui-indigo .navbar-gitlab .container-fluid .navbar-toggler{border-left:1px solid #6868b9;color:#d1d1f0}body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>a:hover,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>a:focus,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>button:hover,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>button:focus,body.ui-indigo .navbar-gitlab .navbar-nav>li>a:hover,body.ui-indigo .navbar-gitlab .navbar-nav>li>a:focus,body.ui-indigo .navbar-gitlab .navbar-nav>li>button:hover,body.ui-indigo .navbar-gitlab .navbar-nav>li>button:focus{background-color:rgba(209,209,240,0.2)}body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.active>a,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.active>button,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.dropdown.show>a,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.dropdown.show>button,body.ui-indigo .navbar-gitlab .navbar-nav>li.active>a,body.ui-indigo .navbar-gitlab .navbar-nav>li.active>button,body.ui-indigo .navbar-gitlab .navbar-nav>li.dropdown.show>a,body.ui-indigo .navbar-gitlab .navbar-nav>li.dropdown.show>button{color:#292961;background-color:#fff}body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.line-separator,body.ui-indigo .navbar-gitlab .navbar-nav>li.line-separator{border-left:1px solid rgba(209,209,240,0.2)}body.ui-indigo .navbar-gitlab .navbar-sub-nav{color:#d1d1f0}body.ui-indigo .navbar-gitlab .nav>li{color:#d1d1f0}body.ui-indigo .navbar-gitlab .nav>li.header-search-new{color:#303030}body.ui-indigo .navbar-gitlab .nav>li>a .notification-dot{border:2px solid #292961}body.ui-indigo .navbar-gitlab .nav>li>a.header-help-dropdown-toggle .notification-dot{background-color:#d1d1f0}body.ui-indigo .navbar-gitlab .nav>li>a.header-user-dropdown-toggle .header-user-avatar{border-color:#d1d1f0}@media (min-width: 576px){body.ui-indigo .navbar-gitlab .nav>li>a:hover,body.ui-indigo .navbar-gitlab .nav>li>a:focus{background-color:rgba(209,209,240,0.2)}}body.ui-indigo .navbar-gitlab .nav>li>a:hover svg,body.ui-indigo .navbar-gitlab .nav>li>a:focus svg{fill:currentColor}body.ui-indigo .navbar-gitlab .nav>li>a:hover .notification-dot,body.ui-indigo .navbar-gitlab .nav>li>a:focus .notification-dot{will-change:border-color, background-color;border-color:#4a4a82}body.ui-indigo .navbar-gitlab .nav>li>a.header-help-dropdown-toggle:hover .notification-dot,body.ui-indigo .navbar-gitlab .nav>li>a.header-help-dropdown-toggle:focus .notification-dot{background-color:#fff}body.ui-indigo .navbar-gitlab .nav>li.active>a,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a{color:#292961;background-color:#fff}body.ui-indigo .navbar-gitlab .nav>li.active>a:hover svg,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a:hover svg{fill:#292961}body.ui-indigo .navbar-gitlab .nav>li.active>a .notification-dot,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a .notification-dot{border-color:#fff}body.ui-indigo .navbar-gitlab .nav>li.active>a.header-help-dropdown-toggle .notification-dot,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a.header-help-dropdown-toggle .notification-dot{background-color:#292961}body.ui-indigo .navbar-gitlab .nav>li .impersonated-user svg,body.ui-indigo .navbar-gitlab .nav>li .impersonated-user:hover svg{fill:#292961}body.ui-indigo .navbar .title>a:hover,body.ui-indigo .navbar .title>a:focus{background-color:rgba(209,209,240,0.2)}body.ui-indigo .header-search{background-color:rgba(209,209,240,0.2) !important;border-radius:4px}body.ui-indigo .header-search:hover{background-color:rgba(209,209,240,0.3) !important}body.ui-indigo .header-search svg.gl-search-box-by-type-search-icon{color:rgba(209,209,240,0.8)}body.ui-indigo .header-search input{background-color:transparent;color:rgba(209,209,240,0.8);box-shadow:inset 0 0 0 1px rgba(209,209,240,0.4)}body.ui-indigo .header-search input::placeholder{color:rgba(209,209,240,0.8)}body.ui-indigo .header-search input:focus::placeholder,body.ui-indigo .header-search input:active::placeholder{color:#868686}body.ui-indigo .header-search.is-not-active::after{color:#d1d1f0;background-color:rgba(209,209,240,0.2)}body.ui-indigo .search form{background-color:rgba(209,209,240,0.2)}body.ui-indigo .search form:hover{background-color:rgba(209,209,240,0.3)}body.ui-indigo .search .search-input::placeholder{color:rgba(209,209,240,0.8)}body.ui-indigo .search .search-input-wrap .search-icon,body.ui-indigo .search .search-input-wrap .clear-icon{fill:rgba(209,209,240,0.8)}body.ui-indigo .search.search-active form{background-color:#fff}body.ui-indigo .search.search-active .search-input-wrap .search-icon{fill:rgba(209,209,240,0.8)}body.ui-indigo .nav-sidebar li.active>a{color:#303030}body.ui-indigo .nav-sidebar .fly-out-top-item a,body.ui-indigo .nav-sidebar .fly-out-top-item a:hover,body.ui-indigo .nav-sidebar .fly-out-top-item.active a,body.ui-indigo .nav-sidebar .fly-out-top-item .fly-out-top-item-container{background-color:var(--gray-100, #f0f0f0);color:var(--gray-900, #303030)}body.ui-indigo .branch-header-title{color:#4b4ba3}body.ui-indigo .ide-sidebar-link.active{color:#4b4ba3}body.ui-indigo .ide-sidebar-link.active.is-right{box-shadow:inset -3px 0 #4b4ba3}
-
-*,*::before,*::after{box-sizing:border-box}html{font-family:sans-serif;line-height:1.15}aside,header{display:block}body{margin:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#303030;text-align:left;background-color:#fff}h1{margin-top:0;margin-bottom:0.25rem}ul{margin-top:0;margin-bottom:1rem}ul ul{margin-bottom:0}strong{font-weight:bolder}a{color:#007bff;text-decoration:none;background-color:transparent}a:not([href]):not([class]){color:inherit;text-decoration:none}img{vertical-align:middle;border-style:none}svg{overflow:hidden;vertical-align:middle}button{border-radius:0}input,button{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,input{overflow:visible}button{text-transform:none}[role="button"]{cursor:pointer}button:not(:disabled),[type="button"]:not(:disabled){cursor:pointer}button::-moz-focus-inner,[type="button"]::-moz-focus-inner{padding:0;border-style:none}[type="search"]{outline-offset:-2px}h1{margin-bottom:0.25rem;font-weight:600;line-height:1.2;color:#303030}h1{font-size:2.1875rem}.list-unstyled{padding-left:0;list-style:none}.container-fluid{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.form-control{display:block;width:100%;height:34px;padding:0.375rem 0.75rem;font-size:0.875rem;font-weight:400;line-height:1.5;color:#303030;background-color:#fff;background-clip:padding-box;border:1px solid #868686;border-radius:0.25rem}.form-control:-moz-focusring{color:transparent;text-shadow:0 0 0 #303030}.form-control::placeholder{color:#5e5e5e;opacity:1}.form-control:disabled{background-color:#fafafa;opacity:1}.form-inline{display:flex;flex-flow:row wrap;align-items:center}@media (min-width: 576px){.form-inline .form-control{display:inline-block;width:auto;vertical-align:middle}}.btn{display:inline-block;font-weight:400;color:#303030;text-align:center;vertical-align:middle;-webkit-user-select:none;user-select:none;background-color:transparent;border:1px solid transparent;padding:0.375rem 0.75rem;font-size:1rem;line-height:20px;border-radius:0.25rem}.btn:disabled{opacity:0.65}.btn:not(:disabled):not(.disabled){cursor:pointer}.collapse:not(.show){display:none}.dropdown{position:relative}.dropdown-menu{position:absolute;top:100%;left:0;z-index:1000;display:none;float:left;min-width:10rem;padding:0.5rem 0;margin:0.125rem 0 0;font-size:1rem;color:#303030;text-align:left;list-style:none;background-color:#fff;background-clip:padding-box;border:1px solid rgba(0,0,0,0.15);border-radius:0.25rem}.nav{display:flex;flex-wrap:wrap;padding-left:0;margin-bottom:0;list-style:none}.navbar{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:0.25rem 0.5rem}.navbar .container-fluid{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}.navbar-nav{display:flex;flex-direction:column;padding-left:0;margin-bottom:0;list-style:none}.navbar-nav .dropdown-menu{position:static;float:none}.navbar-collapse{flex-basis:100%;flex-grow:1;align-items:center}.navbar-toggler{padding:0.25rem 0.75rem;font-size:1.25rem;line-height:1;background-color:transparent;border:1px solid transparent;border-radius:0.25rem}@media (max-width: 575.98px){.navbar-expand-sm>.container-fluid{padding-right:0;padding-left:0}}@media (min-width: 576px){.navbar-expand-sm{flex-flow:row nowrap;justify-content:flex-start}.navbar-expand-sm .navbar-nav{flex-direction:row}.navbar-expand-sm .navbar-nav .dropdown-menu{position:absolute}.navbar-expand-sm>.container-fluid{flex-wrap:nowrap}.navbar-expand-sm .navbar-collapse{display:flex !important;flex-basis:auto}.navbar-expand-sm .navbar-toggler{display:none}}.badge{display:inline-block;padding:0.25em 0.4em;font-size:75%;font-weight:600;line-height:1;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:0.25rem}.badge:empty{display:none}.btn .badge{position:relative;top:-1px}.badge-pill{padding-right:0.6em;padding-left:0.6em;border-radius:10rem}.badge-success{color:#fff;background-color:#108548}.badge-info{color:#fff;background-color:#1f75cb}.badge-warning{color:#fff;background-color:#ab6100}.bg-transparent{background-color:transparent !important}.rounded-circle{border-radius:50% !important}.d-none{display:none !important}.d-block{display:block !important}@media (min-width: 576px){.d-sm-none{display:none !important}.d-sm-inline-block{display:inline-block !important}}@media (min-width: 768px){.d-md-block{display:block !important}}@media (min-width: 992px){.d-lg-none{display:none !important}.d-lg-block{display:block !important}}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0}.m-auto{margin:auto !important}.gl-badge{display:inline-flex;align-items:center;font-size:0.75rem;font-weight:400;line-height:1rem;padding-top:0.25rem;padding-bottom:0.25rem;padding-left:0.5rem;padding-right:0.5rem}.gl-badge.sm{padding-top:0;padding-bottom:0}.gl-badge.badge-info{background-color:#cbe2f9;color:#0b5cad}a.gl-badge.badge-info.active,a.gl-badge.badge-info:active{color:#033464;background-color:#9dc7f1}a.gl-badge.badge-info:active{box-shadow:0 0 0 1px #fff, 0 0 0 3px #428fdc;outline:none}.gl-badge.badge-success{background-color:#c3e6cd;color:#24663b}a.gl-badge.badge-success.active,a.gl-badge.badge-success:active{color:#0a4020;background-color:#91d4a8}a.gl-badge.badge-success:active{box-shadow:0 0 0 1px #fff, 0 0 0 3px #428fdc;outline:none}.gl-badge.badge-warning{background-color:#f5d9a8;color:#8f4700}a.gl-badge.badge-warning.active,a.gl-badge.badge-warning:active{color:#5c2900;background-color:#e9be74}a.gl-badge.badge-warning:active{box-shadow:0 0 0 1px #fff, 0 0 0 3px #428fdc;outline:none}.gl-button .gl-badge{top:0}.gl-form-input,.gl-form-input.form-control{background-color:#fff;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-size:0.875rem;line-height:1rem;padding-top:0.5rem;padding-bottom:0.5rem;padding-left:0.75rem;padding-right:0.75rem;height:auto;color:#303030;box-shadow:inset 0 0 0 1px #868686;border-style:none;-webkit-appearance:none;appearance:none;-moz-appearance:none}.gl-form-input:disabled,.gl-form-input:not(.form-control-plaintext):not([type="color"]):read-only,.gl-form-input.form-control:disabled,.gl-form-input.form-control:not(.form-control-plaintext):not([type="color"]):read-only{background-color:#fafafa;box-shadow:inset 0 0 0 1px #dbdbdb}.gl-form-input:disabled,.gl-form-input.form-control:disabled{cursor:not-allowed;color:#868686}.gl-form-input::placeholder,.gl-form-input.form-control::placeholder{color:#868686}.gl-icon{fill:currentColor}.gl-icon.s12{width:12px;height:12px}.gl-icon.s16{width:16px;height:16px}.gl-icon.s32{width:32px;height:32px}.gl-link{font-size:0.875rem;color:#1f75cb}.gl-link:active{color:#0b5cad}.gl-link:active{text-decoration:underline;outline:2px solid #428fdc;outline-offset:2px}.gl-button{display:inline-flex}.gl-button:not(.btn-link):active{text-decoration:none}.gl-button.gl-button{border-width:0;padding-top:0.5rem;padding-bottom:0.5rem;padding-left:0.75rem;padding-right:0.75rem;background-color:transparent;line-height:1rem;color:#303030;fill:currentColor;box-shadow:inset 0 0 0 1px #bfbfbf;justify-content:center;align-items:center;font-size:0.875rem;border-radius:0.25rem}.gl-button.gl-button.btn-default{background-color:#fff}.gl-button.gl-button.btn-default:active,.gl-button.gl-button.btn-default.active{box-shadow:inset 0 0 0 1px #5e5e5e, 0 0 0 1px #fff, 0 0 0 3px #428fdc;outline:none;background-color:#dbdbdb}.gl-button.gl-button.btn-default:active .gl-icon,.gl-button.gl-button.btn-default.active .gl-icon{color:#303030}.gl-button.gl-button.btn-default .gl-icon{color:#666}.gl-search-box-by-type-search-icon{margin:0.5rem;color:#666;width:1rem;position:absolute}.gl-search-box-by-type{display:flex;position:relative}.gl-search-box-by-type-input,.gl-search-box-by-type-input.gl-form-input{height:2rem;padding-right:2rem;padding-left:1.75rem}body{font-size:0.875rem}button,html [type="button"],[role="button"]{cursor:pointer}h1{margin-top:20px;margin-bottom:10px}strong{font-weight:bold}a{color:#1068bf}svg{vertical-align:baseline}.form-control,.search form{font-size:0.875rem}.hidden{display:none !important;visibility:hidden !important}.hide{display:none}.badge:not(.gl-badge){padding:4px 5px;font-size:12px;font-style:normal;font-weight:400;display:inline-block}.divider{height:0;margin:4px 0;overflow:hidden;border-top:1px solid #dbdbdb}.toggle-sidebar-button .collapse-text,.toggle-sidebar-button .icon-chevron-double-lg-left{color:#666}html{overflow-y:scroll}body{text-decoration-skip:ink}.btn{border-radius:4px;font-size:0.875rem;font-weight:400;padding:6px 10px;background-color:#fff;border-color:#dbdbdb;color:#303030;color:#303030;white-space:nowrap}.btn:active{background-color:#f0f0f0;box-shadow:none}.btn:active,.btn.active{background-color:#eaeaea;border-color:#e3e3e3;color:#303030}.btn svg{height:15px;width:15px}.btn svg:not(:last-child){margin-right:5px}.badge.badge-pill:not(.gl-badge){font-weight:400;background-color:rgba(0,0,0,0.07);color:#525252;vertical-align:baseline}.gl-font-sm{font-size:12px}.dropdown{position:relative}.search-input-container .dropdown-menu{margin-top:11px}.dropdown-menu-toggle{padding:6px 8px 6px 10px;background-color:#fff;color:#303030;font-size:14px;text-align:left;border:1px solid #dbdbdb;border-radius:0.25rem;white-space:nowrap}.dropdown-menu-toggle.no-outline{outline:0}.dropdown-menu-toggle.dropdown-menu-toggle{justify-content:flex-start;overflow:hidden;padding-right:25px;position:relative;text-overflow:ellipsis;width:160px}.dropdown-menu{display:none;position:absolute;width:auto;top:100%;z-index:300;min-width:240px;max-width:500px;margin-top:4px;margin-bottom:24px;font-size:0.875rem;font-weight:400;padding:8px 0;background-color:#fff;border:1px solid #dbdbdb;border-radius:0.25rem;box-shadow:0 2px 4px rgba(0,0,0,0.1)}.dropdown-menu ul{margin:0;padding:0}.dropdown-menu li{display:block;text-align:left;list-style:none;padding:0 1px}.dropdown-menu li>a,.dropdown-menu li button{background:transparent;border:0;border-radius:0;box-shadow:none;display:block;font-weight:400;position:relative;padding:8px 12px;color:#303030;line-height:16px;white-space:normal;overflow:hidden;text-align:left;width:100%}.dropdown-menu li>a:active,.dropdown-menu li button:active{background-color:#eee;color:#303030;outline:0;text-decoration:none}.dropdown-menu .divider{height:1px;margin:0.25rem 0;padding:0;background-color:#dbdbdb}.dropdown-menu .badge.badge-pill+span:not(.badge):not(.badge-pill){margin-right:40px}@media (max-width: 575.98px){.navbar-gitlab li.dropdown{position:static}.navbar-gitlab li.dropdown.user-counter{margin-left:8px !important}.navbar-gitlab li.dropdown.user-counter>a{padding:0 4px !important}header.navbar-gitlab .dropdown .dropdown-menu{width:100%;min-width:100%}}@media (max-width: 767.98px){.dropdown-menu-toggle.dropdown-menu-toggle{width:100%}}input{border-radius:0.25rem;color:#303030;background-color:#fff}.form-control{border-radius:4px;padding:6px 10px}.form-control::placeholder{color:#868686}.navbar-gitlab{padding:0 16px;z-index:1000;margin-bottom:0;min-height:var(--header-height, 40px);border:0;position:fixed;top:0;left:0;right:0;border-radius:0}.navbar-gitlab .close-icon{display:none}.navbar-gitlab .header-content{width:100%;display:flex;justify-content:space-between;position:relative;min-height:var(--header-height, 40px);padding-left:0}.navbar-gitlab .header-content .title-container{display:flex;align-items:stretch;flex:1 1 auto;padding-top:0;overflow:visible}.navbar-gitlab .header-content .title{padding-right:0;color:currentColor;display:flex;position:relative;margin:0;font-size:18px;vertical-align:top;white-space:nowrap}.navbar-gitlab .header-content .title img{height:24px}.navbar-gitlab .header-content .title img+.logo-text{margin-left:8px}.navbar-gitlab .header-content .title a{display:flex;align-items:center;padding:2px 8px;margin:4px 2px 4px -12px;border-radius:4px}.navbar-gitlab .header-content .title .canary-badge{margin-left:-8px}.navbar-gitlab .header-content .navbar-collapse>ul.nav>li:not(.d-none){margin:0 2px}.navbar-gitlab .navbar-collapse{flex:0 0 auto;border-top:0;padding:0}@media (max-width: 575.98px){.navbar-gitlab .navbar-collapse{flex:1 1 auto}}.navbar-gitlab .navbar-collapse .nav{flex-wrap:nowrap}@media (max-width: 575.98px){.navbar-gitlab .navbar-collapse .nav>li:not(.d-none) a{margin-left:0}}.navbar-gitlab .container-fluid{padding:0}.navbar-gitlab .container-fluid .user-counter svg{margin-right:3px}.navbar-gitlab .container-fluid .navbar-toggler{position:relative;right:-10px;border-radius:0;min-width:45px;padding:0;margin:8px 8px 8px 0;font-size:14px;text-align:center;color:currentColor}.navbar-gitlab .container-fluid .navbar-toggler.active{color:currentColor;background-color:transparent}@media (max-width: 575.98px){.navbar-gitlab .container-fluid .navbar-nav{display:flex;padding-right:10px;flex-direction:row}}.navbar-gitlab .container-fluid .navbar-nav li .badge.badge-pill:not(.gl-badge){box-shadow:none;font-weight:600}@media (max-width: 575.98px){.navbar-gitlab .container-fluid .nav>li.header-user{padding-left:10px}}.navbar-gitlab .container-fluid .nav>li>a{will-change:color;margin:4px 0;padding:6px 8px;height:32px}@media (max-width: 575.98px){.navbar-gitlab .container-fluid .nav>li>a{padding:0}}.navbar-gitlab .container-fluid .nav>li>a.header-user-dropdown-toggle{margin-left:2px}.navbar-gitlab .container-fluid .nav>li>a.header-user-dropdown-toggle .header-user-avatar{margin-right:0}.navbar-gitlab .container-fluid .nav>li .header-new-dropdown-toggle{margin-right:0}.navbar-sub-nav>li>a,.navbar-sub-nav>li>button,.navbar-nav>li>a,.navbar-nav>li>button{display:flex;align-items:center;justify-content:center;padding:6px 8px;margin:4px 2px;font-size:12px;color:currentColor;border-radius:4px;height:32px;font-weight:600}.navbar-sub-nav>li .top-nav-toggle,.navbar-sub-nav>li>button,.navbar-nav>li .top-nav-toggle,.navbar-nav>li>button{background:transparent;border:0}.navbar-sub-nav .dropdown-menu,.navbar-nav .dropdown-menu{position:absolute}.navbar-sub-nav{display:flex;margin:0 0 0 6px}.caret-down,.btn .caret-down{top:0;height:11px;width:11px;margin-left:4px;fill:currentColor}.header-user .dropdown-menu,.header-new .dropdown-menu{margin-top:4px}.btn-sign-in{background-color:#ebebfa;color:#292961;font-weight:600;line-height:18px;margin:4px 0 4px 2px}@media (max-width: 575.98px){.navbar-gitlab .container-fluid{font-size:18px}.navbar-gitlab .container-fluid .navbar-nav{table-layout:fixed;width:100%;margin:0;text-align:right}.navbar-gitlab .container-fluid .navbar-collapse{margin-left:-8px;margin-right:-10px}.navbar-gitlab .container-fluid .navbar-collapse .nav>li:not(.d-none){flex:1}.header-user-dropdown-toggle{text-align:center}.header-user-avatar{float:none}}.header-user-avatar{float:left;margin-right:5px;border-radius:50%;border:1px solid #f5f5f5}.notification-dot{background-color:#d99530;height:12px;width:12px;pointer-events:none;visibility:hidden;top:3px}.top-nav-toggle .dropdown-icon{margin-right:0.5rem}.tanuki-logo .tanuki{fill:#e24329}.tanuki-logo .left-cheek,.tanuki-logo .right-cheek{fill:#fc6d26}.tanuki-logo .chin{fill:#fca326}.context-header{position:relative;margin-right:2px;width:220px}.context-header>a,.context-header>button{font-weight:600;display:flex;width:100%;align-items:center;padding:10px 16px 10px 10px;color:#303030;background-color:transparent;border:0;text-align:left}.context-header .avatar-container{flex:0 0 40px;background-color:#fff}.context-header .sidebar-context-title{overflow:hidden;text-overflow:ellipsis;color:#303030}@media (min-width: 768px){.page-with-contextual-sidebar{padding-left:48px}}@media (min-width: 1200px){.page-with-contextual-sidebar{padding-left:220px}}@media (min-width: 768px){.page-with-icon-sidebar{padding-left:48px}}.nav-sidebar{position:fixed;bottom:0;left:0;z-index:600;width:220px;top:var(--header-height, 40px);background-color:#f0f0f0;transform:translate3d(0, 0, 0)}.nav-sidebar.sidebar-collapsed-desktop{width:48px}.nav-sidebar.sidebar-collapsed-desktop .nav-sidebar-inner-scroll{overflow-x:hidden}.nav-sidebar.sidebar-collapsed-desktop .badge.badge-pill:not(.fly-out-badge),.nav-sidebar.sidebar-collapsed-desktop .nav-item-name,.nav-sidebar.sidebar-collapsed-desktop .collapse-text{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.nav-sidebar.sidebar-collapsed-desktop .sidebar-top-level-items>li>a{min-height:unset}.nav-sidebar.sidebar-collapsed-desktop .fly-out-top-item:not(.divider){display:block !important}.nav-sidebar.sidebar-collapsed-desktop .avatar-container{margin:0 auto}.nav-sidebar.sidebar-collapsed-desktop li.active:not(.fly-out-top-item)>a{background-color:rgba(41,41,97,0.08)}.nav-sidebar a{text-decoration:none;color:#303030}.nav-sidebar li{white-space:nowrap}.nav-sidebar li .nav-item-name{flex:1;overflow:hidden;text-overflow:ellipsis}.nav-sidebar li>a,.nav-sidebar li>.fly-out-top-item-container{padding-left:0.75rem;padding-right:0.75rem;padding-top:0.5rem;padding-bottom:0.5rem;display:flex;align-items:center;border-radius:0.25rem;width:auto;line-height:1rem;margin:1px 4px}.nav-sidebar li.active>a{font-weight:600}.nav-sidebar li.active:not(.fly-out-top-item)>a:not(.has-sub-items){background-color:rgba(41,41,97,0.08)}.nav-sidebar ul{padding-left:0;list-style:none}@media (max-width: 767.98px){.nav-sidebar{left:-220px}}.nav-sidebar .nav-icon-container{display:flex;margin-right:8px}.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item{display:none}.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item a,.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item.active a,.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item .fly-out-top-item-container{margin-left:0;margin-right:0;padding-left:1rem;padding-right:1rem;cursor:default;pointer-events:none;font-size:0.75rem;margin-top:-0.25rem;margin-bottom:-0.25rem;margin-top:0;position:relative;color:#fff;background:var(--black, #000)}.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item a strong,.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item.active a strong,.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item .fly-out-top-item-container strong{font-weight:400}.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item a::before,.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item.active a::before,.nav-sidebar a:not(.has-sub-items)+.sidebar-sub-level-items .fly-out-top-item .fly-out-top-item-container::before{position:absolute;content:"";display:block;top:50%;left:-0.25rem;margin-top:-0.25rem;width:0;height:0;border-top:0.25rem solid transparent;border-bottom:0.25rem solid transparent;border-right:0.25rem solid #000;border-right-color:var(--black, #000)}@media (min-width: 576px){.nav-sidebar a.has-sub-items+.sidebar-sub-level-items{min-width:150px}}.nav-sidebar a.has-sub-items+.sidebar-sub-level-items .fly-out-top-item{display:none}.nav-sidebar a.has-sub-items+.sidebar-sub-level-items .fly-out-top-item a,.nav-sidebar a.has-sub-items+.sidebar-sub-level-items .fly-out-top-item.active a,.nav-sidebar a.has-sub-items+.sidebar-sub-level-items .fly-out-top-item .fly-out-top-item-container{margin-left:0;margin-right:0;padding-left:1rem;padding-right:1rem;cursor:default;pointer-events:none;font-size:0.75rem;margin-top:0;border-bottom-left-radius:0;border-bottom-right-radius:0}@media (min-width: 768px) and (max-width: 1199px){.nav-sidebar:not(.sidebar-expanded-mobile){width:48px}.nav-sidebar:not(.sidebar-expanded-mobile) .nav-sidebar-inner-scroll{overflow-x:hidden}.nav-sidebar:not(.sidebar-expanded-mobile) .badge.badge-pill:not(.fly-out-badge),.nav-sidebar:not(.sidebar-expanded-mobile) .nav-item-name,.nav-sidebar:not(.sidebar-expanded-mobile) .collapse-text{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.nav-sidebar:not(.sidebar-expanded-mobile) .sidebar-top-level-items>li>a{min-height:unset}.nav-sidebar:not(.sidebar-expanded-mobile) .fly-out-top-item:not(.divider){display:block !important}.nav-sidebar:not(.sidebar-expanded-mobile) .avatar-container{margin:0 auto}.nav-sidebar:not(.sidebar-expanded-mobile) li.active:not(.fly-out-top-item)>a{background-color:rgba(41,41,97,0.08)}.nav-sidebar:not(.sidebar-expanded-mobile) .context-header{height:60px;width:48px}.nav-sidebar:not(.sidebar-expanded-mobile) .context-header a{padding:10px 4px}.nav-sidebar:not(.sidebar-expanded-mobile) .sidebar-context-title{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.nav-sidebar:not(.sidebar-expanded-mobile) .context-header{height:auto}.nav-sidebar:not(.sidebar-expanded-mobile) .context-header a{padding:0.25rem}.nav-sidebar:not(.sidebar-expanded-mobile) .sidebar-top-level-items>li .sidebar-sub-level-items:not(.flyout-list){display:none}.nav-sidebar:not(.sidebar-expanded-mobile) .nav-icon-container{margin-right:0}.nav-sidebar:not(.sidebar-expanded-mobile) .toggle-sidebar-button{width:48px}.nav-sidebar:not(.sidebar-expanded-mobile) .toggle-sidebar-button .collapse-text{display:none}.nav-sidebar:not(.sidebar-expanded-mobile) .toggle-sidebar-button .icon-chevron-double-lg-left{transform:rotate(180deg);margin:0}}.nav-sidebar-inner-scroll{height:100%;width:100%;overflow-x:hidden;overflow-y:auto}.nav-sidebar-inner-scroll>div.context-header{margin-top:0.25rem}.nav-sidebar-inner-scroll>div.context-header a{padding-left:0.75rem;padding-right:0.75rem;padding-top:0.5rem;padding-bottom:0.5rem;display:flex;align-items:center;border-radius:0.25rem;width:auto;line-height:1rem;margin:1px 4px;padding:0.25rem;margin-bottom:0.25rem;margin-top:0}.nav-sidebar-inner-scroll>div.context-header a .avatar-container{font-weight:400;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)}.nav-sidebar-inner-scroll>div.context-header a .avatar-container.rect-avatar{border-style:none}.nav-sidebar-inner-scroll>div.context-header a .avatar-container.rect-avatar .avatar.s32{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)}.sidebar-top-level-items{margin-top:0.25rem;margin-bottom:60px}.sidebar-top-level-items .context-header a{padding:0.25rem;margin-bottom:0.25rem;margin-top:0}.sidebar-top-level-items .context-header a .avatar-container{font-weight:400;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)}.sidebar-top-level-items .context-header a .avatar-container.rect-avatar{border-style:none}.sidebar-top-level-items .context-header a .avatar-container.rect-avatar .avatar.s32{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.08)}.sidebar-top-level-items>li.active .sidebar-sub-level-items:not(.is-fly-out-only){display:block}.sidebar-top-level-items li>a.gl-link{color:#303030}.sidebar-top-level-items li>a.gl-link:active{text-decoration:none}.sidebar-sub-level-items{padding-top:0;padding-bottom:0;display:none}.sidebar-sub-level-items:not(.fly-out-list) li>a{padding-left:2.25rem}.toggle-sidebar-button,.close-nav-button{height:48px;padding:0 16px;background-color:#fafafa;border:0;color:#666;display:flex;align-items:center;background-color:#f0f0f0;border-top:1px solid #dbdbdb;position:fixed;bottom:0;width:220px}.toggle-sidebar-button .collapse-text,.toggle-sidebar-button .icon-chevron-double-lg-left,.close-nav-button .collapse-text,.close-nav-button .icon-chevron-double-lg-left{color:inherit}.collapse-text{white-space:nowrap;overflow:hidden}.sidebar-collapsed-desktop .context-header{height:60px;width:48px}.sidebar-collapsed-desktop .context-header a{padding:10px 4px}.sidebar-collapsed-desktop .sidebar-context-title{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.sidebar-collapsed-desktop .context-header{height:auto}.sidebar-collapsed-desktop .context-header a{padding:0.25rem}.sidebar-collapsed-desktop .sidebar-top-level-items>li .sidebar-sub-level-items:not(.flyout-list){display:none}.sidebar-collapsed-desktop .nav-icon-container{margin-right:0}.sidebar-collapsed-desktop .toggle-sidebar-button{width:48px}.sidebar-collapsed-desktop .toggle-sidebar-button .collapse-text{display:none}.sidebar-collapsed-desktop .toggle-sidebar-button .icon-chevron-double-lg-left{transform:rotate(180deg);margin:0}.close-nav-button{display:none}@media (max-width: 767.98px){.close-nav-button{display:flex}.toggle-sidebar-button{display:none}}input::-moz-placeholder{color:#868686;opacity:1}input::-ms-input-placeholder{color:#868686}input:-ms-input-placeholder{color:#868686}svg{fill:currentColor}svg.s12{width:12px;height:12px}svg.s16{width:16px;height:16px}svg.s32{width:32px;height:32px}svg.s12{vertical-align:-1px}svg.s16{vertical-align:-3px}.header-search{width:320px}.header-search.is-not-active::after{content:"/";display:inline-block;position:absolute;top:0;right:8px;transform:translateY(calc(50% - 4px));padding:4px 5px;font-size:12px;font-family:"Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;line-height:1;vertical-align:middle;border-width:0;border-style:solid;border-image:none;border-radius:3px;box-shadow:none;white-space:pre-wrap;word-wrap:break-word;overflow-wrap:break-word;word-break:keep-all}.search{margin:0 8px}.search form{display:block;margin:0;padding:4px;width:200px;line-height:24px;height:32px;border:0;border-radius:4px}@media (min-width: 1200px){.search form{width:320px}}.search .search-input{border:0;font-size:14px;padding:0 20px 0 0;margin-left:5px;line-height:25px;width:98%;color:#fff;background:none}.search .search-input-container{display:flex;position:relative}.search .search-input-wrap{width:100%}.search .search-input-wrap .search-icon,.search .search-input-wrap .clear-icon{position:absolute;right:5px;top:4px}.search .search-input-wrap .search-icon{-webkit-user-select:none;user-select:none}.search .search-input-wrap .clear-icon{display:none}.search .search-input-wrap .dropdown{position:static}.search .search-input-wrap .dropdown-menu{left:-5px;max-height:400px;overflow:auto}@media (min-width: 1200px){.search .search-input-wrap .dropdown-menu{width:320px}}.search .identicon{flex-basis:16px;flex-shrink:0;margin-right:4px}.avatar,.avatar-container{float:left;margin-right:16px;border-radius:50%;border:1px solid rgba(0,0,0,0.08)}.avatar.s16,.avatar-container.s16{width:16px;height:16px;margin-right:8px}.avatar.s32,.avatar-container.s32{width:32px;height:32px;margin-right:8px}.avatar{transition-property:none;width:40px;height:40px;padding:0;background:#fdfdfd;overflow:hidden;border-color:rgba(0,0,0,0.1)}.avatar.avatar-tile{border-radius:0;border:0}.identicon{text-align:center;vertical-align:top;color:#303030;background-color:#f0f0f0}.identicon.s16{font-size:10px;line-height:16px}.identicon.s32{font-size:14px;line-height:32px}.identicon.bg1{background-color:#fcf1ef}.identicon.bg2{background-color:#f4f0ff}.identicon.bg3{background-color:#f1f1ff}.identicon.bg4{background-color:#e9f3fc}.identicon.bg5{background-color:#ecf4ee}.identicon.bg6{background-color:#fdf1dd}.identicon.bg7{background-color:#f0f0f0}.avatar-container{overflow:hidden;display:flex}.avatar-container a{width:100%;height:100%;display:flex;text-decoration:none}.avatar-container .avatar{border-radius:0;border:0;height:auto;width:100%;margin:0;align-self:center}.rect-avatar{border-radius:2px}.rect-avatar.s16{border-radius:2px}.rect-avatar.s32{border-radius:4px}.tab-width-8{-moz-tab-size:8;tab-size:8}.gl-sr-only{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.gl-border-none\!{border-style:none !important}.gl-display-none{display:none}@media (min-width: 992px){.gl-lg-display-none\!{display:none !important}}.gl-display-flex{display:flex}@media (min-width: 992px){.gl-lg-display-flex{display:flex}}@media (min-width: 576px){.gl-sm-display-block{display:block}}.gl-relative{position:relative}.gl-absolute{position:absolute}.gl-px-3{padding-left:0.5rem;padding-right:0.5rem}.gl-pr-2{padding-right:0.25rem}.gl-ml-n2{margin-left:-0.25rem}.gl-ml-3{margin-left:0.5rem}.gl-mx-0\!{margin-left:0 !important;margin-right:0 !important}.gl-font-sm{font-size:0.75rem}.gl-font-weight-bold{font-weight:600}.cloak-startup,.content-wrapper>.alert-wrapper,#content-body,.modal-dialog{display:none}
-
-</style>
-
-
-<link rel="stylesheet" media="print" href="/assets/application-65e2df8ed011fa750c4d6a7be6f58560637c7569c4533e56a606d6b367c1373e.css" />
-
-<link rel="stylesheet" media="print" href="/assets/application_utilities-87eb4cb090918257fc7d9862c047538ec6ea994b55759ccbe7d959bd73137b73.css" />
-
-
-<link rel="stylesheet" media="print" href="/assets/highlight/themes/white-6352e0f5eb4851393faf9b9b85a5e6177a64d4062840e9a3a1db5b9e3da8a007.css" />
-<script nonce="sRO9w93AgEVwRm4eIDWUxA==">
-//<![CDATA[
-document.querySelectorAll('link[media="print"]').forEach(linkTag => {
-  linkTag.setAttribute('data-startupcss', 'loading');
-  const startupLinkLoadedEvent = new CustomEvent('CSSStartupLinkLoaded');
-  linkTag.addEventListener('load',function(){this.media='all';this.setAttribute('data-startupcss', 'loaded');document.dispatchEvent(startupLinkLoadedEvent);},{once: true});
-})
-
-//]]>
-</script>
-
-<script nonce="sRO9w93AgEVwRm4eIDWUxA==">
-//<![CDATA[
-window.gon={};gon.api_version="v4";gon.default_avatar_url="https://gitlab.com/assets/no_avatar-849f9c04a3a0d0cea2424ae97b27447dc64a7dbfae83c036c45b403392f0e8ba.png";gon.max_file_size=10;gon.asset_host=null;gon.webpack_public_path="/assets/webpack/";gon.relative_url_root="";gon.user_color_scheme="white";gon.markdown_surround_selection=null;gon.sentry_dsn="https://526a2f38a53d44e3a8e69bfa001d1e8b@sentry.gitlab.net/15";gon.sentry_environment="gprd";gon.recaptcha_api_server_url="https://www.google.com/recaptcha/api.js";gon.recaptcha_sitekey="6LfAERQTAAAAAL4GYSiAMGLbcLyUIBSfPrDNJgeC";gon.gitlab_url="https://gitlab.com";gon.revision="36181ee68d4";gon.feature_category="source_code_management";gon.gitlab_logo="/assets/gitlab_logo-2957169c8ef64c58616a1ac3f4fc626e8a35ce4eb3ed31bb0d873712f2a041a0.png";gon.secure=true;gon.sprite_icons="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg";gon.sprite_file_icons="/assets/file_icons-1f286f5d281936648afcc4dca99c4666b533f3236d6cf0f9cc20b63c2f67b9be.svg";gon.emoji_sprites_css_path="/assets/emoji_sprites-e1b1ba2d7a86a445dcb1110d1b6e7dd0200ecaa993a445df77a07537dbf8f475.css";gon.select2_css_path="/assets/lazy_bundles/select2-972cb11866a2afb07749efdf63c646325d6ad61bac72ad794042166dcbecfc81.css";gon.test_env=false;gon.disable_animations=null;gon.suggested_label_colors={"#009966":"Green-cyan","#8fbc8f":"Dark sea green","#3cb371":"Medium sea green","#00b140":"Green screen","#013220":"Dark green","#6699cc":"Blue-gray","#0000ff":"Blue","#e6e6fa":"Lavendar","#9400d3":"Dark violet","#330066":"Deep violet","#808080":"Gray","#36454f":"Charcoal grey","#f7e7ce":"Champagne","#c21e56":"Rose red","#cc338b":"Magenta-pink","#dc143c":"Crimson","#ff0000":"Red","#cd5b45":"Dark coral","#eee600":"Titanium yellow","#ed9121":"Carrot orange","#c39953":"Aztec Gold"};gon.first_day_of_week=0;gon.time_display_relative=true;gon.ee=true;gon.jh=false;gon.dot_com=true;gon.features={"usageDataApi":true,"securityAutoFix":false,"newHeaderSearch":true,"bootstrapConfirmationModals":false,"sandboxedMermaid":true,"sourceEditorToolbar":false,"glAvatarForAllUserAvatars":false,"mrAttentionRequests":false,"followInUserPopover":false,"refactorBlobViewer":true,"highlightJs":false};gon.roadmap_epics_limit=1000;gon.subscriptions_url="https://customers.gitlab.com";gon.payment_form_url="https://customers.gitlab.com/payment_forms/cc_validation";gon.payment_validation_form_id="payment_method_validation";gon.registration_validation_form_url="https://customers.gitlab.com/payment_forms/cc_registration_validation";gon.licensed_features={"fileLocks":true};
-//]]>
-</script>
-
-
-<script src="/assets/webpack/runtime.6a49f80d.bundle.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/main.953f94b2.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/sentry.9f39114b.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-
-
-<script src="/assets/webpack/graphql.1be99db4.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-globalSearch-pages.admin.abuse_reports-pages.admin.groups.show-pages.dashboard.todos.index-p-1bf0927a.34e5536c.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.groups.boards-pages.groups.details-pages.groups.epic_boards-pages.groups.show-pages.gr-3acf69b5.abfea1b3.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/5.2234dc50.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.projects-pages.projects.activity-pages.projects.alert_management.details-pages.project-6d1dd814.01fefbda.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.projects-pages.projects.activity-pages.projects.alert_management.details-pages.project-174f3076.f1b7e73f.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.admin.subscriptions.show-pages.projects.blob.show-pages.projects.forks.new-pages.proje-610ff45f.93f1efe6.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.projects.blob.show-pages.projects.show-pages.projects.snippets.edit-pages.projects.sni-dd84f7c7.43f82b86.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.projects.blob.show-pages.projects.show-pages.projects.snippets.show-pages.projects.tre-25c821a4.510ab40f.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.projects.blob.show-pages.projects.show-pages.projects.tree.show.5b5489a6.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/commons-pages.projects.blame.show-pages.projects.blob.show.0ec0b4bf.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-<script src="/assets/webpack/pages.projects.blob.show.e7f403d6.chunk.js" defer="defer" nonce="sRO9w93AgEVwRm4eIDWUxA=="></script>
-
-<meta content="object" property="og:type">
-<meta content="GitLab" property="og:site_name">
-<meta content="mwtitle/src/php.rs · mwtitle-0.1.0 · mwbot-rs / mwbot · GitLab" property="og:title">
-<meta content="GitLab.com" property="og:description">
-<meta content="https://gitlab.com/assets/twitter_card-570ddb06edf56a2312253c5872489847a0f385112ddbcd71ccfa1570febab5d2.jpg" property="og:image">
-<meta content="64" property="og:image:width">
-<meta content="64" property="og:image:height">
-<meta content="https://gitlab.com/mwbot-rs/mwbot/-/blob/mwtitle-0.1.0/mwtitle/src/php.rs" property="og:url">
-<meta content="summary" property="twitter:card">
-<meta content="mwtitle/src/php.rs · mwtitle-0.1.0 · mwbot-rs / mwbot · GitLab" property="twitter:title">
-<meta content="GitLab.com" property="twitter:description">
-<meta content="https://gitlab.com/assets/twitter_card-570ddb06edf56a2312253c5872489847a0f385112ddbcd71ccfa1570febab5d2.jpg" property="twitter:image">
-
-<meta content="GitLab.com" name="description">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-<meta content="#292961" name="theme-color">
-<meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="WGTKDPn8DuBssEEllUfUMWIjMzdIngKntP7CudbEWXeN9B0H7miSpn9HOF6ZtLNPSZCMRQFoJwIjA/yHk6bOoQ==" />
-<meta name="csp-nonce" content="sRO9w93AgEVwRm4eIDWUxA==" />
-<meta name="action-cable-url" content="/-/cable" />
-<link rel="apple-touch-icon" type="image/x-icon" href="/assets/apple-touch-icon-b049d4bc0dd9626f31db825d61880737befc7835982586d015bded10b4435460.png" />
-<link href="/search/opensearch.xml" rel="search" title="Search GitLab" type="application/opensearchdescription+xml">
-
-
-
-<script nonce="sRO9w93AgEVwRm4eIDWUxA==">
-//<![CDATA[
-;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
-p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
-};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
-n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://gitlab.com/assets/snowplow/sp-bc5b4b4067898d2d20c35fec045d91d032cb739c3deab5f42607edbeca08323a.js","snowplow"));
-
-window.snowplowOptions = {"namespace":"gl","hostname":"snowplow.trx.gitlab.net","cookieDomain":".gitlab.com","appId":"gitlab","formTracking":true,"linkClickTracking":true}
-
-gl = window.gl || {};
-gl.snowplowStandardContext = {"schema":"iglu:com.gitlab/gitlab_standard/jsonschema/1-0-8","data":{"environment":"production","source":"gitlab-rails","plan":"free","extra":{},"user_id":null,"namespace_id":14037033,"project_id":27531826,"context_generated_at":"2022-05-05T20:57:28.586Z"}}
-gl.snowplowPseudonymizedPageUrl = "https://gitlab.com/namespace14037033/project27531826/-/blob/:repository_path";
-
-
-//]]>
-</script>
-
-</head>
-
-<body class="ui-indigo tab-width-8 gl-browser-generic gl-platform-other" data-find-file="/mwbot-rs/mwbot/-/find_file/mwtitle-0.1.0" data-group="mwbot-rs" data-namespace-id="14037033" data-page="projects:blob:show" data-page-type-id="mwtitle-0.1.0/mwtitle/src/php.rs" data-project="mwbot" data-project-id="27531826">
-
-<script nonce="sRO9w93AgEVwRm4eIDWUxA==">
-//<![CDATA[
-gl = window.gl || {};
-gl.client = {"isGeneric":true,"isOther":true};
-
-
-//]]>
-</script>
-
-
-<header class="navbar navbar-gitlab navbar-expand-sm js-navbar" data-qa-selector="navbar">
-<a class="gl-sr-only gl-accessibility" href="#content-body">Skip to content</a>
-<div class="container-fluid">
-<div class="header-content">
-<div class="title-container hide-when-top-nav-responsive-open">
-<h1 class="title">
-<span class="gl-sr-only">GitLab</span>
-<a title="Dashboard" id="logo" data-track-label="main_navigation" data-track-action="click_gitlab_logo_link" data-track-property="navigation" href="/"><span class="gl-display-none gl-lg-display-flex">
-<svg class="tanuki-logo" width="111" height="24" viewBox="0 0 111 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path class="logo-text" d="M44.814 9.042h3.645c-.608-3.875-3.963-6.574-8.33-6.574-5.166 0-9.043 3.798-9.043 10.16 0 6.248 3.703 10.123 9.15 10.123 4.887 0 8.386-3.144 8.386-8.234v-2.37h-8.01v2.794h4.55c-.058 2.816-1.938 4.599-4.908 4.599-3.305 0-5.57-2.477-5.57-6.95 0-4.445 2.303-6.913 5.494-6.913 2.38 0 4.01 1.272 4.636 3.365Zm6.218 13.438h3.49V7.68h-3.49v14.8Zm1.76-17.151c1.109 0 2.014-.85 2.014-1.89s-.905-1.9-2.014-1.9c-1.109 0-2.024.849-2.024 1.9s.9 1.89 2.017 1.89h.007ZM64.971 7.68H62.05V4.126h-3.49v3.556h-2.1v2.699h2.1v8.233c-.018 2.786 2.007 4.16 4.628 4.079a7.089 7.089 0 0 0 2.055-.348l-.59-2.73a4.247 4.247 0 0 1-1.02.137c-.878 0-1.582-.309-1.582-1.717v-7.662h2.921V7.68Zm2.701 14.8h12.272v-2.998H71.25V2.737h-3.578V22.48Zm18.957.3c2.323 0 3.71-1.09 4.347-2.333h.115v2.033h3.36v-9.91c0-3.913-3.19-5.09-6.016-5.09-3.113 0-5.504 1.388-6.275 4.087l3.26.464c.345-1.013 1.329-1.88 3.04-1.88 1.62 0 2.506.829 2.506 2.285v.057c0 1.002-1.05 1.051-3.664 1.33-2.872.309-5.619 1.166-5.619 4.502-.01 2.912 2.12 4.455 4.946 4.455Zm1.147-2.56c-1.456 0-2.498-.666-2.498-1.948 0-1.34 1.167-1.899 2.72-2.121.917-.125 2.75-.357 3.2-.722v1.744c.01 1.643-1.321 3.042-3.422 3.042v.005Zm9.244 2.26h3.433v-2.332h.201c.551 1.08 1.698 2.593 4.244 2.593 3.489 0 6.102-2.768 6.102-7.644 0-4.936-2.69-7.616-6.112-7.616-2.613 0-3.702 1.57-4.234 2.641h-.147V2.737h-3.486V22.48Zm3.423-7.403c0-2.88 1.234-4.734 3.48-4.734 2.323 0 3.52 1.976 3.52 4.734 0 2.759-1.214 4.8-3.52 4.8-2.227 0-3.48-1.928-3.48-4.8Z"
-        fill="#fff"/>
-  <path class="tanuki-shape tanuki" d="m24.507 9.5-.034-.09L21.082.562a.896.896 0 0 0-1.694.091l-2.29 7.01H7.825L5.535.653a.898.898 0 0 0-1.694-.09L.451 9.411.416 9.5a6.297 6.297 0 0 0 2.09 7.278l.012.01.03.022 5.16 3.867 2.56 1.935 1.554 1.176a1.051 1.051 0 0 0 1.268 0l1.555-1.176 2.56-1.935 5.197-3.89.014-.01A6.297 6.297 0 0 0 24.507 9.5Z"
-        fill="#E24329"/>
-  <path class="tanuki-shape right-cheek" d="m24.507 9.5-.034-.09a11.44 11.44 0 0 0-4.56 2.051l-7.447 5.632 4.742 3.584 5.197-3.89.014-.01A6.297 6.297 0 0 0 24.507 9.5Z"
-        fill="#FC6D26"/>
-  <path class="tanuki-shape chin" d="m7.707 20.677 2.56 1.935 1.555 1.176a1.051 1.051 0 0 0 1.268 0l1.555-1.176 2.56-1.935-4.743-3.584-4.755 3.584Z"
-        fill="#FCA326"/>
-  <path class="tanuki-shape left-cheek" d="M5.01 11.461a11.43 11.43 0 0 0-4.56-2.05L.416 9.5a6.297 6.297 0 0 0 2.09 7.278l.012.01.03.022 5.16 3.867 4.745-3.584-7.444-5.632Z"
-        fill="#FC6D26"/>
-</svg>
-
-</span>
-<span class="gl-lg-display-none! gl-display-flex">
-<svg class="tanuki-logo" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path class="tanuki-shape tanuki" d="m24.507 9.5-.034-.09L21.082.562a.896.896 0 0 0-1.694.091l-2.29 7.01H7.825L5.535.653a.898.898 0 0 0-1.694-.09L.451 9.411.416 9.5a6.297 6.297 0 0 0 2.09 7.278l.012.01.03.022 5.16 3.867 2.56 1.935 1.554 1.176a1.051 1.051 0 0 0 1.268 0l1.555-1.176 2.56-1.935 5.197-3.89.014-.01A6.297 6.297 0 0 0 24.507 9.5Z"
-        fill="#E24329"/>
-  <path class="tanuki-shape right-cheek" d="m24.507 9.5-.034-.09a11.44 11.44 0 0 0-4.56 2.051l-7.447 5.632 4.742 3.584 5.197-3.89.014-.01A6.297 6.297 0 0 0 24.507 9.5Z"
-        fill="#FC6D26"/>
-  <path class="tanuki-shape chin" d="m7.707 20.677 2.56 1.935 1.555 1.176a1.051 1.051 0 0 0 1.268 0l1.555-1.176 2.56-1.935-4.743-3.584-4.755 3.584Z"
-        fill="#FCA326"/>
-  <path class="tanuki-shape left-cheek" d="M5.01 11.461a11.43 11.43 0 0 0-4.56-2.05L.416 9.5a6.297 6.297 0 0 0 2.09 7.278l.012.01.03.022 5.16 3.867 4.745-3.584-7.444-5.632Z"
-        fill="#FC6D26"/>
-</svg>
-
-</span>
-</a></h1>
-<ul class="nav navbar-sub-nav gl-display-none gl-lg-display-flex gl-align-items-center">
-<li class="dropdown gl-mr-3">
-<button data-toggle="dropdown" type="button">
-About GitLab
-<svg class="s16 caret-down" data-testid="chevron-down-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#chevron-down"></use></svg>
-</button>
-<div class="dropdown-menu">
-<ul>
-<li>
-<a href="https://about.gitlab.com/stages-devops-lifecycle/">GitLab: the DevOps platform
-</a></li>
-<li>
-<a href="/explore">Explore GitLab
-</a></li>
-<li>
-<a href="https://about.gitlab.com/install/">Install GitLab
-</a></li>
-<li>
-<a href="https://about.gitlab.com/is-it-any-good/">How GitLab compares
-</a></li>
-<li>
-<a href="https://about.gitlab.com/get-started/">Get started
-</a></li>
-<li>
-<a href="https://docs.gitlab.com/">GitLab docs
-</a></li>
-<li>
-<a href="https://about.gitlab.com/learn/">GitLab Learn
-</a></li>
-</ul>
-</div>
-</li>
-<li class="gl-mr-3">
-<a href="https://about.gitlab.com/pricing/">Pricing
-</a></li>
-<li class="gl-mr-3">
-<a href="https://about.gitlab.com/sales/">Talk to an expert
-</a></li>
-</ul>
-
-</div>
-<div class="navbar-collapse collapse">
-<ul class="nav navbar-nav">
-<li class="nav-item header-search-new d-none d-lg-block m-auto">
-<div class="header-search is-not-active gl-relative" data-autocomplete-path="/search/autocomplete" data-issues-path="/dashboard/issues" data-mr-path="/dashboard/merge_requests" data-search-context="{&quot;group&quot;:{&quot;id&quot;:14037033,&quot;name&quot;:&quot;mwbot-rs&quot;},&quot;group_metadata&quot;:{&quot;group_path&quot;:&quot;mwbot-rs&quot;,&quot;name&quot;:&quot;mwbot-rs&quot;,&quot;issues_path&quot;:&quot;/groups/mwbot-rs/-/issues&quot;,&quot;mr_path&quot;:&quot;/groups/mwbot-rs/-/merge_requests&quot;},&quot;project&quot;:{&quot;id&quot;:27531826,&quot;name&quot;:&quot;mwbot&quot;},&quot;project_metadata&quot;:{&quot;project_path&quot;:&quot;mwbot&quot;,&quot;name&quot;:&quot;mwbot&quot;,&quot;issues_path&quot;:&quot;/mwbot-rs/mwbot/-/issues&quot;,&quot;mr_path&quot;:&quot;/mwbot-rs/mwbot/-/merge_requests&quot;,&quot;issues_disabled&quot;:false},&quot;scope&quot;:null,&quot;code_search&quot;:true,&quot;ref&quot;:&quot;mwtitle-0.1.0&quot;,&quot;for_snippets&quot;:false}" data-search-path="/search" id="js-header-search">
-<form action="/search" accept-charset="UTF-8" method="get"><div class="gl-search-box-by-type">
-<svg class="s16 gl-search-box-by-type-search-icon gl-icon" data-testid="search-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#search"></use></svg>
-<input autocomplete="off" class="form-control gl-form-input gl-search-box-by-type-input" data-qa-selector="search_box" id="search" name="search" placeholder="Search GitLab" type="text">
-</div>
-<input type="hidden" name="group_id" id="group_id" value="14037033" />
-<input type="hidden" name="project_id" id="project_id" value="27531826" />
-<input type="hidden" name="scope" id="scope" />
-<input type="hidden" name="search_code" id="search_code" value="true" />
-<input type="hidden" name="snippets" id="snippets" value="false" />
-<input type="hidden" name="repository_ref" id="repository_ref" value="mwtitle-0.1.0" />
-<input type="hidden" name="nav_source" id="nav_source" value="navbar" />
-</form></div>
-
-</li>
-<li class="nav-item d-none d-sm-inline-block d-lg-none">
-<a title="Search" aria-label="Search" data-toggle="tooltip" data-placement="bottom" data-container="body" href="/search?project_id=27531826"><svg class="s16" data-testid="search-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#search"></use></svg>
-</a></li>
-<li class="nav-item header-help dropdown d-none d-md-block" data-track-action="click_question_mark_link" data-track-experiment="cross_stage_fdm" data-track-label="main_navigation" data-track-property="navigation">
-<a class="header-help-dropdown-toggle gl-relative" data-toggle="dropdown" href="/help"><span class="gl-sr-only">
-Help
-</span>
-<svg class="s16" data-testid="question-o-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#question-o"></use></svg>
-<span class="notification-dot rounded-circle gl-absolute"></span>
-<svg class="s16 caret-down" data-testid="chevron-down-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#chevron-down"></use></svg>
-</a><div class="dropdown-menu dropdown-menu-right">
-<ul>
-
-
-<li>
-<button class="gl-justify-content-space-between gl-align-items-center js-whats-new-trigger gl-display-flex!" type="button">
-What&#39;s new
-<span class="gl-badge badge badge-pill badge-muted sm js-whats-new-notification-count">4</span>
-</button>
-</li>
-
-<li>
-<a href="/help">Help</a>
-</li>
-<li>
-<a href="https://about.gitlab.com/getting-help/">Support</a>
-</li>
-<li>
-<a target="_blank" class="text-nowrap" rel="noopener noreferrer" data-track-action="click_forum" data-track-property="question_menu" href="https://forum.gitlab.com/">Community forum</a>
-
-</li>
-<li>
-<button class="js-shortcuts-modal-trigger" type="button">
-Keyboard shortcuts
-<kbd aria-hidden="true" class="flat float-right">?</kbd>
-</button>
-</li>
-<li class="divider"></li>
-<li>
-<a href="https://about.gitlab.com/submit-feedback">Submit feedback</a>
-</li>
-<li>
-<a target="_blank" class="text-nowrap" href="https://about.gitlab.com/contributing">Contribute to GitLab
-</a>
-
-</li>
-
-<li>
-<a href="https://next.gitlab.com">Switch to GitLab Next</a>
-</li>
-</ul>
-
-</div>
-</li>
-<li class="nav-item gl-display-none gl-sm-display-block">
-<ul class="list-unstyled navbar-sub-nav" data-view-model="{&quot;primary&quot;:[{&quot;id&quot;:&quot;project&quot;,&quot;title&quot;:&quot;Projects&quot;,&quot;active&quot;:true,&quot;icon&quot;:&quot;project&quot;,&quot;href&quot;:&quot;/explore&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Projects&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;groups&quot;,&quot;title&quot;:&quot;Groups&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;group&quot;,&quot;href&quot;:&quot;/explore/groups&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Groups&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;snippets&quot;,&quot;title&quot;:&quot;Snippets&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;snippet&quot;,&quot;href&quot;:&quot;/explore/snippets&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Snippets&quot;},&quot;emoji&quot;:null}],&quot;secondary&quot;:[{&quot;id&quot;:&quot;help&quot;,&quot;title&quot;:&quot;Help&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;question-o&quot;,&quot;href&quot;:&quot;/help&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Help&quot;},&quot;emoji&quot;:null}],&quot;views&quot;:{},&quot;shortcuts&quot;:[{&quot;id&quot;:&quot;project-shortcut&quot;,&quot;title&quot;:&quot;Projects&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;&quot;,&quot;href&quot;:&quot;/explore&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-projects&quot;,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Projects&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;groups-shortcut&quot;,&quot;title&quot;:&quot;Groups&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;&quot;,&quot;href&quot;:&quot;/explore/groups&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-groups&quot;,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Groups&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;snippets-shortcut&quot;,&quot;title&quot;:&quot;Snippets&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;&quot;,&quot;href&quot;:&quot;/explore/snippets&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-snippets&quot;,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Snippets&quot;},&quot;emoji&quot;:null}],&quot;activeTitle&quot;:&quot;Menu&quot;}" id="js-top-nav">
-<li>
-<a class="top-nav-toggle" data-toggle="dropdown" href="#" type="button">
-<svg class="s16 dropdown-icon" data-testid="hamburger-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#hamburger"></use></svg>
-Menu
-</a>
-</li>
-</ul>
-<div class="hidden">
-<a class="dashboard-shortcuts-projects" href="/explore">Projects
-</a><a class="dashboard-shortcuts-groups" href="/explore/groups">Groups
-</a><a class="dashboard-shortcuts-snippets" href="/explore/snippets">Snippets
-</a></div>
-
-</li>
-<li class="nav-item gl-display-none gl-sm-display-block">
-<a class="gl-button btn btn-default btn-sign-in" data-track-action="click_button" data-track-experiment="logged_out_marketing_header" data-track-label="sign_up_now" href="/users/sign_up">Sign up now</a>
-</li>
-<li class="nav-item gl-display-none gl-sm-display-block">
-<a href="/users/sign_in?redirect_to_referer=yes">Login</a>
-</li>
-<li class="nav-item gl-sm-display-none">
-<div>
-<a class="gl-button btn btn-default btn-sign-in" href="/users/sign_in?redirect_to_referer=yes">Sign in / Register</a>
-</div>
-</li>
-
-</ul>
-</div>
-<button class="navbar-toggler d-block d-sm-none gl-border-none!" data-qa-selector="mobile_navbar_button" data-testid="top-nav-responsive-toggle" type="button">
-<span class="sr-only">Toggle navigation</span>
-<span class="more-icon gl-px-3 gl-font-sm gl-font-weight-bold">
-<span class="gl-pr-2">Menu</span>
-<svg class="s16" data-testid="hamburger-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#hamburger"></use></svg>
-</span>
-<svg class="s12 close-icon" data-testid="close-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#close"></use></svg>
-</button>
-</div>
-</div>
-</header>
-<div data-version-digest="fca61c35cab065b1582a6759a0e4f3177773c76586c38bc33a4da61b3599bea7" id="whats-new-app"></div>
-
-<div class="layout-page hide-when-top-nav-responsive-open page-with-contextual-sidebar">
-<aside aria-label="Project navigation" class="nav-sidebar" data-track-action="render" data-track-label="projects_side_navigation" data-track-property="projects_side_navigation">
-<div class="nav-sidebar-inner-scroll">
-<ul class="sidebar-top-level-items" data-qa-selector="project_sidebar">
-<li data-track-label="scope_menu" data-container="body" data-placement="right" class="context-header has-tooltip" title="mwbot"><a aria-label="mwbot" class="shortcuts-project rspec-project-link gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Project scope" href="/mwbot-rs/mwbot"><span class="avatar-container rect-avatar s32 project_avatar">
-<span class="avatar avatar-tile s32 identicon bg1">M</span>
-</span>
-<span class="sidebar-context-title">
-mwbot
-</span>
-</a></li>
-<li data-track-label="project_information_menu" class="home"><a aria-label="Project information" class="shortcuts-project-information has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Project information" href="/mwbot-rs/mwbot/activity"><span class="nav-icon-container">
-<svg class="s16" data-testid="project-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#project"></use></svg>
-</span>
-<span class="nav-item-name">
-Project information
-</span>
-</a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Project information
-</strong>
-</span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="activity" class=""><a aria-label="Activity" class="shortcuts-project-activity gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Activity" href="/mwbot-rs/mwbot/activity"><span>
-Activity
-</span>
-</a></li><li data-track-label="labels" class=""><a aria-label="Labels" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Labels" href="/mwbot-rs/mwbot/-/labels"><span>
-Labels
-</span>
-</a></li><li data-track-label="members" class=""><a aria-label="Members" id="js-onboarding-members-link" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Members" href="/mwbot-rs/mwbot/-/project_members"><span>
-Members
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="repository_menu" class="active"><a aria-label="Repository" class="shortcuts-tree has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Repository" href="/mwbot-rs/mwbot/-/tree/mwtitle-0.1.0"><span class="nav-icon-container">
-<svg class="s16" data-testid="doc-text-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#doc-text"></use></svg>
-</span>
-<span class="nav-item-name" id="js-onboarding-repo-link">
-Repository
-</span>
-</a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item active"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Repository
-</strong>
-</span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="files" class="active"><a aria-label="Files" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Files" href="/mwbot-rs/mwbot/-/tree/mwtitle-0.1.0"><span>
-Files
-</span>
-</a></li><li data-track-label="commits" class=""><a aria-label="Commits" id="js-onboarding-commits-link" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Commits" href="/mwbot-rs/mwbot/-/commits/mwtitle-0.1.0"><span>
-Commits
-</span>
-</a></li><li data-track-label="branches" class=""><a aria-label="Branches" id="js-onboarding-branches-link" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Branches" href="/mwbot-rs/mwbot/-/branches"><span>
-Branches
-</span>
-</a></li><li data-track-label="tags" class=""><a aria-label="Tags" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Tags" href="/mwbot-rs/mwbot/-/tags"><span>
-Tags
-</span>
-</a></li><li data-track-label="contributors" class=""><a aria-label="Contributors" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Contributors" href="/mwbot-rs/mwbot/-/graphs/mwtitle-0.1.0"><span>
-Contributors
-</span>
-</a></li><li data-track-label="graphs" class=""><a aria-label="Graph" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Graph" href="/mwbot-rs/mwbot/-/network/mwtitle-0.1.0"><span>
-Graph
-</span>
-</a></li><li data-track-label="compare" class=""><a aria-label="Compare" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Compare" href="/mwbot-rs/mwbot/-/compare?from=master&amp;to=mwtitle-0.1.0"><span>
-Compare
-</span>
-</a></li><li data-track-label="file_locks" class=""><a aria-label="Locked Files" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Locked Files" href="/mwbot-rs/mwbot/path_locks"><span>
-Locked Files
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="issues_menu" class=""><a aria-label="Issues" class="shortcuts-issues has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Issues" href="/mwbot-rs/mwbot/-/issues"><span class="nav-icon-container">
-<svg class="s16" data-testid="issues-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#issues"></use></svg>
-</span>
-<span class="nav-item-name" id="js-onboarding-issues-link">
-Issues
-</span>
-<span class="gl-badge badge badge-pill badge-info sm count issue_counter">28
-</span></a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Issues
-</strong>
-<span class="gl-badge badge badge-pill badge-info sm count fly-out-badge issue_counter">28
-</span></span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="issue_list" class=""><a aria-label="Issues" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="List" href="/mwbot-rs/mwbot/-/issues"><span>
-List
-</span>
-</a></li><li data-track-label="boards" class=""><a aria-label="Boards" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Boards" href="/mwbot-rs/mwbot/-/boards"><span>
-Boards
-</span>
-</a></li><li data-track-label="service_desk" class=""><a aria-label="Service Desk" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Service Desk" href="/mwbot-rs/mwbot/-/issues/service_desk"><span>
-Service Desk
-</span>
-</a></li><li data-track-label="milestones" class=""><a aria-label="Milestones" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Milestones" href="/mwbot-rs/mwbot/-/milestones"><span>
-Milestones
-</span>
-</a></li><li data-track-label="iterations" class=""><a aria-label="Iterations" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Iterations" href="/mwbot-rs/mwbot/-/iterations"><span>
-Iterations
-</span>
-</a></li><li data-track-label="requirements" class=""><a aria-label="Requirements" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Requirements" href="/mwbot-rs/mwbot/-/requirements_management/requirements"><span>
-Requirements
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="merge_requests_menu" class=""><a aria-label="Merge requests" class="shortcuts-merge_requests gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Merge requests" href="/mwbot-rs/mwbot/-/merge_requests"><span class="nav-icon-container">
-<svg class="s16" data-testid="git-merge-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#git-merge"></use></svg>
-</span>
-<span class="nav-item-name" id="js-onboarding-mr-link">
-Merge requests
-</span>
-<span class="gl-badge badge badge-pill badge-info sm count merge_counter js-merge-counter">3
-</span></a><ul class="sidebar-sub-level-items is-fly-out-only">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Merge requests
-</strong>
-<span class="gl-badge badge badge-pill badge-info sm count fly-out-badge merge_counter js-merge-counter">3
-</span></span>
-</li></ul>
-
-</li><li data-track-label="ci_cd_menu" class=""><a aria-label="CI/CD" class="shortcuts-pipelines rspec-link-pipelines has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="CI/CD" href="/mwbot-rs/mwbot/-/pipelines"><span class="nav-icon-container">
-<svg class="s16" data-testid="rocket-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#rocket"></use></svg>
-</span>
-<span class="nav-item-name" id="js-onboarding-pipelines-link">
-CI/CD
-</span>
-</a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-CI/CD
-</strong>
-</span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="pipelines" class=""><a aria-label="Pipelines" class="shortcuts-pipelines gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Pipelines" href="/mwbot-rs/mwbot/-/pipelines"><span>
-Pipelines
-</span>
-</a></li><li data-track-label="jobs" class=""><a aria-label="Jobs" class="shortcuts-builds gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Jobs" href="/mwbot-rs/mwbot/-/jobs"><span>
-Jobs
-</span>
-</a></li><li data-track-label="pipeline_schedules" class=""><a aria-label="Schedules" class="shortcuts-builds gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Schedules" href="/mwbot-rs/mwbot/-/pipeline_schedules"><span>
-Schedules
-</span>
-</a></li><li data-track-label="test_cases" class=""><a aria-label="Test Cases" class="shortcuts-test-cases gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Test Cases" href="/mwbot-rs/mwbot/-/quality/test_cases"><span>
-Test Cases
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="deployments_menu" class=""><a aria-label="Deployments" class="shortcuts-deployments has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Deployments" href="/mwbot-rs/mwbot/-/environments"><span class="nav-icon-container">
-<svg class="s16" data-testid="deployments-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#deployments"></use></svg>
-</span>
-<span class="nav-item-name">
-Deployments
-</span>
-</a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Deployments
-</strong>
-</span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="environments" class=""><a aria-label="Environments" class="shortcuts-environments gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Environments" href="/mwbot-rs/mwbot/-/environments"><span>
-Environments
-</span>
-</a></li><li data-track-label="releases" class=""><a aria-label="Releases" class="shortcuts-deployments-releases gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Releases" href="/mwbot-rs/mwbot/-/releases"><span>
-Releases
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="packages_registries_menu" class=""><a aria-label="Packages &amp; Registries" class="has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Packages &amp; Registries" href="/mwbot-rs/mwbot/-/packages"><span class="nav-icon-container">
-<svg class="s16" data-testid="package-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#package"></use></svg>
-</span>
-<span class="nav-item-name">
-Packages &amp; Registries
-</span>
-</a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Packages &amp; Registries
-</strong>
-</span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="packages_registry" class=""><a aria-label="Package Registry" class="shortcuts-container-registry gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Package Registry" href="/mwbot-rs/mwbot/-/packages"><span>
-Package Registry
-</span>
-</a></li><li data-track-label="container_registry" class=""><a aria-label="Container Registry" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Container Registry" href="/mwbot-rs/mwbot/container_registry"><span>
-Container Registry
-</span>
-</a></li><li data-track-label="infrastructure_registry" class=""><a aria-label="Infrastructure Registry" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Infrastructure Registry" href="/mwbot-rs/mwbot/-/infrastructure_registry"><span>
-Infrastructure Registry
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="monitor_menu" class=""><a aria-label="Monitor" class="shortcuts-monitor has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Monitor" href="/mwbot-rs/mwbot/-/incidents"><span class="nav-icon-container">
-<svg class="s16" data-testid="monitor-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#monitor"></use></svg>
-</span>
-<span class="nav-item-name">
-Monitor
-</span>
-</a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Monitor
-</strong>
-</span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="incidents" class=""><a aria-label="Incidents" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Incidents" href="/mwbot-rs/mwbot/-/incidents"><span>
-Incidents
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="analytics_menu" class=""><a aria-label="Analytics" class="shortcuts-analytics has-sub-items gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Analytics" href="/mwbot-rs/mwbot/-/value_stream_analytics"><span class="nav-icon-container">
-<svg class="s16" data-testid="chart-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#chart"></use></svg>
-</span>
-<span class="nav-item-name">
-Analytics
-</span>
-</a><ul class="sidebar-sub-level-items">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Analytics
-</strong>
-</span>
-</li><li class="divider fly-out-top-item"></li>
-<li data-track-label="cycle_analytics" class=""><a aria-label="Value stream" class="shortcuts-project-cycle-analytics gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Value stream" href="/mwbot-rs/mwbot/-/value_stream_analytics"><span>
-Value stream
-</span>
-</a></li><li data-track-label="ci_cd_analytics" class=""><a aria-label="CI/CD" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="CI/CD" href="/mwbot-rs/mwbot/-/pipelines/charts"><span>
-CI/CD
-</span>
-</a></li><li data-track-label="code_review" class=""><a aria-label="Code review" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Code review" href="/mwbot-rs/mwbot/-/analytics/code_reviews"><span>
-Code review
-</span>
-</a></li><li data-track-label="insights" class=""><a aria-label="Insights" class="shortcuts-project-insights gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Insights" href="/mwbot-rs/mwbot/insights/"><span>
-Insights
-</span>
-</a></li><li data-track-label="issues" class=""><a aria-label="Issue" class="gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Issue" href="/mwbot-rs/mwbot/-/analytics/issues_analytics"><span>
-Issue
-</span>
-</a></li><li data-track-label="repository_analytics" class=""><a aria-label="Repository" class="shortcuts-repository-charts gl-link" data-qa-selector="sidebar_menu_item_link" data-qa-menu-item="Repository" href="/mwbot-rs/mwbot/-/graphs/mwtitle-0.1.0/charts"><span>
-Repository
-</span>
-</a></li>
-</ul>
-
-</li><li data-track-label="wiki_menu" class=""><a aria-label="Wiki" class="shortcuts-wiki gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Wiki" href="/mwbot-rs/mwbot/-/wikis/home"><span class="nav-icon-container">
-<svg class="s16" data-testid="book-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#book"></use></svg>
-</span>
-<span class="nav-item-name">
-Wiki
-</span>
-</a><ul class="sidebar-sub-level-items is-fly-out-only">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Wiki
-</strong>
-</span>
-</li></ul>
-
-</li><li data-track-label="snippets_menu" class=""><a aria-label="Snippets" class="shortcuts-snippets gl-link" data-qa-selector="sidebar_menu_link" data-qa-menu-item="Snippets" href="/mwbot-rs/mwbot/-/snippets"><span class="nav-icon-container">
-<svg class="s16" data-testid="snippet-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#snippet"></use></svg>
-</span>
-<span class="nav-item-name">
-Snippets
-</span>
-</a><ul class="sidebar-sub-level-items is-fly-out-only">
-<li class="fly-out-top-item"><span class="fly-out-top-item-container">
-<strong class="fly-out-top-item-name">
-Snippets
-</strong>
-</span>
-</li></ul>
-
-</li>
-<li class="hidden">
-<a aria-label="Activity" class="shortcuts-project-activity gl-link" href="/mwbot-rs/mwbot/activity">Activity
-</a></li>
-<li class="hidden">
-<a aria-label="Graph" class="shortcuts-network gl-link" href="/mwbot-rs/mwbot/-/network/mwtitle-0.1.0">Graph
-</a></li>
-<li class="hidden">
-<a aria-label="Create a new issue" class="shortcuts-new-issue gl-link" href="/mwbot-rs/mwbot/-/issues/new">Create a new issue
-</a></li>
-<li class="hidden">
-<a aria-label="Jobs" class="shortcuts-builds gl-link" href="/mwbot-rs/mwbot/-/jobs">Jobs
-</a></li>
-<li class="hidden">
-<a aria-label="Commits" class="shortcuts-commits gl-link" href="/mwbot-rs/mwbot/-/commits/master">Commits
-</a></li>
-<li class="hidden">
-<a aria-label="Issue Boards" class="shortcuts-issue-boards gl-link" href="/mwbot-rs/mwbot/-/boards">Issue Boards
-</a></li>
-
-</ul>
-<a class="toggle-sidebar-button js-toggle-sidebar qa-toggle-sidebar rspec-toggle-sidebar" role="button" title="Toggle sidebar" type="button">
-<svg class="s16 icon-chevron-double-lg-left" data-testid="chevron-double-lg-left-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#chevron-double-lg-left"></use></svg>
-<span class="collapse-text gl-ml-3">Collapse sidebar</span>
-</a>
-<button name="button" type="button" class="close-nav-button"><svg class="s16" data-testid="close-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#close"></use></svg>
-<span class="collapse-text gl-ml-3">Close sidebar</span>
-</button>
-</div>
-</aside>
-
-
-<div class="content-wrapper content-wrapper-margin">
-<div class="mobile-overlay"></div>
-
-<div class="alert-wrapper gl-force-block-formatting-context">
-
-
-
-<div class="broadcast-message broadcast-notification-message mt-2 js-broadcast-notification-100903" role="alert">
-<svg class="s16 vertical-align-text-top" data-testid="bullhorn-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#bullhorn"></use></svg>
-<p>GitLab 15.0 is launching on May 22! This version brings many exciting improvements, but also removes deprecated features and introduces <strong>breaking changes</strong> that may impact your workflow. To see what is being deprecated and removed, please visit <a href="https://about.gitlab.com/blog/2022/04/18/gitlab-releases-15-breaking-changes/" rel="nofollow noreferrer noopener" target="_blank">Breaking changes in 15.0</a> and <a href="https://docs.gitlab.com/ee/update/deprecations.html" rel="nofollow noreferrer noopener" target="_blank">Deprecations</a>.</p>
-<button aria-label="Close" class="js-dismiss-current-broadcast-notification btn btn-link gl-button" data-expire-date="2022-05-18T00:00:00Z" data-id="100903" type="button">
-<svg class="s16 gl-icon gl-mx-3! gl-text-gray-700" data-testid="close-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#close"></use></svg>
-</button>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<nav aria-label="Breadcrumbs" class="breadcrumbs container-fluid container-limited project-highlight-puc">
-<div class="breadcrumbs-container">
-<button name="button" type="button" class="toggle-mobile-nav" data-qa-selector="toggle_mobile_nav_button"><span class="sr-only">Open sidebar</span>
-<svg class="s18" data-testid="hamburger-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#hamburger"></use></svg>
-</button><div class="breadcrumbs-links" data-qa-selector="breadcrumb_links_content" data-testid="breadcrumb-links">
-<ul class="list-unstyled breadcrumbs-list js-breadcrumbs-list">
-<li><a class="group-path breadcrumb-item-text js-breadcrumb-item-text " href="/mwbot-rs">mwbot-rs</a><svg class="s8 breadcrumbs-list-angle" data-testid="angle-right-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#angle-right"></use></svg></li> <li><a href="/mwbot-rs/mwbot"><span class="breadcrumb-item-text js-breadcrumb-item-text">mwbot</span></a><svg class="s8 breadcrumbs-list-angle" data-testid="angle-right-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#angle-right"></use></svg></li>
-
-<li data-qa-selector="breadcrumb_current_link" data-testid="breadcrumb-current-link">
-<a href="/mwbot-rs/mwbot/-/blob/mwtitle-0.1.0/mwtitle/src/php.rs">Repository</a>
-</li>
-</ul>
-</div>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"mwbot-rs","item":"https://gitlab.com/mwbot-rs"},{"@type":"ListItem","position":2,"name":"mwbot","item":"https://gitlab.com/mwbot-rs/mwbot"},{"@type":"ListItem","position":3,"name":"Repository","item":"https://gitlab.com/mwbot-rs/mwbot/-/blob/mwtitle-0.1.0/mwtitle/src/php.rs"}]}
-
-</script>
-
-</div>
-</nav>
-
-</div>
-<div class="container-fluid container-limited project-highlight-puc">
-<main class="content" id="content-body" itemscope itemtype="http://schema.org/SoftwareSourceCode">
-<div class="flash-container flash-container-page sticky" data-qa-selector="flash_container">
-</div>
-
-
-<div class="js-signature-container" data-signatures-path="/mwbot-rs/mwbot/-/commits/5cdcaf9f87aac0be959d0da14c29168f2f14dd85/signatures?limit=1"></div>
-
-<div class="tree-holder" id="tree-holder">
-<div class="nav-block">
-<div class="tree-ref-container">
-<div class="tree-ref-holder">
-<form class="project-refs-form" action="/mwbot-rs/mwbot/-/refs/switch" accept-charset="UTF-8" method="get"><input type="hidden" name="destination" id="destination" value="blob" />
-<div class="dropdown">
-<button class="dropdown-menu-toggle js-project-refs-dropdown qa-branches-select" type="button" data-toggle="dropdown" data-selected="mwtitle-0.1.0" data-ref="mwtitle-0.1.0" data-refs-url="/mwbot-rs/mwbot/refs?sort=updated_desc" data-field-name="ref" data-submit-form-on-click="true" data-visit="true"><span class="dropdown-toggle-text ">mwtitle-0.1.0</span><svg class="s16 dropdown-menu-toggle-icon gl-top-3" data-testid="chevron-down-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#chevron-down"></use></svg></button>
-<div class="dropdown-menu dropdown-menu-selectable git-revision-dropdown dropdown-menu-paging qa-branches-dropdown">
-<div class="dropdown-page-one">
-<div class="dropdown-title gl-display-flex"><span class="gl-ml-auto">Switch branch/tag</span><button class="dropdown-title-button dropdown-menu-close gl-ml-auto" aria-label="Close" type="button"><svg class="s16 dropdown-menu-close-icon" data-testid="close-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#close"></use></svg></button></div>
-<div class="dropdown-input"><input type="search" data-qa-selector="dropdown_input_field" class="dropdown-input-field" placeholder="Search branches and tags" autocomplete="off" /><svg class="s16 dropdown-input-search" data-testid="search-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#search"></use></svg><svg class="s16 dropdown-input-clear js-dropdown-input-clear" data-testid="close-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#close"></use></svg></div>
-<div class="dropdown-content"></div>
-<div class="dropdown-loading"><div class="gl-spinner-container gl-mt-7" role="status"><span class="gl-spinner gl-spinner-dark gl-spinner-md gl-vertical-align-text-bottom!" aria-label="Loading"></span></div></div>
-</div>
-</div>
-</div>
-</form>
-</div>
-<ul class="breadcrumb repo-breadcrumb">
-<li class="breadcrumb-item">
-<a href="/mwbot-rs/mwbot/-/tree/mwtitle-0.1.0">mwbot
-</a></li>
-<li class="breadcrumb-item">
-<a href="/mwbot-rs/mwbot/-/tree/mwtitle-0.1.0/mwtitle">mwtitle</a>
-</li>
-<li class="breadcrumb-item">
-<a href="/mwbot-rs/mwbot/-/tree/mwtitle-0.1.0/mwtitle/src">src</a>
-</li>
-<li class="breadcrumb-item">
-<a href="/mwbot-rs/mwbot/-/blob/mwtitle-0.1.0/mwtitle/src/php.rs"><strong>php.rs</strong>
-</a></li>
-</ul>
-</div>
-<div class="tree-controls gl-children-ml-sm-3"><a class="gl-button btn btn-default shortcuts-find-file" rel="nofollow" href="/mwbot-rs/mwbot/-/find_file/mwtitle-0.1.0">Find file
-</a><a class="gl-button btn btn-default js-blob-blame-link" href="/mwbot-rs/mwbot/-/blame/mwtitle-0.1.0/mwtitle/src/php.rs">Blame</a><a class="gl-button btn btn-default" href="/mwbot-rs/mwbot/-/commits/mwtitle-0.1.0/mwtitle/src/php.rs">History</a><a class="gl-button btn btn-default js-data-file-blob-permalink-url" href="/mwbot-rs/mwbot/-/blob/f8acfdec0ba944a9b8d54c54ca187d47719890b8/mwtitle/src/php.rs">Permalink</a></div>
-</div>
-
-<div class="info-well d-none d-sm-block">
-<div class="well-segment">
-<ul class="blob-commit-info">
-<li class="commit flex-row js-toggle-container" id="commit-5cdcaf9f">
-<div class="avatar-cell d-none d-sm-block">
-<a href="/legoktm"><img alt="legoktm&#39;s avatar" src="/uploads/-/system/user/avatar/1215346/avatar.png?width=40" class="avatar s40 d-none d-sm-inline-block" title="legoktm" /></a>
-</div>
-<div class="commit-detail flex-list">
-<div class="commit-content" data-qa-selector="commit_content">
-<a class="commit-row-message item-title js-onboarding-commit-item " href="/mwbot-rs/mwbot/-/commit/5cdcaf9f87aac0be959d0da14c29168f2f14dd85">mwtitle: Copy phpCharToUpper.json from MediaWiki</a>
-<span class="commit-row-message d-inline d-sm-none">
-&middot;
-5cdcaf9f
-</span>
-<button aria-label="Toggle commit description" class="gl-button btn btn-default button-ellipsis-horizontal btn-sm gl-ml-2 text-expander js-toggle-button" data-container="body" data-toggle="tooltip" title="Toggle commit description">
-<svg class="s12" data-testid="ellipsis_h-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#ellipsis_h"></use></svg>
-</button>
-<div class="committer">
-<a class="commit-author-link js-user-link" data-user-id="1215346" href="/legoktm">legoktm</a> authored <time class="js-timeago" title="Dec 8, 2021 5:24am" datetime="2021-12-08T05:24:59Z" data-toggle="tooltip" data-placement="bottom" data-container="body">Dec 07, 2021</time>
-</div>
-
-<pre class="commit-row-description gl-mb-3 js-toggle-content">&#x000A;These are characters where MediaWiki's behavior differs from Unicode&#x000A;because PHP and reasons. Really MediaWiki should expose this via&#x000A;siteinfo rather than us hardcoding it.&#x000A;&#x000A;Fixes <a href="/mwbot-rs/mwbot/-/issues/35" data-original="#35" data-link="false" data-link-reference="false" data-project="27531826" data-issue="98502732" data-reference-type="issue" data-container="body" data-placement="top" title="Fix mwtitle's uppercase_first to be more like MediaWiki" class="gfm gfm-issue has-tooltip">#35</a>.</pre>
-</div>
-<div class="commit-actions flex-row">
-
-<div class="js-commit-pipeline-status" data-endpoint="/mwbot-rs/mwbot/-/commit/5cdcaf9f87aac0be959d0da14c29168f2f14dd85/pipelines?ref=mwtitle-0.1.0"></div>
-<div class="commit-sha-group btn-group d-none d-sm-flex">
-<div class="label label-monospace monospace">
-5cdcaf9f
-</div>
-<button class="btn gl-button btn btn-default btn-icon" data-toggle="tooltip" data-placement="bottom" data-container="body" data-title="Copy commit SHA" data-class="gl-button btn btn-default btn-icon" data-clipboard-text="5cdcaf9f87aac0be959d0da14c29168f2f14dd85" type="button" title="Copy commit SHA" aria-label="Copy commit SHA" aria-live="polite"><svg class="s16 gl-icon" data-testid="copy-to-clipboard-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#copy-to-clipboard"></use></svg></button>
-
-</div>
-</div>
-</div>
-</li>
-
-</ul>
-</div>
-
-
-</div>
-<div class="blob-content-holder" id="blob-content-holder">
-<div data-blob-path="mwtitle/src/php.rs" data-original-branch="mwtitle-0.1.0" data-project-path="mwbot-rs/mwbot" data-target-branch="mwtitle-0.1.0" id="js-view-blob-app">
-<div class="gl-spinner-container" role="status"><span class="gl-spinner gl-spinner-dark gl-spinner-md gl-vertical-align-text-bottom!" aria-label="Loading"></span></div>
-</div>
-</div>
-
-<div class="modal" id="modal-upload-blob">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<h3 class="page-title">Replace php.rs</h3>
-<button aria-label="Close" class="close" data-dismiss="modal" type="button">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<form class="js-quick-submit js-upload-blob-form" data-method="put" action="/mwbot-rs/mwbot/-/update/mwtitle-0.1.0/mwtitle/src/php.rs" accept-charset="UTF-8" method="post"><input type="hidden" name="_method" value="put" /><input type="hidden" name="authenticity_token" value="IceyqGnZZEzvDuSHXFLxwZTJxvxqBwtXYY2OFRZOsRf0V2Wjfk34Cvz5nfxQoZa/v3p5jiPxLvL2cLArUywmwQ==" /><div class="dropzone">
-<div class="dropzone-previews blob-upload-dropzone-previews">
-<p class="dz-message light">
-Attach a file by drag &amp; drop or <a class="markdown-selector" href="#">click to upload</a>
-</p>
-</div>
-</div>
-<br>
-<div class="gl-alert gl-alert-danger gl-alert-not-dismissible dropzone-alerts gl-alert gl-alert-danger gl-mb-5 data gl-display-none" role="alert">
-<svg class="s16 gl-alert-icon gl-alert-icon-no-title" data-testid="error-icon"><use href="/assets/icons-1008bb94712c8e896164f60259fc330ffa56df8b6bcd4831371abdf4a7b26326.svg#error"></use></svg>
-<div class="gl-alert-content" role="alert">
-
-</div>
-</div>
-
-<div class="form-group row commit_message-group">
-<label class="col-form-label col-sm-2" for="commit_message-78b6c0dbcedbd6b0ca3174077ed9f442">Commit message
-</label><div class="col-sm-10">
-<div class="commit-message-container">
-<div class="max-width-marker"></div>
-<textarea name="commit_message" id="commit_message-78b6c0dbcedbd6b0ca3174077ed9f442" class="form-control gl-form-input js-commit-message" placeholder="Replace php.rs" data-qa-selector="commit_message_field" required="required" rows="3">
-Replace php.rs</textarea>
-</div>
-</div>
-</div>
-
-<input type="hidden" name="branch_name" id="branch_name" />
-<input type="hidden" name="create_merge_request" id="create_merge_request" value="1" />
-<input type="hidden" name="original_branch" id="original_branch" value="mwtitle-0.1.0" class="js-original-branch" />
-
-<div class="form-actions">
-<button name="button" type="button" class="btn gl-button btn-confirm btn-upload-file gl-mr-2" id="submit-all"><span class="gl-spinner-container gl-mr-2 js-loading-icon hidden" role="status"><span class="gl-spinner gl-spinner-dark gl-spinner-sm gl-vertical-align-text-bottom!" aria-label="Loading"></span></span>
-Replace file
-</button><a class="btn gl-button btn-default btn-cancel" data-dismiss="modal" href="#">Cancel</a>
-<div class="inline gl-ml-3">
-GitLab will create a branch in your fork and start a merge request.
-</div>
-
-</div>
-</form></div>
-</div>
-</div>
-</div>
-
-</div>
-
-<script nonce="sRO9w93AgEVwRm4eIDWUxA==">
-//<![CDATA[
-  window.gl = window.gl || {};
-  window.gl.webIDEPath = '/-/ide/project/mwbot-rs/mwbot/edit/mwtitle-0.1.0/-/mwtitle/src/php.rs'
-
-
-//]]>
-</script>
-
-</main>
-</div>
-
-
-</div>
-</div>
-<div class="top-nav-responsive layout-page content-wrapper-margin">
-<div class="cloak-startup">
-<div data-view-model="{&quot;primary&quot;:[{&quot;id&quot;:&quot;project&quot;,&quot;title&quot;:&quot;Projects&quot;,&quot;active&quot;:true,&quot;icon&quot;:&quot;project&quot;,&quot;href&quot;:&quot;/explore&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Projects&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;groups&quot;,&quot;title&quot;:&quot;Groups&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;group&quot;,&quot;href&quot;:&quot;/explore/groups&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Groups&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;snippets&quot;,&quot;title&quot;:&quot;Snippets&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;snippet&quot;,&quot;href&quot;:&quot;/explore/snippets&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Snippets&quot;},&quot;emoji&quot;:null}],&quot;secondary&quot;:[{&quot;id&quot;:&quot;help&quot;,&quot;title&quot;:&quot;Help&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;question-o&quot;,&quot;href&quot;:&quot;/help&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Help&quot;},&quot;emoji&quot;:null}],&quot;views&quot;:{&quot;search&quot;:{&quot;id&quot;:&quot;search&quot;,&quot;title&quot;:&quot;Search&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;search&quot;,&quot;href&quot;:&quot;/search?project_id=27531826&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:null,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Search&quot;},&quot;emoji&quot;:null}},&quot;shortcuts&quot;:[{&quot;id&quot;:&quot;project-shortcut&quot;,&quot;title&quot;:&quot;Projects&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;&quot;,&quot;href&quot;:&quot;/explore&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-projects&quot;,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Projects&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;groups-shortcut&quot;,&quot;title&quot;:&quot;Groups&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;&quot;,&quot;href&quot;:&quot;/explore/groups&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-groups&quot;,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Groups&quot;},&quot;emoji&quot;:null},{&quot;id&quot;:&quot;snippets-shortcut&quot;,&quot;title&quot;:&quot;Snippets&quot;,&quot;active&quot;:false,&quot;icon&quot;:&quot;&quot;,&quot;href&quot;:&quot;/explore/snippets&quot;,&quot;view&quot;:&quot;&quot;,&quot;css_class&quot;:&quot;dashboard-shortcuts-snippets&quot;,&quot;data&quot;:{&quot;qa_selector&quot;:&quot;menu_item_link&quot;,&quot;qa_title&quot;:&quot;Snippets&quot;},&quot;emoji&quot;:null}],&quot;activeTitle&quot;:&quot;Menu&quot;}" id="js-top-nav-responsive"></div>
-</div>
-</div>
-
-
-
-<script nonce="sRO9w93AgEVwRm4eIDWUxA==">
-//<![CDATA[
-if ('loading' in HTMLImageElement.prototype) {
-  document.querySelectorAll('img.lazy').forEach(img => {
-    img.loading = 'lazy';
-    let imgUrl = img.dataset.src;
-    // Only adding width + height for avatars for now
-    if (imgUrl.indexOf('/avatar/') > -1 && imgUrl.indexOf('?') === -1) {
-      const targetWidth = img.getAttribute('width') || img.width;
-      imgUrl += `?width=${targetWidth}`;
-    }
-    img.src = imgUrl;
-    img.removeAttribute('data-src');
-    img.classList.remove('lazy');
-    img.classList.add('js-lazy-loaded', 'qa-js-lazy-loaded');
-  });
-}
-
-//]]>
-</script>
-<script nonce="sRO9w93AgEVwRm4eIDWUxA==">
-//<![CDATA[
-gl = window.gl || {};
-gl.experiments = {"logged_out_marketing_header":{"variant":"candidate","experiment":"logged_out_marketing_header","key":"f2685f17f10685a532822b9b63379ca3","excluded":false}};
-
-
-//]]>
-</script>
-
-</body>
+<html lang="en">
+  <head>
+    <title></title>
+    <script>
+    /*
+    @licstart  The following is the entire license notice for the JavaScript code in this page.
+
+    Copyright (C) 2020 Internet Archive
+
+    The JavaScript code in this page is free software: you can
+    redistribute it and/or modify it under the terms of the GNU Affero
+    General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option)
+    any later version.  The code is distributed WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS
+    FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+    As additional permission under GNU AGPL version 3 section 7, you
+    may distribute non-source (e.g., minimized or compacted) forms of
+    that code without the copy of the GNU AGPL normally required by
+    section 4, provided you include this license notice and a URL
+    through which recipients can access the Corresponding Source.
+
+    @licend  The above is the entire license notice for the JavaScript code in this page.
+    */
+    </script>
+    <script type="text/javascript">
+      window.webComponentLoaderConfig = {
+      baseUrl: 'https://archive.org',
+      version: '29e56e87'
+      }
+    </script>
+    <script src="https://polyfill.archive.org/v3/polyfill.min.js?features=fetch%2CIntersectionObserver%2CResizeObserver%2CglobalThis%2CElement.prototype.getAttributeNames%2CString.prototype.startsWith%2CArray.prototype.flat"></script>
+    <script src="//archive.org/includes/build/npm/jquery/dist/jquery.min.js?v1.12.4" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/jquery-ui-dist/jquery-ui.min.js?v1.12.1" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/bootstrap/dist/js/bootstrap.min.js?v3.0.0" type="text/javascript"></script>
+    <script src="//archive.org/components/npm/clipboard/dist/clipboard.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/regenerator-runtime-polyfill.min.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/ie-dom-node-remove-polyfill.min.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/lit/polyfill-support.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/polyfill.min.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/analytics.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/components/npm/@webcomponents/webcomponentsjs/webcomponents-bundle.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/more-facets.min.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/ia-topnav.min.js?v=c403d3c5" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/archive.min.js?v=c403d3c5" type="text/javascript"></script>
+    <link href="//archive.org/includes/build/css/archive.min.css?v=c403d3c5" rel="stylesheet" type="text/css"/>
+    <meta property="mediatype" content="">
+    <meta property="primary_collection" content="">
+    <script type="text/javascript">if('archive_analytics' in window){var v=archive_analytics.values;v.path='';v.service='wb';v.server_name='wwwb-app214.us.archive.org';v.server_ms=1331;archive_analytics.send_pageview_on_load()}</script>
+    <link href="/_static/images/archive.ico" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/_static/css/styles.css?v=TN3GQxFf" />
+    <script type="text/javascript" src="/_static/js/ui.js?v=NTAW0JFh" charset="utf-8"></script>
+    <base target="_top">  </head>
+  <body class="navia">
+    
+                    <div class="ia-banners">
+              <div
+        class="ia-banner hidden outage-2022-01-14"
+        data-campaign="outage-2022-01-14">
+        <p>Due to a planned power outage on Friday, 1/14, between 8am-1pm PST, some services may be impacted.</p>
+        <form class="banner-close" action="" method="get" data-action="ia-banner-close">
+          <fieldset>
+            <button aria-label="Close Banner" type="submit"></button>
+          </fieldset>
+        </form>
+      </div>
+          </div>
+                    <div id="topnav">
+                    <ia-topnav
+            baseHost="https://archive.org"
+            mediaBaseHost="https://archive.org"
+            username=""
+            userProfileLastModified=""
+            screenName=""
+                        searchQuery=""
+            config="eyJ1cGxvYWRVUkwiOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL2NyZWF0ZSIsImV2ZW50Q2F0ZWdvcnkiOiJUb3BOYXYiLCJ3YXliYWNrUGFnZXNBcmNoaXZlZCI6IjY4MiBiaWxsaW9uIn0="
+            menus="eyJhdWRpbyI6eyJoZWFkaW5nIjoiSW50ZXJuZXQgQXJjaGl2ZSBBdWRpbyIsImljb25MaW5rcyI6W3siaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvc2VydmljZXNcL2ltZ1wvZXRyZWUiLCJ0aXRsZSI6IkxpdmUgTXVzaWMgQXJjaGl2ZSIsInVybCI6IlwvZGV0YWlsc1wvZXRyZWUifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2xpYnJpdm94YXVkaW8iLCJ0aXRsZSI6IkxpYnJpdm94IEZyZWUgQXVkaW8iLCJ1cmwiOiJcL2RldGFpbHNcL2xpYnJpdm94YXVkaW8ifV0sImZlYXR1cmVkTGlua3MiOlt7InRpdGxlIjoiQWxsIEF1ZGlvIiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpbyJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOmF1ZGlvJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiR3JhdGVmdWwgRGVhZCIsInVybCI6IlwvZGV0YWlsc1wvR3JhdGVmdWxEZWFkIn0seyJ0aXRsZSI6Ik5ldGxhYmVscyIsInVybCI6IlwvZGV0YWlsc1wvbmV0bGFiZWxzIn0seyJ0aXRsZSI6Ik9sZCBUaW1lIFJhZGlvIiwidXJsIjoiXC9kZXRhaWxzXC9vbGR0aW1lcmFkaW8ifSx7InRpdGxlIjoiNzggUlBNcyBhbmQgQ3lsaW5kZXIgUmVjb3JkaW5ncyIsInVybCI6IlwvZGV0YWlsc1wvNzhycG0ifV0sImxpbmtzIjpbeyJ0aXRsZSI6IkF1ZGlvIEJvb2tzICYgUG9ldHJ5IiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpb19ib29rc3BvZXRyeSJ9LHsidGl0bGUiOiJDb21wdXRlcnMsIFRlY2hub2xvZ3kgYW5kIFNjaWVuY2UiLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX3RlY2gifSx7InRpdGxlIjoiTXVzaWMsIEFydHMgJiBDdWx0dXJlIiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpb19tdXNpYyJ9LHsidGl0bGUiOiJOZXdzICYgUHVibGljIEFmZmFpcnMiLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX25ld3MifSx7InRpdGxlIjoiU3Bpcml0dWFsaXR5ICYgUmVsaWdpb24iLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX3JlbGlnaW9uIn0seyJ0aXRsZSI6IlBvZGNhc3RzIiwidXJsIjoiXC9kZXRhaWxzXC9wb2RjYXN0cyJ9LHsidGl0bGUiOiJSYWRpbyBOZXdzIEFyY2hpdmUiLCJ1cmwiOiJcL2RldGFpbHNcL3JhZGlvIn1dfSwiaW1hZ2VzIjp7ImhlYWRpbmciOiJJbWFnZXMiLCJpY29uTGlua3MiOlt7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL21ldHJvcG9saXRhbm11c2V1bW9mYXJ0LWdhbGxlcnkiLCJ0aXRsZSI6Ik1ldHJvcG9saXRhbiBNdXNldW0iLCJ1cmwiOiJcL2RldGFpbHNcL21ldHJvcG9saXRhbm11c2V1bW9mYXJ0LWdhbGxlcnkifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2NsZXZlbGFuZGFydCIsInRpdGxlIjoiQ2xldmVsYW5kIE11c2V1bSBvZiBBcnQiLCJ1cmwiOiJcL2RldGFpbHNcL2NsZXZlbGFuZGFydCJ9XSwiZmVhdHVyZWRMaW5rcyI6W3sidGl0bGUiOiJBbGwgSW1hZ2VzIiwidXJsIjoiXC9kZXRhaWxzXC9pbWFnZSJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOmltYWdlJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiRmxpY2tyIENvbW1vbnMiLCJ1cmwiOiJcL2RldGFpbHNcL2ZsaWNrcmNvbW1vbnMifSx7InRpdGxlIjoiT2NjdXB5IFdhbGwgU3RyZWV0IEZsaWNrciIsInVybCI6IlwvZGV0YWlsc1wvZmxpY2tyLW93cyJ9LHsidGl0bGUiOiJDb3ZlciBBcnQiLCJ1cmwiOiJcL2RldGFpbHNcL2NvdmVyYXJ0YXJjaGl2ZSJ9LHsidGl0bGUiOiJVU0dTIE1hcHMiLCJ1cmwiOiJcL2RldGFpbHNcL21hcHNfdXNncyJ9XSwibGlua3MiOlt7InRpdGxlIjoiTkFTQSBJbWFnZXMiLCJ1cmwiOiJcL2RldGFpbHNcL25hc2EifSx7InRpdGxlIjoiU29sYXIgU3lzdGVtIENvbGxlY3Rpb24iLCJ1cmwiOiJcL2RldGFpbHNcL3NvbGFyc3lzdGVtY29sbGVjdGlvbiJ9LHsidGl0bGUiOiJBbWVzIFJlc2VhcmNoIENlbnRlciIsInVybCI6IlwvZGV0YWlsc1wvYW1lc3Jlc2VhcmNoY2VudGVyaW1hZ2VsaWJyYXJ5In1dfSwibW9yZSI6W3sidGl0bGUiOiJBYm91dCIsInVybCI6IlwvYWJvdXRcLyJ9LHsidGl0bGUiOiJCbG9nIiwidXJsIjoiaHR0cHM6XC9cL2Jsb2cuYXJjaGl2ZS5vcmcifSx7InRpdGxlIjoiUHJvamVjdHMiLCJ1cmwiOiJcL3Byb2plY3RzXC8ifSx7InRpdGxlIjoiSGVscCIsInVybCI6IlwvYWJvdXRcL2ZhcXMucGhwIn0seyJ0aXRsZSI6IkRvbmF0ZSIsInVybCI6IlwvZG9uYXRlP29yaWdpbj13Ynd3dy1Ub3BOYXZEb25hdGVCdXR0b24ifSx7InRpdGxlIjoiQ29udGFjdCIsInVybCI6IlwvYWJvdXRcL2NvbnRhY3QucGhwIn0seyJ0aXRsZSI6IkpvYnMiLCJ1cmwiOiJcL2Fib3V0XC9qb2JzLnBocCJ9LHsidGl0bGUiOiJWb2x1bnRlZXIiLCJ1cmwiOiJcL2Fib3V0XC92b2x1bnRlZXJwb3NpdGlvbnMucGhwIn0seyJ0aXRsZSI6IlBlb3BsZSIsInVybCI6IlwvYWJvdXRcL2Jpb3MucGhwIn1dLCJzb2Z0d2FyZSI6eyJoZWFkaW5nIjoiU29mdHdhcmUiLCJpY29uTGlua3MiOlt7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2ludGVybmV0YXJjYWRlIiwidGl0bGUiOiJJbnRlcm5ldCBBcmNhZGUiLCJ1cmwiOiJcL2RldGFpbHNcL2ludGVybmV0YXJjYWRlIn0seyJpY29uIjoiaHR0cHM6XC9cL2FyY2hpdmUub3JnXC9zZXJ2aWNlc1wvaW1nXC9jb25zb2xlbGl2aW5ncm9vbSIsInRpdGxlIjoiQ29uc29sZSBMaXZpbmcgUm9vbSIsInVybCI6IlwvZGV0YWlsc1wvY29uc29sZWxpdmluZ3Jvb20ifV0sImZlYXR1cmVkTGlua3MiOlt7InRpdGxlIjoiQWxsIFNvZnR3YXJlIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZSJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOnNvZnR3YXJlJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiT2xkIFNjaG9vbCBFbXVsYXRpb24iLCJ1cmwiOiJcL2RldGFpbHNcL3Rvc2VjIn0seyJ0aXRsZSI6Ik1TLURPUyBHYW1lcyIsInVybCI6IlwvZGV0YWlsc1wvc29mdHdhcmVsaWJyYXJ5X21zZG9zX2dhbWVzIn0seyJ0aXRsZSI6Ikhpc3RvcmljYWwgU29mdHdhcmUiLCJ1cmwiOiJcL2RldGFpbHNcL2hpc3RvcmljYWxzb2Z0d2FyZSJ9LHsidGl0bGUiOiJDbGFzc2ljIFBDIEdhbWVzIiwidXJsIjoiXC9kZXRhaWxzXC9jbGFzc2ljcGNnYW1lcyJ9LHsidGl0bGUiOiJTb2Z0d2FyZSBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZWxpYnJhcnkifV0sImxpbmtzIjpbeyJ0aXRsZSI6IktvZGkgQXJjaGl2ZSBhbmQgU3VwcG9ydCBGaWxlIiwidXJsIjoiXC9kZXRhaWxzXC9rb2RpX2FyY2hpdmUifSx7InRpdGxlIjoiVmludGFnZSBTb2Z0d2FyZSIsInVybCI6IlwvZGV0YWlsc1wvdmludGFnZXNvZnR3YXJlIn0seyJ0aXRsZSI6IkFQSyIsInVybCI6IlwvZGV0YWlsc1wvYXBrYXJjaGl2ZSJ9LHsidGl0bGUiOiJNUy1ET1MiLCJ1cmwiOiJcL2RldGFpbHNcL3NvZnR3YXJlbGlicmFyeV9tc2RvcyJ9LHsidGl0bGUiOiJDRC1ST00gU29mdHdhcmUiLCJ1cmwiOiJcL2RldGFpbHNcL2NkLXJvbXMifSx7InRpdGxlIjoiQ0QtUk9NIFNvZnR3YXJlIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL2Nkcm9tc29mdHdhcmUifSx7InRpdGxlIjoiU29mdHdhcmUgU2l0ZXMiLCJ1cmwiOiJcL2RldGFpbHNcL3NvZnR3YXJlc2l0ZXMifSx7InRpdGxlIjoiVHVjb3dzIFNvZnR3YXJlIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL3R1Y293cyJ9LHsidGl0bGUiOiJTaGFyZXdhcmUgQ0QtUk9NcyIsInVybCI6IlwvZGV0YWlsc1wvY2RiYnNhcmNoaXZlIn0seyJ0aXRsZSI6IlNvZnR3YXJlIENhcHN1bGVzIENvbXBpbGF0aW9uIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZWNhcHN1bGVzIn0seyJ0aXRsZSI6IkNELVJPTSBJbWFnZXMiLCJ1cmwiOiJcL2RldGFpbHNcL2Nkcm9taW1hZ2VzIn0seyJ0aXRsZSI6IlpYIFNwZWN0cnVtIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZWxpYnJhcnlfenhfc3BlY3RydW0ifSx7InRpdGxlIjoiRE9PTSBMZXZlbCBDRCIsInVybCI6IlwvZGV0YWlsc1wvZG9vbS1jZHMifV19LCJ0ZXh0cyI6eyJoZWFkaW5nIjoiQm9va3MiLCJpY29uTGlua3MiOlt7InRpdGxlIjoiQm9va3MgdG8gQm9ycm93IiwiaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvc2VydmljZXNcL2ltZ1wvaW5saWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9pbmxpYnJhcnkifSx7InRpdGxlIjoiT3BlbiBMaWJyYXJ5IiwiaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvaW1hZ2VzXC93aWRnZXRPTC5wbmciLCJ1cmwiOiJodHRwczpcL1wvb3BlbmxpYnJhcnkub3JnXC8ifV0sImZlYXR1cmVkTGlua3MiOlt7InRpdGxlIjoiQWxsIEJvb2tzIiwidXJsIjoiXC9kZXRhaWxzXC9ib29rcyJ9LHsidGl0bGUiOiJBbGwgVGV4dHMiLCJ1cmwiOiJcL2RldGFpbHNcL3RleHRzIn0seyJ0aXRsZSI6IlRoaXMgSnVzdCBJbiIsInVybCI6Ilwvc2VhcmNoLnBocD9xdWVyeT1tZWRpYXR5cGU6dGV4dHMmc29ydD0tcHVibGljZGF0ZSJ9LHsidGl0bGUiOiJTbWl0aHNvbmlhbiBMaWJyYXJpZXMiLCJ1cmwiOiJcL2RldGFpbHNcL3NtaXRoc29uaWFuIn0seyJ0aXRsZSI6IkZFRExJTksgKFVTKSIsInVybCI6IlwvZGV0YWlsc1wvZmVkbGluayJ9LHsidGl0bGUiOiJHZW5lYWxvZ3kiLCJ1cmwiOiJcL2RldGFpbHNcL2dlbmVhbG9neSJ9LHsidGl0bGUiOiJMaW5jb2xuIENvbGxlY3Rpb24iLCJ1cmwiOiJcL2RldGFpbHNcL2xpbmNvbG5jb2xsZWN0aW9uIn1dLCJsaW5rcyI6W3sidGl0bGUiOiJBbWVyaWNhbiBMaWJyYXJpZXMiLCJ1cmwiOiJcL2RldGFpbHNcL2FtZXJpY2FuYSJ9LHsidGl0bGUiOiJDYW5hZGlhbiBMaWJyYXJpZXMiLCJ1cmwiOiJcL2RldGFpbHNcL3Rvcm9udG8ifSx7InRpdGxlIjoiVW5pdmVyc2FsIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL3VuaXZlcnNhbGxpYnJhcnkifSx7InRpdGxlIjoiUHJvamVjdCBHdXRlbmJlcmciLCJ1cmwiOiJcL2RldGFpbHNcL2d1dGVuYmVyZyJ9LHsidGl0bGUiOiJDaGlsZHJlbidzIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL2lhY2wifSx7InRpdGxlIjoiQmlvZGl2ZXJzaXR5IEhlcml0YWdlIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL2Jpb2RpdmVyc2l0eSJ9LHsidGl0bGUiOiJCb29rcyBieSBMYW5ndWFnZSIsInVybCI6IlwvZGV0YWlsc1wvYm9va3NieWxhbmd1YWdlIn0seyJ0aXRsZSI6IkJvb2tzIGJ5IExhbmd1YWdlIiwidXJsIjoiXC9kZXRhaWxzXC9ib29rc2J5bGFuZ3VhZ2UifSx7InRpdGxlIjoiQWRkaXRpb25hbCBDb2xsZWN0aW9ucyIsInVybCI6IlwvZGV0YWlsc1wvYWRkaXRpb25hbF9jb2xsZWN0aW9ucyJ9XX0sIndlYiI6eyJtb2JpbGVBcHBzTGlua3MiOlt7InVybCI6Imh0dHBzOlwvXC9hcHBzLmFwcGxlLmNvbVwvdXNcL2FwcFwvd2F5YmFjay1tYWNoaW5lXC9pZDEyMDE4ODgzMTMiLCJ0aXRsZSI6IldheWJhY2sgTWFjaGluZSAoaU9TKSIsImV4dGVybmFsIjp0cnVlfSx7InVybCI6Imh0dHBzOlwvXC9wbGF5Lmdvb2dsZS5jb21cL3N0b3JlXC9hcHBzXC9kZXRhaWxzP2lkPWNvbS5hcmNoaXZlLndheWJhY2ttYWNoaW5lJmhsPWVuX1VTIiwidGl0bGUiOiJXYXliYWNrIE1hY2hpbmUgKEFuZHJvaWQpIiwiZXh0ZXJuYWwiOnRydWV9XSwiYnJvd3NlckV4dGVuc2lvbnNMaW5rcyI6W3sidXJsIjoiaHR0cHM6XC9cL2Nocm9tZS5nb29nbGUuY29tXC93ZWJzdG9yZVwvZGV0YWlsXC93YXliYWNrLW1hY2hpbmVcL2Zwbm1nZGthYmttbmFkY2pwZWhtbGxsa25kcGttaWFrIiwidGl0bGUiOiJDaHJvbWUiLCJleHRlcm5hbCI6dHJ1ZX0seyJ1cmwiOiJodHRwczpcL1wvYWRkb25zLm1vemlsbGEub3JnXC9lbi1VU1wvZmlyZWZveFwvYWRkb25cL3dheWJhY2stbWFjaGluZV9uZXdcLyIsInRpdGxlIjoiRmlyZWZveCIsImV4dGVybmFsIjp0cnVlfSx7InVybCI6Imh0dHBzOlwvXC9hcHBzLmFwcGxlLmNvbVwvdXNcL2FwcFwvd2F5YmFjay1tYWNoaW5lXC9pZDE0NzI0MzI0MjI/bXQ9MTIiLCJ0aXRsZSI6IlNhZmFyaSIsImV4dGVybmFsIjp0cnVlfSx7InVybCI6Imh0dHBzOlwvXC9taWNyb3NvZnRlZGdlLm1pY3Jvc29mdC5jb21cL2FkZG9uc1wvZGV0YWlsXC93YXliYWNrLW1hY2hpbmVcL2tqbWlja2Vvb2dnaGFpbW1vbWFnYWdobm9nZWxwY3BuP2hsPWVuLVVTIiwidGl0bGUiOiJFZGdlIiwiZXh0ZXJuYWwiOnRydWV9XSwiYXJjaGl2ZUl0TGlua3MiOlt7InVybCI6Imh0dHBzOlwvXC93d3cuYXJjaGl2ZS1pdC5vcmdcL2V4cGxvcmUiLCJ0aXRsZSI6IkV4cGxvcmUgdGhlIENvbGxlY3Rpb25zIn0seyJ1cmwiOiJodHRwczpcL1wvd3d3LmFyY2hpdmUtaXQub3JnXC9ibG9nXC9sZWFybi1tb3JlXC8iLCJ0aXRsZSI6IkxlYXJuIE1vcmUifSx7InVybCI6Imh0dHBzOlwvXC93d3cuYXJjaGl2ZS1pdC5vcmdcL2NvbnRhY3QtdXMiLCJ0aXRsZSI6IkJ1aWxkIENvbGxlY3Rpb25zIn1dfSwidmlkZW8iOnsiaGVhZGluZyI6IlZpZGVvIiwiaWNvbkxpbmtzIjpbeyJpY29uIjoiaHR0cHM6XC9cL2FyY2hpdmUub3JnXC9zZXJ2aWNlc1wvaW1nXC90diIsInRpdGxlIjoiVFYgTmV3cyIsInVybCI6IlwvZGV0YWlsc1wvdHYifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcLzkxMSIsInRpdGxlIjoiVW5kZXJzdGFuZGluZyA5XC8xMSIsInVybCI6IlwvZGV0YWlsc1wvOTExIn1dLCJmZWF0dXJlZExpbmtzIjpbeyJ0aXRsZSI6IkFsbCBWaWRlbyIsInVybCI6IlwvZGV0YWlsc1wvbW92aWVzIn0seyJ0aXRsZSI6IlRoaXMgSnVzdCBJbiIsInVybCI6Ilwvc2VhcmNoLnBocD9xdWVyeT1tZWRpYXR5cGU6bW92aWVzJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiUHJlbGluZ2VyIEFyY2hpdmVzIiwidXJsIjoiXC9kZXRhaWxzXC9wcmVsaW5nZXIifSx7InRpdGxlIjoiRGVtb2NyYWN5IE5vdyEiLCJ1cmwiOiJcL2RldGFpbHNcL2RlbW9jcmFjeV9ub3dfdmlkIn0seyJ0aXRsZSI6Ik9jY3VweSBXYWxsIFN0cmVldCIsInVybCI6IlwvZGV0YWlsc1wvb2NjdXB5d2FsbHN0cmVldCJ9LHsidGl0bGUiOiJUViBOU0EgQ2xpcCBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9uc2EifV0sImxpbmtzIjpbeyJ0aXRsZSI6IkFuaW1hdGlvbiAmIENhcnRvb25zIiwidXJsIjoiXC9kZXRhaWxzXC9hbmltYXRpb25hbmRjYXJ0b29ucyJ9LHsidGl0bGUiOiJBcnRzICYgTXVzaWMiLCJ1cmwiOiJcL2RldGFpbHNcL2FydHNhbmRtdXNpY3ZpZGVvcyJ9LHsidGl0bGUiOiJDb21wdXRlcnMgJiBUZWNobm9sb2d5IiwidXJsIjoiXC9kZXRhaWxzXC9jb21wdXRlcnNhbmR0ZWNodmlkZW9zIn0seyJ0aXRsZSI6IkN1bHR1cmFsICYgQWNhZGVtaWMgRmlsbXMiLCJ1cmwiOiJcL2RldGFpbHNcL2N1bHR1cmFsYW5kYWNhZGVtaWNmaWxtcyJ9LHsidGl0bGUiOiJFcGhlbWVyYWwgRmlsbXMiLCJ1cmwiOiJcL2RldGFpbHNcL2VwaGVtZXJhIn0seyJ0aXRsZSI6Ik1vdmllcyIsInVybCI6IlwvZGV0YWlsc1wvbW92aWVzYW5kZmlsbXMifSx7InRpdGxlIjoiTmV3cyAmIFB1YmxpYyBBZmZhaXJzIiwidXJsIjoiXC9kZXRhaWxzXC9uZXdzYW5kcHVibGljYWZmYWlycyJ9LHsidGl0bGUiOiJTcGlyaXR1YWxpdHkgJiBSZWxpZ2lvbiIsInVybCI6IlwvZGV0YWlsc1wvc3Bpcml0dWFsaXR5YW5kcmVsaWdpb24ifSx7InRpdGxlIjoiU3BvcnRzIFZpZGVvcyIsInVybCI6IlwvZGV0YWlsc1wvc3BvcnRzIn0seyJ0aXRsZSI6IlRlbGV2aXNpb24iLCJ1cmwiOiJcL2RldGFpbHNcL3RlbGV2aXNpb24ifSx7InRpdGxlIjoiVmlkZW9nYW1lIFZpZGVvcyIsInVybCI6IlwvZGV0YWlsc1wvZ2FtZXZpZGVvcyJ9LHsidGl0bGUiOiJWbG9ncyIsInVybCI6IlwvZGV0YWlsc1wvdmxvZ3MifSx7InRpdGxlIjoiWW91dGggTWVkaWEiLCJ1cmwiOiJcL2RldGFpbHNcL3lvdXRoX21lZGlhIn1dfSwidXNlciI6W10sInNpZ25lZE91dCI6W3sidXJsIjoiXC9hY2NvdW50XC9zaWdudXAiLCJ0aXRsZSI6IlNpZ24gdXAgZm9yIGZyZWUiLCJhbmFseXRpY3NFdmVudCI6IkF2YXRhck1lbnUtU2lnbnVwIn0seyJ1cmwiOiJcL2FjY291bnRcL2xvZ2luIiwidGl0bGUiOiJMb2cgaW4iLCJhbmFseXRpY3NFdmVudCI6IkF2YXRhck1lbnUtTG9naW4ifV19">
+                                      <noscript class='static-content'>      <style scope="icon-hamburger-1">.icon-hamburger-1 svg.icon-hamburger {
+        display: block;
+      }
+
+      .icon-hamburger-1 .fill-color.icon-hamburger {
+        fill: #fff;
+      }</style><!-- Shady DOM styles for login-button --><style scope="login-button-1">.login-button-1 .dropdown-toggle.login-button {
+        display: block;
+          height: 4rem;
+          font-size: 1.6rem;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: #ccc;
+          cursor: pointer;
+      }
+
+      .login-button-1 .dropdown-toggle.login-button .fill-color.login-button {
+        fill: #999;
+      }
+
+      .login-button-1 .dropdown-toggle.login-button:active .fill-color.login-button,.login-button-1 .dropdown-toggle.login-button:focus .fill-color.login-button,.login-button-1 .dropdown-toggle.login-button:hover .fill-color.login-button {
+        fill: #fff;
+      }
+
+      .login-button-1 .active.login-button {
+        border-radius: 1rem 1rem 0 0;
+          background: #333;
+      }
+
+      .login-button-1 .active.login-button .fill-color.login-button {
+        fill: #fff;
+      }
+
+      .login-button-1 span.login-button {
+        display: none;
+          font-size: 1.4rem;
+          text-transform: uppercase;
+          color: #999;
+      }
+
+      .login-button-1 span.login-button a.login-button {
+        color: inherit;
+          text-decoration: none;
+      }
+
+      .login-button-1 a.login-button:hover,.login-button-1 a.login-button:active,.login-button-1 a.login-button:focus {
+        color: #fff;
+      }
+
+      @media (min-width: 890px) {
+      .login-button-1 .logged-out-toolbar.login-button {
+        transform: translateY(-.5rem);
+      }
+
+      .login-button-1 .active.login-button {
+        background: transparent;
+      }
+
+      .login-button-1 .dropdown-toggle.login-button {
+        display: inline-block;
+            vertical-align: middle;
+      }
+
+      .login-button-1 span.login-button {
+        display: inline;
+            vertical-align: middle;
+      }
+
+      }</style><!-- Shady DOM styles for nav-search --><style scope="nav-search-1">.nav-search-1 input.nav-search:focus {
+        outline: none;
+      }
+
+      .nav-search-1 button.nav-search {
+        background: none;
+          color: inherit;
+          border: none;
+          font: inherit;
+          cursor: pointer;
+      }
+
+      .nav-search-1 button.nav-search:focus {
+        outline: none;
+      }
+
+      .nav-search-1 .search.nav-search {
+        padding-top: 0;
+          margin-right: .5rem;
+      }
+
+      .nav-search-1 .search.nav-search svg.nav-search {
+        position: relative;
+          top: -5px;
+          right: -3px;
+          fill:;
+      }
+
+      .nav-search-1 .search-activated.nav-search {
+        display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          position: absolute;
+          top: 0;
+          right: 5rem;
+          bottom: 0;
+          left: 5rem;
+          z-index: 3;
+          padding: 0.5rem 0.2rem;
+          border-radius: 1rem 1rem 0 0;
+          background: #333;
+      }
+
+      .nav-search-1 .search-inactive.nav-search {
+        display: none;
+      }
+
+      .nav-search-1 .search-activated.nav-search .highlight.nav-search,.nav-search-1 .search-activated.nav-search .search.nav-search {
+        background: #fff;
+          border-radius: 0.5rem;
+      }
+
+      .nav-search-1 .search-activated.nav-search .highlight.nav-search {
+        display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          width: 100%;
+          margin: 0 .5rem;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search.nav-search {
+        height: 100%;
+          padding: 0;
+          margin-right: 0;
+          -ms-flex-item-align: center;
+          -ms-grid-row-align: center;
+          align-self: center;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search-field.nav-search {
+        width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          padding-left: 1rem;
+          border-radius: 0.5rem;
+          border: none;
+          font-size: 1.6rem;
+          text-align: center;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search-field.nav-search:focus {
+        outline: none;
+      }
+
+      @keyframes fade-in-nav-search-1 {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+
+      }
+
+      .nav-search-1 .fade-in.nav-search {
+        animation: fade-in-nav-search-1 .2s forwards;
+      }
+
+      @media (min-width: 890px) {
+      .nav-search-1 .search.nav-search svg.nav-search {
+        display: inline;
+            width: 28px;
+            height: 28px;
+            vertical-align: -14px;
+      }
+
+      .nav-search-1 .search.nav-search path.nav-search {
+        fill: #333;
+      }
+
+      .nav-search-1 .search-inactive.nav-search,.nav-search-1 .search-activated.nav-search {
+        display: block;
+            position: static;
+            padding: 1.2rem .2rem;
+            background: transparent;
+      }
+
+      .nav-search-1 .search-activated.nav-search .highlight.nav-search {
+        width: 13rem;
+            height: 2.8rem;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: reverse;
+            -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search-field.nav-search {
+        width: calc(100% - 28px);
+            height: 100%;
+            padding-left: 0;
+            font-size: 1.4rem;
+            text-align: left;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search.nav-search svg.nav-search {
+        width: 28px;
+            height: 28px;
+      }
+
+      }</style><!-- Shady DOM styles for media-button --><style scope="media-button-1">.media-button-1 a.media-button {
+        display: inline-block;
+          text-decoration: none;
+      }
+
+      .media-button-1 .menu-item.media-button {
+        display: inline-flex;
+          width: 100%;
+          padding: 0;
+          font-size: 1.6rem;
+          text-align: left;
+          background: transparent;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+      }
+
+      .media-button-1 .menu-item.media-button:focus {
+        outline: none;
+      }
+
+      .media-button-1 .label.media-button {
+        display: inline-block;
+          padding: 0;
+          font-weight: 400;
+          color: #fff;
+          text-align: left;
+          vertical-align: middle;
+      }
+
+      .media-button-1 .menu-item.media-button > .icon.media-button {
+        display: inline-flex;
+          width: 42px;
+          height: 42px;
+          vertical-align: middle;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+      }
+
+      .media-button-1 .menu-item.selected.media-button .icon.media-button {
+        background-color: #333;
+          border-radius: 1rem 0 0 1rem;
+      }
+
+      .media-button-1 .icon.media-button .fill-color.media-button {
+        fill: #999;
+      }
+
+      .media-button-1 .icon.active.media-button .fill-color.media-button {
+        fill: #fff;
+      }
+
+      .media-button-1 .donate.media-button .fill-color.media-button {
+        fill: #f00;
+      }
+
+      @media (min-width: 890px) {
+      .media-button-1 .menu-item.media-button {
+        width: auto;
+            height: 5rem;
+            color: #999;
+      }
+
+      .media-button-1 .menu-item.media-button:hover,.media-button-1 .menu-item.media-button:active,.media-button-1 .menu-item.media-button:focus {
+        color: #fff;
+      }
+
+      .media-button-1 .menu-item.media-button:hover .fill-color.media-button,.media-button-1 .menu-item.media-button:active .fill-color.media-button,.media-button-1 .menu-item.media-button:focus .fill-color.media-button {
+        fill: #fff;
+      }
+
+      .media-button-1 .label.media-button {
+        display: none;
+      }
+
+      .media-button-1 .label.media-button,.media-button-1 .web.media-button:after {
+        padding-right: 1rem;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            color: inherit;
+      }
+
+      .media-button-1 .web.media-button:after {
+        display: none;
+            content: "web";
+      }
+
+      .media-button-1 .donate.media-button,.media-button-1 .more.media-button {
+        display: none;
+      }
+
+      .media-button-1 .menu-item.selected.media-button {
+        background: #474747;
+      }
+
+      .media-button-1 .menu-item.selected.media-button .label.media-button,.media-button-1 .menu-item.selected.web.media-button:after {
+        color: #fff;
+      }
+
+      .media-button-1 .menu-item.selected.media-button .icon.media-button {
+        background: transparent;
+      }
+
+      .media-button-1 .web.selected.media-button .fill-color.media-button {
+        fill: #ffcd27;
+      }
+
+      .media-button-1 .texts.selected.media-button .fill-color.media-button {
+        fill: #faab3c;
+      }
+
+      .media-button-1 .video.selected.media-button .fill-color.media-button {
+        fill: #f1644b;
+      }
+
+      .media-button-1 .audio.selected.media-button .fill-color.media-button {
+        fill: #00adef;
+      }
+
+      .media-button-1 .software.selected.media-button .fill-color.media-button {
+        fill: #9ecc4f;
+      }
+
+      .media-button-1 .images.selected.media-button .fill-color.media-button {
+        fill: #aa99c9;
+      }
+
+      }
+
+      @media (min-width: 1300px) {
+      .media-button-1 .label.media-button,.media-button-1 .web.media-button:after {
+        display: inline;
+      }
+
+      .media-button-1 .web.media-button .label.media-button {
+        display: none;
+      }
+
+      }</style><!-- Shady DOM styles for media-menu --><style scope="media-menu-1">.media-menu-1 {
+        outline: none;
+      }
+
+      .media-menu-1 .media-menu.media-menu {
+        position: absolute;
+          z-index: -1;
+          top: -100vh;
+          width: 100%;
+          background-color: #222;
+          margin: 0;
+          overflow: hidden;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.media-menu {
+        transition-property: top;
+          transition-duration: 0.2s;
+          transition-timing-function: ease;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.open.media-menu {
+        top: 100%;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.closed.media-menu {
+        top: -100vh;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.closed.media-menu {
+        transition-duration: 0.2s;
+      }
+
+      .media-menu-1 .menu-group.media-menu {
+        position: relative;
+          line-height: normal;
+      }
+
+      @media (min-width: 890px) {
+      .media-menu-1 .media-menu.media-menu {
+        display: inline-block;
+            position: static;
+            width: auto;
+            height: 5rem;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.media-menu {
+        transition-property: none;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.open.media-menu,.media-menu-1 .media-menu.tx-slide.closed.media-menu {
+        top: 0;
+      }
+
+      .media-menu-1 .menu-group.media-menu {
+        font-size: 0;
+      }
+
+      }</style><!-- Shady DOM styles for primary-nav --><style scope="primary-nav-1">.primary-nav-1 button.primary-nav:focus,.primary-nav-1 a.primary-nav:focus,.primary-nav-1 input.primary-nav:focus {
+        outline: none;
+      }
+
+      .primary-nav-1 nav.primary-nav {
+        position: relative;
+          display: -ms-grid;
+          display: grid;
+          height: 4rem;
+          grid-template-areas: "hamburger empty search user";
+          -ms-grid-columns: 4rem minmax(1rem, 100%) 4.3rem 5rem;
+          grid-template-columns: 4rem auto 4.3rem 5rem;
+          -ms-grid-rows: 100%;
+          grid-template-rows: 100%;
+          background: #222;
+          border-bottom: 1px solid #333;
+      }
+
+      .primary-nav-1 button.primary-nav {
+        background: none;
+          color: inherit;
+          border: none;
+          font: inherit;
+          cursor: pointer;
+      }
+
+      .primary-nav-1 .link-home.primary-nav {
+        position: absolute;
+          top: 50%;
+          left: 50%;
+          z-index: 2;
+          text-decoration: none;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+      }
+
+      .primary-nav-1 media-menu.primary-nav {
+        grid-column-start: hamburger-start;
+          grid-column-end: user-end;
+      }
+
+      .primary-nav-1 .ia-logo.primary-nav {
+        display: block;
+      }
+
+      .primary-nav-1 .ia-wordmark.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .hamburger.primary-nav {
+        -ms-grid-row: 1;
+          -ms-grid-column: 1;
+          grid-area: hamburger;
+          padding: 0;
+      }
+
+      .primary-nav-1 .search-trigger.primary-nav {
+        -ms-grid-row: 1;
+          -ms-grid-column: 3;
+          grid-area: search;
+          position: relative;
+          padding: 0;
+          z-index: 1;
+          width: 100%;
+          text-align: right;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+      }
+
+      .primary-nav-1 .search-trigger.primary-nav .fill-color.primary-nav {
+        fill: #999;
+      }
+
+      .primary-nav-1 .search-activated.primary-nav {
+        position: relative;
+          z-index: 3;
+      }
+
+      .primary-nav-1 .upload.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .upload.primary-nav span.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .user-info.primary-nav {
+        -ms-grid-row: 1;
+          -ms-grid-column: 4;
+          grid-area: user;
+          -ms-grid-row-align: stretch;
+          align-self: stretch;
+          -ms-grid-column-align: end;
+          justify-self: end;
+      }
+
+      .primary-nav-1 .username.primary-nav {
+        display: none;
+          font-size: 1.3rem;
+          vertical-align: middle;
+          text-transform: uppercase;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav {
+        height: 100%;
+          padding: .5rem 1rem;
+          color: #999;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav:hover {
+        color: #fff;
+      }
+
+      .primary-nav-1 .user-menu.active.primary-nav {
+        border-radius: 1rem 1rem 0 0;
+          background: #333;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav img.primary-nav {
+        display: block;
+          width: 30px;
+          height: 30px;
+      }
+
+      @media (min-width: 890px) {
+      .primary-nav-1 {
+        ;
+      }
+
+      .primary-nav-1 nav.primary-nav {
+        display: block;
+            z-index: 2;
+            height: 5rem;
+            padding-right: 1.5rem;
+      }
+
+      .primary-nav-1 .link-home.primary-nav {
+        position: static;
+            float: left;
+            margin-top: 1rem;
+            padding: 0 10px 0 13px;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+      }
+
+      .primary-nav-1 .ia-logo.primary-nav,.primary-nav-1 .ia-wordmark.primary-nav {
+        display: inline-block;
+            vertical-align: middle;
+      }
+
+      .primary-nav-1 .ia-wordmark.primary-nav {
+        margin-left: 1rem;
+      }
+
+      .primary-nav-1 .hamburger.primary-nav,.primary-nav-1 .search-trigger.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .user-info.primary-nav {
+        float: right;
+            padding-top: 1rem;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav {
+        padding-top: 0;
+      }
+
+      .primary-nav-1 .user-menu.active.primary-nav {
+        background: transparent;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav img.primary-nav {
+        display: inline-block;
+            vertical-align: middle;
+      }
+
+      .primary-nav-1 .upload.primary-nav {
+        display: block;
+            float: right;
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #999;
+      }
+
+      .primary-nav-1 .upload.primary-nav:active,.primary-nav-1 .upload.primary-nav:focus,.primary-nav-1 .upload.primary-nav:hover {
+        color: #fff;
+      }
+
+      .primary-nav-1 .upload.primary-nav svg.primary-nav {
+        width: 32px;
+            height: 32px;
+            vertical-align: middle;
+            fill: #999;
+      }
+
+      .primary-nav-1 .upload.primary-nav:hover svg.primary-nav,.primary-nav-1 .upload.primary-nav:focus svg.primary-nav,.primary-nav-1 .upload.primary-nav:active svg.primary-nav {
+        fill: #fff;
+      }
+
+      .primary-nav-1 nav-search.primary-nav {
+        float: right;
+            margin-left: 1rem;
+      }
+
+      .primary-nav-1 login-button.primary-nav {
+        display: block;
+            margin-right: 1rem;
+      }
+
+      }
+
+      @media (min-width: 990px) {
+      .primary-nav-1 .username.primary-nav {
+        display: inline-block;
+      }
+
+      .primary-nav-1 .upload.primary-nav span.primary-nav {
+        display: inline;
+      }
+
+      }</style><!-- Shady DOM styles for user-menu --><!-- Shady DOM styles for search-menu --><style scope="search-menu-1">.search-menu-1 {
+        ;
+      }
+
+      .search-menu-1 button.search-menu:focus,.search-menu-1 input.search-menu:focus {
+        outline-color: #428bca;
+          outline-width: 0.16rem;
+          outline-style: auto;
+      }
+
+      .search-menu-1 .search-menu.search-menu {
+        position: absolute;
+          top: -800px;
+          right: 0;
+          left: 0;
+          z-index: 1;
+          padding: 0 4.5rem;
+          font-size: 1.6rem;
+          background-color: #333;
+      }
+
+      .search-menu-1 .tx-slide.search-menu {
+        overflow: hidden;
+          transition-property: top;
+          transition-duration: 0.2s;
+          transition-timing-function: ease;
+      }
+
+      .search-menu-1 .initial.search-menu,.search-menu-1 .closed.search-menu {
+        top: -800px;
+      }
+
+      .search-menu-1 .closed.search-menu {
+        transition-duration: 0.2s;
+      }
+
+      .search-menu-1 .open.search-menu {
+        top: 4rem;
+      }
+
+      .search-menu-1 label.search-menu,.search-menu-1 a.search-menu {
+        padding: 1rem;
+          display: block;
+      }
+
+      .search-menu-1 .advanced-search.search-menu {
+        text-decoration: none;
+          color: #428bca;
+      }
+
+      @media (min-width: 890px) {
+      .search-menu-1 .search-menu.search-menu {
+        overflow: visible;
+            top: -400px;
+            right: 2rem;
+            left: auto;
+            z-index: 5;
+            padding: 1rem 2rem;
+            transition: opacity .2s ease-in-out;
+            font-size: 1.4rem;
+            color: #333;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .15);
+      }
+
+      .search-menu-1 .search-menu.search-menu:after {
+        position: absolute;
+            right: 7px;
+            top: -7px;
+            width: 12px;
+            height: 7px;
+            box-sizing: border-box;
+            color: #fff;
+            content: "";
+            border-bottom: 7px solid currentColor;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+      }
+
+      .search-menu-1 .initial.search-menu,.search-menu-1 .closed.search-menu {
+        opacity: 0;
+            transition-duration: .2s;
+      }
+
+      .search-menu-1 .open.search-menu {
+        top: 5.1rem;
+            opacity: 1;
+      }
+
+      .search-menu-1 label.search-menu {
+        padding: 0;
+      }
+
+      .search-menu-1 label.search-menu + label.search-menu {
+        padding-top: 7px;
+      }
+
+      .search-menu-1 a.search-menu {
+        padding: 1rem 0 0 0;
+      }
+
+      }</style><!-- Shady DOM styles for wayback-search --><!-- Shady DOM styles for more-slider --><!-- Shady DOM styles for media-subnav --><style scope="media-subnav-1">.media-subnav-1 a.media-subnav {
+        text-decoration: none;
+          color: #fff;
+      }
+
+      .media-subnav-1 img.media-subnav {
+        display: block;
+          width: 90px;
+          height: 90px;
+          margin: 0 auto 1rem auto;
+          border-radius: 45px;
+      }
+
+      .media-subnav-1 h3.media-subnav {
+        margin-top: 0;
+          font-size: 1.8rem;
+      }
+
+      .media-subnav-1 h4.media-subnav {
+        font-size: 1.6rem;
+      }
+
+      .media-subnav-1 ul.media-subnav {
+        padding: 0;
+          margin: 0;
+          list-style: none;
+      }
+
+      .media-subnav-1 li.media-subnav + li.media-subnav {
+        padding-top: 1.5rem;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav {
+        display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: space-evenly;
+          -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+          text-align: center;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav a.media-subnav {
+        display: inline-block;
+          width: 120px;
+          margin-bottom: 1.5rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-align: center;
+          text-overflow: ellipsis;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav a.media-subnav + a.media-subnav {
+        margin-left: 2rem;
+      }
+
+      .media-subnav-1 .featured.media-subnav h4.media-subnav {
+        display: none;
+      }
+
+      @media (min-width: 890px) {
+      .media-subnav-1 {
+        display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 40% 20% 40%;
+            grid-template-columns: 40% 20% 40%;
+      }
+
+      .media-subnav-1 .wayback-search.media-subnav {
+        -ms-grid-column: 1;
+            -ms-grid-column-span: 3;
+            grid-column: 1 / 4;
+      }
+
+      .media-subnav-1 h3.media-subnav {
+        display: none;
+      }
+
+      .media-subnav-1 h4.media-subnav {
+        margin: 0 0 1rem 0;
+            font-weight: 100;
+      }
+
+      .media-subnav-1 ul.media-subnav {
+        font-size: 1.3rem;
+      }
+
+      .media-subnav-1 li.media-subnav {
+        padding-bottom: .5rem;
+      }
+
+      .media-subnav-1 li.media-subnav + li.media-subnav {
+        padding-top: 0;
+      }
+
+      .media-subnav-1 li.media-subnav a.media-subnav {
+        display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav {
+        -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav a.media-subnav {
+        padding-top: 3.5rem;
+            max-width: 160px;
+      }
+
+      .media-subnav-1 .links.media-subnav {
+        padding: 0 1.5rem;
+      }
+
+      .media-subnav-1 .featured.media-subnav {
+        -ms-grid-column: 2;
+      }
+
+      .media-subnav-1 .featured.media-subnav h4.media-subnav {
+        display: block;
+      }
+
+      .media-subnav-1 .top.media-subnav {
+        -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav {
+        display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 50% 3rem 50%;
+            grid-template-columns: 50% 50%;
+            -ms-grid-rows: (auto)[7];
+            grid-template-rows: repeat(7, auto);
+            grid-column-gap: 3rem;
+            grid-auto-flow: column;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(1) {
+        -ms-grid-row: 1;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(2) {
+        -ms-grid-row: 2;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(3) {
+        -ms-grid-row: 3;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(4) {
+        -ms-grid-row: 4;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(5) {
+        -ms-grid-row: 5;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(6) {
+        -ms-grid-row: 6;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(7) {
+        -ms-grid-row: 7;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(8) {
+        -ms-grid-row: 1;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(9) {
+        -ms-grid-row: 2;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(10) {
+        -ms-grid-row: 3;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(11) {
+        -ms-grid-row: 4;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(12) {
+        -ms-grid-row: 5;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(13) {
+        -ms-grid-row: 6;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(14) {
+        -ms-grid-row: 7;
+            -ms-grid-column: 3;
+      }
+
+      }</style><!-- Shady DOM styles for media-slider --><style scope="media-slider-1">.media-slider-1 .overflow-clip.media-slider {
+        display: none;
+          position: absolute;
+          top: 4rem;
+          right: 0;
+          left: 4rem;
+          height: 368px;
+          overflow-x: hidden;
+      }
+
+      .media-slider-1 .information-menu.media-slider {
+        position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          padding: 0;
+          height: 368px;
+          overflow-x: hidden;
+          font-size: 1.4rem;
+          background: #333;
+      }
+
+      .media-slider-1 .open.media-slider {
+        display: block;
+      }
+
+      .media-slider-1 .info-box.media-slider {
+        padding: 1rem;
+      }
+
+      @media (min-width: 890px) {
+      .media-slider-1 .overflow-clip.media-slider {
+        display: block;
+            top: 0;
+            left: 0;
+            height: auto;
+            overflow-x: visible;
+            transform: translate(0, -100%);
+            transition: transform .2s ease;
+      }
+
+      .media-slider-1 .information-menu.media-slider {
+        left: 0;
+            z-index: 1;
+            height: auto;
+            min-height: 21rem;
+            background: #474747;
+            transform: translate(0, -100%);
+            transition: transform .2s ease;
+      }
+
+      .media-slider-1 .overflow-clip.open.media-slider {
+        transform: translate(0, 8rem);
+      }
+
+      .media-slider-1 .information-menu.open.media-slider {
+        transform: translate(0, 0);
+      }
+
+      .media-slider-1 .info-box.media-slider {
+        max-width: 1000px;
+            padding: 1.5rem 0;
+            margin: 0 auto;
+      }
+
+      }</style><!-- Shady DOM styles for desktop-subnav --><style scope="desktop-subnav-1">.desktop-subnav-1 ul.desktop-subnav {
+        position: relative;
+          z-index: 3;
+          padding: .8rem 0;
+          margin: 0;
+          font-size: 1.2rem;
+          text-transform: uppercase;
+          text-align: center;
+          background: #333;
+      }
+
+      .desktop-subnav-1 li.desktop-subnav {
+        display: inline-block;
+          padding: 0 15px;
+      }
+
+      .desktop-subnav-1 a.desktop-subnav {
+        text-decoration: none;
+          color: #aaa;
+      }
+
+      .desktop-subnav-1 a.desktop-subnav:hover,.desktop-subnav-1 a.desktop-subnav:active,.desktop-subnav-1 a.desktop-subnav:focus {
+        color: #fff;
+      }
+
+      .desktop-subnav-1 .donate.desktop-subnav svg.desktop-subnav {
+        width: 16px;
+          height: 16px;
+          vertical-align: -4px;
+          fill: #f00;
+      }</style><!-- Shady DOM styles for signed-out-dropdown --><style scope="signed-out-dropdown-1">.signed-out-dropdown-1 {
+        ;
+      }
+
+      .signed-out-dropdown-1 nav.signed-out-dropdown {
+        position: absolute;
+          top: -1500px;
+          right: 0;
+          z-index: 1;
+          overflow: hidden;
+          font-size: 1.6rem;
+          background-color: #333;
+          transition-property: top;
+          transition-duration: 0.2s;
+          transition-timing-function: ease;
+      }
+
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown {
+        top: -1500px;
+      }
+
+      .signed-out-dropdown-1 .closed.signed-out-dropdown {
+        transition-duration: 0.5s;
+      }
+
+      .signed-out-dropdown-1 .open.signed-out-dropdown {
+        top: 4rem;
+          max-width: 100vw;
+          overflow: auto;
+      }
+
+      .signed-out-dropdown-1 h3.signed-out-dropdown {
+        padding: 0.6rem 2rem;
+          margin: 0;
+          font-size: inherit;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+
+      .signed-out-dropdown-1 ul.signed-out-dropdown {
+        padding: 0.4rem 0 0.7rem 0;
+          margin: 0;
+          list-style: none;
+
+          max-height: calc(100vh - 7.2rem + 1px);
+          overflow: auto;
+          box-sizing: border-box;
+      }
+
+      .signed-out-dropdown-1 .divider.signed-out-dropdown {
+        margin: .5rem 0;
+          border-bottom: 1px solid #666;
+      }
+
+      .signed-out-dropdown-1 a.signed-out-dropdown,.signed-out-dropdown-1 .info-item.signed-out-dropdown {
+        display: block;
+          color: #fff;
+          text-decoration: none;
+          padding: 1rem 2rem;
+      }
+
+      .signed-out-dropdown-1 .info-item.signed-out-dropdown {
+        font-size: .8em;
+          color: #999;
+      }
+
+      @media (min-width: 890px) {
+      .signed-out-dropdown-1 nav.signed-out-dropdown {
+        overflow: visible;
+            top: calc(100% + 7px);
+            left: auto;
+            z-index: 5;
+            transition: opacity .2s ease-in-out;
+            font-size: 1.4rem;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .15);
+      }
+
+      .signed-out-dropdown-1 nav.signed-out-dropdown:after {
+        position: absolute;
+            right: 7px;
+            top: -7px;
+            width: 12px;
+            height: 7px;
+            box-sizing: border-box;
+            color: #fff;
+            content: "";
+            border-bottom: 7px solid currentColor;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+      }
+
+      .signed-out-dropdown-1 h3.signed-out-dropdown {
+        display: none;
+      }
+
+      .signed-out-dropdown-1 ul.signed-out-dropdown {
+        max-height: calc(100vh - 8.5rem + 1px);
+      }
+
+      .signed-out-dropdown-1 .divider.signed-out-dropdown {
+        border-bottom-color: #666;
+      }
+
+      .signed-out-dropdown-1 a.signed-out-dropdown {
+        padding: .5rem 2rem;
+            color: #333;
+            transition: background .1s ease-out, color .1s ease-out;
+      }
+
+      .signed-out-dropdown-1 .info-item.signed-out-dropdown {
+        padding: .5rem 2rem;
+            font-size: .8em;
+      }
+
+      .signed-out-dropdown-1 a.signed-out-dropdown:hover,.signed-out-dropdown-1 a.signed-out-dropdown:active,.signed-out-dropdown-1 a.signed-out-dropdown:focus {
+        color: #fff;
+            background: #428bca;
+      }
+
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown {
+        opacity: 0;
+            transition-duration: .2s;
+      }
+
+      .signed-out-dropdown-1 .open.signed-out-dropdown {
+        top: 5.1rem;
+            opacity: 1;
+            overflow: visible;
+      }
+
+      }
+
+      @media (min-width: 890px) {
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown,.signed-out-dropdown-1 .open.signed-out-dropdown {
+        right: 33.7rem;
+      }
+
+      .signed-out-dropdown-1 .search-hidden.initial.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.closed.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.open.signed-out-dropdown {
+        right: 18.3rem;
+      }
+
+      }
+
+      @media (min-width: 990px) {
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown,.signed-out-dropdown-1 .open.signed-out-dropdown {
+        right: 39.7rem;
+      }
+
+      .signed-out-dropdown-1 .search-hidden.initial.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.closed.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.open.signed-out-dropdown {
+        right: 23.5rem;
+      }
+
+      }</style><!-- Shady DOM styles for ia-topnav --><style scope="ia-topnav-1">.ia-topnav-1 {
+        ;
+
+          color: #fff;
+          font-size: 2rem;
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+
+      .ia-topnav-1 #close-layer.ia-topnav {
+        display: none;
+          position: fixed;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 0;
+      }
+
+      .ia-topnav-1 #close-layer.visible.ia-topnav {
+        display: block;
+      }
+
+      .ia-topnav-1 .topnav.ia-topnav {
+        position: relative;
+          z-index: 3;
+      }
+
+      @media (max-width: 889px) {
+      .ia-topnav-1 desktop-subnav.ia-topnav {
+        display: none;
+      }
+
+      }</style><style>body {transition: opacity ease-in 0.2s; }
+      body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; }
+      </style>
+          <div class="topnav style-scope ia-topnav">
+        <primary-nav class="style-scope ia-topnav x-scope primary-nav-1"><!---->
+      <nav class="style-scope primary-nav">
+        <a class="link-home style-scope primary-nav" href="https://archive.org" data-event-click-tracking="BetaTopNav|NavHome"><!---->
+  <svg class="ia-logo style-scope primary-nav" width="27" height="30" viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg" aria-labelledby="logoTitleID logoDescID">
+    <title id="logoTitleID" class="style-scope primary-nav">Internet Archive logo</title>
+    <desc id="logoDescID" class="style-scope primary-nav">A line drawing of the Internet Archive headquarters building façade.</desc>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="style-scope primary-nav">
+      <mask id="mask-2" fill="white" class="style-scope primary-nav">
+        <path d="M26.6666667,28.6046512 L26.6666667,30 L0,30 L0.000283687943,28.6046512 L26.6666667,28.6046512 Z M25.6140351,26.5116279 L25.6140351,28.255814 L1.05263158,28.255814 L1.05263158,26.5116279 L25.6140351,26.5116279 Z M3.62469203,7.6744186 L3.91746909,7.82153285 L4.0639977,10.1739544 L4.21052632,13.9963932 L4.21052632,17.6725617 L4.0639977,22.255044 L4.03962296,25.3421929 L3.62469203,25.4651163 L2.16024641,25.4651163 L1.72094074,25.3421929 L1.55031755,22.255044 L1.40350877,17.6970339 L1.40350877,14.0211467 L1.55031755,10.1739544 L1.68423854,7.80887484 L1.98962322,7.6744186 L3.62469203,7.6744186 Z M24.6774869,7.6744186 L24.9706026,7.82153285 L25.1168803,10.1739544 L25.2631579,13.9963932 L25.2631579,17.6725617 L25.1168803,22.255044 L25.0927809,25.3421929 L24.6774869,25.4651163 L23.2130291,25.4651163 L22.7736357,25.3421929 L22.602418,22.255044 L22.4561404,17.6970339 L22.4561404,14.0211467 L22.602418,10.1739544 L22.7369262,7.80887484 L23.0420916,7.6744186 L24.6774869,7.6744186 Z M9.94042303,7.6744186 L10.2332293,7.82153285 L10.3797725,10.1739544 L10.5263158,13.9963932 L10.5263158,17.6725617 L10.3797725,22.255044 L10.3556756,25.3421929 L9.94042303,25.4651163 L8.47583122,25.4651163 L8.0362015,25.3421929 L7.86556129,22.255044 L7.71929825,17.6970339 L7.71929825,14.0211467 L7.86556129,10.1739544 L8.00005604,7.80887484 L8.30491081,7.6744186 L9.94042303,7.6744186 Z M18.0105985,7.6744186 L18.3034047,7.82153285 L18.449948,10.1739544 L18.5964912,13.9963932 L18.5964912,17.6725617 L18.449948,22.255044 L18.425851,25.3421929 L18.0105985,25.4651163 L16.5460067,25.4651163 L16.1066571,25.3421929 L15.9357367,22.255044 L15.7894737,17.6970339 L15.7894737,14.0211467 L15.9357367,10.1739544 L16.0702315,7.80887484 L16.3753664,7.6744186 L18.0105985,7.6744186 Z M25.6140351,4.53488372 L25.6140351,6.97674419 L1.05263158,6.97674419 L1.05263158,4.53488372 L25.6140351,4.53488372 Z M13.0806755,0 L25.9649123,2.93331338 L25.4484139,3.8372093 L0.771925248,3.8372093 L0,3.1041615 L13.0806755,0 Z" id="path-1" class="style-scope primary-nav"></path>
+      </mask>
+      <use fill="#FFFFFF" xlink:href="#path-1" class="style-scope primary-nav"></use>
+      <g mask="url(#mask-2)" fill="#FFFFFF" class="style-scope primary-nav">
+        <path d="M0,0 L26.6666667,0 L26.6666667,30 L0,30 L0,0 Z" id="swatch" class="style-scope primary-nav"></path>
+      </g>
+    </g>
+  </svg>
+<!---->
+  <svg class="ia-wordmark style-scope primary-nav" height="14" viewBox="0 0 183 14" width="183" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd" class="style-scope primary-nav"><g transform="translate(107.24177)" class="style-scope primary-nav"><path d="m3.46567087 2.73592273c.09358964-.31350476.26547063-.95793121.26547063-1.08718317 0-.73655285-.57818604-.75488647-1.20271694-.86488814v-.40471447h2.93682509l3.81107838 12.38893815h-1.62387035l-1.17212033-3.82897484h-3.98340931l-1.17167038 3.82897484h-.96784292zm-.7032722 5.33783106h3.4520181l-1.78045302-5.37541496z" class="style-scope primary-nav"></path><path d="m13.7607138 2.88304997c0-1.82281935-.0319465-1.82281935-1.4843858-2.09919855v-.40471447h3.8425749c1.1721204 0 4.4050127 0 4.4050127 3.2954667 0 2.09828187-1.1554722 2.79816749-2.3896856 3.03696279l2.874282 6.05650866h-1.7957513l-2.7649442-5.72512863h-.9687428v5.72512863h-1.7183599zm1.7183599 3.29500836h.8909015c1.0146377 0 2.4364804-.33092169 2.4364804-2.39299467 0-1.98873853-.9687428-2.54103858-2.2812476-2.54103858-1.0461343 0-1.0461343.33138003-1.0461343 1.6573585z" class="style-scope primary-nav"></path><path d="m31.6158204 12.2524422c-.5304913.2768376-1.3903462.6998857-2.9989182.6998857-3.389925 0-4.6083902-2.4113283-4.6083902-6.55334954 0-3.35000921.8742533-6.07530059 4.3582178-6.07530059 1.3903462 0 2.4058839.27592086 3.1240044.55230005l.0940396 3.07500503h-.4530999c-.062543-.9395976-.921948-2.743625-2.6088113-2.743625-2.296096 0-2.6713545 2.88983555-2.6713545 5.19162051 0 2.90816916.8598549 5.52254214 3.0304147 5.52254214 1.4843858 0 2.2497511-.5523 2.7338976-.9386809z" class="style-scope primary-nav"></path><path d="m36.1784975 2.80971552c0-1.45568877-.0935896-1.62114962-1.5626771-1.80448573v-.40563116l3.2805871-.42258975v5.70633665h4.2484299v-5.50420858h1.7183599v12.38893815h-1.7183599v-6.01984144h-4.2484299v6.01984144h-1.71791z" class="style-scope primary-nav"></path><path d="m46.8631973 12.3083598c1.1086774 0 1.3273532-.2759209 1.3273532-1.711901v-7.91645358c0-1.43598014-.2186758-1.71144266-1.3273532-1.71144266v-.46109033h4.3735162v.46109033c-1.093829 0-1.3273532.27546252-1.3273532 1.71144266v7.91645358c0 1.4359801.2335242 1.711901 1.3273532 1.711901v.4597153h-4.3735162z" class="style-scope primary-nav"></path><path d="m56.1269544 2.73592273c-.4998947-1.67569211-.6407291-1.67569211-1.8902409-1.95207131v-.40471447h3.0304147l3.0614614 10.08806985h.0310465l2.9840699-10.08806985h1.0146377l-3.8106284 12.38893815h-1.3588497z" class="style-scope primary-nav"></path><path d="m68.8422796 2.88304997c0-1.82281935-.0467948-1.82281935-1.4839359-2.09919855v-.40471447h7.4826722l.0467949 2.7243747h-.4378016c0-1.47264736-.6555775-1.85948657-1.6868634-1.85948657h-1.2184652c-.7806636 0-.9835912.07333445-.9835912.95747287v3.66351396h1.8902409c1.0767309 0 1.1865187-.80942895 1.2805583-1.41672984h.4369017v3.86518369h-.4369017c0-.9941401-.3437619-1.58356571-1.2805583-1.58356571h-1.8902409v4.10535405c0 1.0308073.2029276 1.0679328.9835912 1.0679328h1.7345581c.8895516 0 1.311155-.3685056 1.4051946-1.8040274h.4378015l-.0476947 2.6689156h-6.2322605z" class="style-scope primary-nav"></path></g><g transform="translate(.24177 .277385)" class="style-scope primary-nav"><path d="m1.57302598 10.3699491v-8.03470531c0-1.45706379-.25962128-1.73802639-1.57302598-1.73802639v-.46659042h5.18252665v.46659042c-1.29540668 0-1.57302597.2809626-1.57302597 1.73802639v8.03470531c0 1.4575222.27761929 1.7366514 1.57302597 1.7366514v.4675071h-5.18252665v-.4675071c1.3134047 0 1.57302598-.2791292 1.57302598-1.7366514z" class="style-scope primary-nav"></path><path d="m10.0331719 2.39116131c0-1.73756805-.25872136-1.66240024-1.85064525-1.98003007v-.41113124h3.90556795l5.830455 10.1641543h.0368959v-10.1641543h1.1662709v12.5741076h-1.7773033l-6.1076243-10.63028642h-.0373459v10.63028642h-1.166271z" class="style-scope primary-nav"></path><path d="m25.9161467.87818h-1.2774087c-1.4618883 0-1.8875412.46704876-1.9991288 1.83198615h-.5178928l.0737919-2.71016615h9.4768516l.0742417 2.76562533h-.5183426c0-1.43873018-.5925845-1.88744533-2.0175768-1.88744533h-1.2580608v11.6959276h-2.0364747z" class="style-scope primary-nav"></path><path d="m36.505907 2.54103859c0-1.84986143-.0562438-1.84986143-1.7593054-2.12990735v-.41113124h8.8658192l.0557938 2.76562533h-.5183426c0-1.49510604-.777064-1.88744533-1.9982289-1.88744533h-1.4443403c-.9255476 0-1.1662709.07516781-1.1662709.97213976v3.71805646h2.2398522c1.2769587 0 1.4060944-.82272082 1.5176821-1.43964686h.5187926v3.92430959h-.5187926c0-1.00880698-.406755-1.60648273-1.5176821-1.60648273h-2.2398522v4.16631328c0 1.0463909.2407233 1.0830581 1.1662709 1.0830581h2.0544728c1.0555832 0 1.554578-.3735473 1.6652657-1.83061113h.5192426l-.0557938 2.70879113h-7.3845831z" class="style-scope primary-nav"></path><path d="m48.7037894 2.54103859c0-1.84986143-.0368959-1.84986143-1.7575055-2.12990735v-.41113124h4.5525963c1.3885464 0 5.2194226 0 5.2194226 3.34450912 0 2.13036568-1.3687486 2.8403348-2.8315368 3.08325515l3.4056733 6.14634333h-2.1287145l-3.2756376-5.81083823h-1.1478231v5.81083823h-2.0364747zm2.0364747 3.34405077h1.0555833c1.202267 0 2.8873305-.33550509 2.8873305-2.42782853 0-2.01898899-1.147823-2.57908083-2.7028509-2.57908083-1.2400629 0-1.2400629.33596344-1.2400629 1.68256722z" class="style-scope primary-nav"></path><path d="m62.1435345 2.39116131c0-1.73756805-.2596213-1.66240024-1.8510952-1.98003007v-.41113124h3.905118l5.830005 10.1641543h.0373458v-10.1641543h1.166271v12.5741076h-1.7764035l-6.1085242-10.63028642h-.0368959v10.63028642h-1.165821z" class="style-scope primary-nav"></path><path d="m75.9895846 2.54103859c0-1.84986143-.0553439-1.84986143-1.7584055-2.12990735v-.41113124h8.8658192l.0557938 2.76562533h-.5183426c0-1.49510604-.777964-1.88744533-1.9991289-1.88744533h-1.4438902c-.9250977 0-1.1658211.07516781-1.1658211.97213976v3.71805646h2.2394023c1.2774087 0 1.4060944-.82272082 1.5176821-1.43964686h.5187926v3.92430959h-.5187926c0-1.00880698-.406755-1.60648273-1.5176821-1.60648273h-2.2394023v4.16631328c0 1.0463909.2407234 1.0830581 1.1658211 1.0830581h2.0544727c1.0555832 0 1.5550279-.3735473 1.6661657-1.83061113h.5183426l-.0557938 2.70879113h-7.385033z" class="style-scope primary-nav"></path><path d="m90.2243917.87818h-1.2765088c-1.4623382 0-1.8879911.46704876-1.9995788 1.83198615h-.5178927l.0742418-2.71016615h9.4759517l.0742418 2.76562533h-.5178928c0-1.43873018-.5921344-1.88744533-2.0180267-1.88744533h-1.2585108v11.6959276h-2.0360247z" class="style-scope primary-nav"></path></g></g></svg>
+<!----></a>
+
+      <button class="search-trigger style-scope primary-nav" data-event-click-tracking="BetaTopNav|NavSearchOpen">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="searchTitleID searchDescID" class="style-scope primary-nav">
+    <title id="searchTitleID" class="style-scope primary-nav">Search icon</title>
+    <desc id="searchDescID" class="style-scope primary-nav">An illustration of a magnifying glass.</desc>
+    <path class="fill-color style-scope primary-nav" d="m32.4526364 29.8875889-8.1719472-7.9751279c1.1046135-1.4876138 1.7652549-3.3102407 1.7652549-5.2846451 0-.101185-.0142895-.1981539-.030573-.2944743.0166158-.0976175.0309053-.196208.0309053-.2990145 0-4.9814145-4.152935-9.0343271-9.2572866-9.0343271-.0907218 0-.1781206.01394537-.2655193.02594487-.0880633-.0119995-.1747974-.02594487-.2655193-.02594487-5.1046839 0-9.25761889 4.0529126-9.25761889 9.0343271 0 .1011849.01395722.1981539.03057294.2947985-.01694804.0976176-.03090525.1958838-.03090525.2986903 0 4.9814145 4.1526027 9.0346514 9.2572866 9.0346514.0907218 0 .1777882-.0139454.2658516-.0262692.0873987.0123238.1741328.0262692.265187.0262692 1.7306942 0 3.3467399-.4747911 4.7338208-1.2852439l8.2882574 8.0886366c.3652137.3564177.843082.53414 1.3212826.53414.4782007 0 .9567336-.1780467 1.3212827-.53414.7294304-.7118622.7294304-1.8660845-.0003323-2.5782711zm-15.9526364-7.8875889c-.0832667-.0118703-.1652765-.0253024-.2513711-.0253024-2.8781993 0-5.2197212-2.3278242-5.2197212-5.1891862 0-.0974612-.013197-.1908615-.0289077-.2836371.0160249-.0940251.0292219-.1889874.0292219-.2880105 0-2.861362 2.3418361-5.1891861 5.2200354-5.1891861.0854662 0 .1677902-.0131198.2510569-.0246777.0826383.0115579.1649623.0246777.2510569.0246777 2.8781993 0 5.2197212 2.3278241 5.2197212 5.1891861 0 .0974612.0135112.1908616.0289077.2839496-.0157107.0940251-.0295361.1886749-.0295361.287698 0 2.861362-2.3415219 5.1891862-5.2197212 5.1891862-.0860946 0-.1684187.0134321-.2507427.0253024z" fill-rule="evenodd"></path>
+  </svg>
+
+      </button>
+      <nav-search class="style-scope primary-nav x-scope nav-search-1"><!----><div class="search-activated fade-in search-inactive style-scope nav-search">
+      <form id="nav-search" class="highlight style-scope nav-search" method="get" action="https://archive.org/search.php" data-event-submit-tracking="BetaTopNav|NavSearchSubmit">
+        <input type="text" name="query" class="search-field style-scope nav-search" placeholder="Search" autocomplete="off">
+        <input type="hidden" name="sin" class="style-scope nav-search" value="">
+        <button type="submit" class="search style-scope nav-search" data-event-click-tracking="BetaTopNav|NavSearchClose">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="searchTitleID searchDescID" class="style-scope nav-search">
+    <title id="searchTitleID" class="style-scope nav-search">Search icon</title>
+    <desc id="searchDescID" class="style-scope nav-search">An illustration of a magnifying glass.</desc>
+    <path class="fill-color style-scope nav-search" d="m32.4526364 29.8875889-8.1719472-7.9751279c1.1046135-1.4876138 1.7652549-3.3102407 1.7652549-5.2846451 0-.101185-.0142895-.1981539-.030573-.2944743.0166158-.0976175.0309053-.196208.0309053-.2990145 0-4.9814145-4.152935-9.0343271-9.2572866-9.0343271-.0907218 0-.1781206.01394537-.2655193.02594487-.0880633-.0119995-.1747974-.02594487-.2655193-.02594487-5.1046839 0-9.25761889 4.0529126-9.25761889 9.0343271 0 .1011849.01395722.1981539.03057294.2947985-.01694804.0976176-.03090525.1958838-.03090525.2986903 0 4.9814145 4.1526027 9.0346514 9.2572866 9.0346514.0907218 0 .1777882-.0139454.2658516-.0262692.0873987.0123238.1741328.0262692.265187.0262692 1.7306942 0 3.3467399-.4747911 4.7338208-1.2852439l8.2882574 8.0886366c.3652137.3564177.843082.53414 1.3212826.53414.4782007 0 .9567336-.1780467 1.3212827-.53414.7294304-.7118622.7294304-1.8660845-.0003323-2.5782711zm-15.9526364-7.8875889c-.0832667-.0118703-.1652765-.0253024-.2513711-.0253024-2.8781993 0-5.2197212-2.3278242-5.2197212-5.1891862 0-.0974612-.013197-.1908615-.0289077-.2836371.0160249-.0940251.0292219-.1889874.0292219-.2880105 0-2.861362 2.3418361-5.1891861 5.2200354-5.1891861.0854662 0 .1677902-.0131198.2510569-.0246777.0826383.0115579.1649623.0246777.2510569.0246777 2.8781993 0 5.2197212 2.3278241 5.2197212 5.1891861 0 .0974612.0135112.1908616.0289077.2839496-.0157107.0940251-.0295361.1886749-.0295361.287698 0 2.861362-2.3415219 5.1891862-5.2197212 5.1891862-.0860946 0-.1684187.0134321-.2507427.0253024z" fill-rule="evenodd"></path>
+  </svg>
+
+        </button>
+      </form>
+    </div><!----></nav-search>
+
+        <a class="upload style-scope primary-nav" href="https://archive.org/create/">
+
+  <svg width="40" height="41" viewBox="0 0 40 41" xmlns="http://www.w3.org/2000/svg" aria-labelledby="uploadTitleID uploadDescID" class="style-scope primary-nav">
+    <title id="uploadTitleID" class="style-scope primary-nav">Upload icon</title>
+    <desc id="uploadDescID" class="style-scope primary-nav">An illustration of a horizontal line over an up pointing arrow.</desc>
+    <path class="fill-color style-scope primary-nav" d="m20 12.8 8 10.4h-4.8v8.8h-6.4v-8.8h-4.8zm12-4.8v3.2h-24v-3.2z" fill-rule="evenodd"></path>
+  </svg>
+
+          <span class="style-scope primary-nav">Upload</span>
+        </a>
+        <div class="user-info style-scope primary-nav">
+
+      <login-button class="style-scope primary-nav x-scope login-button-1"><!---->
+      <div class="logged-out-toolbar style-scope login-button">
+        <a class="dropdown-toggle style-scope login-button" data-event-click-tracking="BetaTopNav|NavLoginIcon">
+
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="userTitleID userDescID" class="style-scope login-button">
+    <title id="userTitleID" class="style-scope login-button">User icon</title>
+    <desc id="userDescID" class="style-scope login-button">An illustration of a person's head and chest.</desc>
+    <path class="fill-color style-scope login-button" d="m20.7130435 18.0434783c-3.5658385 0-6.4565218-2.9198821-6.4565218-6.5217392 0-3.60185703 2.8906833-6.5217391 6.4565218-6.5217391s6.4565217 2.91988207 6.4565217 6.5217391c0 3.6018571-2.8906832 6.5217392-6.4565217 6.5217392zm-12.9130435 16.9565217c0-7.9240855 5.7813665-14.3478261 12.9130435-14.3478261s12.9130435 6.4237406 12.9130435 14.3478261z" fill-rule="evenodd"></path>
+  </svg>
+
+        </a>
+        <span class="style-scope login-button">
+          <a class="style-scope login-button" href="https://archive.org/account/signup">Sign up</a>
+          |
+          <a class="style-scope login-button" href="https://archive.org/account/login">Log in</a>
+        </span>
+      </div>
+    <!----></login-button>
+
+        </div>
+        <media-menu class="style-scope primary-nav x-scope media-menu-1" tabindex="-1"><!---->
+      <nav class="media-menu tx-slide closed style-scope media-menu" aria-hidden="true" aria-expanded="false">
+        <div class="menu-group style-scope media-menu">
+          <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="web"><!---->
+      <a class="menu-item web  style-scope media-button" href="https://archive.org/web/" data-event-click-tracking="BetaTopNav|NavMenuWeb">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="webTitleID webDescID" class="style-scope media-button">
+    <title id="webTitleID" class="style-scope media-button">Web icon</title>
+    <desc id="webDescID" class="style-scope media-button">An illustration of a computer application window</desc>
+    <path class="fill-color style-scope media-button" d="m8 28.7585405v-8.1608108-9.3577297h24v9.3577297 8.1608108zm14.2702703-15.8863783h-12.43243246v2.6114594h12.43243246zm7.7837838 14.0365946v-7.0727027-1.8497838h-20.21621626v1.8497838 7.0727027zm-3.7837838-14.0365946h-2.7027027v2.6114594h2.7027027zm4 0h-2.7027027v2.6114594h2.7027027z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Wayback Machine<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="texts"><!---->
+      <a class="menu-item texts  style-scope media-button" href="https://archive.org/details/texts" data-event-click-tracking="BetaTopNav|NavMenuTexts">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="textsTitleID textsDescID" class="style-scope media-button">
+    <title id="textsTitleID" class="style-scope media-button">Texts icon</title>
+    <desc id="textsDescID" class="style-scope media-button">An illustration of an open book.</desc>
+    <path class="fill-color style-scope media-button" d="m10.3323235 11.0007023h6.9060825c.8851083 0 1.5847122.3064258 2.0988114.9192774v14.4324451h-.6460032c-.1435563-.120323-.3528315-.2434552-.6278257-.3693964-.2749942-.1259413-.5201585-.2191097-.7354929-.2795053l-.3048241-.1081503h-5.7042647c-.3108832 0-.5621067-.0601615-.7536705-.1804846-.0717781-.0599274-.1256117-.1439663-.1615008-.2521166-.0358891-.1081502-.0598928-.2043619-.0720112-.2886348v-13.8741368zm19.1752505 0v13.603761c-.0717781.3361555-.2211606.5943584-.4481473.7746089-.0717781.0599274-.1733862.1079162-.304824.1439663-.1314379.0360501-.2451643.0601615-.3411793.0723343h-5.5965975c-.9568865.2640552-1.5068748.5164059-1.649965.757052h-.6634817v-14.4324451c.5140992-.6128516 1.2076439-.9192774 2.0806339-.9192774h6.92426zm1.3814961.6489017-.1796783 15.2976474c-.0955489 0-1.0342578.0119386-2.8161268.035816-1.7818691.0238773-3.3006293.0898911-4.5562806.1980414-1.2556514.1081503-1.9613144.2884008-2.1169891.5407514-.0955488.1924233-.5439291.273419-1.345141.2429871-.8012118-.0304319-1.3155441-.1776755-1.5429969-.4417308-.334654-.3843783-3.4558378-.5765674-9.36355164-.5765674v-15.3875385l-.96830576.3960828v16.2702977c6.4096947-.2041278 9.7760429-.0840388 10.0990445.3602669.2391051.276228.9864833.414342 2.2421347.414342.1915638 0 .4187835-.0210682.6816593-.0632047s.4810068-.0870821.6543929-.1348367c.1733862-.0477547.2719646-.0838048.2957353-.1081503.0838965-.1563732.9599161-.2675666 2.6280587-.3335805 1.6681426-.0660138 3.3213703-.0931684 4.9596831-.0814638l2.4392915.0182591v-16.2344816z"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Books<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="video"><!---->
+      <a class="menu-item video  style-scope media-button" href="https://archive.org/details/movies" data-event-click-tracking="BetaTopNav|NavMenuVideo">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="videoTitleID videoDescID" class="style-scope media-button">
+    <title id="videoTitleID" class="style-scope media-button">Video icon</title>
+    <desc id="videoDescID" class="style-scope media-button">An illustration of two cells of a film strip.</desc>
+    <path class="fill-color style-scope media-button" d="m31.0117647 12.0677966c0 .4067797-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711864-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067797-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711864-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711865-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.3898305c0 .4067797-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711864-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711865-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711865-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm-4.0941176-10.440678c0 .5423729-.4235295.9491525-.9882353.9491525h-11.5764706c-.5647059 0-.9882353-.4067796-.9882353-.9491525v-6.9152542c0-.5423729.4235294-.9491526.9882353-.9491526h11.5764706c.5647058 0 .9882353.4067797.9882353.9491526zm-.1411765 11.2542373c0 .5423729-.4235294.9491525-.9882353.9491525h-11.5764706c-.5647059 0-.9882353-.4067796-.9882353-.9491525v-6.9152542c0-.5423729.4235294-.9491526.9882353-.9491526h11.5764706c.5647059 0 .9882353.4067797.9882353.9491526zm-14.9647059-17.220339c0 .4067797-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711864-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067797-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711864-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711865-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.3898305c0 .4067797-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711864-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711865-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711865-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm20.0470588-20.4745763h-.8470588v.27118644.6779661c0 .40677966-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.27118644-.7058823-.6779661v-.6779661-.27118644h-16.5176471v.27118644.6779661c0 .40677966-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.27118644-.70588236-.6779661v-.6779661-.27118644h-1.12941176v24h1.12941176v-.2711864-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661v.6779661.2711864h16.6588235v-.2711864-.6779661c0-.4067797.282353-.6779661.7058824-.6779661h1.2705882c.4235294 0 .7058824.2711864.7058824.6779661v.6779661.2711864h.8470588v-24z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Video<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="audio"><!---->
+      <a class="menu-item audio  style-scope media-button" href="https://archive.org/details/audio" data-event-click-tracking="BetaTopNav|NavMenuAudio">
+
+      <span class="icon  style-scope media-button">
+
+  <svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-labelledby="audioTitleID audioDescID" class="style-scope media-button">
+    <title id="audioTitleID" class="style-scope media-button">Audio icon</title>
+    <desc id="audioDescID" class="style-scope media-button">An illustration of an audio speaker.</desc>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="style-scope media-button">
+      <g transform="translate(10, 8)" class="fill-color style-scope media-button">
+        <path d="M19.4264564,11.8585048 L19.4264564,20.7200433 C19.4264564,22.3657576 18.8838179,23.2519114 16.8489237,23.2519114 C12.2364969,23.125318 7.75972977,23.125318 3.14730298,23.2519114 C1.24806842,23.2519114 0.569770368,22.492351 0.569770368,20.7200433 L0.569770368,2.74377955 C0.569770368,1.09806526 1.11240881,0.211911416 3.14730298,0.211911416 C7.75972977,0.338504822 12.2364969,0.338504822 16.8489237,0.211911416 C18.7481583,0.211911416 19.4264564,0.971471855 19.4264564,2.74377955 C19.2907967,5.78202131 19.4264564,8.82026306 19.4264564,11.8585048 L19.4264564,11.8585048 Z M10.0659432,2.74377955 C8.16670861,2.74377955 6.67445288,4.13630702 6.67445288,5.90861471 C6.67445288,7.6809224 8.16670861,9.07344988 10.0659432,9.07344988 C11.9651777,9.07344988 13.4574335,7.6809224 13.4574335,5.90861471 C13.4574335,4.13630702 11.8295181,2.74377955 10.0659432,2.74377955 L10.0659432,2.74377955 Z M10.0659432,11.4787246 C7.21709133,11.4787246 5.04653754,13.6308125 5.04653754,16.1626806 C5.04653754,18.8211422 7.35275094,20.8466367 10.0659432,20.8466367 C12.914795,20.8466367 15.0853488,18.6945488 15.0853488,16.1626806 C15.0853488,13.6308125 12.7791354,11.4787246 10.0659432,11.4787246 L10.0659432,11.4787246 Z" class="style-scope media-button"></path>
+        <ellipse cx="10.2016028" cy="16.5690777" rx="1.35659611" ry="1.34075134" class="style-scope media-button"></ellipse>
+      </g>
+    </g>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Audio<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="software"><!---->
+      <a class="menu-item software  style-scope media-button" href="https://archive.org/details/software" data-event-click-tracking="BetaTopNav|NavMenuSoftware">
+
+      <span class="icon  style-scope media-button">
+
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="softwareTitleID softwareDescID" class="style-scope media-button">
+    <title id="softwareTitleID" class="style-scope media-button">Software icon</title>
+    <desc id="softwareDescID" class="style-scope media-button">An illustration of a 3.5" floppy disk.</desc>
+    <path class="fill-color style-scope media-button" d="m32 30.6900373v-21.44521088c0-.82988428-.4156786-1.24482642-1.2470357-1.24482642h-21.50592858c-.83135715 0-1.24703572.4221795-1.24703572 1.26653851v21.44521089c0 .8588337.41567857 1.2882506 1.24703572 1.2882506h21.48327168c.8458575 0 1.2687863-.4366542 1.2687863-1.3099627zm-5.9950155-20.4410268v6.114667c0 .6694561-.3428744 1.0041841-1.0286232 1.0041841h-10.1294464c-.2622159 0-.4773054-.0802141-.6452685-.2406423s-.2519447-.3642806-.2519447-.6115572v-6.1363791l.0217506-.1311772h12.0326259zm-4.9437353.8295827v5.0010178h3.0405558v-5.0010178zm-9.7134658 18.8035735v-7.753025c0-.5241057.1604108-.9025595.4812325-1.1353613.1897138-.1453504.4011782-.2180256.6343932-.2180256h14.7451099c.3208217 0 .5905898.1091636.8093044.3274907s.3280719.5023936.3280719.8521995v7.8181612l-.0217506.1094652h-16.9772676z"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Software<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="images"><!---->
+      <a class="menu-item images  style-scope media-button" href="https://archive.org/details/image" data-event-click-tracking="BetaTopNav|NavMenuImages">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="imagesTitleID imagesDescID" class="style-scope media-button">
+    <title id="imagesTitleID" class="style-scope media-button">Images icon</title>
+    <desc id="imagesDescID" class="style-scope media-button">An illustration of two photographs.</desc>
+    <path class="fill-color style-scope media-button" d="m20.8219178 15.3769871c0 1.1136708-.8767123 1.8932404-1.8630137 1.8932404s-1.9726027-.8909367-1.9726027-1.8932404c0-1.0023038.8767123-1.8932404 1.9726027-1.8932404.9863014 0 1.8630137.8909366 1.8630137 1.8932404zm-5.9178082-3.7864808h15.4520548v6.0138225l-1.9726028-3.3410125-2.6301369 6.3479237-2.1917809-2.67281-6.1369863 5.1228859h-2.5205479zm-1.7534247-1.6705063v14.9231892h18.8493151v-14.9231892zm-2.9589041 7.2388604c.2191781 0 1.9726028-.3341012 1.9726028-.3341012v-2.0046075l-4.1643836.5568354c.43835616 4.7887846.87671233 9.9116704 1.31506849 14.700455 6.02739731-.5568354 13.26027401-1.5591391 19.39726031-2.1159746-.1095891-.5568354-.1095891-2.0046075-.2191781-2.67281-.4383562.1113671-1.4246575 0-1.8630137.1113671v.8909367c-5.1506849.4454683-10.3013699 1.1136708-15.4520548 1.6705062.109589-.111367-.5479452-7.0161262-.9863014-10.8026071z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Images<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="donate"><!---->
+      <a class="menu-item donate  style-scope media-button" href="https://archive.org/donate/" data-event-click-tracking="BetaTopNav|NavMenuDonate">
+
+      <span class="icon  style-scope media-button">
+
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="donateTitleID donateDescID" class="style-scope media-button">
+    <title id="donateTitleID" class="style-scope media-button">Donate icon</title>
+    <desc id="donateDescID" class="style-scope media-button">An illustration of a heart shape</desc>
+    <path class="fill-color style-scope media-button" d="m30.0120362 11.0857287c-1.2990268-1.12627221-2.8599641-1.65258786-4.682812-1.57894699-.8253588.02475323-1.7674318.3849128-2.8262192 1.08047869-1.0587873.6955659-1.89622 1.5724492-2.512298 2.63065-.591311-1.0588196-1.4194561-1.9357029-2.4844351-2.63065-1.0649791-.69494706-2.0039563-1.05510663-2.8169316-1.08047869-1.2067699-.04950647-2.318187.17203498-3.3342513.66462439-1.0160643.4925893-1.82594378 1.2002224-2.42963831 2.1228992-.60369453.9226769-.91173353 1.9629315-.92411701 3.1207641-.03715043 1.9202322.70183359 3.7665141 2.21695202 5.5388457 1.2067699 1.4035084 2.912594 3.1606786 5.1174721 5.2715107 2.2048782 2.1108321 3.7565279 3.5356901 4.6549492 4.2745742.8253588-.6646243 2.355647-2.0647292 4.5908647-4.2003145s3.9747867-3.9171994 5.218707-5.3448422c1.502735-1.7723316 2.2355273-3.6186135 2.1983769-5.5388457-.0256957-1.7608832-.6875926-3.2039968-1.9866194-4.3302689z"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Donate<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="more"><!---->
+      <a class="menu-item more  style-scope media-button" href="https://archive.org/about/" data-event-click-tracking="BetaTopNav|NavMenuMore">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="ellipsesTitleID ellipsesDescID" class="style-scope media-button">
+    <title id="ellipsesTitleID" class="style-scope media-button">Ellipses icon</title>
+    <desc id="ellipsesDescID" class="style-scope media-button">An illustration of text ellipses.</desc>
+    <path class="fill-color style-scope media-button" d="m10.5 17.5c1.3807119 0 2.5 1.1192881 2.5 2.5s-1.1192881 2.5-2.5 2.5c-1.38071187 0-2.5-1.1192881-2.5-2.5s1.11928813-2.5 2.5-2.5zm9.5 0c1.3807119 0 2.5 1.1192881 2.5 2.5s-1.1192881 2.5-2.5 2.5-2.5-1.1192881-2.5-2.5 1.1192881-2.5 2.5-2.5zm9.5 0c1.3807119 0 2.5 1.1192881 2.5 2.5s-1.1192881 2.5-2.5 2.5-2.5-1.1192881-2.5-2.5 1.1192881-2.5 2.5-2.5z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->More<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        </div>
+      </nav>
+    <!----></media-menu>
+        <button class="hamburger style-scope primary-nav" tabindex="1" data-event-click-tracking="BetaTopNav|NavHamburger">
+          <icon-hamburger class="style-scope primary-nav x-scope icon-hamburger-1"><!---->
+      <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="hamburgerTitleID hamburgerDescID" class="style-scope icon-hamburger">
+        <title id="hamburgerTitleID" class="style-scope icon-hamburger">Hamburger icon</title>
+        <desc id="hamburgerDescID" class="style-scope icon-hamburger">An icon used to represent a menu that can be toggled by interacting with this icon.</desc>
+        <path d="m30.5 26.5c.8284271 0 1.5.6715729 1.5 1.5s-.6715729 1.5-1.5 1.5h-21c-.82842712 0-1.5-.6715729-1.5-1.5s.67157288-1.5 1.5-1.5zm0-8c.8284271 0 1.5.6715729 1.5 1.5s-.6715729 1.5-1.5 1.5h-21c-.82842712 0-1.5-.6715729-1.5-1.5s.67157288-1.5 1.5-1.5zm0-8c.8284271 0 1.5.6715729 1.5 1.5s-.6715729 1.5-1.5 1.5h-21c-.82842712 0-1.5-.6715729-1.5-1.5s.67157288-1.5 1.5-1.5z" fill="#999" fill-rule="evenodd" class="style-scope icon-hamburger"></path>
+      </svg>
+    <!----></icon-hamburger>
+        </button>
+      </nav>
+    <!----></primary-nav>
+        <media-slider class="style-scope ia-topnav x-scope media-slider-1"><!---->
+      <div class="overflow-clip closed style-scope media-slider">
+        <div class="information-menu closed style-scope media-slider">
+          <div class="info-box style-scope media-slider">
+            <media-subnav class="style-scope media-slider x-scope media-subnav-1"><!----><!----></media-subnav>
+          </div>
+        </div>
+      </div>
+    <!----></media-slider>
+      </div>
+      <desktop-subnav class="style-scope ia-topnav x-scope desktop-subnav-1"><!---->
+      <ul class="style-scope desktop-subnav">
+        <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="about style-scope desktop-subnav" href="https://archive.org/about/"><!---->About<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="blog style-scope desktop-subnav" href="https://blog.archive.org/"><!---->Blog<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="projects style-scope desktop-subnav" href="https://archive.org/projects/"><!---->Projects<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="help style-scope desktop-subnav" href="https://archive.org/about/faqs.php"><!---->Help<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="donate style-scope desktop-subnav" href="https://archive.org/donate/"><!---->Donate<!---->
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="donateTitleID donateDescID" class="style-scope desktop-subnav">
+    <title id="donateTitleID" class="style-scope desktop-subnav">Donate icon</title>
+    <desc id="donateDescID" class="style-scope desktop-subnav">An illustration of a heart shape</desc>
+    <path class="fill-color style-scope desktop-subnav" d="m30.0120362 11.0857287c-1.2990268-1.12627221-2.8599641-1.65258786-4.682812-1.57894699-.8253588.02475323-1.7674318.3849128-2.8262192 1.08047869-1.0587873.6955659-1.89622 1.5724492-2.512298 2.63065-.591311-1.0588196-1.4194561-1.9357029-2.4844351-2.63065-1.0649791-.69494706-2.0039563-1.05510663-2.8169316-1.08047869-1.2067699-.04950647-2.318187.17203498-3.3342513.66462439-1.0160643.4925893-1.82594378 1.2002224-2.42963831 2.1228992-.60369453.9226769-.91173353 1.9629315-.92411701 3.1207641-.03715043 1.9202322.70183359 3.7665141 2.21695202 5.5388457 1.2067699 1.4035084 2.912594 3.1606786 5.1174721 5.2715107 2.2048782 2.1108321 3.7565279 3.5356901 4.6549492 4.2745742.8253588-.6646243 2.355647-2.0647292 4.5908647-4.2003145s3.9747867-3.9171994 5.218707-5.3448422c1.502735-1.7723316 2.2355273-3.6186135 2.1983769-5.5388457-.0256957-1.7608832-.6875926-3.2039968-1.9866194-4.3302689z"></path>
+  </svg>
+<!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="contact style-scope desktop-subnav" href="https://archive.org/about/contact.php"><!---->Contact<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="jobs style-scope desktop-subnav" href="https://archive.org/about/jobs.php"><!---->Jobs<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="volunteer style-scope desktop-subnav" href="https://archive.org/about/volunteerpositions.php"><!---->Volunteer<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="people style-scope desktop-subnav" href="https://archive.org/about/bios.php"><!---->People<!----><!----></a>
+        </li>
+      <!---->
+      </ul>
+    <!----></desktop-subnav>
+      <search-menu class="style-scope ia-topnav x-scope search-menu-1" tabindex="-1"><!---->
+      <div class="search-menu tx-slide closed style-scope search-menu" aria-hidden="true" aria-expanded="false">
+        <!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="" checked="">
+          Search Metadata
+        </label>
+      <!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="TXT">
+          Search text contents
+        </label>
+      <!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="TV">
+          Search TV news captions
+        </label>
+      <!----><!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="WEB">
+          Search archived websites
+        </label>
+      <!---->
+        <a class="advanced-search style-scope search-menu" href="https://archive.org/advancedsearch.php" data-event-click-tracking="BetaTopNav|NavAdvancedSearch">Advanced Search</a>
+      </div>
+    <!----></search-menu>
+
+      <signed-out-dropdown class="style-scope ia-topnav x-scope signed-out-dropdown-1" tabindex="-1"><!---->
+      <nav class="initial style-scope signed-out-dropdown" aria-hidden="true" aria-expanded="false">
+        <ul class="style-scope signed-out-dropdown">
+          <!---->
+        <li class="style-scope signed-out-dropdown"><!----><a class="style-scope signed-out-dropdown" href="https://archive.org/account/signup" data-event-click-tracking="BetaTopNav|NavSignUpDropdown"><!---->Sign up for free<!----></a><!----></li>
+      <!---->
+        <li class="style-scope signed-out-dropdown"><!----><a class="style-scope signed-out-dropdown" href="https://archive.org/account/login" data-event-click-tracking="BetaTopNav|NavLogInDropdown"><!---->Log in<!----></a><!----></li>
+      <!---->
+        </ul>
+      </nav>
+    <!----></signed-out-dropdown>
+
+    </noscript>                      </ia-topnav>
+
+                  </div>
+            <input class="js-tvsearch" type="hidden" value='{"ands":[],"minday":"06/04/2009","maxday":"05/14/2022"}'/>
+    
+        
+    <script>update_aoheader();</script>
+        <div id="positionHome">
+      <section>
+	<div class="search-toolbar-logo-container">
+	  <a href="/"><div class="search-toolbar-logo" alt="logo: Internet Archive's Wayback Machine"></div></a>
+	</div>
+      </section>
+      <section>
+	<div id="error">
+	  <script type="text/javascript">
+	    function go() {
+	      document.location.href = "https://web.archive.org/web/20190607073211/http://visualdictionarynetwork.com/openx/www/delivery/ck.php?ct=1&n=adfb5e89&cb=INSERT_RANDOM_NUMBER_HERE";
+	    }
+	    window.setTimeout(go,  5000);
+	  </script>
+	  <p class="code">Loading...</p>
+	  	  <p class="code shift target">http://visualdictionarynetwork.com/openx/www/delivery/ck.php?n=adfb5e89&amp;cb=INSERT_RANDOM_NUMBER_HERE |
+	    07:32:11 June 07, 2019</p>
+	  <p class="code shift red">Got an HTTP 302 response at crawl time</p>
+	  <p class="code">Redirecting to...</p>
+	  <p class="code shift target">http://visualdictionarynetwork.com/openx/www/delivery/ck.php?ct=1&n=adfb5e89&cb=INSERT_RANDOM_NUMBER_HERE</p>
+	  	  <p class="impatient"><a href="https://web.archive.org/web/20190607073211/http://visualdictionarynetwork.com/openx/www/delivery/ck.php?ct=1&n=adfb5e89&cb=INSERT_RANDOM_NUMBER_HERE">Impatient?</a></p>
+	</div>
+      </section>
+      <div id="errorBorder"></div>
+    <noscript>
+      <div class="no-script-message">
+        The Wayback Machine requires your browser to support JavaScript, please email <a href="mailto:info@archive.org">info@archive.org</a><br/>if you have any questions about this.
+      </div>
+    </noscript>
+    <footer>
+      <div id="footerHome">
+        <p>
+          The Wayback Machine is an initiative of the
+          <a href="//archive.org/">Internet Archive</a>,
+          a 501(c)(3) non-profit, building a digital library of
+          Internet sites and other cultural artifacts in digital form.
+          <br/>Other <a href="//archive.org/projects/">projects</a> include
+          <a href="https://openlibrary.org/">Open Library</a> &amp;
+          <a href="https://archive-it.org">archive-it.org</a>.
+        </p>
+        <p>
+          Your use of the Wayback Machine is subject to the Internet Archive's
+          <a href="//archive.org/about/terms.php">Terms of Use</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
-

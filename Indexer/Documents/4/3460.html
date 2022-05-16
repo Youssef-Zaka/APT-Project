@@ -1,658 +1,1207 @@
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google-site-verification" content="5fPGCLllnWrvFxH9QWI0l1TadV7byeEvfPcyK2VkS_s"/>
-    <meta name="google-site-verification" content="Rp5zp04IKW-s1IbpTOGB7Z6XY60oloZD5C3kTM-AiY4"/>
-
-<meta name="norton-safeweb-site-verification" content="umenay8zh4kswbi568zqp19bqb-jvngusibub1ygib0x3jne9rig0fnmtofm8abb7lkzgltqp5yhm68s5qz4iqqkm39xl2o-p5foixd-1xfq4yig07ugcd1sp5kmyvpe" />
-    <title>Tracking Knowledge Propagation Across Wikipedia Languages | Zenodo</title>
-    <link rel="shortcut icon" href="/static/favicon.ico"/>
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/apple-touch-icon-144-precomposed.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/apple-touch-icon-114-precomposed.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/apple-touch-icon-72-precomposed.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/static/apple-touch-icon-57-precomposed.png"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,100,italic" rel="stylesheet">
-<link href="/static/gen/zenodo.5fb6164a.css" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
-  
-    <meta name="description" content="We present a dataset of inter-language knowledge propagation in Wikipedia. Covering the entire 309 language editions and 33M articles, the dataset aims to track the full propagation history of Wikipedia concepts, and allow follow up research on building predictive models of them. For this purpose, we align all the Wikipedia articles in a language-agnostic manner according to the concept they cover, which results in 13M propagation instances. To the best of our knowledge, this dataset is the first to explore the full inter-language propagation at a large scale. Together with the dataset, a holistic overview of the propagation and key insights about the underlying structural factors are provided to aid future research. For example, we find that although long cascades are unusual, the propagation tends to continue further once it reaches more than four language editions. We also find that the size of language editions are associated with the speed of propagation. We believe the dataset not only contributes to the prior literature on Wikipedia growth but also enables new use cases such as edit recommendation for addressing knowledge gaps, detection of disinformation, and cultural relationship analysis." />
-    <meta name="citation_title" content="Tracking Knowledge Propagation Across Wikipedia Languages" />
-    <meta name="citation_author" content="Valentim, Rodolfo" />
-    <meta name="citation_author" content="Comarela, Giovanni" />
-    <meta name="citation_author" content="Park, Souneil" />
-    <meta name="citation_author" content="Saez-Trumper, Diego" />
-    <meta name="citation_publication_date" content="2021/03/15" />
-    <meta name="citation_doi" content="10.5281/zenodo.4433137" />
-    <meta name="citation_keywords" content="knowledge propagation" />
-    <meta name="citation_keywords" content="Wikipedia" />
-    <meta name="citation_abstract_html_url" content="https://zenodo.org/record/4433137" />
-    <meta property="og:title" content="Tracking Knowledge Propagation Across Wikipedia Languages" />
-    <meta property="og:description" content="We present a dataset of inter-language knowledge propagation in Wikipedia. Covering the entire 309 language editions and 33M articles, the dataset aims to track the full propagation history of Wikipedia concepts, and allow follow up research on building predictive models of them. For this purpose, we align all the Wikipedia articles in a language-agnostic manner according to the concept they cover, which results in 13M propagation instances. To the best of our knowledge, this dataset is the first to explore the full inter-language propagation at a large scale. Together with the dataset, a holistic overview of the propagation and key insights about the underlying structural factors are provided to aid future research. For example, we find that although long cascades are unusual, the propagation tends to continue further once it reaches more than four language editions. We also find that the size of language editions are associated with the speed of propagation. We believe the dataset not only contributes to the prior literature on Wikipedia growth but also enables new use cases such as edit recommendation for addressing knowledge gaps, detection of disinformation, and cultural relationship analysis." />
-    <meta property="og:url" content="https://zenodo.org/record/4433137" />
-    <meta property="og:site_name" content="Zenodo" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@zenodo_org" />
-    <meta name="twitter:title" content="Tracking Knowledge Propagation Across Wikipedia Languages" />
-    <meta name="twitter:description" content="We present a dataset of inter-language knowledge propagation in Wikipedia. Covering the entire 309 language editions and 33M articles, the dataset aims to track the full propagation history of Wikipedia concepts, and allow follow up research on building predictive models of them. For this purpose, we align all the Wikipedia articles in a language-agnostic manner according to the concept they cover, which results in 13M propagation instances. To the best of our knowledge, this dataset is the first to explore the full inter-language propagation at a large scale. Together with the dataset, a holistic overview of the propagation and key insights about the underlying structural factors are provided to aid future research. For example, we find that although long cascades are unusual, the propagation tends to continue further once it reaches more than four language editions. We also find that the size of language editions are associated with the speed of propagation. We believe the dataset not only contributes to the prior literature on Wikipedia growth but also enables new use cases such as edit recommendation for addressing knowledge gaps, detection of disinformation, and cultural relationship analysis." />
-    <link rel="canonical" href="https://zenodo.org/record/4433137">
-    <link rel="alternate" type="application/zip" href="https://zenodo.org/record/4433137/files/dataset.csv.zip">
-    <link rel="alternate" type="application/zip" href="https://zenodo.org/record/4433137/files/dataset.jsonl.zip">
-  </head>
-  <body ng-csp  itemscope itemtype="http://schema.org/WebPage" data-spy="scroll" data-target=".scrollspy-target">
-    <!--[if lt IE 8]>
-      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-<header>
-  <nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-          <a href="/"><img class="navbar-brand" src="/static/img/zenodo.svg" alt="Zenodo" /></a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-<form class="navbar-form navbar-left navbar-search" action="/search" role="search">
-  <div class="form-group">
-    <div class="input-group">
-      <input type="text" class="form-control search" name="q" placeholder="Search">
-      <div class="input-group-btn">
-        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-      </div>
-    </div>
-  </div>
-</form>
-        <ul class="nav navbar-nav">
-            <li><a href="/deposit">Upload</a></li>
-            <li><a href="/communities/">Communities</a></li>
-        </ul>
-<form class="navbar-form navbar-right">
-  <a href="/login/?next=%2Frecord%2F4433137" class="btn btn-default"><i class="fa fa-sign-in"></i> Log in</a>
-  <a href="/signup/" type="submit" class="btn btn-default btn-warning"><i class="fa fa-edit"></i> Sign up</a>
-</form>
-      </div>
-    </div>
-  </nav>
-
-
-</header>
-<div class="container record-detail">
-  <div class="row">
-    <div class="col-sm-8 col-md-8 col-left">
-      <p>
-        <time datetime="March 15, 2021" data-toggle="tooltip" title="Publication date">March 15, 2021</time>
-        <span class="pull-right">
-          
-<span class="label label-default">Dataset</span>
-          
-<span class="label label-success">
-Open Access
-</span>
-        </span>
-      </p>
-      <h1>Tracking Knowledge Propagation Across Wikipedia Languages</h1>
-      <p>
-<a href="https://orcid.org/0000-0002-7702-2991"><img class="inline-orcid" src="/static/img/orcid.png" /></a>
-<span class="text-muted" data-toggle="tooltip" title="Politecnico di Torino">Valentim, Rodolfo</span>; 
-<a href="https://orcid.org/0000-0001-7612-9650"><img class="inline-orcid" src="/static/img/orcid.png" /></a>
-<span class="text-muted" data-toggle="tooltip" title="Federal University of Espírito Santo">Comarela, Giovanni</span>; 
-<span class="text-muted" data-toggle="tooltip" title="Telefonica Research">Park, Souneil</span>; 
-<a href="https://orcid.org/0000-0002-7679-5423"><img class="inline-orcid" src="/static/img/orcid.png" /></a>
-<span class="text-muted" data-toggle="tooltip" title="Wikimedia Foundation">Saez-Trumper, Diego</span></p>
-      <div class="record-description"><p>We present a dataset of <em>inter-language knowledge propagation</em> in Wikipedia. Covering the entire 309 language editions and 33M articles, the dataset aims to track the full propagation history of Wikipedia concepts, and allow follow up research on building predictive models of them. For this purpose, we align all the Wikipedia articles in a language-agnostic manner according to the concept they cover, which results in 13M propagation instances. To the best of our knowledge, this dataset is the first to explore the full inter-language propagation at a large scale. Together with the dataset, a holistic overview of the propagation and key insights about the underlying structural factors are provided to aid future research. For example, we find that although long cascades are unusual, the propagation tends to continue further once it reaches more than four language editions. We also find that the size of language editions are associated with the speed of propagation. We believe the dataset not only contributes to the prior literature on Wikipedia growth but also enables new use cases such as edit recommendation for addressing knowledge gaps, detection of disinformation, and cultural relationship analysis.</p></div>
-
-
-  <div class="panel panel-default" id="preview">
-    <div class="panel-heading">
-      <a class="panel-toggle" data-toggle="collapse" href="#collapseOne">
-        Preview
-        <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
-        <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
-      </a>
-    </div>
-    <div id="collapseOne" class="collapse in">
-  <iframe
-   class="preview-iframe"
-   id="preview-iframe"
-   width="100%"
-   height="400"
-   src="/record/4433137/preview/dataset.csv.zip"></iframe>
-    </div>
-  </div><div class="panel panel-default files-box" id="files">
-  <div class="panel-heading">
-    <a class="panel-toggle" data-toggle="collapse" href="#collapseTwo">
-      Files
-      <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
-      <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
-    </a>
-    <small class="text-muted"> (673.8 MB)</small>
-  </div>
-  <div class="collapse in" id="collapseTwo">
-  <table class="table table-striped" >
-    <thead>
-      <tr class="">
-        <th>Name</th>
-        <th>Size</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <a class="filename" href="/record/4433137/files/dataset.csv.zip?download=1">dataset.csv.zip</a>
-          <br/><small class="text-muted nowrap">md5:49cf4224d6cd75423773c17656fab416 <i class="fa fa-question-circle text-muted" data-toggle="tooltip" tooltip data-placement="top" title="This is the file fingerprint (MD5 checksum), which can be used to verify the file integrity."></i></small>
-        </td>
-        <td class="nowrap">321.9 MB</td>
-        <td class="nowrap"><span class="pull-right"><button class="btn preview-link btn-xs btn-default" data-filename="dataset.csv.zip"><i class="fa fa-eye"></i> Preview</button> <a class="btn btn-xs btn-default" href="/record/4433137/files/dataset.csv.zip?download=1"><i class="fa fa-download"></i> Download</a></span></td>
-      </tr>
-      <tr>
-        <td>
-          <a class="filename" href="/record/4433137/files/dataset.jsonl.zip?download=1">dataset.jsonl.zip</a>
-          <br/><small class="text-muted nowrap">md5:3f7d416827fe0edc887933f785096560 <i class="fa fa-question-circle text-muted" data-toggle="tooltip" tooltip data-placement="top" title="This is the file fingerprint (MD5 checksum), which can be used to verify the file integrity."></i></small>
-        </td>
-        <td class="nowrap">351.9 MB</td>
-        <td class="nowrap"><span class="pull-right"><button class="btn preview-link btn-xs btn-default" data-filename="dataset.jsonl.zip"><i class="fa fa-eye"></i> Preview</button> <a class="btn btn-xs btn-default" href="/record/4433137/files/dataset.jsonl.zip?download=1"><i class="fa fa-download"></i> Download</a></span></td>
-      </tr></tbody>
-    </table>
-  </div>
-</div>
-
-
-
-
-
-
-<div id="citations">
-  <invenio-search
-   disable-url-handler="true"
-   search-endpoint="https://zenodo-broker.web.cern.ch/api/relationships"
-   search-extra-params='{"group_by": "version", "id": "10.5281/zenodo.4433136", "page": 1, "size": 10}'
-   search-hidden-params='{"relation": "isCitedBy", "scheme": "doi"}'
-   search-headers='{"Accept": "application/json"}' >
-    <div class="panel panel-default" id="citation">
-      <div class="panel-heading">
-        <!-- Beta ribbon -->
-        <div class="row" style="margin-bottom: -15px;">
-          <div class="col-sm-1">
-            <div class="ribbon-wrapper-green">
-              <a href="https://help.zenodo.org/#citations" target="_blank" rel="noopener noreferrer">
-                <div class="corner-ribbon top-left ribbon-green">Beta</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-sm-11" style="margin-top: 5px;">
-            <a class="panel-toggle" data-toggle="collapse" href="#collapseCitations" style="margin-left:-25px;">
-              Citations
-            </a>
-            <a href="https://help.zenodo.org/#citations" target="_blank" rel="noopener noreferrer">
-              <i class="fa fa-question-circle"></i>
-            </a>
-            <small class="text-muted">
-              <invenio-search-count template="/static/templates/citations/count.html">
-              </invenio-search-count>
-            </small>
-            <a class="panel-toggle" data-toggle="collapse" href="#collapseCitations" style="margin-left:-25px;">
-              <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
-              <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Without beta ribbon -->
-        <!--<a class="panel-toggle" data-toggle="collapse" href="#collapseCitations">-->
-          <!--Citations-->
-          <!--<small class="text-muted">-->
-            <!--<invenio-search-count-->
-            <!--template="/static/templates/citations/count.html">-->
-            <!--</invenio-search-count>-->
-          <!--</small>-->
-          <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
-          <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
-        <!--</a>-->
-
-      </div>
-      <div id="collapseCitations" class="collapse in">
-        <div class="search-page">
-          <div class="container-fluid facets">
-            <div class="row">
-              <div class="col-sm-9">
-                <invenio-search-facets
-                   ng-init="vm.record_id='10.5281/zenodo.4433137'; vm.version_id='10.5281/zenodo.4433136'"
-                   template="/static/templates/citations/facets.html">
-                </invenio-search-facets>
-              </div>
-              <div class="col-sm-3">
-                <invenio-search-bar
-                  template="/static/templates/invenio_search_ui/searchbar.html"
-                  placeholder="Search">
-                </invenio-search-bar>
-              </div>
-            </div>
-          </div>
-          <div class="container-fluid">
-          <invenio-search-error
-            template="/static/templates/zenodo_search_ui/error.html"
-            message="Error">
-          </invenio-search-error>
-          </div>
-          <invenio-search-results
-           template="/static/templates/citations/results.html">
-          </invenio-search-results>
-          <div class="row">
-            <div class="col-md-2 col-sm-12">
-            </div>
-            <div class="col-md-7 col-sm-12 text-center">
-              <invenio-search-pagination
-                template="/static/templates/citations/pagination.html">
-              </invenio-search-pagination>
-            </div>
-            <div class="col-md-3 col-sm-12" style="padding-top: 5px;">
-              <invenio-search-select-box
-                 sort-key="size"
-                 available-options='{
-                  "options": [
-                     {
-                       "title": "10",
-                       "value": "10"
-                     },
-                     {
-                       "title": "20",
-                       "value": "20"
-                     },
-                     {
-                       "title": "50",
-                       "value": "50"
-                     }
-                  ]}'
-                 template="/static/templates/citations/selectbox.html">
-                </invenio-search-select-box>
-            </div>
-          </div>
-      </div>
-    </div>
-    </div>
-  </invenio-search>
-</div>
-
-    </div>
-    <div class="col-sm-4 col-md-4 col-right">
-
-
-
-      
-      <div class="well"><!-- Stats -->
-<div class="row stats-box">
-  <div id="accordion">
-    <!-- Banner --><div class="row">
-      <div class="col-sm-6">
-        <span class="stats-data">788</span>
-      </div>
-      <div class="col-sm-6">
-        <span class="stats-data">255</span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <i class="fa fa-eye " data-toggle="tooltip" tooltip data-placement="top" title="Total views." data-original-title="Total views."></i> views
-      </div>
-      <div class="col-sm-6">
-        <i class="fa fa-download " data-toggle="tooltip" tooltip data-placement="top" title="Total downloads." data-original-title="Total downloads."></i> downloads
-      </div>
-    </div>
-
-    <!-- Collapsed details -->
-    <div id="toggle-stats" class="row">
-      <div class="col-sm-12">
-        <a style="cursor: pointer;" class="panel-toggle" data-toggle="collapse" data-target="#collapse-stats" aria-expanded="true" aria-controls="collapse-stats">
-          See more details...
-        </a>
-      </div>
-    </div>
-    <div id="collapse-stats" class="collapse" aria-labelledby="toggle-stats" data-parent="#accordion">
-      <table class="table stats-table">
-        <!-- Skip table header if no versions --><tr>
-          <th></th>
-          <th>All versions</th>
-          <th>This version</th>
-        </tr><tr>
-          <td>Views <i class="fa fa-question-circle text-muted" data-toggle="tooltip" tooltip data-placement="top" title="Total views." data-original-title="Total views."></i></td><td>788</td><td>788</td>
-        </tr>
-        <tr>
-          <td>Downloads <i class="fa fa-question-circle text-muted" data-toggle="tooltip" tooltip data-placement="top" title="Total downloads." data-original-title="Total downloads."></i></td><td>255</td><td>255</td>
-        </tr>
-        <tr>
-          <td>Data volume <i class="fa fa-question-circle text-muted" data-toggle="tooltip" tooltip data-placement="top" title="Total download volume." data-original-title="Total download volume."></i></td><td>84.4 GB</td><td>84.4 GB</td>
-        </tr>
-        <tr>
-          <td>Unique views <i class="fa fa-question-circle text-muted" data-toggle="tooltip" tooltip data-placement="top" title="Views in one hour user-sessions are counted only once." data-original-title="Views in one hour user-sessions are counted only once."></i></td><td>660</td><td>660</td>
-        </tr>
-        <tr>
-          <td>Unique downloads <i class="fa fa-question-circle text-muted" data-toggle="tooltip" tooltip data-placement="top" title="Downloads in one hour user-sessions are counted only once." data-original-title="Downloads in one hour user-sessions are counted only once."></i></td><td>177</td><td>177</td>
-        </tr>
-      </table>
-      <div class="row">
-        <a href="https://help.zenodo.org/#statistics">More info on how stats are collected.</a>
-      </div>
-    </div>
-  </div>
-</div>
-      </div>
-<div class="well metadata">
-  
-    <small class="text-muted">Indexed in</small>
-    <a href="https://explore.openaire.eu/search/dataset?pid=10.5281/zenodo.4433137">
-      <img src="/static/img/openaire-horizontal-old.png" class="img-thumbnail" width="100%" />
-    </a>
-</div>
-      <div class="well metadata"><dl>
-    <dt>Publication date:</dt>
-    <dd>March 15, 2021</dd>
-    <dt>DOI:</dt>
-    <dd>
-      <span class="get-badge" data-toggle="`tooltip" data-placement="bottom"
-            title="Get the DOI badge!">
-        <img data-toggle="modal" data-target="[data-modal='10.5281/zenodo.4433137']"
-              src="/badge/DOI/10.5281/zenodo.4433137.svg" alt="10.5281/zenodo.4433137">
-        </img>
-      </span>
-      <div class="modal fade badge-modal" data-modal="10.5281/zenodo.4433137">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <h4>Zenodo DOI Badge</h4>
-              <h4>
-                  <small>DOI</small>
-              </h4>
-              <h4>
-                  <pre>10.5281/zenodo.4433137</pre>
-              </h4>
-              
-              
-    <h4>
-        <small>Markdown</small>
-    </h4>
-    <h4>
-        <pre>[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4433137.svg)](https://doi.org/10.5281/zenodo.4433137)</pre>
-    </h4>
-    <h4>
-        <small>reStructedText</small>
-    </h4>
-    <h4>
-        <pre>.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.4433137.svg
-   :target: https://doi.org/10.5281/zenodo.4433137</pre>
-    </h4>
-    <h4>
-        <small>HTML</small>
-    </h4>
-    <h4>
-      <pre>&lt;a href="https://doi.org/10.5281/zenodo.4433137"&gt;&lt;img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4433137.svg" alt="DOI"&gt;&lt;/a&gt;</pre>
-    </h4>
-
-    <h4>
-        <small>Image URL</small>
-    </h4>
-    <h4>
-      <pre>https://zenodo.org/badge/DOI/10.5281/zenodo.4433137.svg</pre>
-    </h4>
-
-    <h4>
-        <small>Target URL</small>
-    </h4>
-    <h4>
-      <pre>https://doi.org/10.5281/zenodo.4433137</pre>
-    </h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </dd>
-    <dt>Keyword(s):</dt>
-    <dd>
-      
-      <a class="label-link" href="/search?q=keywords%3A%22knowledge+propagation%22">
-        <span class="label label-default">knowledge propagation</span>
-      </a>
-      
-      <a class="label-link" href="/search?q=keywords%3A%22Wikipedia%22">
-        <span class="label label-default">Wikipedia</span>
-      </a>
-    </dd>
-
-  
-    <dt>License (for files):</dt>
-    <dd><a rel="license" href="https://creativecommons.org/licenses/by/4.0/legalcode"><i class="fa fa-external-link"></i> Creative Commons Attribution 4.0 International</a></dd>
-  </dl>
-      </div>
-  <div class="well metadata">
-    <h4>Versions</h4>
-    <table class="table">
-      <tr class="info">
-        <td>
-          <a href="/record/4433137">Version 1 </a>
-          <small class="text-muted">10.5281/zenodo.4433137</small>
-        </td>
-        <td align="right"><small class="text-muted">Mar 15, 2021</small></td>
-      </tr>
-    </table>
-    <small>
-      <strong>Cite all versions?</strong> You can cite all versions by using the DOI <a href="https://doi.org/10.5281/zenodo.4433136">10.5281/zenodo.4433136</a>. This DOI represents all versions, and will always resolve to the latest one. <a href="http://help.zenodo.org/#versioning">Read more</a>.
-    </small>
-  </div>
-      <div class="well"><h4>Share</h4>
-  <!-- AddThis Button BEGIN -->
-  <div class="addthis_toolbox addthis_default_style addthis_32x32_style" addthis:url="https://doi.org/10.5281/zenodo.4433137">
-  <a class="addthis_button_mendeley"></a>
-  <a class="addthis_button_citeulike"></a>
-  <a class="addthis_button_twitter"></a>
-  <a class="addthis_button_preferred_1"></a>
-  <a class="addthis_button_preferred_2"></a>
-  <a class="addthis_button_compact"></a>
-  </div>
-  <!-- AddThis Button END -->
-  <h4>Cite as</h4>
-  <div id='invenio-csl'>
-    
-    <invenio-csl
-        ng-init="vm.citationResult = 'Valentim, Rodolfo, Comarela, Giovanni, Park, Souneil, &amp; Saez-Trumper, Diego. (2021). Tracking Knowledge Propagation Across Wikipedia Languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.4433137'"
-    >
-      <invenio-csl-citeproc
-       endpoint="/api/records/4433137"
-       template="/static/templates/invenio_csl/citeproc.html"></invenio-csl-citeproc>
-      <invenio-csl-error
-       template="/static/node_modules/invenio-csl-js/dist/templates/error.html"></invenio-csl-error>
-      <invenio-csl-loading
-       template="/static/node_modules/invenio-csl-js/dist/templates/loading.html"></invenio-csl-loading>
-      <invenio-csl-typeahead
-       lazy="true"
-       placeholder="Start typing a citation style..."
-       remote="/api/csl/styles"
-       template="/static/node_modules/invenio-csl-js/dist/templates/typeahead.html"
-       item-template="/static/templates/invenio_csl/item.html">
-      </invenio-csl-typeahead>
-    </invenio-csl>
-  </div>
-      </div>
-      <div class="well"><h4>Export</h4>
-<ul class="list-inline">
-  <li><a href="/record/4433137/export/hx">BibTeX</a></li>
-  <li><a href="/record/4433137/export/csl">CSL</a></li>
-  <li><a href="/record/4433137/export/dcite4">DataCite</a></li>
-  <li><a href="/record/4433137/export/xd">Dublin Core</a></li>
-  <li><a href="/record/4433137/export/dcat">DCAT</a></li>
-  <li><a href="/record/4433137/export/json">JSON</a></li>
-  <li><a href="/record/4433137/export/schemaorg_jsonld">JSON-LD</a></li>
-  <li><a href="/record/4433137/export/geojson">GeoJSON</a></li>
-  <li><a href="/record/4433137/export/xm">MARCXML</a></li>
-  <li><a href="https://www.mendeley.com/import/?url=https://zenodo.org/record/4433137"><i class="fa fa-external-link"></i> Mendeley</a></li>
-</ul>
-      </div>
-    </div>
-  </div>
-</div>
-<footer class="footer">
-  <div class="menu-wrapper">
-    <div class="container">
-      <div class="row footer-menu">
-        <div class="col-xs-12 col-md-8">
-          <div class="row">
-            <div class="col-xs-2 col-md-2">
-              <h5>About</h5>
-              <ul class="list-unstyled">
-                <li><a href="http://about.zenodo.org">About</a></li>
-                <li><a href="http://about.zenodo.org/policies">Policies</a></li>
-                <li><a href="http://about.zenodo.org/infrastructure">Infrastructure</a></li>
-                <li><a href="http://about.zenodo.org/principles">Principles</a></li>
-                <li><a href="http://about.zenodo.org/contact">Contact</a></li>
-              </ul>
-            </div>
-            <div class="col-xs-2 col-md-2">
-              <h5>Blog</h5>
-              <ul class="list-unstyled">
-                <li><a href="http://blog.zenodo.org">Blog</a></li>
-              </ul>
-            </div>
-            <div class="col-xs-2 col-md-2">
-              <h5>Help</h5>
-              <ul class="list-unstyled">
-                <li><a href="http://help.zenodo.org">FAQ</a></li>
-                <li><a href="http://help.zenodo.org/features">Features</a></li>
-                <li><a href="/support">Support</a></li>
-              </ul>
-            </div>
-            <div class="col-xs-2 col-md-2">
-              <h5>Developers</h5>
-              <ul class="list-unstyled">
-              <li><a href="http://developers.zenodo.org">REST API</a></li>
-              <li><a href="http://developers.zenodo.org#oai-pmh">OAI-PMH</a></li>
-              </ul>
-            </div>
-            <div class="col-xs-2 col-md-2">
-              <h5>Contribute</h5>
-              <ul class="list-unstyled">
-                <li><a href="https://github.com/zenodo/zenodo"><i class="fa fa-external-link"></i> GitHub</a></li>
-                <li><a href="/donate"><i class="fa fa-external-link"></i> Donate</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-4">
-          <div class="pull-right-md text-center-sm text-center-xs">
-            <h5>Funded by</h5>
-            <ul class="list-inline">
-              <li><a href="https://home.cern"><img src="/static/img/cern.png" width="60" height="60" /></a></li>
-              <li><a href="https://www.openaire.eu"><img src="/static/img/openaire.png" width="80" /></a></li>
-              <li><a href="https://ec.europa.eu/programmes/horizon2020/"><img src="/static/img/eu.png" width="88" height="60" /></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-sm-push-6">
-        <div class="pull-right-sm text-center-xs">
-          <ul class="list-inline">
-            <li><a href="https://stats.uptimerobot.com/vlYOVuWgM">Status</a></li>
-            <li><a href="http://about.zenodo.org/privacy-policy">Privacy policy</a></li>
-            <li><a href="http://about.zenodo.org/terms">Terms of Use</a></li>
-            <li><a href="/support">Support</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-sm-pull-6 text-center-xs">
-        <p><a title="Except where otherwise noted, content on this site is licensed under a Creative Commons Attribution 4.0 International License." rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons Licence" height="20" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>&nbsp; Powered by <a href="https://home.cern/science/computing/data-centre">CERN Data Centre</a> &amp; <a href="http://inveniosoftware.org">Invenio</a>.</p>
-      </div>
-    </div>
-  </div>
-</footer>
-
-  <script type='application/ld+json'>{"@context": "https://schema.org/", "@id": "https://doi.org/10.5281/zenodo.4433137", "@type": "Dataset", "creator": [{"@id": "https://orcid.org/0000-0002-7702-2991", "@type": "Person", "affiliation": "Politecnico di Torino", "name": "Valentim, Rodolfo"}, {"@id": "https://orcid.org/0000-0001-7612-9650", "@type": "Person", "affiliation": "Federal University of Esp\u00edrito Santo", "name": "Comarela, Giovanni"}, {"@type": "Person", "affiliation": "Telefonica Research", "name": "Park, Souneil"}, {"@id": "https://orcid.org/0000-0002-7679-5423", "@type": "Person", "affiliation": "Wikimedia Foundation", "name": "Saez-Trumper, Diego"}], "datePublished": "2021-03-15", "description": "\u003cp\u003eWe present a dataset of \u003cem\u003einter-language knowledge propagation\u003c/em\u003e in Wikipedia. Covering the entire 309 language editions and 33M articles, the dataset aims to track the full propagation history of Wikipedia concepts, and allow follow up research on building predictive models of them. For this purpose, we align all the Wikipedia articles in a language-agnostic manner according to the concept they cover, which results in 13M propagation instances. To the best of our knowledge, this dataset is the first to explore the full inter-language propagation at a large scale. Together with the dataset, a holistic overview of the propagation and key insights about the underlying structural factors are provided to aid future research. For example, we find that although long cascades are unusual, the propagation tends to continue further once it reaches more than four language editions. We also find that the size of language editions are associated with the speed of propagation. We believe the dataset not only contributes to the prior literature on Wikipedia growth but also enables new use cases such as edit recommendation for addressing knowledge gaps, detection of disinformation, and cultural relationship analysis.\u003c/p\u003e", "distribution": [{"@type": "DataDownload", "contentUrl": "https://zenodo.org/api/files/41a86d62-fcf7-4dd9-bc34-d7e794280db9/dataset.csv.zip", "encodingFormat": "zip"}, {"@type": "DataDownload", "contentUrl": "https://zenodo.org/api/files/41a86d62-fcf7-4dd9-bc34-d7e794280db9/dataset.jsonl.zip", "encodingFormat": "zip"}], "identifier": "https://doi.org/10.5281/zenodo.4433137", "inLanguage": {"@type": "Language", "alternateName": "eng", "name": "English"}, "keywords": ["knowledge propagation", "Wikipedia"], "license": "https://creativecommons.org/licenses/by/4.0/legalcode", "name": "Tracking Knowledge Propagation Across Wikipedia Languages", "url": "https://zenodo.org/record/4433137"}</script>
-
-<script src="/static/gen/zenodo.f843b7ec.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script src="/static/gen/zenodo.search.ff7bb1ad.js"></script>
-<script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6 "><![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7 "> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8 "> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9 "><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en" class="no-js "> <!--<![endif]-->
+  <head id="Head1"><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app224.us.archive.org';v.server_ms=801;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
 <script type="text/javascript">
-  // Bootstrap the Invenio CSL Formatter and invenio-search-js
-  require([
-    "jquery",
-    'typeahead.js',
-    'bloodhound',
-    "node_modules/angular/angular",
-    "node_modules/invenio-csl-js/dist/invenio-csl-js",
-    "node_modules/invenio-search-js/dist/invenio-search-js",
-    "js/zenodo/module"
-    ], function(typeahead, Bloodhound) {
-      angular.element(document).ready(function() {
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.alte.org/","20210226233915","https://web.archive.org/","web","/_static/",
+	      "1614382755");
+</script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
 
-        // FIXME: This is already defined in js/zenodo_deposit/filters.js.
-        // It should be moved to a common place...
-        angular.module('zenodo.filters').filter('limitToEllipsis', function () {
-          return function(text, n) {
-            return (text.length > n) ? text.substr(0, n-1) + '&hellip;' : text;
-          };
-        });
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://web.archive.org/web/20210226233915cs_/https://sf.wildapricot.org/BuiltTheme/firma_above_the_clouds.v3.0/current/fdf4ac6a/styles/combined.css" rel="stylesheet" type="text/css"/><link href="https://web.archive.org/web/20210226233915cs_/https://www.alte.org/resources/theme/customStyles.css?t=636389201340000000" rel="stylesheet" type="text/css"/><link href="//web.archive.org/web/20210226233915cs_/https://sf.wildapricot.org/WebUI/built7.18.0.16672/scripts/public/react/index-dc2aacc.css" rel="stylesheet" type="text/css"/><link href="//web.archive.org/web/20210226233915cs_/https://sf.wildapricot.org/WebUI/built7.18.0.16672/css/shared/ui/shared-ui-compiled.css" rel="stylesheet" type="text/css"/><script type="text/javascript" language="javascript" id="idJavaScriptEnvironment">var bonaPage_BuildVer='7.18.0.16672';
+var bonaPage_AdminBackendUrl = '/admin/';
+var bonaPage_StatRes='https://web.archive.org/web/20210226233915/https://sf.wildapricot.org/WebUI/';
+var bonaPage_InternalPageType = { isUndefinedPage : false,isWebPage : true,isAdminPage : false,isDialogPage : false,isSystemPage : false,isErrorPage : false,isError404Page : false };
+var bonaPage_PageView = { isAnonymousView : true,isMemberView : false,isAdminView : false };
+var WidgetMode = 0;
+var bonaPage_IsUserAnonymous = true;
+var bonaPage_ThemeVer='fdf4ac6a0636389201340000000'; var bonaPage_ThemeId = 'firma_above_the_clouds.v3.0'; var bonaPage_ThemeVersion = '3.0';
+var bonaPage_id='18067'; version_id='';
+if (bonaPage_InternalPageType && (bonaPage_InternalPageType.isSystemPage || bonaPage_InternalPageType.isWebPage) && window.self !== window.top) { var success = true; try { var tmp = top.location.href; if (!tmp) { top.location = self.location; } } catch (err) { try { if (self != top) { top.location = self.location; } } catch (err) { try { if (self != top) { top = self; } success = false; } catch (err) { success = false; } } success = false; } if (!success) { window.onload = function() { document.open('text/html', 'replace'); document.write('<ht'+'ml><he'+'ad></he'+'ad><bo'+'dy><h1>Wrong document context!</h1></bo'+'dy></ht'+'ml>'); document.close(); } } }
+try { function waMetricsGlobalHandler(args) { if (WA.topWindow.waMetricsOuterGlobalHandler && typeof(WA.topWindow.waMetricsOuterGlobalHandler) === 'function') { WA.topWindow.waMetricsOuterGlobalHandler(args); }}} catch(err) {}
+ try { if (parent && parent.BonaPage) parent.BonaPage.implementBonaPage(window); } catch (err) { }
+try { document.write('<style type="text/css"> .WaHideIfJSEnabled, .HideIfJSEnabled { display: none; } </style>'); } catch(err) {}
+var bonaPage_WebPackRootPath = '//web.archive.org/web/20210226233915/https://sf.wildapricot.org/WebUI/built7.18.0.16672/scripts/public/react/';</script><script type="text/javascript" language="javascript" src="//web.archive.org/web/20210226233915js_/https://sf.wildapricot.org/WebUI/built7.18.0.16672/scripts/shared/bonapagetop/bonapagetop-compiled.js" id="idBonaPageTop"></script><script type="text/javascript" language="javascript" src="//web.archive.org/web/20210226233915js_/https://sf.wildapricot.org/WebUI/built7.18.0.16672/scripts/public/react/index-dc2aacc.js" id="ReactPublicJs"></script><script type="text/javascript" language="javascript" src="//web.archive.org/web/20210226233915js_/https://sf.wildapricot.org/WebUI/built7.18.0.16672/scripts/shared/ui/shared-ui-compiled.js" id="idSharedJs"></script><script type="text/javascript" language="javascript" src="//web.archive.org/web/20210226233915js_/https://sf.wildapricot.org/WebUI/built7.18.0.16672/General.js" id=""></script><script type="text/javascript" language="javascript" src="https://web.archive.org/web/20210226233915js_/https://sf.wildapricot.org/BuiltTheme/firma_above_the_clouds.v3.0/current/fdf4ac6a/scripts/combined.js" id=""></script><title>Association of Language Testers in Europe (ALTE) - Home</title>
+<meta name="Keywords" content="language,testers,testing,courses,conferences,quality,consultancy,standards,diversity,multilingualism,plurilingualism,impact,policy,education,Europe,"/><meta name="Description" content="ALTE is an association of language test providers who work together to promote the fair and accurate assessment of linguistic ability across Europe and beyond.  ALTE organises courses and conferences on aspects of language assessment, and operates a quality auditing system of European language examinations."/></script><script type="text/javascript" src="https://web.archive.org/web/20210226233915js_/https://app.easyling.com/_el/ext/js/languageSelector.js?code=lcukecs1"></script><link rel="search" type="application/opensearchdescription+xml" title="www.alte.org" href="/web/20210226233915/https://www.alte.org/opensearch.ashx"/></head>
+  <body id="PAGEID_18067" class="publicContentView LayoutMain"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20210226233915/https%3A//www.alte.org/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.alte.org/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20210226233915" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20210226233915*/https://www.alte.org/" title="See a list of every capture for this URL">895 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">25 Jan 1999 - 13 May 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20210126093148/http://www.alte.org/" title="26 Jan 2021"><strong>Jan</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 23:39:15 Feb 26, 2021">FEB</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210414200743/http://www.alte.org/" title="14 Apr 2021"><strong>Apr</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20210217110800/http://www.alte.org/" title="11:08:00 Feb 17, 2021"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 23:39:15 Feb 26, 2021">26</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210303175356/https://www.alte.org/" title="17:53:56 Mar 03, 2021"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200226040255/http://www.alte.org:80/" title="26 Feb 2020"><strong>2020</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 23:39:15 Feb 26, 2021">2021</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20220301140211/https://www.alte.org/" title="01 Mar 2022"><strong>2022</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20210226233915/http://web.archive.org/screenshot/https://www.alte.org/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20210226233915/https://www.alte.org/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20210226233915/https://www.alte.org/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/archiveteam);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/archiveteam" target="_new"><span class="wm-title">Archive Team</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  <img align=right src="http://archiveteam.org/images/e/e6/Archiveteam.jpg" width=200> Formed in 2009, the Archive Team (not to be confused with the archive.org Archive-It Team) is a rogue archivist collective dedicated to saving copies of rapidly dying or deleted websites for the sake of history and digital heritage. The group is 100% composed of volunteers and interested parties, and has expanded into a large amount of related projects for saving online and digital history.
+<p>
+History is littered with hundreds of conflicts over the future of a community, group, location or business that were "resolved" when one of the parties stepped ahead and destroyed what was there. With the original point of contention destroyed, the debates would fall to the wayside. Archive Team believes that by duplicated condemned data, the conversation and debate can continue, as well as the richness and insight gained by keeping the materials. Our projects have ranged in size from a single volunteer downloading the data to a small-but-critical site, to over 100 volunteers stepping forward to acquire terabytes of user-created data to save for future generations.
+<p>
+The main site for Archive Team is at <a href="http://www.archiveteam.org">archiveteam.org</a> and contains up to the date information on various projects, manifestos, plans and walkthroughs.
+<p>
+This collection contains the output of many Archive Team projects, both ongoing and completed. Thanks to the generous providing of disk space by the Internet Archive, multi-terabyte datasets can be made available, as well as in use by the <a href="http://archive.org/web/web.php">Wayback Machine</a>, providing a path back to lost websites and work. 
+<p>
+Our collection has grown to the point of having sub-collections for the type of data we acquire. If you are seeking to browse the contents of these collections, the Wayback Machine is the best first stop. Otherwise, you are free to dig into the stacks to see what you may find.
+<p>
+<b>The Archive Team Panic Downloads</b> are full pulldowns of currently extant websites, meant to serve as emergency backups for needed sites that are in danger of closing, or which will be missed dearly if suddenly lost due to hard drive crashes or server failures. 
+<p>
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/archiveteam_urls)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/archiveteam_urls" target="_new"><span class="wm-title">Archive Team: URLs</span></a></div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20210226233915/https://www.alte.org/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.alte.org/","20210226233915",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+<div class="mLayout layoutMain state1" id="mLayout">
+<div class="mobilePanelContainer">
+<div id="id_MobilePanel" data-componentid="MobilePanel" class="WaPlaceHolder WaPlaceHolderMobilePanel" style=""><div style=""><div id="id_xaBsq8r" class="WaGadgetOnly WaGadgetMobilePanel  gadgetStyleNone" style="" data-componentid="xaBsq8r"><div class="mobilePanel">
+	
+	<div class="mobilePanelButton buttonMenu" title="Menu">Menu</div>
+<div class="mobilePanelButton buttonLogin" title="Log in">Log in</div>
+<div class="menuInner">
+		<ul class="firstLevel">
+<li class="sel ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/" title="Home"><span>Home</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Digital-Symposium-2021" title="Digital Symposium 2021"><span>Digital Symposium 2021</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Sessions" title="Sessions"><span>Sessions</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Digital-Symposium-Programme" title="Programme"><span>Programme</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Plenary-Speakers" title="Plenary Speakers"><span>Plenary Speakers</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Registration-page" title="Registration"><span>Registration</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Who-we-are" title="Who we are"><span>Who we are</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Administration-and-Management" title="Administration and Management"><span>Administration and Management</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-history" title="Our History"><span>Our History</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-Full-Members" title="Our Full Members"><span>Our Full Members</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-Associate-Members" title="Our Associate Members"><span>Our Associate Members</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-Expert-Members" title="Our Expert Members"><span>Our Expert Members</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Mission" title="Our Mission"><span>Our Mission</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Maximising-Impact" title="Maximising Impact"><span>Maximising Impact</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Sustaining-Diversity" title="Sustaining Diversity"><span>Sustaining Diversity</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Setting-Standards" title="Q-Mark"><span>Q-Mark</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/SIGs" title="SIGs"><span>SIGs</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/CEFR-SIG" title="CEFR SIG"><span>CEFR SIG</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/LAMI-SIG" title="LAMI SIG"><span>LAMI SIG</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/LSP-SIG" title="LSP SIG"><span>LSP SIG</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/QMS-Working-Group" title="QMS Working Group"><span>QMS Working Group</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/technology-SIG" title="SIG on Technology"><span>SIG on Technology</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Events" title="Events"><span>Events</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Support" title="Support"><span>Support</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Resources-ALTE" title="Resources"><span>Resources</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Materials" title="Guides and Reference Materials"><span>Guides and Reference Materials</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/IntConfProceedings" title="International Conference Proceedings"><span>International Conference Proceedings</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/ALTE-bi-annual-conferences-material" title="ALTE Bi-annual Conference Material"><span>ALTE Bi-annual Conference Material</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Videos" title="Videos"><span>Videos</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Other-Resources" title="Other Resources"><span>Other Resources</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Join-ALTE" title="Join ALTE"><span>Join ALTE</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Become-an-ALTE-Individual-Affiliate" title="Become an ALTE Individual Affiliate"><span>Become an ALTE Individual Affiliate</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/associate-membership" title="Become an ALTE Associate Member"><span>Become an ALTE Associate Member</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Become-an-ALTE-Full-Member" title="Become an ALTE Full Member"><span>Become an ALTE Full Member</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Contact" title="Contact"><span>Contact</span></a>
+</div>
+</li>
+	
+</ul>
+	</div>
 
-        angular.bootstrap(document.getElementById("citations"), [
-            'invenioSearch',
-            'zenodo.filters',
-            'mgcrea.ngStrap.tooltip',
-          ]
-        );
+	<div class="loginInner">
+<div class="loginContainerForm oAuthIsfalse">
+<form method="post" action="https://web.archive.org/web/20210226233915/https://www.alte.org/Sys/Login" id="id_xaBsq8r_form" class="generalLoginBox" data-disableinadminmode="true">
+<input type="hidden" name="ReturnUrl" id="id_xaBsq8r_returnUrl" value="">
+				<input type="hidden" name="browserData" id="id_xaBsq8r_browserField">
+<div class="loginUserName">
+<div class="loginUserNameTextBox">
+		<input name="email" type="text" maxlength="100" placeholder="Email" id="id_xaBsq8r_userName" tabindex="1" class="emailTextBoxControl"/>
+	</div>
+</div><div class="loginPassword">
+<div class="loginPasswordTextBox">
+		<input name="password" type="password" placeholder="Password" maxlength="50" id="id_xaBsq8r_password" tabindex="2" class="passwordTextBoxControl" autocomplete="off"/>
+	</div>
+</div><div class="loginActionRememberMe">
+		<input id="id_xaBsq8r_rememberMe" type="checkbox" name="rememberMe" tabindex="3" class="rememberMeCheckboxControl"/>
+		<label for="id_xaBsq8r_rememberMe">Remember me</label>
+	</div>
+<div class="loginPasswordForgot">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Sys/ResetPasswordRequest">Forgot password</a>
+	</div>
+<div class="loginAction">
+	<input type="submit" name="ctl03$ctl02$loginViewControl$loginControl$Login" value="Log in" id="id_xaBsq8r_loginAction" onclick="if (!browserInfo.clientCookiesEnabled()) {alert('Warning: browser cookies disabled. Please enable them to use this website.'); return false;}" tabindex="4" class="loginButton loginButtonControl"/>
+</div></form></div>
+</div>
 
-        angular.bootstrap(document.getElementById("invenio-csl"), [
-            'invenioCsl',
-          ]
-        );
+</div>
+
+<script type="text/javascript">
+
+jq$(function()
+{
+	var gadget = jq$('#id_xaBsq8r'),
+		menuContainer = gadget.find('.menuInner'),
+		loginContainer = gadget.find('.loginInner');
+
+	gadget.find('.buttonMenu').on("click",function()
+	{
+		menuContainer.toggle();
+		loginContainer.hide();
+		jq$(this).toggleClass('active');
+        jq$('.buttonLogin').removeClass('active');
+		return false;
+	});
+
+	gadget.find('.buttonLogin').on("click",function()
+	{
+		loginContainer.toggle();
+		menuContainer.hide();
+		jq$(this).toggleClass('active');
+        jq$('.buttonMenu').removeClass('active');
+		return false;
+	});
+
+	gadget.find('.mobilePanel').on("click",function(event)
+	{
+        if( !(jq$(event.target).parents('.loginInner').size() || event.target.className == 'loginInner') )
+        {
+            menuContainer.hide();
+            loginContainer.hide();
+            jq$('.buttonLogin').removeClass('active');
+            jq$('.buttonMenu').removeClass('active');
+        }
+
+        event.stopPropagation();
+	});
+
+	jq$('body').on("click",function()
+	{
+		menuContainer.hide();
+		loginContainer.hide();
+		jq$('.buttonLogin').removeClass('active');
+        jq$('.buttonMenu').removeClass('active');
+	});
+
+
+	// login
+	var browserField = document.getElementById('id_xaBsq8r' + '_browserField');
+
+	if (browserField)
+	{
+		browserField.value = browserInfo.getBrowserCapabilitiesData();
+	}
+
+	jq$('#id_xaBsq8r' + '_form').FormValidate();
+	jq$('.WaGadgetMobilePanel form').attr('data-disableInAdminMode', 'false');
+
+});
+
+</script></div></div>
+</div></div>
+
+		<!-- header zone -->
+		<div class="zoneHeaderOuter">
+			<div class="zoneHeader container_12">
+				<div class="zoneHeaderInner s1_grid_12 s2_grid_12 s3_grid_12">
+<div id="id_Header" data-componentid="Header" class="WaPlaceHolder WaPlaceHolderHeader" style=""><div style=""><div id="id_qaISEe5" class="WaGadgetFirst WaGadgetLoginButton  gadgetStyleNone" style="margin-top:20px;margin-right:20px;margin-bottom:20px;margin-left:20px;" data-componentid="qaISEe5"><div class="loginButtonBackground"></div>
+<div class="loginButtonWrapper alignRight">
+  <div class="loginBoxLinkContainer">
+    <a class="loginBoxLinkButton" href="https://web.archive.org/web/20210226233915/https://www.alte.org/Sys/Login">Log in</a>
+  </div>
+  </div>
+<script type="text/javascript">
+  jq$(function() {
+    var gadgetLoginButton = jq$('#id_qaISEe5');
+    var leftOffset;
+    
+    function resizeBgLogin() {
+      // background track
+      leftOffset = (gadgetLoginButton.closest('.WaLayoutTable').length > 0) ? gadgetLoginButton.closest('.WaLayoutTable').width() : gadgetLoginButton.width();
+        
+      gadgetLoginButton.find('.loginButtonBackground').css({
+        'width': jq$('body').width(),
+        'left': ( ( jq$('body').width() - leftOffset ) * -0.5 )
       });
     }
-  );
-  require([
-    "jquery",
-    "js/zenodo/functions",
-    ], function($, recordCommunityCurate) {
-      $(function () {
-        $("#recordCommunityCuration .btn").click(recordCommunityCurate);
-        $('.preview-link').on('click', function(event) {
-          $('#preview').show();
-          var filename = encodeURIComponent($(event.target).data('filename'));
-          $('#preview-iframe').attr("src","/record/4433137/preview/" + filename);
-        });
-      });
-    }
-  );
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+
+    resizeBgLogin();
+    jq$(window).resize(function() { resizeBgLogin(); });
   });
 </script>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5137aff66ad9c2a1"></script>
+</div><div id="id_Cp2rriq" class="WaGadget WaGadgetCustomHTML  gadgetStyleNone" style="" data-componentid="Cp2rriq"><div class="gadgetStyleBody " style="" data-areaheight="auto">
+<head><script type="text/javascript" src="https://web.archive.org/web/20210226233915js_/https://app.easyling.com/js/webtranslate/languageDropdown.js?code=lcukecs1"></script></head></div>
+</div><div id="id_eAlxkwd" class="WaGadget WaGadgetContent  gadgetStyleNone" style="margin-bottom:0px;background-image:url('/web/20210226233915im_/https://www.alte.org/resources/Pictures/imageedit_1_2656649153.png');background-repeat:no-repeat;background-position:center top;background-color:transparent;height:249px;" data-componentid="eAlxkwd"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:20px;padding-bottom:20px;" data-editablearea="0" data-areaheight="auto">
+<h1 class="titlePage" align="center"><br></h1>
+</div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_eAlxkwd' }); }</script>
+</div><div id="id_H8b9tTl" class="WaGadget WaGadgetMenuHorizontal  menuStyle002" style="margin-right:0px;margin-bottom:20px;" data-componentid="H8b9tTl"><div data-sticky-wrapper="true">
+    <div class="stickness">
+        <div class="menuBackground"></div>
+        <div class="menuInner">
+            <ul class="firstLevel">
+                <li class="sel ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/" title="Home"><span>Home</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Digital-Symposium-2021" title="Digital Symposium 2021"><span>Digital Symposium 2021</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Sessions" title="Sessions"><span>Sessions</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Digital-Symposium-Programme" title="Programme"><span>Programme</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Plenary-Speakers" title="Plenary Speakers"><span>Plenary Speakers</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Registration-page" title="Registration"><span>Registration</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Who-we-are" title="Who we are"><span>Who we are</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Administration-and-Management" title="Administration and Management"><span>Administration and Management</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-history" title="Our History"><span>Our History</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-Full-Members" title="Our Full Members"><span>Our Full Members</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-Associate-Members" title="Our Associate Members"><span>Our Associate Members</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Our-Expert-Members" title="Our Expert Members"><span>Our Expert Members</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Mission" title="Our Mission"><span>Our Mission</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Maximising-Impact" title="Maximising Impact"><span>Maximising Impact</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Sustaining-Diversity" title="Sustaining Diversity"><span>Sustaining Diversity</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Setting-Standards" title="Q-Mark"><span>Q-Mark</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/SIGs" title="SIGs"><span>SIGs</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/CEFR-SIG" title="CEFR SIG"><span>CEFR SIG</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/LAMI-SIG" title="LAMI SIG"><span>LAMI SIG</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/LSP-SIG" title="LSP SIG"><span>LSP SIG</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/QMS-Working-Group" title="QMS Working Group"><span>QMS Working Group</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/technology-SIG" title="SIG on Technology"><span>SIG on Technology</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Events" title="Events"><span>Events</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Support" title="Support"><span>Support</span></a>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Resources-ALTE" title="Resources"><span>Resources</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Materials" title="Guides and Reference Materials"><span>Guides and Reference Materials</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/IntConfProceedings" title="International Conference Proceedings"><span>International Conference Proceedings</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/ALTE-bi-annual-conferences-material" title="ALTE Bi-annual Conference Material"><span>ALTE Bi-annual Conference Material</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Videos" title="Videos"><span>Videos</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Other-Resources" title="Other Resources"><span>Other Resources</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" dir">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Join-ALTE" title="Join ALTE"><span>Join ALTE</span></a>
+<ul class="secondLevel">
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Become-an-ALTE-Individual-Affiliate" title="Become an ALTE Individual Affiliate"><span>Become an ALTE Individual Affiliate</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/associate-membership" title="Become an ALTE Associate Member"><span>Become an ALTE Associate Member</span></a>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Become-an-ALTE-Full-Member" title="Become an ALTE Full Member"><span>Become an ALTE Full Member</span></a>
+</div>
+</li>
+	
+</ul>
+</div>
+</li>
+	
+<li class=" ">
+	<div class="item">
+		<a href="https://web.archive.org/web/20210226233915/https://www.alte.org/Contact" title="Contact"><span>Contact</span></a>
+</div>
+</li>
+	
+</ul>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
-var _paq = _paq || [];
-_paq.push(["setDomains", ["*.zenodo.org","*.zenodo.cern.ch","*.zenodo.eu","*.zenodo.net"]]);
-_paq.push(["trackPageView"]);
-_paq.push(["enableLinkTracking"]);
-
-(function() {
-  var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.web.cern.ch/";
-  _paq.push(["setTrackerUrl", u+"piwik.php"]);
-  _paq.push(["setSiteId", "57"]);
-  var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-  g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-})();
+    if (window.WaMenuHorizontal)
+    {
+        jq$(document).ready(function()
+        {
+            new stickyPlaceholder();
+            new WaMenuHorizontal({ id: "id_H8b9tTl" });
+        });
+    }
 </script>
-  </body>
+
+
+<script type="text/javascript">
+    jq$(function()
+    {
+        var gadgetHorMenu = jq$('#id_H8b9tTl');
+        var leftOffset;
+
+        function resizeBg()
+        {
+            // background track
+
+            leftOffset = (gadgetHorMenu.closest('.WaLayoutTable').length > 0) ? gadgetHorMenu.closest('.WaLayoutTable').width() : gadgetHorMenu.width();
+
+            gadgetHorMenu.find('.menuBackground').css(
+            {
+                'width': jq$('body').width(),
+                'left': ( ( jq$('body').width() - leftOffset ) * -0.5 )
+            });
+        }
+
+        resizeBg();
+
+        jq$(window).resize(function()
+        {
+            resizeBg();
+        });
+    });
+</script></div><div id="id_wfaSmaT" data-componentid="wfaSmaT" class="WaLayoutContainer" style=""><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="wfaSmaT_row" class="WaLayoutRow"><td id="id_4Re9ira" data-componentid="4Re9ira" class="WaLayoutItem" style="width:61%;"><div id="id_oP3CbDH" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="oP3CbDH" style=""><div style=""><div id="id_38DWP3N" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="background-color:#FFFFFF;height:400px;" data-componentid="38DWP3N"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:15px;padding-right:15px;padding-bottom:15px;padding-left:15px;" data-editablearea="0" data-areaheight="auto">
+<h4 align="center"><strong><font style="font-size: 30px;">Welcome to ALTE,&nbsp;</font></strong></h4><h4 align="center"><strong><font style="font-size: 30px;">the Association of Language Testers in Europe</font></strong></h4>
+
+<p align="left">ALTE is an association of language test providers who work together to promote the fair and accurate assessment of linguistic ability across Europe and beyond.&nbsp; ALTE organises courses and conferences on aspects of language assessment, and operates a quality auditing system of European language examinations.<br></p><p align="left">ALTE was founded in 1989 by the University of Cambridge (UK) and the Universidad de Salamanca (Spain). Today, ALTE has 33 Full Member Organisations representing 25 European languages, as well as 68 Associate Members, 15 Individual Expert Members and over 800 Individual Affiliates from all around the world. ALTE is a non-profit organisation, and has Participatory Status as an NGO with the Council of Europe.&nbsp;</p></div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_38DWP3N' }); }</script>
+</div></div></div></td><td style="" data-componentid="4Re9ira_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_5vdt7BZ" data-componentid="5vdt7BZ" class="WaLayoutItem" style="width:39%;"><div id="id_uKd3CVh" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="uKd3CVh" style=""><div style=""><div id="id_EiZfJDW" class="WaGadgetOnly WaGadgetSlideshow  gadgetStyleNone" style="" data-componentid="EiZfJDW"><div class="gadgetStyleBody " style="" data-areaheight="auto">
+<script language="javascript">
+
+	jq$(function(){
+
+		var imgAmount = jq$('#camera_wrap_EiZfJDW > div').size();
+		var cameraNavigation = ( imgAmount <= 1 ) ? false : false,
+				cameraAutoAdvance = ( imgAmount <= 1 ) ? false : true;
+
+		jq$('#camera_wrap_EiZfJDW').camera
+		(
+		  {
+			componentId: 'EiZfJDW',
+			thumbnails: true,
+			loader: 'none',
+			fx: 'simpleFade',
+			time: (5*1000),
+			transPeriod: (750),
+			portrait: false,
+			randomSlide: false,
+			playPause: false,
+			pauseOnClick: false,
+			thumbnails: cameraNavigation,
+			pagination: cameraNavigation,
+			navigation: cameraNavigation,
+			autoAdvance: cameraAutoAdvance,
+			mobileAutoAdvance: cameraAutoAdvance,
+			height: '400px'		  }
+		);		
+	});
+
+</script>
+
+	<div class="camera_wrap camera_charcoal_skin" id="camera_wrap_EiZfJDW">
+<div data-link="" data-src="https://web.archive.org/web/20210226233915oe_/https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH2162.JPG" data-target="" data-thumb="https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH2162.JPG" data-title="">
+    </div><div data-link="" data-src="https://web.archive.org/web/20210226233915oe_/https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH2663.JPG" data-target="" data-thumb="https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH2663.JPG" data-title="">
+    </div><div data-link="" data-src="https://web.archive.org/web/20210226233915oe_/https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH3615.jpg" data-target="" data-thumb="https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH3615.jpg" data-title="">
+    </div><div data-link="" data-src="https://web.archive.org/web/20210226233915oe_/https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH3623.jpg" data-target="" data-thumb="https://www.alte.org/resources/Pictures/Sept%2018%20photos/MICH3623.jpg" data-title="">
+    </div></div>
+</div>
+</div></div></div></td></tr></table> </div><div id="id_2jRfvub" data-componentid="2jRfvub" class="WaLayoutContainer" style="background-color:#FFFFFF;"><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="2jRfvub_row" class="WaLayoutRow"><td id="id_PMgL6Ev" data-componentid="PMgL6Ev" class="WaLayoutItem" style="width:58%;"><div id="id_VFuKesf" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="VFuKesf" style=""><div style=""><div id="id_Q7XiasG" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="background-color:#FFFFFF;" data-componentid="Q7XiasG"><div class="gadgetStyleBody gadgetContentEditableArea" style="" data-editablearea="0" data-areaheight="auto">
+<a href="/web/20210226233915/https://www.alte.org/Digital-Symposium-2021" target="_blank"><img src="/web/20210226233915im_/https://www.alte.org/resources/Pictures/ALTE_Digital_Symposium_lockup_Hashtag_Colour.jpg" alt="" title="" border="0" style="margin: 10px auto; display: block;" width="543" height="124"></a><p><br></p></div>
+</div></div></div></td><td style="" data-componentid="PMgL6Ev_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_wjG8YnP" data-componentid="wjG8YnP" class="WaLayoutItem" style="width:42%;"><div id="id_OTImdDg" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="OTImdDg" style=""><div style=""><div id="id_NLhNo8H" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="margin-top:20px;" data-componentid="NLhNo8H"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-right:10px;" data-editablearea="0" data-areaheight="auto">
+<h3 align="right" style="margin-bottom: 0px !important;">Find out about our exciting</h3><h3 align="right" style="margin-top: 0px !important;"><a href="/web/20210226233915/https://www.alte.org/Digital-Symposium-2021" target="_blank">1st International Digital Symposium,</a> 28-30 April 2021</h3></div>
+</div></div></div></td></tr></table> </div><div id="id_UBtIeIG" class="WaGadgetLast WaGadgetContent  gadgetStyleNone" style="" data-componentid="UBtIeIG"><div class="gadgetStyleBody gadgetContentEditableArea" style="" data-editablearea="0" data-areaheight="auto">
+<h1>Our mission</h1></div>
+</div></div>
+</div></div>
+			</div>
+		</div>
+
+		<div class="zoneHeader1Outer">
+			<div class="zoneHeader1 container_12">
+				<div class="zoneHeader1Inner s1_grid_12 s2_grid_12 s3_grid_12">
+					<div class="color"></div>
+<div id="id_Header1" data-componentid="Header1" class="WaPlaceHolder WaPlaceHolderHeader1" style=""><div style=""><div id="id_IDDQDUp" data-componentid="IDDQDUp" class="WaLayoutContainerFirst" style=""><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="IDDQDUp_row" class="WaLayoutRow"><td id="id_yERjCIv" data-componentid="yERjCIv" class="WaLayoutItem" style="width:33%;"><div id="id_4UmEsIs" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="4UmEsIs" style=""><div style=""><div id="id_thCw7J9" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="background-color:#B5CCDA;height:230px;" data-componentid="thCw7J9"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h2 align="center"><font style="font-size: 30px;">Setting Standards</font></h2>
+
+
+
+<p>ALTE has established a set of common standards which cover all the stages of the language testing process. These standards can be applied to exams of any language, and ensure the quality of ALTE Members' examinations.</p>
+</div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_thCw7J9' }); }</script>
+</div></div></div></td><td style="" data-componentid="yERjCIv_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_537IB4G" data-componentid="537IB4G" class="WaLayoutItem" style="width:33%;"><div id="id_DauG65Q" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="DauG65Q" style=""><div style=""><div id="id_iT6kzpN" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="background-color:#BCBCBC;height:230px;" data-componentid="iT6kzpN"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h2 align="center"><font style="font-size: 30px;">Sustaining Diversity</font></h2>
+
+
+
+<p>ALTE supports the learning, teaching and assessment of a wide range of languages, and promotes the recognition of qualifications in these languages across Europe.</p>
+</div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_iT6kzpN' }); }</script>
+</div></div></div></td><td style="" data-componentid="537IB4G_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_mvVbbLn" data-componentid="mvVbbLn" class="WaLayoutItem" style="width:33%;"><div id="id_QNxBDRZ" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="QNxBDRZ" style=""><div style=""><div id="id_ND9CmRC" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="background-color:#F7E7DA;height:230px;" data-componentid="ND9CmRC"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h2 align="center"><font style="font-size: 30px;">Maximising Impact</font></h2>
+
+<p>ALTE helps maximise tests' positive impact by making the connections between policy, research and practice, between language learning, teaching and assessment, and between experts in different fields and parts of the world.</p>
+</div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_ND9CmRC' }); }</script>
+</div></div></div></td></tr></table> </div><div id="id_b5cJPwC" data-componentid="b5cJPwC" class="WaLayoutContainer" style=""><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="b5cJPwC_row" class="WaLayoutRow"><td id="id_e4USBEY" data-componentid="e4USBEY" class="WaLayoutItem" style="width:33%;"><div id="id_krC8oCd" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="krC8oCd" style=""><div style=""><div id="id_3a8AsT6" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="margin-top:-20px;background-color:#B5CCDA;height:300px;" data-componentid="3a8AsT6"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h2 align="center"><img src="/web/20210226233915im_/https://www.alte.org/resources/Pictures/untitled%20(8).jpeg" alt="" title="" border="0"><br></h2><div><p align="center"><a href="/web/20210226233915/https://www.alte.org/Setting-Standards" class="stylizedButton buttonStyle001">Learn more</a></p></div></div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_3a8AsT6' }); }</script>
+</div></div></div></td><td style="" data-componentid="e4USBEY_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_2B7OsBq" data-componentid="2B7OsBq" class="WaLayoutItem" style="width:33%;"><div id="id_YnFqhT7" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="YnFqhT7" style=""><div style=""><div id="id_QH5S3As" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="margin-top:-20px;background-color:#BCBCBC;height:300px;" data-componentid="QH5S3As"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h2 align="center"><img src="/web/20210226233915im_/https://www.alte.org/resources/Pictures/untitled%20(9).jpeg" alt="" title="" border="0"><br></h2><div><p align="center"><a href="/web/20210226233915/https://www.alte.org/Sustaining-Diversity" class="stylizedButton buttonStyle001">Learn more</a>&nbsp;</p></div></div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_QH5S3As' }); }</script>
+</div></div></div></td><td style="" data-componentid="2B7OsBq_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_XbdRYK4" data-componentid="XbdRYK4" class="WaLayoutItem" style="width:33%;"><div id="id_Jd6mA64" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="Jd6mA64" style=""><div style=""><div id="id_aYuDlnu" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="margin-top:-20px;background-color:#F7E7DA;height:300px;" data-componentid="aYuDlnu"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h2 align="center"><img src="/web/20210226233915im_/https://www.alte.org/resources/Pictures/untitled%20(10).jpeg" alt="" title="" border="0"><br></h2><p align="center"><font style="font-size: 16px;"><a href="/web/20210226233915/https://www.alte.org/Maximising-Impact" class="stylizedButton buttonStyle001">Learn more</a></font></p></div>
+<script type="text/javascript">if (window.WA) { new WaContentGadgetResizer({ id: 'id_aYuDlnu' }); }</script>
+</div></div></div></td></tr></table> </div><div id="id_gY4jmNf" class="WaGadgetLast WaGadgetSocialProfile  gadgetStyle001" style="" data-componentid="gY4jmNf"><div class="gadgetStyleBody " style="" data-areaheight="auto">
+<div class="socialProfileWrapper alignLeft fixedtrue">
+	<ul class="orientationHorizontal"><li><a href="https://web.archive.org/web/20210226233915/https://www.facebook.com/ALTE.Association.of.Language.Testers.in.Europe/" title="Facebook" class="Facebook" target="_blank"></a></li><li><a href="https://web.archive.org/web/20210226233915/https://mobile.twitter.com/AlteSec" title="Twitter" class="Twitter" target="_blank"></a></li><li><a href="https://web.archive.org/web/20210226233915/https://www.youtube.com/channel/UC-DKfhbQugszruON3Uummbg/" title="YouTube" class="YouTube" target="_blank"></a></li></ul>
+</div>
+</div>
+<script>
+    jq$(document).ready(function() {
+        jq$(".socialProfileWrapper.fixedtrue").closest(".WaGadgetSocialProfile").addClass("fixed");
+        jq$(".socialProfileWrapper.fixedtrue ul").removeClass("orientationHorizontal").addClass("orientationVertical");
+
+        // new stuff
+        var mobileResolution = 959,
+                innerPadding = 10,
+                target = jq$('#id_gY4jmNf.WaGadgetSocialProfile.fixed'),
+                stickyAnchor = target.closest('.WaPlaceHolder');
+
+        if( target && stickyAnchor.length > 0 )
+        {
+            makeSocialSticky(stickyAnchor, target);
+
+            jq$(window).scroll( function()
+            {
+                makeSocialSticky(stickyAnchor, target);
+            });
+
+            jq$(window).resize( function()
+            {
+                makeSocialSticky(stickyAnchor, target);
+            });
+
+            makeSocialSticky(stickyAnchor, target);
+        }
+
+        function makeSocialSticky(anchor, target){
+            var anchorOffset = anchor.offset().top,
+                windowTop = jq$(window).scrollTop(),
+                styleNoneMargin = (target.hasClass('gadgetStyleNone'))? 6:0;
+
+
+            if ( window.innerWidth < mobileResolution){ // for inner position
+                if (windowTop > anchorOffset+innerPadding && target.height() < jq$(window).height()) {
+                    var innerOffset = anchor.offset().left + anchor.width() - target.width() - innerPadding;
+                    target.addClass('sticky').css("left", innerOffset).css("right", "auto");
+                }
+                else{
+                    target.removeClass('sticky').css("left","").css("right","");
+                }
+            }
+            else{ //for outer position
+                if (windowTop > anchorOffset && target.height() < jq$(window).height()) {
+                    target.addClass('sticky').css("left", anchor.offset().left + anchor.width() + styleNoneMargin).css("right", "auto");
+                }
+                else{
+                    target.removeClass('sticky').css("left","").css("right","");
+                }
+            }
+
+
+        };
+        //end of new stuff
+    });
+</script>
+</div></div>
+</div></div>
+			</div>
+		</div>
+
+		<div class="zoneHeader2Outer">
+			<div class="zoneHeader2 container_12">
+				<div class="zoneHeader2Inner s1_grid_12 s2_grid_12 s3_grid_12">
+</div>
+			</div>
+		</div>
+		<!-- /header zone -->
+
+<!-- content zone -->
+	<div class="zoneContentOuter">
+		<div class="zoneContent container_12">
+			<div class="zoneContentInner s1_grid_12 s2_grid_12 s3_grid_12">
+<div id="id_Content" data-componentid="Content" class="WaPlaceHolder WaPlaceHolderContent" style=""><div style="padding-bottom:40px;"><div id="id_BHn3o8I" data-componentid="BHn3o8I" class="WaLayoutContainerOnly" style=""><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="BHn3o8I_row" class="WaLayoutRow"><td id="id_sRSWkpV" data-componentid="sRSWkpV" class="WaLayoutItem" style="width:59%;"><div id="id_bgUlnwH" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="bgUlnwH" style=""><div style=""><div id="id_pcJdSQ3" class="WaGadgetFirst WaGadgetContent  gadgetStyleNone" style="margin-top:0px;margin-right:0px;margin-bottom:20px;margin-left:0px;background-color:#F7E7DA;" data-componentid="pcJdSQ3"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h1>Who we are&nbsp;</h1><p>Discover <a href="/web/20210226233915/https://www.alte.org/Our-history">ALTE's history</a>, check our list of <a href="/web/20210226233915/https://www.alte.org/Our-Full-Members">Members</a> and <a href="/web/20210226233915/https://www.alte.org/Our-Institutional-Affiliates">Institutional Affiliates</a>, or learn more about the <a href="/web/20210226233915/https://www.alte.org/page-18051">structure and administration</a> of our association.&nbsp;</p></div>
+</div><div id="id_GZVakzH" class="WaGadget WaGadgetContent  gadgetStyleNone" style="background-color:#C69C6E;" data-componentid="GZVakzH"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h1>q-mark &amp; Quality audits</h1><div>ALTE audits member organisations' tests for evidence of quality in language test development and delivery. A successful audit results in a Q-Mark. <a href="/web/20210226233915/https://www.alte.org/Setting-Standards" target="_blank">Find out more</a>, as well as which tests have the Q-Mark in the ALTE Framework.</div></div>
+</div><div id="id_q59DoJz" class="WaGadget WaGadgetContent  gadgetStyleNone" style="background-color:#BCBCBC;" data-componentid="q59DoJz"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h1>Resources</h1><div>Check our collection of <a href="/web/20210226233915/https://www.alte.org/Resources-ALTE">resources</a> to support language learning, teaching and assessment.&nbsp;</div></div>
+</div><div id="id_XQcUxwA" class="WaGadgetLast WaGadgetContent  gadgetStyleNone" style="margin-top:0px;margin-right:0px;margin-bottom:20px;margin-left:0px;background-color:#B5CCDA;" data-componentid="XQcUxwA"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h1 style="line-height: 28px;">SIGs</h1>
+
+<div>
+  <p>ALTE has several <a href="/web/20210226233915/https://www.alte.org/page-18052">Special Interest Groups (SIGs)</a> who look at assessment issues from a range of perspectives, such as special needs and circumstances, migration, and technology.&nbsp;</p>
+</div>
+</div>
+</div></div></div></td><td style="" data-componentid="sRSWkpV_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_pJW6uOx" data-componentid="pJW6uOx" class="WaLayoutItem" style="width:41%;"><div id="id_l4uFKHS" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="l4uFKHS" style=""><div style=""><div id="id_cwKntdc" class="WaGadgetFirst WaGadgetUpcomingEvents  gadgetStyle001" style="margin-top:15px;margin-right:0px;margin-bottom:15px;margin-left:25px;background-color:#FFFFFF;" data-componentid="cwKntdc"><div class="gadgetStyleTitle"><h4 class="gadgetTitleH4">
+Upcoming events</h4></div>
+<div class="gadgetStyleBody " style="" data-areaheight="auto">
+<ul>
+<li>
+	<div class="title"><a href="https://web.archive.org/web/20210226233915/https://www.alte.org/event-3668540">ALTE Introductory course in Language Testing - ONLINE EVENT - SOLD OUT</a></div>
+	<div class="date">
+		<span>8 Mar 2021 8:30 AM</span>
+	</div>
+	<div class="location">
+		<span>Online</span>
+	</div>
+</li>
+<li>
+	<div class="title"><a href="https://web.archive.org/web/20210226233915/https://www.alte.org/event-4088935">ALTE 1st International Digital Symposium</a></div>
+	<div class="date">
+		<span>28 Apr 2021</span>
+	</div>
+	<div class="location">
+		<span>Online</span>
+	</div>
+</li>
+<li>
+	<div class="title"><a href="https://web.archive.org/web/20210226233915/https://www.alte.org/event-3806687">ALTE course in Assessing Writing in the Digital Age - Postponed to Sept 2021</a></div>
+	<div class="date">
+		<span>6 Sep 2021 9:00 AM</span>
+	</div>
+	<div class="location">
+		<span>Cambridge, UK</span>
+	</div>
+</li>
+<li class="last">
+	<div class="title"><a href="https://web.archive.org/web/20210226233915/https://www.alte.org/event-4175124">ALTE 56th Conference Day</a></div>
+	<div class="date">
+		<span>12 Nov 2021 8:00 AM</span>
+	</div>
+	<div class="location">
+		<span>Perugia, Italy</span>
+	</div>
+</li>
+</ul>
+	
+</div>
+</div><div id="id_sTUsySQ" class="WaGadgetLast WaGadgetContent  gadgetStyleNone" style="" data-componentid="sTUsySQ"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-left:30px;" data-editablearea="0" data-areaheight="auto">
+<p><a href="/web/20210226233915/https://www.alte.org/Events">More events...</a></p><p>Or <a href="/web/20210226233915/https://www.alte.org/Sys/Login">log in</a> to see member-only events<br></p></div>
+</div></div></div></td></tr></table> </div></div>
+</div></div>
+		</div>
+	</div>
+	<!-- /content zone -->
+
+<!-- footer zone -->
+		<div class="zoneFooterOuter">
+			<div class="zoneFooter container_12">
+				<div class="zoneFooterInner s1_grid_12 s2_grid_12 s3_grid_12">
+<div id="id_Footer" data-componentid="Footer" class="WaPlaceHolder WaPlaceHolderFooter" style="background-color:transparent;"><div style="padding-top:0px;padding-right:0px;padding-left:0px;"><div id="id_uQVwVke" data-componentid="uQVwVke" class="WaLayoutContainerOnly" style=""><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="uQVwVke_row" class="WaLayoutRow"><td id="id_lvLy5j8" data-componentid="lvLy5j8" class="WaLayoutItem" style="width:33%;"><div id="id_Ek6a3Xe" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="Ek6a3Xe" style=""><div style=""><div id="id_wCrPcci" class="WaGadgetOnly WaGadgetContent  gadgetStyleNone" style="margin-top:10px;margin-right:10px;margin-bottom:10px;margin-left:10px;background-color:#A2ABB0;" data-componentid="wCrPcci"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h2 align="center"><font style="font-size: 30px;">Join ALTE today!</font></h2>
+
+<p align="center"><span style="line-height: 1.175;"><font style="font-size: 18px;" color="#333333">Joining
+ ALTE as an Individual Affiliate is completely free, and you will 
+receive regular information about our events and activities.</font></span></p>
+
+<div align="center"><a href="/web/20210226233915/https://www.alte.org/Join-ALTE" class="stylizedButton buttonStyle001"><font style="font-size: 18px;"><font><font>Join ALTE</font></font></font></a></div></div>
+</div></div></div></td><td style="" data-componentid="lvLy5j8_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_ixXznDC" data-componentid="ixXznDC" class="WaLayoutItem" style="width:33%;"><div id="id_GAQVIJ8" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="GAQVIJ8" style=""><div style=""><div id="id_TyI3LOT" class="WaGadgetFirst WaGadgetContent  gadgetStyleNone" style="margin-top:10px;margin-right:10px;margin-bottom:10px;margin-left:10px;background-color:#B5CCDA;" data-componentid="TyI3LOT"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;" data-editablearea="0" data-areaheight="auto">
+<h4 align="center"><strong><font>Need to contact us?</font></strong></h4><p align="center">&nbsp;&nbsp;<a href="/web/20210226233915/https://www.alte.org/Contact" class="stylizedButton buttonStyle001">Contact</a> <br></p></div>
+</div><div id="id_LidzRgU" class="WaGadgetLast WaGadgetContent  gadgetStyleNone" style="margin-top:20px;margin-right:20px;margin-bottom:20px;margin-left:20px;background-color:#FFFFFF;" data-componentid="LidzRgU"><div class="gadgetStyleBody gadgetContentEditableArea" style="padding-top:15px;padding-right:0px;padding-bottom:15px;padding-left:15px;" data-editablearea="0" data-areaheight="auto">
+<p><font style="font-size: 12px;">Please note the use of the ALTE logo is exclusively for ALTE members. No other institution or individual may use the logo without written consent from the ALTE Secretariat. More information can be found <a href="/web/20210226233915/https://www.alte.org/resources/Documents/Rules%20on%20the%20Use%20of%20ALTE%20Logos.pdf" target="_blank">here</a>. </font><br></p></div>
+</div></div></div></td><td style="" data-componentid="ixXznDC_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_DyC3NPl" data-componentid="DyC3NPl" class="WaLayoutItem" style="width:33%;"><div id="id_FkQwLrL" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="FkQwLrL" style=""><div style=""><div id="id_T56OaID" class="WaGadgetOnly WaGadgetFacebookPagePlugin  gadgetStyleNone" style="margin-top:0px;margin-right:0px;margin-left:0px;" data-componentid="T56OaID"><div class="gadgetStyleBody " style="" data-areaheight="auto">
+<script type="text/javascript">
+  (function ()
+  {
+    'use strict';
+
+    function initializeGadget()
+    {
+	  if (window.WaFacebookPagePluginManager)
+	  {
+		WaFacebookPagePluginManager.createGadget({ id: 'T56OaID' }, 
+		{ 
+			facebookPagePluginContainerId: 'facebook_T56OaID'
+		});
+	  }	  
+	}
+
+    if(window.BonaPage) { BonaPage.addPageStateHandler(BonaPage.PAGE_PARSED, initializeGadget, BonaPage.HANDLERTYPE_ALWAYS); }
+  })();
+</script>
+
+<div id="facebook_T56OaID">  
+<div class="fb-page" style="width: 100%;" data-href="https://www.facebook.com/ALTE.Association.of.Language.Testers.in.Europe/" data-width="300" data-height="350" data-hide-cover="false" data-show-facepile="false" data-show-posts="true"></div>
+</div>
+
+</div>
+</div></div></div></td></tr></table> </div></div>
+</div></div>
+			</div>
+		</div>
+
+        <div class="zoneFooter1Outer">
+            <div class="zoneFooter1 container_12">
+                <div class="zoneFooter1Inner s1_grid_12 s2_grid_12 s3_grid_12">
+                    <div id="id_Footer1" data-componentid="Footer1" class="WaPlaceHolder WaPlaceHolderFooter1" style=""><div style="padding-right:0px;padding-left:0px;"><div id="id_yw86mXP" data-componentid="yw86mXP" class="WaLayoutContainerFirst" style="margin-top:20px;"><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="yw86mXP_row" class="WaLayoutRow"><td id="id_OcIAa8I" data-componentid="OcIAa8I" class="WaLayoutItem" style="width:33%;"><div id="id_qkaS9MD" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="qkaS9MD" style=""><div style=""><div id="id_6jF33oZ" class="WaGadgetOnly WaGadgetSiteSearch  gadgetStyleNone" style="" data-componentid="6jF33oZ"><div class="gadgetStyleBody " style="" data-areaheight="auto">
+<div class="searchBoxOuter alignLeft">
+	<div class="searchBox">
+<form method="post" action="https://web.archive.org/web/20210226233915/https://www.alte.org/Sys/Search" id="id_6jF33oZ_form" class="generalSearchBox" data-disableinadminmode="true">
+<span class="searchBoxFieldContainer"><input class="searchBoxField" type="text" name="searchString" id="idid_6jF33oZ_searchBox" value="" maxlength="300" autocomplete="off" placeholder="Enter search string"></span>
+<div class="autoSuggestionBox" id="idid_6jF33oZ_resultDiv"></div>
+</form></div>
+	</div>
+	<script type="text/javascript">
+		(function(){
+
+			function init()
+			{
+				var model = {};
+				model.gadgetId = 'idid_6jF33oZ';
+				model.searchBoxId = 'idid_6jF33oZ_searchBox';
+				model.resultDivId = 'idid_6jF33oZ_resultDiv';
+				model.selectedTypes = '7';
+				model.searchTemplate = 'https://web.archive.org/web/20210226233915/https://www.alte.org/Sys/Search?q={0}&types={1}&page={2}';
+				model.searchActionUrl = '/Sys/Search/DoSearch';
+				model.GoToSearchPageTextTemplate = 'Search for &#39;{0}&#39;';
+				model.autoSuggest = true;
+				var WASiteSearch = new WASiteSearchGadget(model);
+			}
+
+			jq$(document).ready(init);
+		}) ();
+	</script>
+</div>
+</div></div></div></td><td style="" data-componentid="OcIAa8I_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_5nmG4dt" data-componentid="5nmG4dt" class="WaLayoutItem" style="width:10%;"></td><td style="" data-componentid="5nmG4dt_separator" class="WaLayoutSeparator"><div style="width: inherit;"></div></td><td id="id_i7K31dv" data-componentid="i7K31dv" class="WaLayoutItem" style="width:56%;"><div id="id_EX2xTpW" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="EX2xTpW" style=""><div style=""><div id="id_6edXR9Z" class="WaGadgetOnly WaGadgetSharingButtons  gadgetStyleNone" style="" data-componentid="6edXR9Z"><div class="gadgetStyleBody " style="" data-areaheight="auto">
+<div class="orientationHorizontal">
+
+		
+	        <div class="socialSharingButton">
+<!-- https://developers.facebook.com/docs/plugins/like-button/ -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//web.archive.org/web/20210226233915/https://connect.facebook.net/en_GB/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-share="true"></div></div>
+		
+	        <div class="socialSharingButton">
+<!-- https://dev.twitter.com/docs/tweet-button -->
+<a href="https://web.archive.org/web/20210226233915/https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
+ 
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//web.archive.org/web/20210226233915/https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>
+		
+	        <div class="socialSharingButton">
+<!-- https://developer.linkedin.com/plugins/share-plugin-generator -->
+<script src="//web.archive.org/web/20210226233915js_/https://platform.linkedin.com/in.js" type="text/javascript"></script>
+<script type="IN/Share" data-counter="right"></script></div>
+		
+	        </div>
+
+</div>
+</div></div></div></td></tr></table> </div><div id="id_ElIBOkE" data-componentid="ElIBOkE" class="WaLayoutContainerLast" style=""><table cellspacing="0" cellpadding="0" class="WaLayoutTable" style=""><tr data-componentid="ElIBOkE_row" class="WaLayoutRow"><td id="id_QY1ec2T" data-componentid="QY1ec2T" class="WaLayoutItem" style="width:100%;"><div id="id_4LBTz4L" class="WaLayoutPlaceHolder placeHolderContainer" data-componentid="4LBTz4L" style=""><div style=""><div id="id_jM7u29I" class="WaGadgetFirst WaGadgetCustomMenu  gadgetStyleNone" style="" data-componentid="jM7u29I"><div class="gadgetStyleBody " style="" data-areaheight="auto">
+<div class="customMenuWrapper alignLeft">
+	<ul class="orientationHorizontal">
+
+<li>
+				<a href="/web/20210226233915/https://www.alte.org/" title="Home">Home</a>
+			</li>
+<li>
+				<a href="/web/20210226233915/https://www.alte.org/dataprotectionpolicy" title="Data Protection Policy">Data Protection Policy</a>
+			</li>
+<li>
+				<a href=" " title="© ALTE 2021">© ALTE 2021</a>
+			</li>
+</ul>
+</div>
+</div>
+</div><div id="id_m8zjLSG" class="WaGadgetLast WaGadgetContent  gadgetStyleNone" style="" data-componentid="m8zjLSG"><div class="gadgetStyleBody gadgetContentEditableArea" style="" data-editablearea="0" data-areaheight="auto">
+<p style="line-height: 10px;"><font style="font-size: 11px;">ALTE - the Association of Language Testers in Europe is a Charitable Incorporated Organisation (CIO), registered in England, charity number 1184799.<a href="https://web.archive.org/web/20210226233915/http://es.alte.org/" target="_blank"><font><br></font></a></font></p><p><font style="font-size: 11px;"><font><a href="https://web.archive.org/web/20210226233915/http://es.alte.org/" target="_blank">Spanish Translation © Instituto Cervantes and University of Salamanca 2021</a>&nbsp;| <a href="https://web.archive.org/web/20210226233915/http://fr.alte.org/" target="_blank">French Translation © France Éducation International (formerly CIEP) 2021</a>&nbsp;|<a href="https://web.archive.org/web/20210226233915/http://it.alte.org/" target="_blank"> Italian Translation © University for Foreigners, Perugia 2021</a>&nbsp;|<a href="https://web.archive.org/web/20210226233915/http://nl.alte.org/" target="_blank"> Dutch Translation © CNaVT 2021&nbsp;</a>| <a href="https://web.archive.org/web/20210226233915/http://ro.alte.org/" target="_blank">Romanian Translation © Babeş-Bolyai University 2021</a>&nbsp;| <a href="https://web.archive.org/web/20210226233915/http://se.alte.org/" target="_blank">Swedish Translation © Stockholm University 2021</a>&nbsp;| <a href="https://web.archive.org/web/20210226233915/https://pt.alte.org/" target="_blank">Portuguese Translation © CAPLE-University of Lisbon 2021</a></font></font><br></p></div>
+</div></div></div></td></tr></table> </div></div>
+</div></div>
+            </div>
+        </div>
+		<!-- /footer zone -->
+
+		<!-- branding zone -->
+<div class="zoneBrandingOuter">
+			<div class="zoneBranding container_12">
+				<div class="zoneBrandingInner s1_grid_12 s2_grid_12 s3_grid_12">
+<div id="idFooterPoweredByContainer">
+	<span id="idFooterPoweredByWA">
+Powered by <a href="https://web.archive.org/web/20210226233915/http://www.wildapricot.com/" target="_blank">Wild Apricot</a> Membership Software</span>
+</div>
+</div>
+			</div>
+		</div>
+<!-- /branding zone -->
+</div></body>
 </html>
+<script type="text/javascript">if (window.BonaPage && BonaPage.setPageState) { BonaPage.setPageState(BonaPage.PAGE_PARSED); }</script><!--
+     FILE ARCHIVED ON 23:39:15 Feb 26, 2021 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:23:31 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 585.064
+  exclusion.robots: 0.139
+  exclusion.robots.policy: 0.132
+  RedisCDXSource: 0.532
+  esindex: 0.005
+  LoadShardBlock: 549.81 (3)
+  PetaboxLoader3.resolve: 451.687 (4)
+  PetaboxLoader3.datanode: 139.024 (7)
+  CDXLines.iter: 23.996 (3)
+  load_resource: 197.096 (2)
+  loaddict: 151.308 (2)
+-->

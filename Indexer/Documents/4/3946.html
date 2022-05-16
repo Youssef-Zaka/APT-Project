@@ -1,728 +1,870 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
 <head>
-  <title>[2201.10369] Winograd Convolution for Deep Neural Networks: Efficient Point Selection</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
-</script>
-  <meta name="citation_title" content="Winograd Convolution for Deep Neural Networks: Efficient Point Selection"/>
-  <meta name="citation_author" content="Alam, Syed Asad"/>
-  <meta name="citation_author" content="Anderson, Andrew"/>
-  <meta name="citation_author" content="Barabasz, Barbara"/>
-  <meta name="citation_author" content="Gregg, David"/>
-  <meta name="citation_date" content="2022/01/25"/>
-  <meta name="citation_online_date" content="2022/01/25"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2201.10369"/>
-  <meta name="citation_arxiv_id" content="2201.10369"/>
-  <meta name="citation_abstract" content=" Convolutional neural networks (CNNs) have dramatically improved the accuracy
-of tasks such as object recognition, image segmentation and interactive speech
-systems. CNNs require large amounts of computing resources because
-ofcomputationally intensive convolution layers. Fast convolution algorithms
-such as Winograd convolution can greatly reduce the computational cost of these
-layers at a cost of poor numeric properties, such that greater savings in
-computation exponentially increase floating point errors. A defining feature of each Winograd convolution algorithm is a set of
-real-value points where polynomials are sampled. The choice of points impacts
-the numeric accuracy of the algorithm, but the optimal set of points for small
-convolutions remains unknown. Existing work considers only small integers and
-simple fractions as candidate points. In this work, we propose a novel approach
-to point selection using points of the form {-1/c , -c, c, 1/c } using the full
-range of real-valued numbers for c. We show that groups of this form cause
-cancellations in the Winograd transform matrices that reduce numeric error. We
-find empirically that the error for different values of c forms a rough curve
-across the range of real-value numbers helping to localize the values of c that
-reduce error and that lower errors can be achieved with non-obvious real-valued
-evaluation points instead of integers or simple fractions. We study a range of
-sizes for small convolutions and achieve reduction in error ranging from 2% to
-around 59% for both 1D and 2D convolution. Furthermore, we identify patterns in
-cases when we select a subset of our proposed points which will always lead to
-a lower error. Finally we implement a complete Winograd convolution layer and
-use it to run deep convolution neural networks on real datasets and show that
-our proposed points reduce error, ranging from 22% to 63%.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2201.10369"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Winograd Convolution for Deep Neural Networks: Efficient Point Selection"/>
-    <meta name="twitter:description" content="Convolutional neural networks (CNNs) have dramatically improved the accuracy
-of tasks such as object recognition, image segmentation and interactive speech
-systems. CNNs require large amounts of..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="Winograd Convolution for Deep Neural Networks: Efficient Point Selection"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2201.10369v1"/>
-    <meta property="og:description" content="Convolutional neural networks (CNNs) have dramatically improved the accuracy
-of tasks such as object recognition, image segmentation and interactive speech
-systems. CNNs require large amounts of computing resources because
-ofcomputationally intensive convolution layers. Fast convolution algorithms
-such as Winograd convolution can greatly reduce the computational cost of these
-layers at a cost of poor numeric properties, such that greater savings in
-computation exponentially increase floating point errors.
-  A defining feature of each Winograd convolution algorithm is a set of
-real-value points where polynomials are sampled. The choice of points impacts
-the numeric accuracy of the algorithm, but the optimal set of points for small
-convolutions remains unknown. Existing work considers only small integers and
-simple fractions as candidate points. In this work, we propose a novel approach
-to point selection using points of the form {-1/c , -c, c, 1/c } using the full
-range of real-valued numbers for c. We show that groups of this form cause
-cancellations in the Winograd transform matrices that reduce numeric error. We
-find empirically that the error for different values of c forms a rough curve
-across the range of real-value numbers helping to localize the values of c that
-reduce error and that lower errors can be achieved with non-obvious real-valued
-evaluation points instead of integers or simple fractions. We study a range of
-sizes for small convolutions and achieve reduction in error ranging from 2% to
-around 59% for both 1D and 2D convolution. Furthermore, we identify patterns in
-cases when we select a subset of our proposed points which will always lead to
-a lower error. Finally we implement a complete Winograd convolution layer and
-use it to run deep convolution neural networks on real datasets and show that
-our proposed points reduce error, ranging from 22% to 63%."/>
+<meta charset="UTF-8"/>
+<title>Template:Quantum mechanics topics and Template:Quantum mechanics topics/sandbox: Difference between pages - Wikipedia</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"8caf37b0-e0ae-4c79-ac9b-75654677a68d","wgCSPNonce":false,"wgCanonicalNamespace":"Special","wgCanonicalSpecialPageName":"ComparePages","wgNamespaceNumber":-1,"wgPageName":"Special:ComparePages","wgTitle":"ComparePages","wgCurRevisionId":0,"wgRevisionId":0,"wgArticleId":0,"wgIsArticle":false,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Special:ComparePages","wgRelevantArticleId":0,"wgIsProbablyEditable":false,"wgRelevantPageIsProbablyEditable":false,"wgFlaggedRevsParams":{"tags":{"status":{"levels":1}}},"wgVisualEditor":{"pageLanguageCode":"en"
+,"pageLanguageDir":"ltr","pageVariantFallbacks":"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"nearby":true,"watchlist":true,"tagline":false},"wgWMESchemaEditAttemptStepOversample":false,"wgWMEPageLength":0,"wgNoticeProject":"wikipedia","wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgPopupsFlags":10,"wgULSCurrentAutonym":"English","wgDiffOldId":1063791671,"wgDiffNewId":1039881021,"wgEditSubmitButtonLabelPublish":true,"wgCentralAuthMobileDomain":false,"wgULSPosition":"interlanguage","wgULSisCompactLinksEnabled":true};RLSTATE={"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","mediawiki.special":"ready","mediawiki.helplink":"ready","oojs-ui-core.styles":"ready","oojs-ui.styles.indicators":"ready","mediawiki.widgets.styles":"ready","oojs-ui-core.icons":"ready","mediawiki.htmlform.ooui.styles":"ready","mediawiki.htmlform.styles":"ready",
+"mediawiki.interface.helpers.styles":"ready","mediawiki.diff.styles":"ready","skins.vector.styles.legacy":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.wikimediaBadges":"ready","ext.uls.interlanguage":"ready"};RLPAGEMODULES=["mediawiki.htmlform","mediawiki.htmlform.ooui","mediawiki.widgets","mediawiki.diff","site","mediawiki.page.ready","skins.vector.legacy.js","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.cx.eventlogging.campaigns","ext.centralNotice.geoIP","ext.gadget.ReferenceTooltips","ext.gadget.charinsert","ext.gadget.extra-toolbar-buttons","ext.gadget.refToolbar","ext.gadget.switcher","ext.centralauth.centralautologin","ext.popups","ext.uls.compactlinks","ext.uls.interface"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1i9g4",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.diff.styles%7Cmediawiki.helplink%2Cspecial%7Cmediawiki.htmlform.ooui.styles%7Cmediawiki.htmlform.styles%7Cmediawiki.interface.helpers.styles%7Cmediawiki.widgets.styles%7Coojs-ui-core.icons%2Cstyles%7Coojs-ui.styles.indicators%7Cskins.vector.styles.legacy&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<meta name="generator" content="MediaWiki 1.39.0-wmf.10"/>
+<meta name="referrer" content="origin"/>
+<meta name="referrer" content="origin-when-crossorigin"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta property="og:title" content="Template:Quantum mechanics topics and Template:Quantum mechanics topics/sandbox: Difference between pages - Wikipedia"/>
+<meta property="og:type" content="website"/>
+<link rel="alternate" media="only screen and (max-width: 720px)" href="//en.m.wikipedia.org/wiki/Special:ComparePages"/>
+<link rel="apple-touch-icon" href="/static/apple-touch/wikipedia.png"/>
+<link rel="shortcut icon" href="/static/favicon/wikipedia.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikipedia (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikipedia.org/w/api.php?action=rsd"/>
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikipedia.org/w/index.php?title=Special:ComparePages&amp;page1=Template%3AQuantum+mechanics+topics&amp;page2=Template%3AQuantum+mechanics+topics%2Fsandbox"/>
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
 </head>
-
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
-  </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
-      </div>
-    </div>
-  </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
-
-        <!-- timeboxed column --><!-- /end timeboxed column -->
-
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
-
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2201.10369
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2201.10369"
-        dc:identifier="/abs/2201.10369"
-        dc:title="Winograd Convolution for Deep Neural Networks: Efficient Point Selection"
-        trackback:ping="/trackback/2201.10369" />
-    </rdf:RDF>
--->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Computer Vision and Pattern Recognition</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2201.10369</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 25 Jan 2022]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>Winograd Convolution for Deep Neural Networks: Efficient Point Selection</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Alam%2C+S+A">Syed Asad Alam</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Anderson%2C+A">Andrew Anderson</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Barabasz%2C+B">Barbara Barabasz</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Gregg%2C+D">David Gregg</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2201.10369">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  Convolutional neural networks (CNNs) have dramatically improved the accuracy
-of tasks such as object recognition, image segmentation and interactive speech
-systems. CNNs require large amounts of computing resources because
-ofcomputationally intensive convolution layers. Fast convolution algorithms
-such as Winograd convolution can greatly reduce the computational cost of these
-layers at a cost of poor numeric properties, such that greater savings in
-computation exponentially increase floating point errors.
-<br>A defining feature of each Winograd convolution algorithm is a set of
-real-value points where polynomials are sampled. The choice of points impacts
-the numeric accuracy of the algorithm, but the optimal set of points for small
-convolutions remains unknown. Existing work considers only small integers and
-simple fractions as candidate points. In this work, we propose a novel approach
-to point selection using points of the form {-1/c , -c, c, 1/c } using the full
-range of real-valued numbers for c. We show that groups of this form cause
-cancellations in the Winograd transform matrices that reduce numeric error. We
-find empirically that the error for different values of c forms a rough curve
-across the range of real-value numbers helping to localize the values of c that
-reduce error and that lower errors can be achieved with non-obvious real-valued
-evaluation points instead of integers or simple fractions. We study a range of
-sizes for small convolutions and achieve reduction in error ranging from 2% to
-around 59% for both 1D and 2D convolution. Furthermore, we identify patterns in
-cases when we select a subset of our proposed points which will always lead to
-a lower error. Finally we implement a complete Winograd convolution layer and
-use it to run deep convolution neural networks on real datasets and show that
-our proposed points reduce error, ranging from 22% to 63%.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata">
-        <tr>
-          <td class="tablecell label">Comments:</td>
-          <td class="tablecell comments mathjax">19 pages, 3 figures, 9 tables and 32 equations</td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Computer Vision and Pattern Recognition (cs.CV)</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label"><abbr title="Association of Computing Machinery Classification">ACM</abbr>&nbsp;classes:</td>
-          <td class="tablecell acm-classes">C.3.2; G.0</td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2201.10369">arXiv:2201.10369</a> [cs.CV]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2201.10369v1">arXiv:2201.10369v1</a> [cs.CV]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2201.10369">https://doi.org/10.48550/arXiv.2201.10369</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns--1 ns-special mw-special-ComparePages page-Special_ComparePages rootpage-Special_ComparePages skin-vector action-view skin-vector-legacy"><div id="mw-page-base" class="noprint"></div>
+<div id="mw-head-base" class="noprint"></div>
+<div id="content" class="mw-body" role="main">
+	<a id="top"></a>
+	<div id="siteNotice"><!-- CentralNotice --></div>
+	<div class="mw-indicators">
+	<div id="mw-indicator-mw-helplink" class="mw-indicator"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Diff" target="_blank" class="mw-helplink">Help</a></div>
+	</div>
+	<h1 id="firstHeading" class="firstHeading mw-first-heading">Template:Quantum mechanics topics and Template:Quantum mechanics topics/sandbox: Difference between pages</h1>
+	<div id="bodyContent" class="vector-body">
+		
+		<div id="contentSub">(Difference between pages)</div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" class="mw-body-content"><div class='mw-htmlform-ooui-wrapper oo-ui-layout oo-ui-panelLayout'><form action='/wiki/Special:ComparePages' method='get' enctype='application/x-www-form-urlencoded' class='mw-htmlform mw-htmlform-ooui oo-ui-layout oo-ui-formLayout'><div class='oo-ui-layout oo-ui-panelLayout oo-ui-panelLayout-padded oo-ui-panelLayout-framed'><fieldset class='oo-ui-layout oo-ui-labelElement oo-ui-fieldsetLayout'><legend class='oo-ui-fieldsetLayout-header'><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon'></span><span class='oo-ui-labelElement-label'>Page 1</span></legend><div class='oo-ui-fieldsetLayout-group'><div class='oo-ui-widget oo-ui-widget-enabled'><div id="mw-htmlform-page1"><div data-mw-modules='mediawiki.widgets' id='ooui-php-3' class='mw-htmlform-field-HTMLTitleTextField mw-htmlform-autoinfuse oo-ui-layout oo-ui-labelElement oo-ui-fieldLayout oo-ui-fieldLayout-align-top' data-ooui='{"_":"mw.htmlform.FieldLayout","fieldWidget":{"tag":"mw-input-page1"},"align":"top","helpInline":true,"$overlay":true,"label":{"html":"Page 1"},"classes":["mw-htmlform-field-HTMLTitleTextField","mw-htmlform-autoinfuse"]}'><div class='oo-ui-fieldLayout-body'><span class='oo-ui-fieldLayout-header'><label for='ooui-php-1' class='oo-ui-labelElement-label'>Page 1</label></span><div class='oo-ui-fieldLayout-field'><div id='mw-input-page1' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-textInputWidget oo-ui-textInputWidget-type-text oo-ui-textInputWidget-php mw-widget-titleInputWidget' data-ooui='{"_":"mw.widgets.TitleInputWidget","relative":false,"$overlay":true,"maxLength":255,"name":"page1","value":"Template:Quantum mechanics topics","inputId":"ooui-php-1","required":false}'><input type='text' tabindex='0' name='page1' value='Template:Quantum mechanics topics' maxlength='255' id='ooui-php-1' class='oo-ui-inputWidget-input' /><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon'></span><span class='oo-ui-indicatorElement-indicator oo-ui-indicatorElement-noIndicator'></span></div></div></div></div><div id='ooui-php-4' class='mw-htmlform-field-HTMLIntField oo-ui-layout oo-ui-labelElement oo-ui-fieldLayout oo-ui-fieldLayout-align-top' data-ooui='{"_":"mw.htmlform.FieldLayout","fieldWidget":{"tag":"mw-input-rev1"},"align":"top","helpInline":true,"$overlay":true,"label":{"html":"Revision 1"},"classes":["mw-htmlform-field-HTMLIntField"]}'><div class='oo-ui-fieldLayout-body'><span class='oo-ui-fieldLayout-header'><label for='ooui-php-2' class='oo-ui-labelElement-label'>Revision 1</label></span><div class='oo-ui-fieldLayout-field'><div id='mw-input-rev1' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-textInputWidget oo-ui-textInputWidget-type-number oo-ui-textInputWidget-php oo-ui-numberInputWidget oo-ui-numberInputWidget-php' data-ooui='{"_":"OO.ui.NumberInputWidget","step":1,"type":"number","name":"rev1","inputId":"ooui-php-2","required":false}'><input step='1' type='number' tabindex='0' name='rev1' value='' id='ooui-php-2' class='oo-ui-inputWidget-input' /><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon'></span><span class='oo-ui-indicatorElement-indicator oo-ui-indicatorElement-noIndicator'></span></div></div></div></div></div></div></div></fieldset></div><div class='oo-ui-layout oo-ui-panelLayout oo-ui-panelLayout-padded oo-ui-panelLayout-framed'><fieldset class='oo-ui-layout oo-ui-labelElement oo-ui-fieldsetLayout'><legend class='oo-ui-fieldsetLayout-header'><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon'></span><span class='oo-ui-labelElement-label'>Page 2</span></legend><div class='oo-ui-fieldsetLayout-group'><div class='oo-ui-widget oo-ui-widget-enabled'><div id="mw-htmlform-page2"><div data-mw-modules='mediawiki.widgets' id='ooui-php-7' class='mw-htmlform-field-HTMLTitleTextField mw-htmlform-autoinfuse oo-ui-layout oo-ui-labelElement oo-ui-fieldLayout oo-ui-fieldLayout-align-top' data-ooui='{"_":"mw.htmlform.FieldLayout","fieldWidget":{"tag":"mw-input-page2"},"align":"top","helpInline":true,"$overlay":true,"label":{"html":"Page 2"},"classes":["mw-htmlform-field-HTMLTitleTextField","mw-htmlform-autoinfuse"]}'><div class='oo-ui-fieldLayout-body'><span class='oo-ui-fieldLayout-header'><label for='ooui-php-5' class='oo-ui-labelElement-label'>Page 2</label></span><div class='oo-ui-fieldLayout-field'><div id='mw-input-page2' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-textInputWidget oo-ui-textInputWidget-type-text oo-ui-textInputWidget-php mw-widget-titleInputWidget' data-ooui='{"_":"mw.widgets.TitleInputWidget","relative":false,"$overlay":true,"maxLength":255,"name":"page2","value":"Template:Quantum mechanics topics\/sandbox","inputId":"ooui-php-5","required":false}'><input type='text' tabindex='0' name='page2' value='Template:Quantum mechanics topics/sandbox' maxlength='255' id='ooui-php-5' class='oo-ui-inputWidget-input' /><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon'></span><span class='oo-ui-indicatorElement-indicator oo-ui-indicatorElement-noIndicator'></span></div></div></div></div><div id='ooui-php-8' class='mw-htmlform-field-HTMLIntField oo-ui-layout oo-ui-labelElement oo-ui-fieldLayout oo-ui-fieldLayout-align-top' data-ooui='{"_":"mw.htmlform.FieldLayout","fieldWidget":{"tag":"mw-input-rev2"},"align":"top","helpInline":true,"$overlay":true,"label":{"html":"Revision 2"},"classes":["mw-htmlform-field-HTMLIntField"]}'><div class='oo-ui-fieldLayout-body'><span class='oo-ui-fieldLayout-header'><label for='ooui-php-6' class='oo-ui-labelElement-label'>Revision 2</label></span><div class='oo-ui-fieldLayout-field'><div id='mw-input-rev2' class='oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-textInputWidget oo-ui-textInputWidget-type-number oo-ui-textInputWidget-php oo-ui-numberInputWidget oo-ui-numberInputWidget-php' data-ooui='{"_":"OO.ui.NumberInputWidget","step":1,"type":"number","name":"rev2","inputId":"ooui-php-6","required":false}'><input step='1' type='number' tabindex='0' name='rev2' value='' id='ooui-php-6' class='oo-ui-inputWidget-input' /><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon'></span><span class='oo-ui-indicatorElement-indicator oo-ui-indicatorElement-noIndicator'></span></div></div></div></div></div></div></div></fieldset></div>
+<input id="mw-input-action" name="action" type="hidden"/>
+<input id="mw-input-unhide" name="unhide" type="hidden"/>
+<div class="mw-htmlform-submit-buttons">
+<span id='ooui-php-11' class='mw-htmlform-submit oo-ui-widget oo-ui-widget-enabled oo-ui-inputWidget oo-ui-buttonElement oo-ui-buttonElement-framed oo-ui-labelElement oo-ui-flaggedElement-primary oo-ui-flaggedElement-progressive oo-ui-buttonInputWidget' data-ooui='{"_":"OO.ui.ButtonInputWidget","type":"submit","value":"Compare","label":"Compare","flags":["primary","progressive"],"classes":["mw-htmlform-submit"]}'><button type='submit' tabindex='0' value='Compare' class='oo-ui-inputWidget-input oo-ui-buttonElement-button'><span class='oo-ui-iconElement-icon oo-ui-iconElement-noIcon oo-ui-image-invert'></span><span class='oo-ui-labelElement-label'>Compare</span><span class='oo-ui-indicatorElement-indicator oo-ui-indicatorElement-noIndicator oo-ui-image-invert'></span></button></span></div>
+</form></div><table class="diff diff-contentalign-left diff-editfont-monospace" data-mw="interface">
+				<col class="diff-marker" />
+				<col class="diff-content" />
+				<col class="diff-marker" />
+				<col class="diff-content" />
+				<tr class="diff-title" lang="en">
+				<td colspan="2" class="diff-otitle diff-side-deleted"><div id="mw-diff-otitle1"><strong><a href="/w/index.php?title=Template:Quantum_mechanics_topics&amp;oldid=1063791671" title="Template:Quantum mechanics topics">Latest revision as of 23:33, 4 January 2022</a> <span class="mw-diff-edit">(<a href="/w/index.php?title=Template:Quantum_mechanics_topics&amp;action=edit" title="Template:Quantum mechanics topics">edit</a>)</span></strong></div><div id="mw-diff-otitle2"><a href="/wiki/User:Paine_Ellsworth" class="mw-userlink" title="User:Paine Ellsworth"><bdi>Paine Ellsworth</bdi></a> <span class="mw-usertoollinks">(<a href="/wiki/User_talk:Paine_Ellsworth" class="mw-usertoollinks-talk" title="User talk:Paine Ellsworth">talk</a> | <a href="/wiki/Special:Contributions/Paine_Ellsworth" class="mw-usertoollinks-contribs" title="Special:Contributions/Paine Ellsworth">contribs</a>)</span></div><div id="mw-diff-otitle3"> <span class="comment">(add entry)</span></div><div id="mw-diff-otitle5"></div><div id="mw-diff-otitle4"> </div></td>
+				<td colspan="2" class="diff-ntitle diff-side-added"><div id="mw-diff-ntitle1"><strong><a href="/w/index.php?title=Template:Quantum_mechanics_topics/sandbox&amp;oldid=1039881021" title="Template:Quantum mechanics topics/sandbox">Latest revision as of 09:56, 21 August 2021</a> <span class="mw-diff-edit">(<a href="/w/index.php?title=Template:Quantum_mechanics_topics/sandbox&amp;action=edit" title="Template:Quantum mechanics topics/sandbox">edit</a>)</span> </strong></div><div id="mw-diff-ntitle2"><a href="/wiki/User:Andrybak" class="mw-userlink" title="User:Andrybak"><bdi>Andrybak</bdi></a> <span class="mw-usertoollinks">(<a href="/wiki/User_talk:Andrybak" class="mw-usertoollinks-talk" title="User talk:Andrybak">talk</a> | <a href="/wiki/Special:Contributions/Andrybak" class="mw-usertoollinks-contribs" title="Special:Contributions/Andrybak">contribs</a>)</span> </div><div id="mw-diff-ntitle3"><abbr class="minoredit" title="This is a minor edit">m</abbr> <span class="comment">(sync with live version of the template)</span></div><div id="mw-diff-ntitle5"></div><div id="mw-diff-ntitle4"> </div></td>
+				</tr><tr>
+  <td colspan="2" class="diff-lineno">Line 3:</td>
+  <td colspan="2" class="diff-lineno">Line 3:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|title      = [[Quantum mechanics]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|title      = [[Quantum mechanics]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|bodyclass = hlist</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|bodyclass = hlist</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>|state   = {{{state<del class="diffchange diffchange-inline">&lt;includeonly&gt;</del>|autocollapse<del class="diffchange diffchange-inline">&lt;/includeonly&gt;</del>}}}</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>|state   = {{{state|autocollapse}}}</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><br /></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><br /></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|group1     = Background</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|group1     = Background</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 9:</td>
+  <td colspan="2" class="diff-lineno">Line 9:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Introduction to quantum mechanics|Introduction]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Introduction to quantum mechanics|Introduction]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[History of quantum mechanics|History]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[History of quantum mechanics|History]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Timeline of quantum mechanics|<del class="diffchange diffchange-inline">Timeline</del>]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Timeline of quantum mechanics|<ins class="diffchange diffchange-inline">timeline</ins>]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Classical mechanics]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Classical mechanics]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Old quantum theory]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Old quantum theory]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 21:</td>
+  <td colspan="2" class="diff-lineno">Line 21:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Density matrix]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Density matrix]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Energy level]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Energy level]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Ground state]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Ground<ins class="diffchange diffchange-inline"> state|ground</ins> state]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Excited state]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Excited<ins class="diffchange diffchange-inline"> state|excited</ins> state]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Degenerate energy levels|<del class="diffchange diffchange-inline">Degenerate</del> levels]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Degenerate energy levels|<ins class="diffchange diffchange-inline">degenerate</ins> levels]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Zero-point energy]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Zero<ins class="diffchange diffchange-inline">-point energy|zero</ins>-point energy]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum entanglement|Entanglement]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum entanglement|Entanglement]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Hamiltonian (quantum mechanics)|Hamiltonian]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Hamiltonian (quantum mechanics)|Hamiltonian]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[<del class="diffchange diffchange-inline">Wave</del> <del class="diffchange diffchange-inline">interference</del>|Interference]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>* [[<ins class="diffchange diffchange-inline">Interference</ins> <ins class="diffchange diffchange-inline">(wave propagation)</ins>|Interference]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum decoherence|Decoherence]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum decoherence|Decoherence]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Measurement in quantum mechanics|Measurement]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Measurement in quantum mechanics|Measurement]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 38:</td>
+  <td colspan="2" class="diff-lineno">Line 38:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Uncertainty principle|Uncertainty]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Uncertainty principle|Uncertainty]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Wave function]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Wave function]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Wave function collapse|<del class="diffchange diffchange-inline">Collapse</del>]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Wave function collapse|<ins class="diffchange diffchange-inline">collapse</ins>]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Wave–particle duality]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Wave–particle<ins class="diffchange diffchange-inline"> duality|wave–particle</ins> duality]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><br /></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><br /></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|group3 = Formulations</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|group3 = Formulations</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 49:</td>
+  <td colspan="2" class="diff-lineno">Line 49:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Schrödinger picture|Schrödinger]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Schrödinger picture|Schrödinger]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Path integral formulation]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Path integral formulation]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Phase<del class="diffchange diffchange-inline">-</del>space formulation|Phase space]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>* [[Phase<ins class="diffchange diffchange-inline"> </ins>space formulation|Phase space]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><br /></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><br /></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|group4 = Equations</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|group4 = Equations</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 67:</td>
+  <td colspan="2" class="diff-lineno">Line 67:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[de Broglie–Bohm theory|de Broglie–Bohm]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[de Broglie–Bohm theory|de Broglie–Bohm]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Ensemble interpretation|Ensemble]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Ensemble interpretation|Ensemble]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Hidden<del class="diffchange diffchange-inline">-</del>variable theory|Hidden<del class="diffchange diffchange-inline">-variable</del>]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>* [[Hidden<ins class="diffchange diffchange-inline"> </ins>variable theory|Hidden<ins class="diffchange diffchange-inline"> variables</ins>]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>** [[Local hidden-variable theory|Local]]</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Many-worlds interpretation|Many-worlds]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Many-worlds interpretation|Many-worlds]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Objective<del class="diffchange diffchange-inline">-</del>collapse theory|Objective collapse]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>* [[Objective<ins class="diffchange diffchange-inline"> </ins>collapse theory|Objective collapse]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum logic]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum logic]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Relational quantum mechanics|Relational]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Relational quantum mechanics|Relational]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Transactional interpretation|Transactional]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Transactional interpretation|Transactional]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Von Neumann–Wigner interpretation|Van Neumann-Wigner]]</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><br /></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><br /></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|group6 = Experiments</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|group6 = Experiments</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 80:</td>
+  <td colspan="2" class="diff-lineno">Line 78:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Bell test|Bell's inequality]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Bell test|Bell's inequality]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Davisson–Germer experiment|Davisson–Germer]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Davisson–Germer experiment|Davisson–Germer]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Delayed<del class="diffchange diffchange-inline">-</del>choice quantum eraser]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>* [[Delayed<ins class="diffchange diffchange-inline"> </ins>choice quantum eraser]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Double-slit experiment|Double-slit]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Double-slit experiment|Double-slit]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Franck–Hertz experiment|Franck–Hertz]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Franck–Hertz experiment|Franck–Hertz]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 88:</td>
+  <td colspan="2" class="diff-lineno">Line 86:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum eraser experiment|Quantum eraser]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum eraser experiment|Quantum eraser]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Stern–Gerlach experiment|Stern–Gerlach]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Stern–Gerlach experiment|Stern–Gerlach]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Wheeler's delayed<del class="diffchange diffchange-inline">-</del>choice experiment|Wheeler's delayed choice]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>* [[Wheeler's delayed<ins class="diffchange diffchange-inline"> </ins>choice experiment|Wheeler's delayed choice]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><br /></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><br /></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|group7 = [[Quantum nanoscience|Science]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|group7 = [[Quantum nanoscience|Science]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 109:</td>
+  <td colspan="2" class="diff-lineno">Line 107:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum bus]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum bus]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum cellular automaton|Quantum cellular automata]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum cellular automaton|Quantum cellular automata]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>** [[<del class="diffchange diffchange-inline">Quantum finite automaton|</del>Quantum finite automata]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>** [[Quantum finite automata]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum channel]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum channel]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum circuit]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum circuit]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum complexity theory]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum complexity theory]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum computing]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum computing]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[Timeline of quantum computing<del class="diffchange diffchange-inline"> and communication</del>|Timeline]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[Timeline of quantum computing|Timeline]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum cryptography]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum cryptography]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum electronics]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum electronics]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 123:</td>
+  <td colspan="2" class="diff-lineno">Line 121:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum key distribution]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum key distribution]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum logic]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum logic]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Quantum logic <del class="diffchange diffchange-inline">gate</del>]]<del class="diffchange diffchange-inline">s</del></div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>* [[<ins class="diffchange diffchange-inline">Quantum gate|</ins>Quantum logic <ins class="diffchange diffchange-inline">gates</ins>]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum machine]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum machine]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum machine learning]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum machine learning]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-lineno">Line 138:</td>
+  <td colspan="2" class="diff-lineno">Line 136:</td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|group9 = Extensions</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|group9 = Extensions</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>|list9 = </div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>|list9 = </div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>* [[Casimir effect]]</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum statistical mechanics]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum statistical mechanics]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker"><a class="mw-diff-movedpara-right" title="Paragraph was moved. Click to jump to old location." href="#movedpara_36_0_lhs">&#x26AB;</a></td>
+  <td class="diff-addedline diff-side-added"><div><a name="movedpara_32_0_rhs"></a>* [[Relativistic quantum mechanics]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum field theory]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum field theory]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>**<del class="diffchange diffchange-inline"> </del>[[History of quantum field theory|<del class="diffchange diffchange-inline">History</del>]]</div></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>**[[History of quantum field theory|<ins class="diffchange diffchange-inline">history</ins>]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>* [[Quantum gravity]]</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>* [[Quantum gravity]]</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"><a class="mw-diff-movedpara-left" title="Paragraph was moved. Click to jump to new location." href="#movedpara_32_0_rhs">&#x26AB;</a></td>
+  <td class="diff-deletedline diff-side-deleted"><div><a name="movedpara_36_0_lhs"></a>* [[Relativistic quantum mechanics]]</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><br /></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><br /></td>
+</tr>
+<tr>
+  <td class="diff-marker"><a class="mw-diff-movedpara-left" title="Paragraph was moved. Click to jump to new location." href="#movedpara_40_0_rhs">&#x26AB;</a></td>
+  <td class="diff-deletedline diff-side-deleted"><div><a name="movedpara_38_0_lhs"></a>| below = </div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"><a class="mw-diff-movedpara-left" title="Paragraph was moved. Click to jump to new location." href="#movedpara_40_1_rhs">&#x26AB;</a></td>
+  <td class="diff-deletedline diff-side-deleted"><div><a name="movedpara_38_1_lhs"></a>* {{icon|category}} [[:Category:Quantum mechanics|Category]]</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"><a class="mw-diff-movedpara-left" title="Paragraph was moved. Click to jump to new location." href="#movedpara_40_2_rhs">&#x26AB;</a></td>
+  <td class="diff-deletedline diff-side-deleted"><div><a name="movedpara_38_2_lhs"></a>* {{icon|portal}} [[Portal:Physics<del class="diffchange diffchange-inline">|Physics portal</del>]]</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"><a class="mw-diff-movedpara-left" title="Paragraph was moved. Click to jump to new location." href="#movedpara_40_3_rhs">&#x26AB;</a></td>
+  <td class="diff-deletedline diff-side-deleted"><div><a name="movedpara_38_3_lhs"></a>* {{Icon|Commons}} [[<del class="diffchange diffchange-inline">Commons</del>:Category:Quantum mechanics|Commons]]</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><br /></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><br /></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker"><a class="mw-diff-movedpara-right" title="Paragraph was moved. Click to jump to old location." href="#movedpara_38_0_lhs">&#x26AB;</a></td>
+  <td class="diff-addedline diff-side-added"><div><a name="movedpara_40_0_rhs"></a>| below = </div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker"><a class="mw-diff-movedpara-right" title="Paragraph was moved. Click to jump to old location." href="#movedpara_38_1_lhs">&#x26AB;</a></td>
+  <td class="diff-addedline diff-side-added"><div><a name="movedpara_40_1_rhs"></a>* {{icon|category}} <ins class="diffchange diffchange-inline">'''</ins>[[:Category:Quantum mechanics|Category]]<ins class="diffchange diffchange-inline">'''</ins></div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker"><a class="mw-diff-movedpara-right" title="Paragraph was moved. Click to jump to old location." href="#movedpara_38_2_lhs">&#x26AB;</a></td>
+  <td class="diff-addedline diff-side-added"><div><a name="movedpara_40_2_rhs"></a>* {{icon|portal}} <ins class="diffchange diffchange-inline">'''</ins>[[Portal:Physics]]<ins class="diffchange diffchange-inline">'''</ins></div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker"><a class="mw-diff-movedpara-right" title="Paragraph was moved. Click to jump to old location." href="#movedpara_38_3_lhs">&#x26AB;</a></td>
+  <td class="diff-addedline diff-side-added"><div><a name="movedpara_40_3_rhs"></a>* {{Icon|Commons}} <ins class="diffchange diffchange-inline">'''</ins>[[<ins class="diffchange diffchange-inline">commons</ins>:Category:Quantum mechanics|Commons]]<ins class="diffchange diffchange-inline">'''</ins></div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>&lt;!-- * {{icon|WikiProject}} '''[[Wikipedia:Quantum mechanics|WikiProject]]''' --&gt;</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-deleted"><div>}}&lt;noinclude&gt;</div></td>
+  <td class="diff-marker"></td>
+  <td class="diff-context diff-side-added"><div>}}&lt;noinclude&gt;</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>{{collapsible option}}</div></td>
+</tr>
+<tr>
+  <td class="diff-marker" data-marker="−"></td>
+  <td class="diff-deletedline diff-side-deleted"><div>{{Documentation}}</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>{{Sandbox other||</div></td>
+</tr>
+<tr>
+  <td class="diff-marker"><a class="mw-diff-movedpara-left" title="Paragraph was moved. Click to jump to new location." href="#movedpara_46_2_rhs">&#x26AB;</a></td>
+  <td class="diff-deletedline diff-side-deleted"><div><a name="movedpara_45_0_lhs"></a>&lt;/noinclude&gt;</div></td>
+  <td colspan="2" class="diff-empty diff-side-added"></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>[[Category:Mechanics templates]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker" data-marker="+"></td>
+  <td class="diff-addedline diff-side-added"><div>[[Category:Physics navbox templates]]</div></td>
+</tr>
+<tr>
+  <td colspan="2" class="diff-empty diff-side-deleted"></td>
+  <td class="diff-marker"><a class="mw-diff-movedpara-right" title="Paragraph was moved. Click to jump to old location." href="#movedpara_45_0_lhs">&#x26AB;</a></td>
+  <td class="diff-addedline diff-side-added"><div><a name="movedpara_46_2_rhs"></a><ins class="diffchange diffchange-inline">}}</ins>&lt;/noinclude&gt;</div></td>
+</tr>
+</table><noscript><img src="//en.wikipedia.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript>
+<div class="printfooter">Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/wiki/Special:ComparePages">https://en.wikipedia.org/wiki/Special:ComparePages</a>"</div></div>
+		<div id="catlinks" class="catlinks catlinks-allhidden" data-mw="interface"></div>
+	</div>
 </div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Syed Asad Alam Dr. [<a href="/show-email/92775874/2201.10369">view email</a>]
-      <br/><strong>[v1]</strong>
-Tue, 25 Jan 2022 15:00:54 UTC (251 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2201.10369" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/ps/2201.10369" class="abs-button download-ps">PostScript</a></li>
-  <li><a href="/format/2201.10369" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license">(<a href="http://arxiv.org/licenses/nonexclusive-distrib/1.0/" title="Rights to this article">license</a>)</div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CV</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2201.10369&amp;function=prev&amp;context=cs.CV"
-         accesskey="p" title="previous in cs.CV (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2201.10369&amp;function=next&amp;context=cs.CV" accesskey="n"
-         title="next in cs.CV (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CV/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CV/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CV/2201">2201</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2201.10369?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2201.10369">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2201.10369" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2201.10369" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2201.html#abs-2201-10369" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2201-10369" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Andrew%20Anderson" title="DBLP author search">Andrew Anderson</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Barbara%20Barabasz" title="DBLP author search">Barbara Barabasz</a><br/><a href="https://dblp.uni-trier.de/search/author?author=David%20Gregg" title="DBLP author search">David Gregg</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
+<div id='mw-data-after-content'>
+	<div class="read-more-container"></div>
 </div>
 
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.10369%26description%3DWinograd+Convolution+for+Deep+Neural+Networks%3A+Efficient+Point+Selection&amp;v=0ccf9c74"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.10369&amp;v=9537db2a"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.10369%26title%3DWinograd+Convolution+for+Deep+Neural+Networks%3A+Efficient+Point+Selection&amp;v=16a950b5"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2201.10369&amp;v=5c7f0ab8"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
+<div id="mw-navigation">
+	<h2>Navigation menu</h2>
+	<div id="mw-head">
+		
+<nav id="p-personal" class="mw-portlet mw-portlet-personal vector-user-menu-legacy vector-menu" aria-labelledby="p-personal-label" role="navigation" 
+	 >
+	<label id="p-personal-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Personal tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="pt-anonuserpage" class="mw-list-item"><span title="The user page for the IP address you are editing as">Not logged in</span></li><li id="pt-anontalk" class="mw-list-item"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n"><span>Talk</span></a></li><li id="pt-anoncontribs" class="mw-list-item"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y"><span>Contributions</span></a></li><li id="pt-createaccount" class="mw-list-item"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Special%3AComparePages&amp;returntoquery=page1%3DTemplate%253AQuantum%2Bmechanics%2Btopics%26page2%3DTemplate%253AQuantum%2Bmechanics%2Btopics%252Fsandbox" title="You are encouraged to create an account and log in; however, it is not mandatory"><span>Create account</span></a></li><li id="pt-login" class="mw-list-item"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Special%3AComparePages&amp;returntoquery=page1%3DTemplate%253AQuantum%2Bmechanics%2Btopics%26page2%3DTemplate%253AQuantum%2Bmechanics%2Btopics%252Fsandbox" title="You&#039;re encouraged to log in; however, it&#039;s not mandatory. [o]" accesskey="o"><span>Log in</span></a></li></ul>
+		
+	</div>
+</nav>
 
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
+		<div id="left-navigation">
+			
+<nav id="p-namespaces" class="mw-portlet mw-portlet-namespaces vector-menu vector-menu-tabs" aria-labelledby="p-namespaces-label" role="navigation" 
+	 >
+	<label id="p-namespaces-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Namespaces</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-nstab-special" class="selected mw-list-item"><a href="/w/index.php?title=Special:ComparePages&amp;page1=Template%3AQuantum+mechanics+topics&amp;page2=Template%3AQuantum+mechanics+topics%2Fsandbox" title="This is a special page which you cannot edit"><span>Special page</span></a></li></ul>
+		
+	</div>
+</nav>
 
+			
+<nav id="p-variants" class="mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-variants-label" role="navigation" 
+	 >
+	<input type="checkbox"
+		id="p-variants-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-variants"
+		class="vector-menu-checkbox" aria-labelledby="p-variants-label" />
+	<label id="p-variants-label" aria-label="Change language variant" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">English</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
+		</div>
+		<div id="right-navigation">
+			
+<nav id="p-views" class="mw-portlet mw-portlet-views emptyPortlet vector-menu vector-menu-tabs" aria-labelledby="p-views-label" role="navigation" 
+	 >
+	<label id="p-views-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Views</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
+			
+<nav id="p-cactions" class="mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-cactions-label" role="navigation"  title="More options"
+	 >
+	<input type="checkbox"
+		id="p-cactions-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-cactions"
+		class="vector-menu-checkbox" aria-labelledby="p-cactions-label" />
+	<label id="p-cactions-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">More</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2201.10369" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
+			
+<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+	<div>
+			<h3 >
+				<label for="searchInput">Search</label>
+			</h3>
+		<form action="/w/index.php" id="searchform"
+			class="vector-search-box-form">
+			<div id="simpleSearch"
+				class="vector-search-box-inner"
+				 data-search-loc="header-navigation">
+				<input class="vector-search-box-input"
+					 type="search" name="search" placeholder="Search Wikipedia" aria-label="Search Wikipedia" autocapitalize="sentences" title="Search Wikipedia [f]" accesskey="f" id="searchInput"
+				/>
+				<input type="hidden" name="title" value="Special:Search"/>
+				<input id="mw-searchButton"
+					 class="searchButton mw-fallbackSearchButton" type="submit" name="fulltext" title="Search Wikipedia for this text" value="Search" />
+				<input id="searchButton"
+					 class="searchButton" type="submit" name="go" title="Go to a page with this exact name if it exists" value="Go" />
+			</div>
+		</form>
+	</div>
 </div>
 
-      </div>
-    </main>
+		</div>
+	</div>
+	
 
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
+<div id="mw-panel">
+	<div id="p-logo" role="banner">
+		<a class="mw-wiki-logo" href="/wiki/Main_Page"
+			title="Visit the main page"></a>
+	</div>
+	
+<nav id="p-navigation" class="mw-portlet mw-portlet-navigation vector-menu vector-menu-portal portal" aria-labelledby="p-navigation-label" role="navigation" 
+	 >
+	<label id="p-navigation-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Navigation</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-mainpage-description" class="mw-list-item"><a href="/wiki/Main_Page" icon="home" title="Visit the main page [z]" accesskey="z"><span>Main page</span></a></li><li id="n-contents" class="mw-list-item"><a href="/wiki/Wikipedia:Contents" title="Guides to browsing Wikipedia"><span>Contents</span></a></li><li id="n-currentevents" class="mw-list-item"><a href="/wiki/Portal:Current_events" title="Articles related to current events"><span>Current events</span></a></li><li id="n-randompage" class="mw-list-item"><a href="/wiki/Special:Random" icon="die" title="Visit a randomly selected article [x]" accesskey="x"><span>Random article</span></a></li><li id="n-aboutsite" class="mw-list-item"><a href="/wiki/Wikipedia:About" title="Learn about Wikipedia and how it works"><span>About Wikipedia</span></a></li><li id="n-contactpage" class="mw-list-item"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia"><span>Contact us</span></a></li><li id="n-sitesupport" class="mw-list-item"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us by donating to the Wikimedia Foundation"><span>Donate</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-interaction" class="mw-portlet mw-portlet-interaction vector-menu vector-menu-portal portal" aria-labelledby="p-interaction-label" role="navigation" 
+	 >
+	<label id="p-interaction-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Contribute</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-help" class="mw-list-item"><a href="/wiki/Help:Contents" icon="help" title="Guidance on how to use and edit Wikipedia"><span>Help</span></a></li><li id="n-introduction" class="mw-list-item"><a href="/wiki/Help:Introduction" title="Learn how to edit Wikipedia"><span>Learn to edit</span></a></li><li id="n-portal" class="mw-list-item"><a href="/wiki/Wikipedia:Community_portal" title="The hub for editors"><span>Community portal</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" icon="recentChanges" title="A list of recent changes to Wikipedia [r]" accesskey="r"><span>Recent changes</span></a></li><li id="n-upload" class="mw-list-item"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Add images or other media for use on Wikipedia"><span>Upload file</span></a></li></ul>
+		
+	</div>
+</nav>
+
+<nav id="p-tb" class="mw-portlet mw-portlet-tb vector-menu vector-menu-portal portal" aria-labelledby="p-tb-label" role="navigation" 
+	 >
+	<label id="p-tb-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="t-upload" class="mw-list-item"><a href="/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [u]" accesskey="u"><span>Upload file</span></a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li><li id="t-print" class="mw-list-item"><a href="javascript:print();" rel="alternate" title="Printable version of this page [p]" accesskey="p"><span>Printable version</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+<nav id="p-lang" class="mw-portlet mw-portlet-lang vector-menu vector-menu-portal portal" aria-labelledby="p-lang-label" role="navigation" 
+	 >
+	<label id="p-lang-label" aria-label="" class="vector-menu-heading "  >
+		<span class="vector-menu-heading-label">Languages</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		<div class="after-portlet after-portlet-lang"><span class="uls-after-portlet-link"></span></div>
+	</div>
+</nav>
+
+</div>
+
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" >
+	<ul id="footer-info">
+</ul>
+
+	<ul id="footer-places">
+	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+	<li id="footer-places-about"><a href="/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+	<li id="footer-places-disclaimer"><a href="/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+	<li id="footer-places-contact"><a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+	<li id="footer-places-mobileview"><a href="//en.m.wikipedia.org/w/index.php?title=Special:ComparePages&amp;page1=Template%3AQuantum+mechanics+topics&amp;page2=Template%3AQuantum+mechanics+topics%2Fsandbox&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+	<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/en.wikipedia.org">Statistics</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Cookie_statement">Cookie statement</a></li>
+</ul>
+
+	<ul id="footer-icons" class="noprint">
+	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/"><img src="/static/images/footer/wikimedia-button.png" srcset="/static/images/footer/wikimedia-button-1.5x.png 1.5x, /static/images/footer/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation" loading="lazy" /></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/"><img src="/static/images/footer/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/footer/poweredby_mediawiki_132x47.png 1.5x, /static/images/footer/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a></li>
+</ul>
+
+</footer>
+
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":141,"wgHostname":"mw1430"});});</script>
 </body>
-
 </html>

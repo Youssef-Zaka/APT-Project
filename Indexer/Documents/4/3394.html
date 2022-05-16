@@ -1,712 +1,1687 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<head>
-  <title>[2204.06113] Liuer Mihou: A Practical Framework for Generating and Evaluating Grey-box Adversarial Attacks against NIDS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
+<!DOCTYPE html>
 
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app223.us.archive.org';v.server_ms=855;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://www.cambridge.org/gb/academic?utm_medium=academic","20201219121727","https://web.archive.org/","web","/_static/",
+	      "1608380247");
 </script>
-  <meta name="citation_title" content="Liuer Mihou: A Practical Framework for Generating and Evaluating Grey-box Adversarial Attacks against NIDS"/>
-  <meta name="citation_author" content="He, Ke"/>
-  <meta name="citation_author" content="Kim, Dan Dongseong"/>
-  <meta name="citation_author" content="Sun, Jing"/>
-  <meta name="citation_author" content="Yoo, Jeong Do"/>
-  <meta name="citation_author" content="Lee, Young Hun"/>
-  <meta name="citation_author" content="Kim, Huy Kang"/>
-  <meta name="citation_date" content="2022/04/12"/>
-  <meta name="citation_online_date" content="2022/04/12"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2204.06113"/>
-  <meta name="citation_arxiv_id" content="2204.06113"/>
-  <meta name="citation_abstract" content=" Due to its high expressiveness and speed, Deep Learning (DL) has become an
-increasingly popular choice as the detection algorithm for Network-based
-Intrusion Detection Systems (NIDSes). Unfortunately, DL algorithms are
-vulnerable to adversarial examples that inject imperceptible modifications to
-the input and cause the DL algorithm to misclassify the input. Existing
-adversarial attacks in the NIDS domain often manipulate the traffic features
-directly, which hold no practical significance because traffic features cannot
-be replayed in a real network. It remains a research challenge to generate
-practical and evasive adversarial attacks. This paper presents the Liuer Mihou attack that generates practical and
-replayable adversarial network packets that can bypass anomaly-based NIDS
-deployed in the Internet of Things (IoT) networks. The core idea behind Liuer
-Mihou is to exploit adversarial transferability and generate adversarial
-packets on a surrogate NIDS constrained by predefined mutation operations to
-ensure practicality. We objectively analyse the evasiveness of Liuer Mihou
-against four ML-based algorithms (LOF, OCSVM, RRCF, and SOM) and the
-state-of-the-art NIDS, Kitsune. From the results of our experiment, we gain
-valuable insights into necessary conditions on the adversarial transferability
-of anomaly detection algorithms. Going beyond a theoretical setting, we replay
-the adversarial attack in a real IoT testbed to examine the practicality of
-Liuer Mihou. Furthermore, we demonstrate that existing feature-level
-adversarial defence cannot defend against Liuer Mihou and constructively
-criticise the limitations of feature-level adversarial defences.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2204.06113"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="Liuer Mihou: A Practical Framework for Generating and Evaluating..."/>
-    <meta name="twitter:description" content="Due to its high expressiveness and speed, Deep Learning (DL) has become an
-increasingly popular choice as the detection algorithm for Network-based
-Intrusion Detection Systems (NIDSes)...."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="Liuer Mihou: A Practical Framework for Generating and Evaluating Grey-box Adversarial Attacks against NIDS"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2204.06113v1"/>
-    <meta property="og:description" content="Due to its high expressiveness and speed, Deep Learning (DL) has become an
-increasingly popular choice as the detection algorithm for Network-based
-Intrusion Detection Systems (NIDSes). Unfortunately, DL algorithms are
-vulnerable to adversarial examples that inject imperceptible modifications to
-the input and cause the DL algorithm to misclassify the input. Existing
-adversarial attacks in the NIDS domain often manipulate the traffic features
-directly, which hold no practical significance because traffic features cannot
-be replayed in a real network. It remains a research challenge to generate
-practical and evasive adversarial attacks.
-  This paper presents the Liuer Mihou attack that generates practical and
-replayable adversarial network packets that can bypass anomaly-based NIDS
-deployed in the Internet of Things (IoT) networks. The core idea behind Liuer
-Mihou is to exploit adversarial transferability and generate adversarial
-packets on a surrogate NIDS constrained by predefined mutation operations to
-ensure practicality. We objectively analyse the evasiveness of Liuer Mihou
-against four ML-based algorithms (LOF, OCSVM, RRCF, and SOM) and the
-state-of-the-art NIDS, Kitsune. From the results of our experiment, we gain
-valuable insights into necessary conditions on the adversarial transferability
-of anomaly detection algorithms. Going beyond a theoretical setting, we replay
-the adversarial attack in a real IoT testbed to examine the practicality of
-Liuer Mihou. Furthermore, we demonstrate that existing feature-level
-adversarial defence cannot defend against Liuer Mihou and constructively
-criticise the limitations of feature-level adversarial defences."/>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+</script>
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://web.archive.org/web/20201219121727/https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MXMG453');</script>
+
+<meta charset="utf-8"/>
+<meta name="p:domain_verify" content="282442bb6520e445ad1ffb0d81f8c524"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9, chrome=1"/>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta name="format-detection" content="telephone=no">
+<title>Academic Publishing | Academic books, ebooks, reference books and textbooks | Cambridge University Press </title>
+<meta name="description" content="Academic publishing from Cambridge University Press, including: research monographs, reference books, textbooks, books for professionals, and paperbacks aimed at graduate students."/>
+<meta name="keywords" content="academic books, academic textbooks, reference books, cambridge academic books, cambridge course books, CUP textbooks, CUP books, academic ebooks, cambridge ebooks, academic publishing, cambridge monographs"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1"/>
+<script type="text/javascript">
+    var CCM_DISPATCHER_FILENAME = '';
+var CCM_CID = 1916;
+var CCM_EDIT_MODE = false;
+var CCM_ARRANGE_MODE = false;
+
+    var CCM_IMAGE_PATH        = "/gb/concrete/images";
+    var CCM_TOOLS_PATH        = "/gb/tools/required";
+    var CCM_BASE_URL          = "https://web.archive.org/web/20201219121727/https://www.cambridge.org";
+    var CCM_REL               = "/gb";
+    var KK_MINI_CART          = "//web.archive.org/web/20201219121727/https://www.cambridge.org/wm-ecommerce-web/ws/getItems";
+    var VISTA_SERVICE_REGION  = "C";
+    var IS_KK_ASIA            = "1";
+    var IS_KK_AUS             = "1";
+    var CURRENT_SITE          = "academic";
+    var GTM_CURRENT_THEME     = "academic";
+    var VYRE_BASKET           = "//web.archive.org/web/20201219121727/https://www.cambridge.org/wm-ecommerce-web/academic/cart";
+    var IS_KK_ACS_ENABLED     = "0";
+
+    if (window.dataLayer !== undefined) {
+        window.dataLayer.push({"stream": GTM_CURRENT_THEME});
+    }
+</script>
+<script type="text/javascript">
+    var CWS_ECOMMERCE_ENABLED = true;
+
+            if (CWS_ECOMMERCE_ENABLED) {
+                        var Locale = {
+                countryCode: "GB",
+                countryName: "United Kingdom",
+                currencyCode: "GBP",
+                currencySymbol: "&pound;",
+                region: "C"
+            };
+        }
+    </script>
+<link rel="stylesheet" href="/web/20201219121727cs_/https://www.cambridge.org/concrete/css/ccm.base.css" type="text/css"/>
+<script src="/web/20201219121727js_/https://www.cambridge.org/concrete/js/jquery.js" type="text/javascript"></script>
+<script src="/web/20201219121727js_/https://www.cambridge.org/concrete/js/ccm.base.js" type="text/javascript"></script>
+<link rel="shortcut icon" href="/web/20201219121727im_/https://www.cambridge.org/files/7413/5946/5646/favicon.ico" type="image/x-icon"/>
+<link rel="icon" href="/web/20201219121727im_/https://www.cambridge.org/files/7413/5946/5646/favicon.ico" type="image/x-icon"/>
+<script type="text/javascript" src="/web/20201219121727js_/https://www.cambridge.org/packages/cambridge_themes/js/academic_header.min.js?v=1aae203730743e9f0cb39bbdbe1f1c00"></script>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/packages/cambridge_themes/css/academic.header.min.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Academic Publishing | Academic books, ebooks, reference books and textbooks | Cambridge University Press">
+<meta property="og:site_name" content="Cambridge University Press">
+<meta property="og:description" content="Academic publishing from Cambridge University Press, including: research monographs, reference books, textbooks, books for professionals, and paperbacks aimed at graduate students.">
+<script type="text/javascript" src="/web/20201219121727js_/https://www.cambridge.org/packages/cambridge_themes/blocks/simple_promo/js/form.js?v=1aae203730743e9f0cb39bbdbe1f1c00"></script>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/packages/cambridge_data/blocks/product_search/view.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/packages/cambridge_themes/blocks/social_plugin/style/view.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/blocks/content/style/view.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<script type="text/javascript" src="/web/20201219121727js_/https://www.cambridge.org/blocks/content/js_file/view.js?v=1aae203730743e9f0cb39bbdbe1f1c00"></script>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/packages/cambridge_themes/blocks/custom_content/style/view.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/concrete/blocks/next_previous/style/view.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/packages/cambridge_english/blocks/popular_links/css/form.min.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<link rel="stylesheet" type="text/css" href="/web/20201219121727cs_/https://www.cambridge.org/packages/cws_ecommerce/css/mini-cart.css?v=1aae203730743e9f0cb39bbdbe1f1c00"/>
+<meta name="google-site-verification" content="mf9qxYoGf7r-gGOdl6iqoaNc4vHlI2_aXqkZOW2GgmA"/>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<link rel="apple-touch-icon-precomposed" href="/web/20201219121727im_/https://www.cambridge.org/packages/cambridge_themes/images/favicons/touch-icon-iphone-retina-precomposed.png"/>
+<link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/af/academic" hreflang="en-af"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ax/academic" hreflang="en-ax"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/al/academic" hreflang="en-al"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/dz/academic" hreflang="en-dz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/as/academic" hreflang="en-as"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ad/academic" hreflang="en-ad"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ao/academic" hreflang="en-ao"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ai/academic" hreflang="en-ai"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/aq/academic" hreflang="en-aq"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ag/academic" hreflang="en-ag"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ar/academic" hreflang="en-ar"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/am/academic" hreflang="en-am"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/aw/academic" hreflang="en-aw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/au/academic" hreflang="en-au"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/at/academic" hreflang="en-at"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/az/academic" hreflang="en-az"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bs/academic" hreflang="en-bs"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bh/academic" hreflang="en-bh"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bd/academic" hreflang="en-bd"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bb/academic" hreflang="en-bb"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/by/academic" hreflang="en-by"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/be/academic" hreflang="en-be"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bz/academic" hreflang="en-bz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bj/academic" hreflang="en-bj"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bm/academic" hreflang="en-bm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bt/academic" hreflang="en-bt"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bo/academic" hreflang="en-bo"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ba/academic" hreflang="en-ba"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bw/academic" hreflang="en-bw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bv/academic" hreflang="en-bv"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/br/academic" hreflang="en-br"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/io/academic" hreflang="en-io"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/vg/academic" hreflang="en-vg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bn/academic" hreflang="en-bn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bg/academic" hreflang="en-bg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bf/academic" hreflang="en-bf"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bi/academic" hreflang="en-bi"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/kh/academic" hreflang="en-kh"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cm/academic" hreflang="en-cm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ca/academic" hreflang="en-ca"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cv/academic" hreflang="en-cv"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ky/academic" hreflang="en-ky"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cf/academic" hreflang="en-cf"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/td/academic" hreflang="en-td"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cl/academic" hreflang="en-cl"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cn/academic" hreflang="en-cn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cx/academic" hreflang="en-cx"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cc/academic" hreflang="en-cc"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/co/academic" hreflang="en-co"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/km/academic" hreflang="en-km"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cg/academic" hreflang="en-cg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cd/academic" hreflang="en-cd"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ck/academic" hreflang="en-ck"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cr/academic" hreflang="en-cr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ci/academic" hreflang="en-ci"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/hr/academic" hreflang="en-hr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cu/academic" hreflang="en-cu"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cy/academic" hreflang="en-cy"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cz/academic" hreflang="en-cz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/dk/academic" hreflang="en-dk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/dj/academic" hreflang="en-dj"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/dm/academic" hreflang="en-dm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/do/academic" hreflang="en-do"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ec/academic" hreflang="en-ec"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/eg/academic" hreflang="en-eg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sv/academic" hreflang="en-sv"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gq/academic" hreflang="en-gq"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/er/academic" hreflang="en-er"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ee/academic" hreflang="en-ee"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/et/academic" hreflang="en-et"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/fk/academic" hreflang="en-fk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/fo/academic" hreflang="en-fo"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/fj/academic" hreflang="en-fj"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/fi/academic" hreflang="en-fi"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/fr/academic" hreflang="en-fr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gf/academic" hreflang="en-gf"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pf/academic" hreflang="en-pf"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tf/academic" hreflang="en-tf"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ga/academic" hreflang="en-ga"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gm/academic" hreflang="en-gm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ge/academic" hreflang="en-ge"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/de/academic" hreflang="en-de"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gh/academic" hreflang="en-gh"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gi/academic" hreflang="en-gi"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gr/academic" hreflang="en-gr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gl/academic" hreflang="en-gl"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gd/academic" hreflang="en-gd"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gp/academic" hreflang="en-gp"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gu/academic" hreflang="en-gu"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gt/academic" hreflang="en-gt"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gg/academic" hreflang="en-gg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gn/academic" hreflang="en-gn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gw/academic" hreflang="en-gw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gy/academic" hreflang="en-gy"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ht/academic" hreflang="en-ht"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/hm/academic" hreflang="en-hm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/hn/academic" hreflang="en-hn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/hk/academic" hreflang="en-hk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/hu/academic" hreflang="en-hu"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/is/academic" hreflang="en-is"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/in/academic" hreflang="en-in"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/id/academic" hreflang="en-id"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/iq/academic" hreflang="en-iq"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ie/academic" hreflang="en-ie"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/im/academic" hreflang="en-im"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/il/academic" hreflang="en-il"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/it/academic" hreflang="en-it"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/jm/academic" hreflang="en-jm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/jp/academic" hreflang="en-jp"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/je/academic" hreflang="en-je"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/jo/academic" hreflang="en-jo"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/kz/academic" hreflang="en-kz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/kz/academic" hreflang="en-kz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ke/academic" hreflang="en-ke"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ki/academic" hreflang="en-ki"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/kw/academic" hreflang="en-kw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/kg/academic" hreflang="en-kg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/la/academic" hreflang="en-la"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/lv/academic" hreflang="en-lv"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/lb/academic" hreflang="en-lb"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ls/academic" hreflang="en-ls"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/lr/academic" hreflang="en-lr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ly/academic" hreflang="en-ly"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/li/academic" hreflang="en-li"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/lt/academic" hreflang="en-lt"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/lu/academic" hreflang="en-lu"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mo/academic" hreflang="en-mo"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mk/academic" hreflang="en-mk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mg/academic" hreflang="en-mg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mw/academic" hreflang="en-mw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/my/academic" hreflang="en-my"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mv/academic" hreflang="en-mv"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ml/academic" hreflang="en-ml"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mt/academic" hreflang="en-mt"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mh/academic" hreflang="en-mh"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mq/academic" hreflang="en-mq"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mr/academic" hreflang="en-mr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mu/academic" hreflang="en-mu"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/yt/academic" hreflang="en-yt"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mx/academic" hreflang="en-mx"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/fm/academic" hreflang="en-fm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/md/academic" hreflang="en-md"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mc/academic" hreflang="en-mc"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mn/academic" hreflang="en-mn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/me/academic" hreflang="en-me"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ms/academic" hreflang="en-ms"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ma/academic" hreflang="en-ma"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mz/academic" hreflang="en-mz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mm/academic" hreflang="en-mm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/na/academic" hreflang="en-na"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/nr/academic" hreflang="en-nr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/np/academic" hreflang="en-np"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/nl/academic" hreflang="en-nl"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/an/academic" hreflang="en-an"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/nc/academic" hreflang="en-nc"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/nz/academic" hreflang="en-nz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ni/academic" hreflang="en-ni"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ne/academic" hreflang="en-ne"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ng/academic" hreflang="en-ng"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/nu/academic" hreflang="en-nu"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/nf/academic" hreflang="en-nf"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/mp/academic" hreflang="en-mp"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/no/academic" hreflang="en-no"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/om/academic" hreflang="en-om"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pk/academic" hreflang="en-pk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pw/academic" hreflang="en-pw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ps/academic" hreflang="en-ps"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pa/academic" hreflang="en-pa"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pg/academic" hreflang="en-pg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/py/academic" hreflang="en-py"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pe/academic" hreflang="en-pe"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ph/academic" hreflang="en-ph"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pn/academic" hreflang="en-pn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pl/academic" hreflang="en-pl"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pt/academic" hreflang="en-pt"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pr/academic" hreflang="en-pr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/qa/academic" hreflang="en-qa"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/re/academic" hreflang="en-re"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ro/academic" hreflang="en-ro"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ru/academic" hreflang="en-ru"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/rw/academic" hreflang="en-rw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sh/academic" hreflang="en-sh"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/kn/academic" hreflang="en-kn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/lc/academic" hreflang="en-lc"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/pm/academic" hreflang="en-pm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/vc/academic" hreflang="en-vc"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ws/academic" hreflang="en-ws"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sm/academic" hreflang="en-sm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/st/academic" hreflang="en-st"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sa/academic" hreflang="en-sa"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sn/academic" hreflang="en-sn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/rs/academic" hreflang="en-rs"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sc/academic" hreflang="en-sc"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sl/academic" hreflang="en-sl"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sg/academic" hreflang="en-sg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sk/academic" hreflang="en-sk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/si/academic" hreflang="en-si"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sb/academic" hreflang="en-sb"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/so/academic" hreflang="en-so"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/za/academic" hreflang="en-za"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gs/academic" hreflang="en-gs"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/kr/academic" hreflang="en-kr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/es/academic" hreflang="en-es"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/lk/academic" hreflang="en-lk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sr/academic" hreflang="en-sr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sj/academic" hreflang="en-sj"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/sz/academic" hreflang="en-sz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/se/academic" hreflang="en-se"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ch/academic" hreflang="en-ch"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tw/academic" hreflang="en-tw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tj/academic" hreflang="en-tj"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tz/academic" hreflang="en-tz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/th/academic" hreflang="en-th"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tl/academic" hreflang="en-tl"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tg/academic" hreflang="en-tg"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tk/academic" hreflang="en-tk"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/to/academic" hreflang="en-to"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tt/academic" hreflang="en-tt"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tn/academic" hreflang="en-tn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tr/academic" hreflang="en-tr"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tm/academic" hreflang="en-tm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tc/academic" hreflang="en-tc"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/tv/academic" hreflang="en-tv"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/um/academic" hreflang="en-um"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/vi/academic" hreflang="en-vi"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ug/academic" hreflang="en-ug"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ua/academic" hreflang="en-ua"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ae/academic" hreflang="en-ae"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic" hreflang="en-gb"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/us/academic" hreflang="en-us"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/uy/academic" hreflang="en-uy"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/uz/academic" hreflang="en-uz"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/vu/academic" hreflang="en-vu"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/va/academic" hreflang="en-va"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ve/academic" hreflang="en-ve"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/vn/academic" hreflang="en-vn"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/wf/academic" hreflang="en-wf"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/eh/academic" hreflang="en-eh"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/ye/academic" hreflang="en-ye"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/zm/academic" hreflang="en-zm"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/zw/academic" hreflang="en-zw"/><link rel="alternate" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic" hreflang="x-default"/><link rel="canonical" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic"/>
+<script>
+            $(document).ready(function() {
+                $('#1916').addClass('current');
+            });
+        </script>
+<script type="text/javascript">
+            var CCP_ENABLED = 1;
+        </script>
+
+<script>!function(f,b,e,v,n,t,s){
+        if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://web.archive.org/web/20201219121727/https://connect.facebook.net/en_US/fbevents.js');fbq('init', '1536692386342783'); fbq('track', 'PageView');
+        </script>
+<noscript>
+        <img height="1" width="1" src="https://web.archive.org/web/20201219121727im_/https://www.facebook.com/tr?id=1536692386342783&amp;ev=PageView&amp;noscript=1"/>
+        </noscript>
+
 </head>
-
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
+<body class="news-listing"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20201219121727/https%3A//www.cambridge.org/gb/academic%3Futm_medium%3Dacademic"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
   </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://www.cambridge.org/gb/academic?utm_medium=academic" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20201219121727" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20201219121727*/https://www.cambridge.org/gb/academic?utm_medium=academic" title="See a list of every capture for this URL">7 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">03 May 2020 - 04 May 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200503023611/https://www.cambridge.org/gb/academic?utm_medium=academic" title="03 May 2020"><strong>May</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 12:17:27 Dec 19, 2020">DEC</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210501061646/https://www.cambridge.org/gb/academic?utm_medium=academic" title="01 May 2021"><strong>May</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200503023611/https://www.cambridge.org/gb/academic?utm_medium=academic" title="02:36:11 May 03, 2020"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 12:17:27 Dec 19, 2020">19</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210501061646/https://www.cambridge.org/gb/academic?utm_medium=academic" title="06:16:46 May 01, 2021"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap">2019</td>
+	    <td class="c" id="displayYearEl" title="You are here: 12:17:27 Dec 19, 2020">2020</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20220504012233/https://www.cambridge.org/gb/academic?utm_medium=academic" title="04 May 2022"><strong>2022</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20201219121727/http://web.archive.org/screenshot/https://www.cambridge.org/gb/academic?utm_medium=academic"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic?utm_medium=academic" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic?utm_medium=academic" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
       </div>
     </div>
   </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/GDELT_Project)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/GDELT_Project" target="_new"><span class="wm-title">GDELT Project</span></a></div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic?utm_medium=academic</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://www.cambridge.org/gb/academic?utm_medium=academic","20201219121727",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
+<noscript><iframe src="https://web.archive.org/web/20201219121727if_/https://www.googletagmanager.com/ns.html?id=GTM-MXMG453" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
+<span id="og-img-hack"></span>
+<a href="#mainContent" class="skipNavigationLink">Skip to content</a>
 
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2204.06113
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
+<noscript>
+    <div id="ccm-headerAnnounce">
+        <div class="disclosure-container" style="display: block">
+            <div class="disclosure-content row">
+                <p id="header_announcement_us" style="text-align: center;"><span style="color: red; text-align: center;">To register on our site and for the best user experience, please enable Javascript in your browser using these <a target="_blank" href="https://web.archive.org/web/20201219121727/http://enable-javascript.com/">instructions</a>.</p>
             </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
         </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2204.06113"
-        dc:identifier="/abs/2204.06113"
-        dc:title="Liuer Mihou: A Practical Framework for Generating and Evaluating Grey-box Adversarial Attacks against NIDS"
-        trackback:ping="/trackback/2204.06113" />
-    </rdf:RDF>
--->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Cryptography and Security</h1>
     </div>
+</noscript>
+<div id="content">
+<div id="global-nav"><a href="#globalnav" class="open icon hide-text" id="ccpOpenPageSlide" style="display:none;">Open global navigation</a><div class="mobile-logo-wrapper"><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/?utm_medium=logo" class="cupshield icon">Cambridge University Press</a><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/academic?utm_medium=academic" class="academic icon">Academic</a></div><ul id="globalnav"><li><a tabindex="0" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/?utm_medium=logo" class="hide-text icon" data-tapp="lnk_gnbcambridgelogo">Cambridge University Press</a></li><li><a href="#" class="submenu icon" onclick="" aria-expanded="false">Academic</a><ul><li><a href="/web/20201219121727/https://www.cambridge.org/core/?utm_medium=core" data-tapp="lnk_gnbcore">Cambridge Core <span> (Institutional access)</span></a></li><li><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic?utm_medium=academic" data-tapp="lnk_gnbacademic">Books Catalogue <span>(Individuals)</span></a></li></ul></li><li><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/cambridgeenglish?site_locale=en_GB&amp;prefCountry=GB&amp;utm_medium=cenglish" data-tapp="lnk_gnbcameng">English Language Learning</a></li><li><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/education?utm_medium=education" data-tapp="lnk_gnbeducation">Education</a></li><li><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/bibles?site_locale=en_GB&amp;prefCountry=GB&amp;utm_medium=bibles" data-tapp="lnk_gnbbibles">Bibles</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/digital-products?utm_medium=digiprod" data-tapp="lnk_gnbdigiprod">Digital Products</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/about-us?utm_medium=aboutus" class="submenu icon expanded" aria-expanded="false">About Us</a><ul><li><a href="/web/20201219121727/https://www.cambridge.org/about-us/who-we-are/press-syndicate?utm_medium=gov" data-tapp="lnk_gnbagovernance">Governance</a></li><li class="tablet-only"><a href="/web/20201219121727/https://www.cambridge.org/about-us/careers?utm_medium=careers">Careers</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/about-us/rights-permissions?utm_medium=rights" data-tapp="lnk_gnbrightspermissions">Rights &amp; Permissions</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/about-us/what-we-do/cambridge-conference-facilities?utm_medium=conf" data-tapp="lnk_gnbconfvenues">Conference Venues</a></li><li class="hide-for-mobile"><a href="/web/20201219121727/https://www.cambridge.org/about-us/contact-us/?site=corporate&amp;utm_medium=contactus" data-tapp="lnk_gnbcontactus">Contact Us</a></li></ul></li><li class="hide-for-mobile"><a href="/web/20201219121727/https://www.cambridge.org/about-us/careers?utm_medium=careers" data-tapp="lnk_gnbcareers">Careers</a></li><li class="show-for-mobile"><a href="/web/20201219121727/https://www.cambridge.org/about-us/contact-us/?site=corporate&amp;utm_medium=contactus">Contact Us</a></li><li class="right"><ul><li class="navLocation "><a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/location" data-ajax-reveal-id="locationOptions" title="United Kingdom" class="location icon toggle-select-country" data-tapp="lnk_gnblocale" modal-toggle="modal" modal-target="#country-selector-modal">United Kingdom</a></li></ul></li></ul><ul class="mobile-icons"><li><a href="#" class="cart icon hide-text cartCount" id="cart_button" data-reveal-id="cart"><span id="mobileCartQty"> Cart</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/location" data-ajax-reveal-id="locationOptions" class="countryReveal icon hide-text toggle-select-country" modal-toggle="modal" modal-target="#country-selector-modal">Location selector</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/location" data-ajax-reveal-id="locationOptions" class="countryReveal icon hide-text">Location selector</a><a href="#" class="search icon hide-text searchToggle">Search toggle</a></li><li><a href="#" class="menu icon hide-text mainNavToggle">Menu</a></li></ul></div>
+<div class="cartWrapper">
 
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2204.06113</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 12 Apr 2022]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>Liuer Mihou: A Practical Framework for Generating and Evaluating Grey-box Adversarial Attacks against NIDS</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=He%2C+K">Ke He</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Kim%2C+D+D">Dan Dongseong Kim</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Sun%2C+J">Jing Sun</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Yoo%2C+J+D">Jeong Do Yoo</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Lee%2C+Y+H">Young Hun Lee</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Kim%2C+H+K">Huy Kang Kim</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2204.06113">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  Due to its high expressiveness and speed, Deep Learning (DL) has become an
-increasingly popular choice as the detection algorithm for Network-based
-Intrusion Detection Systems (NIDSes). Unfortunately, DL algorithms are
-vulnerable to adversarial examples that inject imperceptible modifications to
-the input and cause the DL algorithm to misclassify the input. Existing
-adversarial attacks in the NIDS domain often manipulate the traffic features
-directly, which hold no practical significance because traffic features cannot
-be replayed in a real network. It remains a research challenge to generate
-practical and evasive adversarial attacks.
-<br>This paper presents the Liuer Mihou attack that generates practical and
-replayable adversarial network packets that can bypass anomaly-based NIDS
-deployed in the Internet of Things (IoT) networks. The core idea behind Liuer
-Mihou is to exploit adversarial transferability and generate adversarial
-packets on a surrogate NIDS constrained by predefined mutation operations to
-ensure practicality. We objectively analyse the evasiveness of Liuer Mihou
-against four ML-based algorithms (LOF, OCSVM, RRCF, and SOM) and the
-state-of-the-art NIDS, Kitsune. From the results of our experiment, we gain
-valuable insights into necessary conditions on the adversarial transferability
-of anomaly detection algorithms. Going beyond a theoretical setting, we replay
-the adversarial attack in a real IoT testbed to examine the practicality of
-Liuer Mihou. Furthermore, we demonstrate that existing feature-level
-adversarial defence cannot defend against Liuer Mihou and constructively
-criticise the limitations of feature-level adversarial defences.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata">
-        <tr>
-          <td class="tablecell label">Comments:</td>
-          <td class="tablecell comments mathjax">16 pages, 8 figures, planning on submitting to ACM CCS 2022</td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Cryptography and Security (cs.CR)</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label"><abbr title="Association of Computing Machinery Classification">ACM</abbr>&nbsp;classes:</td>
-          <td class="tablecell acm-classes">I.2.1</td>
-        </tr>
-        <tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2204.06113">arXiv:2204.06113</a> [cs.CR]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2204.06113v1">arXiv:2204.06113v1</a> [cs.CR]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2204.06113">https://doi.org/10.48550/arXiv.2204.06113</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
+<div class="row">
+<div class="twelve columns noPadding">
+<a id="cart_button" href="/web/20201219121727/https://www.cambridge.org/cart" data-reveal-id="cart">
+Cart&nbsp;<span id="cartQty"></span>
+</a>
+<div id="cart" class="reveal-modal medium">
 </div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Ke He [<a href="/show-email/add5ffc7/2204.06113">view email</a>]
-      <br/><strong>[v1]</strong>
-Tue, 12 Apr 2022 23:13:22 UTC (1,840 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2204.06113" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2204.06113" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license"><a href="http://creativecommons.org/licenses/by-nc-nd/4.0/" title="Rights to this article"><img src="https://arxiv.org/icons/licenses/by-nc-nd-4.0.png"/></a></div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.CR</div>
+<div id="itemAddedModal" class="reveal-modal">
+<h3 id="itemAddedMessage"></h3>
+<a href="//web.archive.org/web/20201219121727/https://www.cambridge.org/wm-ecommerce-web/academic/cart" class="button blue large viewCart float-left ted">
+View cart and checkout </a>
+<a class="button large close-reveal-modal float-right blue">Continue shopping</a>
+<a class="close-reveal-modal close-cart">&times;</a>
+</div>
+<div id="addToCartCustom" class="reveal-modal">
+<h4 style="text-transform: initial;"></h4>
+<a class="blue large button close-reveal-modal float-right" style="position: relative;">
+Continue shopping </a>
+<a class="close-reveal-modal close-cart">&times;</a>
+</div> </div>
+</div>
+</div>
+<div class="searchWrapper">
+<div class="row">
+<div class="five columns searchBox">
+<style type="text/css">
+    li.ui-menu-item {
+        list-style: none;
+        list-style-type: none;
+    }
 
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2204.06113&amp;function=prev&amp;context=cs.CR"
-         accesskey="p" title="previous in cs.CR (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2204.06113&amp;function=next&amp;context=cs.CR" accesskey="n"
-         title="next in cs.CR (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.CR/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.CR/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.CR/2204">2204</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2204.06113?context=cs">cs</a><br class="is-hidden-mobile">
+    li.ui-menu-item a {
+        padding-left: 10px !important;
+    }
+
+    .ui-autocomplete {
+        background-color: #ffffff;
+        max-height: 400px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+        /* add padding to account for vertical scrollbar */
+        /*padding-right: 20px; */
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 0px 0px 0px 5px; /* top, right ,bottom, left */
+        /*padding-top:0px;*/
+        /*padding-bottom: 0px;*/
+        /*background-color: yellow;*/
+        padding-left: 0;
+        border-bottom: 1px;
+        width: 390px !important; /*force width*/
+    }
+
+    /* IE 6 doesn't support max-height
+        * we use height instead, but this forces the menu to always be this tall
+    */
+    * html .ui-autocomplete {
+        height: 250px;
+    }
+
+</style>
+<fieldset>
+<div class="academicSearch noPadding">
+<form id="search" action="/web/20201219121727/https://www.cambridge.org/gb/search" method="get">
+<span class="clcInclude has-tip" data-width="280" title="Include reissues and reprints of historic titles in your search. Reprints and reissues form the basis of Cambridge Library Collection."><input value="Historic+titles" type="checkbox" name="options[]"/> Include historic titles</span>
+<input type="hidden" name="iFeelLucky" id="iFeelLucky" value="false"/>
+<input type="hidden" name="currentTheme" value="Academic_v1"/>
+<label for="search-products" class="labelHidden">Search products</label>
+<input type="text" name="query" id="query" autocomplete="off" placeholder="Search for keyword, author, ISBN, etc.">
+<input type="submit" name="c" value="MainSearchBar"/>
+</form>
+</div>
+</fieldset>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
         
-      
-    </div>
-  </div>
-  
-    </div>
+        $(".academicSearch input#query").change(function () {
+            $("#iFeelLucky").val("false");
+        });
 
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2204.06113">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2204.06113" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2204.06113" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
+        $(".academicSearch input#query").autocomplete({
+            source: '/gb/tools/packages/cambridge_themes/search_autocomplete?currentTheme=Academic_v1',
+            minLength: 2,
+            select: function (event, ui) {
+                $("#iFeelLucky").val("false");
+                $("input#query").val(ui.item.value);
+                $("#search").submit();
+            },
+            open: function (event, ui) {
+                $("ul.ui-autocomplete.ui-menu li").css('cursor', 'hand');
+                $("ul.ui-autocomplete.ui-menu li").css('cursor', 'pointer');
+                var url = '<li style="padding-top: 10px; text-align: center;"><a style="line-height: 30px; height: 30px; color: #D3461E; text-decoration: underline; cursor: hand; cursor: pointer;" class="ui-corner-all" tabindex="-1" onclick="$(\'#iFeelLucky\').val(\'false\'); $(\'#search\').submit();">Click here for more results</a></li>';
+                $("ul.ui-autocomplete.ui-menu").append(url);
+            }
+        });
+    });
+</script> <div class="searchTabs hide-for-small">
 
-    <div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
+<a class="registerButton registerLink" href="/web/20201219121727/https://www.cambridge.org/gb/register">
+Register </a>
+<a id="sign_in_button" class="signinLink" href="/web/20201219121727/https://www.cambridge.org/gb/signin" data-reveal-id="signIn">
+Sign in </a>
+<form id="registerForm" action="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/register" method="post" style="display:none;">
+<input type="hidden" name="rcID" value="1916"/>
+</form>
+<script type="text/javascript">
+            $(document).ready(function () {
+                $(".registerButton").click(function () {
+                    $("#registerForm").submit();
+                    return false;
+                });
+            });
+        </script>
 </div>
-
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
 </div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2204.06113%26description%3DLiuer+Mihou%3A+A+Practical+Framework+for+Generating+and+Evaluating+Grey-box+Adversarial+Attacks+against+NIDS&amp;v=347e237b"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2204.06113&amp;v=2635e495"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2204.06113%26title%3DLiuer+Mihou%3A+A+Practical+Framework+for+Generating+and+Evaluating+Grey-box+Adversarial+Attacks+against+NIDS&amp;v=343aa2d0"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2204.06113&amp;v=7c0b28b4"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
 </div>
-  </div>
-  <!--end extra-services-->
-
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
-
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>
-<!-- END LABS AREA -->
+<div class="row show-for-small">
+<div class="twelve columns noPadding mobileSiteFunctions">
+<a class="registerButton registerLink" href="/web/20201219121727/https://www.cambridge.org/gb/register">
+Register </a>
+<a id="sign_in_button_mobile" class="signinLink" href="/web/20201219121727/https://www.cambridge.org/gb/signin" data-reveal-id="signIn">
+Sign in </a>
+<form id="registerForm" action="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/register" method="post" style="display:none;">
+<input type="hidden" name="rcID" value="1916"/>
+</form>
+<script type="text/javascript">
+            $(document).ready(function () {
+                $(".registerButton").click(function () {
+                    $("#registerForm").submit();
+                    return false;
+                });
+            });
+        </script>
+<a href="/web/20201219121727/https://www.cambridge.org/gb/profile/wishlist/" class="no-image mobileWishlistLink">Wishlist</a>
+</div>
+</div>
+<div class="wrapHeader">
+<div class="row">
+<div class="seven columns introText">
+<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic" class="academicLogoWrap">
+<img src="/web/20201219121727im_/https://www.cambridge.org/packages/cambridge_themes/images/academic/academic-logo.png" alt="Academic" class="academicLogo"/>
+ </a>
+<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic" class="academicIntroWrap">
+<h2 class="academicIntro" id="mainContent">Unlocking potential with the best learning and research solutions</h2>
+</a>
+</div>
+</div>
+<div class="mainNavWrap ">
+<ul class="mainNav">
+<li class="navDrop">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/" data-tapp="lnk_navsubjects">
+Subjects<span class="navExpander"></span>
+</a>
+<div class="navPanel">
+<ul>
+<li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/anthropology/" target="_self" data-tapp="lnk_anthropology">Anthropology</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/archaeology/" target="_self" data-tapp="lnk_archaeology">Archaeology</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/arts-theatre-culture/" target="_self" data-tapp="lnk_artstheatreculture">Arts, theatre and culture</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/chemistry/" target="_self" data-tapp="lnk_chemistry">Chemistry</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/classical-studies/" target="_self" data-tapp="lnk_classicalstudies">Classical studies</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/computer-science/" target="_self" data-tapp="lnk_computerscience">Computer science</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/earth-and-environmental-science/" target="_self" data-tapp="lnk_earthenviscience">Earth and environmental science</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/economics/" target="_self" data-tapp="lnk_economics">Economics</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/education/" target="_self" data-tapp="lnk_education">Education</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/engineering/" target="_self" data-tapp="lnk_engineering">Engineering</a></li></ul><ul><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/general-science/" target="_self" data-tapp="lnk_generalscience">General science</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/geography/" target="_self" data-tapp="lnk_geography">Geography</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/history/" target="_self" data-tapp="lnk_history">History</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/languages-linguistics/" target="_self" data-tapp="">Languages and linguistics</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/law/" target="_self" data-tapp="lnk_law">Law</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/life-sciences/" target="_self" data-tapp="">Life science</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/literature/" target="_self" data-tapp="lnk_literature">Literature</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/management/" target="_self" data-tapp="lnk_management">Management</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/mathematics/" target="_self" data-tapp="lnk_mathematics">Mathematics</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/medicine/" target="_self" data-tapp="lnk_medicine">Medicine</a></li></ul><ul><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/music/" target="_self" data-tapp="lnk_music">Music</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/philosophy/" target="_self" data-tapp="lnk_philosophy">Philosophy</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/physics/" target="_self" data-tapp="">Physics and astronomy</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/politics-international-relations/" target="_self" data-tapp="lnk_politicsinternatl">Politics and international relations</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/psychology/" target="_self" data-tapp="lnk_psychology">Psychology</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/religion/" target="_self" data-tapp="lnk_religion">Religion</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/sociology/" target="_self" data-tapp="lnk_sociology">Sociology</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/statistics-probability/" target="_self" data-tapp="lnk_statprobability">Statistics and probability</a></li><li><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/social-science-research-methods/" target="_self" data-tapp="">Social science research methods</a></li></ul><ul><li class="browseAll"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/subjects/" data-tapp="lnk_browseall">Browse all subjects</a></li> </ul>
+</div>
+</li>
+<li id="32921"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/textbooks/" data-tapp="lnk_navtextbooks">Textbooks</a></li><li id="32937"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/blogs/" data-tapp="lnk_navblogs">Blogs</a></li><li id="32929"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/reference/" data-tapp="lnk_navreference">Reference</a></li><li id="33377"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/conferences/" data-tapp="lnk_navconferences">Conferences</a></li><li id="33534"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/news/" data-tapp="lnk_navnews">News</a></li><li id="32930"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/authors/" data-tapp="lnk_navauthors">Authors</a></li><li id="45313"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/contact-us/#country-contact-data" data-tapp="lnk_navcontactus">Contact Us</a></li>
+<li class="navLocation show-for-small"><a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/location" data-ajax-reveal-id="locationOptions" title="United Kingdom" class="location icon toggle-select-country" data-tapp="lnk_gnblocale" modal-toggle="modal" modal-target="#country-selector-modal">United Kingdom</a></li></ul>
+</div> 
+<div class="row">
+<div class="homepageHero mainHero">
+<div class="featuredContentWrap">
+<div id="homepageSliderButtons" class="featuredContent">
+<div class="homepageSlide">
+<style>
+.details {
+ position: absolute;
+ top: 40px;
+ left: 9%;
+ width: 40%;
+}
 
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2204.06113" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
+.details > div > span{
+padding-top: 5px;
+padding-bottom: 5px;
+line-height: 24px;
+height: 24px;
+margin-top: 15px;
+width: auto !important;
+}
+
+    .details > div > span > span{
+  height: 23px !important;
+}
+
+
+</style>
+<div>
+<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic/covid-19-resources-and-information"> <img src="https://web.archive.org/web/20201219121727im_/https://www.cambridge.org/files/8815/8445/8937/640x345_COVID19.jpg" alt="COVID-19 resources and information"/>
+</a> <a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic/covid-19-resources-and-information" class="details"> <div>
+<h2 class="white"></h2>
+<p class="white"></p>
+<span class="button heroButton arrow" onclick="ga('send', 'event', 'Banners', 'Clicked on Hero banner - homepage ', 'hero banner on homepage - hero_space_1__EMEA');">
+<span></span>
+Read more </span>
+</div>
+</a> </div>
+<div id="place-holder">
+<img src="/web/20201219121727im_/https://www.cambridge.org/packages/cambridge_themes/images/academic/hero-blank-no-text.png" style="margin-top:20px"/>
+</div>
+</div>
+<div class="homepageSlide">
+<style>
+.details {
+ position: absolute;
+ top: 40px;
+ left: 9%;
+ width: 40%;
+}
+
+.details > div > span{
+padding-top: 5px;
+padding-bottom: 5px;
+line-height: 24px;
+height: 24px;
+margin-top: 15px;
+width: auto !important;
+}
+
+    .details > div > span > span{
+  height: 23px !important;
+}
+
+
+</style>
+<div>
+<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/highereducation"> <img src="https://web.archive.org/web/20201219121727im_/https://www.cambridge.org/files/2816/0103/8474/640x345_WMP_Banner_Blue.jpg" alt="Higher Education Website"/>
+</a> <a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/highereducation" class="details"> <div>
+<h2 class="white"></h2>
+<p class="white"></p>
+<span class="button heroButton arrow" onclick="ga('send', 'event', 'Banners', 'Clicked on Hero banner - homepage ', 'hero banner on homepage - hero_space_2__EMEA');">
+<span></span>
+Find out more </span>
+</div>
+</a> </div>
+</div>
+<div class="homepageSlide">
+ <style>
+.details {
+ position: absolute;
+ top: 40px;
+ left: 9%;
+ width: 40%;
+}
+
+.details > div > span{
+padding-top: 5px;
+padding-bottom: 5px;
+line-height: 24px;
+height: 24px;
+margin-top: 15px;
+width: auto !important;
+}
+
+    .details > div > span > span{
+  height: 23px !important;
+}
+
+
+</style>
+<div>
+<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/authorhub/"> <img src="https://web.archive.org/web/20201219121727im_/https://www.cambridge.org/files/6615/4998/6275/Author_Hub_Banner_Image.jpg" alt="Author Hub Banner"/>
+</a> <a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/authorhub/" class="details"> <div>
+<h2 class="white"></h2>
+<p class="white"></p>
+<span class="button heroButton arrow" onclick="ga('send', 'event', 'Banners', 'Clicked on Hero banner - homepage ', 'hero banner on homepage - hero_space_3__EMEA');">
+<span></span>
+Find out more </span>
+</div>
+</a> </div>
+</div>
+<div class="homepageSlide">
+<style>
+.details {
+ position: absolute;
+ top: 40px;
+ left: 9%;
+ width: 40%;
+}
+
+.details > div > span{
+padding-top: 5px;
+padding-bottom: 5px;
+line-height: 24px;
+height: 24px;
+margin-top: 15px;
+width: auto !important;
+}
+
+    .details > div > span > span{
+  height: 23px !important;
+}
+
+
+</style>
+<div>
+<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/core/what-we-publish/race-and-power/"> <img src="https://web.archive.org/web/20201219121727im_/https://www.cambridge.org/files/2315/9833/5006/Race_and_Power_WMP.png" alt="Race and Power"/>
+</a> <a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/core/what-we-publish/race-and-power/" class="details"> <div>
+<h2 class="white"></h2>
+<p class="white"></p>
+<span class="button heroButton arrow" onclick="ga('send', 'event', 'Banners', 'Clicked on Hero banner - homepage ', 'hero banner on homepage - hero_space_4__EMEA');">
+<span></span>
+Find out more </span>
+</div>
+</a> </div>
+</div>
+<div class="homepageSlide">
+<style>
+.details {
+ position: absolute;
+ top: 40px;
+ left: 9%;
+ width: 40%;
+}
+
+.details > div > span{
+padding-top: 5px;
+padding-bottom: 5px;
+line-height: 24px;
+height: 24px;
+margin-top: 15px;
+width: auto !important;
+}
+
+    .details > div > span > span{
+  height: 23px !important;
+}
+
+
+</style>
+<div>
+<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/core/services/open-research"> <img src="https://web.archive.org/web/20201219121727im_/https://www.cambridge.org/files/3815/4046/4041/WMP_carousel_-_OR.JPG" alt="Cambridge Open - Web banner"/>
+</a> <a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/core/services/open-research" class="details"> <div>
+<h2 class="white"></h2>
+<p class="white"></p>
+<span class="button heroButton arrow" onclick="ga('send', 'event', 'Banners', 'Clicked on Hero banner - homepage ', 'hero banner on homepage - hero_space_5__EMEA');">
+<span></span>
+Find out more </span>
+</div>
+</a> </div>
+</div>
+</div>
 </div>
 
-      </div>
-    </main>
+<div class="heroRight">
+<div class="findContent">
+<h3>Find content that relates to you</h3>
+<fieldset>
+<label for="aim" class="hidden">Find content that relates to you</label>
+<select name="aim" id="aim" class="pretty dk">
+<option value="#">I am a...</option>
+<option value="authors">Author</option>
+<option value="bookseller">Bookseller</option>
+<option value="company">Company</option>
+<option value="journalist">Journalist</option>
+<option value="textbooks">Lecturer</option>
+<option value="librarian">Librarian</option>
+ <option value="society">Society</option>
+</select>
+</fieldset>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#aim").dropkick({
+            change: function(value, label) {
+                window.location = CCM_REL + '/academic/' + value;
+            }
+        });
+    });
+</script>
 
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
+<div class="heroPromo">
+<a href="/web/20201219121727/https://www.cambridge.org/alerts_new" target="_blank">
+<h3>Save 20% on your next online purchase with Cambridge Alerts</h3>
+<p>Receive email alerts on new books, offers and news...</p>
+<a href="/web/20201219121727/https://www.cambridge.org/alerts_new" class="button black arrow" onclick="ga('send', 'event', 'Subscribe to alerts ', 'Clicked on Subscribe to alerts', 'Clicked subscribe to alerts (/academic)  ( hero_promo )');"><span></span>Subscribe</a>
+</a>
+</div> <div id="heroRightpromoArea">
+</div>
+</div>
+</div>
+</div>
+<div class="hide-for-small">
+<p><br/></p>
+</div>
+</div>
+
+<div class="wrapStandard">
+<div class="row firstProductsChunk">
+<div class="eight columns noPadding">
+<ul class="tabs-content products-slider-tabs">
+<h2 class="productsTitle">Highlights</h2>
+<li class="active">
+<div id="product_search_301741_slider" class="products-slider"><div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="Grow the Pie" data-ee-id="9781108494854" data-ee-price="18.99" data-ee-brand="academic" data-ee-category="Economics, business studies [Finance]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="1" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/economics/finance/grow-pie-how-great-companies-deliver-both-purpose-and-profit?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/94854/cover/9781108494854.jpg" alt="Grow the Pie"/></div>
+<h5>Grow the Pie<span></span></h5>
+<p>
+<span class="editorHover">Edmans</span>
+<span class="editor">Edmans</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;18.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108494854" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="Female Husbands" data-ee-id="9781108483803" data-ee-price="17.99" data-ee-brand="academic" data-ee-category="American history [Colonial American history]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="2" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/history/colonial-american-history/female-husbands-trans-history?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/83803/cover/9781108483803.jpg" alt="Female Husbands"/></div>
+<h5>Female Husbands<span></span></h5>
+<p>
+<span class="editorHover">Manion</span>
+<span class="editor">Manion</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;17.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108483803" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="All the Sonnets of Shakespeare" data-ee-id="9781108490399" data-ee-price="12.99" data-ee-brand="academic" data-ee-category="English literature [Literature - editions, texts]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="3" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/literature/literary-texts/all-sonnets-shakespeare?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/90399/cover/9781108490399.jpg" alt="All the Sonnets of Shakespeare"/></div>
+<h5>All the Sonnets of Shakespeare<span></span></h5>
+<p>
+<span class="editorHover">Shakespeare/Edmondson/Wells</span>
+<span class="editor">Shakespeare/Edmondson/Wells</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;12.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108490399" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression last-product-item" data-ee-currency-code="GBP" data-ee-name="The Citizen's Guide to Climate Success" data-ee-id="9781108742665" data-ee-price="14.99" data-ee-brand="academic" data-ee-category="Economics, business studies [Natural resource and environmental economics]" data-ee-variant="Paperback" data-ee-list="Product Highlights" data-ee-position="4" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/economics/natural-resource-and-environmental-economics/citizens-guide-climate-success-overcoming-myths-hinder-progress?format=PB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811087/42665/cover/9781108742665.jpg" alt="The Citizen's Guide to Climate Success"/></div>
+<h5>The Citizen's Guide to Climate Success<span></span></h5>
+<p>
+<span class="editorHover">Jaccard</span>
+<span class="editor">Jaccard</span><span class="book-type ">Paperback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;14.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108742665" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div></div><div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="Roman Architecture and Urbanism" data-ee-id="9780521470711" data-ee-price="230.00" data-ee-brand="academic" data-ee-category="Archaeology [Classical archaeology]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="5" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/archaeology/classical-archaeology/roman-architecture-and-urbanism-origins-late-antiquity?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97805214/70711/cover/9780521470711.jpg" alt="Roman Architecture and Urbanism"/></div>
+<h5>Roman Architecture and Urbanism<span></span></h5>
+<p>
+<span class="editorHover">Yegül/Favro</span>
+<span class="editor">Yegül/Favro</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;230.00 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9780521470711" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="A First Course in Network Science" data-ee-id="9781108471138" data-ee-price="34.99" data-ee-brand="academic" data-ee-category="Physics and astronomy [Statistical physics, network science and complex systems]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="6" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/physics/statistical-physics/first-course-network-science?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/71138/cover/9781108471138.jpg" alt="A First Course in Network Science"/></div>
+<h5>A First Course in Network Science<span></span></h5>
+<p>
+<span class="editorHover">Menczer/Fortunato/Davis</span>
+<span class="editor">Menczer/Fortunato/Davis</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;34.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108471138" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a><div class="note"><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/highereducation/isbn/9781108471138/examination-copy" class="productInspection" target="_blank">Request inspection copy</a></div></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="The Study of Language" data-ee-id="9781108730709" data-ee-price="24.99" data-ee-brand="academic" data-ee-category="Language and linguistics [English language, linguistics (general)]" data-ee-variant="Paperback" data-ee-list="Product Highlights" data-ee-position="7" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/languages-linguistics/english-language-and-linguistics-general-interest/study-language-7th-edition?format=PB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811087/30709/cover/9781108730709.jpg" alt="The Study of Language"/></div>
+<h5>The Study of Language<span>7th Edition</span></h5>
+<p>
+<span class="editorHover">Yule</span>
+<span class="editor">Yule</span><span class="book-type ">Paperback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;24.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108730709" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a><div class="note"><a href="javascript:void(0);" class="productInspection" onclick="javascript:void window.open('https://web.archive.org/web/20201219121727/http://cambridge.force.com/Samples?isbn=9781108730709&amp;Title=The+Study+of+Language&amp;Author=Yule','1359297944740','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;">Request inspection copy</a></div></div></div></div><div class="product-item eeData eeImpression last-product-item" data-ee-currency-code="GBP" data-ee-name="Global Environment Outlook – GEO-6: Healthy Planet, Healthy People" data-ee-id="9781108707664" data-ee-price="59.99" data-ee-brand="academic" data-ee-category="Earth and environmental science [Environmental science]" data-ee-variant="Paperback" data-ee-list="Product Highlights" data-ee-position="8" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/earth-and-environmental-science/environmental-science/global-environment-outlook-geo-6-healthy-planet-healthy-people?format=PB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811087/07664/cover/9781108707664.jpg" alt="Global Environment Outlook – GEO-6: Healthy Planet, Healthy People"/></div>
+<h5>Global Environment Outlook – GEO-6: Healthy Planet, Healthy People<span></span></h5>
+<p>
+<span class="editorHover">UN Environment</span>
+<span class="editor">UN Environment</span><span class="book-type ">Paperback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;59.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108707664" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div></div><div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="A Century of Votes for Women" data-ee-id="9781316638071" data-ee-price="18.99" data-ee-brand="academic" data-ee-category="Politics, social theory, history of ideas [American government, politics, policy]" data-ee-variant="Paperback" data-ee-list="Product Highlights" data-ee-position="9" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/politics-international-relations/american-government-politics-and-policy/century-votes-women-american-elections-suffrage?format=PB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97813166/38071/cover/9781316638071.jpg" alt="A Century of Votes for Women"/></div>
+<h5>A Century of Votes for Women<span></span></h5>
+<p>
+<span class="editorHover">Wolbrecht/Corder</span>
+<span class="editor">Wolbrecht/Corder</span><span class="book-type ">Paperback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;18.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781316638071" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="Machine Learning Refined" data-ee-id="9781108480727" data-ee-price="52.99" data-ee-brand="academic" data-ee-category="Engineering [Communications, information theory and signal processing]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="10" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/engineering/communications-and-signal-processing/machine-learning-refined-foundations-algorithms-and-applications-2nd-edition?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/80727/cover/9781108480727.jpg" alt="Machine Learning Refined"/></div>
+<h5>Machine Learning Refined<span>2nd Edition</span></h5>
+<p>
+<span class="editorHover">Watt/Borhani/Katsaggelos</span>
+<span class="editor">Watt/Borhani/Katsaggelos</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;52.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108480727" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a><div class="note"><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/highereducation/isbn/9781108480727/examination-copy" class="productInspection" target="_blank">Request inspection copy</a></div></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="The Caravan" data-ee-id="9780521765954" data-ee-price="24.99" data-ee-brand="academic" data-ee-category="History - other areas [Middle East history]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="11" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/history/middle-east-history/caravan-abdallah-azzam-and-rise-global-jihad?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97805217/65954/cover/9780521765954.jpg" alt="The Caravan"/></div>
+<h5>The Caravan<span></span></h5>
+<p>
+<span class="editorHover">Hegghammer</span>
+<span class="editor">Hegghammer</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;24.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9780521765954" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression last-product-item" data-ee-currency-code="GBP" data-ee-name="The Cosmic Revolutionary's Handbook" data-ee-id="9781108486705" data-ee-price="17.99" data-ee-brand="academic" data-ee-category="Physics and astronomy [Cosmology, relativity and gravitation]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="12" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/physics/cosmology-relativity-and-gravitation/cosmic-revolutionarys-handbook-or-how-beat-big-bang?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/86705/cover/9781108486705.jpg" alt="The Cosmic Revolutionary's Handbook"/></div>
+<h5>The Cosmic Revolutionary's Handbook<span></span></h5>
+<p>
+<span class="editorHover">Barnes/Lewis</span>
+<span class="editor">Barnes/Lewis</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;17.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108486705" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div></div><div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="The Atlas of Mars" data-ee-id="9781107036291" data-ee-price="39.99" data-ee-brand="academic" data-ee-category="Physics and astronomy [Planetary systems and astrobiology]" data-ee-variant="Hardback" data-ee-list="Product Highlights" data-ee-position="13" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/physics/planetary-systems-and-astrobiology/atlas-mars-mapping-its-geography-and-geology?format=HB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811070/36291/cover/9781107036291.jpg" alt="The Atlas of Mars"/></div>
+<h5>The Atlas of Mars<span></span></h5>
+<p>
+<span class="editorHover">Coles/Tanaka/Christensen</span>
+<span class="editor">Coles/Tanaka/Christensen</span><span class="book-type ">Hardback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;39.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781107036291" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="Biblical Theology" data-ee-id="9781108712682" data-ee-price="26.99" data-ee-brand="academic" data-ee-category="Religion [Theology]" data-ee-variant="Paperback" data-ee-list="Product Highlights" data-ee-position="14" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/religion/theology/biblical-theology-convergence-canon?format=PB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811087/12682/cover/9781108712682.jpg" alt="Biblical Theology"/></div>
+<h5>Biblical Theology<span></span></h5>
+<p>
+<span class="editorHover">Witherington, III</span>
+<span class="editor">Witherington, III</span><span class="book-type ">Paperback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;26.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108712682" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression " data-ee-currency-code="GBP" data-ee-name="The Holocaust and New World Slavery" data-ee-id="9781108415088" data-ee-price="210.00" data-ee-brand="academic" data-ee-category="European history [20C European history]" data-ee-variant="Multiple copy pack" data-ee-list="Product Highlights" data-ee-position="15" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/history/twentieth-century-european-history/holocaust-and-new-world-slavery-comparative-history?format=WX&amp;isbn=9781108415088" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/15088/cover/9781108415088.jpg" alt="The Holocaust and New World Slavery"/></div>
+<h5>The Holocaust and New World Slavery<span></span></h5>
+<p>
+<span class="editorHover">Katz</span>
+<span class="editor">Katz</span><span class="book-type mixed-media">Multiple copy pack</span><span class="book-component">2 Volume Hardback Set</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;210.00 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108415088" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div><div class="product-item eeData eeImpression last-product-item" data-ee-currency-code="GBP" data-ee-name="Climate, Clothing, and Agriculture in Prehistory" data-ee-id="9781108455190" data-ee-price="25.99" data-ee-brand="academic" data-ee-category="Archaeology [Prehistory]" data-ee-variant="Paperback" data-ee-list="Product Highlights" data-ee-position="16" data-ee-cambridge-id="" data-ee-area-of-interest="" data-ee-job-title="" data-ee-user-type=""><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/fr/academic/subjects/archaeology/prehistory/climate-clothing-and-agriculture-prehistory-linking-evidence-causes-and-effects?format=PB" class="book-link"><div class="book"><img class="jacket" src="//web.archive.org/web/20201219121727im_/https://assets.cambridge.org/97811084/55190/cover/9781108455190.jpg" alt="Climate, Clothing, and Agriculture in Prehistory"/></div>
+<h5>Climate, Clothing, and Agriculture in Prehistory<span></span></h5>
+<p>
+<span class="editorHover">Gilligan</span>
+<span class="editor">Gilligan</span><span class="book-type ">Paperback</span></p>
+</a>
+<div class="book-hidden cf"><div class="price">&pound;25.99 </div><p></p><a href="#" class="button blue addToCartBtn" rel="nofollow" data-isbn="9781108455190" data-country="FR" data-page="academic" data-discountcode=""><span></span>Add to cart</a></div></div></div></div></div> </li>
+</ul>
+
+<div class="ccm-page-list sbs_plp_container">
+<ul class="tabs-content products-slider-tabs">
+<h2 class="productsTitle">Featured collections</h2>
+<li class="active">
+<div id="featured_collections_slider" class="products-slider"><div><div class="product-item "><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/collections/doodys-core-titles-2020/" class="book-link"><div class="book"><img class="jacket" src="/web/20201219121727im_/https://www.cambridge.org/files/cache/a4a042b92163ff0205d196f79a3c33a4_f1022225.jpg"></div><h5>Doody&rsquo;s Core Titles&reg; 2020</h5><p class="desc-no-upper">Explore the Cambridge University Press titles selected as Doody&rsquo;s Core Titles&reg; for 2020.</p><div class="book-hidden cf"></div></a></div></div><div class="product-item "><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/collections/freud-cambridge/" class="book-link"><div class="book"><img class="jacket" src="/web/20201219121727im_/https://www.cambridge.org/files/cache/f3269f5361b6db5b28372f64df555dfd_f920937.jpg"></div><h5>Freud from Cambridge</h5><p class="desc-no-upper">Freud from Cambridge</p><div class="book-hidden cf"></div></a></div></div><div class="product-item "><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/collections/latest-titles-our-elements-series/" class="book-link"><div class="book"><img class="jacket" src="/web/20201219121727im_/https://www.cambridge.org/files/cache/20b5a9392dca51189c1df9228def0f3f_f1022221.jpg"></div><h5>Latest Elements</h5><p class="desc-no-upper">A new concept in academic publishing, combining the best features of books and journals. </p><div class="book-hidden cf"></div></a></div></div><div class="product-item last-product-item"><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/collections/mrcog-collection/" class="book-link"><div class="book"><img class="jacket" src="/web/20201219121727im_/https://www.cambridge.org/files/cache/7d22e4f4f8da93758a6830c4293d561e_f1022223.jpg"></div><h5>MRCOG Collection</h5><p class="desc-no-upper">Explore our crucial resources for all MRCOG candidates:up-to-date, comprehensive and written by highly experienced examiners.</p><div class="book-hidden cf"></div></a></div></div></div><div><div class="product-item "><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/collections/rcpsych-books/" class="book-link"><div class="book"><img class="jacket" src="/web/20201219121727im_/https://www.cambridge.org/files/cache/0443bdfc0f973b9cb8e144f1426132d9_f968566.jpg"></div><h5>RCPsych Books</h5><p class="desc-no-upper"></p><div class="book-hidden cf"></div></a></div></div><div class="product-item "><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/collections/robotics-cambridge-university-press/" class="book-link"><div class="book"><img class="jacket" src="/web/20201219121727im_/https://www.cambridge.org/files/cache/4d8f7bf2711fd99d8dd29cf1bd633cf6_f948408.jpg"></div><h5>Robotics by Cambridge University Press</h5><p class="desc-no-upper">Find out more about these varied and rich resources on robotics.</p><div class="book-hidden cf"></div></a></div></div><div class="product-item "><div class="product-inner cf"><a href="/web/20201219121727/https://www.cambridge.org/gb/academic/collections/philosophers/" class="book-link"><div class="book"><img class="jacket" src="/web/20201219121727im_/https://www.cambridge.org/files/cache/ffb2f8ec1d1e048e34733ac26fd37ac9_f941349.jpg"></div><h5>The Lives of the Philosophers</h5><p class="desc-no-upper">Browse award-winning biographies of the world's greatest philosophical minds.</p><div class="book-hidden cf"></div></a></div></div></div></div> </li>
+</ul>
+</div>
+</div>
+<div class="four columns sideNews greyNews">
+
+<div class="ccm-page-list sbs_plp_container">
+<div class="twelve columns sliderWrap newsWrap">
+<div class="row">
+<div class="ten columns noPaddingLeft"><h2>Latest News</h2></div>
+<div class="two columns noPaddingRight"><a type="application/rss+xml" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic/news/rss/" class="rss">RSS</a></div>
+</div>
+<div class="flexslider">
+<ul class="slides">
+<li style="display:block">
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/news/choice-names-40-outstanding-academic-titles-press-20201/" target="_self">
+<div class="twelve columns">
+<div class="detailsWrapper">
+<h4>CHOICE names 40 Outstanding Academic Titles from the Press in 2020</h4>
+<p>This improves upon the 31 titles chosen for the 2019 list.</p>
+</div>
+</div>
+</a>
+</div>
+</li>
+<li>
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/news/aha-awards-two-press-authors/" target="_self">
+<div class="twelve columns">
+<div class="detailsWrapper">
+<h4>AHA awards two Press authors</h4>
+<p>Winners named for the Morris D. Forkosch Prize and the Martin A. Klein Prize.</p>
+</div>
+</div>
+</a>
+</div>
+</li>
+<li>
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/news/nobel-prize-2020/" target="_self">
+<div class="twelve columns">
+<div class="detailsWrapper">
+<h4>Five 2020 Nobel Laureates published by the Press</h4>
+<p>Including those awarded for their work in physics, chemistry, and economics.</p>
+</div>
+</div>
+</a>
+</div>
+</li>
+<li>
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/news/16-press-authors-elected-american-academy-arts-and-sciences3/" target="_self">
+<div class="twelve columns">
+<div class="detailsWrapper">
+<h4>16 Press authors elected to the American Academy of Arts and Sciences</h4>
+<p>The American Academy of Arts and Sciences has elected 16 Press authors as part of its 2020 class.</p>
+</div>
+</div>
+</a>
+</div>
+</li>
+</ul>
+</div>
+<h2><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic/news" class="right arrow"><span></span>See all</a></h2>
+</div>
+</div>
+
+</div>
+<div class="four columns sideNews greyNews">
+
+<div class="ccm-page-list sbs_plp_container">
+<div class="twelve columns sliderWrap newsWrap">
+<div class="row">
+<div class="ten columns noPaddingLeft">
+<h2>Upcoming conferences</h2>
+</div>
+<div class="two columns noPaddingRight">
+<a type="application/rss+xml" href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic/conferences/rss/" class="rss">RSS</a>
+</div>
+</div>
+<div class="flexslider">
+<ul class="slides">
+<li style="display:block">
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/conferences/cmstatistics-2020/" target="_self">
+<div class="detailsWrapper">
+<h4>CMStatistics 2020</h4> </div>
+</a>
+</div>
+</li>
+<li>
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/conferences/british-society-eighteenth-century-studies-annual-conference/" target="_self">
+<div class="detailsWrapper">
+<h4>British Society for Eighteenth-Century Studies Annual Conference</h4> </div>
+</a>
+</div>
+</li>
+<li>
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/conferences/allied-social-sciences-association-annual-meeting3/" target="_self">
+<div class="detailsWrapper">
+<h4>Allied Social Sciences Association Annual Meeting</h4> </div>
+</a>
+</div>
+</li>
+<li>
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/conferences/american-philosophical-association-eastern-division/" target="_self">
+<div class="detailsWrapper">
+<h4>American Philosophical Association Eastern Division</h4> </div>
+</a>
+</div>
+</li>
+<li>
+<div class="newsItem">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/academic/conferences/archaeological-institute-americasociety-classical-studies-annual-meeting/" target="_self">
+<div class="detailsWrapper">
+<h4>Archaeological Institute of America/Society for Classical Studies Annual Meeting</h4> </div>
+</a>
+</div>
+</li>
+</ul>
+</div>
+<h2><a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/academic/conferences" class="right arrow"><span></span>See all</a></h2>
+</div>
+</div>
+
+</div>
+<div class="four columns sideNews greyNews">
+<div class="titleSocial hide-for-small"><h2>Connect with Academic</h2> <a href="https://web.archive.org/web/20201219121727/https://www.twitter.com/CUPAcademic" class="twitter" onclick="ga('send', 'event', 'Connect via Twitter ', 'Clicked on twitter button (EMEA)', 'Clicked on twitter button /academic ) [EMEA]');" target="_blank">Twitter</a>
+<a href="https://web.archive.org/web/20201219121727/https://www.facebook.com/CambridgeUniversityPressAcademic" class="facebook" onclick="ga('send', 'event', 'Connect via Facebook (subject pages)', 'Clicked on Facebook button (EMEA)', 'Clicked on facebook button /academic ) [EMEA]');" target="_blank">Facebook</a>
+<a href="https://web.archive.org/web/20201219121727/https://www.linkedin.com/company/11160" class="linkedin" onclick="ga('send', 'event', 'Connect via Linkedin (subject pages)', 'Clicked on Linkedin button (EMEA)', 'Clicked on Linkedin button /academic ) [EMEA]');" target="_blank">LinkedIn</a>
+<a href="https://web.archive.org/web/20201219121727/https://www.youtube.com/cambridgeupacpro" class="youTube" onclick="ga('send', 'event', 'Connect via Youtube (subject pages)', 'Clicked on Youtube button (EMEA)', 'Clicked on Youtube button /academic ) [EMEA]');" target="_blank">YouTube</a>
+</div>
+<div class="sideConnect show-for-small"><h2>Connect with Academic</h2> <a href="https://web.archive.org/web/20201219121727/https://www.twitter.com/CUPAcademic" class="twitter" onclick="ga('send', 'event', 'Connect via Twitter ', 'Clicked on twitter button (EMEA)', 'Clicked on twitter button /academic ) [EMEA]');" target="_blank">Twitter</a>
+<a href="https://web.archive.org/web/20201219121727/https://www.facebook.com/CambridgeUniversityPressAcademic" class="facebook" onclick="ga('send', 'event', 'Connect via Facebook (subject pages)', 'Clicked on Facebook button (EMEA)', 'Clicked on facebook button /academic ) [EMEA]');" target="_blank">Facebook</a>
+<a href="https://web.archive.org/web/20201219121727/https://www.linkedin.com/company/11160" class="linkedin" onclick="ga('send', 'event', 'Connect via Linkedin (subject pages)', 'Clicked on Linkedin button (EMEA)', 'Clicked on Linkedin button /academic ) [EMEA]');" target="_blank">LinkedIn</a>
+<a href="https://web.archive.org/web/20201219121727/https://www.youtube.com/cambridgeupacpro" class="youTube" onclick="ga('send', 'event', 'Connect via Youtube (subject pages)', 'Clicked on Youtube button (EMEA)', 'Clicked on Youtube button /academic ) [EMEA]');" target="_blank">YouTube</a>
+</div>
+<hr/>
+<div class="videoWrapper">
+<h2>Cambridge Elements!</h2>
+<div class="video-container">
+<iframe src="https://web.archive.org/web/20201219121727if_/https://www.youtube.com/embed/5ETTAWXjqg0" frameborder="0" width="560" height="315" allowfullscreen></iframe>
+</div>
+<p>Visit www.cambridge.org/elements to find out more.</p>
+</div>
+<a href="/web/20201219121727/https://www.cambridge.org/de/academic/elements/" class="img-block-a"><img border="0" class="ccm-image-block" alt="Cambridge Elements" src="/web/20201219121727im_/https://www.cambridge.org/de/files/9916/0165/1673/Copy_of_Elements_Button.png" width="500" height="150"/></a></div>
+</div>
+</div>
+<script>
+    (function(t,e,c,o)
+    {var s,n,a;t.SMCX=t.SMCX||[],e.getElementById(o)||(s=e.getElementsByTagName(c),n=s[s.length-1],a=e.createElement(c),a.type="text/javascript",a.async=!0,a.id=o,a.src=["https:"===location.protocol?"https://":"http://","widget.surveymonkey.com/collect/website/js/57i5fIBZxR0At99pHNfeB14Dex63asQjzwgH8m3B8tuVbg6URU_2Fhcczcaph6o0YT.js"].join(""),n.parentNode.insertBefore(a,n))}
+    )(window,document,"script","smcx-sdk");</script>
+<div id="signIn" class="reveal-modal small">
+<h2>Sign In</h2>
+<p>Please sign in to access your account</p>
+<form method="post" id="loginPopup" action="https://web.archive.org/web/20201219121727/https://www.cambridge.org/gb/signin/do_login">
+<input type="hidden" id="rcID" name="rcID" value="1916"/>
+<input type="hidden" id="redirectUrl" name="redirectUrl" value=""/>
+<input type="hidden" id="theme" name="theme" value="Academic_v1"/>
+<fieldset>
+<div class="formRow fullRow">
+<label for="uNamePop">
+Email Address </label>
+<input type="email" name="uName" id="uNamePop" value="" tabindex="1" placeholder="e.g. name@domain.com" class="validate[required,custom[email]]"/>
+</div>
+<div class="formRow fullRow">
+<label for="uPasswordPop">Password</label>
+<input type="password" id="uPasswordPop" name="uPassword" value="" tabindex="1" class="validate[required]"/>
+<a id="fPasswordPop" href="/web/20201219121727/https://www.cambridge.org/gb/forgot_user_password" tabindex="1" class="formLink">
+Forgotten your password? </a>
+</div>
+<div class="formRow fullRow">
+<label for="uMaintainLogin">
+<input id="uMaintainLogin" type="checkbox" tabindex="1" value="1" name="uMaintainLogin"/>&nbsp;Remain logged in to website. </label>
+<a href="#" onclick="return false;" class="button grey large close-reveal-modal" tabindex="1"><span></span>Cancel</a>
+<input type="submit" id="signinSubmitPop" name="signing-submit" value="Sign in" class="button large blue" tabindex="1" onclick="ga('send', 'event', 'Log in', 'Clicked to log in', 'Clicked log in (Modal)');"/>
+</div>
+</fieldset>
+</form>
+<hr/>
+
+<a href="/web/20201219121727/https://www.cambridge.org/gb/register" id="lightboxRegisterLink" class="formLink" onclick="ga('send', 'event', 'Create account', 'Clicked to create account (modal) ', 'Clicked to create account (modal)');">
+Not already registered? Create an account now.</a>
+
+<a class="close-reveal-modal">&#215;</a>
+</div> 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#loginPopup").validationEngine(
+            'attach',
+            {
+                promptPosition : "inline",
+                prettySelect: true,
+                maxErrorsPerField: 1,
+                usePrefix: 'dk_container_',
+                onValidationComplete: function(form, status) {
+                    if (status === true) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        );
+
+        $("#sign_in_button").click(function() {
+            $("#signIn").reveal();
+            return false;
+        });
+
+        $("#sign_in_button_mobile").click(function() {
+            $("#signIn").reveal();
+            return false;
+        });
+
+        $('#registerFormLightbox').click(function() {
+            document.registerForm.submit();
+        });
+    });
+</script>
+<div id="notifyTitleModal" class="reveal-modal medium">
+<h3 id="notifyTitleMessage"></h3>
+<a id="notifyTitleModalContinue" class="blue large button right close-reveal-modal">Continue</a>
+<a class="close-reveal-modal">&#215;</a>
+</div>
+<div id="notifyTitleModalRemovePrompt" class="reveal-modal medium" aria-hidden="true" role="dialog">
+<h3 id="notifyTitleRemoveMessage">Remove this title from your notification list?</h3>
+<a id="notifyTitleModalRemoveCancel" href="#" onclick="return false;" class="button grey large close-reveal-modal" tabindex="1"><span></span>Cancel</a>
+<a id="notifyTitleModalRemoveContinue" class="blue large button right close-reveal-modal">Continue</a>
+<a class="close-reveal-modal">&#215;</a>
+</div>
+<div class="wrapTexture footerShareWrap">
+<div class="row">
+<div class="twelve columns socialFooter">
+<div class="addThisButtons">
+<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_twitter" tw:via="cambup_books"></a>
+<a class="addthis_button_linkedin"></a>
+<a class="addthis_button_compact"></a>
+<a class="addthis_counter addthis_bubble_style"></a>
+<script type="text/javascript">
+                            var addthis_config = { "data_track_addressbar": false };
+                            var addthis_share = {
+                                templates: {
+                                    twitter: '{{title}} {{url}} via @CUPAcademic',
+                                }
+                            };
+                        </script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="wrapFooter">
+<div class="row">
+<div class="four columns">
+
+<div class="heroPromo">
+<a href="/web/20201219121727/https://www.cambridge.org/alerts_new" target="_blank">
+<h3>Save <strong>20% off</strong> on your next online purchase with Cambridge Alerts</h3>
+<p>Receive email alerts on new books, offers and news...</p>
+<a href="/web/20201219121727/https://www.cambridge.org/alerts_new" class="button black arrow" onclick="ga('send', 'event', 'Subscribe to alerts ', 'Clicked on Subscribe to alerts', 'Clicked subscribe to alerts (/academic)  ( hero_promo_footer )');"><span></span>Subscribe</a>
+</a>
+</div> </div>
+<div class="four columns">
+<div class="findContent">
+<h3>Find content that relates to you</h3>
+<fieldset>
+<label for="aim2" class="hidden">Find content that relates to you</label>
+<select name="aim2" id="aim2" class="pretty dk">
+<option value="#">I am a...</option>
+<option value="authors">Author</option>
+<option value="bookseller">Bookseller</option>
+<option value="company">Company</option>
+<option value="journalist">Journalist</option>
+<option value="textbooks">Lecturer</option>
+<option value="librarian">Librarian</option>
+<option value="society">Society</option>
+</select>
+</fieldset>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#aim2").dropkick({
+            change: function(value, label) {
+                window.location = CCM_REL + '/academic/' + value;
+            }
+        });
+    });
+</script> </div>
+<div class="four columns">
+<h3 data-tapp="txt_footerjoinus">Join us online</h3>
+<ul class="joinUsOnline">
+<li class="linkedIn">
+<a href="https://web.archive.org/web/20201219121727/https://www.linkedin.com/company/cambridge-university-press" target="_blank" data-tapp="icn_footerlinkedin">LinkedIn</a>
+</li>
+<li class="facebook">
+<a href="https://web.archive.org/web/20201219121727/https://www.facebook.com/CambridgeUniversityPress" target="_blank" data-tapp="icn_footerfacebook">Facebook</a>
+</li>
+<li class="youTube">
+<a href="https://web.archive.org/web/20201219121727/https://www.youtube.com/CambridgeUP" target="_blank" data-tapp="icn_footeryoutube">YouTube</a>
+</li>
+<li class="twitter">
+<a href="https://web.archive.org/web/20201219121727/https://twitter.com/CambridgeUP" target="_blank" data-tapp="icn_footertwitter">Twitter</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="cookieNotice">
+<div class="wrap">
+<span class="message">This site uses cookies to improve your experience.</span>
+<a href="/web/20201219121727/https://www.cambridge.org/about-us/legal-notices/cookies-policy" class="cta link">Read more</a>
+<a href="#" class="dismiss cambridge-icon hideText">Close</a>
+</div>
+</div>
+<script type="text/javascript">
+        $('.close').click(function() {
+            $('.disclosure-container').slideUp();
+            $('#content').css("padding-top","0");
+            
+                        $('.cartWrapper').animate({'top':'55px'});
+            
+            // GAW-2286 - Search box is pushed  ... add code for firefox / ie..
+            // removed $.browser.webkit and used 750 for minwidth / ebaluyo - 2015-05-27
+            if ($(window).width() <= 750)
+            {
+                $('.searchWrapper').removeAttr("style");
+            }
+            else
+            {
+                                $('.searchWrapper').animate({'top':'103px'});
+                            }
+            $('.openPageSlide').animate({'position':'absolute'});
+            $('.openPageSlide.expand').css({'z-index':'200'});
+
+                    });
+                $('#content').before($('#cookieNotice'));
+        $(document).ready(function () {
+            setTimeout(function(){
+                $('#cookieNotice').fadeIn(500);
+            }, 1000);
+        });
+
+        $( "#cookieNotice .dismiss").click(function() {
+            $("#cookieNotice").toggleClass("off");
+        });
+
+                // This is only for academic
+        $('.openPageSlide.expand').css({'z-index':'32'});
+        checkCookieMessageHeight();
+        $(window).resize(function() {
+            if($('.disclosure-container').css('display')=="block")
+            {
+                if($(window).width() <= 750)
+                {
+                    $('.searchWrapper').css({'top':'0px'});
+                }
+                else
+                {
+                    checkCookieMessageHeight();
+                }
+
+            }
+        });
+        function checkCookieMessageHeight()
+        {
+            messageDivHeight = $('#cookieNotice').height();
+            if(messageDivHeight > 40)
+            {
+                
+                // GAW-2286 - Search box is pushed  ... changed 119px -> 55px, 163px -> 103px
+                $('.cartWrapper').css({'top':'55px'});    // old: 119px
+                $('.searchWrapper').css({'top':'103px'}); // old: 163px
+                $('.openPageSlide').css({'position':'relative'});
+                            }
+            else
+            {
+                                $('.cartWrapper').css({'top':'55px'});
+                $('.searchWrapper').css({'top':'103px'});
+                $('.openPageSlide').css({'position':'relative'});
+                            }
+        }
+
+        
+            </script>
+<div class="mainfooter twelve columns">
+<div class="ninesixty columns centered">
+<ul id="footernav">
+<li class="pipe">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/accessibility">Accessibility</a></li>
+<li class="pipe">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/legal-notices">Privacy &amp; Legal</a></li>
+<li class="pipe">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/who-we-are/cambridges-ethics">Our Ethics</a></li>
+<li class="pipe">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/legal-notices/anti-slavery-and-human-trafficking">Modern Slavery Statement</a></li>
+<li class="pipe">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/rights-permissions">Rights &amp; Permissions</a></li>
+<li class="pipe">
+<a data-ajax-reveal-id="yourFeedback" href="/web/20201219121727/https://www.cambridge.org/gb/about-us/feedback">Feedback </a></li>
+<li class="pipe">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/about-us/media">Media</a></li>
+<li class="pipe">
+<a href="/web/20201219121727/https://www.cambridge.org/gb/sitemap">Sitemap</a></li>
+<li><a class="icon lifebuoy" title="Lifebuoy" aria-label="Lifebuoy" href="/web/20201219121727/https://www.cambridge.org/gb/academic/support"></a></li>
+<li class="right">&copy; Cambridge University Press 2020</li>
+<li class="mobile-icons"><a href="#global-nav" class="arrow-up up hide-text">back to top</a></li>
+</ul>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+<div id="delete-account" class="reveal-modal">
+<h2>Are you sure you want to delete your account?</h2>
+<p>This cannot be undone.</p>
+<form action="/web/20201219121727/https://www.cambridge.org/gb/signin/delete/confirmed/" method="post">
+<a class="button grey large close-reveal-modal" href="#" onclick="return false;"><span></span>Cancel</a>
+<input type="hidden" name="secret_security_token" id="secret_security_token" value="1608380247:098660a6c0ecbaac0d5ac820f6ef4f13"/> <input type="submit" class="button large red" value="Delete"/>
+</form>
+</div>
+<div id="feedback_confirm" class="reveal-modal small">
+<p>Thank you for your feedback which will help us improve our service.</p>
+<p>If you requested a response, we will make sure to get back to you shortly.</p>
+<a class="close-reveal-modal">&#215;</a>
+</div>
+<div id="feedback_validation" class="reveal-modal medium">
+<div class="alert-box">
+Please fill in the required fields in your feedback submission.
+</div>
+<a class="close-reveal-modal">&#215;</a>
+</div>
+<div id="yourFeedback" class="reveal-modal large"></div>
+<script type="text/javascript">
+    var LOCALE = "en_GB";
+
+    
+    
+    var CURRENT_THEME = "Academic_v1";
+    var ACADEMIC_THEME_HANDLE = "Academic_v1";
+    var LEARNING_THEME_HANDLE = "Learning";
+
+    
+    var isTablet = '';
+    var isMobile = '';
+
+        var data = {"GET":{"query":""},"hHandle":"global_navbar_ccp","pHandle":"cambridge_themes","action":"renderLocaleRevealForm","locale":"en_GB","businessStream":"academic"};
+</script>
+<script type="text/javascript">
+  (function () {
+    var euCountryCodes = [
+      'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR',
+      'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
+      'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'IS', 'LI', 'NO', 'CH'
+    ];
+
+    if (window.CURRENT_SITE === 'corporate' ||
+      (window.VISTA_SERVICE_REGION !== 'A' && euCountryCodes.indexOf(Locale.countryCode) === -1)) {
+      return;
+    }
+
+    var msg = '';
+    var shouldDisplay = false;
+    var currDate = new Date();
+
+    if (window.VISTA_SERVICE_REGION === 'A') {
+      msg = 'Please note that the Cambridge University Press ANZ office and warehouse will be closed '
+          + 'for the holiday season from 5:00 pm AEDT Wednesday, 23rd December 2020<br>'
+          + 'and will re-open at 9:00 am AEDT Tuesday, 5th January 2021. '
+          + 'During this time you can continue to place your website orders, '
+          + 'all in stock items will be despatched upon our return.<br>'
+          + 'We wish all our customers a safe and happy holiday season.';
+      var startDate = new Date('December 23, 2020 00:00:00 GMT+11:00');
+      var endDate = new Date('January 5, 2021 00:00:00 GMT+11:00');
+      shouldDisplay = currDate >= startDate && currDate <= endDate;
+    } else { // EU countries
+      msg = 'Brexit notice for customers in the EU: '
+          + 'Please read this '
+          + '<a href="https://web.archive.org/web/20201219121727/https://www.cambridge.org/brexit-notice">important information</a> '
+          + 'on possible changes to how you pay VAT, import taxes and duties on our products.';
+      shouldDisplay = true;
+    }
+
+    if (shouldDisplay) {
+      var $html = $('<div/>', { id: 'ccm-headerAnnounce' })
+        .append(
+          $('<div/>', { class: 'disclosure-container' })
+            .append(
+              $('<div/>', { class: 'disclosure-content row' })
+                .append($('<p/>', { style: 'text-align:center;' }).html(msg))
+            )
+        );
+      $('body > div#content').before($html);
+    }
+  })();
+</script>
+<meta name="google-site-verification" content="zaZApwnrrBwe94fhywE6bxDz_b2Np4e9XTMDV-6YqcU"/>
+<script type="text/javascript">
+  $(function () {
+    if (window.location.href.indexOf('/academic/subjects') >= 0) {
+      $.each($('.relatedItemsWrap .relatedItem a[href^="//web.archive.org/web/20201219121727/https://journals.cambridge.org"]'), function () { 
+        $(this).attr('href', 'http://' + this.href.substring(this.href.indexOf('journals')));
+      });
+    }
+  });
+</script>
+<script type="text/javascript">
+  var eduUrlPattern = new RegExp('^\/[a-z]{2}\/education');
+
+  if (!CWS_ECOMMERCE_ENABLED
+    && !eduUrlPattern.test(window.location.pathname)
+    && $('.addToCartBtn').length > 0) {
+
+    $(function () {
+      $('.addToCartBtn').removeClass('addToCartBtn').addClass('addToCartBtnPatch');
+
+      if ((VISTA_SERVICE_REGION === 'A' && IS_KK_AUS === '0') || (VISTA_SERVICE_REGION === 'E' && IS_KK_ASIA === '0')) {
+        if (IS_KK_ACS_ENABLED > 0) {
+          getVyreServicePatch();
+        }
+      } else {
+        getKonakartServicePatch();
+      }
+
+      function getKonakartServicePatch() {
+        jQuery('.addToCartBtnPatch').live('click', addToCartEventPatch);
+
+        // send request to cart WS
+        jQuery.ajax({
+          url: KK_MINI_CART,
+          dataType: 'xml',
+          success: mini_cart_successful_patch,
+          error: function () {
+            jQuery('#miniCartDetail .qty').show();
+            jQuery('#cartQty').html('(' + jQuery('#qtyValue').html() + ')');
+          },
+          // https://jira.cambridge.org/browse/KEP-453
+          cache: false
+        });
+      }
+
+      function getVyreServicePatch() {
+        // GAW-2570
+        if (jQuery('.addToCartBtnPatch.konakartLink').length > 0) {
+          jQuery('.addToCartBtnPatch.konakartLink').live('click', addToCartEventPatch);
+        }
+
+        $.ajax({
+          url: "/tools/packages/cambridge_themes/miniCart",
+          data: {
+            source: "Academic_v1"
+          },
+          success: function (data) {
+            if ($('#qtyValue').html() == 0) {
+              jQuery('#cartQty').html('');
+              var cartOpt = {
+                url: KK_MINI_CART,
+                dataType: 'xml',
+                success: mini_cart_successful_patch,
+                error: function () {
+                  jQuery('#miniCartDetail .qty').show();
+                  jQuery('#cartQty').html('(' + jQuery('#qtyValue').html() + ')');
+                },
+                // https://jira.cambridge.org/browse/KEP-453
+                cache: false
+              };
+
+              // send request to cart WS
+              jQuery.ajax(cartOpt);
+              jQuery("a.viewCart").attr("href", VYRE_BASKET);
+              jQuery("a.academicCheckout").attr("href", VYRE_BASKET);
+
+              var minicartDetail = '<p class="qty">You have <span id="qtyString"><span id="qtyValue">0</span> items</span> in your cart.</p>' +
+                '<div id="miniCartItems"></div>' +
+                '<div class="withItems" style="display:none;">' +
+                '<div id="subtotal"><h4>Subtotal: <span id="subtotalValue">0.0</span></h4></div>' +
+                '<div class="clearfix"></div>' +
+                '<div id="buttons">' +
+                '<a href="' + VYRE_BASKET + '" class="button blue large viewCart">View cart <span class="viewCartCountAcademic_v1" style="display:none;">(0)</span></a>' +
+                '<a href="' + VYRE_BASKET + '" class="button orange large checkout academicCheckout">Checkout</a>' +
+                '</div>' +
+                '</div>';
+
+              $("#miniCartDetail").html(minicartDetail);
+            } else {
+              hasAsp = true;
+            }
+          }
+        });
+      }
+    });
+
+    var errorCallBackPatch = function () {
+      // hide the view cart
+      if (cartItemCount < 1) {
+        jQuery('.viewCart').hide();
+      }
+
+      jQuery('#itemAddedMessage').text("There was a problem getting your cart information.");
+      jQuery('#itemAddedModal').reveal();
+    };
+
+    var completeCallBackPatch = function () {
+      alreadyClicked = false;
+      countryChange = true;
+      jQuery('body').css('cursor', 'auto');
+    };
+
+    var addToCartEventPatch = function (event) {
+      event.preventDefault();
+
+      // check first if the user hasn't clicked on the link to prevent multiple
+      // AJAX requests
+      if (alreadyClicked == false) {
+        alreadyClicked = true;
+
+        // make the body to show wait cursor while processing
+        jQuery('body').css('cursor', 'wait');
+        addToCartPatch(jQuery(this).data());
+      }
+    };
+
+    /**
+     * upon success of calling add to cart WS
+     * @param data xml returned data from ecom
+     * @param textStatus test status
+     * @param isbn string added isbn
+     */
+    var add_to_cart_successful_patch = function (data, textStatus, isbn) {
+      var $cartData = jQuery(data);
+      // hack to get HTML content in XML
+      var cartErrorMessage = $cartData.find('errorMessage').text().trim();
+      var cartInfoMessage = $cartData.find('infoMessage').text().trim();
+
+      // get cart lines in the cart WS
+      var cartLines = processCartDataPatch(data);
+      refresh_cart_patch(cartLines);
+
+      // check first if we have error message then display it instead of item added message
+      if (cartErrorMessage !== '') {
+        jQuery('#addToCartCustom h4').html(cartErrorMessage);
+        jQuery('#addToCartCustom h4').css('text-transform', 'none');
+        jQuery('#addToCartCustom').reveal();
+      } else if (cartInfoMessage !== '') {
+        jQuery('#addToCartCustom h4').html(cartInfoMessage);
+        jQuery('#addToCartCustom h4').css('text-transform', 'none');
+        jQuery('#addToCartCustom').reveal();
+      } else {
+        // hide the view cart
+        if (cartItemCount < 1) {
+          jQuery('.viewCart').hide();
+        }
+
+        jQuery('#itemAddedMessage').text("Item added to your cart!");
+        jQuery('#itemAddedModal').reveal();
+        googleTagManagerPatch(isbn);
+      }
+    };
+
+    // upon success of calling cart WS
+    var mini_cart_successful_patch = function (data, textStatus) {
+      // get cart lines in the cart WS
+      var cartLines = processCartDataPatch(data);
+      refresh_cart_patch(cartLines);
+    };
+
+    /**
+     * Convert data collected from the cart WS and traverse and store it in array
+     * @param  {XML} xml Expected XML cart data
+     * @return {Array}     Array list of lines (products) in the cart
+     */
+    var processCartDataPatch = function (xml) {
+      // reset
+      cartItemCount = 0;
+      currency = '$';
+      subTotal = 0;
+
+      var $cartData = jQuery(xml);
+      var cartLines = [];
+
+      currency = $cartData.find('symbol').text();
+      subTotal = $cartData.find('totalValueOverride').text();
+
+      // traverse the orderline
+      $cartData.find('orderLines').find('orderLine').each(function () {
+        var data = [];
+        data['availabilityLegend'] = getXMLValuePatch("availabilityLegend", this);
+
+        cartItemCount += getXMLValuePatch('quantity', this) ? parseInt(getXMLValuePatch('quantity', this)) : 1;
+        data['title'] = getXMLValuePatch('title', this);
+        data['author'] = getXMLValuePatch('author', this);
+        var price = getXMLValuePatch('publishedPriceOverride', this);
+        data['price'] = price.length > 0 ? price : getXMLValuePatch('originalValue', this);
+        data['price'] = data['price'].replace(',', '');
+
+        data['discountPrice'] = getXMLValuePatch('publishedPriceOverride', this);
+        data['discountPrice'] = data['discountPrice'].replace(',', '');
+        data['ean'] = getXMLValuePatch('ean', this);
+        data['quantity'] = getXMLValuePatch('quantity', this).replace(',', '');
+        data['format'] = getXMLValuePatch('format', this);
+
+        var volumeNumber = getXMLValuePatch('volumeNumber', this);
+        data['volume'] = volumeNumber.length > 0 && volumeNumber != '0' ? 'Volume ' + volumeNumber : '';
+
+        var partNumber = getXMLValuePatch('partNumber', this);
+        data['part'] = partNumber.length > 0 && partNumber != '0' ? 'Part ' + partNumber : '';
+
+        var edition = getXMLValuePatch('edition', this);
+        data['edition'] = edition.length > 0 ? edition + ' Edition' : '';
+
+        var lastModified = new Date(getXMLValuePatch('lastModified', this));
+        data['lastModified'] = lastModified.getTime();
+
+        cartLines.push(data);
+      });
+
+      cartLines.sort(function (a, b) {
+        return a['lastModified'] - b['lastModified'];
+      });
+
+      return cartLines;
+    };
+
+    var getXMLValuePatch = function (key, container) {
+      return jQuery(container).find(key).text();
+    };
+
+    var refresh_cart_patch = function (cartLines) {
+      if (cartLines.length > 0) {
+        var $miniCartDetail = jQuery('#miniCartDetail');
+        var $learningQty = jQuery('p.qty #qtyString', $miniCartDetail);
+        var $miniCartItems = jQuery('#miniCartItems');
+        var $subTotal = jQuery('#subtotalValue');
+
+        var cartItemString = '<span id="qtyValue">' + cartItemCount + '</span>' +
+          (cartItemCount == 0 || cartItemCount > 1 ? ' items' : ' item');
+
+        $learningQty.html(cartItemString);
+
+        var cartItems = '';
+
+        var itemDisplayCount = 1;
+        for (var i = 0; i < cartLines.length; i++) {
+          cartItems += '<h4><a href="/' + cartLines[i]['ean'] + '">' + cartLines[i]['title'] + '</a></h4>';
+          cartItems += '<p>' + cartLines[i]['volume'] + ' ' + cartLines[i]['part'] + ' ' + cartLines[i]['edition'] + '<span>' + ' ' + cartLines[i]['author'] + '</span></p>';
+          cartItems += '<p>' + cartLines[i]['format'] + '</p>';
+          cartItems += '<p>' + cartLines[i]['availabilityLegend'] + ' | Qty: ' + cartLines[i]['quantity'] + ' | Price: ' + currency + (parseFloat(cartLines[i]['quantity']) * parseFloat(cartLines[i]['price'])).toFixed(2) + '</p>';
+          itemDisplayCount++;
+
+          if (itemDisplayCount > 3 && CURRENT_SITE === 'cambridgeenglish') {
+            break;
+          }
+        }
+
+        $miniCartItems.html(cartItems);
+        $subTotal.html(currency + subTotal);
+        jQuery('#mobileCartQty').html('(' + jQuery('#qtyValue').html() + ')');
+
+        jQuery('.withItems').show();
+      }
+      else {
+        if (jQuery('#miniCartItems > h4').length == 0) {
+          jQuery('.withItems').hide();
+        }
+        jQuery('#miniCartDetail .qty').show();
+      }
+
+      jQuery('#cartQty').html('(' + jQuery('#qtyValue').html() + ')');
+    };
+
+    var addToCartPatch = function (data) {
+      var params = {
+        isbn: isbn = typeof data.isbn !== 'undefined' ? data.isbn : '',
+        locale: typeof data.country !== 'undefined' ? data.country : '',
+        page: typeof data.page !== 'undefined' ? data.page : '',
+        discountCode: typeof data.discountcode !== 'undefined' ? data.discountcode : ''
+      };
+
+      if (params.page === "schools") {
+        params['institutiononly'] = typeof data.institutiononly !== 'undefined' ? data.institutiononly : 0;
+        params['qty'] = typeof data.qty !== 'undefined' ? data.qty : '';
+      }
+
+      var urlTarget = location.protocol + "//" + location.host
+              + "/wm-ecommerce-web/" + params.page + "/addtocart?" + $.param(params);
+
+      jQuery.ajax({
+        url: urlTarget,
+        dataType: 'xml',
+        success: function (data, textStatus) {
+          add_to_cart_successful_patch(data, textStatus, isbn)
+        },
+        error: errorCallBackPatch,
+        complete: completeCallBackPatch,
+        cache: false
+      });
+    };
+
+    /**
+     * firing google tag manager after adding to cart
+     * the try catch block will take care of the logic for firing GTM if applicable, which is for ELT ATM.
+     * @param isbn string
+     */
+    function googleTagManagerPatch(isbn) {
+      try {
+         var gtm = new GoogleTagManager();
+
+         if ($.isFunction(gtm.addToCart)) {
+           $.post(
+             '/tools/packages/cambridge_core/titleService',
+             {"isbn": isbn, "data": "gtm_data"},
+             function (data, status) {
+               gtm.addToCart(data);
+             }
+           );
+         }
+      } catch (err) {
+        // Google Tag Manager is not loaded.
+        return;
+      }
+    }
+  }
+</script>
+<script type="text/javascript">
+  $(window).on("load", function () {
+    $("a[href*='/elt/blog'], a[href*='/core']").each(function () {
+      var href = $(this).attr("href");
+
+      var urlSlug = href.split('/');
+
+      if (urlSlug[3] && urlSlug[3].length === 2) {
+        urlSlug.splice(0, 4);
+        href = '/' + urlSlug.join('/');
+      }
+
+      var startsWithEltBlog = new RegExp("^\/elt\/blog");
+      if (startsWithEltBlog.test(href)) {
+        href = CCM_BASE_URL + href;
+        href = href.replace('https://', 'http://');
+      }
+
+      $(this).attr("href", href);
+    });
+
+    if (CCM_BASE_URL.includes('//web.archive.org/web/20201219121727/https://admin')) {
+      $("#global-nav a[href*='cambridge.org']").each(function () {
+        var href = $(this).attr("href");
+
+        href = href.replace('https://', 'http://');
+        href = href.replace('//web.archive.org/web/20201219121727/https://www.', '//web.archive.org/web/20201219121727/https://admin.');
+
+        $(this).attr("href", href);
+      });
+    }
+  });
+
+  if (window.location.pathname === '/checkout/vista_confirm') {
+    $(".container .row.cart-info").prepend('<div class="col-12"><div class="alert alert-info" role="alert"><div class="alert-icon"><span class="svg-icon info"></span></div><div class="alert-message"><p>Please note, your transactions may incur a foreign transaction fee, not included in the final price listed but will appear on your credit card statement. This charge is made by your credit card provider, not by Cambridge University Press.</p></div></div></div>');
+  }
+
+  if (window.location.href.indexOf('/academic/conferences') >= 0) {
+    $('.conferenceWrap').find('.seven.columns').first().addClass('twelve').removeClass('seven');
+    $('.conferenceWrap img.ccm-image-block').css('margin', 'auto');
+
+    $(".conferenceWrap .conferenceDetails").insertAfter('.row.conferenceWrap .columns.twelve h1');
+    $('.conferenceWrap .conferenceDetails').css('float', 'left');
+    $('.conferenceWrap .conferenceDetails').css('border', '0');
+    $('.conferenceWrap .conferenceDetails').css('padding', '10px 0 10px 0');
+  }
+
+  if (window.location.pathname === '/cart' ||
+    window.location.pathname === '/checkout/confirm' ||
+    window.location.pathname === '/checkout/vista_confirm') {
+    $(".item-quantity input.qty").on('keypress', function (e) {
+      if (!$.isNumeric(e.key) && e.key !== 'Enter') {
+        return false;
+      }
+    });
+  }
+</script><script type="text/javascript" src="/web/20201219121727js_/https://www.cambridge.org/packages/cambridge_themes/js/academic_footer.min.js?v=1aae203730743e9f0cb39bbdbe1f1c00"></script>
+<script type="text/javascript" src="/web/20201219121727js_/https://www.cambridge.org/packages/cws_ecommerce/js/bluebird.min.js?v=1aae203730743e9f0cb39bbdbe1f1c00"></script>
+<script type="text/javascript" src="/web/20201219121727js_/https://www.cambridge.org/packages/cws_ecommerce/js/updateHtmlLinks.js?v=1aae203730743e9f0cb39bbdbe1f1c00"></script>
+<script type="text/javascript">
+    var GTM = (typeof GTM === 'undefined') ? {
+        cambridgeId: "",
+        areaOfInterest: "",
+        jobTitle: "",
+        userType: "",
+        clientId: '',
+        currencyCode: "GBP"
+    } : GTM;
+
+    GTMCart.init(GTM);
+</script>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $('#ccm-nav-edit').parent().remove();
+            $('#ccm-nav-dashboard').parent().remove();
+
+                    });
+    </script>
+<script type="text/javascript" src="//web.archive.org/web/20201219121727js_/https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-511de76363dcda8e"></script>
 </body>
+</html><!--
+     FILE ARCHIVED ON 12:17:27 Dec 19, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:22:20 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
-</html>
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 96.717
+  exclusion.robots: 0.278
+  exclusion.robots.policy: 0.265
+  RedisCDXSource: 1.843
+  esindex: 0.011
+  LoadShardBlock: 56.437 (3)
+  PetaboxLoader3.datanode: 66.621 (4)
+  CDXLines.iter: 33.023 (3)
+  load_resource: 721.287
+  PetaboxLoader3.resolve: 159.81
+-->

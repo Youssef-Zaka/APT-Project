@@ -1,701 +1,399 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
-<head>
-  <title>[2110.02065] SDR: Efficient Neural Re-ranking using Succinct Document Representation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv.css?v=20200727" />
-  <link rel="stylesheet" type="text/css" media="print" href="https://static.arxiv.org/static/browse/0.3.4/css/arXiv-print.css?v=20200611" />
-  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/browse/0.3.4/css/browse_search.css" />
-  <script language="javascript" src="https://static.arxiv.org/static/browse/0.3.4/js/accordion.js" /></script>
-
-  <link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/static/browse/0.3.4/css/tooltip.css"/><link rel="stylesheet" media="screen" type="text/css" href="https://static.arxiv.org/js/bibex-dev/bibex.css?20200709"/>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/mathjaxToggle.min.js" type="text/javascript"></script>
-  <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" type="text/javascript"></script>
-  <script src="//cdn.jsdelivr.net/npm/dompurify@2.3.5/dist/purify.min.js"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/toggle-labs.js?20210728" type="text/javascript"></script>
-  <script src="https://static.arxiv.org/static/browse/0.3.4/js/cite.js" type="text/javascript"></script><script type="text/javascript" src="https://arxiv-org.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/zca7yc/b/13/a44af77267a987a660377e5c46e0fb64/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=7a8da419"></script>
-<script type="text/javascript">window.ATL_JQ_PAGE_PROPS =  {
-  "triggerFunction": function(showCollectorDialog) {
-    //Requires that jQuery is available!
-    jQuery("#feedback-button").click(function(e) {
-      e.preventDefault();
-      showCollectorDialog();
-    });
-  },
-  fieldValues: {
-    "components": ["15700"],  // Jira ID for browse component
-    "versions": ["14251"],    // Jira ID for browse-0.3.2 release
-    "customfield_11401": window.location.href
-  }
-  };
+<!DOCTYPE html>
+<html lang="en-US">
+<head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app224.us.archive.org';v.server_ms=202;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://marketing.usatoday.com/contact","20200305135558","https://web.archive.org/","web","/_static/",
+	      "1583416558");
 </script>
-  <meta name="citation_title" content="SDR: Efficient Neural Re-ranking using Succinct Document Representation"/>
-  <meta name="citation_author" content="Cohen, Nachshon"/>
-  <meta name="citation_author" content="Portnoy, Amit"/>
-  <meta name="citation_author" content="Fetahu, Besnik"/>
-  <meta name="citation_author" content="Ingber, Amir"/>
-  <meta name="citation_date" content="2021/10/03"/>
-  <meta name="citation_online_date" content="2021/10/03"/>
-  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2110.02065"/>
-  <meta name="citation_arxiv_id" content="2110.02065"/>
-  <meta name="citation_abstract" content=" BERT based ranking models have achieved superior performance on various
-information retrieval tasks. However, the large number of parameters and
-complex self-attention operation come at a significant latency overhead. To
-remedy this, recent works propose late-interaction architectures, which allow
-pre-computation of intermediate document representations, thus reducing the
-runtime latency. Nonetheless, having solved the immediate latency issue, these
-methods now introduce storage costs and network fetching latency, which limits
-their adoption in real-life production systems. In this work, we propose the Succinct Document Representation (SDR) scheme
-that computes highly compressed intermediate document representations,
-mitigating the storage/network issue. Our approach first reduces the dimension
-of token representations by encoding them using a novel autoencoder
-architecture that uses the document&#39;s textual content in both the encoding and
-decoding phases. After this token encoding step, we further reduce the size of
-entire document representations using a modern quantization technique. Extensive evaluations on passage re-reranking on the MSMARCO dataset show
-that compared to existing approaches using compressed document representations,
-our method is highly efficient, achieving 4x-11.6x better compression rates for
-the same ranking quality.
-"/>
-  <meta name="citation_doi" content="10.48550/arXiv.2110.02065"/><meta name="twitter:site" content="@arxiv"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="SDR: Efficient Neural Re-ranking using Succinct Document Representation"/>
-    <meta name="twitter:description" content="BERT based ranking models have achieved superior performance on various
-information retrieval tasks. However, the large number of parameters and
-complex self-attention operation come at a..."/>
-    <meta name="twitter:image" content="https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png"/>
-    <meta name="twitter:image:alt" content="arXiv logo"/>
-    <meta property="og:site_name" content="arXiv.org"/>
-    <meta property="og:title" content="SDR: Efficient Neural Re-ranking using Succinct Document Representation"/>
-    <meta property="og:url" content="https://arxiv.org/abs/2110.02065v1"/>
-    <meta property="og:description" content="BERT based ranking models have achieved superior performance on various
-information retrieval tasks. However, the large number of parameters and
-complex self-attention operation come at a significant latency overhead. To
-remedy this, recent works propose late-interaction architectures, which allow
-pre-computation of intermediate document representations, thus reducing the
-runtime latency. Nonetheless, having solved the immediate latency issue, these
-methods now introduce storage costs and network fetching latency, which limits
-their adoption in real-life production systems.
-  In this work, we propose the Succinct Document Representation (SDR) scheme
-that computes highly compressed intermediate document representations,
-mitigating the storage/network issue. Our approach first reduces the dimension
-of token representations by encoding them using a novel autoencoder
-architecture that uses the document&#39;s textual content in both the encoding and
-decoding phases. After this token encoding step, we further reduce the size of
-entire document representations using a modern quantization technique.
-  Extensive evaluations on passage re-reranking on the MSMARCO dataset show
-that compared to existing approaches using compressed document representations,
-our method is highly efficient, achieving 4x-11.6x better compression rates for
-the same ranking quality."/>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+
+<meta charset="UTF-8"/>
+		<meta name="robots" content="noodp,noydir"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Contact Us</title>
+<link rel="dns-prefetch" href="//web.archive.org/web/20200305135558/https://s.w.org/"/>
+<link rel="canonical" href="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/contact"/>
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/web.archive.org\/web\/20200305135558\/https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/web.archive.org\/web\/20200305135558\/https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/web.archive.org\/web\/20200305135558\/https:\/\/marketing.usatoday.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.5"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel="stylesheet" id="usa-today-marketing-theme-css" href="https://web.archive.org/web/20200305135558cs_/https://marketing.usatoday.com/wp-content/themes/usa-today-marketing/style.css?ver=1.2" type="text/css" media="all"/>
+<link rel="stylesheet" id="wp-block-library-css" href="https://web.archive.org/web/20200305135558cs_/https://marketing.usatoday.com/wp-includes/css/dist/block-library/style.min.css?ver=5.2.5" type="text/css" media="all"/>
+<link rel="stylesheet" id="dashicons-css" href="https://web.archive.org/web/20200305135558cs_/https://marketing.usatoday.com/wp-includes/css/dashicons.min.css?ver=5.2.5" type="text/css" media="all"/>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1"></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='https://marketing.usatoday.com/wp-content/themes/genesis/lib/js/html5shiv.min.js?ver=3.7.3'></script>
+<![endif]-->
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/themes/usa-today-marketing/js/parallax.js?ver=1.0.0"></script>
+<link rel="https://api.w.org/" href="https://marketing.usatoday.com/wp-json/"/>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://marketing.usatoday.com/xmlrpc.php?rsd"/>
+<link rel="alternate" type="application/json+oembed" href="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmarketing.usatoday.com%2Fcontact"/>
+<link rel="alternate" type="text/xml+oembed" href="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmarketing.usatoday.com%2Fcontact&amp;format=xml"/>
+<link rel="icon" href="https://web.archive.org/web/20200305135558im_/https://marketing.usatoday.com/wp-content/themes/usa-today-marketing/images/favicon.ico"/>
 </head>
-
-<body  class="with-cu-identity">
-  <!-- Piwik Pro Trial 2021 -->
-  <script type="text/javascript">
-  (function(window, document, dataLayerName, id) {
-  window[dataLayerName]=window[dataLayerName]||[],window[dataLayerName].push({start:(new Date).getTime(),event:"stg.start"});var scripts=document.getElementsByTagName('script')[0],tags=document.createElement('script');
-  function stgCreateCookie(a,b,c){var d="";if(c){var e=new Date;e.setTime(e.getTime()+24*c*60*60*1e3),d="; expires="+e.toUTCString()}document.cookie=a+"="+b+d+"; path=/"}
-  var isStgDebug=(window.location.href.match("stg_debug")||document.cookie.match("stg_debug"))&&!window.location.href.match("stg_disable_debug");stgCreateCookie("stg_debug",isStgDebug?1:"",isStgDebug?14:-1);
-  var qP=[];dataLayerName!=="dataLayer"&&qP.push("data_layer_name="+dataLayerName),isStgDebug&&qP.push("stg_debug");var qPString=qP.length>0?("?"+qP.join("&")):"";
-  tags.async=!0,tags.src="//arxivcu.containers.piwik.pro/"+id+".js"+qPString,scripts.parentNode.insertBefore(tags,scripts);
-  !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
-  })(window, document, 'dataLayer', '5cd2af31-892f-43fc-89ba-dbb835c4ec39');
-  </script><noscript><iframe src="//arxivcu.containers.piwik.pro/5cd2af31-892f-43fc-89ba-dbb835c4ec39/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-<aside class="slider-wrapper bps-banner" style="display:none">
-  <a class="close-slider bps-banner" href="#"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/close-slider.png" alt="close this message"></a>
-  <div class="copy-donation bps-banner">
-    <img role="presentation" class="banner-smileybones-icon" width="50" src="https://static.arxiv.org/static/browse/0.3.4/images/icons/smileybones-pixel.png" alt="arXiv smileybones icon" />
-    <h1>Giving Week!</h1>
-    <p>Show your support for Open Science by <a href="http://bit.ly/arXivDONATEa" target="_blank">donating to arXiv</a> during Giving Week, April 25th-29th.</p>
+<body class="page-template page-template-page_with_header page-template-page_with_header-php page page-id-13 header-full-width full-width-content contact" itemscope itemtype="https://schema.org/WebPage"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20200305135558/https%3A//marketing.usatoday.com/contact"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
   </div>
-  <div class="amount-donation bps-banner">
-    <div class="wrapper">
-      <div class="donate-cta"><a class="banner_link banner-btn-grad" target="_blank" href="http://bit.ly/arXivDONATEa"><b>DONATE</b></a>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://marketing.usatoday.com/contact" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20200305135558" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20200305135558*/https://marketing.usatoday.com/contact" title="See a list of every capture for this URL">1,140 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">18 Aug 2015 - 21 Apr 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200205041941/https://marketing.usatoday.com/contact" title="05 Feb 2020"><strong>Feb</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 13:55:58 Mar 05, 2020">MAR</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200406022416/https://marketing.usatoday.com/contact" title="06 Apr 2020"><strong>Apr</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20200229194638/https://marketing.usatoday.com/contact/" title="19:46:38 Feb 29, 2020"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 13:55:58 Mar 05, 2020">05</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200306144538/https://marketing.usatoday.com/contact" title="14:45:38 Mar 06, 2020"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20190304193023/http://marketing.usatoday.com/contact" title="04 Mar 2019"><strong>2019</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 13:55:58 Mar 05, 2020">2020</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20210307034344/http://marketing.usatoday.com/contact/" title="07 Mar 2021"><strong>2021</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20200305135558/http://web.archive.org/screenshot/https://marketing.usatoday.com/contact"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/contact" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/contact" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
       </div>
     </div>
   </div>
-</aside><div class="flex-wrap-footer">
-    <header>
-      <a href="#content" class="is-sr-only">Skip to main content</a>
-      <!-- start desktop header -->
-      <div class="columns is-vcentered is-hidden-mobile" id="cu-identity">
-        <div class="column" id="cu-logo">
-          <a href="https://www.cornell.edu/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University" /></a>
-        </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/archiveteam);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/archiveteam" target="_new"><span class="wm-title">Archive Team</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  <img align=right src="http://archiveteam.org/images/e/e6/Archiveteam.jpg" width=200> Formed in 2009, the Archive Team (not to be confused with the archive.org Archive-It Team) is a rogue archivist collective dedicated to saving copies of rapidly dying or deleted websites for the sake of history and digital heritage. The group is 100% composed of volunteers and interested parties, and has expanded into a large amount of related projects for saving online and digital history.
+<p>
+History is littered with hundreds of conflicts over the future of a community, group, location or business that were "resolved" when one of the parties stepped ahead and destroyed what was there. With the original point of contention destroyed, the debates would fall to the wayside. Archive Team believes that by duplicated condemned data, the conversation and debate can continue, as well as the richness and insight gained by keeping the materials. Our projects have ranged in size from a single volunteer downloading the data to a small-but-critical site, to over 100 volunteers stepping forward to acquire terabytes of user-created data to save for future generations.
+<p>
+The main site for Archive Team is at <a href="http://www.archiveteam.org">archiveteam.org</a> and contains up to the date information on various projects, manifestos, plans and walkthroughs.
+<p>
+This collection contains the output of many Archive Team projects, both ongoing and completed. Thanks to the generous providing of disk space by the Internet Archive, multi-terabyte datasets can be made available, as well as in use by the <a href="http://archive.org/web/web.php">Wayback Machine</a>, providing a path back to lost websites and work. 
+<p>
+Our collection has grown to the point of having sub-collections for the type of data we acquire. If you are seeking to browse the contents of these collections, the Wayback Machine is the best first stop. Otherwise, you are free to dig into the stacks to see what you may find.
+<p>
+<b>The Archive Team Panic Downloads</b> are full pulldowns of currently extant websites, meant to serve as emergency backups for needed sites that are in danger of closing, or which will be missed dearly if suddenly lost due to hard drive crashes or server failures. 
+<p>
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/archivebot)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/archivebot" target="_new"><span class="wm-title">ArchiveBot: The Archive Team Crowdsourced Crawler</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  ArchiveBot is an IRC bot designed to automate the archival of smaller websites (e.g. up to a few hundred thousand URLs). You give it a URL to start at, and it grabs all content under that URL, records it in a WARC, and then uploads that WARC to ArchiveTeam servers for eventual injection into the Internet Archive (or other archive sites).
+<p>
+To use ArchiveBot, drop by #archivebot on EFNet. To interact with ArchiveBot, you issue commands by typing it into the channel. Note you will need channel operator permissions in order to issue archiving jobs. The dashboard shows the sites being downloaded currently.
+<p>
+There is a dashboard running for the archivebot process at <a href="http://www.archivebot.com">http://www.archivebot.com</a>.
+<p>
+ArchiveBot's source code can be found at <a href="https://github.com/ArchiveTeam/ArchiveBot">https://github.com/ArchiveTeam/ArchiveBot</a>.
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/contact</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://marketing.usatoday.com/contact","20200305135558",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT --><div class="site-container"><div id="site-navbar"><section id="text-2" class="widget widget_text"><div class="widget-wrap">			<div class="textwidget"><iframe id="usa-today-site-nav" frameborder="0" frameborder="0" scrolling="no" src="https://web.archive.org/web/20200305135558if_/http://www.usatoday.com/services/cobrand/header"></iframe></div>
+		</div></section>
+</div><header class="site-header" itemscope itemtype="https://schema.org/WPHeader"><div class="wrap"><div class="title-area"><p class="site-title"><a href="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/" title="USA TODAY Media Kit"><strong class="site-name">Media Kit</strong></a></p></div></div></header><div class="page-header" style="background-image: url(https://web.archive.org/web/20200305135558im_/https://marketing.usatoday.com/wp-content/uploads/2015/07/featured-image-contact-v04.jpg);"><div class="wrap"><div class="page-header-inner"><div class="one-half first">
+<h1><strong>Contact</strong> Us</h1>
+<p class="callout">For advertising and editorial inquiries, we’re here to answer any and all of your questions. Just fill out the information below and ask away.</p>
+</div>
+</div></div></div><div class="site-inner"><div class="content-sidebar-wrap"><main class="content"><article class="post-13 page type-page status-publish has-post-thumbnail entry" itemscope itemtype="https://schema.org/CreativeWork"><header class="entry-header"></header><div class="entry-content" itemprop="text"><div id="contact-form" class="two-thirds first">	<div id="ninja_forms_form_6_cont" class="ninja-forms-cont">
+		<div id="ninja_forms_form_6_wrap" class="ninja-forms-form-wrap">
+	<div id="ninja_forms_form_6_response_msg" style="" class="ninja-forms-response-msg "></div>	<form id="ninja_forms_form_6" enctype="multipart/form-data" method="post" name="" action="" class="ninja-forms-form">
 
-        <!-- timeboxed column --><!-- /end timeboxed column -->
+	<input type="hidden" id="_wpnonce" name="_wpnonce" value="52a01ba415"/><input type="hidden" name="_wp_http_referer" value="/contact"/>	<input type="hidden" name="_ninja_forms_display_submit" value="1">
+	<input type="hidden" name="_form_id" id="_form_id" value="6">
+		<div class="hp-wrap">
+		<label>If you are a human and are seeing this field, please leave it blank.			<input type="text" value="" name="_6xtAx">
+			<input type="hidden" value="_6xtAx" name="_hp_name">
+		</label>
+	</div>
+		<div id="ninja_forms_form_6_all_fields_wrap" class="ninja-forms-all-fields-wrap">
+		<h2 class="ninja-forms-field  nf-desc" id="ninja_forms_field_20_div_wrap" style="" rel="20">Please use the form below to send us your&nbsp;inquiry.</h2>
+		<p class="ninja-forms-field  nf-desc" id="ninja_forms_field_21_div_wrap" style="" rel="21">Fields marked with an <span class="ninja-forms-req-symbol">*</span> are required.</p>
+							<div class="field-wrap list-dropdown-wrap label-left" id="ninja_forms_field_22_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_22_type" value="list">
+		<input type="hidden" id="ninja_forms_field_22_list_type" value="dropdown">
+				<label for="ninja_forms_field_22" id="ninja_forms_field_22_label" class="">Department <span class="ninja-forms-req-symbol"><strong>*</strong></span>				</label>
+		<select name="ninja_forms_field_22" id="ninja_forms_field_22" class="ninja-forms-field  ninja-forms-field-conditional-listen  ninja-forms-req" rel="22">									<option value="" selected style="">Please select a department</option>
+									<option value="Accessibility Support" style="">Accessibility Support</option>
+									<option value="Ad Operations" style="">Ad Operations</option>
+									<option value="For Corrections and Clarifications" style="">For Corrections and Clarifications</option>
+									<option value="Newsroom" style="">Newsroom</option>
+									<option value="Opinion Submissions" style="">Opinion Submissions</option>
+									<option value="Press Inquires for Gannett" style="">Press Inquires for Gannett</option>
+									<option value="Press Inquiries for USA TODAY" style="">Press Inquiries for USA TODAY</option>
+									<option value="Reader Feedback/Letters" style="">Reader Feedback/Letters</option>
+									<option value="USA TODAY Mobile" style="">USA TODAY Mobile</option>
+							</select>
+				<div id="ninja_forms_field_22_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+							<div class="ninja-forms-field  field-note ninja-forms-field-calc-no-new-op ninja-forms-field-calc-no-old-op ninja-forms-field-calc-no-new-op ninja-forms-field-calc-no-old-op nf-desc" id="ninja_forms_field_24_div_wrap" style="display:none;" rel="24"><p>Please review the <a href="https://web.archive.org/web/20200305135558/http://www.usatoday.com/submission-guidelines/" target="_blank">Opinion submission guidelines</a>.</p>
+</div>
+							<div class="field-wrap text-wrap label-left" id="ninja_forms_field_10_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_10_type" value="text">
+		<label for="ninja_forms_field_10" id="ninja_forms_field_10_label" class="">Name <span class="ninja-forms-req-symbol"><strong>*</strong></span>				</label>
+			<input id="ninja_forms_field_10" data-mask="" data-input-limit="" data-input-limit-type="char" data-input-limit-msg="" name="ninja_forms_field_10" type="text" placeholder="" class="ninja-forms-field  ninja-forms-req " value="" rel="10"/>
+		<div id="ninja_forms_field_10_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+												<div class="field-wrap text-wrap label-left" id="ninja_forms_field_15_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_15_type" value="text">
+		<label for="ninja_forms_field_15" id="ninja_forms_field_15_label" class="">Title 				</label>
+			<input id="ninja_forms_field_15" data-mask="" data-input-limit="" data-input-limit-type="char" data-input-limit-msg="character(s) left" name="ninja_forms_field_15" type="text" placeholder="" class="ninja-forms-field  " value="" rel="15"/>
+		<div id="ninja_forms_field_15_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+												<div class="field-wrap text-wrap label-left" id="ninja_forms_field_16_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_16_type" value="text">
+		<label for="ninja_forms_field_16" id="ninja_forms_field_16_label" class="">Company 				</label>
+			<input id="ninja_forms_field_16" data-mask="" data-input-limit="" data-input-limit-type="char" data-input-limit-msg="character(s) left" name="ninja_forms_field_16" type="text" placeholder="" class="ninja-forms-field  " value="" rel="16"/>
+		<div id="ninja_forms_field_16_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+												<div class="field-wrap text-wrap label-left" id="ninja_forms_field_11_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_11_type" value="text">
+		<label for="ninja_forms_field_11" id="ninja_forms_field_11_label" class="">Email <span class="ninja-forms-req-symbol"><strong>*</strong></span>				</label>
+			<input id="ninja_forms_field_11" data-mask="" data-input-limit="" data-input-limit-type="char" data-input-limit-msg="" name="ninja_forms_field_11" type="text" placeholder="" class="ninja-forms-field  ninja-forms-req email " value="" rel="11"/>
+		<div id="ninja_forms_field_11_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+												<div class="field-wrap text-wrap label-left" id="ninja_forms_field_17_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_17_type" value="text">
+		<label for="ninja_forms_field_17" id="ninja_forms_field_17_label" class="">Phone 				</label>
+			<input id="ninja_forms_field_17" data-mask="(999) 999-9999" data-input-limit="" data-input-limit-type="char" data-input-limit-msg="character(s) left" name="ninja_forms_field_17" type="text" placeholder="" class="ninja-forms-field  ninja-forms-mask" value="" rel="17"/>
+		<div id="ninja_forms_field_17_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+												<div class="field-wrap text-wrap label-above" id="ninja_forms_field_25_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_25_type" value="text">
+		<label for="ninja_forms_field_25" id="ninja_forms_field_25_label" class="">Subject <span class="ninja-forms-req-symbol"><strong>*</strong></span>				</label>
+			<input id="ninja_forms_field_25" data-mask="" data-input-limit="77" data-input-limit-type="char" data-input-limit-msg="" name="ninja_forms_field_25" type="text" placeholder="" class="ninja-forms-field  ninja-forms-req input-limit " value="" rel="25"/>
+		<div id="ninja_forms_field_25_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+												<div class="field-wrap textarea-wrap label-left" id="ninja_forms_field_12_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_12_type" value="textarea">
+		<label for="ninja_forms_field_12" id="ninja_forms_field_12_label" class="">Message <span class="ninja-forms-req-symbol"><strong>*</strong></span>				</label>
+				<textarea name="ninja_forms_field_12" id="ninja_forms_field_12" class="ninja-forms-field  ninja-forms-req" rel="12" data-input-limit="" data-input-limit-type="char" data-input-limit-msg=""></textarea>
+			<div id="ninja_forms_field_12_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+												<div class="field-wrap submit-wrap label-above" id="ninja_forms_field_14_div_wrap" data-visible="1">
+							<input type="hidden" id="ninja_forms_field_14_type" value="submit">
+	<div id="nf_submit_6">
+		<input type="submit" name="_ninja_forms_field_14" class="ninja-forms-field " id="ninja_forms_field_14" value="Submit" rel="14">
+	</div>
+	<div id="nf_processing_6" style="display:none;">
+		<input type="submit" name="_ninja_forms_field_14" class="ninja-forms-field " id="ninja_forms_field_14" value="Processing" rel="14" disabled>
+	</div>
+		<div id="ninja_forms_field_14_error" style="display:none;" class="ninja-forms-field-error">
+		</div>
+							</div>
+							</div>
+		</form>
+		</div>
+		</div>
+	</div>
+<div class="one-third">
+<h3>Advertising Contacts</h3>
+<p><b>Estee Cross </b><br/>
+VP, Digital Sales<br/>
+New York Office<br/>
+<a href="https://web.archive.org/web/20200305135558/mailto:ecross@gannett.com">ecross@gannett.com</a></p>
+<p><b>Reggie Riley </b><br/>
+VP, Integrated Revenue<br/>
+Chicago, Detroit, and Los Angeles Offices<br/>
+<a href="rriley@gannett.com">rriley@gannett.com</a></p>
+<h3>Re-prints and Permissions</h3>
+<p>For Film/T.V. re-prints and permissions requests:<br/>
+<a href="https://web.archive.org/web/20200305135558/http://www.gannettreprints.com/" target="_blank" rel="noopener noreferrer">http://www.gannettreprints.com/</a></p>
+<h3>Subscription Services</h3>
+<p>For inquiries about your subscription:<br/>
+<a href="https://web.archive.org/web/20200305135558/https://service.usatoday.com/feedback/feedback.jsp" target="_blank" rel="noopener noreferrer">service.usatoday.com/feedback/feedback.jsp</a></p>
+</div>
+</div></article></main></div></div>
+	<div class="site-footer">
+	<div class="footer-rule">
+		<span class="news-border"></span>
+	</div>
+	<div class="site-inner">
+		<div class="one-third first">
+			<div class="footer-menu-container"><nav class="menu-footer-navigation-container"><ul id="menu-footer-navigation" class="menu genesis-nav-menu menu-tertiary"><li id="menu-item-2581" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-13 current_page_item menu-item-2581"><a href="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/contact" aria-current="page" itemprop="url">Contact Us</a></li>
+<li id="menu-item-2564" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2564"><a href="https://web.archive.org/web/20200305135558/https://marketing.usatoday.com/green-statement" itemprop="url">Green Statement</a></li>
+</ul></nav></div>		</div>
+		<div class="two-thirds footer-branding">
+		<div class="two-thirds first footer-tagline"></div>
+		<div class="one-third">
+		<img class="footer-logo" src="https://web.archive.org/web/20200305135558im_/https://marketing.usatoday.com/wp-content/themes/usa-today-marketing/images/footer-logo.png" alt="USA TODAY"/>
+		</div>	
+		</div>
+	</div></div><link rel="stylesheet" id="ninja-forms-display-css" href="https://web.archive.org/web/20200305135558cs_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms/deprecated/css/ninja-forms-display.css?nf_ver=3.3.18&amp;ver=5.2.5" type="text/css" media="all"/>
+<link rel="stylesheet" id="jquery-qtip-css" href="https://web.archive.org/web/20200305135558cs_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms/deprecated/css/qtip.css?ver=5.2.5" type="text/css" media="all"/>
+<link rel="stylesheet" id="jquery-rating-css" href="https://web.archive.org/web/20200305135558cs_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms/deprecated/css/jquery.rating.css?ver=5.2.5" type="text/css" media="all"/>
+<link rel="stylesheet" id="ninja-forms-conditionals-display-css" href="https://web.archive.org/web/20200305135558cs_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms-conditionals//deprecated/css/ninja-forms-conditionals-display.css?nf_ver=3.0.17&amp;ver=5.2.5" type="text/css" media="all"/>
+<script type="text/javascript">
+/* <![CDATA[ */
+var qpprFrontData = {"linkData":{"https:\/\/web.archive.org\/web\/20200305135558\/https:\/\/marketing.usatoday.com\/ad-showcase":[0,1,""]},"siteURL":"https:\/\/web.archive.org\/web\/20200305135558\/https:\/\/marketing.usatoday.com","siteURLq":"https:\/\/web.archive.org\/web\/20200305135558\/https:\/\/marketing.usatoday.com"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/plugins/quick-pagepost-redirect-plugin/js/qppr_frontend_script.min.js?ver=5.1.8"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/themes/usa-today-marketing/js/responsive-menu.js?ver=1.0.0"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/themes/usa-today-marketing/js/affix-nav.js?ver=1.0.0"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-includes/js/wp-embed.min.js?ver=5.2.5"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms/deprecated/js/min/jquery.maskedinput.min.js?ver=5.2.5"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms/deprecated/js/min/word-and-character-counter.min.js?ver=5.2.5"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-includes/js/jquery/jquery.form.min.js?ver=4.2.1"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-includes/js/underscore.min.js?ver=1.8.3"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-includes/js/backbone.min.js?ver=1.2.3"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var ninja_forms_settings = {"ajax_msg_format":"inline","password_mismatch":"The passwords provided do not match.","plugin_url":"https:\/\/web.archive.org\/web\/20200305135558\/https:\/\/marketing.usatoday.com\/wp-content\/plugins\/ninja-forms\/deprecated\/","datepicker_args":{"dateFormat":"dd\/mm\/yy"},"currency_symbol":"$","date_format":"dd\/mm\/yy"};
+var thousandsSeparator = ",";
+var decimalPoint = ".";
+var ninja_forms_form_6_settings = {"ajax":"0","hide_complete":"1","clear_complete":"1"};
+var ninja_forms_form_6_calc_settings = {"calc_value":{"22":{"":0,"Accessibility Support":0,"Ad Operations":0,"For Corrections and Clarifications":0,"Newsroom":0,"Opinion Submissions":0,"Press Inquires for Gannett":0,"Press Inquiries for USA TODAY":0,"Reader Feedback\/Letters":0,"USA TODAY Mobile":0}},"calc_fields":[]};
+var ninja_forms_password_strength = {"empty":"Strength indicator","short":"Very weak","bad":"Weak","good":"Medium","strong":"Strong","mismatch":"Mismatch"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms/deprecated/js/min/ninja-forms-display.min.js?nf_ver=3.3.18&amp;ver=5.2.5"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var ninja_forms_form_6_conditionals_settings = {"conditionals":{"field_24":{"conditional":[{"action":"show","connector":"and","value":"","cr":[{"field":"22","operator":"==","value":"Opinion Submissions"}]}]}}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://marketing.usatoday.com/wp-content/plugins/ninja-forms-conditionals//deprecated/js/min/ninja-forms-conditionals-display.min.js?nf_ver=3.0.17&amp;ver=5.2.5"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20200305135558js_/https://aas.gannettdigital.com/USAT-AAS-MARKETING/jab.min.js"></script>
+</body></html>
 
-        <div class="column" id="support-ack">
-          <a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br/>the Simons Foundation and member institutions.</a>
-        </div>
-      </div>
+<!-- Page generated by LiteSpeed Cache 2.9.8.7 on 2020-02-28 22:33:57 --><!--
+     FILE ARCHIVED ON 13:55:58 Mar 05, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:14:29 May 14, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
-      <div id="header" class="is-hidden-mobile">
-        <a aria-hidden="true" href="{url_path('ignore_me')}"></a>
-        
-  <div class="header-breadcrumbs is-hidden-mobile">
-    <a href="/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logo-one-color-white.svg" alt="arxiv logo" style="height:40px;"/></a> <span>&gt;</span> <a href="/list/cs/recent">cs</a> <span>&gt;</span> arXiv:2110.02065
-  </div>
-
-        
-        
-  <div class="search-block level-right">
-    <form class="level-item mini-search" method="GET" action="https://arxiv.org/search">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input is-small" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-          <p class="help"><a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced Search</a></p>
-        </div>
-        <div class="control">
-          <div class="select is-small">
-            <select name="searchtype" aria-label="Field to search">
-              <option value="all" selected="selected">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="abstract">Abstract</option>
-              <option value="comments">Comments</option>
-              <option value="journal_ref">Journal reference</option>
-              <option value="acm_class">ACM classification</option>
-              <option value="msc_class">MSC classification</option>
-              <option value="report_num">Report number</option>
-              <option value="paper_id">arXiv identifier</option>
-              <option value="doi">DOI</option>
-              <option value="orcid">ORCID</option>
-              <option value="author_id">arXiv author ID</option>
-              <option value="help">Help pages</option>
-              <option value="full_text">Full text</option>
-            </select>
-          </div>
-        </div>
-        <input type="hidden" name="source" value="header">
-        <button class="button is-small is-cul-darker">Search</button>
-      </div>
-    </form>
-  </div>
-       
-     </div><!-- /end desktop header -->
-
-      <div class="mobile-header">
-        <div class="columns is-mobile">
-          <div class="column logo-arxiv"><a href="https://arxiv.org/"><img src="https://static.arxiv.org/static/browse/0.3.4/images/arxiv-logomark-small-white.svg" alt="arXiv logo" style="height:60px;" /></a></div>
-          <div class="column logo-cornell"><a href="https://www.cornell.edu/">
-            <picture>
-              <source media="(min-width: 501px)"
-                srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg  400w"
-                sizes="400w" />
-              <source srcset="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell_seal_simple_black.svg 2x" />
-              <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/cu/cornell-reduced-white-SMALL.svg" alt="Cornell University Logo" />
-            </picture>
-          </a></div>
-          <div class="column nav" id="toggle-container" role="menubar">
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-white"><title>open search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <form class="mobile-search-form" method="GET" action="https://arxiv.org/search">
-                <div class="field has-addons">
-                  <input class="input" type="text" name="query" placeholder="Search..." aria-label="Search term or terms" />
-                  <input type="hidden" name="source" value="header">
-                  <input type="hidden" name="searchtype" value="all">
-                  <button class="button">GO</button>
-                </div>
-              </form>
-            </div>
-
-            <button class="toggle-control"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-white" role="menu"><title>open navigation menu</title><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/ ></svg></button>
-            <div class="mobile-toggle-block toggle-target">
-              <nav class="mobile-menu" aria-labelledby="mobilemenulabel">
-                <h2 id="mobilemenulabel">quick links</h2>
-                <ul>
-                    
-                    <li><a href="https://arxiv.org/login">Login</a></li>
-                    
-                    <li><a href="https://arxiv.org/help">Help Pages</a></li>
-                    <li><a href="https://arxiv.org/about">About</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div><!-- /end mobile-header -->
-    </header>
-
-    <main>
-      
-      
-      <div id="content">
-        <!--
-rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-    <rdf:Description
-        rdf:about="/abs/2110.02065"
-        dc:identifier="/abs/2110.02065"
-        dc:title="SDR: Efficient Neural Re-ranking using Succinct Document Representation"
-        trackback:ping="/trackback/2110.02065" />
-    </rdf:RDF>
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
 -->
-<div id="abs-outer">
-  
-
-  <div class="leftcolumn">
-    <div class="subheader">
-      <h1>Computer Science > Information Retrieval</h1>
-    </div>
-
-    <div class="header-breadcrumbs-mobile">
-      <strong>arXiv:2110.02065</strong> (cs)
-    </div>
-    
-<link rel="stylesheet" type="text/css" href="https://static.arxiv.org/static/base/0.17.4.post2/css/abs.css">
-
-
-<div id="content-inner">
-  <div id="abs">
-    <div class="dateline">
-  
-  
-  
-    
-  
-  
-    
-    
-  
-
-  [Submitted on 3 Oct 2021]</div>
-    <h1 class="title mathjax"><span class="descriptor">Title:</span>SDR: Efficient Neural Re-ranking using Succinct Document Representation</h1>
-    <div class="authors"><span class="descriptor">Authors:</span><a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Cohen%2C+N">Nachshon Cohen</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Portnoy%2C+A">Amit Portnoy</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Fetahu%2C+B">Besnik Fetahu</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Ingber%2C+A">Amir Ingber</a></div>
-      
-    
-  
-    <a class="mobile-submission-download" href="/pdf/2110.02065">Download PDF</a>
-  
-
-  
-    
-
-    <blockquote class="abstract mathjax">
-      <span class="descriptor">Abstract:</span>  BERT based ranking models have achieved superior performance on various
-information retrieval tasks. However, the large number of parameters and
-complex self-attention operation come at a significant latency overhead. To
-remedy this, recent works propose late-interaction architectures, which allow
-pre-computation of intermediate document representations, thus reducing the
-runtime latency. Nonetheless, having solved the immediate latency issue, these
-methods now introduce storage costs and network fetching latency, which limits
-their adoption in real-life production systems.
-<br>In this work, we propose the Succinct Document Representation (SDR) scheme
-that computes highly compressed intermediate document representations,
-mitigating the storage/network issue. Our approach first reduces the dimension
-of token representations by encoding them using a novel autoencoder
-architecture that uses the document's textual content in both the encoding and
-decoding phases. After this token encoding step, we further reduce the size of
-entire document representations using a modern quantization technique.
-<br>Extensive evaluations on passage re-reranking on the MSMARCO dataset show
-that compared to existing approaches using compressed document representations,
-our method is highly efficient, achieving 4x-11.6x better compression rates for
-the same ranking quality.
-
-    </blockquote>
-
-    <!--CONTEXT-->
-    <div class="metatable">
-      <table summary="Additional metadata"><tr>
-          <td class="tablecell label">Subjects:</td>
-          <td class="tablecell subjects">
-            <span class="primary-subject">Information Retrieval (cs.IR)</span>; Machine Learning (cs.LG)</td>
-        </tr><tr>
-          <td class="tablecell label">Cite as:</td>
-          <td class="tablecell arxivid"><span class="arxivid"><a href="https://arxiv.org/abs/2110.02065">arXiv:2110.02065</a> [cs.IR]</span></td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxividv">(or <span class="arxivid">
-              <a href="https://arxiv.org/abs/2110.02065v1">arXiv:2110.02065v1</a> [cs.IR]</span> for this version)
-          </td>
-        </tr>
-        <tr>
-          <td class="tablecell label">&nbsp;</td>
-          <td class="tablecell arxivdoi">
-            <a href="https://doi.org/10.48550/arXiv.2110.02065">https://doi.org/10.48550/arXiv.2110.02065</a>
-            <div class="button-and-tooltip">
-              <button class="more-info" aria-describedby="more-info-desc-1">
-                <svg height="15" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" class=""></path></svg>
-                <span class="visually-hidden">Focus to learn more</span>
-              </button>
-              <!-- tooltip description -->
-              <div role="tooltip" id="more-info-desc-1">
-                <span class="left-corner"></span>
-                arXiv-issued DOI via DataCite
-              </div>
-            </div>
-          </td>
-        </tr></table>
-    </div>
-  </div>
-</div>
-    <div class="submission-history">
-      <h2>Submission history</h2> From: Amit Portnoy [<a href="/show-email/3616b56c/2110.02065">view email</a>]
-      <br/><strong>[v1]</strong>
-Sun, 3 Oct 2021 07:43:16 UTC (692 KB)<br/></div>
-  </div>
-  <!--end leftcolumn-->
-  <div class="extra-services">
-    <div class="full-text">
-      <a name="other"></a>
-      <span class="descriptor">Full-text links:</span>
-      <h2>Download:</h2>
-      <ul>
-  <li><a href="/pdf/2110.02065" accesskey="f" class="abs-button download-pdf">PDF</a></li>
-  <li><a href="/format/2110.02065" class="abs-button download-format">Other formats</a></li></ul>
-      <div class="abs-license">(<a href="http://arxiv.org/licenses/nonexclusive-distrib/1.0/" title="Rights to this article">license</a>)</div>
-    </div>
-    <!--end full-text-->
-    <div class="browse">
-    Current browse context: <div class="current">cs.IR</div>
-
-  <div class="prevnext">
-    <span class="arrow">
-      <a class="abs-button prev-url" href="/prevnext?id=2110.02065&amp;function=prev&amp;context=cs.IR"
-         accesskey="p" title="previous in cs.IR (accesskey p)">&lt;&nbsp;prev</a>
-    </span>
-    <span class="is-hidden-mobile">&nbsp; | &nbsp;</span>
-    <span class="arrow">
-      <a class="abs-button next-url" href="/prevnext?id=2110.02065&amp;function=next&amp;context=cs.IR" accesskey="n"
-         title="next in cs.IR (accesskey n)">next&nbsp;&gt;</a>
-    </span><br/>
-  </div><div class="list">
-    <a class="abs-button abs-button-grey abs-button-small context-new" href="/list/cs.IR/new">new</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-recent" href="/list/cs.IR/recent">recent</a>
-    <span class="is-hidden-mobile"> | </span>
-    <a class="abs-button abs-button-grey abs-button-small context-id" href="/list/cs.IR/2110">2110</a>
-  </div><div class="abs-switch-cat">
-    Change to browse by:
-    <div class="switch context-change">
-      
-        <a href="/abs/2110.02065?context=cs">cs</a><br class="is-hidden-mobile">
-        
-      
-        <a class="subclass" href="/abs/2110.02065?context=cs.LG">cs.LG</a><br class="is-hidden-mobile">
-        
-      
-    </div>
-  </div>
-  
-    </div>
-
-    <div class="extra-ref-cite">
-      <h3>References &amp; Citations</h3>
-      <ul>
-        
-        <li><a  class="abs-button abs-button-small cite-ads" href="https://ui.adsabs.harvard.edu/abs/arXiv:2110.02065">NASA ADS</a></li><li><a  class="abs-button abs-button-small cite-google-scholar" href="https://scholar.google.com/scholar_lookup?arxiv_id=2110.02065" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a  class="abs-button abs-button-small cite-semantic-scholar" href="https://api.semanticscholar.org/arXiv:2110.02065" target="_blank" rel="noopener">Semantic Scholar</a></li>
-      </ul>
-      <div style="clear:both;"></div>
-    </div>
-
-    <div class="dblp">
-    <h3><a href="https://dblp.uni-trier.de">DBLP</a> - CS Bibliography</h3>
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/db/journals/corr/corr2110.html#abs-2110-02065" title="listing on DBLP">listing</a> | <a href="https://dblp.uni-trier.de/rec/bibtex/journals/corr/abs-2110-02065" title="DBLP bibtex record">bibtex</a>
-    </div>
-    
-    <div class="list">
-      <a href="https://dblp.uni-trier.de/search/author?author=Nachshon%20Cohen" title="DBLP author search">Nachshon Cohen</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Besnik%20Fetahu" title="DBLP author search">Besnik Fetahu</a><br/><a href="https://dblp.uni-trier.de/search/author?author=Amir%20Ingber" title="DBLP author search">Amir Ingber</a>
-    
-    </div>
-    
-  </div><div class='extra-ref-cite'>
-    
-    <a id='bib-cite-css' hidden='true' href='https://static.arxiv.org/static/browse/0.3.4/css/cite.css'>a</a>
-
-    <span id='bib-cite-trigger' class="bib-cite-button abs-button">export bibtex citation</span>
-    <span id='bib-cite-loading' hidden='true'>Loading...</span>
-</div>
-
-<div id='bib-cite-modal' class='bib-modal' hidden='true'>
-    <div class='bib-modal-content'>
-        <div class='bib-modal-title'>
-            <h2>Bibtex formatted citation</h2>
-            <span class='bib-modal-close' >&times;</span>
-        </div>
-        <div>
-            <textarea id='bib-cite-target' class="bib-citation-content" aria-label="loading the citation">loading...</textarea>
-        </div>
-        <div>
-            <span>Data provided by: </span>
-            <a id='bib-cite-source-api'></a>
-        </div>
-    </div>
-</div>
-    <div class="bookmarks">
-  <div><h3>Bookmark</h3></div><a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2110.02065%26description%3DSDR%3A+Efficient+Neural+Re-ranking+using+Succinct+Document+Representation&amp;v=99d35bad"
-     title="Bookmark on BibSonomy">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/bibsonomy.png"
-         alt="BibSonomy logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2110.02065&amp;v=ec0dcb91"
-     title="Bookmark on Mendeley">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/mendeley.png"
-         alt="Mendeley logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2110.02065%26title%3DSDR%3A+Efficient+Neural+Re-ranking+using+Succinct+Document+Representation&amp;v=de789f70"
-     title="Bookmark on Reddit">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/reddit.png"
-         alt="Reddit logo"/>
-  </a>
-  <a class="abs-button abs-button-grey abs-button-small" href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttps%3A%2F%2Farxiv.org%2Fabs%2F2110.02065&amp;v=35a41eed"
-     title="Bookmark on ScienceWISE">
-    <img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/social/sciencewise.png"
-         alt="ScienceWISE logo"/>
-  </a>
-</div>
-  </div>
-  <!--end extra-services-->
-
-  <!-- LABS AREA -->
-<div id="labstabs">
-  <div class="labstabs"><input type="radio" name="tabs" id="tabone"checked="checked">
-    <label for="tabone">Bibliographic Tools</label>
-    <div class="tab labs-display-bib">
-      <h1>Bibliographic and Citation Tools</h1>
-      <div class="toggle">
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="bibex-toggle" type="checkbox" class="lab-toggle">
-              <span class="slider"></span>
-              <span class="is-sr-only">Bibliographic Explorer Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-bibex">Bibliographic Explorer</span> <em>(<a href="https://labs.arxiv.org/">What is the Explorer?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="litmaps-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/litmaps.js?20210617"
-                aria-labelledby="label-for-litmaps">
-              <span class="slider"></span>
-              <span class="is-sr-only">Litmaps Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-litmaps">Litmaps</span> <em>(<a href="https://www.litmaps.co/" target="_blank">What is Litmaps?</a>)</em>
-          </div>
-        </div>
-        
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="scite-toggle"
-                type="checkbox"
-                class="lab-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/scite.js?20210617"
-                aria-labelledby="label-for-scite">
-              <span class="slider"></span>
-              <span class="is-sr-only">scite.ai Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-scite">scite Smart Citations</span> <em>(<a href="https://www.scite.ai/" target="_blank">What are Smart Citations?</a>)</em>
-          </div>
-        </div>
-      </div>
-        <div class="labs-content-placeholder labs-display" style="display: none;"></div>
-        <div style="min-height: 15px" id="litmaps-open-in"></div>
-        <div style="min-height: 15px" id="scite-open-in"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabtwo">
-    <label for="tabtwo">Code &amp; Data</label>
-    <div class="tab">
-      <h1>Code and Data Associated with this Article</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="paperwithcode-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/paperswithcode.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-pwc">
-              <span class="slider"></span>
-              <span class="is-sr-only">arXiv Links to Code Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-pwc">arXiv Links to Code &amp; Data</span> <em>(<a href="https://labs.arxiv.org/" target="_blank">What is Links to Code &amp; Data?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="pwc-output"></div>
-      <div id="pwc-data-output"></div>
-    </div>
-
-    <!-- 
-      hide the "Demos" tab by default, and conditionally display it using 
-      JavaScript on pages in specific categories like `cs`, `eess``, and `stat`
-     -->
-    <input type="radio" name="tabs" id="labstabs-demos-input" disabled>
-    <label for="labstabs-demos-input" id="labstabs-demos-label" style="display:none">Demos</label>
-    <div class="tab">
-      <h1>Demos</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input
-                id="replicate-toggle"
-                data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/replicate.js"
-                type="checkbox" class="lab-toggle" aria-labelledby="label-for-replicate">
-              <span class="slider"></span>
-              <span class="is-sr-only">Replicate Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-replicate">Replicate</span> <em>(<a href="https://replicate.com/docs/arxiv/about" target="_blank">What is Replicate?</a>)</em>
-          </div>
-        </div>
-      </div>
-      <div id="replicate-output"></div>
-    </div>
-
-
-    <input type="radio" name="tabs" id="tabfour">
-    <label for="tabfour">Related Papers</label>
-    <div class="tab">
-      <h1>Recommenders and Search Tools</h1>
-      <div class="toggle">
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="connectedpapers-toggle" type="checkbox" class="lab-toggle"
-              data-script-url="https://static.arxiv.org/static/browse/0.3.4/js/connectedpapers.js"
-              aria-labelledby="label-for-connected-papers" >
-              <span class="slider"></span>
-              <span class="is-sr-only">Connected Papers Toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-connected-papers">Connected Papers</span> <em>(<a href="https://www.connectedpapers.com/about" target="_blank">What is Connected Papers?</a>)</em>
-          </div>
-        </div>
-        <div class="columns is-mobile lab-row">
-          <div class="column lab-switch">
-            <label class="switch">
-              <input id="core-recommender-toggle" type="checkbox" class="lab-toggle" aria-labelledby="label-for-core">
-              <span class="slider"></span>
-              <span class="is-sr-only">Core recommender toggle</span>
-            </label>
-          </div>
-          <div class="column lab-name">
-            <span id="label-for-core">CORE Recommender</span> <em>(<a href="https://labs.arxiv.org/">What is CORE?</a>)</em>
-          </div>
-        </div></div>
-      <div style="min-height: 15px" id="connectedpapers-output"></div>
-      <div id="coreRecommenderOutput"></div>
-      <div id="iarxivOutput"></div>
-    </div>
-
-    <input type="radio" name="tabs" id="tabfive">
-    <label for="tabfive">
-      About arXivLabs
-    </label>
-    <div class="tab">
-      <div class="columns">
-        <div class="column">
-          <h1>arXivLabs: experimental projects with community collaborators</h1>
-          <p>arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.</p>
-          <p>Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.</p>
-          <p>Have an idea for a project that will add value for arXiv's community? <a href="https://labs.arxiv.org/"><strong>Learn more about arXivLabs</strong></a> and <a href="https://arxiv.org/about/people/developers"><strong>how to get involved</strong></a>.</p>
-        </div>
-        <div class="column is-narrow is-full-mobile">
-          <p class="icon-labs"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 635.572 811"><path d="M175.6 676v27h-27v-27zm-54 27v27h27v-27zm-27 27v27h27v-27zm396-54v27h-27v-27zm0 27v27h27v-27zm27 27v27h27v-27zm-27-414h27v27h-27zm27 0h27v-27h-27zm27-27h27v-27h-27zm-396 45h-27v-27h27zm-27-54h-27v27h27zm-27-27h-27v27h27z"/><path d="M94.6 730v27h-27v-27zm477 0v27h-27v-27zm-27-495h27v27h-27zm-450 18h-27v-27h27zm477 9h27v27h-27zm-54 495h27v27h-27zm-423 0h27v27h-27zm-54-504h27v27h-27z" fill="#666"/><path d="M67.6 730v27h-27v-27zm54 54v27h-27v-27zm0-108v27h27v-27zm-27 27v27h27v-27zm-81 0v27h27v-27zm585 27v27h-27v-27zm-108-54v27h27v-27zm27 27v27h27v-27zm81 0v27h27v-27zm-54-495h27v27h-27zm-54 108h27v-27h-27zm27-27h27v-27h-27zm0-81h27v-27h-27zm-423 18h-27v-27h27zm54 54h-27v27h27zm-27-27h-27v27h27zm0-81h-27v27h27zm423 612v27h-27v-27zm81-522v27h-27v-27zm-585-9v27h-27v-27z" fill="#999"/><path d="M94.6 784v27h-27v-27zm-27-27v27h27v-27zm-27-54v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm0-27v27h27v-27zm27 0v27h27v-27zm-108 81v27h27v-27zm558 54v27h-27v-27zm-27-27v27h27v-27zm27-54v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm0-27v27h27v-27zm-27 0v27h27v-27zm108 81v27h27v-27zm0-495h27v27h-27zm-27 27h27v-27h-27zm-54-27h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm-27 0h27v-27h-27zm0 27h27v-27h-27zm81-108h27v-27h-27zm-504 45h-27v-27h27zm27-27h-27v27h27zm54-27h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm27 0h-27v27h27zm0 27h-27v27h27zm-81-108h-27v27h27z" fill="#ccc"/><path d="M598.6 665.1H41.5C-76.5 667 176 280.2 176 280.2h53a46.5 46.5 0 0162.8-56.3 29.2 29.2 0 1128.5 35.9h-1a46.5 46.5 0 01-1.5 20.3l142.5-.1s255.3 387 138.3 385.1zM291 181a29.3 29.3 0 10-29.2-29.3A29.3 29.3 0 00291 181zm65.4-66.8a22.4 22.4 0 10-22.5-22.4 22.4 22.4 0 0022.5 22.4z" fill="#fc0"/><path d="M245.5 172V10h153v162s324 495 198 495h-558c-126 0 207-495 207-495zm126 54h56m-13 72h56m-9 72h56m-20 72h56m-22 72h56m-29 72h56m-457-45c20.8 41.7 87.3 81 160.7 81 72.1 0 142.1-38.2 163.4-81" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="20"/><path d="M273.3 421.7c0 31-9.8 56.3-21.9 56.3s-21.8-25.2-21.8-56.3 9.8-56.3 21.8-56.3 21.9 25.2 21.9 56.3zm114.4-56.3c-12 0-21.8 25.2-21.8 56.3s9.7 56.3 21.8 56.3 21.9-25.2 21.9-56.3-9.8-56.3-21.9-56.3zM150.1 526.6c-18.2 6.7-27.5 22.9-23.2 30.2s14.8-5.5 33-12.2 37.4-4.9 33-12.2-24.5-12.6-42.8-5.8zm296 5.8c-4.2 7.3 14.9 5.5 33.1 12.2s28.7 19.5 33 12.2-5-23.5-23.2-30.2-38.5-1.5-42.8 5.8z"/></svg></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- END LABS AREA -->
-
-  <div class="endorsers">
-    <a href="/auth/show-endorsers/2110.02065" class="endorser-who">Which authors of this paper are endorsers?</a> |
-    <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax">What is MathJax?</a>)
-    <span class="help" style="font-style: normal; float: right; margin-top: 0; margin-right: 1em;"></span>
-  </div>
-  <script type="text/javascript" language="javascript">mathjaxToggle();</script>
-</div>
-
-      </div>
-    </main>
-
-    <footer style="clear: both;">
-      <div class="columns is-desktop" role="navigation" aria-label="Secondary" style="margin: -0.75em -0.75em 0.75em -0.75em">
-        <!-- Macro-Column 1 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/about">About</a></li>
-                <li><a href="https://arxiv.org/help">Help</a></li>
-              </ul>
-            </div>
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>contact arXiv</title><desc>Click here to contact arXiv</desc><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                  <a href="https://arxiv.org/help/contact"> Contact</a>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><title>subscribe to arXiv mailings</title><desc>Click here to subscribe</desc><path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
-                  <a href="https://arxiv.org/help/subscribe"> Subscribe</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- End Macro-Column 1 -->
-        <!-- Macro-Column 2 -->
-        <div class="column" style="padding: 0;">
-          <div class="columns">
-            <div class="column">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/license">Copyright</a></li>
-                <li><a href="https://arxiv.org/help/policies/privacy_policy">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div class="column sorry-app-links">
-              <ul style="list-style: none; line-height: 2;">
-                <li><a href="https://arxiv.org/help/web_accessibility">Web Accessibility Assistance</a></li>
-                <li>
-                  <p class="help">
-                    <a class="a11y-main-link" href="https://status.arxiv.org" target="_blank">arXiv Operational Status <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" class="icon filter-dark_grey" role="presentation"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a><br>
-                    Get status notifications via
-                    <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/email/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon filter-black" role="presentation"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>email</a>
-                    or <a class="is-link" href="https://subscribe.sorryapp.com/24846f03/slack/new" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon filter-black" role="presentation"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>slack</a>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- end MetaColumn 2 -->
-        <!-- End Macro-Column 2 -->
-      </div>
-    </footer>
-  </div>
-  
-</body>
-
-</html>
+<!--
+playback timings (ms):
+  captures_list: 125.277
+  exclusion.robots: 0.185
+  exclusion.robots.policy: 0.178
+  RedisCDXSource: 0.793
+  esindex: 0.007
+  LoadShardBlock: 87.226 (3)
+  PetaboxLoader3.datanode: 83.43 (4)
+  CDXLines.iter: 23.853 (3)
+  load_resource: 68.584
+  PetaboxLoader3.resolve: 43.48
+-->
