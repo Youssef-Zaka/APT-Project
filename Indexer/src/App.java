@@ -89,17 +89,29 @@ public class App {
         String eol = System.getProperty("line.separator");
     	
         try (Writer writer = new FileWriter("map.csv")) {
+        	Writer cleanCSV = new FileWriter("clean.csv");
         	DocComparator dc = new DocComparator();
           for (Map.Entry<String, HashMap<String, DocInfo>> entry : wordsMap.entrySet()) {
         	  List<DocInfo> valueHashMap = new ArrayList<DocInfo>(entry.getValue().values());
         	  valueHashMap.sort(dc);
+        	  List<String> keyStrings = new ArrayList<String>();
+        	  for (DocInfo docInfo : valueHashMap) {
+        		  keyStrings.add(docInfo.document.split("\\.")[0]);
+        	  }
         	  String valueString = valueHashMap.toString();
+        	  
+        	  String keyString = keyStrings.toString();
         	  
             writer.append(entry.getKey())
                   .append(',')
                   .append(valueString.substring(1, valueString.length() - 1))
                   .append(eol);
+            cleanCSV.append(entry.getKey())
+		            .append(',')
+		            .append(keyString.substring(1, keyString.length() - 1))
+		            .append(eol);
           }
+          cleanCSV.close();
         } catch (IOException ex) {
           ex.printStackTrace(System.err);
         }
