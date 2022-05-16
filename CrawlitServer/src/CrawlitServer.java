@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import org.tartarus.snowball.ext.englishStemmer;
 
 
 //TODO:
@@ -22,44 +22,74 @@ public class CrawlitServer {
     // The port number on which the server will listen for incoming connections.
     public static final int PORT = 6666;
 
+    //create a List of url and stop words entries
+    static List<String> urlList = new ArrayList<String>();
+    static List<String> stopWordsList = new ArrayList<String>();
+
+    //create a map with a key of string and value of list of strings
+    static Map<String, List<String>> invertedIndex = new HashMap<String, List<String>>();
+
     //main method
     public static void main(String[] args) {
         System.out.println("The server started .. ");
 
         //get access to Files holding the index and the crawled data
-        File indexFile = new File("../Indexer/map.csv");
-        //File UrlListFile = new File("../Indexer/urlList.txt");
+        File indexFile = new File("../Indexer/clean.csv");
+        File UrlListFile = new File("URLSources.txt");
+        //file to hold the list of stop words
+        File stopWordsFile = new File("stopWords.txt");
 
         //read the index file
         Scanner indexScanner = null;
+        Scanner urlScanner = null;
+        Scanner stopWordsScanner = null;
         try {
             indexScanner = new Scanner(indexFile);
+            urlScanner = new Scanner(UrlListFile);
+            stopWordsScanner = new Scanner(stopWordsFile);
         }
         catch (Exception e) {
             System.out.println("Error reading index file");
         }
-        //create a List of index entries
-        List<String> indexList = new ArrayList<String>();
-        int count = 0;
+
 
         //get time before starting to read the index file
         long startTime = System.currentTimeMillis();
+
+        //read the index file and create the inverted index
         while (indexScanner.hasNextLine()) {
-            //add the index entry to the list after removing whitespace and space characters
-            indexList.add(indexScanner.nextLine().replaceAll("\\s+", "").trim());
+            String line = indexScanner.nextLine();
+            //trim and remove spaces
+            line = line.trim();
+            line = line.replaceAll("\\s+", "");
+            //split the line into words
+            String[] lineArray = line.split(",");
+            //the first element of the array is the map key and all other elements are the values
+            String key = lineArray[0];
+            List<String> value = new ArrayList<String>();
+            for (int i = 1; i < lineArray.length; i++) {
+                value.add(lineArray[i]);
+            }
+            invertedIndex.put(key, value);
+        }
+
+        while (urlScanner.hasNextLine()) {
+            //add the index entry to the list after removing whitespace
+            urlList.add(urlScanner.nextLine().trim());
+        }
+
+        while (stopWordsScanner.hasNextLine()) {
+            //add the index entry to the list after removing whitespace
+            stopWordsList.add(stopWordsScanner.nextLine().trim());
         }
         //get time after reading the index file
         long endTime = System.currentTimeMillis();
         //calculate the time it took to read the index file
         long elapsedTime = endTime - startTime;
-        System.out.println("Time to read index file: " + elapsedTime + " milliseconds");
+        System.out.println("Time to read index and url files: " + elapsedTime/1000.0 + " Seconds");
 
-        //print first 100 index entries
-        for (int i = 0; i < 100; i++) {
-            System.out.println(indexList.get(i));
-        }
-
-
+        //print waiting for connection message
+        System.out.println("Waiting for connection .. ");
 
         // Create a new server socket
         ServerSocket serverSocket = null;
@@ -92,23 +122,7 @@ public class CrawlitServer {
         public void run() {
 
             List<String> list = new ArrayList<>();
-            //assign a value to list
-            list.add("http://www.google.com");
-            list.add("http://www.yahoo.com");
-            list.add("http://www.bing.com");
-            list.add("http://www.facebook.com");
-            list.add("http://www.twitter.com");
-            list.add("http://www.linkedin.com");
-            list.add("http://www.youtube.com");
-            list.add("http://www.wikipedia.com");
-            list.add("http://www.amazon.com");
-            list.add("http://www.ebay.com");
-            //add new unique links to the list
-            list.add("http://stackoverflow.com");
-            list.add("http://github.com");
-            list.add("http://quora.com");
-            list.add("http://reddit.com");
-            list.add("http://wikipedia.org");
+
             try {
                 // Get the input stream from the socket
                 DataInputStream inputStream = new DataInputStream(socket.getInputStream());
@@ -117,15 +131,64 @@ public class CrawlitServer {
                 PrintWriter writer = new PrintWriter(outputStream, true);
 
                 while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    System.out.println("Received Message from client: " + line);
-                    // Send the line to the client but add Zaka: to the beginning
-                    writer.println(list + "\n");
-                }
 
+
+                    //receive search query
+                    String query = scanner.nextLine();
+                    System.out.println("Received query from client: " + query);
+
+                    //empty all the elements in the list
+                    list.clear();
+
+                    //Process the query
+                    englishStemmer stemmer = new englishStemmer();
+                    //trim and remove stop words
+                    List<String> queryWords = Arrays.asList(query.trim().split("\\s+"));
+                    queryWords.removeAll(stopWordsList);
+
+                    for(int j = 0; j < queryWords.size();j++) {
+                        stemmer.setCurrent(queryWords.get(j));
+                        if (stemmer.stem()) { //If the word has been Stemmed update the list
+                            queryWords.set(j, stemmer.getCurrent());
+                        }
+                    }
+
+                    //print the query words
+                    System.out.println("Query words: " + queryWords);
+
+                    //for every word in the query
+                    for(int i = 0; i < queryWords.size(); i++) {
+                        //if the word is in the inverted index
+                        if(invertedIndex.containsKey(queryWords.get(i))) {
+                            //get the list of urls that contain the word
+                            list.addAll(invertedIndex.get(queryWords.get(i)));
+                        }
+
+                    }
+
+                    //remove duplicates
+                    list = list.stream().distinct().collect(Collectors.toList());
+
+                    //print the list of docs
+                    System.out.println("List of docs: " + list);
+
+                    //if the list is empty
+                    if(list.isEmpty()) {
+                        writer.println(list);
+                    }
+                    else {
+                        //replace each list entry with the url of url list (list)
+                        for(int i = 0; i < list.size(); i++) {
+                            list.set(i, urlList.get(Integer.parseInt(list.get(i))));
+                        }
+                    }
+                    //print what is to be written to the client
+                    System.out.println("Sending list to client: " + list);
+                    writer.println(list);
+                }
             }
             catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("Error: " + e);
             }
         }
     }
