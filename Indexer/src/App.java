@@ -58,7 +58,8 @@ public class App {
 					textList.removeAll(stopWordsList);
 					
 					for(int j = 0; j < textList.size();j++) {
-						stemmer.setCurrent(textList.get(j));
+						String unstemmed = textList.get(j);
+						stemmer.setCurrent(unstemmed);
 						if(stemmer.stem()) { //If the word has been Stemmed update the list
 							textList.set(j, stemmer.getCurrent());
 						}
@@ -66,16 +67,16 @@ public class App {
 						if(word.matches("[a-zA-Z]+")) {//word has to have Alphabet characters only
 							if(wordsMap.containsKey(word)) { //If there already exist a list
 								if(wordsMap.get(word).containsKey(fileName)) {//If the current HTML already exists in the list just update it
-									wordsMap.get(word).put(fileName, wordsMap.get(word).get(fileName).incrementTF(tag));
+									wordsMap.get(word).put(fileName, wordsMap.get(word).get(fileName).incrementTF(tag, unstemmed, j));
 								}
 								else {//If the current HTML doesn't exist in the list create one and insert it
-									wordsMap.get(word).put(fileName, new DocInfo(fileName, tag));
+									wordsMap.get(word).put(fileName, new DocInfo(fileName, tag, unstemmed, j));
 								}
 								
 							}
 							else { //If a list of HTMLs doesn't already exist Initialize one
 								HashMap<String, DocInfo> docInfo = new HashMap<String, DocInfo>();
-								docInfo.put(fileName, new DocInfo(fileName, tag));
+								docInfo.put(fileName, new DocInfo(fileName, tag, unstemmed, j));
 								wordsMap.put(word, docInfo);
 							}
 						}
