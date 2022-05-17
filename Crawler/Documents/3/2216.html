@@ -1,618 +1,1353 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML">
+
 <head>
-    <!-- iid: 5394 -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css" rel="stylesheet">
-
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css918/LibCal_public.min.css" rel="stylesheet">
-    <link href="/css918/print.min.css" rel="stylesheet" media="print">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+            <link rel="canonical" href="https://www.emerald.com/insight/content/doi/10.1108/CDI-11-2012-0108/full/html" />
+                <meta name="citation_xml_url" content="https://www.emerald.com/insight/content/doi/10.1108/CDI-11-2012-0108/full/xml"/>
     
+    <!-- CC:EG|CFVC:EG -->
+    <!-- 2022-05-17T18:51:24Z -->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        window.jQuery || document.write('<script src="/js918/jquery.min.js">\x3C/script>');
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="rzZhYNKIUteniq6U1x2RiBCIIdVJWP8VSdCMO5ue">
+
+    <script type="text/javascript">
+      const supportsWebpImages = function () {
+        const elem = document.createElement('canvas');
+
+        if (!!(elem.getContext && elem.getContext('2d'))) {
+          // was able or not to get WebP representation
+          return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+        } else {
+          // very old browser like IE 8, canvas not supported
+          return false;
+        }
+      }
+      document.documentElement.classList.add(supportsWebpImages() ? 'webp' : 'no-webp')
     </script>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script>
-        jQuery.ui || document.write('<script src="/js918/jquery-ui.min.js">\x3C/script>');
+    const isReady = (fn) => (document.readyState === "complete" || document.readyState === "interactive") ? setTimeout(fn, 1) : document.addEventListener("DOMContentLoaded", fn)
     </script>
 
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- JS helper methods for getting cookies -->
     <script>
-        (typeof $().modal == 'function') || document.write('<script src="/js918/bootstrap.min.js">\x3C/script>');
-    </script>
-    <script src="/js918/LibCal_public.min.js"></script>
-        <script>
-    springSpace.dateFormat = "dddd, MMMM D, YYYY";
-    springSpace.dateShortFormat = "ddd MMM Do YYYY";
-    springSpace.timeFormat = "h:mma";
-    springSpace.timezone = 'America/New_York';
-    springSpace.currency = "USD";
-    springSpace.currencySymbol = "$";
+window.cookieHelper = {
+    /**
+     * Get the value of a specific cookie
+     * @returns  {string | undefined}
+     */
+    getCookieValue: function (key) {
+        return document.cookie
+            .split(';')
+            .map(function(c) { return c.trim().split('=') })
+            .filter(function(c) { return c[0] === key })
+            .map(function(c) { return c[1] })[0]
+    },
 
-    springSpace.language = 'en'; // en
-    springSpace.locale = 'en-US'; // en-US
+    cookieExists: function (cookieName) {
+        return document.cookie.split(';').some((item) => item.trim().indexOf(cookieName) == 0)
+    },
 
-    springSpace.phpTimeFormat = 'g:ia';
+    setCookie: function (cookieName, value, expires, samesite='lax', path='/') {
+        if(expires == null) {
+            const timeOneDay = 24*60*60*1000
+            expires = new Date(new Date().getTime() + timeOneDay).toUTCString()
+        }
+        document.cookie = `${cookieName}=${value}; expires=${expires}; samesite=${samesite}, path=${path}`
+    },
 
-    springSpace.bootstrapAsset = '/css918/bootstrap.min.css';
-    springSpace.publicCssAsset = '/css918/LibCal_public.min.css';
-    springSpace.adminCssAsset = '/css918/LibCal_admin.min.css';
+    deleteCookie: function (cookieName) {
+        document.cookie = `${cookieName}=null; expires=${new Date().getTime() - 24*60*60*1000}; Max-Age=0`
+    },
+
+    /**
+     * Get a list of the cookie categories that have been disabled
+     * @returns  {string[]} A list of disabled cookie categories
+     */
+    getDisabledCookies: function () {
+        const disableCookiesValue = this.getCookieValue('disabled_cookies')
+        return disableCookiesValue
+            ? disableCookiesValue
+                .split(',')
+                .map(function(c) { return c.trim() })
+            : []
+    },
+
+    arePerformanceCookiesEnabled: function () {
+        return this.getDisabledCookies().indexOf('performance') < 0
+    },
+
+    areFunctionalCookiesEnabled: function () {
+        return this.getDisabledCookies().indexOf('functional') < 0
+    }
+}
 </script>
-    <script>
-         var springLang  = { eq_GoToNextAvailable: "Next Available", eq_js_add_cart_btn: "Add to Cart", eq_js_add_cc_btn: "Add to Cart & Checkout", eq_js_add_eq_btn: "Add Equipment", eq_js_add_start: "All additional items must have a starting time of", eq_js_add_to_cart: "Add Item to Cart", eq_js_booking_summary_title: "Thank you!", eq_js_cart_tt: "Create a shopping cart with these space bookings, and go to equipment booking page to add more items to the cart.", eq_js_close: "Close", eq_js_date: "Change Return Date", eq_js_det_return: "Determining return time", eq_js_from: "From:", eq_js_from_det: "from", eq_js_go_to_date: "Go To Date", eq_js_isRequired: "is required!", eq_js_rem_pending: "Remove Pending Booking", eq_js_spacew_forb_multi: "Forbidden from booking same resource multiple times in a single booking.<br><br>Please only select sequential checkboxes.", eq_js_spacew_forb_single: "Forbidden from booking different resources in a single booking.", eq_js_to: "To:", eq_js_until_det: "until...", eq_start_over: "Make Another Booking", eq_unavail: "Unavailable/Padding", eq_your_book: "Your Booking" };
-    </script>
-    <meta name="robots" content="noindex, nofollow, noarchive">    <title>
-                Research Appointments -
-        Library of Congress
-    </title>
-        <link rel="stylesheet" href="/css918/fullcalendar.min.css"/>
-    <link rel="shortcut icon" href='https://www.loc.gov/favicon.ico' />
-<link rel="icon" sizes="192x192" href="https://www.loc.gov/touch-icon-192x192.png" />
-<link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://www.loc.gov/apple-touch-icon-180x180.png" />
-<link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://www.loc.gov/apple-touch-icon-152x152.png" />
-<link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://www.loc.gov/apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon-precomposed" href="https://www.loc.gov/apple-touch-icon-precomposed.png" />
-<meta name="msapplication-TileColor" content="#ffffff" />
-<meta name="msapplication-TileImage" content="https://www.loc.gov/ms-icon-144x144.png" />
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Slab:400,700" rel="stylesheet" />
-<link href="https://cdn.loc.gov/libguide/css/libcal.css" rel="stylesheet" />
-</head>
-<body id="index_php" class="s-lc-public s-lc-public-page-5">
+
+    <!-- Add Analytics snippets - Oct 2018 -->
+    <!-- start Mixpanel -->
 
 
-<a id="s-lc-public-skiplink" class="s-lc-skiplink alert-info" href="#s-lc-page-maincontent">Skip to Main Content</a>
+<script type="text/javascript">(function(c,a){if(!a.__SV){var b=window;try{var d,m,j,k=b.location,f=k.hash;d=function(a,b){return(m=a.match(RegExp(b+"=([^&]*)")))?m[1]:null};f&&d(f,"state")&&(j=JSON.parse(decodeURIComponent(d(f,"state"))),"mpeditor"===j.action&&(b.sessionStorage.setItem("_mpcehash",f),history.replaceState(j.desiredHash||"",c.title,k.pathname+k.search)))}catch(n){}var l,h;window.mixpanel=a;a._i=[];a.init=function(b,d,g){function c(b,i){var a=i.split(".");2==a.length&&(b=b[a[0]],i=a[1]);b[i]=function(){b.push([i].concat(Array.prototype.slice.call(arguments,0)))}}var e=a;"undefined"!==typeof g?e=a[g]=[]:g="mixpanel";e.people=e.people||[];e.toString=function(b){var a="mixpanel";"mixpanel"!==g&&(a+="."+g);b||(a+=" (stub)");return a};e.people.toString=function(){return e.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<l.length;h++)c(e,l[h]);var f="set set_once union unset remove delete".split(" ");e.get_group=function(){function a(c){b[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));e.push([d,call2])}}for(var b={},d=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<f.length;c++)a(f[c]);return b};a._i.push([b,d,g])};a.__SV=1.2;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.crossOrigin='anonymous';b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===c.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d)}})(document,window.mixpanel||[]);</script>
 
-<div id="s-lc-public-cust-header" role="banner"><header id="loc-header-wrapper" class="loc-header-wrapper">
-<div class="container">
-<div class="loc-header row">
-<div class="logo-container col-xs-12">
-<a href="https://www.loc.gov/" class="logo-loc">
-<img src="https://cdn.loc.gov/libguide/images/logo-loc-padded.svg" width="170" height="96" alt="Library of Congress" />
-</a>
-<a href="/" class="logo-researcher-scheduling">
-<img src="https://cdn.loc.gov/libguide/images/logo-reseacher-scheduling.svg" width="422" height="25" alt="Researcher Scheduling" />
-</a>
-</div>
-</div>
-</div>
-</header></div>
-<div class="container">
+<script>
+const getMixpanelId = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const inputId = urlParams.get('distinct_id');
+    if (inputId) {
+        // Identify with the passed in distinct id
+        mixpanel.register({'distinct_id' : inputId});
+        // Remove param from url so that if user bookmarks / shared page they would not reuse the id.
+        urlParams.delete('distinct_id');
+        window.history.pushState('',document.title, window.location.href.replace(window.location.search, '?' + urlParams))
+    }
+}
+const addMixpanelId = () => {
+    // Some ad blockers and privacy extensions block mixpanel being downloaded, so check this function exists before calling it
+    if (typeof(mixpanel.get_distinct_id) === 'function') {
+        const mixpanelId = mixpanel.get_distinct_id();
+        // Find all mixpanel_link classes and append distinct_id query param to the end
+        [...document.querySelectorAll('.mixpanel_link')]
+            .forEach(node => {
+                const currentUrl = new URL(node.href)
+                currentUrl.searchParams.delete('distinct_id');
+                currentUrl.searchParams.append('distinct_id', mixpanelId);
+                node.href = currentUrl.href;
+            })
+    }
+}
+const syncMixPanel = () => {
+    getMixpanelId();
+    addMixpanelId();
+}
+
+
+mixpanelEvents = {
+  hasReturned: false,
+  stack: []
+}
+
+function storeOrPushMixpanelEvent(eventType, eventName, data) {
+  if (mixpanelEvents.hasReturned) {
+    mixpanel.push([ eventType, eventName, data ]);
+  } else {
+    mixpanelEvents.stack.push({ eventType, eventName, data });
+  }
+}
+
+function pushStoredMixpanelEvents () {
+  var sizeOfTracker = mixpanelEvents.stack.length;
+  mixpanelEvents.hasReturned = true;
+
+  for (var i = 0; i < sizeOfTracker; i++) {
+    var ev = mixpanelEvents.stack[i];
+
+    if (typeof ev.eventName === 'undefined') continue;
+
+    mixpanel.push([ev.eventType, ev.eventName, ev.data]);
+  }
+}
+
+/**
+ * Set up mixpanel to track a link click. This allows mixpanel to make sure the click event is tracked before
+ * a new page is navigated to
+ * Note: This doesn't handle right click -> open in new tab/window. There appears to be no straightforward way to handle
+ * that short of rewriting the links to point to an internal redirect endpoint and handling the mixpanel event there
+ * @param  element {HTMLElement} The link element
+ * @param  eventName {string} The name of the mixpanel event
+ * @param  makeData {function} A function that takes the element and returns the mixpanel properties for the event
+ */
+function mixpanelTrackLinkClick(element, eventName, makeData) {
+    // use built-in mixpanel link tracking - this tracks left clicks and enter key
+    mixpanel.track_links(element, eventName, makeData)
+
+    // handle middle clicks - shortcut for open in new tab
+    element.addEventListener('mousedown', event => {
+        if (event.button === 1) {
+            storeOrPushMixpanelEvent('track', eventName, makeData(event.currentTarget))
+        }
+    })
+}
+
+mixpanel.init('8e8ac8d2dbd2378f29bd1dd9116a0c9a', {api_host: "https://api.mixpanel.com", loaded: syncMixPanel});
+</script>
+<!-- end Mixpanel -->
+
+
+
+<!-- Google Tag Manager - head section - June 2018 -->
+
+<!-- anti-flicker snippet (recommended)  -->
+<style>.async-hide { opacity: 0 !important} </style>
+<script>
+    (function(a,s,y,n,c,h,i,d,e) {
+        s.className+=' '+y;
+        h.start=1*new Date;
+        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+        (a[n]=a[n]||[]).hide=h;
+        setTimeout(function(){i();h.end=null},c);
+        h.timeout=c;
+    })
+    (window,document.documentElement,'async-hide','dataLayer',4000,{'GTM-KGFMJXR':true});
+</script>
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KGFMJXR');</script>
+
+<script>
+  ((disableGaKey) => {
+    window[disableGaKey] = !window.cookieHelper.arePerformanceCookiesEnabled()
+
+    isReady(() => {
+      window.events.$on('cookiesUpdated', () => {
+        window[disableGaKey] = !window.cookieHelper.arePerformanceCookiesEnabled()
+      })
+    })
+  })('ga-disable-UA-127317715-1')
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Hotjar -->
+<script>
+  const cookie_hotjarOptOut = '_hjOptOut'
+  const timeOneYear = 365*24*60*60*1000
+
+  const disableHotjar = () => {
+    const expireTime = new Date(new Date().getTime() + timeOneYear).toUTCString()
+
+    if (window.cookieHelper.cookieExists(cookie_hotjarOptOut) === false) {
+      window.cookieHelper.setCookie(cookie_hotjarOptOut, true, expireTime)
+    }
+  }
+
+  const enableHotJar = () => {
+    if (window.cookieHelper.cookieExists(cookie_hotjarOptOut) === true) {
+      window.cookieHelper.deleteCookie(cookie_hotjarOptOut)
+    }
+  }
+
+  isReady(() => {
+    window.cookieHelper.arePerformanceCookiesEnabled() === true ? enableHotJar() : disableHotjar()
+
+    window.events.$on('cookiesUpdated', () => {
+      window.cookieHelper.arePerformanceCookiesEnabled() === true ? enableHotJar() : disableHotjar()
+    })
+  })
+</script>
+<!-- End: Hotjar -->
+
+
+
+    <title>     Why they stay: women persisting in US engineering careers
+ |  Emerald Insight</title>
+
     
-    <div id="s-lc-public-bc" class="row">
-        <div class="col-md-12">
-            <nav aria-label="Breadcrumb">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="https://www.loc.gov/">
-                            Library of Congress
-                        </a>
-                    </li>
+    
+    
+    
+    
+    <script src="https://kit.fontawesome.com/9d150393c6.js" crossorigin="anonymous" defer></script>
 
-                    <li class="s-lc-desktop-only">
-                        <a href="https://research-appointments.loc.gov">
-                            Research Appointments
-                        </a>
-                    </li>
+    
+    
+    <link href="/insight/static/css/app.css?id=a0317f5dd45e609d03fb" rel="stylesheet">
 
-                    
-                    
-                                                        </ol>
+    <style type="text/css">
+        /* hide vue content until vue has initialised */
+        [v-cloak]{ display: none; }
+        /* reduce CLS on page load */
+        #search-input-container { height: calc(1.5em + .75rem + 4px); }
+        a.navbar-brand > div.extra-small { height: 1rem; }
+        #breadcrumbs-container { min-height: 2.06667rem; }
+        #search-books-and-journals-container { min-height: calc(1.75rem + 11px); margin-bottom: 1rem; }
+        .header_logo_image { height: calc(14rem / (264/36)); }
+        body:not(.scrolling) #login-header-container { min-height: calc((14rem / (264/36)) + 2.625rem + 30px + 2.388px); }
+        @media (max-width: 480px) {
+            .header_logo_image { height: calc(12rem / (264/36)); }
+            body:not(.scrolling) #login-header-container { min-height: calc((12rem / (264/36)) + 2.625rem + 30px + 2.388px); }
+        }
+        .toc-alert-button { min-width: calc(13.03472rem + 2.5rem + 14px + 2.405px); min-height: calc(1.75556rem + 2px); }
+    </style>
+
+    
+    <script src="https://scholar.google.com/scholar_js/casa.js" async></script>
+
+    <script type="application/ld+json">{
+    "@type": "ItemPage",
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Journals",
+                "item": "https://www.emerald.com/insight/sitemap/publications#journals"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Career Development International",
+                "item": "https://www.emerald.com/insight/publication/issn/1362-0436"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Volume 18 Issue 2",
+                "item": "https://www.emerald.com/insight/publication/issn/1362-0436/vol/18/iss/2"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Why they stay: women persisting in US engineering careers"
+            }
+        ]
+    },
+    "mainEntity": {
+        "@type": "ScholarlyArticle",
+        "@id": "#article",
+        "url": "https://www.emerald.com/insight/content/doi/10.1108/CDI-11-2012-0108/full/html",
+        "name": "Why they stay: women persisting in US engineering careers",
+        "headline": "Why they stay: women persisting in US engineering careers",
+        "datePublished": "2013-05-17Z",
+        "description": "\u2013 Women remain dramatically underrepresented in the engineering profession and far fewer women than men persist in the field. This study aims to identify individual and contextual factors that distinguish women who persist in engineering careers in the US.  \u2013 Qualitative research was conducted based on semi\u2010structured interviews with 31 women engineers, ten of whom had left an engineering career and 21 persisting for on average 21 years. The interviews were recorded, transcribed, coded and analyzed.  \u2013 Women who persisted in engineering careers articulated high levels of self efficacy, described themselves in terms of their identity as an engineer, and were motivated by the challenges and novelty of the profession. Women engineers' ability to adapt enabled them to persist and thrive despite working in a male\u2010dominated culture characterized by difficulties associated with the workplace, including discrimination. Women who opted out of engineering were less likely to recognize options in navigating the workplace and some felt as if they were pushed into engineering. Persistent engineers were less likely to be married and had fewer children.  \u2013 Although appropriate for an inductive study using a grounded theory approach the sample was small and the data was self reported.  \u2013 A model is developed that integrates individual and contextual factors explaining a woman's persistence in an engineering career and has potential to explain persistence in other professions. To retain more women in engineering careers, organizations and managers should provide opportunities to develop identified skills within the professional domain and should provide opportunities for women engineers that provide continuous learning, on\u2010going challenges and novel work.  \u2013 Although numerous studies have addressed the retention of women in academic engineering programs and several recent studies have described why women leave engineering careers, the novelty of this study is that it addresses why women stay.",
+        "author": [
+            {
+                "@type": "Person",
+                "name": "Kathleen Buse"
+            },
+            {
+                "@type": "Person",
+                "name": "Diana Bilimoria"
+            },
+            {
+                "@type": "Person",
+                "name": "Sheri Perelli"
+            }
+        ],
+        "pageStart": 139,
+        "pageEnd": 154,
+        "isPartOf": "/insight/publication/issn/1362-0436/vol/18/iss/2#issue",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Emerald Group Publishing Limited"
+        },
+        "mainEntityOfPage": "https://www.emerald.com/insight/content/doi/10.1108/CDI-11-2012-0108/full/html"
+    },
+    "@context": "https://schema.org/"
+}</script>
+
+    
+            <!--dublincore-->
+
+        <link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+         <meta name="dc.Title" content="Why they stay: women persisting in US engineering careers">          <meta name="citation_journal_title" content="Career Development International">          <meta name="citation_volume" content="18">          <meta name="citation_issue" content="2">          <meta name="citation_firstpage" content="139">         
+         <meta name="citation_lastpage" content="154">         
+         <meta name="dc.Subject" content="Women engineers,Career decisions,Persistence,STEM women,Women,United States of America">          <meta name="dc.Description" content="– Women remain dramatically underrepresented in the engineering profession and far fewer women than men persist in the field. This study aims to identify individual and contextual factors that distinguish women who persist in engineering careers in the US., – Qualitative research was conducted based on semi‐structured interviews with 31 women engineers, ten of whom had left an engineering career and 21 persisting for on average 21 years. The interviews were recorded, transcribed, coded and analyzed., – Women who persisted in engineering careers articulated high levels of self efficacy, described themselves in terms of their identity as an engineer, and were motivated by the challenges and novelty of the profession. Women engineers&#039; ability to adapt enabled them to persist and thrive despite working in a male‐dominated culture characterized by difficulties associated with the workplace, including discrimination. Women who opted out of engineering were less likely to recognize options in navigating the workplace and some felt as if they were pushed into engineering. Persistent engineers were less likely to be married and had fewer children., – Although appropriate for an inductive study using a grounded theory approach the sample was small and the data was self reported., – A model is developed that integrates individual and contextual factors explaining a woman&#039;s persistence in an engineering career and has potential to explain persistence in other professions. To retain more women in engineering careers, organizations and managers should provide opportunities to develop identified skills within the professional domain and should provide opportunities for women engineers that provide continuous learning, on‐going challenges and novel work., – Although numerous studies have addressed the retention of women in academic engineering programs and several recent studies have described why women leave engineering careers, the novelty of this study is that it addresses why women stay.">          <meta name="dc.Date" scheme="WTN8601" content="2013-05-17Z">          <meta name="dc.Type" content="article">          <meta name="dc.Format" content="text/html">          <meta name="dc.Identifier" scheme="doi" content="10.1108/CDI-11-2012-0108">          <meta name="dc.Identifier" scheme="issn" content="1362-0436">                          <meta name="dc.Language" content="en">          <meta name="dc.Coverage" content="world">          <meta name="keywords" content="Women engineers,Career decisions,Persistence,STEM women,Women,United States of America">          <meta name="dc.Publisher" content="Emerald Group Publishing Limited">          <meta name="DCTERMS.bibliographicCitation" scheme="KEV.ctx" content="&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.spage=139&amp;rft.epage=154&amp;rft.volume=18&amp;rft.issue=2">                 
+                            
+                                    <meta name="dc.Contributor" content="Kathleen Buse">
+                            <meta name="dc.Contributor" content="Diana Bilimoria">
+                            <meta name="dc.Contributor" content="Sheri Perelli">
+                        <!--dublincore end-->
+    
+            <meta name="description" content="Why they stay: women persisting in US engineering careers - Author: Kathleen Buse, Diana Bilimoria, Sheri Perelli">
+    </head>
+
+<body data-spy="scroll" data-target=".table-of-contents" data-offset="220" class="">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGFMJXR" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="cookies-consent">
+    <cookies-manager
+        banner-class-name=""
+        cookie-policy-url="/insight/site-policies/cookie-policy"
+        root="/insight/" ></cookies-manager>
+</div>
+
+<div id="app" class=" ">
+
+    <header class="mb-0 mb-lg-0 page-header">
+    <div id="support-banner-container" style="display:inline">
+    <support-banner root="/insight/"></support-banner>
+</div>
+
+    <div class="d-none">
+        
+        <div id="browse-content-template">
+            <nav class="intent_browse_content w-100 medium bg-aquamarine-menu">
+                <div class="justify-content-around d-flex py-2">
+                    <a href="/insight/browse/publications">Books and journals</a>
+                    <a href="/insight/content/case-studies">Case studies</a>
+                    <a href="/insight/content/briefings">Expert Briefings</a>
+                    <a href="/insight/content/open-access">Open Access</a>
+                </div>
             </nav>
         </div>
     </div>
 
-    <noscript>
-        <div class="alert alert-danger" id="noscript">Your browser has javascript disabled. Without javascript some functions will not work.</div>
-    </noscript>
-
-            <div id="s-lc-public-header" class="s-lc-header row clearfix">
-        <div class="col-md-12">
-            <div class="s-lc-public-header-text">
-                                    <h1 id="s-lc-public-header-title">
-                        Onsite Researchers | Research and Reference Services at the Library
-                    </h1>
+    <div id="login-header-container">
+        <page-header
+                id="login-header"
+                theme="light"
+                root="/insight/"
+                defaultusername="Guest user"
+                reloadpageonlogin="true"
+                routes="{&quot;browseBooksAndJournals&quot;:&quot;\/insight\/browse\/publications&quot;,&quot;caseStudies&quot;:&quot;\/insight\/content\/case-studies&quot;,&quot;open-access&quot;:&quot;\/insight\/content\/open-access&quot;,&quot;briefings&quot;:&quot;\/insight\/content\/briefings&quot;,&quot;logout&quot;:&quot;\/insight\/logout&quot;,&quot;login&quot;:&quot;\/insight\/login&quot;,&quot;register&quot;:&quot;\/insight\/register&quot;,&quot;savedSearches&quot;:&quot;\/insight\/savedSearches&quot;,&quot;myProducts&quot;:&quot;\/insight\/products&quot;,&quot;myProfile&quot;:&quot;\/insight\/profile&quot;,&quot;home&quot;:&quot;\/insight&quot;}"
+                opencartbaseurl="https://shop.emerald.com/"
+                ecommerce_opencart_api_key="3W1yvE5RpkdXufL8DLWkg0z21owCNKH1EfibEUDYGVkBKT3RlSOwFA5rTDVzjK4Cs4TTQnxoAk80U3Yp1bFCV36XAiSZ4aV42u6zLiLGndfYFYArCGv4grcdTsusg63ueaPwPnF42GsH2DaouyEHq5X3F8lWXmDa5zk1Lf7RIvTiW7Y6RqLBj6rVDiF3FnZZfTkE18G7KTZOMA8meUvOJLYqNnQTo8LcwwfMY6w1FREjEZLsrXMJzfnDhYm4Yfr7"
+                show_cart_menu=""
+                account="">
+            <template v-slot:default="props">
                 
+                <meta name="EZproxyRewriting" content="disable">
+                <welcome-message
+                    class="bg-pale-blue text-dark topHeader"
+                    message="Welcome "
+                    :banner-message-array="props.welcomeTexts"
+                    :is-administrator="props.account.isAdministrator"
+                    amp-url="https://manage.emerald.com/">
+                </welcome-message>
+                <meta name="EZproxyRewriting" content="enable">
+            </template>
+        </page-header>
+    </div>
+
+            <div class="nav-div nav-div-search bg-primary py-2 text-dark">
+    <div class="container d-md-flex d-flex-row align-items-center">
+        <div class="flex-grow-1" id="search-input-container">
+            <search-content action="/insight/search"
+                            advancedsearch="/insight/advanced-search"
+                            publicationurl="/insight/publication"
+                            value=""
+                            placeholder="Enter your search terms here"
+                            autocomplete="/insight/search/title"
+                            v-bind:errors="[]"
+                            v-bind:showall="true"
+                            v-bind:openaccess="false"
+                            v-bind:home="false">
+            </search-content>
+        </div>
+
+        <div class="d-flex d-flex-row align-items-center justify-content-end">
+            <div class="pr-0 small mr-0 my-0 text-center text-right text-md-left">
+                <a class="intent_AdvancedSearch font-size-small btn btn-link rounded-0 p-2 text-white" href="/insight/advanced-search">Advanced search</a>
+            </div>
+
+                    </div>
+    </div>
+</div>
+        <div id="alert-notification-container">
+    <alert-notification></alert-notification>
+</div>
+        <div class="ml-0 w-100 bg-white">
+    <div id="breadcrumbs" class="container">
+        <div class="row ml-0" id="breadcrumbs-container">
+            <breadcrumbs
+                root="/insight/"
+                crumbs="[[&quot;Journals&quot;,&quot;\/sitemap\/publications#journals&quot;],[&quot;Career Development International&quot;,&quot;\/publication\/issn\/1362-0436&quot;],[&quot;Volume 18 Issue 2&quot;,&quot;\/publication\/issn\/1362-0436\/vol\/18\/iss\/2&quot;],[&quot;Why they stay: women persisting in US engineering careers&quot;,&quot;&quot;]]">
+            </breadcrumbs>
+        </div>
+    </div>
+</div>
+    
+</header>
+
+    <main role="main" class="main-content" id="mainContent" tabindex="0">
+        
+    
+    <div id="turnaway-block" class="mt-3 container-fluid content_block turnaway">
+        <div class="row turnaway__message">
+            <div class="container">
+                <div class="row">
+                    <div class="offset-md-2 col-md-10 pt-3">
+                                                <h2 class="h4 mt-0 mb-3">To read the full version of this content please select one of the options below:</h2>
+                        <div class="container">
+                            <div class="row">
+                                                                    <div class="sa_btn mr-3">
+    <iframe class="sa_frame overflow-hidden border-0" src="/insight/liblynx/seamless-access.html" title="Access through your institution" scrolling="no"></iframe>
+</div>
+                                                                <div class="dropdown mb-3">
+    <button class="btn btn-default dropdown-toggle text-light turnaway__dropdown d-flex align-items-center pl-2" type="button" id="menu1" data-toggle="dropdown" data-boundary="window" data-flip="false">
+        <img src="/insight/static/img/logo-white.svg" alt="Emerald logo icon" width="43" class="border-right border-white pr-2"/>
+                  <span class="flex-grow-1">Other access options</span>
+                <span class="caret"></span>
+    </button>
+    <div class="dropdown-menu rounded-0 turnaway__dropdownmenu" role="menu" id="access-popup" aria-labelledby="menu1">
+        <div class="container">
+    
+    
+    
+    
+    
+    
+            <div class="row align-middle turnaway__dropdownborderbottom">
+                        <div class="col-12 mt-2 mb-3">
+                <span class="d-inline-block">You may be able to access this content by logging in via your Emerald profile.</span>
+            </div>
+            <div class="col-12 p-3 mb-3">
+                <a
+                    href="/insight/login?hide=federated"
+                    class="intent_wayf_login turnaway-login-link btn btn-primary rounded-pill p-0 mb-3 d-flex align-items-center justify-content-end turnaway__button"
+                >
+                    <span class="flex-grow-1 align-self-center medium pl-4 pr-4">Login</span>
+                    <span role="img" aria-hidden="true" class="rounded-circle my-auto bg-insight fal fa-xs fa-user text-white d-flex justify-content-center align-items-center turnaway__button-icon"></span>
+                </a>
+            </div>
+        </div>
+    
+        
+    
+    
+            <div class="row align-middle turnaway__dropdownborderbottom">
+            <div class="col-12 mt-2 mb-3">
+                <span class="d-inline-block">Rent this content from DeepDyve</span>
+            </div>
+            <div class="col-12 p-3 mb-3">
+                    <a
+                        data-event-name="Rent Content"
+                        href="https://www.deepdyve.com/doc-view?docId=10.1108/CDI-11-2012-0108&fieldName=journal_doi&journal=1362-0436&affiliateId=emerald"
+                        target="_blank"
+                        class="clickIntercept btn btn-primary rounded-pill p-0 text-center d-flex turnaway__button"
+                    >
+                        <span class="flex-grow-1 align-self-center medium pl-4 pr-4">Rent from DeepDyve</span>
+                        <span role="img" aria-hidden="true" class="rounded-circle my-auto bg-insight fal fa-caret-right text-white d-flex justify-content-center align-items-center turnaway__button-icon"></span>
+                    </a>
+            </div>
+        </div>
+    
+    
+    <div class="row align-middle">
+        <div class="col-12 mt-2 mb-3">
+            <span class="d-inline-block">If you think you should have access to this content, click to contact our support team.</span>
+        </div>
+        <div class="col-12 p-3 mb-3">
+            <a
+                data-event-name="Submit Turnaway Enquiry"
+                href="https://emeraldpublishinggroup.freshdesk.com/support/home"
+                target="_blank"
+                class="clickIntercept intent_wayf_enquiry btn btn-primary rounded-pill p-0 text-center d-flex turnaway__button"
+            >
+                <span class="flex-grow-1 align-self-center medium pl-4 pr-4">Contact us</span>
+                <span role="img" aria-hidden="true" class="rounded-circle my-auto bg-insight fal fa-caret-right text-white d-flex justify-content-center align-items-center turnaway__button-icon"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <main>
-            <div id="s-lc-page-maincontent" role="main"><div class="s-lc-row row">
-			<div id="s-lc-page-column-0" class="s-lc-column-top col-md-12"><div id="s-lc-box-54324-container" class="s-lc-box-container s-lc-color-bars-border s-lc-box-borderless s-lc-box-type-1 s-lc-box-position-1">
-				<div id="s-lc-box-54324" class="s-lc-box s-lc-box-html" role="region" aria-label="intro-text">
-					<div class="s-lc-box-title s-lc-color-bars s-lc-color-bars-border"><h1>intro-text </h1></div>
-					<div class="s-lc-box-content clearfix"><div id="s-lc-content-text-72323" class="s-lc-content-text s-lc-content cf">
-			<div class="lc-decorative-banner"><img alt="Photo of researchers in Library of Congress Main Reading Room" src="https://libapps.s3.amazonaws.com/customers/4016/images/LoC_LibCal_Banner.png" style="width: 100%" /></div>
+    <div id="teaching-notes-turnaway-block" class="mt-3 container-fluid content_block turnaway" style="display:none;">
+        <div class="row turnaway__message">
+            <div class="container">
+                <div class="row">
+                    <div class="offset-md-2 col-md-10 pt-3">
+                                                <h2 class="h4 mt-0 mb-3">Please note you do not have access to teaching notes</h2>
+                        <div class="container">
+                            <div class="row">
+                                                                    <div class="sa_btn mr-3">
+    <iframe class="sa_frame overflow-hidden border-0" src="/insight/liblynx/seamless-access.html" title="Access through your institution" scrolling="no"></iframe>
+</div>
+                                                                <div class="dropdown mb-3">
+    <button class="btn btn-default dropdown-toggle text-light turnaway__dropdown d-flex align-items-center pl-2" type="button" id="menu1" data-toggle="dropdown" data-boundary="window" data-flip="false">
+        <img src="/insight/static/img/logo-white.svg" alt="Emerald logo icon" width="43" class="border-right border-white pr-2"/>
+                  <span class="flex-grow-1">Other access options</span>
+                <span class="caret"></span>
+    </button>
+    <div class="dropdown-menu rounded-0 turnaway__dropdownmenu" role="menu" id="access-popup" aria-labelledby="menu1">
+        <div class="container">
+    
+    
+    
+    
+    
+    
+            <div class="row align-middle turnaway__dropdownborderbottom">
+                        <div class="col-12 mt-2 mb-3">
+                <span class="d-inline-block">You may be able to access teaching notes by logging in via your Emerald profile.</span>
+            </div>
+            <div class="col-12 p-3 mb-3">
+                <a
+                    href="/insight/login?hide=federated"
+                    class="intent_wayf_login turnaway-login-link btn btn-primary rounded-pill p-0 mb-3 d-flex align-items-center justify-content-end turnaway__button"
+                >
+                    <span class="flex-grow-1 align-self-center medium pl-4 pr-4">Login</span>
+                    <span role="img" aria-hidden="true" class="rounded-circle my-auto bg-insight fal fa-xs fa-user text-white d-flex justify-content-center align-items-center turnaway__button-icon"></span>
+                </a>
+            </div>
+        </div>
+    
+        
+    
+    
+    
+    
+    <div class="row align-middle">
+        <div class="col-12 mt-2 mb-3">
+            <span class="d-inline-block">If you think you should have access to this content, click to contact our support team.</span>
+        </div>
+        <div class="col-12 p-3 mb-3">
+            <a
+                data-event-name="Submit Turnaway Enquiry"
+                href="https://emeraldpublishinggroup.freshdesk.com/support/solutions/articles/36000063571"
+                target="_blank"
+                class="clickIntercept intent_wayf_enquiry btn btn-primary rounded-pill p-0 text-center d-flex turnaway__button"
+            >
+                <span class="flex-grow-1 align-self-center medium pl-4 pr-4">Contact us</span>
+                <span role="img" aria-hidden="true" class="rounded-circle my-auto bg-insight fal fa-caret-right text-white d-flex justify-content-center align-items-center turnaway__button-icon"></span>
+            </a>
+        </div>
+    </div>
+</div>
 
-<p>The Library of Congress welcomes researchers to its reading rooms and research centers. Whether you are a long-time researcher or are embarking on your first research project, the Library&rsquo;s reference staff are committed to making your visit a success. We&rsquo;re excited to welcome you at one of our 17&nbsp;reading rooms/research centers. &nbsp;Remember, the Library of Congress is your library!&nbsp;<a href="https://loc.gov/rr/">Learn more about Research and Reference Services</a>.</p>
+    </div>
+</div>
 
-<hr />
-<h2>Planning a Research Visit</h2>
-
-<ul style="padding-left:1em">
-	<li>Appointments are&nbsp;<strong>optional</strong>,&nbsp;but&nbsp;<strong>encouraged&nbsp;</strong>to serve you best, ensure collection material is accessible during your visit and optimize your time at the Library.</li>
-	<li>Request a research appointment by clicking on the reading room you plan to visit below and completing an online form.&nbsp; Library staff will confirm the date and time of your scheduled appointment.</li>
-</ul>
-
-<p><strong>We encourage appointments at least 24 hours in advance, but walk in appointments are welcome.&nbsp;We reserve a small number of seats for optional appointments. If the optional appointments are all booked, researchers may still utilize the Reading Room as walk-ins.</strong></p>
-
-<ul style="padding-left:1em">
-	<li>You&rsquo;ll need a reader&rsquo;s card in order to access the reading rooms or use the collections.&nbsp; Get a new reader card, if you don&rsquo;t have one, or renew your reader card, if yours is expired.&nbsp;<a href="https://reader-registration.loc.gov/readerreg/remote/">Pre-registration</a>&nbsp;should be completed online. Information, locations, and more on&nbsp;<a href="https://www.loc.gov/rr/readerregistration.html">how and where to register</a>.</li>
-	<li>You can get started on your research from home by browsing our&nbsp;<a href="https://catalog.loc.gov/">catalog</a>, exploring our&nbsp;<a href="https://guides.loc.gov/">research guides</a>, or through&nbsp;<a href="https://ask.loc.gov/">Ask a Librarian</a>.</li>
-</ul>
-<style type="text/css">body {font-size: 13px;}
-#s-lc-public-header {padding: 0;}
-.s-lc-public-header-text {margin:0;}
-.lc-decorative-banner {text-align: center; margin-bottom: 1em;}
-#s-lc-public-bc .breadcrumb {margin-bottom: 0 !important;}
-#s-lc-box-54324-container {margin-top: 0 !important;}
-</style>
-
-
-		</div></div>
-					
-				</div>
-			</div></div>
-		</div><div class="s-lc-row row"><div id="s-lc-page-column-1" class="s-lc-page-column col-md-9"><div id="s-lc-box-46770-container" class="s-lc-box-container s-lc-color-bars-border s-lc-box-borderless s-lc-box-type-1 s-lc-box-position-1">
-				<div id="s-lc-box-46770" class="s-lc-box s-lc-box-html" role="region" aria-label="reading-rooms-list">
-					<div class="s-lc-box-title s-lc-color-bars s-lc-color-bars-border"><h1>reading-rooms-list </h1></div>
-					<div class="s-lc-box-content clearfix"><div id="s-lc-content-text-70991" class="s-lc-content-text s-lc-content cf">
-			<h2 style="margin-top: -1.2rem;">Onsite Research at the Library of Congress</h2>
-
-<div class="alert alert-info">Appointments are available between the hours of 8:30 a.m. and 5:00 p.m., Monday &ndash; Friday. Evening and Saturday hours vary by location; consult the&nbsp;<a href="https://www.loc.gov/rr/hours.html">hours page</a>&nbsp;for specifics.</div>
-
-<h3>Main Reading Room</h3>
-
-<p>The Main Reading Room in the Thomas Jefferson Building is the principal reference and book service point for the Library&#39;s general collections. If this is your first time researching at the library or researching general topics, this is the place to start.</p>
-
-<p><a class="btn btn-primary" href="/reserve/main-reading-room" style="white-space: normal;">Make an Appointment for the Main Reading Room</a></p>
-
-<hr />
-<h3>All Reading Rooms&nbsp;and Research Centers</h3>
-
-
-		</div><div id="s-lc-content-eqlist-60353" class="s-lc-content-sp-eqlist s-lc-content">
-
-    <div>
-                                    African &amp; Middle Eastern
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/AME">African &amp; Middle Eastern Reading Room</a></li>
-                            </ul>
-                                American Folklife Center
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/afc-center">American Folklife Center</a></li>
-                            </ul>
-                                Asian
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/ad-area-studies-room">Asian Reading Room</a></li>
-                            </ul>
-                                European
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/eur-room">European Reading Room</a></li>
-                            </ul>
-                                Geography &amp; Map
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/map-reading-room">Geography &amp; Map Reading Room</a></li>
-                            </ul>
-                                Hispanic
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/hisp-room">Hispanic Reading Room</a></li>
-                            </ul>
-                                Law Library of Congress
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/law-reading-room">Law Library of Congress</a></li>
-                            </ul>
-                                Manuscript
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/mss-reading-room">Manuscript Reading Room</a></li>
-                            </ul>
-                                Moving Image
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/moving-image">Moving Image Research Center</a></li>
-                            </ul>
-                                Performing Arts
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/music-reading-room">Performing Arts Reading Room</a></li>
-                            </ul>
-                                Prints &amp; Photographs
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/prints-photographs-room">Prints &amp; Photographs Reading Room</a></li>
-                            </ul>
-                                Rare Book &amp; Special Collections
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/rbsc-room">Rare Book &amp; Special Collections Reading Room</a></li>
-                            </ul>
-                                Recorded Sound
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/recorded-sound">Recorded Sound Research Center</a></li>
-                            </ul>
-                                Main Reading Room
-            <ul class="s-lc-content-eqlist-ul cf">
-                                    <li class="s-lc-content-viewall"><a href="/spaces?lid=12768&gid=0">All Reading Rooms</a></li>
-                
-                                    <li><a href="/reserve/main-reading-room">Main Reading Room (MRR)</a></li>
-                                    <li><a href="/reserve/merc">Microform &amp; Electronic Resources Center (MERC)</a></li>
-                            </ul>
-                                Science, Technology &amp; Business
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/stb-room">Science and Business Reference Services</a></li>
-                            </ul>
-                                Serial and Government Publications
-            <ul class="s-lc-content-eqlist-ul cf">
-                
-                                    <li><a href="/reserve/ser-room">Newspaper &amp; Current Periodical Reading Room</a></li>
-                            </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-</div><div id="s-lc-content-text-71608" class="s-lc-content-text s-lc-content cf">
-			<!-- change DOM of the dynamic locations/rooms list to be more accessible --><script>
-$(function() {
-    $('.s-lc-content-eqlist-ul.cf li').each(function(){
-      if($(this).text() == 'All Reading Rooms') $(this).hide();
-    });
-    $('#s-lc-content-eqlist-60353 div').contents().each(function () {
-        //3 = text node
-        if (this.nodeType == 3 && $(this).text().trim().length) {
-            $(this).wrap(function() {
-                const regex = /[ |&]/ig;
-                const id = 'rr-' + $(this).text().trim().toLowerCase().replaceAll(regex,'-')
-                $(this).next().attr('aria-labelledby', id);
-                return "<h4 id='" + id + "'></h4>";
-            })
-        }
-    });
-});
-</script>
+            </div>
+        </div>
+    </div><!--/ #Teaching-notes-turnaway-block -->
 
-		</div></div>
-					
-				</div>
-			</div></div><div id="s-lc-page-column-2" class="s-lc-page-column col-md-3"><div id="s-lc-box-53601-container" class="s-lc-box-container s-lc-color-bars-border s-lc-box-borderless s-lc-box-type-1 s-lc-box-position-1">
-				<div id="s-lc-box-53601" class="s-lc-box s-lc-box-html" role="region" aria-label="i">
-					<div class="s-lc-box-title s-lc-color-bars s-lc-color-bars-border"><h1>i </h1></div>
-					<div class="s-lc-box-content clearfix"><div id="s-lc-content-text-70989" class="s-lc-content-text s-lc-content cf">
-			<h2>Information</h2>
+    <div class="container content_block">
+        <div class="row">
+            <div class="offset-md-2 col-md-10">
+                <header class="py-3">
+    <h1 class="content-title intent_article_title mt-0 mb-3">Why they stay: women persisting in US engineering careers</h1>
+    <section id="intent_contributors" class="mt-4 intent_contributors">
+    <contributor-block block="&lt;span class=&quot;m:contributor-display&quot;&gt;&lt;div class=&quot;contrib_block__contrib intent_contributor&quot; contrib-type=&quot;author&quot;&gt;&lt;a rel=&quot;nofollow&quot; class=&quot;contrib-search&quot; href=&quot;/insight/search?q=Kathleen Buse&quot; aria-label=&quot;Search for more content by contributor Kathleen Buse&quot;&gt; &lt;span class=&quot;given-names&quot;&gt;Kathleen&lt;/span&gt; &lt;span class=&quot;surname&quot;&gt;Buse&lt;/span&gt; &lt;/a&gt;&lt;span class=&quot;contrib_block__aff--italic intent_contributor_affiliate&quot;&gt;
+            (Case Western Reserve University, Cleveland, Ohio, USA)
+        &lt;/span&gt;&lt;/div&gt;&lt;span class=&quot;x&quot;&gt;
+&lt;/span&gt;&lt;div class=&quot;contrib_block__contrib intent_contributor&quot; contrib-type=&quot;author&quot;&gt;&lt;a rel=&quot;nofollow&quot; class=&quot;contrib-search&quot; href=&quot;/insight/search?q=Diana Bilimoria&quot; aria-label=&quot;Search for more content by contributor Diana Bilimoria&quot;&gt; &lt;span class=&quot;given-names&quot;&gt;Diana&lt;/span&gt; &lt;span class=&quot;surname&quot;&gt;Bilimoria&lt;/span&gt; &lt;/a&gt;&lt;span class=&quot;contrib_block__aff--italic intent_contributor_affiliate&quot;&gt;
+            (Case Western Reserve University, Cleveland, Ohio, USA)
+        &lt;/span&gt;&lt;/div&gt;&lt;span class=&quot;x&quot;&gt;
+&lt;/span&gt;&lt;div class=&quot;contrib_block__contrib intent_contributor&quot; contrib-type=&quot;author&quot;&gt;&lt;a rel=&quot;nofollow&quot; class=&quot;contrib-search&quot; href=&quot;/insight/search?q=Sheri Perelli&quot; aria-label=&quot;Search for more content by contributor Sheri Perelli&quot;&gt; &lt;span class=&quot;given-names&quot;&gt;Sheri&lt;/span&gt; &lt;span class=&quot;surname&quot;&gt;Perelli&lt;/span&gt; &lt;/a&gt;&lt;span class=&quot;contrib_block__aff--italic intent_contributor_affiliate&quot;&gt;
+            (Wayne State University, Detroit, Michigan, USA)
+        &lt;/span&gt;&lt;/div&gt;&lt;/span&gt;" contrib-count="3" affil-count="3">
+        <span class="m:contributor-display"><div class="contrib_block__contrib intent_contributor" contrib-type="author"><a rel="nofollow" class="contrib-search" href="/insight/search?q=Kathleen Buse" aria-label="Search for more content by contributor Kathleen Buse"> <span class="given-names">Kathleen</span> <span class="surname">Buse</span> </a><span class="contrib_block__aff--italic intent_contributor_affiliate">
+            (Case Western Reserve University, Cleveland, Ohio, USA)
+        </span></div><span class="x">
+</span><div class="contrib_block__contrib intent_contributor" contrib-type="author"><a rel="nofollow" class="contrib-search" href="/insight/search?q=Diana Bilimoria" aria-label="Search for more content by contributor Diana Bilimoria"> <span class="given-names">Diana</span> <span class="surname">Bilimoria</span> </a><span class="contrib_block__aff--italic intent_contributor_affiliate">
+            (Case Western Reserve University, Cleveland, Ohio, USA)
+        </span></div><span class="x">
+</span><div class="contrib_block__contrib intent_contributor" contrib-type="author"><a rel="nofollow" class="contrib-search" href="/insight/search?q=Sheri Perelli" aria-label="Search for more content by contributor Sheri Perelli"> <span class="given-names">Sheri</span> <span class="surname">Perelli</span> </a><span class="contrib_block__aff--italic intent_contributor_affiliate">
+            (Wayne State University, Detroit, Michigan, USA)
+        </span></div></span>
+    </contributor-block>
+</section>
+    <div class="mb-2 row">
+    <div class="col-12 col-md-6">
+        
+                    <p>
+                <span class="intent_journal_title"><a href="/insight/publication/issn/1362-0436">Career Development International</a></span>
+            </p>
+        
+        
+                    <p class="mt-0">
+                <span>
+                    <abbr title="International Standard Serial Number." class="font-weight-normal">ISSN</abbr>:
+                    <span class="intent_journal_issn">1362-0436</span>
+                </span>
+            </p>
+        
+        <p class="mt-0">
+            
+                                                                <span class="intent_journal_publication_date">Article publication date: 17 May 2013</span>
 
-<ul style="padding-left:.25em;">
-	<li><a href="https://www.loc.gov/rr/res-faq.html" target="_blank">Frequently Asked Questions for Researchers</a></li>
-	<li><a href="https://www.loc.gov/rr/hours.html" target="_blank">Hours of Operation</a></li>
-	<li><a href="https://www.loc.gov/visit/maps-and-floor-plans/" target="_blank">Maps/Locations</a></li>
-	<li><a href="https://www.loc.gov/rr/buildingaccess.html" target="_blank">Accessing Library of Congress Buildings</a></li>
-	<li><a href="https://www.loc.gov/rr/main/inforeas/conduct.html" target="_blank">Conduct</a>&nbsp;and&nbsp;<a href="https://www.loc.gov/rr/personalbelongings.html" target="_blank">Personal Belongings Restrictions</a></li>
-	<li><a href="https://www.loc.gov/rr/wirelessaccess.html" target="_blank">Wireless Access at the Library of Congress</a></li>
-	<li><a href="https://guides.loc.gov/" target="_blank">Library of Congress Research Guides</a></li>
-</ul>
+                            <span class="ml-2" id="rights-link">
+                    <rights-link-button
+    root="/insight/"
+    img-src="/insight/static/img/rightsLink.png"
+    doi="10.1108/CDI-11-2012-0108">
+</rights-link-button>
+                </span>
+            
+        </p>
 
+                    </div>
+    <div class="col-12 col-md-6 d-flex mt-3 mt-md-0">
+        <div class="d-flex flex-column align-items-center pr-3">
+        <label class="mini-caps" id="downloadCountLabel-1">Downloads</label>
 
-		</div></div>
-					
-				</div>
-			</div><div id="s-lc-box-53603-container" class="s-lc-box-container s-lc-color-bars-border s-lc-box-borderless s-lc-box-type-1 s-lc-box-position-1">
-				<div id="s-lc-box-53603" class="s-lc-box s-lc-box-html" role="region" aria-label="q">
-					<div class="s-lc-box-title s-lc-color-bars s-lc-color-bars-border"><h1>q </h1></div>
-					<div class="s-lc-box-content clearfix"><div id="s-lc-content-text-70992" class="s-lc-content-text s-lc-content cf">
-			<h2>Have a question? Need assistance?</h2>
+        <div class="text-primary pt-2 d-flex align-items-center intent_download_counts_badge" aria-labelledby="downloadCountLabel-1"
+             title="This item has been downloaded 4019 times since 2013." data-toggle="tooltip" data-placement="right" tabindex="0">
+            <span class="fal fa-file-download fa-2x px-1"></span>
+            <span class="intent_download_count small flex-grow-1 text-center">
+                4019
+            </span>
+        </div>
+    </div>
 
-<p>View FAQs or use our online form to ask a librarian for help.</p>
+        
+        <div class="altmetric-mount">
+    <altmetric-badge
+        root="/insight/"
+        content-doi="10.1108/CDI-11-2012-0108"
+        publication-doi="10.1108/cdi">
+    </altmetric-badge>
+</div>
+    </div>
+</div>
+    </header>
+            </div>
+        </div>
+    </div>
+    <div class="container content_block" >
+        <div class="row">
 
-<p><a class="btn btn-info s-lg-hp-btn-section" href="http://ask.loc.gov">Ask a Librarian</a></p>
+            <div class="offset-md-2 col-md-7">
+            
+                <section id="abstract" class="intent_abstract pt-2 mb-5 Abstract" tabindex="0">
+            <h2 class="intent_title Abstract__title mb-1">Abstract</h2>
+            
+                <div class="intent_sub_item Abstract__block">
+                                            <h3 class="intent_sub_title Abstract__block__title mb-1 mt-3">Purpose</h3>
+                                        <section class="intent_sub_content Abstract__block__text">
+                        <span class="x"> – </span><p>Women remain dramatically underrepresented in the engineering profession and far fewer women than men persist in the field. This study aims to identify individual and contextual factors that distinguish women who persist in engineering careers in the US.</p>
+                    </section>
+                </div><!--/ Abstract__block -->
 
+            
+                <div class="intent_sub_item Abstract__block">
+                                            <h3 class="intent_sub_title Abstract__block__title mb-1 mt-3">Design/methodology/approach</h3>
+                                        <section class="intent_sub_content Abstract__block__text">
+                        <span class="x"> – </span><p>Qualitative research was conducted based on semi‐structured interviews with 31 women engineers, ten of whom had left an engineering career and 21 persisting for on average 21 years. The interviews were recorded, transcribed, coded and analyzed.</p>
+                    </section>
+                </div><!--/ Abstract__block -->
 
-		</div></div>
-					
-				</div>
-			</div></div></div><div class="s-lc-row row">
-			<div id="s-lc-page-column-4" class="s-lc-column-bottom col-md-12"><div id="s-lc-box-54322-container" class="s-lc-box-container s-lc-color-bars-border s-lc-box-borderless s-lc-box-type-1 s-lc-box-position-1">
-				<div id="s-lc-box-54322" class="s-lc-box s-lc-box-html" role="region" aria-label="ada">
-					<div class="s-lc-box-title s-lc-color-bars s-lc-color-bars-border"><h1>ada </h1></div>
-					<div class="s-lc-box-content clearfix"><div id="s-lc-content-text-72208" class="s-lc-content-text s-lc-content cf">
-			<p>The Library of Congress asks all visitors to follow <a href="https://guides.loc.gov/ld.php?content_id=66207443">our COVID-19 health screening protocols</a>, which are based on guidance from the Centers for Disease Control and the Office of the Attending Physician of the U.S. Capitol.&nbsp;Masks are optional in Library facilities. Wearing a mask continues to be a very effective personal protective measure to reduce the chance of infection. Visitors are encouraged to wear a mask when it is not feasible to maintain six feet of separation for an extended period of time or whenever they feel more comfortable doing so. Visitors should avoid close contact with others by staying six feet apart where possible.</p>
+            
+                <div class="intent_sub_item Abstract__block">
+                                            <h3 class="intent_sub_title Abstract__block__title mb-1 mt-3">Findings</h3>
+                                        <section class="intent_sub_content Abstract__block__text">
+                        <span class="x"> – </span><p>Women who persisted in engineering careers articulated high levels of self efficacy, described themselves in terms of their identity as an engineer, and were motivated by the challenges and novelty of the profession. Women engineers' ability to adapt enabled them to persist and thrive despite working in a male‐dominated culture characterized by difficulties associated with the workplace, including discrimination. Women who opted out of engineering were less likely to recognize options in navigating the workplace and some felt as if they were pushed into engineering. Persistent engineers were less likely to be married and had fewer children.</p>
+                    </section>
+                </div><!--/ Abstract__block -->
 
-<p>Researchers must follow all Washington, D.C.&nbsp;health and travel&nbsp;<a href="https://coronavirus.dc.gov/healthguidance">guidance requirements</a>. Out-of-area researchers should also review the&nbsp;<a href="https://www.cdc.gov/coronavirus/2019-ncov/travelers/travel-during-covid19.html">Centers for Disease Control and Prevention&rsquo;s travel guidance</a>.</p>
+            
+                <div class="intent_sub_item Abstract__block">
+                                            <h3 class="intent_sub_title Abstract__block__title mb-1 mt-3">Research limitations/implications</h3>
+                                        <section class="intent_sub_content Abstract__block__text">
+                        <span class="x"> – </span><p>Although appropriate for an inductive study using a grounded theory approach the sample was small and the data was self reported.</p>
+                    </section>
+                </div><!--/ Abstract__block -->
 
-<p>Researchers requiring an ADA accommodation for their visit must make a request at least five business days before their planned appointment by contacting <a href="/cdn-cgi/l/email-protection#56171217163a393578313920"><span class="__cf_email__" data-cfemail="4c0d080d0c20232f622b233a">[email&#160;protected]</span></a> or (202) 707-6024.</p>
+            
+                <div class="intent_sub_item Abstract__block">
+                                            <h3 class="intent_sub_title Abstract__block__title mb-1 mt-3">Practical implications</h3>
+                                        <section class="intent_sub_content Abstract__block__text">
+                        <span class="x"> – </span><p>A model is developed that integrates individual and contextual factors explaining a woman's persistence in an engineering career and has potential to explain persistence in other professions. To retain more women in engineering careers, organizations and managers should provide opportunities to develop identified skills within the professional domain and should provide opportunities for women engineers that provide continuous learning, on‐going challenges and novel work.</p>
+                    </section>
+                </div><!--/ Abstract__block -->
 
-<p>Researchers can also continue to access many Library resources remotely through&nbsp;<a href="https://www.loc.gov/">loc.gov</a>,&nbsp;<a href="https://ask.loc.gov/">Ask a Librarian</a>&nbsp;and&nbsp;<a href="https://congress.gov/">Congress.gov</a>. The Library&rsquo;s&nbsp;<a href="https://guides.loc.gov/?b=g&amp;d=a">Research Guides</a>&nbsp;and&nbsp;<a href="https://www.loc.gov/rr/geogmap/storymaps.html">Story Maps</a>&nbsp;offer curated content for online research.</p>
+            
+                <div class="intent_sub_item Abstract__block">
+                                            <h3 class="intent_sub_title Abstract__block__title mb-1 mt-3">Originality/value</h3>
+                                        <section class="intent_sub_content Abstract__block__text">
+                        <span class="x"> – </span><p>Although numerous studies have addressed the retention of women in academic engineering programs and several recent studies have described why women leave engineering careers, the novelty of this study is that it addresses why women stay.</p>
+                    </section>
+                </div><!--/ Abstract__block -->
 
+                    </section><!--/ Abstract -->
 
-		</div></div>
-					
-				</div>
-			</div></div>
-		</div></div>
+    
+
+                <section id="keywords_list" class="intent_keywords">
+        <h2 class="intent_title" id="page__keywords-label">Keywords</h2>
+        <ul class="intent_paragraph list-inline" aria-labelledby="page__keywords-label">
+                            <li class="list-inline-item mr-0"> <a rel="nofollow" href="/insight/search?q=Women+engineers"class="intent_link btn btn-outline-secondary btn-sm my-1"title="Search for keyword Women engineers"><span class="intent_text">Women engineers</span></a></li>
+                            <li class="list-inline-item mr-0"> <a rel="nofollow" href="/insight/search?q=Career+decisions"class="intent_link btn btn-outline-secondary btn-sm my-1"title="Search for keyword Career decisions"><span class="intent_text">Career decisions</span></a></li>
+                            <li class="list-inline-item mr-0"> <a rel="nofollow" href="/insight/search?q=Persistence"class="intent_link btn btn-outline-secondary btn-sm my-1"title="Search for keyword Persistence"><span class="intent_text">Persistence</span></a></li>
+                            <li class="list-inline-item mr-0"> <a rel="nofollow" href="/insight/search?q=STEM+women"class="intent_link btn btn-outline-secondary btn-sm my-1"title="Search for keyword STEM women"><span class="intent_text">STEM women</span></a></li>
+                            <li class="list-inline-item mr-0"> <a rel="nofollow" href="/insight/search?q=Women"class="intent_link btn btn-outline-secondary btn-sm my-1"title="Search for keyword Women"><span class="intent_text">Women</span></a></li>
+                            <li class="list-inline-item mr-0"> <a rel="nofollow" href="/insight/search?q=United+States+of+America"class="intent_link btn btn-outline-secondary btn-sm my-1"title="Search for keyword United States of America"><span class="intent_text">United States of America</span></a></li>
+                    </ul>
+    </section>
+
+                
+                                    <section class="Citation mb-2">
+    <h2 class="h4 intent_citation Citation__title">Citation</h2>
+    <p>
+        <a rel="nofollow" href="/insight/search?q=Kathleen Buse" title="Kathleen Buse" class="font-weight-light link-dark">Buse, K.</a>, <a rel="nofollow" href="/insight/search?q=Diana Bilimoria" title="Diana Bilimoria" class="font-weight-light link-dark">Bilimoria, D.</a> and <a rel="nofollow" href="/insight/search?q=Sheri Perelli" title="Sheri Perelli" class="font-weight-light link-dark">Perelli, S.</a> (2013), "Why they stay: women persisting in US engineering careers", <i><a href="/insight/publication/issn/1362-0436">Career Development International</a></i>, Vol. 18 No. 2, pp. 139-154. <a class='intent_doi_link Citation__identifier__link' href='https://doi.org/10.1108/CDI-11-2012-0108' title='DOI: https://doi.org/10.1108/CDI-11-2012-0108'>https://doi.org/10.1108/CDI-11-2012-0108</a>
+    </p>
+
+            <div id="citation-download">
+            <citation-download doi="10.1108/CDI-11-2012-0108" 
+                               root="/insight/"/>
+        </div>
+    </section><!--/ Citation -->
+                
+                <section class="mt-1 Body" v-pre>
+        <h2 class="d-inline h4" id="page__publisher-label">Publisher</h2>:
+        <p class="publisher d-inline" aria-labelledby="page__publisher-label">Emerald Group Publishing Limited</p>
+    </section><!--/ Body -->
+
+                <p class="Citation__identifier">
+        Copyright <span
+            class="intent_copyright_text">&copy; 2013, Emerald Group Publishing Limited</span>
+    </p>
+                        </div>
+
+            <div class="col-12 col-md-3">
+                                    <h2 class="trendmd-replacement-heading">Related articles</h2>
+<div id="trendmd-suggestions"></div>
+                            </div>
+        </div><!--/ row -->
+    </div>
+
+    
     </main>
 
-    <footer id="s-lc-public-footer" class="s-lc-public-footer row">
-        <div id="s-lc-public-footer-brand">
-            <span title="libcal-us-2">Powered by</span> <a href="https://www.springshare.com">Springshare</a>.
-        </div>
-        <div id="s-lc-public-footer-rights">
-            All rights reserved.
-        </div>
+    <flash message=""></flash>
 
-                    <div id="s-lc-footer-support-link">
-                <a href="/cdn-cgi/l/email-protection#fe9b939792be92919dd0999188">Report a tech support issue.</a>
+    <footer role="contentinfo" class="bg-dark pt-4 pb-5 text-center text-white">
+    <div class="container">
+        <div class="row px-lg-5 pb-3">
+            <div class="col-12 col-md-3 text-md-left pl-md-2 pb-4 pb-md-0 text-white">
+                <img src="/insight/static/img/emerald_publishing_logo-white.svg" class="img-fluid" width="50%" alt="Emerald Publishing" />
+                <div class="mt-2 mt-md-4 mt-xl-5 ml-md-n1 d-flex flex-row justify-content-center justify-content-md-start align-self-center">
+                    <ul class="list-inline my-0 mt-md-2 mt-lg-0">
+                        <li class="list-inline-item"><a href="https://twitter.com/EmeraldGlobal" target="_blank" rel="noopener noreferrer" title="Twitter (opens in new window)" aria-label="Twitter (opens in new window)" class="text-white font-size-small p-1"><span role="img" class="fab fa-twitter"></span></a></li>
+                        <li class="list-inline-item"><a href="https://www.facebook.com/EmeraldPublishingImpact/" target="_blank" rel="noopener noreferrer" title="Facebook (opens in new window)" aria-label="Facebook (opens in new window)" class="text-white font-size-small p-1"><span role="img" class="fab fa-facebook-f"></span></a></li>
+                        <li class="list-inline-item"><a href="https://www.linkedin.com/company/emerald-group-publishing-limited" target="_blank" rel="noopener noreferrer" title="LinkedIn (opens in new window)" aria-label="LinkedIn (opens in new window)" class="text-white font-size-small p-1"><span role="img" class="fab fa-linkedin-in"></span></a></li>
+                        <li class="list-inline-item"><a href="https://www.youtube.com/user/EmeraldPublishing67" target="_blank" rel="noopener noreferrer" title="YouTube (opens in new window)" aria-label="YouTube (opens in new window)" class="text-white font-size-small p-1"><span role="img" class="fab fa-youtube-square"></span></a></li>
+                    </ul>
+                </div>
+                <div class="text-white font-size-small font-weight-light">&copy; 2022 Emerald Publishing Limited</div>
             </div>
-        
-                
-        <div id="s-lc-public-footer-admin-links" role="navigation">
-                            <a id="s-lc-sign-in" href="https://loc.libapps.com/libapps/login.php?site_id=21049&amp;target=">Login to LibApps</a>
-                    </div>
-
-        <div class="s-lc-public-footer-actions">
-    
-<div id="s-lc-language">
-    <select id="s-lc-language-selector" aria-label="Select Language">
-                <option value="cy" >Cymraeg</option>
-                <option value="en" selected>English</option>
-                <option value="es" >español</option>
-                <option value="fr" >français</option>
-                <option value="ga" >Irish</option>
-                <option value="sl" >slovenski jezik</option>
-                <option value="vi" >Tiếng Việt</option>
-                <option value="zh" >中文 Zhōngwén</option>
-            </select>
-</div>
-</div>
-    </footer>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="//assets.adobedtm.com/dac62e20b491e735c6b56e64c39134d8ee93f9cf/satelliteLib-6b47f831c184878d7338d4683ecf773a17973bb9.js"></script>
-        <script type="text/javascript">_satellite.pageBottom();</script>
-</div>
-
-<div id="s-lc-public-cust-footer"><footer id="loc-footer-wrapper" class="loc-libguides-footer-wrapper">
-<div class="container">
-<div class="loc-libguides-footer-container row">
-<div class="loc-libguides-footer col-xs-12">
-<div class="loc-libguides-footer-left">
-Hosted by Springshare
-</div>
-<div class="loc-libguides-footer-center">
-<a href="https://www.loc.gov/legal/" target="_blank">Library of Congress Legal</a>
-<a href="https://springshare.com/privacy.html" target="_blank">SpringShare Privacy Policy</a>
-</div>
-<div class="loc-libguides-footer-right">
-<!-- login link -->
+            <!-- These links have title and aria-label so that the "opens in new window" warning shows up in tooltips, as well as Narrator and NVDA reading out the link names and new window warnings without duplication -->
+            <div class="col-12 col-md-3 text-md-left pl-md-4 pb-4 pb-md-0">
+                <h2 class="h4 my-0">Services</h2>
+                <ul class="list-unstyled my-0">
+                    <li><a href="https://www.emeraldgrouppublishing.com/services/authors" class="mixpanel_link intent_footer_link_services_authors text-white font-size-small font-weight-light" target="_blank" rel="noopener noreferrer" aria-label="Authors (opens in new window)" title="Authors (opens in new window)">Authors</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/services/journal-editors" class="mixpanel_link intent_footer_link_services_editors text-white font-size-small font-weight-light" target="_blank" rel="noopener noreferrer" aria-label="Editors (opens in new window)" title="Editors (opens in new window)">Editors</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/services/librarians" class="mixpanel_link intent_footer_link_services_librarians text-white font-size-small font-weight-light" target="_blank" rel="noopener noreferrer" aria-label="Librarians (opens in new window)" title="Librarians (opens in new window)">Librarians</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/services/researchers" class="mixpanel_link intent_footer_link_services_research text-white font-size-small font-weight-light" target="_blank" rel="noopener noreferrer" aria-label="Researchers (opens in new window)" title="Researchers (opens in new window)">Researchers</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/services/reviewers" class="mixpanel_link intent_footer_link_services_reviewers text-white font-size-small font-weight-light" target="_blank" rel="noopener noreferrer" aria-label="Reviewers (opens in new window)" title="Reviewers (opens in new window)">Reviewers</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-3 text-md-left pb-4 pb-md-0">
+                <h2 class="h4 my-0">About</h2>
+                <ul class="list-unstyled my-0">
+                    <li><a href="https://www.emeraldgrouppublishing.com/about/" target="_blank" rel="noopener noreferrer" aria-label="About Emerald (opens in new window)" title="About Emerald (opens in new window)" class="mixpanel_link intent_footer_link_about_emerald text-white font-size-small font-weight-light">About Emerald</a></li>
+                    <li><a href="https://careers.emeraldpublishing.com" target="_blank" rel="noopener noreferrer" aria-label="Working for Emerald (opens in new window)" title="Working for Emerald (opens in new window)" class="intent_footer_link_about_working text-white font-size-small font-weight-light">Working for Emerald</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/about/contact-us" target="_blank" rel="noopener noreferrer" aria-label="Contact us (opens in new window)" title="Contact us (opens in new window)" class="mixpanel_link intent_footer_link_about_contact text-white font-size-small font-weight-light">Contact us</a></li>
+                    <li><a href="/insight/sitemap/publications" class="intent_footer_link_publication_sitemap text-white font-size-small font-weight-light">Publication sitemap</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-3 text-md-left">
+                <h2 class="h4 my-0">Policies and information</h2>
+                <ul class="list-unstyled my-0">
+                    <li><a href="/insight/site-policies" class="intent_footer_link_policies_privacy text-white font-size-small font-weight-light">Privacy notice</a></li>
+                    <li><a href="/insight/site-policies" class="intent_footer_link_policies_site_policies text-white font-size-small font-weight-light">Site policies</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/about/policies-and-information/modern-slavery-act" target="_blank" rel="noopener noreferrer" aria-label="Modern Slavery Act (opens in new window)" title="Modern Slavery Act (opens in new window)" class="mixpanel_link intent_footer_link_policies_modern_slavery text-white font-size-small font-weight-light">Modern Slavery Act</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/sites/default/files/2020-08/MCB-Pension-Chair-Statement-2019.pdf" target="_blank" rel="noopener noreferrer" aria-label="Chair of Trustees governance statement (opens in new window, PDF, 511 KB)" title="Chair of Trustees governance statement (opens in new window, PDF, 511 KB)" class="mixpanel_link intent_footer_link_trustees_governance_statement text-white font-size-small font-weight-light">Chair of Trustees governance statement</a></li>
+                    <li><a href="https://www.emeraldgrouppublishing.com/sites/default/files/2020-06/Emerald-covid-19-policy.pdf" target="_blank" rel="noopener noreferrer" aria-label="COVID-19 policy (opens in new window, PDF, 240 KB)" title="COVID-19 policy (opens in new window, PDF, 240 KB)" class="mixpanel_link intent_footer_link_covid_19_policy text-white font-size-small font-weight-light">COVID-19 policy</a></li>
+                    <li><a href="/insight/accessibility" class="intent_footer_link_accessibility text-white font-size-small font-weight-light">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </footer>
+
+<div id="topscroll">
+    <top-scroll text="Back to top" visibleoffset="500"></top-scroll>
 </div>
-</div>
-</div>
-</div>
-</div>
-<script>
-$( document ).ready(function() {
-    // .removeClass("s-la-box-border-simple")
-    $(".s-la-box-container.s-la-box-border-simple").addClass("red");
-    // .removeClass("s-la-box-borderless")
-    $(".s-la-box-container.s-la-box-borderless").addClass("blue");
-    // move springshare footer links
-    $("#s-lc-public-footer").appendTo( ".loc-libguides-footer-right" );
-    $("#s-lc-public-footer-brand").unwrap();
-    $("#s-lc-public-footer-admin-links").removeAttr("role");
-    // show H1 on scheduling page
-    $("#s-lc-eq-navform h1.sr-only").addClass("title-seat-availability").removeClass("sr-only");
-    // move accessible version link on scheduling page
-    $( "#s-lc-public-footer-print-link a" ).insertAfter( "#s-lc-eq-navform h1" ).wrap("<p class='accessible-version-link'></p>").text("View this page in an alternate accessible format");
-    // move accessible version link on seat detail (?) page
-    $( "#s-lc-public-footer-print-link a" ).insertAfter( "#s-lc-public-header-title" ).wrap("<p class='accessible-version-link'></p>").text("View this page in an alternate accessible format");
-    // markup mod - remove search landmark role from all forms
-    $("#s-lc-eq-navform form, #s-lc-new-reservation-form").removeAttr("role");
-    // markup mod - unwrap header and footer wrapper that are generated by default
-    $("#loc-header-wrapper, #loc-footer-wrapper").unwrap();
-    // markup mod - remove a duplicated main region on homepage
-    $('#s-lc-page-maincontent').removeAttr('role');
-    // markup mod - prepend h1 to the main tag on homepage
-    $("body > .container > #s-lc-public-header").prependTo("main");
-    // markup mod - prepend h1 to the main tag on booking detail and accessible version
-    $("body > .container > #s-lc-public-title").prependTo("main");
-    // markup mod - remove a duplicated main region on single seat booking accessible page
-    $("#s-lc-eq-times-form #s-lc-eq-checkboxes").removeAttr('role');
-    //make the dept/room dropdown selector more prominent
-    $('#s-lc-eq-navform form').addClass('alert alert-info')
-    //make currently selected reading room more prominent
-    $('h1.title-seat-availability').prepend($('#gid option:selected').text() + ': ')
-    // make sure breadcrumbs show current/active page
-    if (!$('nav[aria-label="Breadcrumb"] li.active').length) {
-        const pageTitle = $('h1:first').text().trim();
-        $('nav[aria-label="Breadcrumb"] ol').append('<li class="active s-lc-desktop-only">' + pageTitle + '</li>');
+    </div>
+
+<script type="text/javascript">
+    window.subDir = "/insight/"
+
+    function document_ready (callback) {
+        if (document.readyState !== 'loading') {
+            callback()
+        } else {
+            document.addEventListener('DOMContentLoaded', callback)
+        }
     }
-//tweak fullCalendar for better accessibility
-if ($('#s-lc-periods').length) {
-    var selectedTimeslotsRef = {};
-    //fullCal table is populated with JS, wait until it's ready
-    const locTargetNode = document.getElementById('s-lc-periods');
-    const locCallback = function(mutationsList, locObserver) {
-        for(const mutation of mutationsList) {
-            if (mutation.type === 'attributes') {
-                //make wheelchair/power icons accessible
-                if ($('#s-lc-periods').is(':visible')) {
-                    $('#s-lc-periods i[aria-hidden="true"]').each(function(i) {
-                        const faClass = $(this).attr('class');
-                        let ariaLabel;
-                        if (faClass.includes('-wheelchair')) {
-                            ariaLabel = 'Wheelchair Accessible Seating';
-                        } else if (faClass.includes('-plug')) {
-                            ariaLabel = 'Power Available';
-                        }
-                        if (ariaLabel) {
-                            $(this).attr({'aria-label': ariaLabel, 'title': ariaLabel}).removeAttr('aria-hidden');
-                        }
-                    });
+
+    // Replacement for $(element).on(event, selector, handler), as addEventListener
+    // does not support the selector parameter.
+    function add_event_listener(element, event, selector, handler) {
+        if (element === null) {
+            return
+        }
+        element.addEventListener(event, function (e) {
+            for (let target = e.target; target && target !== this; target = target.parentNode) {
+                if (target instanceof Element && target.matches(selector)) {
+                    handler.call(target, e)
                 }
-            } else if (mutation.type === 'childList' && mutation.addedNodes?.length) {
-                // add a title to the booking table
-                $("<span>Time slots available: </span>").prependTo("#s-lc-displaydate");
-                $("table.s-lc-eq-periods").attr("aria-describedby", "s-lc-displaydate");
-                //make timeslots keyboard navigable
-                $('.s-lc-eq-period-available').each(function(i) {
-                    const ariaLabel = 'Seat Available ' + $(this).attr('data-original-title').trim();
-                    $(this).attr({'tabindex':0,'role':'button','aria-label': ariaLabel});
-                })
-                $('.s-lc-eq-period-available').keypress(function(e) {
-                    //enter or spacebar
-                    if (e.which == 13 || e.which == 32) {
-                        //update arai-lable of the block selected
-                        const pendingBookingId = pendingBookingNextId;
-                        selectedTimeslotsRef[pendingBookingId] = $(this);
-                        $(this).attr('aria-label',$(this).attr('aria-label').replace('Seat Available','Your Booking: Seat'));
-                        $(this).trigger('click');
-                        //listen to remove button so we can update the timeslot's aria-label
-                        setTimeout(() => {
-                            $(`button.s-lc-pending-booking-remove[data-id="${pendingBookingId}"]`).keypress(function(e) {
-                                //enter or spacebar
-                                if (e.which == 13 || e.which == 32) {
-                                    selectedTimeslotsRef[$(this).attr('data-id')].attr('aria-label', selectedTimeslotsRef[$(this).attr('data-id')].attr('aria-label').replace('Your Booking: Seat','Seat Available'));
-                                    delete selectedTimeslotsRef[$(this).attr('data-id')];
-                                }
-                            })
-                        }, 500);  
-                    }
-                });
-                $('.s-lc-eq-period-booked').each(function(i) {
-                    $(this).attr('aria-label', 'Seat Not Available');
-                })
             }
-        }
-    };
-    const locObserver = new MutationObserver(locCallback);
-    locObserver.observe(locTargetNode, {attributes: true, childList: true});
-}
-});
-</script></div>
-    <script src="/js918/fullcalendar.min.js"></script>
-    <script>
-    var springyFullCalendar = {
-        commonOptions: {
-            schedulerLicenseKey: '0989929130-fcs-1627596663',
-            now: '2022\u002D05\u002D14\u002013\u003A07',
-            nowIndicator: true,
-            scrollTime: '12\u003A00\u003A00',
-            lazyFetching: false,
-            locale: springSpace.language,
-            themeSystem: 'bootstrap',
-            eventTextColor: '#222',
-            eventDisplay: 'block',
-            moreLinkClick: 'day',
-            bootstrapFontAwesome: {
-                goToDate: 'fa-calendar',
-                goToNextAvailable: 'fa-fast-forward',
-                refresh: 'fa-refresh',
-            },
-            navLinks: true, // https://fullcalendar.io/docs/navLinks
-            resourceOrder: false, // https://fullcalendar.io/docs/resourceOrder
-        },
-        timelineOptions: {
-            height: 'auto',
-            refetchResourcesOnNavigate: false,
-            eventOverlap: false,
-            displayEventTime: false,
-            slotDuration: '01\u003A00',
-            titleFormat: springSpace.dateFormat,
-            views: {
-                timelineSingleDay: {
-                    type: 'resourceTimeline',
-                    buttonText: 'Day\u0020View',
-                    duration: {days: 1},
-                    slotLabelFormat: springSpace.timeFormat,
-                },
-                timelineHourlyShort: {
-                    type: 'resourceTimeline',
-                    duration: {days: 3},
-                    slotLabelFormat: [springSpace.dateFormat, springSpace.timeFormat],
-                },
-                timelineHourlyLong: {
-                    type: 'resourceTimeline',
-                    duration: {days: 7},
-                    slotLabelFormat: [springSpace.dateFormat, springSpace.timeFormat],
-                },
-                timelineDailyLong: {
-                    type: 'resourceTimeline',
-                    slotDuration: '24:00',
-                    duration: {days: 28},
-                    slotLabelFormat: ['dd D'],
-                    nowIndicator: false
-                },
-                resourceTimeGridWeek: {
-                    buttonText: 'Week\u0020View',
-                    slotLabelFormat: springSpace.timeFormat,
-                }
-            },
-        },
-        publicTexts: {
-            allDay: 'All\u0020Day',
-            available: 'Available',
-            dayGridMonth: 'Month',
-            dayGridWeek: 'Agenda',
-            goToDate: 'Go\u0020To\u0020Date',
-            goToNextAvailable: 'Next\u0020Available',
-            next: 'Next',
-            prev: 'Previous',
-            timeGridDay: 'Day',
-            timeGridWeek: 'Week',
-            today: 'Today',
-            unavailable: 'Unavailable\/Padding',
-            yourBooking: 'Your\u0020Booking',
-            listWeek: 'Week\u0020List',
-        },
-        adminTexts: {
-            goToDate: 'Go\u0020To\u0020Date',
-            refresh: 'Refresh',
-            prev: 'Previous',
-            next: 'Next',
-            today: 'Today',
-            week: 'Week',
-            month: 'Month',
-            day: 'Day',
-            dayGridWeek: 'Agenda',
-            allDay: 'All\u0020Day',
-            atLocation: '\u0025title\u0025\u0020at\u0020\u0025location\u0025',
-        },
-        dateTimeFormats: {
-            monthViewTitle: 'MMMM YYYY',
-        },
-    };
-
-    // placeholder for dynamic content boxes with a full calendar
-    var calendarList = {};
-
-    function reRenderCalendarList() {
-        for (var calId in calendarList) {
-            calendarList[calId].render();
-        }
+        }, false)
     }
 </script>
-<script src="/js918/direct/full-calendar-common.min.js"></script>
 
-            <script>
-            jQuery(function() {
-                                jQuery('a[data-toggle="tab"]').on('shown.bs.tab', reRenderCalendarList);
+<script src="/insight/static/js/manifest.js?id=3c768977c2574a34506e" defer></script>
+<script src="/insight/static/js/vendor.js?id=56ccea9999955498404d" defer></script>
+<script src="/insight/static/js/app.js?id=961e26a434de07c8809f" defer></script>
+<script src="/insight/static/js/vendor/dragscroll.js?id=150f32f7889624139012" defer></script>
+<script src="/insight/static/js/mixpanel/mixpanel.js?id=2dda9234d207a5504645" defer></script>
 
-                                                    hit(5394, 'home', 'r');
-                            });
-        </script>
+<script type="text/javascript">
+  document_ready(function () {
+    // enable bootstrap tooltips globally
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+<script type="text/javascript">
+  document_ready(function () {
+    let scrollMagnet = $('.scroll-magnet-item')
+
+    if (typeof scrollMagnet[0] === 'undefined') {
+      return
+    }
+
+    $.get(window.subDir + 'api/banner', function (data) {
+      if (data.status === 'Down') {
+
+        let bodyElement = $('body')
+        bodyElement.attr('data-offset', 215)
+
+        let scrollMagnet = $('.scroll-magnet-item')
+
+        if (typeof scrollMagnet[0] === 'undefined') {
+          return
+        }
+
+        let observer = new MutationObserver(function () {
+          const scrollingBanner = 'is-scrolling--support-banner'
+          const isScrolling = 'is-scrolling'
+
+          if (scrollMagnet.hasClass(isScrolling) && !scrollMagnet.hasClass(scrollingBanner)) {
+            scrollMagnet.addClass(scrollingBanner)
+          }
+
+          if (!scrollMagnet.hasClass(isScrolling) && scrollMagnet.hasClass(scrollingBanner)) {
+            scrollMagnet.removeClass(scrollingBanner)
+          }
+        })
+
+        observer.observe(scrollMagnet[0], {
+          attributes: true,
+          attributeFilter: ['class'],
+          childList: false,
+          characterData: false
+        })
+      }
+    })
+  })
+</script>
+
+<script type="application/javascript">
+    document_ready(function() {
+        if (document.referrer) {
+            document.querySelectorAll('.turnaway-login-link').forEach(link => {
+                const loginHref = new URL(link.href)
+                loginHref.searchParams.set('referrer', document.referrer)
+                // We pass this page's referrer to /login so that later we can record the initial referrer without the roundtrip
+                // to liblynx muddying the waters. We have to get it via JS because this page may be cached at the CDN for guest
+                // users, in which case the server-written version of the referrer may be incorrect
+                link.href = loginHref
+            })
+        }
+    })
+</script>
+  <script>
+    document.querySelector('#access-popup').addEventListener('click', function (event) {
+      event.stopPropagation()
+    })
+  </script>
+  <script>
+    document.querySelector('#access-popup').addEventListener('click', function (event) {
+      event.stopPropagation()
+    })
+  </script>
+    <div id="shivPlaceholder" tabindex="-1" class="shivContents position-relative text-center mt-3 mb-3 px-5 py-3 pt-4 border table-responsive" style="display: none">
+    <div style="z-index: 999; right: 1rem; top: 0;" class="position-absolute shiv-header row text-right">
+        <button style="font-size: 2.1rem; width:2.1rem; height:2.1rem; overflow: hidden;" type="button" class="close" title="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="free dragscroll">
+        <div class="shivContent d-inline-block m-auto text-left position-relative"></div>
+    </div>
+</div>
+
+<script src="/insight/static/js/emerald/js_shiv.js?id=5127ec8d3d8f3cd91c9f" defer></script>
+    <script type="text/javascript" id="trendmd-block">
+    if (window.cookieHelper.areFunctionalCookiesEnabled()) {
+      /**
+       * If we just included the script, it would execute at a deferred point in time,
+       * regardless of our cookie setting, therefore it's added as a script element only
+       * on condition that functional cookies have actually been enabled
+       **/
+      const trendmd_block = document.getElementById("trendmd-block");
+      const js = document.createElement("script");
+
+      js.src ='//js.trendmd.com/trendmd.min.js';
+      js.setAttribute('data-trendmdconfig', '{"element":"#trendmd-suggestions"}');
+      js.setAttribute('defer', 'true');
+
+      trendmd_block.append(js);
+
+      const eventName = 'TrendMD'
+
+      function mixpanelProperties (el) {
+        const url = (el.href || '').split('?')[0]
+        return {
+          'Article name': el.text,
+          'Format': url.endsWith('.pdf') ? 'PDF' : 'HTML',
+          'Link Type': url.includes('emerald') ? 'Internal' : 'External',
+          url: el.href
+        }
+      }
+
+      let alreadySeenLinks = []
+      const suggestions = document.querySelector('#trendmd-suggestions')
+      add_event_listener(suggestions, 'DOMNodeInserted', '.trendmd-widget-list', event => {
+        const links = Array.from(event.currentTarget.querySelectorAll('a.trendmd-widget-list-item__link'))
+        const newLinks = links.filter(l => !alreadySeenLinks.includes(l))
+        // add new links to the already seen list so we can make sure we don't attach listeners to them more than once
+        alreadySeenLinks = alreadySeenLinks.concat(newLinks)
+
+        newLinks.forEach(link => mixpanelTrackLinkClick(link, eventName, mixpanelProperties))
+      })
+    }
+</script>
+
+    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js' defer></script>
+
+    <script>
+        document_ready(function() {
+            const hash = window.location.hash.substr(1);
+            if (hash === 'teaching-notes-tab'){
+                document.getElementById('turnaway-block').style.display = "none";
+                document.getElementById('teaching-notes-turnaway-block').style.display = "block";
+            }
+            const cases = document.querySelector('#cases')
+            if (cases !== null) {
+                cases.addEventListener('click', function () {
+                    $('#tocscroll').css('visibility', 'visible');
+                    document.getElementById('turnaway-block').style.display = 'block';
+                    document.getElementById('teaching-notes-turnaway-block').style.display = "none";
+                });
+            }
+            const teachingNotes = document.querySelector('#teaching-notes')
+            if (teachingNotes !== null) {
+                teachingNotes.addEventListener('click', function () {
+                    $('#tocscroll').css('visibility', 'hidden');
+                    document.getElementById('turnaway-block').style.display = 'none';
+                    document.getElementById('teaching-notes-turnaway-block').style.display = "block";
+                });
+            }
+        });
+
+        window.addEventListener('load', (event) => {
+            window.scrollTo(0, 0);
+        });
+    </script>
+
+    <script>
+  function trackingEnabled() {
+    const isLockss = (navigator.userAgent === 'LOCKSS cache');
+    const shouldSkipTracking = (window.location.href.indexOf('skipTracking=true') > -1);
+    return !isLockss && !shouldSkipTracking;
+  };
+</script>
+
+
+<script>
+  const mixPanelJson = {"URI":"\/content\/doi\/10.1108\/CDI-11-2012-0108\/full\/html","Format":"HTML","Denied, Reason":"No License","Content ID \/ DOI":"10.1108\/CDI-11-2012-0108","Content Title":"Why they stay: women persisting in US engineering careers","Parent Title":"Career Development International","Year Of Publication":"2013","Publication Date":"17 May 2013","Access Method":"User","Access Type":"controlled","Parent Type":"journal","ISSN":"1362-0436","Parent ID \/ DOI":"10.1108\/cdi","pISBN":"","eISBN":"","ISBN":"","Content Type":"article"};
+  const mixPanelCurrentPageEvent = 'Turnaway';
+  const currentDate = '2022-05-17T18:51:24+00:00';
+  const isAuthenticatedPerson = false;
+
+  let teachingNotesAlreadyClicked = false;
+  let caseStudyAlreadyClicked = false;
+  let articleAlreadyClicked = false;
+
+  function mixpanelTrack(eventName, mixPanelData) {
+    storeOrPushMixpanelEvent('track', eventName, mixPanelData);
+
+    if (['Download', 'Turnaway', 'Saved Search'].includes(eventName) && isAuthenticatedPerson === true) {
+      mixpanel.people.increment('# of ' + eventName + 's');
+    }
+
+    if (eventName === 'Download' && isAuthenticatedPerson === true) {
+      mixpanel.people.set({'Last Download Date': currentDate});
+      mixpanel.identify('');
+    }
+  };
+
+  function trackTeachingNoteDownload() {
+    if (teachingNotesAlreadyClicked) {
+      return;
+    }
+    teachingNotesAlreadyClicked = true;
+
+    const mixPanelData = JSON.parse(JSON.stringify(mixPanelJson));
+    mixPanelData['Content Type'] = 'Teaching Note';
+    mixpanelTrack(mixPanelCurrentPageEvent, mixPanelData);
+  }
+
+  function trackCaseStudyDownload() {
+    if (caseStudyAlreadyClicked) {
+      return;
+    }
+    caseStudyAlreadyClicked = true;
+
+    const mixPanelData = JSON.parse(JSON.stringify(mixPanelJson));
+    mixPanelData['Content Type'] = 'case study';
+    mixpanelTrack(mixPanelCurrentPageEvent, mixPanelData);
+  }
+
+  function trackArticleDownload() {
+    if (articleAlreadyClicked) {
+      return;
+    }
+    articleAlreadyClicked = true;
+
+    const mixPanelData = JSON.parse(JSON.stringify(mixPanelJson));
+    mixPanelData['Content Type'] = 'article';
+    mixpanelTrack(mixPanelCurrentPageEvent, mixPanelData);
+  }
+
+  function eventInterceptInit() {
+    add_event_listener(window, 'click', 'a.clickIntercept', function () {
+      const $this = $(this);
+      switch($this.data("contentType")) {
+        case 'Case Study':
+          trackCaseStudyDownload();
+          break;
+        case 'Teaching Note':
+          trackTeachingNoteDownload();
+          break;
+        case 'Article':
+          trackArticleDownload();
+          break;
+        default:
+          const mixPanelData = JSON.parse(JSON.stringify(mixPanelJson));
+          const clickEventName = $this.data("eventName");
+          mixpanelTrack(clickEventName, mixPanelData);
+      }
+    })
+  }
+
+  // Check if the tabs were already clicked on page land, if it was then track the relevant event
+  function checkSelectedTabs() {
+    const teachingNotes = document.querySelector('#teaching-notes')
+    if (teachingNotes != null && teachingNotes.getAttribute('aria-selected') === 'true') {
+      trackTeachingNoteDownload()
+      return
+    }
+
+    const cases = document.querySelector('#cases')
+    if (cases != null && cases.getAttribute('aria-selected') === 'true') {
+      trackCaseStudyDownload()
+      return
+    }
+
+    const articles = document.querySelector('#articles')
+    if (articles != null && articles.getAttribute('aria-selected') === 'true') {
+      trackArticleDownload()
+      return
+    }
+
+    mixpanelTrack(mixPanelCurrentPageEvent, mixPanelJson)
+  }
+
+  function getQueryParam(url, param) {
+    // Expects a raw URL
+    param = param.replace(/[[]/, "\[").replace(/[]]/, "\]");
+    const regexS = "[\?&]" + param + "=([^&#]*)";
+    const regex = new RegExp( regexS );
+    const results = regex.exec(url);
+    if (results === null || (results && typeof(results[1]) !== 'string' && results[1].length)) {
+      return '';
+    } else {
+      return decodeURIComponent(results[1]).replace(/\W/gi, ' ');
+    }
+  };
+
+  // Parse and register last touch UTM tags as super properties. Also add first touch attribution data as a user profile property.
+  function campaignParams() {
+    const campaign_keywords = 'utm_source utm_medium utm_campaign utm_content utm_term'.split(' ')
+            , kw = ''
+            , params = {}
+            , first_params = {};
+    campaign_keywords.forEach(keyword => {
+      const kw = getQueryParam(document.URL, keyword);
+      if (kw.length) {
+        params[keyword + ' [last touch]'] = kw;
+      }
+    })
+    campaign_keywords.forEach(keyword => {
+      const kw = getQueryParam(document.URL, keyword);
+      if (kw.length) {
+        first_params[keyword + ' [first touch]'] = kw;
+      }
+    })
+    mixpanel.people.set(params);
+    mixpanel.people.set_once(first_params);
+    mixpanel.register(params);
+  }
+
+  (function(){
+    if (trackingEnabled()) {
+      checkSelectedTabs();
+      eventInterceptInit();
+      campaignParams();
+    };
+  })();
+</script>
+
+
+
+<script>
+var _ll = _ll || [];
+
+function counterTrack(endpoint) {
+  window._ll = [];
+
+  window._ll.push(['setEndpoint', endpoint ]);
+
+  window._ll.push(['setDefaults', {"pid":"0959a6c7150c5e64","plname":"Emerald Publishing Limited"} ]);
+
+  var counterJson = {"tm":{"title":"Career Development International","dt":"journal","issnp":"1362-0436","doi":"10.1108\/cdi"},"im":{"doi":"10.1108\/CDI-11-2012-0108","title":"Why they stay: women persisting in US engineering careers","yop":"2013","pdate":"17 May 2013","dt":"article","stype":"article"},"aid":"00001","aname":"Guest User","sid":"sHnVT0ODk4KHpML2ijeJqEmif8lJynw3DFIzERt0","uri":"\/content\/doi\/10.1108\/CDI-11-2012-0108\/full\/html","fmt":"HTML","referrer":null,"deny":"No_License","am":"regular","at":"controlled"};
+
+  
+    window._ll.push(['trackDenial', counterJson ]);
+
+     // track turnaway abtract page as investigation
+        window._ll.push(['trackItemInvestigation', counterJson ]);
     
+  };
 
+function counterLoadScript(){
+  let d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+
+      const liblynxSuffix = '/log/js/counter5.min.js';
+  
+  const liblynxPrefixOne = "https://connect.lib";
+  const liblynxPrefixTwo = "lynx.com";
+
+  const liblynxSrc = liblynxPrefixOne + liblynxPrefixTwo + liblynxSuffix;
+
+  g.type='text/javascript';
+  g.async=true;
+  g.id='counter_script';
+  g.defer=true;
+  g.src=liblynxSrc;
+  s.parentNode.insertBefore(g,s);
+};
+
+function counterGetEndpoint() {
+  const baseUrlOne = "https://connect.lib".replace('https:','').replace('http:','');
+  const baseUrlTwo = "lynx.com";
+  return baseUrlOne + baseUrlTwo + "/log/counter";
+};
+
+document_ready(() => {
+  if (trackingEnabled()) {
+    counterTrack(counterGetEndpoint())
+    counterLoadScript()
+  }
+})
+</script>
+
+
+<div id="feedback-strip" class="header-feedback dropdown  ">
+  <div class="header-feedback__link ">
+    <button
+      type="button"
+      class="intent_header_feedback_link header-feedback__link-button collapsed"
+      data-toggle="collapse"
+      data-target="#header-feedback-content"
+      aria-expanded="false"
+    >
+      <div class="header-feedback__link-left font-weight-bold text-left">
+        <span id="header-feedback__link-text">Support & Feedback</span> <span id="header-feedback__link-caret" class="toggleCaret fas fa-caret-up fa-lg ml-1"></span>
+      </div>
+    </button>
+    <a href="#" class="header-feedback__link-cookie-button text-white intent_cookie_manage" data-toggle="modal" data-target="#manage-cookies-modal">
+      Manage cookies
+    </a>
+  </div>
+
+  <div id="header-feedback-content" class="intent_header_feedback_content header-feedback__content collapse pt-4 pb-4 text-center text-white">
+    <div class="container">
+      <div class="row px-lg-5">
+
+        <div class="col-12 col-md-6 text-left pl-md-2 pb-2 pb-md-0">
+          <h2 class="h2 mb-2">We’re listening &mdash; tell us what you think</h2>
+          <ul class="emerald-list mb-2 pt-1">
+            <li>
+              <h3 class="h4">Something didn’t work…</h3>
+              <p><a href="https://emeraldpublishinggroup.freshdesk.com/support/home" class="text-light" target="_blank">Report bugs here</a></p>
+            </li>
+            <li>
+              <h3 class="h4">All feedback is valuable</h3>
+              <p>Please <a href="https://eu.surveymonkey.com/r/MBYR7TJ" class="text-light" target="_blank">share your general feedback</a></p>
+            </li>
+            <li>
+              <h3 class="h4">Member of Emerald Engage?</h3>
+              <p>You can join in the discussion by <a href="https://engage.ex-plor.com/" class="text-light" target="_blank">joining the community or logging in here</a>.<br>You can also find out more about <a href="https://engage.ex-plor.com/" class="text-light" target="_blank">Emerald Engage</a>.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-md-6 text-left pl-md-2 pb-2 pb-md-0">
+          <h2 class="h2 mb-2">Join us on our journey</h2>
+          <ul class="emerald-list mb-2 pt-1">
+            <li>
+              <h3 class="h4">Platform update page</h3>
+              <p>Visit <a href="https://www.emeraldgrouppublishing.com/emerald-insight-platform-update-tracker" class="mixpanel_link text-light" target="_blank">emeraldpublishing.com/platformupdate</a> to discover the latest news and updates</p>
+            </li>
+            <li>
+              <h3 class="h4">Questions & More Information</h3>
+              <p>Answers to the <a href="https://emeraldpublishinggroup.freshdesk.com/support/home" class="text-light" target="_blank">most commonly asked questions here</a></p>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="feedback-underlay" class="feedback-underlay">
+</div>
+
+<script type="text/javascript">
+  document_ready(function () {
+    document.querySelector('.header-feedback__link-button').addEventListener('click', function () {
+      $('#header-feedback__link-caret').toggleClass('fa-caret-up fa-caret-down');
+      if( $('#header-feedback__link-text').text() == 'Close')
+      {
+        $('#header-feedback__link-text').text('Support & Feedback');
+        $('#feedback-underlay').hide();
+      } else {
+        $('#header-feedback__link-text').text('Close');
+        $('#feedback-underlay').show();
+      };
+    });
+  });
+</script>
+
+<script src="/insight/static/js/mixpanel/mixpanel-cookies.js?id=339fc836a8c881ec7df9" defer></script>
 </body>
 </html>

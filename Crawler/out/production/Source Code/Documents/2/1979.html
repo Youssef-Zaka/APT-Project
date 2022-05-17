@@ -1,856 +1,1777 @@
 <!DOCTYPE html>
-<html dir='ltr' lang='en'>
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-<title>PetScan</title>
-
-<!--<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PET-image.jpg/32px-PET-image.jpg">-->
-
-<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap-v4-rtl/4.5.2-1/css/bootstrap.min.css">
-
-<!--<link rel="stylesheet" href="//tools-static.wmflabs.org/cdnjs/ajax/libs/tether/1.1.1/css/tether.min.css">-->
-<link rel="stylesheet" href="https://tools-static.wmflabs.org/magnustools/resources/html/wikimedia.css">
-
-<style>
-.radio-inline {
-	display:inline-block !important;
-}
-textarea, input[type=text], input[type=number], div.input-group-prepend {
-	box-shadow:3px 3px 2px #DDD;
-}
-.smaller {
-	font-size:10pt;
-}
-div.ns-block {
-	display:inline-block;
-	padding:1px;
-	margin-bottom:5px;
-	margin-right:5px;
-	white-space: nowrap;
-}
-#main_form textarea {
-	font-size:9pt;
-}
-div.form-group.row > label:first-child {
-	font-weight:bold;
-}
-.num {
-	font-family:courier;
-	text-align:right;
-}
-#autolist_box {
-	float:right;
-	margin-left:5px;
-	margin-bottom:5px;
-	padding:2px;
-	font-size:10pt;
-}
-div.autolist_subbox {
-	display:inline-block;
-	vertical-align:top;
-	margin-left:5px;
-}
-div.tab-pane {
-	margin-top:15px;
-}
-a.redlink {
-	color:red !important;
-}
-a.pagelink:visited {
-	color:#0056ab
-}
-div.fileusage {
-	white-space: nowrap;
-}
-td.link_container {
-	width:100%;
-}
-div.thumbcard {
-	text-align:center;
-	max-height:120px;
-}
-img.thumbcard-img {
-	max-height:120px;
-	border:0px;
-}
-div.example_psid {
-	padding:5px;
-	text-align:right;
-	font-weight:bold;
-	display:table-cell;
-}
-div.example_desc {
-	padding:5px;
-	display:table-cell;
-}
-#example_list {
-	height:500px;
-	overflow:auto;
-}
-</style>
-
-
-
-<script>
-/*
-var raw_interface_text_object ;
-function receiveRawInterfaceText ( j ) {
-	raw_interface_text_object = j ;
-}
-*/
-var global_namespace_cache = {} ;
-
-function receiveEnglishNamespaceData ( j ) {
-	global_namespace_cache['en.wikipedia.org'] = j ;
-}
-
+  <html lang="en">
+  <head>
+        <script>
+(function(w, d) {
+	w.adthrive = w.adthrive || {};
+	w.adthrive.cmd = w.adthrive.cmd || [];
+	w.adthrive.plugin = 'adthrive-ads-1.0.40-manual';
+	w.adthrive.host = 'ads.adthrive.com';
+	w.adthrive.threshold = Math.floor(Math.random() * 100 + 1);
+	var s = d.createElement('script');
+	s.async = true;
+	s.referrerpolicy='no-referrer-when-downgrade';
+	s.src = 'https://' + w.adthrive.host + '/sites/61575e8e934c48ea554b3caa/ads.min.js?referrer=' + w.encodeURIComponent(w.location.href) + '&threshold='+w.adthrive.threshold;
+	var n = d.getElementsByTagName('script')[0];
+	n.parentNode.insertBefore(s, n);
+})(window, document);
 </script>
-<!--<script src='https://meta.wikimedia.org/w/api.php?action=parse&prop=wikitext&page=PetScan/Interface&format=json&callback=receiveRawInterfaceText'></script>-->
-<script src='https://en.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=namespaces&format=json&callback=receiveEnglishNamespaceData'></script>
-<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap-v4-rtl/4.5.2-1/js/bootstrap.bundle.min.js"></script>
-<script src="https://tools-static.wmflabs.org/tooltranslate/tt.js"></script>
-<script src='main.js'></script>
-</head>
-<body style='display:none'>
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="referrer" content="unsafe-url">
+    <meta property="fb:app_id" content="178450008855735">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://merriam-webster.com/assets">
+    <link rel="preconnect" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://telemetry.art19.com">
+    <link rel="dns-prefetch" href="https://entitlements.jwplayer.com">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+        <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WW4KHXF');</script>
+    <!-- End Google Tag Manager -->
 
-	<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	<span class="navbar-toggler-icon"></span>
-	</button>
+                      
+              <title>Imperative Definition &amp; Meaning - Merriam-Webster</title>
+              <meta name="description" content="The meaning of IMPERATIVE is not to be avoided or evaded : necessary. How to use imperative in a sentence. Synonym Discussion of Imperative.">
+              <link rel="canonical" href="https://www.merriam-webster.com/dictionary/imperative" />
+            
+                                            <link rel="search" type="application/opensearchdescription+xml" href="/opensearch/dictionary.xml" title="Merriam-Webster Dictionary" />
+    
+              
+<script type="application/ld+json">
+[{
+	"@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Definition of imperative",
+    "url": "https://www.merriam-webster.com/dictionary/imperative",
+    "description": "Definition of 'imperative' by Merriam-Webster",
+    "isPartOf": {
+    	"@id":"https://www.merriam-webster.com/#website"}
+            ,"relatedLink": [
+                            "https://www.merriam-webster.com/dictionary/categorical%20imperative",                            "https://www.merriam-webster.com/dictionary/the%20imperative"                    ]
+    },
+{
+	"@context": "https://schema.org",
+    "@type":"WebSite",
+    "@id":"https://www.merriam-webster.com/#website",
+    "url": "https://www.merriam-webster.com",
+    "name": "Merriam-Webster Dictionary",
+    "potentialAction": {
+    	"@type": "SearchAction",
+    	"target": "https://www.merriam-webster.com/dictionary/{search_term_string}?utm_campaign=sd&utm_medium=serp&utm_source=jsonld",
+    	"query-input": "required name=search_term_string"}
+},
+{
+	"@context": "https://schema.org",
+	"@type":["DefinedTermSet","Book"],
+	"@id":"https://www.merriam-webster.com",
+	"name": "Dictionary by Merriam-Webster"
+},
+{
+	"@context":"https://schema.org",
+	"@type": "DefinedTerm",
+    "@id": "https://www.merriam-webster.com/dictionary/imperative",
+    "name": "imperative",
+    "inDefinedTermSet": "https://www.merriam-webster.com/"
+}
+            ,{
+        "@context":"https://schema.org",
+        "@type": "AudioObject",
+        "contentURL": "https://media.merriam-webster.com/audio/prons/en/us/mp3/i/impera01.mp3",
+        "description":"How to pronounce imperative (audio)",
+        "encodingFormat":"audio/mpeg",
+        "name":"impera01.mp3"
+    }
+]
+</script>    
+                              <meta property="og:title" content="Definition of IMPERATIVE" />
+                                <meta property="og:image" content="https://merriam-webster.com/assets/mw/static/social-media-share/mw-logo-245x245@1x.png" />
+                                  <meta property="og:url" content="https://www.merriam-webster.com/dictionary/imperative" />
+                                <meta property="og:description" content="not to be avoided or evaded : necessary; of, relating to, or constituting the grammatical mood that expresses the will to influence the behavior of another; expressive of a command, entreaty, or exhortation… See the full definition" />
+                                <meta property="og:aria-text" content="Post the Definition of imperative to Facebook" />
+                    
+                                      <meta name="twitter:title" content="Definition of IMPERATIVE" />
+                                                    <meta name="twitter:image" content="https://merriam-webster.com/assets/mw/static/social-media-share/mw-logo-245x245@1x.png" />
+                                                    <meta name="twitter:url" content="https://www.merriam-webster.com/dictionary/imperative" />
+                                                    <meta name="twitter:description" content="not to be avoided or evaded : necessary… See the full definition" />
+                                                                  <meta name="twitter:card" content="summary" />
+                                                    <meta name="twitter:site" content="@MerriamWebster" />
+                                                    <meta name="twitter:aria-text" content="Share the Definition of imperative on Twitter" />
+                              
+        <link rel="icon" href="/favicon.svg">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#305f7a">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
 
-	<div class="collapse navbar-collapse" id="bd-main-nav">
-	<ul class="navbar-nav mr-auto">
-		<li class="nav-item"><a class="nav-item nav-link active" tt="toolname" href="/"></a></li>
-		<li class="nav-item"><a target='_blank' class="nav-item nav-link" tt="manual" href="#"></a></li>
-		<li class="nav-item"><a target='_blank' class="nav-item nav-link" tt="issues" href="https://github.com/magnusmanske/petscan_rs/issues"></a></li>
-		<li class="nav-item"><div class="btn-group nav-item nav-link" id='interface_languages_wrapper'></div></li>
-	</ul>
+            
+                              <!-- Playfair, 700, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Playfair, 700, italic, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu5DRmFqWF_g.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Playfair, 400, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, latin-ext -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFW50bf8pkAp6a.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, italic, latin-ext -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Xdc1GAK6bt6o.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 400, italic, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Zdc1GAK6b.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 700, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOUuhpKKSTjw.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Open Sans, 700, italic, latin -->
+<link rel="preload" as="font" href="https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhrIqOxjaPX.woff2" type="font/woff2" crossorigin="anonymous">
+<!-- Minimize the following css -->
+<style type="text/css" media="screen, print">
+/* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Udc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0ddc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Vdc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0adc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Wdc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Xdc1GAK6bt6o.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 400; src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://merriam-webster.com/assets/mw/fonts/mem6YaGs126MiZpBA-UFUK0Zdc1GAK6b.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhmIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhvIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhnIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhoIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhkIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhlIqOxjaPXZSk.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: italic; font-weight: 700; src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/memnYaGs126MiZpBA-UFUKWiUNhrIqOxjaPX.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFWJ0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFUZ0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFWZ0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFVp0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFWp0bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFW50bf8pkAp6a.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 400; src: local('Open Sans Regular'), local('OpenSans-Regular'), url('https://merriam-webster.com/assets/mw/fonts/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOX-hpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; } /* cyrillic */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOVuhpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* greek-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOXuhpKKSTj5PW.woff2') format('woff2'); unicode-range: U+1F00-1FFF; } /* greek */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOUehpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0370-03FF; } /* vietnamese */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOXehpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOXOhpKKSTj5PW.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Open Sans'; font-style: normal; font-weight: 700; src: local('Open Sans Bold'), local('OpenSans-Bold'), url('https://merriam-webster.com/assets/mw/fonts/mem5YaGs126MiZpBA-UN7rgOUuhpKKSTjw.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu4DRmFqWF_ljR.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* vietnamese */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu6zRmFqWF_ljR.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu6jRmFqWF_ljR.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: italic; font-weight: 700; src: local('Playfair Display Bold Italic'), local('PlayfairDisplay-BoldItalic'), url('https://merriam-webster.com/assets/mw/fonts/nuFnD-vYSZviVYUb_rj3ij__anPXDTngOWwu5DRmFqWF_g.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTjYgEM86xRbPQ.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* vietnamese */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTPYgEM86xRbPQ.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTLYgEM86xRbPQ.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 400; src: local('Playfair Display Regular'), local('PlayfairDisplay-Regular'), url('https://merriam-webster.com/assets/mw/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } /* cyrillic */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lWoe5j5hNKe1_w.woff2') format('woff2'); unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; } /* vietnamese */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lWEe5j5hNKe1_w.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB; } /* latin-ext */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lWAe5j5hNKe1_w.woff2') format('woff2'); unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF; } /* latin */ @font-face { font-display: block; font-family: 'Playfair Display'; font-style: normal; font-weight: 700; src: local('Playfair Display Bold'), local('PlayfairDisplay-Bold'), url('https://merriam-webster.com/assets/mw/fonts/nuFlD-vYSZviVYUb_rj3ij__anPXBYf9lW4e5j5hNKc.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+</style>          
+                                      <link rel="stylesheet" href="https://merriam-webster.com/assets/mw/dist/compiled/css/style-dsp-redesign-definitions.c724d77d58de9ee75e2e.css" media="screen">
+            
+    
+                                      <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://merriam-webster.com/assets/mw/dist/compiled/css/style-dsp-redesign-definitions-defer.ad5d4ce4a1782dba8842.css">
+            
+        
+    <script>!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);</script>
+        <script>var googletag=googletag||{};googletag.cmd=googletag.cmd||[];</script>
+    <script>
+      googletag.cmd.push(function() {
+          googletag.pubads().setTagForChildDirectedTreatment(0);
+          googletag.pubads().setTagForUnderAgeOfConsent(0);
+      });
+    </script>
+            <script>window.disableAllAds = true;</script>
+        <style type="text/css">.abl {display:none!important;}</style>    
+      
+        <script>window.mwdata={"importModules":[],"search":"imperative","statusRefreshTime":600,"gaSiteId":"UA-296234-25","gtagSlots":[],"cat":"GR-2a","fbAppId":"178450008855735","fbSdkReady":false,"processAds":false,"fbSdkQueue":[],"assetsDomain1":"https://merriam-webster.com/assets","assetsDomain2":"https://merriam-webster.com/assets","svgPath":"","assetsDomain3":"https://media2.merriam-webster.com","pronsDomain":"https://media.merriam-webster.com","ssoDomainFront":"https://sso.merriam-webster.com","contentSource":"OWL","contentType1":null,"contentType2":null,"contentType3":null,"taxon":null,"userSearch":"imperative","partialMatch":"false","jwkey":"zw1JPzyqv2DcY1xJTZncAt9HKaUKLEztLQFMqw==","jwPlayerPath":"https://merriam-webster.com/assets/mw/jwplayer-8.10.3/","gaNoTrackOnLoad":false,"gaSpecialTracking":null,"gaSpecialTrackingWord":null,"ref":"dictionary","canonicalURL":"https://www.merriam-webster.com/dictionary/imperative"};window.mwdata.partialURL=location.pathname;</script>
+                
+          
+    
+          
+            <script defer src="https://merriam-webster.com/assets/mw/dist/compiled/js/js-dsp-redesign-definitions.10a9134fe3fe9c98ada0.js"></script>
+      
+      <script src="https://www.googleoptimize.com/optimize.js?id=OPT-N8CP5K8"></script>
 
-	<div class="btn-group nav-item nav-link"><a target='_blank' class="btn btn-outline-warning" tt="examples" href="#"></a></div>
-	<div class="btn-group nav-item nav-link"><button class='btn btn-outline-default' tt='toggle_list' id='tab-list'></button></div>
-    <a style="margin:0px;padding:0px;margin-top:4px;margin-left:10px;" href="https://tools.wmflabs.org" target='_blank'><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Toolforge_logo.svg/32px-Toolforge_logo.svg.png" tt_title="wmf_powered" border="0" width="32px"></a>
+  </head>
+  <body class='no-touch definitions-page dictionary-lookup'>
+      <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WW4KHXF"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="outer-container">
+      <div class="main-container">
+                <div class="menu-filler"></div>
+<header class="shrinkheader">
+  <div class="container navbar">
+    <a href="/" class="logo-cnt">
+      <img class="svg" src="/images/svg/mw-logo--color.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+    </a>
+    <div class="since1828-cnt">
+      <span class="since1828-text">SINCE</span> <span class="since1828-num">1828</span>
+    </div>
+    <a rel="nofollow" href="/settings" aria-label="Settings" class="nav-username ul-username ul-logged-in-show"></a>
+    <div class="nav-btn-cnt menu-toggle">
+      <img class="svg" src="/images/svg/menu-toggle.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+    </div>
+    <div class="nav-search-btn mob-search-btn">
+      <span class="search-icon">
+        <img width="26px" height="29px" class="svg" src="/images/svg/search.svg" alt="Search Icon" aria-hidden="true">
+      </span>
+    </div>  
 
+    <div class="search-cnt">
+      <nav class="link-bar">
+        <div class="link-bar-l" role="navigation">
+          <a class="link-bar-l__link" href="/word-games">GAMES & QUIZZES</a>
+          <a class="link-bar-l__link" href="/thesaurus">THESAURUS</a>
+          <a class="link-bar-l__link" href="/word-of-the-day">WORD OF THE DAY</a>
+          <a class="link-bar-l__link" href="/words-at-play">FEATURES</a>
+          <li class="link-bar-l__link link-bar-l__link__dropdown">SHOP 
+            <span class="link-bar-l__link__dropdown__arrow"><b role="presentation"></b></span>                             
+            <div class="link-bar-l__dropdown">
+                <a 
+                href="/reviews?utm_source=mw&utm_medium=referral&utm_campaign=nav" target="_blank" rel="noopener noreferrer"
+                class="link-bar-l__dropdown__link">Buying Guide <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+                <a 
+                href="https://shop.merriam-webster.com/?utm_source=mwsite&utm_medium=nav&utm_content=header" target="_blank" rel="noopener noreferrer"
+                class="link-bar-l__dropdown__link">M-W Books <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+            </div>
+          </li>
+          <a class="link-bar-l__link" target="_blank" rel="noopener noreferrer" href="https://unabridged.merriam-webster.com/subscriber/register/p1">JOIN MWU</a>
+        </div>      
+        <div class="link-bar-r ul-login-menu">
+          <ul class="ul-login-links">
+            <li class="ul-logged-in-show ul-logged-in-menu">
+              <a rel="nofollow" class="ul-link-settings" aria-label="Settings" href="/settings"><div class="ul-username"></div>
+                <span class="ul-up-down">
+                  <img width="12px" height="8px" class="svg" src="/images/svg/ul-icon-up-down.svg" alt="Up Down" aria-hidden="true">
+                </span>
+              </a>
+              <div class="ul-loggedin-links">
+                <a rel="nofollow" class="ul-favorites" href="/saved-words">
+                  <img class="svg" src="/images/svg/ul-icon-wordlist.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+                  <span class="on-user-logged-in">MY WORDS</span><span class="on-user-logged-out">MY WORDS</span>
+                </a>
+                <a rel="nofollow" class="ul-recents" href="recents">
+                  <span class="ul-recents-icon">
+                    <img width="18px" height="18px" class="svg" src="/images/svg/ul-icon-recents.svg" alt="Recents Icon" aria-hidden="true">
+                  </span>
+                  <span>RECENTS</span>
+                </a>
+                <a rel="nofollow" aria-label="Settings" href="/settings">settings</a>
+                <a rel="nofollow" class="ul-sign-out" href="/logout">log out</a>
+              </div>              
+            </li>
+            <li class="ul-logged-out-show"><a rel="nofollow" href="/login">LOG IN</a></li>
+            <li class="ul-logged-out-show"><a rel="nofollow" href="/register">REGISTER</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <form class="container s-frm clearfix" id="mw-search-frm" action="/dictionary">              
+        <div class="s-term-cnt border-box">
+          <button class="search-bar-submit" aria-label="Search">
+            <img class="svg" src="/images/svg/search-bar--submit.svg" alt="Search Bar Submit Icon" aria-hidden="true">
+          </button>
+          <input aria-label="Search term" name="s" id="s-term" class="s-term" type="text" value="imperative" autocapitalize="off" spellcheck="false" autocorrect="off" autocomplete="off" />
+          <div class="clear-term-cnt" id="clear-term-cnt">
+            <img class="svg" src="/images/svg/search--clear.svg" alt="Clear Search Icon" aria-hidden="true">
+          </div>
+          <div class="nav-search-btn desk-search-btn">
+            <span class="search-icon">
+              <img width="26px" height="29px" class="svg" src="/images/svg/search.svg" alt="Search Icon" aria-hidden="true">
+            </span>
+          </div>                
+        </div>
+                <div id="mw-search-tabs" class="header-search-tabs  search-dictionary">
+          <div class="button dictionary-tab  active" data-search-url="/dictionary" data-ref="dictionary"><span class="search-ref">dictionary</span></div>
+          <div class="button thesaurus-tab " data-search-url="/thesaurus" data-ref="thesaurus"><span class="search-ref">thesaurus</span></div>
+        </div>
+        <div id="mw-autocomplete" class="s-autocomplete border-box"></div>
+      </form>
+    </div>
   </div>
-</nav>
-
-
-<div class="container mt-2">
-<div class="row">
-<div class="col-md-12">
-
-<div id='referrer_box' class="alert alert-primary" role="alert" style="display:none;">
-	<span tt="referrer"></span> <a id='referrer' href=''class='external'></a>
-</div>
-
-<!--<div class="alert alert-primary" role="alert" tt="v2_alert"></div>-->
-
-<form id='main_form' method='post' action='/' class='form'>
-
-<ul class="nav nav-tabs" role="tablist">
-	<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_categories" role="tab"><span tt='categories'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_pageprops" role="tab"><span tt='page_props'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_templates_n_links" role="tab"><span tt='templates_links'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_other_sources" role="tab"><span tt='other_sources'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_wikidata" role="tab"><span tt='wikidata'></span></a></li>
-<!--	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_wdfist" role="tab"><span>WDFIST</span></a></li>-->
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_output" role="tab"><span tt='output'></span></a></li>
-</ul>
-
-<div class="tab-content">
-
-
-<div class="tab-pane active" id="tab_categories" role="tabpanel">
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="language"></label>
-<div class="col-sm-4"><input type="text" class="form-control" name="language" value='en'></div>
-<div class="col-sm-6">
-<a href='#' style='margin-left:20px;' tabindex="-1" id='quick_commons' tt='site_commons'></a>
-<a href='#' style='margin-left:20px;' tabindex="-1" id='quick_wikispecies' tt='site_wikispecies'></a>
-<a href='#' style='margin-left:20px;' tabindex="-1" id='quick_wikidata' tt='site_wikidata'></a>
-<!--<span class='smaller' tt='projects_note'></span>-->
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="project"></label>
-<div class="col-sm-4"><input type="text" class="form-control" name="project" value='wikipedia'></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="depth"></label>
-<div class="col-sm-2"><input type="number" class="form-control" name="depth" value='0'></div>
-<div class='col-sm-8 smaller' tt='depth_explanation'></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="categories"></label>
-<div class="col-sm-10"><textarea class="form-control" name='categories' rows=3 style='width:100%'></textarea></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="combination"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="combination" value="subset"> <span tt='comb_subset'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="combination" value="union"> <span tt='comb_union'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="negative_categories"></label>
-<div class="col-sm-10"><textarea class="form-control" name='negcats' rows=3 style='width:100%'></textarea></div>
-</div>
-
-
-</div> <!--tab panel-->
-<div class="tab-pane" id="tab_pageprops" role="tabpanel">
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='namespaces'></span><br/><span class='smaller current_wiki'></span></label>
-<div class="col-sm-10" id='namespaces'></div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='size'></span></label>
-<div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="larger"></div></div>
-	<input class="form-control" tt_placeholder="size_explanation" name="larger" value="" type="text"></div>
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="smaller"></div></div>
-	<input class="form-control" tt_placeholder="size_explanation" name="smaller" value="" type="text"></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-7">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="since_rev0"></div></div>
-	<input class="form-control" tt_placeholder="since_rev0_explanation" name="since_rev0" value="" type="text"></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='link_number'></span></label>
-<div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="minlinks"></div></div>
-	<input class="form-control" name="minlinks" placeholder="#" value="" type="text"></div>
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="maxlinks"></div></div>
-	<input class="form-control" name="maxlinks" placeholder="#" value="" type="text"></div>
-</div>
-</div>
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='edits'></span></label>
-<div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="before"></div></div>
-	<input class="form-control" tt_placeholder="date_format" name="before" value="" type="text"></div>
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="after"></div></div>
-	<input class="form-control" tt_placeholder="date_format" name="after" value="" type="text"></div>
-</div></div>
-<div class="form-group row">
-<div class="col-sm-2">
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="max_age"></div></div>
-	<input class="form-control" tt_placeholder="max_age_format" name="max_age" value="" type="text"></div>
-</div><div class="col-sm-5">
-<label><input type='checkbox' name='only_new' /> <span tt='only_new'></span></label>
-</div>
-</div>
-
-
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="show_redirects"></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="show_redirects" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_redirects" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_redirects" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-2 form-control-label" tt="show_soft_redirects" style='font-weight: bold'></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="show_soft_redirects" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_soft_redirects" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_soft_redirects" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-2 form-control-label" tt="show_disambiguation_pages" style='font-weight: bold'></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="show_disambiguation_pages" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_disambiguation_pages" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_disambiguation_pages" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='edits'></span>: <span tt='edit_bots'></span></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="edits[bots]" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[bots]" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[bots]" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-1 form-control-label" style='font-weight: bold'> <span tt='edit_anons'></span></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="edits[anons]" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[anons]" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[anons]" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-1 form-control-label" style='font-weight: bold'><span tt='edit_flagged'></span></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="edits[flagged]" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[flagged]" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[flagged]" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='page_image'></span></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="page_image" value="any"> <span tt='page_image_any'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="yes"> <span tt='page_image_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="free"> <span tt='page_image_free'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="nonfree"> <span tt='page_image_nonfree'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="no"> <span tt='page_image_no'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row" id='ores_options'>
-<label class="col-sm-2 form-control-label"><span tt='ores'></span></label>
-<div class="col-sm-2" tt_title='ores_caution'>
-	<select name="ores_type" id='ores_model_select'>
-		<option value='any' tt='ores_any'></option>
-		<option value='damaging'>damaging</option>
-		<option value='goodfaith'>goodfaith</option>
-		<option value='reverted'>reverted</option>
-		<option value='draftquality'>draftquality</option>
-		<option value='wp10'>wp10</option>
-	</select>
-</div>
-<div class="col-sm-5">
-	<span tt='ores_probability'></span>
-	<input type='text' name='ores_prob_from' style='width:100px' placeholder='0.00' /> &mdash; <input type='text' name='ores_prob_to' style='width:100px' placeholder='1.00' />
-</div>
-<div class="col-sm-3">
-	<span tt='ores_prediction'></span>
-	<div class="radio-inline"><label><input type="radio" name="ores_prediction" value="any"> <span tt='ores_prediction_any'></span></label></div>
-	<div class="radio-inline"><label><input type="radio" name="ores_prediction" value="yes"> <span tt='ores_yes'></span></label></div>
-	<div class="radio-inline"><label><input type="radio" name="ores_prediction" value="no"> <span tt='ores_no'></span></label></div>
-</div>
-</div>
-
-</div> <!--tab panel-->
-
-<div class="tab-pane" id="tab_templates_n_links" role="tabpanel">
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="templates"></label>
-<div class="col-sm-3"><div tt='templates_yes'></div><textarea class="form-control" name='templates_yes' rows=4 style="width:100%"></textarea><div><label><input type='checkbox' name='templates_use_talk_yes' /> <span tt='templates_use_talk_instead'></span></label></div></div>
-<div class="col-sm-3"><div tt='templates_any'></div><textarea class="form-control" name='templates_any' rows=4 style="width:100%"></textarea><div><label><input type='checkbox' name='templates_use_talk_any' /> <span tt='templates_use_talk_instead'></span></label></div></div>
-<div class="col-sm-3"><div tt='templates_no' ></div><textarea class="form-control" name='templates_no'  rows=4 style="width:100%"></textarea><div><label><input type='checkbox' name='templates_use_talk_no'  /> <span tt='templates_use_talk_instead'></span></label></div></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="outlinks"></label>
-<div class="col-sm-3"><div tt='outlinks_yes'></div><textarea class="form-control" name='outlinks_yes' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_any'></div><textarea class="form-control" name='outlinks_any' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_no' ></div><textarea class="form-control" name='outlinks_no'  rows=4 style="width:100%"></textarea></div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="links_to"></label>
-<div class="col-sm-3"><div tt='outlinks_yes'></div><textarea class="form-control" name='links_to_all' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_any'></div><textarea class="form-control" name='links_to_any' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_no' ></div><textarea class="form-control" name='links_to_no'  rows=4 style="width:100%"></textarea></div>
-</div>
-
-
-</div> <!--tab panel-->
-<div class="tab-pane" id="tab_other_sources" role="tabpanel">
-
-<!--
-<div class="row">
-<div class='col-sm-1'></div>
-<div class='col-sm-11' tt='multi_result_note'></div>
-</div>
--->
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sparql"></label>
-<div class="col-sm-10">
-<textarea class="form-control" tt_placeholder="sparql_note" name='sparql' rows=4 style="width:100%"></textarea>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="manual_list"></label>
-<div class="col-sm-10">
-<textarea class="form-control" tt_placeholder="manual_list_note" name='manual_list' rows=4 style="width:100%"></textarea>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-sm-2"></div>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="manual_list_wiki"></div></div>
-	<input class="form-control" tt_placeholder="manual_list_wiki_note" name="manual_list_wiki" value="" type="text"></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="pagepile"></label>
-<div class="col-sm-4">
-<input type="text" class="form-control" tt_placeholder="pagepile_note" name='pagepile' />
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="search"></label>
-<div class="col-sm-4">
-<input type="text" class="form-control" tt_placeholder="search_note" name='search_query' />
-</div>
-<div class="col-sm-2">
-<input type="text" class="form-control" tt_placeholder="search_wiki_note" name='search_wiki' />
-</div>
-<div class="col-sm-2">
-<span tt='max_results'></span>
-</div>
-<div class="col-sm-2">
-<input type="number" class="form-control" name='search_max_results' value='500' />
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="wikidata"></label>
-<div class="col-sm-5"><input type="text" class="form-control col-sm-4" tt_placeholder="wikidata_source_ph" name='wikidata_source_sites' /></div>
-<div class="col-sm-5"><span tt='wikidata_source'></span></div>
-</div>
-<div class="form-group row">
-<div class="col-sm-2"></div>
-<div class="col-sm-10"><span class='smaller' tt='wikidata_source_note'></span></div>
-</div>
-
-
-
-<div class="form-group row">
-	<label class="col-sm-2 form-control-label" tt="namespaces"></label>
-	<div class="col-sm-10">
-		<div class="radio-inline"><label><input type="radio" name="namespace_conversion" value="keep"> <span tt='namespace_conversion_keep'></span></label></div>
-		<div class="radio-inline"><label><input type="radio" name="namespace_conversion" value="topic"> <span tt='namespace_conversion_topic'></span></label></div>
-		<div class="radio-inline"><label><input type="radio" name="namespace_conversion" value="talk"> <span tt='namespace_conversion_talk'></span></label></div>
-	</div>
-</div>
-
-	
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="subpages"></label>
-<div class="col-sm-3"><div class="radio-inline"><label><input type="checkbox" name="add_subpages" value="1"> <span tt='add_subpages'></span></label></div></div>
-<div class="col-sm-7">
-<span tt='subpage_filter' style='vertical-align:top'></span>&nbsp;
-<div class="radio-inline"><label><input type="radio" name="subpage_filter" value="either"> <span tt='subpages_either'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="subpage_filter" value="subpages"> <span tt='subpages_only'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="subpage_filter" value="no_subpages"> <span tt='subpages_no'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="common_wiki"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="auto"> <span tt='common_wiki_auto'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="cats"> <span tt='common_wiki_cats'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="pagepile"> <span tt='common_wiki_pagepile'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="manual"> <span tt='common_wiki_manual'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="wikidata"> <span tt='common_wiki_wikidata'></span></label></div>
-<div class="radio-inline" style="white-space:nowrap">
-	<label><input type="radio" name="common_wiki" value="other"></label>
-	<input class="form-control" type="text" name="common_wiki_other" tt_placeholder="common_wiki_other"  style='display:inline-block;' />
-</div>
-</div>
-</div>
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="source_combination"></label>
-<div class="col-sm-10">
-<div class="input-group" style="width:100%">
-<input type='text' class="form-control" tt_placeholder="source_combination_hint" name='source_combination' />
-</div>
-<div tt='source_combination_description' class='smaller'></div>
-</div>
-</div>
-
-
-</div> <!--tab panel-->
-<div class="tab-pane" id="tab_wikidata" role="tabpanel">
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="pages_with_items"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="no"><span tt='wikidata_no'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="any"><span tt='wikidata_any'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="with"><span tt='wikidata_with'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="without"><span tt='wikidata_without'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="wikidata_label_language"></label>
-<div class="col-sm-4">
-<input type='text' name='wikidata_label_language' class='form-control' tt_placeholder='wikidata_label_language_ph' />
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="wikidata_prop_item_use"></label>
-<div class="col-sm-4">
-<input type='text' name='wikidata_prop_item_use' class='form-control' tt_placeholder='wikidata_prop_item_use_ph' style='margin-right:20px;' />
-</div>
-<div class="col-sm-6">
-<div class="radio-inline"><label><input type="radio" name="wpiu" value="any"><span tt='wpiu_uses_any'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wpiu" value="all"><span tt='wpiu_uses_all'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wpiu" value="none"><span tt='wpiu_uses_none'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="checkbox" name="wpiu_no_statements" value="1"> <span tt='wpiu_no_statements'></span></label></div>
-<div class="radio-inline"><label><input type="checkbox" name="wpiu_no_sitelinks" value="1"> <span tt='wpiu_no_sitelinks'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sitelinks"></label>
-<div class="col-sm-10">
-<span tt='sitelink_note'></span>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-10">
-<div class="row">
-<div class="col-sm-3"><div tt='sitelinks_yes'></div><textarea class="form-control" name='sitelinks_yes' tt_placeholder='ph_sites' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='sitelinks_any'></div><textarea class="form-control" name='sitelinks_any' tt_placeholder='ph_sites' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='sitelinks_no' ></div><textarea class="form-control" name='sitelinks_no'  tt_placeholder='ph_sites' rows=4 style="width:100%"></textarea></div>
-</div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="min_sitelink_count"></div></div>
-	<input class="form-control" name="min_sitelink_count" value="" type="number"></div>
-</div>
-<div class="col-sm-1"></div>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="max_sitelink_count"></div></div>
-	<input class="form-control" name="max_sitelink_count" value="" type="number"></div>
-</div>
-</div>
-
-
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="labels_etc"></label>
-<div class="col-sm-10"><span tt='labels_note'></span></div>
-</div>
-<div class="form-group row">
-<div class="col-sm-2"></div>
-<div class="col-sm-3">
-<div tt='labels_yes'></div>
-<textarea class="form-control" name='labels_yes' tt_placeholder='ph_labels' rows=4 style="width:100%"></textarea>
-<div>
-<label><input type='checkbox' name='cb_labels_yes_l' value='1' /> <span tt='labels'></span></label>
-<label><input type='checkbox' name='cb_labels_yes_a' value='1' /> <span tt='aliases'></span></label>
-<label><input type='checkbox' name='cb_labels_yes_d' value='1' /> <span tt='descriptions'></span></label>
-</div>
-<div><input class="form-control" type='text' name='langs_labels_yes' tt_placeholder='ph_langs_labels' /></div>
-</div>
-<div class="col-sm-3">
-<div tt='labels_any'></div>
-<textarea class="form-control" name='labels_any' tt_placeholder='ph_labels' rows=4 style="width:100%"></textarea>
-<div>
-<label><input type='checkbox' name='cb_labels_any_l' value='1' /> <span tt='labels'></span></label>
-<label><input type='checkbox' name='cb_labels_any_a' value='1' /> <span tt='aliases'></span></label>
-<label><input type='checkbox' name='cb_labels_any_d' value='1' /> <span tt='descriptions'></span></label>
-</div>
-<div><input class="form-control" type='text' name='langs_labels_any' tt_placeholder='ph_langs_labels' /></div>
-</div>
-<div class="col-sm-3">
-<div tt='labels_no' ></div>
-<textarea class="form-control" name='labels_no'  tt_placeholder='ph_labels' rows=4 style="width:100%"></textarea>
-<div>
-<label><input type='checkbox' name='cb_labels_no_l' value='1' /> <span tt='labels'></span></label>
-<label><input type='checkbox' name='cb_labels_no_a' value='1' /> <span tt='aliases'></span></label>
-<label><input type='checkbox' name='cb_labels_no_d' value='1' /> <span tt='descriptions'></span></label>
-</div>
-<div><input class="form-control" type='text' name='langs_labels_no' tt_placeholder='ph_langs_labels' /></div>
-</div>
-<div class="col-sm-2"></div>
-</div>
-
-</div> <!--tab panel-->
-
-
-
-<!--
-<div class="tab-pane" id="tab_wdfist" role="tabpanel">
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-10">
-<div>
-	THIS WILL RUN WDFIST AFTER NOTMAL OPERATIONS AND RETURN DIFFERENT OUTPUT
-</div>
-<label><input type='checkbox' name='wdf_main' /> <span>USE WDFIST</span></label>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label">FOLLOW</label>
-<div class="col-sm-10">
-<label><input type='checkbox' name='wdf_langlinks' /> <span>LANGLINKS</span></label>
-<label><input type='checkbox' name='wdf_coords' /> <span>COORDINATES</span></label>
-<label><input type='checkbox' name='wdf_search_commons' /> <span>SEARCH COMMONS</span></label>
-<label><input type='checkbox' name='wdf_commons_cats' /> <span>COMMONS CATEGORIES</span></label>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label">OPTIONS</label>
-<div class="col-sm-10">
-<label><input type='checkbox' name='wdf_only_items_without_p18' /> <span>ONLY WITHOUT P18</span></label>
-<label><input type='checkbox' name='wdf_only_files_not_on_wd' /> <span>ONLY FILES NOT USED ON WIKIDATA</span></label>
-<label><input type='checkbox' name='wdf_only_jpeg' /> <span>ONLY JPEG</span></label>
-<label><input type='checkbox' name='wdf_max_five_results' /> <span>MAX 5 RESULTS</span></label>
-<label><input type='checkbox' name='wdf_only_page_images' /> <span>PAGE IMAGES ONLY</span></label>
-<label><input type='checkbox' name='wdf_allow_svg' /> <span>SHOW SVG</span></label>
-</div>
-</div>
-
-</div>-->
-<!--tab panel-->
-
-
-
-
-<div class="tab-pane" id="tab_output" role="tabpanel">
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="format"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="format" value="html"> HTML</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="csv"> CSV</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="tsv"> TSV</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="wiki"> Wiki</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="json"> JSON</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="pagepile"> PagePile</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="kml"> KML</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="plain"> <span tt="plain_text"></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="output_compatability"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="output_compatability" value="catscan"> <span tt='catscan'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="output_compatability" value="quick-intersection"> <span tt='quick_intersection'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='sparse' /> <span tt='sparse'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='json-pretty' /> <span tt='pretty_json'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sort"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="sortby" value="none"> <span tt='sort_by_none'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="title"> <span tt='sort_by_title'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="ns_title"> <span tt='sort_by_ns_title'></label></div><br/>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="size"> <span tt='sort_by_size'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="date"> <span tt='sort_by_date'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="incoming_links"> <span tt='sort_by_incoming_links'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="filesize"> <span tt='sort_by_filesize'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="uploaddate"> <span tt='sort_by_uploaddate'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="sitelinks"> <span tt='sort_by_sitelinks'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="random"> <span tt='sort_by_random'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="defaultsort"> <span tt='sort_by_defaultsort'></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sort_order"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="sortorder" value="ascending"><span tt='sort_ascending'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortorder" value="descending"><span tt='sort_descending'></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="files"></label>
-<div class="col-sm-10">
-<label><input type='checkbox' name='ext_image_data' /> <span tt='ext_image_data'></span></label>
-<label><input type='checkbox' name='file_usage_data' /> <span tt='file_usage_data'></span></label>
-<label><input type='checkbox' name='file_usage_data_ns0' /> <span tt='file_usage_data_ns0'></span></label>
-<label><input type='checkbox' name='thumbnails_in_wiki_output' /> <span tt='thumbnails_in_wiki_output'></span></label>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="add_metadata"></label>
-<div class="col-sm-10">
-<label style='margin-right:20px;'><input type='checkbox' name='add_image' /> <span tt='add_image'></span></label>
-<label style='margin-right:20px;'><input type='checkbox' name='add_coordinates' /> <span tt='add_coordinates'></span></label>
-<label style='margin-right:20px;'><input type='checkbox' name='add_defaultsort' /> <span tt='add_defaultsort'></span></label>
-<label style='margin-right:20px;'><input type='checkbox' name='add_disambiguation' /> <span tt='add_disambiguation'></span></label>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="regexp_filter"></label>
-<div class="col-sm-4">
-<input type='text' name='regexp_filter' class='form-control' tt_placeholder='regexp_filter_rules' />
-</div>
-<div class="col-sm-6">
-<span tt='regexp_filter_note'></span>
-</div>
-</div>
-
-
-<div class="form-group row">
-	<label class="col-sm-2 form-control-label" tt="search_filter"></label>
-	<div class="col-sm-4">
-	<input type='text' name='search_filter' class='form-control' tt_placeholder='search_filter_rules' />
-	</div>
-	<div class="col-sm-6">
-	<span tt='search_filter_note'></span>
-	</div>
-</div>
-	
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="redlinks"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type='checkbox' name='show_redlinks' /> <span tt='show_redlinks'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='remove_template_redlinks' /> <span tt='remove_template_redlinks'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='article_redlinks_only' /> <span tt='article_redlinks_only'></span></label></div>
-</div>
-<div class="col-sm-2"></div>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="min_redlink_count"></div></div>
-	<input class="form-control" name="min_redlink_count" value="" type="number"></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="limit"></label>
-<div class="col-sm-4">
-<input type='number' name='output_limit' class='form-control' tt_placeholder='ph_limit' />
-</div>
-</div>
-
-
-
-</div> <!--tab panel-->
-
-<div class='row' style='padding-top:10px;margin-top:20px;'>
-<div class="col-sm-2">
-<input type='submit' id='doit' name='doit' name='doit' class='btn btn-lg btn-outline-primary' tt_value='doit' accesskey='s' />
-</div>
-<div class="col-sm-10">
-<span id='permalink'></span>
-</div>
-</div>
-
-
-</div>
-
-<input type='hidden' name='referrer_url' value='' />
-<input type='hidden' name='referrer_name' value='' />
-
-
-<input type='hidden' name='interface_language' value='en' />
-<input type='hidden' name='active_tab' value='' />
-<span id='querystring' style='display:none'>ns%5B6%5D=1&categories=Industries&language=commons&project=wikimedia</span>
-<!--psid-->
-</form>
-
-
-</div>
-
-
-</div><!--row-->
-
-<div class="row"><div class="col-md-12"><!--output--></div></div>
-
-</div><!--container-->
-
-<div class="modal fade" id="example_dialog" tabindex="-1" role="dialog" style='display:none'>
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" tt="example_title"></h4>
+</header>
+
+    <div id="menu-mob-cnt" class="menu-mob-cnt ul-login-menu">
+      <div class="menu-mob-inner">
+      <div class="menu-mob-header">
+          <div class="ul-login-links ul-logged-out-show">
+              <img class="svg menu-mob-logo" src="/images/svg/mw-logo--white.svg" alt="Merriam-Webster Logo" aria-hidden="true">
+              <a class="ul-button hoverable" rel="nofollow" href="/login">
+                  <span class="ul-action-text">Log in</span>
+              </a>
+              <a class="ul-button hoverable" rel="nofollow" href="/register">
+                  <span class="ul-action-text">Sign Up</span>
+              </a>
+          </div>
+          <div class="ul-login-links ul-logged-in-show">
+              <div class="ul-links-header">Hello,<br/>
+                  <a rel="nofollow" class="ul-link-username" aria-label="Settings" href="/settings"><span class="ul-username ul-username-mob"></span></a>      
+              </div>
+          </div>
       </div>
-      <div class="modal-body">
-      	<div><input type='text' value='' id='example_search' class='form-control' tt_placeholder='search_examples' /></div>
-      	<div>
-      		<div id='example_list'>
-      		</select>
-      	</div>
+      <div class="mob-nav">
+          <a class="mob-nav__link" href="/word-games">Games & Quizzes</a>
+          <a class="mob-nav__link" href="/thesaurus">Thesaurus</a>
+          <a class="mob-nav__link" href="/word-of-the-day">Word of the Day</a>
+          <a class="mob-nav__link" href="/words-at-play">Features</a>
+          <a class="mob-nav__link" href="/reviews?utm_source=mw&utm_medium=referral&utm_campaign=nav">Buying Guide <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+          <a class="mob-nav__link" href="https://shop.merriam-webster.com/?utm_source=mwsite&utm_medium=nav&utm_content=header" target="_blank" rel="noopener noreferrer">M-W Books <img width="18" height="18" class="svg" src="/images/svg/link-icon.svg" alt="link icon" aria-hidden="true"></a>
+          <a class="mob-nav__link l-wap" target="_blank" rel="noopener noreferrer" href="https://unabridged.merriam-webster.com/subscriber/register/p1">Join MWU</a>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-light" tt="close" data-dismiss="modal"></button>
-        <a type="button" id='edit_examples' class="btn btn-light" tt="edit_examples" href='https://meta.wikimedia.org/w/index.php?title=PetScan/Examples&action=edit' target='_blank'></a>
+      <ul class="ul-login-links-mob">
+          <li class="ul-login-link-mob">
+              <a rel="nofollow" class="ul-favorites" href="/saved-words">
+                  <span class="ul-word-list-icon">
+                      <img class="svg" src="/images/svg/ul-icon-wordlist.svg" alt="Word List Icon" aria-hidden="true">
+                  </span>
+                  <span class="on-user-logged-in">My Words</span><span class="on-user-logged-out">My Words</span>
+              </a>
+          </li>
+          <li class="ul-login-link-mob mob-nav__link ul-logged-in-show" style="border-top: 1px solid #97bece;">
+              <a href="/recents" class="ul-recents-link" id="ul-recents-link">
+                  <span class="ul-recents-icon">
+                      <img width="18px" height="18px" class="svg" src="/images/svg/ul-icon-recents.svg" alt="Recents Icon" aria-hidden="true">
+                  </span>
+                  View Recents
+              </a>
+          </li>
+          <li class="ul-login-link-mob mob-nav__link ul-logged-in-show l-wap">
+              <a class="ul-account" rel="nofollow" aria-label="Settings" href="/settings">
+              <span class="ul-account-icon">
+                  <img width="18px" height="18px" class="svg" src="/images/svg/ul-icon-account.svg" alt="Account Icon" aria-hidden="true">
+              </span>
+              Account
+              </a>
+          </li>
+      </ul>
+      <a class="ul-sign-out ul-button ul-logged-in-show hoverable" rel="nofollow" href="/logout">
+          <span class="ul-action-text">Log Out</span>
+      </a>
+      </div>
+  </div>
+  <div class="close-trigger" id="menu-mob-close-trigger" aria-label="close trigger">
+      <img class="svg" src="/images/svg/mob-menu-close.svg" alt="Mobile Menu Close Icon" aria-hidden="true">
+  </div>
+  <div class="menu-mob-underlay" id="menu-mob-underlay"></div>                    
+                                <div class="container mt-3"><div class="cafemedia-ad-slot-top"></div></div>
+          
+                    
+
+
+
+
+
+<div id="definition-wrapper" class="container" data-word-click='enabled'>
+    <div class="row">
+        <div class="left-content col-lg-7 col-xl-8" id="left-content">
+                                                                        
+                        
+                                                                        
+                                                                                                
+                                                                                                                        
+                                            <span href="#" data-hom="1" class="anchor-name ga-track-hom" id="h1-anchor"></span>
+    
+    
+<div class="row entry-header">
+    <div class="col-12">
+                <h1 class="hword">imperative</h1>
+
+                 <span class="fl"><!--
+    --><a class="important-blue-link" href="/dictionary/adjective">adjective</a><!--
+--></span>            </div>
+    <!-- Save to list Button -->
+            <div class="col-12 save-to-list">
+          <a id="save-to-list-link" href="/saved-words" data-ref="dictionary" data-word="imperative">
+            <span class="ul-add-icon ul-icon">
+              <svg class="ul-word-list-icon" width="14px" height="19px" viewBox="0 0 14 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="WordList" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+  <rect id="RectFill" class="rect-fill" x="1" y="1" width="12" height="9" r="0" rx="0" ry="0" stroke="none"></rect>
+  <polygon id="Path-10" fill="#97bece" points="1 8 13 8 13 17 7 12.6775391 1 17"></polygon>
+  <polygon id="Path-11" stroke="#fff" stroke-width="1.5" points="1 1 13 1 13 17 6.98357563 12.2587174 1 17"></polygon>
+	</g>
+</svg>            </span>
+            <span id="save-to-list-txt">Save Word</span>
+          </a>
+        </div>
+    </div>
+
+<div class="ul-must-login-def">
+  <div id="save-word-login-html"></div></div>
+
+<div class="row entry-attr">
+    <div class="col">
+                          
+                <span class="word-syllables">im·&#8203;per·&#8203;a·&#8203;tive</span>
+    
+                            <span class="prs">
+            <span class="syl-break">|</span>            <span class="first-slash">\</span><span class="pr"> im-ˈper-ə-tiv</span>    <a class="play-pron hw-play-pron" data-lang="en_us" data-file="impera01" data-dir="i" href="/dictionary/imperative?pronunciation&lang=en_us&dir=i&amp;file=impera01" data-url="https://www.merriam-webster.com/dictionary/imperative?pronunciation&lang=en_us&dir=i&amp;file=impera01" data-title="How to pronounce imperative (audio)" title="How to pronounce imperative (audio)">
+        <img class="svg" src="/images/svg/audio.svg" alt="How to pronounce imperative (audio)">
+    </a>
+<span class="addPunct">, </span><span class="pr"> -ˈpe-rə-</span>            <span class="last-slash">\</span>
+        </span>
+              </div>
+</div>
+
+    
+      
+          
+  
+    
+        
+            
+    <div id="dictionary-entry-1">
+                
+                    <div class="row vg-header">
+                <div class="col">
+                                                        <h2 class="">Definition of <em>imperative</em></h2><p class="entryNumbers">&nbsp;(Entry 1 of 2)</p>                                </div>
+            </div>
+        
+                
+                
+                                                    
+<div class="vg">
+                    <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-1"><span class="num">1</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>not to be avoided or evaded <strong class="mw_t_bc">: </strong><a href = "/dictionary/necessary" class = 'mw_t_sx'><span class='text-uppercase'>necessary</span></a></span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents">an <span class="mw_t_wi">imperative</span> duty</span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+              <div class="sb has-num has-let">
+      <span class="sb-0">
+              <div class="sense has-sn">
+
+            <span class="sn sense-2 a"><span class="num">2</span><span class="letter">a</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>of, relating to, or constituting the grammatical <a href = "/dictionary/mood#h2" class = 'mw_t_d_link'>mood</a> that expresses the will to influence the behavior of another</span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+      <span class="sb-1">
+              <div class="sense has-sn">
+
+            <span class="sn sense-b"><span class="letter">b</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>expressive of a command, <a href = "/dictionary/entreaty" class = 'mw_t_d_link'>entreaty</a>, or <a href = "/dictionary/exhortation" class = 'mw_t_d_link'>exhortation</a></span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+      <span class="sb-2">
+              <div class="sense has-sn">
+
+            <span class="sn sense-c"><span class="letter">c</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>having power to <a href = "/dictionary/restrain" class = 'mw_t_d_link'>restrain</a>, control, and direct</span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+            </div>
+                    
+                
+                
+                        
+                
+                
+                
+                    </div>
+                            
+                                                                    
+                                                                                                                        
+                                            <span href="#" data-hom="2" class="anchor-name anchor-spacer ga-track-hom" id="h2-anchor"></span>
+    
+    
+<div class="row entry-header">
+    <div class="col-12">
+                <p class="hword">imperative</p>
+
+                 <span class="fl"><!--
+    --><a class="important-blue-link" href="/dictionary/noun">noun</a><!--
+--></span>            </div>
+    <!-- Save to list Button -->
+    </div>
+
+
+
+    
+      
+          
+  
+    
+        
+            
+    <div id="dictionary-entry-2">
+                
+                    <div class="row vg-header">
+                <div class="col">
+                                                        <p class="hword2">Definition of <em>imperative</em>&nbsp;(Entry 2 of 2)</p>                                </div>
+            </div>
+        
+                
+                
+                                                    
+<div class="vg">
+                    <div class="sb has-num has-let">
+      <span class="sb-0">
+              
+            <div class="sense has-num-only">
+
+            <span class="sn sense-1"><span class="num">1</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>something that is imperative (see <a href = "/dictionary/imperative#h1" class = 'mw_t_dxt'><span class='text-uppercase'>imperative</span> <span class='text-lowercase'>entry</span> 1</a>): such as</span>                                      
+      
+
+        </span>
+
+      </div>          
+          </span>
+      <span class="sb-1">
+              <div class="sense has-sn">
+
+            <span class="sn sense-a"><span class="letter">a</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong><a href = "/dictionary/command" class = 'mw_t_sx'><span class='text-uppercase'>command</span></a>, <a href = "/dictionary/order" class = 'mw_t_sx'><span class='text-uppercase'>order</span></a></span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+      <span class="sb-2">
+              <div class="sense has-sn">
+
+            <span class="sn sense-b"><span class="letter">b</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong><a href = "/dictionary/rule" class = 'mw_t_sx'><span class='text-uppercase'>rule</span></a>, <a href = "/dictionary/guide" class = 'mw_t_sx'><span class='text-uppercase'>guide</span></a></span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+      <span class="sb-3">
+              <div class="sense has-sn">
+
+            <span class="sn sense-c"><span class="letter">c</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>an <a href = "/dictionary/obligatory" class = 'mw_t_d_link'>obligatory</a> act or duty</span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+      <span class="sb-4">
+              <div class="sense has-sn">
+
+            <span class="sn sense-d"><span class="letter">d</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>an obligatory judgment or proposition</span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+              <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-2"><span class="num">2</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>the grammatical <a href = "/dictionary/mood#h2" class = 'mw_t_d_link'>mood</a> that expresses the will to influence the behavior of another or a verb form or verbal phrase expressing it</span>                                      
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+            </div>
+                    
+                
+                
+                        
+                
+                
+                
+                    </div>
+                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+                        
+                        
+                                                    <div class="wgt-incentive-anchors">
+  <div class="anchor-list">
+                    <a href="#other-words" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="UROs: imperative" data-link=".uro-module-anchor" data-hash="other-words">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Other Words from <em>imperative</em>
+        </a>
+                            <a href="#synonyms" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Synonym Antonym Guide: imperative" data-link=".thesaurus-synonyms-module-anchor" data-hash="synonyms">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Synonyms & Antonyms        </a>
+                            <a href="#synonym-discussion" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Synonym Guide: imperative" data-link=".syns-module-anchor" data-hash="synonym-discussion">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Choose the Right Synonym
+        </a>
+                              <a href="#examples" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Examples: imperative" data-link=".examples-module-anchor" data-hash="examples">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            More Example Sentences          </a>
+                            <a href="#related-phrases" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Related Phrases: imperative" data-link=".related-phrases-module-anchor" data-hash="related-phrases">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Phrases Containing <em>imperative</em>
+        </a>
+                    <a href="#learn-more" data-tracking-action="Scroll Anchor Link Click" data-tracking-category="Engagement - Definition" data-tracking-label="Learn More: imperative" data-link=".learn-more-module-anchor" data-hash="learn-more">
+            <svg width="22px" height="26px" viewBox="0 0 22 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g class="Jumplink_Arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="Arrow" fill="#97bece" fill-rule="nonzero">
+                        <path class="logo Combined-Shape" d="M13,19.5635256 L18.668743,14.5074335 C19.4930647,13.7722005 20.7573336,13.8444213 21.4925665,14.668743 C22.2277995,15.4930647 22.1555787,16.7573336 21.331257,17.4925665 L12.3618903,25.4925665 C11.6052562,26.1674271 10.46334,26.1693571 9.7044291,25.4970579 L0.673795825,17.4970579 C-0.153006447,16.7646156 -0.229500284,15.5005981 0.502942057,14.6737958 C1.2353844,13.8469936 2.4994019,13.7704997 3.32620418,14.5029421 L9,19.5292082 L9,2 C9,0.8954305 9.8954305,0 11,0 C12.1045695,0 13,0.8954305 13,2 L13,19.5635256 Z"></path>
+                    </g>
+                </g>
+            </svg>
+            Learn More About <em>imperative</em>
+        </a>
+  </div>
+</div>
+                    <span id="anchor-seporator"></span>
+                                                 
+            
+                        
+
+                                        <div id="other-words-anchor" class="widget uros uro-module-anchor">
+                    <h2>Other Words from <em>imperative</em></h2>
+                                                <p class="function-label">Adjective</p>
+
+<div class="uro">
+                          <span class="ure">imperatively</span>
+                          <span class="fl">adverb</span>
+              </div>
+<div class="uro">
+                          <span class="ure">imperativeness</span>
+                          <span class="fl">noun</span>
+              </div>
+<div class="uro">
+  </div>
+<div class="uro">
+  </div>
+                                    </div> 
+            
+            
+                                        <div id="synonyms-anchor" class="widget synonyms_list thesaurus-synonyms-module-anchor">
+                    <h2>Synonyms & Antonyms for <em>imperative</em></h2>
+                                                                        <p class="function-label">Synonyms: Adjective</p>
+
+<ul class="mw-list"><li><a href="/dictionary/compulsory">compulsory</a>, </li><li><a href="/dictionary/forced">forced</a>, </li><li><a href="/dictionary/incumbent">incumbent</a>, </li><li><a href="/dictionary/involuntary">involuntary</a>, </li><li><a href="/dictionary/mandatory">mandatory</a>, </li><li><a href="/dictionary/necessary">necessary</a>, </li><li><a href="/dictionary/nonelective">nonelective</a>, </li><li><a href="/dictionary/obligatory">obligatory</a>, </li><li><a href="/dictionary/peremptory">peremptory</a>, </li><li><a href="/dictionary/required" class="syn-last">required</a></li></ul>                                                                                                                                                                                        <p class="function-label">Synonyms: Noun</p>
+
+<ul class="mw-list"><li><a href="/dictionary/behest">behest</a>, </li><li><a href="/dictionary/charge">charge</a>, </li><li><a href="/dictionary/command">command</a>, </li><li><a href="/dictionary/commandment">commandment</a>, </li><li><a href="/dictionary/decree">decree</a>, </li><li><a href="/dictionary/dictate">dictate</a>, </li><li><a href="/dictionary/direction">direction</a>, </li><li><a href="/dictionary/directive">directive</a>, </li><li><a href="/dictionary/do">do</a>, </li><li><a href="/dictionary/edict">edict</a>, </li><li><a href="/dictionary/injunction">injunction</a>, </li><li><a href="/dictionary/instruction">instruction</a>, </li><li><a href="/dictionary/order">order</a>, </li><li><a href="/dictionary/word" class="syn-last">word</a></li></ul>                                                                
+                                                                                                        <p class="function-label">Antonyms: Adjective</p>
+
+<ul class="mw-list"><li><a href="/dictionary/elective">elective</a>, </li><li><a href="/dictionary/optional">optional</a>, </li><li><a href="/dictionary/voluntary" class="syn-last">voluntary</a></li></ul>                                                                        
+                    <a class="widget-button thesaurus" href="/thesaurus/imperative">Visit the Thesaurus for More&nbsp;<img class="svg double-arrows" src="/images/svg/double-arrows-transparent.svg"></a>
+                </div>           
+            
+                                        <div id="synonym-discussion-anchor" class="widget syns_discussion syns-module-anchor">
+                    <h2>Choose the Right Synonym for <em>imperative</em></h2>
+                                                                        
+    <p class="function-label">Adjective</p>
+  <p class="syn">
+                  
+  <a href="/dictionary/masterful" class="mw_t_sc">masterful</a>, <a href="/dictionary/domineering" class="mw_t_sc">domineering</a>, <a href="/dictionary/imperious" class="mw_t_sc">imperious</a>, <a href="/dictionary/peremptory" class="mw_t_sc">peremptory</a>, <a href="/dictionary/imperative" class="mw_t_sc">imperative</a> mean tending to impose one's will on others. <a href="/dictionary/masterful" class="mw_t_sc">masterful</a> implies a strong personality and ability to act authoritatively.           
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        her <em class="mw_t_it">masterful</em> personality soon dominated the movement    </span>
+  
+       <a href="/dictionary/domineering" class="mw_t_sc">domineering</a> suggests an overbearing or arbitrary manner and an obstinate determination to enforce one's will.           
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        children controlled by <em class="mw_t_it">domineering</em> parents    </span>
+  
+       <a href="/dictionary/imperious" class="mw_t_sc">imperious</a> implies a commanding nature or manner and often suggests arrogant assurance.           
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        an <em class="mw_t_it">imperious</em> executive used to getting his own way    </span>
+  
+       <a href="/dictionary/peremptory" class="mw_t_sc">peremptory</a> implies an abrupt dictatorial manner coupled with an unwillingness to brook disobedience or dissent.           
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        given a <em class="mw_t_it">peremptory</em> dismissal    </span>
+  
+       <a href="/dictionary/imperative" class="mw_t_sc">imperative</a> implies peremptoriness arising more from the urgency of the situation than from an inherent will to dominate.           
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        an <em class="mw_t_it">imperative</em> appeal for assistance    </span>
+  
+          </p>                                                            </div>
+                                    
+                        
+                                                <div id="examples-anchor" class="widget example_sentences examples-module-anchor">
+                        <h2>Examples of <em>imperative</em> in a Sentence</h2>
+                                                    <div class="in-sentences read-more-content-hint-container">
+                                                                                                            <span class="ex-header function-label">Adjective</span>
+    <!--1/2 => Quotes-->
+                  <span class="ex-sent sents">
+            
+
+            <span class="t has-aq">… I have begun to feel each time as if I am mutilating my antennae (which is how Rastafarians, among others, think of hair) and attenuating my power. It seems <span class="mw_t_qword">imperative</span> not to cut my hair anymore.</span>
+              <span class="aq has-aq">
+<span class="aq">
+            <span class="auth">&mdash; Alice Walker</span>,                <span class="source"><em class="mw_t_it">Living by the Word</em></span>,                <span class="aqdate">(1981) 1988</span>      </span></span>
+            </span>
+              <span class="ex-sent sents">
+            
+
+            <span class="t has-aq">This strange and distorted form of breathing could be interrupted for a minute or two by a strong effort of will, but would then resume its bizarre and <span class="mw_t_qword">imperative</span> character.</span>
+              <span class="aq has-aq">
+<span class="aq">
+            <span class="auth">&mdash; Oliver Sacks</span>,                <span class="source"><em class="mw_t_it">Awakenings</em></span>,                <span class="aqdate">1973</span>      </span></span>
+            </span>
+              <span class="ex-sent sents">
+            
+
+            <span class="t has-aq">We had a long and interesting evening with the Katzenbachs. He and Lyndon discussed the <span class="mw_t_qword">imperative</span> need to make Washington a law-abiding city and how to go about it.</span>
+              <span class="aq has-aq">
+<span class="aq">
+            <span class="auth">&mdash; Lady Bird Johnson</span>                <span class="aqdate">27 Jan. 1965</span>,                 
+<span class="subsource">
+            <span class="source"><em class="mw_t_it">A White House Diary</em></span>,&nbsp;                <span class="aqdate">1970</span>
+      </span>      </span></span>
+            </span>
+          
+    <!--2/2 => Extra Examples-->
+                            
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        “Eat your spinach!” is an <em class="mw_t_it">imperative</em> sentence.    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        “Help” in the sentence “Help me!” is an <em class="mw_t_it">imperative</em> verb.    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        a verb in the <em class="mw_t_it">imperative</em> mood    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        People resented his <em class="mw_t_it">imperative</em> tone of voice.    </span>
+  
+                                                                                                                                                                                                                                  <span class="ex-header function-label">Noun</span>
+    <!--1/2 => Quotes-->
+                  <span class="ex-sent sents">
+            
+
+            <span class="t has-aq">Ellroy has got to be the only writer who still uses &quot;dig&quot; as an <span class="mw_t_qword">imperative</span> …</span>
+              <span class="aq has-aq">
+<span class="aq">
+            <span class="auth">&mdash; Laura Miller</span>,                <span class="source"><em class="mw_t_it">New York Times Book Review</em></span>,                <span class="aqdate">20 May 2001</span>      </span></span>
+            </span>
+              <span class="ex-sent sents">
+            
+
+            <span class="t has-aq">Indeed, under pressure from a new way of life in which radiant heat from woodburning stoves must circulate unimpeded by dividers, virtually every house with a chimney today has abandoned the closed-door <span class="mw_t_qword">imperative</span> of the high-technology kitchen.</span>
+              <span class="aq has-aq">
+<span class="aq">
+            <span class="auth">&mdash; Maxine Kumin</span>,                <span class="source"><em class="mw_t_it">In Deep</em></span>,                <span class="aqdate">1987</span>      </span></span>
+            </span>
+              <span class="ex-sent sents">
+            
+
+            <span class="t has-aq">&quot;Maturity&quot; had been a code word … for marriage and settling down; &quot;growth&quot; implied a plurality of legitimate options, if not a positive <span class="mw_t_qword">imperative</span> to keep moving from one insight or experience to the next.</span>
+              <span class="aq has-aq">
+<span class="aq">
+            <span class="auth">&mdash; Barbara Ehrenreich</span>,                <span class="source"><em class="mw_t_it">New York Times Magazine</em></span>,                <span class="aqdate">20 May 1984</span>      </span></span>
+            </span>
+          
+    <!--2/2 => Extra Examples-->
+                            
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        She considers it a moral <em class="mw_t_it">imperative</em> to help people in need.    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        “Eat your spinach!” is in <em class="mw_t_it">the imperative</em>.    </span>
+  
+                        
+
+
+          <span class="ex-sent  first-child t no-aq sents">
+         
+                        “Go” and “buy” are <em class="mw_t_it">imperatives</em> in the sentence “Please go to the store and buy some milk.”    </span>
+  
+                                                                                  
+                                                                    <a class="read-more-content-hint-toggler" href="javascript:void(0)" data-target-classname=".in-sentences"><span class="read-more-content-hint-toggler-btn">See More</span><span class="read-more-content-hint-icon"></span></a>
+                                                            </div>
+                        
+                                                    <div id="example-hr"  class=""></div>
+                        
+                           
+                            <div class="on-web read-more-content-hint-container">
+                                                                                                            <span class="ex-header function-label">Recent Examples on the Web: Adjective</span>
+
+    <span class="ex-sent sents" data-example-id="13387835">
+        <span class="t has-aq">Pairing him with the right coach will be <em>imperative</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Tristan Lavalette, <em>Forbes</em>, 24 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13387836">
+        <span class="t has-aq">Snyder added that overall defensive improvement — both individually and collectively — is <em>imperative</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Eric Walden, <em>The Salt Lake Tribune</em>, 21 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13387837">
+        <span class="t has-aq">Temperature is a measurement of atom vibration speed in the detector, according to a NASA news release, so reducing the temperature is <em>imperative </em>to dial down the dark current.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Manasee Wagh, <em>Popular Mechanics</em>, 18 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13387838">
+        <span class="t has-aq">Having that extra me-time will be <em>imperative </em>because Taurus season is also accompanied by another important astrological event: eclipse season.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Elizabeth Gulino, <em>refinery29.com</em>, 18 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13387839">
+        <span class="t has-aq">All of the above will be <em>imperative </em>because the market itself has not been a great selling point.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>oregonlive</em>, 15 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13284242">
+        <span class="t has-aq">Today, physicists are still trying to make optical clocks talk to one another over distances, an <em>imperative </em>for time keeping.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>New York Times</em>, 25 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13284243">
+        <span class="t has-aq">In an interview from London, Nice was unsparing about the time <em>imperative</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Dahlia Scheindlin, <em>The New Republic</em>, 18 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13284244">
+        <span class="t has-aq">That <em>imperative </em>to phase out oil and gas has proved difficult to accept for countries whose economies are highly reliant on exports of those fuels.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Ciara Nugent, <em>Time</em>, 4 Apr. 2022        	</span>
+        </span>
+    </span>
+                                                                                                                                                                                                                    <span class="ex-header function-label">Recent Examples on the Web: Noun</span>
+
+    <span class="ex-sent sents" data-example-id="13396329">
+        <span class="t has-aq">There is also a scientific <em>imperative </em>to move away from their use.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Anna C. F. Lewis, <em>STAT</em>, 4 May 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13396330">
+        <span class="t has-aq">Taking a harder line on Russia, a parade of American and European emissaries argued, is a global <em>imperative</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>New York Times</em>, 4 May 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13396331">
+        <span class="t has-aq">The sense of urgency and national <em>imperative </em>was reflected in U.S. policy documents, the budget, and weapons deployments.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Rebeccah Heinrichs, <em>National Review</em>, 23 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13396332">
+        <span class="t has-aq">The status quo lays bare a moral <em>imperative</em>, and an opportunity, for the philanthropic sector to take a new approach to dismantling the structures keeping climate justice elusive.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            John Palfrey, <em>CNN</em>, 22 Apr. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13396333">
+        <span class="t has-aq">County Judge Darryl Mahoney said expanding broadband coverage to underserved areas is a 21st-century <em>imperative</em>.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>Arkansas Online</em>, 16 Mar. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13396334">
+        <span class="t has-aq">Kristine Berzina, senior fellow and head of the geopolitics team for the German Marshall Fund — a think tank in Washington — said the invasion has created a moral <em>imperative </em>to move away from Russian energy and toward cleaner technologies.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            <em>Los Angeles Times</em>, 7 Mar. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13396335">
+        <span class="t has-aq">To some extent, investing in sustainability in the developing world is a moral <em>imperative </em>as well as a commercially viable venture.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Shivaram Rajgopal, <em>Forbes</em>, 1 Jan. 2022        	</span>
+        </span>
+    </span>
+    <span class="ex-sent sents" data-example-id="13292590">
+        <span class="t has-aq">Yet the moral <em>imperative </em>of exiting Russia becomes increasingly gray the closer a company comes to providing basic needs to the population at large.</span>
+        <span class="aq has-aq">
+        	&mdash;
+        	<span class="aq">
+            Christiaan Hetzner, <em>Fortune</em>, 18 Mar. 2022        	</span>
+        </span>
+    </span>
+                                                                                                                                        <a class="read-more-content-hint-toggler" href="javascript:void(0)"><span class="read-more-content-hint-toggler-btn">See More</span><span class="read-more-content-hint-icon"></span></a>
+                                                            </div>
+                            <p class="disclaimer">
+                                These example sentences are selected automatically from various online news sources to reflect current usage of the word 'imperative.' Views expressed in the examples do not represent the opinion of Merriam-Webster or its editors. <a href="/contact-us?ref=freshexamples&hw=imperative&url=https%3A%2F%2Fwww.merriam-webster.com%2Fdictionary%2Fimperative">Send us feedback</a>.
+                            </p>
+                                            </div>
+                
+                                                    <div id="related-phrases-anchor" class="widget related-phrases-module-anchor">
+                        <h2>Phrases Containing <em>imperative</em></h2>
+                        <div class="related-phrases-dictionary">
+                            <div class="related-phrases-list-container">
+        <div class="mw-grid-table-list ">
+  <ul class="d-flex flex-wrap align-items-baseline row">
+          <li class="related-phrases-list-item col-6 col-lg-4"><a class="pb-4 pr-4 d-block" href="/dictionary/categorical%20imperative"><span class="syl">categorical imperative</span></a></li>
+          <li class="related-phrases-list-item col-6 col-lg-4"><a class="pb-4 pr-4 d-block" href="/dictionary/the%20imperative"><span class="syl">the imperative</span></a></li>
+      </ul>
+  </div>    </div>
+
+    <div class="related-phrases-list-container-xs"> 
+        <div class="mw-grid-table-list ">
+  <ul class="d-flex flex-wrap align-items-baseline row">
+          <li class="related-phrases-list-item col-6 col-lg-4"><a class="pb-4 pr-4 d-block" href="/dictionary/categorical%20imperative"><span class="syl">categorical imperative</span></a></li>
+          <li class="related-phrases-list-item col-6 col-lg-4"><a class="pb-4 pr-4 d-block" href="/dictionary/the%20imperative"><span class="syl">the imperative</span></a></li>
+      </ul>
+  </div>    </div>                        </div>
+                    </div>
+                
+                                                                        <div id="first-known-anchor" class="widget firstknown-list">
+                        <h2>First Known Use of <em>imperative</em></h2>
+                                                        <p class="function-label">Adjective</p>
+<p class="ety-sl" data-entry-id="1">15th century, in the meaning defined at <a href="#h1">sense 2a</a></p>                                                        <p class="function-label">Noun</p>
+<p class="ety-sl" data-entry-id="2">1530, in the meaning defined at <a href="#h2">sense 2</a></p>                                            </div>
+                
+                                                      
+                    <div id="etymology-anchor" class="widget etymology-list">
+                        <h2>History and Etymology for <em>imperative</em></h2>
+                                                        <p class="function-label">Adjective</p>
+
+                        <p class="et">
+                Middle English <em class="mw_t_it">imperatyf,</em> borrowed from Late Latin <em class="mw_t_it">imperātīvus,</em> from Latin <em class="mw_t_it">imperātus,</em> past participle of <em class="mw_t_it">imperāre</em> &quot;to give orders, command&quot; + <em class="mw_t_it">-īvus</em> <a href = "/dictionary/-ive#etymology" class = 'mw_t_et_link'>-ive</a>  — more at <a href = "/dictionary/emperor#etymology" class = 'mw_t_mat'>emperor</a>            </p>
+                                                                    <p class="function-label">Noun</p>
+
+                        <p class="et">
+                borrowed from Late Latin <em class="mw_t_it">imperātīvus,</em> noun derivative of <em class="mw_t_it">imperātīvus</em> <a href = "/dictionary/imperative#etymology" class = 'mw_t_et_link'>imperative <span class='text-lowercase'>entry</span> 1</a>            </p>
+                                                        </div>
+                
+                                                                                              
+                                
+                                <div id="learn-more-anchor" class="heavy-break learn-more-module-anchor"></div>
+                <div class="widget learn_more">
+                    <h2 class="learn-more-header">Learn More About <em>imperative</em></h2>
+                    <div class="light-break"></div>
+                    <div id="social-sidebar-container" class="row">
+                        
+        <div id="share-anchor" class="col-md-6">
+        <p class="hword2">Share <em>imperative</em></p>
+        <div class="row">
+            <div class="col">
+                <a href="#" class="fb share-link" data-share-url="https://www.merriam-webster.com/dictionary/imperative" data-share-image="https://merriam-webster.com/assets/mw/static/social-media-share/mw-logo-245x245@1x.png" data-share-title="Definition of IMPERATIVE" data-share-description="not to be avoided or evaded : necessary; of, relating to, or constituting the grammatical mood that expresses the will to influence the behavior of another; expressive of a command, entreaty, or exhortation… See the full definition">
+                  <span class="aria-text">Post the Definition of imperative to Facebook</span>
+                  <img class="svg" src="/images/svg/facebook.svg" alt="Facebook">
+                </a>
+
+                <a href="#" class="twitter share-link" data-share-url="https://www.merriam-webster.com/dictionary/imperative" data-share-text="This is the @MerriamWebster definition of 'imperative'">
+                    <span class="aria-text">Share the Definition of imperative on Twitter</span>
+                    <img class="svg" src="/images/svg/twitter.svg" alt="Twitter">
+                </a>
+            </div>
+        </div>
+    </div>
+                                                    <div id="time-traveler-anchor" class="col-md-6">
+                                <p class="hword2">Time Traveler for <em>imperative</em></p>
+                                <a href="/time-traveler/15th-century?src=learn-more-timetraveler" class="time-traveler">
+                                    <img class="svg" src="/images/svg/time-traveler.svg" alt="Time Traveler">
+                                </a>
+                                <h2 class="hword4">The first known use of <em>imperative</em> was 
+                                in the 15th century</h2>
+                                <p><a class="see-more" href="/time-traveler/15th-century?src=defrecirc-timetraveler-etycard">See more words from the same century</a></p>
+                            </div>
+                                            </div>
+
+                    
+                    
+                                                <div id="related-articles-anchor" class="row">
+        <div class="col">
+            <p class="hword2">From the Editors at Merriam-Webster</p>
+                            <a class="card related-article-box" href="/words-at-play/getting-in-the-subjunctive-mood">
+                    <div class="row no-gutters">
+                        <div class="col-4 justify-content-center align-self-center">
+                            <span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="alt 5b96902fed136" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5b96902fed136-5589-e325fe31dc3fd3d954b5f3e68cc829f8@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="alt-5b96902fed136-5589-e325fe31dc3fd3d954b5f3e68cc829f8" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5b96902fed136-5589-e325fe31dc3fd3d954b5f3e68cc829f8@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5b96902fed136-5589-e325fe31dc3fd3d954b5f3e68cc829f8@2x.jpg 2x" pair-id="5591" image-id="5589" class="img-fluid lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span>                        </div>
+                        <div class="col-8 justify-content-center align-self-center">
+                            <div class="card-block">
+                                                                                                                                                                                                <p class=" hword3 card-title d-md-none">Getting in the (Subjunctive) Mood</p>
+                                <h3 class="card-title d-none d-md-block">Getting in the (Subjunctive) Mood</h3>
+                                                                                                <p class="card-text d-none d-xl-block">Everything you need to know about some tricky verbs</p>
+                                                            </div>
+                        </div>
+                    </div>
+                </a>
+                            <a class="card related-article-box" href="/words-at-play/question-mark-in-imperative-request">
+                    <div class="row no-gutters">
+                        <div class="col-4 justify-content-center align-self-center">
+                            <span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="alt 5ac65d21d7724" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5ac65d21d7724-5067-7238b3f62a9ecf1bdcd42adf15a45d68@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="alt-5ac65d21d7724-5067-7238b3f62a9ecf1bdcd42adf15a45d68" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5ac65d21d7724-5067-7238b3f62a9ecf1bdcd42adf15a45d68@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5ac65d21d7724-5067-7238b3f62a9ecf1bdcd42adf15a45d68@2x.jpg 2x" pair-id="5069" image-id="5067" class="img-fluid lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span>                        </div>
+                        <div class="col-8 justify-content-center align-self-center">
+                            <div class="card-block">
+                                                                                                                                                                                                <p class=" hword3 card-title d-md-none">To Use or Not Use the "?" in Requests</p>
+                                <h3 class="card-title d-none d-md-block">To Use or Not Use the "?" in Requests</h3>
+                                                                                                <p class="card-text d-none d-xl-block">"Would you read this, please." (Wait, where's the question mark?)</p>
+                                                            </div>
+                        </div>
+                    </div>
+                </a>
+                    </div>
+    </div>
+                    
+                    
+
+                    <div id="browse-dictionary" class="row">
+                        <div id="near-entries-anchor" class="col-md-6">
+                            <h2>Dictionary Entries Near <em>imperative</em></h2>
+                                                        <p>
+                    <a class="b-link" data-ind="4" href="/dictionary/imperatival">imperatival</a>
+                </p>
+                <p class='active'>
+                    <span class="b-link hw-text" data-ind="5">imperative</span>
+                </p>
+                <p>
+                    <a class="b-link" data-ind="6" href="/dictionary/imperator">imperator</a>
+                </p>
+                
+    <a class="widget-button hoverable see-more-browse" href="/browse/dictionary/i/7">See More Nearby Entries&nbsp;<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 20 20" version="1.1" class="svg double-arrows">
+    <g class="Button_DoubleArrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g class="Icon/Button/DoubleArrow" transform="translate(0.000000, -2.000000)" fill="#ffffff">
+            <path class="outline Oval-2" d="M10,20 C14.418278,20 18,16.418278 18,12 C18,7.581722 14.418278,4 10,4 C5.581722,4 2,7.581722 2,12 C2,16.418278 5.581722,20 10,20 Z M10,22 C4.4771525,22 0,17.5228475 0,12 C0,6.4771525 4.4771525,2 10,2 C15.5228475,2 20,6.4771525 20,12 C20,17.5228475 15.5228475,22 10,22 Z" fill-rule="nonzero"></path>
+            <path class="logo »" d="M14.5324998,12.5078125 L11.6340623,16.046875 L9.92312479,15.1171875 L12.0949998,12.3984375 L9.92312479,9.6796875 L11.6340623,8.75 L14.5324998,12.3046875 L14.5324998,12.5078125 Z M10.5793748,12.5078125 L7.68093729,16.046875 L5.96999979,15.1171875 L8.14187479,12.3984375 L5.96999979,9.6796875 L7.68093729,8.75 L10.5793748,12.3046875 L10.5793748,12.5078125 Z"></path>
+        </g>
+    </g>
+</svg></a>
+                        </div>
+
+                        
+                                                                                                                                    <div id="statistics-anchor" class="col-md-6">
+                                    <h2>Statistics for <em>imperative</em></h2>
+                                    <div class="pop-update-wrapper">
+                                          <p class="function-title">Last Updated</p>
+  <p class="update-date">10 May 2022</p>
+                                                                                    <div id="popularity-block-wrapper" class="hidden">
+                                                <span class="subheader-sm function-title">Look-up Popularity</span>
+                                                <p id="popularity-block" class="popularity-block"></p>
+                                            </div>
+                                                                             </div>
+                                </div>
+                                                    
+                                                    <div id="cite-anchor" class="col-md-6">
+                                <p class="hword2">Cite this Entry</p>
+                                <p id="citationText">&ldquo;Imperative.&rdquo; <em>Merriam-Webster.com Dictionary</em>, Merriam-Webster, https://www.merriam-webster.com/dictionary/imperative. Accessed 17 May. 2022.</p>
+
+
+                            <div class="custom-select-wrapper">
+                                <div class="citation-select">
+                                    <div class="custom-select__trigger"><span class="custom-select-placeholder"><b>Style:</b> MLA</span>
+                                        <div class="custom-select-arrow"></div>
+                                    </div>
+                                    <div class="custom-options">
+                                        <span class="custom-option selected" data-value="mla" width="16" height="16" data-attr="&ldquo;Imperative.&rdquo; <em>Merriam-Webster.com Dictionary</em>, Merriam-Webster, https://www.merriam-webster.com/dictionary/imperative. Accessed 17 May. 2022.">MLA<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                        <span class="custom-option" data-value="chicago" width="16" height="16" data-attr="<em>Merriam-Webster.com Dictionary</em>, s.v. &ldquo;imperative,&rdquo; accessed May 17, 2022, https://www.merriam-webster.com/dictionary/imperative.">Chicago<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                        <span class="custom-option" data-value="apa" width="16" height="16" data-attr="Merriam-Webster. (n.d.).  Imperative. In <em>Merriam-Webster.com dictionary</em>. Retrieved May 17, 2022, from https://www.merriam-webster.com/dictionary/imperative">APA<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                        <span class="custom-option" width="16" height="16" data-value="mw" data-attr="&ldquo;imperative,&rdquo; <em>Merriam-Webster.com Dictionary</em>, https://www.merriam-webster.com/dictionary/imperative. Accessed 5/17/2022.">Merriam-Webster<img src="https://merriam-webster.com/assets/mw/static/app-css-images/global/blue-check.svg" alt="Check Mark Icon"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        
+                    </div>
+                </div>
+                <div class="heavy-break bottom"></div>
+                
+                                    <div class="open-web-comments-definition-container">
+                        <div id="open-web-comments-widget"></div>
+<script>
+
+setTimeout(    
+    () => {
+
+        // Get the script container.
+        var container = document.getElementById("open-web-comments-widget");
+        
+        // Add the header.
+        var header = document.createElement("div");
+        header.className = "open-web-comments-header";
+        header.innerHTML = '<div class="primary-header">Seen & Heard</div>';
+        header.innerHTML += '<div class="secondary-header"><span>People are talking about</span></div>';
+        container.parentNode.insertBefore(header, container);
+
+        // Add the div for the openweb comments.
+        var openwebDiv = document.createElement("div");
+        openwebDiv.className = "pitc-div";
+        openwebDiv.setAttribute("data-spotim-module", "pitc");
+        container.parentNode.insertBefore(openwebDiv, container);  
+
+        // Create the openweb tag.
+        var openwebScript = document.createElement("script");
+        openwebScript.type = "text/javascript";
+        openwebScript.src = "https://launcher.spot.im/spot/sp_704FKM73";
+        openwebScript.setAttribute("data-spotim-module", "spotim-launcher");
+        openwebScript.setAttribute("data-post-id", "owl:imperative");
+        openwebScript.setAttribute("data-post-url", "http://www.merriam-webster.com/dictionary/imperative");
+        openwebScript.setAttribute("data-messages-count", "3");
+        container.appendChild(openwebScript);
+    },
+    // 5000
+);
+
+</script>                    </div>
+                
+                                                                                                                                                                                                                                                                                                                                <div class="heavy-break"></div>
+                                <div class="widget more_defs">
+                                <p id="more-definitions-anchor" class="hword2 more-defs-header">More Definitions for <em>imperative</em></p>
+                                <div class="light-break"></div>
+                                                             
+
+                                                        
+                                                                                                                        
+                                                                                                                                            <span id="kidsdictionary-anchor"></span>
+                                                                                    
+                
+    
+<div class="row entry-header">
+    <div class="col-12">
+                <p class="hword">imperative</p>
+
+                 <span class="fl"><!--
+    --><span class="important-blue-link">adjective</span><!--
+--></span>            </div>
+    <!-- Save to list Button -->
+    </div>
+
+
+<div class="row entry-attr">
+    <div class="col">
+                          
+                <span class="word-syllables">im·&#8203;per·&#8203;a·&#8203;tive</span>
+    
+                            <span class="prs">
+            <span class="syl-break">|</span>            <span class="first-slash">\</span><span class="pr"> im-ˈper-ə-tiv</span>    <a class="play-pron hw-play-pron" data-lang="en_us" data-file="impera01" data-dir="i" href="/dictionary/imperative?pronunciation&lang=en_us&dir=i&amp;file=impera01" data-url="https://www.merriam-webster.com/dictionary/imperative?pronunciation&lang=en_us&dir=i&amp;file=impera01" data-title="How to pronounce imperative (audio)" title="How to pronounce imperative (audio)">
+        <img class="svg" src="/images/svg/audio.svg" alt="How to pronounce imperative (audio)">
+    </a>
+            <span class="last-slash">\</span>
+        </span>
+              </div>
+</div>
+
+    
+      
+          
+  
+    
+        
+            
+    <div id="elementary-entry-1">
+                
+                    <div class="row vg-header">
+                <div class="col">
+                                    <h2>Kids Definition of <em>imperative</em></h2><p class="entryNumbers"></p>                                </div>
+            </div>
+        
+                
+                
+                                                    
+<div class="vg">
+                    <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-1"><span class="num">1</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>expressing a command, request, or strong encouragement</span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents"><span class="mw_t_sp">"Come here!" is an <em class="mw_t_it">imperative</em> sentence.</span></span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+              <div class="sb has-num">
+      <span class="sb-0">
+              <div class="sense has-num-only">
+
+            <span class="sn sense-2"><span class="num">2</span></span>
+                  <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong><a href = "/dictionary/urgent#kidsdictionary" class = 'mw_t_sx'><span class='text-uppercase'>urgent</span> <span class='text-lowercase'>sense 1</span></a></span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents">It is <em class="mw_t_it">imperative</em> that you get help.</span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+            </div>
+                    
+                
+                
+                        
+                
+                
+                
+                    </div>
+                                    
+                                                                                                
+                                                                                            
+                                                        <!-- Adding $refName !== $ref because supplemental definition entries can now be displayed as secondary and this prevents duplicate origins -->
+                            
+                                                                                        <div class="heavy-break entry"></div>
+                                                                                                                                                                                                                                         
+
+                                                        
+                                                                                                                        
+                                                                                                                                            <span id="medicalDictionary-anchor"></span>
+                                                                                    
+                
+    
+<div class="row entry-header">
+    <div class="col-12">
+                <p class="hword">imperative</p>
+
+                 <span class="fl"><!--
+    --><span class="important-blue-link">adjective</span><!--
+--></span>            </div>
+    <!-- Save to list Button -->
+    </div>
+
+
+<div class="row entry-attr">
+    <div class="col">
+                          
+                <span class="word-syllables">im·&#8203;per·&#8203;a·&#8203;tive</span>
+    
+                            <span class="prs">
+            <span class="syl-break">|</span>            <span class="first-slash">\</span><span class="pr"> im-ˈper-ət-iv</span>    <a class="play-pron hw-play-pron" data-lang="en_us" data-file="impera01" data-dir="i" href="/dictionary/imperative?pronunciation&lang=en_us&dir=i&amp;file=impera01" data-url="https://www.merriam-webster.com/dictionary/imperative?pronunciation&lang=en_us&dir=i&amp;file=impera01" data-title="How to pronounce imperative (audio)" title="How to pronounce imperative (audio)">
+        <img class="svg" src="/images/svg/audio.svg" alt="How to pronounce imperative (audio)">
+    </a>
+            <span class="last-slash">\</span>
+        </span>
+              </div>
+</div>
+
+    
+      
+          
+  
+    
+        
+            
+    <div id="medical-entry-1">
+                
+                    <div class="row vg-header">
+                <div class="col">
+                                                        <h2 class="">Medical&nbsp;Definition of <em>imperative</em></h2><p class="entryNumbers"></p>                                </div>
+            </div>
+        
+                
+                
+                                                    
+<div class="vg">
+                    <div class="sb no-sn">
+      <span class="sb-0">
+              <div class="sense no-subnum">
+
+              <span class="dt ">
+            
+          
+            
+                                                <span class="dtText"><strong class="mw_t_bc">: </strong>eliciting a motor response</span>                                      
+             
+             <span class="ex-sent  first-child t no-aq sents">an <span class="mw_t_wi">imperative</span> stimulus</span>         
+      
+
+        </span>
+
+      </div>          </span>
+  </div>
+            </div>
+                    
+                
+                
+                        
+                
+                
+                
+                    </div>
+                                    
+                                                                                                
+                                                                                            
+                                                        <!-- Adding $refName !== $ref because supplemental definition entries can now be displayed as secondary and this prevents duplicate origins -->
+                            
+                                                                                        <div class="heavy-break entry"></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                        
+
+                                            </div>
+                                                    
+                                            <div class="widget more-from">
+          <p class="hword2">More from Merriam-Webster on <em>imperative</em></p>        
+                
+                
+                
+                  <p>Nglish: <a href="http://www.nglish.com/spanish/imperative" rel="noopener" target="_blank">Translation of <em>imperative</em> for Spanish Speakers</a></p>
+                
+                  <p>Britannica English: <a href="http://arabic.britannicaenglish.com/imperative" rel="noopener" target="_blank">Translation of <em>imperative</em> for Arabic Speakers</a></p>
+                
+          </div>
+                
+                                                     
+        </div> 
+
+
+
+                <div id="definition-right-rail" class="right-rail col-lg-5 col-xl-4">
+          <div class="fixed-wrapper non-sticky" id="definition-fixed-wrapper">
+                                        <div class="cafemedia-ad-slot-right1 mt-0"></div>
+            
+            
+                            <div class="wotd-side wgt-side wgt-wod-side top-location">
+  
+  <h4 class="wotd-side__title margin-t-0p9375em">
+    <a href="/word-of-the-day">WORD OF THE DAY</a>
+  </h4>
+  
+  <div class="wotd-side__divider margin-t-0p625em"></div>
+  
+  <div class="wotd-side__headword-wrapper">
+    <h4 class="wotd-side__headword">
+      <a href="/word-of-the-day">nonpareil</a>
+    </h4>
+    <a class="wotd-side__headword__pron  play-pron" data-lang="en_us" data-dir="n" data-file="nonpar02" href="javascript:void(0)" title="Listen to the pronunciation of nonpareil">
+      <img class="svg" alt="Listen to the pronunciation of nonpareil" src="/images/svg/audio.svg">
+    </a>
+  </div>
+
+  <p class="wotd-side__link">
+    <a href="/word-of-the-day">See Definitions and Examples</a> &raquo;
+  </p>
+  
+  <div class="wotd-side__subscribe">
+    <p class="wotd-side__subscribe__lead">Get Word of the Day daily email!</p>
+    <form class="js-wod-subscribe-frm wotd-side__subscribe__form" action="/word-of-the-day" method="post">
+      <input type="submit" class="wod-submit wotd-side__subscribe__form__submit" name="wod-submit" value="SUBSCRIBE">
+      <input type="text" class="wod-subscribe wotd-side__subscribe__form__input" name="wod-subscribe" placeholder="Your email address" aria-label="Subscribe to Word of the Day">
+    </form>
+  </div>
+  
+</div>
+                                                  <!-- Sidebar games widget -->
+              <div class="wgt-side wgt-games-side">
+  
+  <h4 class="jc-wgt-title-type1">
+    <a href="/word-games">Test Your Vocabulary</a>
+  </h4>
+  
+  <div class="jc-under-tline-type2 margin-t-0p625em margin-b-1p375em"></div>
+      <p class="lead">Which Word Does Not Belong?</p>
+    <div class="wgt-games-side-items">
+    
+    <div class="wgts-quiz-with-answers">
+      <ul class="wgts-quiz-question">
+        <li class="wgts-quiz-image">
+          <div class="thumbnail">
+          <span class="lazyload-container ratio-4-3"><img data-sizes="auto" alt="one green toy robot amidst many red toy robots" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-side-widget/one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-side-widget" data-ret-pref="one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-side-widget/one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-side-widget/one-green-toy-robot-amidst-many-red-toy-robots-4369-256c517b91ff05bc8de5b00f64dfd503@2x.jpg 2x" pair-id="4371" image-id="4369" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></div>
+        </li>
+        <li class="lead">Which of these words does <em>not</em> mean "nonsense"?</li>
+      </ul>
+      <div class="content">
+        <ul class="quiz-answer-list">
+          <li>
+                                      <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8942">sagacity</a>
+                                      <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8944">blatherskite</a>
+                        </li><li>              <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8945">folderol</a>
+                                      <a class="quiz-answer" href="/word-games/exception-quiz-iii?q=2491&a=8943">bunkum</a>
+                    </li>
+        </ul>  
+      </div>
+    </div>
+    
+    <div class="wgts-quiz">
+      <div class="thumbnail"><span class="lazyload-container ratio-4-3"><img data-sizes="auto" alt="Name That Thing" data-src="https://merriam-webster.com/assets/mw/static/images/old-quizzes/name-that-thing/80x60@1x.jpg" data-dim="80x60" data-srcset="https://merriam-webster.com/assets/mw/static/images/old-quizzes/name-that-thing/80x60@1x.jpg 1x, https://merriam-webster.com/assets/mw/static/images/old-quizzes/name-that-thing/80x60@2x.jpg 2x" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></div>
+      <div class="content">
+        <p class="blurb">Test your visual vocabulary with our 10-question challenge!</p>
+        <a class="to-quiz" href="/word-games/name-that-thing">TAKE THE QUIZ</a>
+      </div>
+    </div>
+  
+
+
+    <div class="wgts-quiz last">
+      <div class="thumbnail"><span class="lazyload-container ratio-4-3"><img data-sizes="auto" alt="Universal Daily Crossword" data-src="https://merriam-webster.com/assets/mw/static/images/games/crosswords/universal-daily-crossword/204x153@1x.jpg" data-srcset="https://merriam-webster.com/assets/mw/static/images/games/crosswords/universal-daily-crossword/204x153@1x.jpg 1x, https://merriam-webster.com/assets/mw/static/images/games/crosswords/universal-daily-crossword/204x153@2x.jpg 2x" data-dim="204x153" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></span></div>
+      <div class="content">
+        <p class="blurb"><!--
+        -->A daily challenge for crossword fanatics.<!--
+        --></p>
+        <a class="to-quiz" href="/word-games/universal-daily-crossword">TAKE THE QUIZ</a>
+      </div>
+    </div>
+    
+  </div>
+</div>                            
+                          </div>
+        </div>
+        
+      </div>
+      
+
+          
+<div id="subscribe-unabridged" class="clearfix">
+  <div class="header">Love words? Need even more definitions?</div>
+  <p class="teaser">Subscribe to America's largest dictionary and get thousands more definitions and advanced search&mdash;ad free!</p>
+  <a class="subscribe-btn" rel="noopener" target="_blank" href="https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU">Merriam-Webster unabridged</a>
+</div>
+    
+ </div>
+
+
+  <div class="additional-content-area">
+    <div class="additional-items additional-items-widget">
+  <span class="items__header">Words at Play</span>
+  <ul>
+      <li>
+        <a class="item-card" href="&#x2F;words-at-play&#x2F;bare-vs-bear">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="brown bear in woods" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/brown%20bear%20in%20woods-9278-9eeb884adccccf7e2ad4f80631e8d436@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="brown bear in woods-9278-9eeb884adccccf7e2ad4f80631e8d436" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/brown%20bear%20in%20woods-9278-9eeb884adccccf7e2ad4f80631e8d436@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/brown%20bear%20in%20woods-9278-9eeb884adccccf7e2ad4f80631e8d436@2x.jpg 2x" pair-id="9280" image-id="9278" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">'Bare' vs. 'Bear'</span>
+            <p class="mell-gr235"><span>Words and phrases to bear in mind</span></p>
+          </div>
+        </a>
+    </li>
+      <li>
+        <a class="item-card" href="&#x2F;words-at-play&#x2F;beautiful-useless-obscure-words-volume-2">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="two goats" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/two%20goats-8845-9a56589d95e0e9498a48666160ff6a5a@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="two goats-8845-9a56589d95e0e9498a48666160ff6a5a" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/two%20goats-8845-9a56589d95e0e9498a48666160ff6a5a@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/two%20goats-8845-9a56589d95e0e9498a48666160ff6a5a@2x.jpg 2x" pair-id="8847" image-id="8845" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Great Big List of Beautiful &amp; Useless Words</span>
+            <p class="mell-gr235"><span>Along with their degrees of usefulness</span></p>
+          </div>
+        </a>
+    </li>
+      <li>
+        <a class="item-card" href="&#x2F;topics&#x2F;difference-between">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="alt 5a37e26cd8123" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/alt-5a37e26cd8123-4638-05dcea38552c416185162a0b02d209e6@2x.jpg 2x" pair-id="4640" image-id="4638" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">What's the Difference?</span>
+            <p class="mell-gr235"><span>These words shouldn't be used interchangeably</span></p>
+          </div>
+        </a>
+    </li>
+      <li>
+        <a class="item-card" href="&#x2F;words-at-play&#x2F;top-10-words-you-didnt-know-vol-2">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="words for things you didnt know have names vol 2 eyeshine" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/words%20for%20things%20you%20didnt%20know%20have%20names%20vol%202%20eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6@1x.jpg" data-caption="" data-credit="" data-type="article" data-dim="art-global-footer-recirc" data-ret-pref="words for things you didnt know have names vol 2 eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/words%20for%20things%20you%20didnt%20know%20have%20names%20vol%202%20eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/article/art-global-footer-recirc/words%20for%20things%20you%20didnt%20know%20have%20names%20vol%202%20eyeshine-401-d7173fa5b554bfd7b0e020bbb7cd61c6@2x.jpg 2x" pair-id="401" image-id="401" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Words For Things You Didn't Know Have Names</span>
+            <p class="mell-gr235"><span>When 'thingamajig' and 'thingamabob' just won't do</span></p>
+          </div>
+        </a>
+    </li>
+    </ul>
+</div>    <div class="additional-items additional-items-widget">
+  <span class="items__header">Ask the Editors</span>
+  <ul>   
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;literally">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="video literally" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-literally-1143@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="video-literally-1143" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-literally-1143@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-literally-1143@2x.jpg 2x" pair-id="1145" image-id="1143" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">Literally</span>
+          <p class="mell-gr235"><span>How to use a word that (literally) drives some pe...</span></p>
+        </div>
+      </a>
+    </li>
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;intensive-intents-and-purposes-eggcorn-video">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="person studying illustration" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/person%20studying%20illustration-7779-81d9394ee7c8538073da0765d0b7f345@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="person studying illustration-7779-81d9394ee7c8538073da0765d0b7f345" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/person%20studying%20illustration-7779-81d9394ee7c8538073da0765d0b7f345@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/person%20studying%20illustration-7779-81d9394ee7c8538073da0765d0b7f345@2x.jpg 2x" pair-id="7781" image-id="7779" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">'All Intensive Purposes' or 'All Intents and Purposes'?</span>
+          <p class="mell-gr235"><span>We're intent on clearing it up</span></p>
+        </div>
+      </a>
+    </li>
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;lay-vs-lie">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="video lay vs lie" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-lay-vs-lie-1123@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="video-lay-vs-lie-1123" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-lay-vs-lie-1123@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/video-lay-vs-lie-1123@2x.jpg 2x" pair-id="1125" image-id="1123" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">Lay vs. Lie</span>
+          <p class="mell-gr235"><span>Editor Emily Brewster clarifies the difference.</span></p>
+        </div>
+      </a>
+    </li>
+      <li>
+      <a class="item-card" href="&#x2F;video&#x2F;why-did-yankee-doodle-call-a-feather-macaroni">
+        <div class="item-content">
+          <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="cartoon-of-british-nobility" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913@1x.jpg" data-caption="" data-credit="" data-type="video" data-dim="vid-global-footer-recirc" data-ret-pref="cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/video/vid-global-footer-recirc/cartoon-of-british-nobility-7372-3875b9169f94f0b8d2d4f8068e974913@2x.jpg 2x" pair-id="7374" image-id="7372" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+          <span class="item-title-text">Why Did Yankee Doodle Call a Feather 'Macaroni'?</span>
+          <p class="mell-gr235"><span>What's with his feathered cap?</span></p>
+        </div>
+      </a>
+    </li>
+    </ul>
+</div>    <div class="additional-items additional-items-widget">
+  <span class="items__header">Word Games</span>
+   <ul> 
+            <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;fears-quiz">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="clown-mask" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/clown-mask-9275-d7ebabfc519b06b2f21ae24423473734@1x.jpg" data-caption="Clown mask" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="clown-mask-9275-d7ebabfc519b06b2f21ae24423473734" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/clown-mask-9275-d7ebabfc519b06b2f21ae24423473734@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/clown-mask-9275-d7ebabfc519b06b2f21ae24423473734@2x.jpg 2x" pair-id="9277" image-id="9275" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Face Your Fears</span>
+            <p class="mell-gr235"><span>Don&#039;t be scared to answer these questions about f...</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+                <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;acronym-quiz">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="asap street sign" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/asap%20street%20sign-9256-dd994583afbea22abfc4047fb74a8b8c@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="asap street sign-9256-dd994583afbea22abfc4047fb74a8b8c" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/asap%20street%20sign-9256-dd994583afbea22abfc4047fb74a8b8c@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/asap%20street%20sign-9256-dd994583afbea22abfc4047fb74a8b8c@2x.jpg 2x" pair-id="9258" image-id="9256" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Figure Out These Acronyms ASAP</span>
+            <p class="mell-gr235"><span>You don&#039;t have to be a NASA engineer to get these...</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+                <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;ntt-herbs-and-spices">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="a table filled with colorful herbs and spices" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/a%20table%20filled%20with%20colorful%20herbs%20and%20spices-8896-fb730a52b1a44c1ee6b7b82769a7254b@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="a table filled with colorful herbs and spices-8896-fb730a52b1a44c1ee6b7b82769a7254b" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/a%20table%20filled%20with%20colorful%20herbs%20and%20spices-8896-fb730a52b1a44c1ee6b7b82769a7254b@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/a%20table%20filled%20with%20colorful%20herbs%20and%20spices-8896-fb730a52b1a44c1ee6b7b82769a7254b@2x.jpg 2x" pair-id="8898" image-id="8896" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">Name Those Herbs and Spices</span>
+            <p class="mell-gr235"><span>How many do you know?</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+                <li>
+        <a class="item-card" href="&#x2F;word-games&#x2F;vocabulary-quiz">
+          <div class="item-content">
+            <span><span class="lazyload-container ratio-3-2"><img data-sizes="auto" alt="how strong is your vocabulary" is_retina="true" data-src="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/how%20strong%20is%20your%20vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e@1x.jpg" data-caption="" data-credit="" data-type="quiz" data-dim="quiz-global-footer-recirc" data-ret-pref="how strong is your vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e" data-ret-x="1" data-srcset="https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/how%20strong%20is%20your%20vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e@1x.jpg 1x, https://merriam-webster.com/assets/mw/images/quiz/quiz-global-footer-recirc/how%20strong%20is%20your%20vocabulary-7851-872bc208355765e6ba6a4ff9fd06fd6e@2x.jpg 2x" pair-id="7853" image-id="7851" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></span></span>
+            <span class="item-title-text">How Strong Is Your Vocabulary?</span>
+            <p class="mell-gr235"><span>The faster you answer, the higher your score</span></p>
+            <p class="quiz-link">Take the quiz</p>
+          </div>
+        </a>
+      </li>
+        </ul>
+</div>   </div>
+
+
+
+<script>window.mwdata.firstHwFound="imperative";window.mwdata.time="1652812053";window.mwdata.rp=encodeURIComponent("dictionary");window.mwdata.usp=encodeURIComponent("imperative");window.mwdata.esid=encodeURIComponent("mp-esid-6283e91562292");</script>
+                    
+<footer class="global-footer ">
+  <div class="footer-mast clearfix">
+    <div class="mw-logo-section lazyload">
+      <a href="/" class="footer-logo">Merriam Webster</a>
+    </div>
+    <div class="footer-mast-content clearfix">
+      <div class="footer-subscribe-block">
+        <div class="footer-subscribe-msg">
+          <p>Learn a new word every day. Delivered to your inbox!</p>
+        </div>
+        <form data-medium="footer" class="footer-subscribe js-wod-subscribe-frm">
+          <input class="footer-subscribe-field" type="text" name="email" value="" aria-label="Sign up for Merriam-Webster's Word of the Day newsletter" placeholder="Your email address">
+          <input class="footer-subscribe-button" type="submit" name="submit" aria-label="Subscribe" value="SUBSCRIBE">
+          <input class="footer-subscribe-button hidden arrow" type="submit" name="submit" value="&gt;">
+        </form>
+      </div>
+      <div class="footer-dictionaries">
+        <p>OTHER MERRIAM-WEBSTER DICTIONARIES</p>
+        <div class="other-dictionaries">
+          <ul>
+            <li><a href="https://unabridged.merriam-webster.com/">MERRIAM-WEBSTER'S UNABRIDGED DICTIONARY</a></li>
+            <li><a href="https://scrabble.merriam.com/">SCRABBLE<sup>&reg;</sup> WORD FINDER</a></li>
+            <li><a href="https://dictionaryapi.com/">MERRIAM-WEBSTER DICTIONARY API</a></li>
+          </ul>
+          <ul>
+            <li><a href="https://www.nglish.com/spanish/en/">NGLISH - SPANISH-ENGLISH TRANSLATION</a></li>
+            <li><a href="https://arabic.britannicaenglish.com/en/">BRITANNICA ENGLISH - ARABIC TRANSLATION</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="follow-us lazyload">
+        <p>FOLLOW US</p>
+        <div class="follow-links">
+          <ul>
+            <li><a href="https://www.facebook.com/merriamwebster" rel="noopener" target="_blank" class="social-link social-fb">Facebook</a></li>
+            <li><a href="https://twitter.com/merriamwebster" rel="noopener" target="_blank" class="social-link social-tw">Twitter</a></li>
+            <li><a href="https://www.youtube.com/user/MerriamWebsterOnline" rel="noopener" target="_blank" class="social-link social-play">YouTube</a></li>
+            <li><a href="https://www.instagram.com/merriamwebster/" rel="noopener" target="_blank" class="social-link social-ig">Instagram</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-</body>
+  <div class="footer-foot clearfix footer-oa cafemedia-footer-foot">
+    <div class="footer-foot-content clearfix">
+          <ul class="footer-menu browse-dictionary">
+        <li><a href="/browse/dictionary/a">Browse the Dictionary:</a></li>
+        <li><a href="/browse/dictionary/a">a</a></li>
+        <li><a href="/browse/dictionary/b">b</a></li>
+        <li><a href="/browse/dictionary/c">c</a></li>
+        <li><a href="/browse/dictionary/d">d</a></li>
+        <li><a href="/browse/dictionary/e">e</a></li>
+        <li><a href="/browse/dictionary/f">f</a></li>
+        <li><a href="/browse/dictionary/g">g</a></li>
+        <li><a href="/browse/dictionary/h">h</a></li>
+        <li><a href="/browse/dictionary/i">i</a></li>
+        <li><a href="/browse/dictionary/j">j</a></li>
+        <li><a href="/browse/dictionary/k">k</a></li>
+        <li><a href="/browse/dictionary/l">l</a></li>
+        <li><a href="/browse/dictionary/m">m</a></li>
+        <li><a href="/browse/dictionary/n">n</a></li>
+        <li><a href="/browse/dictionary/o">o</a></li>
+        <li><a href="/browse/dictionary/p">p</a></li>
+        <li><a href="/browse/dictionary/q">q</a></li>
+        <li><a href="/browse/dictionary/r">r</a></li>
+        <li><a href="/browse/dictionary/s">s</a></li>
+        <li><a href="/browse/dictionary/t">t</a></li>
+        <li><a href="/browse/dictionary/u">u</a></li>
+        <li><a href="/browse/dictionary/v">v</a></li>
+        <li><a href="/browse/dictionary/w">w</a></li>
+        <li><a href="/browse/dictionary/x">x</a></li>
+        <li><a href="/browse/dictionary/y">y</a></li>
+        <li><a href="/browse/dictionary/z">z</a></li>
+        <li><a href="/browse/dictionary/0">0-9</a></li>
+      </ul>
+     
+
+      <ul class="footer-menu">
+        <li><a href="/">Home <span class="rborder"></span></a></li>
+        <li><a href="/help">Help <span class="rborder"></span></a></li>
+        <li><a href="/about-us">About Us <span class="rborder"></span></a></li>
+        <li><a href="https://shop.merriam-webster.com/?utm_source=mwsite&utm_medium=nav&utm_content=footer">Shop <span class="rborder"></span></a></li>
+        <li><a href="/advertising">Advertising Info <span class="rborder"></span></a></li>
+        <li><a href="https://www.dictionaryapi.com/" rel="noopener" target="_blank">Dictionary API <span class="rborder"></span></a></li>
+        <li><a href="/contact-us">Contact Us <span class="rborder"></span></a></li>
+        <li><a href="https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_JOINMWU" rel="noopener" target="_blank">Join MWU <span class="rborder"></span></a></li>
+        <li><a href="/video">Videos <span class="rborder"></span></a></li>
+        <li><a href="/words-at-play/word-of-the-year">Word of the Year <span class="rborder"></span></a></li>
+        <li><a href="/vocabulary/see-all">Vocabulary Resources <span class="rborder"></span></a></li>                
+        <li><a href="/legal">Law Dictionary <span class="rborder"></span></a></li>
+        <li><a href="/medical">Medical Dictionary <span class="rborder"></span></a></li>
+        <li><a href="/privacy-policy">Privacy Policy <span class="rborder"></span></a></li>
+                <li class="last"><a href="/terms-of-use">Terms of Use</span></a></li>
+              </ul>
+
+      <ul class="footer-menu">
+        <li><a href="/browse/thesaurus/a">Browse the Thesaurus <span class="rborder"></span></a></li>
+        <li><a href="/browse/medical/a">Browse the Medical Dictionary<span class="rborder"></span></a></li>
+        <li class="last"><a href="/browse/legal/a">Browse the Legal Dictionary</a></li>
+      </ul>
+            <p class="copyright">© 2022 Merriam-Webster, Incorporated</p>
+    </div>
+  </div>
+</footer>
+      </div>
+    </div>
+            
+        
+      </body>
 </html>

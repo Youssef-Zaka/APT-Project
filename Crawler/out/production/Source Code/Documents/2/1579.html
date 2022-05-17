@@ -1,1190 +1,520 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
+<html ng-app="tmog" lang="en">
+<head>
+    <title>USPTO | TMOG Search</title>
 
-<!-- def.1 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title>
-Purdue e-Pubs | Purdue University Scholarship Online
-</title>
- 
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=1"/>
+    
+    <!--START OF SCRIPTS-->
+    <!-- Bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
 
-<!-- FILE meta-tags.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/meta-tags.inc -->
-<!-- FILE: meta-tags.inc (cont) -->
+    <!-- TMOG styles-->
+    <link type="text/css" rel="stylesheet" href="css/main.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="css/search.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="css/review.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="css/single.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="css/print.css" media="print"/>
+    <link type="text/css" rel="stylesheet" href="js/lib/imageZoom/image-zoom.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css"
+          media="screen"/>
+    <!--[if IE 9]>
+    <link rel="stylesheet" type="text/css" href="css/eog-ie.css"/>
+    <![endif]-->
+    <!--HEADER CSS-->
+    <link rel="stylesheet" type="text/css" href="uhf/css/uspto-header-styles.css">
+    <link rel="shortcut icon" type="image/x-icon" href="uhf/images/icons/favicon.ico">
+    <link rel="icon" type="image/png" href="uhf/images/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="uhf/images/icons/favicon-16x16.png" sizes="16x16">
 
-<!-- sh.1 -->
-<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
-<link rel="alternate" type="application/rss+xml" title="Purdue e-Pubs Feed" href="/recent.rss">
-<script type="text/javascript" src="/assets/footnoteLinks.js"></script>
-<!--[if IE]>
-<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
-<![endif]-->
-<!-- end sh.1 -->
-
-
-
-
-<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"site:index","businessUnit":"els:rp:st"},"visitor":{}};</script>
+    <!--END OF SCRIPTS-->
 
 </head>
-<body >
-<!-- FILE /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen --><!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
-<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
+<body>
 
-<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
-  
-  
-  <nav class="nav-collapse">
-    <ul>
-      <li class="menu-item active device-fixed-width"><a href="https://docs.lib.purdue.edu" title="Home" data-scroll >Home</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/communities.html" title="Browse" data-scroll >Browse Collections</a></li>
-      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/about.html" title="About" data-scroll >About</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
+<!--USPTO STANDARD HEADER-->
+<div id="usptoGlobalHeader">
+    <div class="uspto-header-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="http://www.uspto.gov" target="_blank" class="uspto-logo"
+                       title="United States Patent and Trademark Office - An Agency of the Department of Commerce"></a>
+
+                    <div class="pull-right" id="uspto-header-links">
+                        <span><a href="http://www.uspto.gov/about-us" target="_blank">About Us</a></span><span><a
+                            href="http://www.uspto.gov/careers" target="_blank">Careers</a></span><span><a
+                            href="http://www.uspto.gov/about-us/contact-us" target="_blank">Contact Us</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="uspto-header-middle">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <span>Trademark Official Gazette</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<noscript>
+    <style type="text/css">
+        .noJsHide {
+            display: none;
+        }
+    </style>
+    <div class="noscriptmsg">To use the TMOG successfully, please note the following requirements:</br></br>
+        We’re sorry, you must have javascript enabled in your browser. Please be sure javascript is enabled and try
+        again.
+    </div>
+</noscript>
+
+<!-- SUB-HEADER (bread crumbs and horizontal nav) -->
+<div id="header-gray" class="noJsHide">
+    <div class="">
+        <div class="site-crumbs">
+            <a href="http://www.uspto.gov/trademarks" target="_blank"> Trademarks</a> / <a href="#"
+                                                                                            onclick="homePage()">Trademark
+            Official Gazette</a>
+			
+			
+        </div>
+		<div class="site-crumbs pull-right">
+		<span><a href="https://www.uspto.gov/trademark/trademark-updates-and-announcements/proposed-amendments-identifications-goods-and-services" target="_blank" style="color:#ffbd6d" onMouseOver="this.style.color='#f2a952'" onMouseOut="this.style.color='#ffbd6d'"> Technological Evolution </a></span>&nbsp;
+		</div>
+			
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div ng-controller="TabsCtrl" id="tabsetNav" ng-cloak>
+
+<div class="tabHeader">
+    <ul class="nav nav-justified" aria-label="Application Tabs" role="tablist">
+        <!-- SEARCH TAB -->
+        <li ng-click="setView('review', 'tile')" ng-keypress="($event.which === 13)?setView('review', 'tile'):0"
+            ng-class="{active: view.view == 'review'}" class="searchTabHeader" role="tab"
+            aria-label="Search / Review Tab" tabindex="0">
+            <a>Search</a>
+        </li>
+
+        <!-- MY LIST TAB -->
+        <li ng-click="setView('myList', 'list')" ng-keypress="($event.which === 13)?setView('myList', 'list'):0"
+            ng-class="{active: view.view == 'myList'}" role="tab" aria-label="My List Tab" tabindex="0">
+            <a>
+                <span class="badge pull-right collectionCount"> {{ myListCount }} </span> My List
+            </a>
+        </li>
+
+        <!-- RESOURCES TAB -->
+        <li ng-click="setView('resources')" ng-keypress="($event.which === 13)?setView('resources'):0"
+            ng-class="{active: view.view == 'resources'}" role="tab" aria-label="Resources Tab" tabindex="0">
+            <a>Help&nbsp;/&nbsp;Resources</a>
+        </li>
     </ul>
-  </nav>
-</header>
-
-<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
-<!--<![endif]-->
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen (cont) -->
-
-
-
-<div id="purdue">
-	<div id="container">
-		<a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
-
-					
-			<div id="header">
-				<a href="https://docs.lib.purdue.edu" id="banner_link" title="Purdue e-Pubs" >
-					<img id="banner_image" alt="Purdue e-Pubs" width='980' height='127' src="/assets/md5images/0ef023a18cb347526fa389886bca42cb.png">
-				</a>	
-				
-					<a href="http://www.lib.purdue.edu/" id="logo_link" title="Purdue University" >
-						<img id="logo_image" alt="Purdue University" width='404' height='127' src="/assets/md5images/256521ebbdbbd9ed12c3870e899829ec.png">
-					</a>	
-				
-			</div>
-					
-			<div id="navigation">
-				<!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://docs.lib.purdue.edu" title="Home" ><span>Home</span></a></li><li id="tabtwo"><a href="https://docs.lib.purdue.edu/about.html" title="About" ><span>About</span></a></li><li id="tabthree"><a href="https://www.lib.purdue.edu/repositories/epubs/about" title="FAQ" ><span>FAQ</span></a></li><li id="tabfour"><a href="https://docs.lib.purdue.edu/cgi/myaccount.cgi?context=" title="My Account" ><span>My Account</span></a></li></ul></div>
-
-
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen (cont) -->
-			</div>
-		
-
-		<div id="wrapper">
-			<div id="content">
-				<div id="main" class="text">
- 
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_index.inc -->
-
-
-
-
-
-
-
-
-<div id="dcn-home">
-
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_cover_text.inc -->
-
-        
-              
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-              
-        
-
-        
-              
-        
-
-
-
-
-
-<h2>Browse and Search by:  <span class="site-follow"><!-- FILE: /srv/sequoia/main/data/assets/site/nw_follow_ctx.inc -->
-	
-		<a rel="nofollow" href="https://network.bepress.com/api/follow/subscribe?institution=MzM4ZGU4ZWRlZDAwOGEwYg%3D%3D&amp;format=html" data-follow-set="institution:MzM4ZGU4ZWRlZDAwOGEwYg==" title="Follow Purdue e-Pubs" class="btn followable" >Follow</a>
-	
-
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_cover_text.inc (cont) --></span></h2>
-<div id="cover-browse">
-<h3><a href="https://docs.lib.purdue.edu/authors.html" >Author Names</a></h3>
-<h3><a href="https://docs.lib.purdue.edu/communities.html" >Departments and Centers at Purdue</a></h3>
-
-
-
-<h3><a href="https://docs.lib.purdue.edu/thepress" >Purdue University Press</a></h3>
-<h3><a href="https://docs.lib.purdue.edu/etd" >Theses and Dissertations</a></h3>
 </div>
 
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/homepage_intro.inc --><div id="homepage-intro">
-<p>Purdue e-Pubs is a service of the Purdue University Libraries, providing online publishing support for original publications as well as hosting for Purdue-affiliated articles, reports, conference proceedings, student scholarship, and more. Contact <a href="mailto:epubs@purdue.edu" >the Libraries</a> to discuss opportunities to bring additional Purdue-affiliated scholarship online.</p>
+<!-- info and warning messaging -->
+<div ng-cloak class="messageContainer" aria-label="Alert Message Container">
+    <div ng-repeat="success in alertSrvc.alert.success" class="alert alert-success alert-dismissable" role="alert"
+         aria-label="Success Message">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="alertSrvc.dismiss('success', success)">&times;</button>
+        {{success.text}}
+    </div>
+
+    <div ng-repeat="info in alertSrvc.alert.info" class="alert alert-info alert-dismissable" role="alert"
+         aria-label="Alert Message">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="alertSrvc.dismiss('info', info)">&times;</button>
+        {{info.text}}
+    </div>
+
+    <div ng-repeat="warn in alertSrvc.alert.warning" class="alert alert-warning alert-dismissable" role="alert"
+         aria-label="Warning Message">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="alertSrvc.dismiss('warning', warn)">&times;</button>
+        {{warn.text}}
+    </div>
+
+    <div ng-repeat="error in alertSrvc.alert.error" class="alert alert-danger alert-dismissable" role="alert"
+         aria-label="Error Message">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="alertSrvc.dismiss('error', error)">&times;</button>
+        {{error.text}}
+    </div>
 </div>
-<script type="text/javascript">
- var head = document.getElementsByTagName('head')[0],
-        script = document.createElement('meta');
+<div class="tabBodyExternal">
 
-    $(script).attr('name' , 'google-site-verification');    
-    $(script).attr('content' , 'gGWWPjWInJK5hxU8n9q4ijQLdV424-Fsq0Fuqtu-d0Y');    
+    <!-- REVIEW TAB -->
+    <div ng-controller="ReviewCtrl" ng-show="view.view == 'review'" id="reviewTab">
+        <h1 ng-hide="view.subview === 'case'" class="viewTitle">Search Results</h1>
 
-    head.appendChild(script);
+        <h1 ng-show="view.subview === 'case'" class="viewTitle">Case Details</h1>
 
-</script><!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_cover_text.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_index.inc (cont) -->
+        <!-- sidebar filter groups -->
+        <!-- todo split it and hit it -->
+        <div ng-hide="view.subview === 'case'">
+            <ng-include src="'js/app/sidebar/sidebar-filters-review.html'"></ng-include>
+        </div>
 
+        <!-- results container for pagination, filter crumbs, action btns, and customize field btn -->
+        <div ng-hide="view.subview === 'case'" class="sitewide-search">
 
-  <!-- FILE: /srv/sequoia/main/data/assets/site/readership_map.inc -->
+            <!-- CONTROLS (Pagination, Filter Crumbs, Action Buttons, Grid Sort, Custom Columns Link -->
+            <div id="tableControls">
+                <!-- page settings, prev, records count, next, go to record, list/grid icons -->
+                <og-pagination tab-name="review"></og-pagination>
 
+                <!-- FILTER CRUMBS -->
+                <og-filter-crumbs filter-sidebar="review"></og-filter-crumbs>
 
+                <!-- Action Buttons for Share All Results, Reviewed, Add To My List -->
+                <div class="actionButtons">
 
+                    <span>
+                        <button type="button" class="shareResults btn btn-primary btn-share share right"
+                                aria-label="email issue" title="Email Results"
+                                ng-click="shareSearch($event, 'review')">
+                            <span class="glyphicon glyphicon-envelope"></span> Email All Results
+                        </button>
+                    </span>
 
+                    <!-- show add to list and reviewed action buttons once case is selected -->
+                    <div ng-show="isCaseSelected(cases.cases)">
+                        <button type="button" class="btn btn-addToList btn-hidden" aria-label="Add to My List"
+                                title="Add to My List"
+                                ng-click="addToMyList($event)">
+                            <span class="glyphicon glyphicon-plus"></span> Add to My List
+                        </button>
+                    </div>
+                </div>
 
+                <!-- custom fields button and modal -->
+                <og-customize-case-fields tab-name="review"></og-customize-case-fields>
+            </div>
 
+            <!-- Review Tile -->
+            <div class="reviewTileWrapper">
+                <div ng-controller="ReviewTileCtrl" ng-show="view.subview == 'tile'">
+                    <ng-include src="'js/app/common/review-tiles.html'"></ng-include>
+                </div>
 
+                <!-- Action Buttons for Share All Results, Reviewed, Add To My List -->
+                <div class="actionButtons">
 
+                    <span>
+                        <button type="button" class="shareResults btn btn-primary btn-share share right"
+                                aria-label="email issue" title="Email Results"
+                                ng-click="shareSearch($event, 'review')">
+                            <span class="glyphicon glyphicon-envelope"></span> Email All Results
+                        </button>
+                    </span>
 
+                    <!-- show add to list and reviewed action buttons once case is selected -->
+                    <div ng-show="isCaseSelected(cases.cases)">
+                        <button type="button" class="btn btn-addToList btn-hidden" aria-label="Add to My List"
+                                title="Add to My List"
+                                ng-click="addToMyList($event)">
+                            <span class="glyphicon glyphicon-plus"></span> Add to My List
+                        </button>
+                    </div>
+                </div>
 
-<div id="rdr-embed" data-width="666" data-height="380" scrolling="no" style="margin-top: 20px; overflow: hidden; width: 100%; max-width: 666px;"></div>
+                <!-- BOTTOM PAGINATION (Page Length, Next/Prev Page, Go To Record -->
+                <div ng-hide="searching" class="bottomPagination">
+                    <og-pagination tab-name="review" bottom="true"></og-pagination>
+                </div>
+            </div>
 
+            <!-- Searching Indicator -->
+            <div ng-show="searching" id="loadingRecords">
+                <img src="images/loading.gif" height="60" alt="Loading eOG Records">
 
+                <p>Loading eOG Records</p>
+            </div>
 
+        </div>
 
+        <!-- SINGLE CASE VIEW -->
+        <div ng-show="view.subview == 'case'" ng-controller="CaseCtrl">
+            <ng-include src="'js/app/review/single-case.html'"></ng-include>
+        </div>
 
+    </div>
 
-<script> 
-  (function () {
-    var og = window.location.origin;
-    window.rdrAsync = function() {
-     RDR.init({ 
-       mapContext: '119483', 
-       datastreamHost: 'datastream.bepress.com', 
-       datastreamPort: '443', 
-       datastreamStaticRoot: '//assets.bepress.com/20200205/', 
-       colorCode: 'custom', 
-       customColor: 'B1946c', 
-       customSaturation: 0, 
-       customLightness: 0, 
-       institution_title: 'Purdue University', 
-       site_title: 'Purdue e-Pubs',  
-       site_link: 'https://docs.lib.purdue.edu', 
-       instCountryCode: 'us', 
-       instCity: 'West Lafayette', 
-       instRegion: 'Indiana', 
-       instCountry: 'United States', 
-       origin: og,
-       embedLink: 'https://docs.lib.purdue.edu/embed_map.html',
-       largeMapLink: 'https://docs.lib.purdue.edu/readership_map.html#content',
-       homepageMap: 1, 
-       publicationMap: 0, 
-       zoom: 1, 
-       minZoom: 1,
-       stats_host: 'https://resources.bepress.com',
-       playbackHost: 'https://playback.bepressaws.com',
-       playbackTimerTID: null,
-       playbackForce: false,
-       
-     }); 
-    }; 
-  }());
-</script>
+    <!-- MY LIST TAB -->
+    <div ng-controller="MyListCtrl" ng-show="view.view == 'myList'" id="myListTab">
+        <div class="fullWidthLayout">
+            <h1 class="viewTitle"> My List </h1>
 
+            <div class="pagination-wrapper">
+                <span class="totalCountCollection tableInfo">Showing <strong>{{myListCount}}</strong> record(s)</span>
+            </div>
 
+            <!-- action buttons - refresh, share, and save -->
+            <div class="actionButtons">
+                <button type="button" class="refreshCollection btn btn-secondary"
+                        aria-label="remove from my list" title="Remove From My List"
+                        ng-click="refreshMyList()">
+                    <span class="glyphicon glyphicon-remove"></span> Remove
+                </button>
 
-   <script src="https://assets.bepress.com/20200205/shared/embed/rdr.js" async="true"></script>
+                <span>
+                    <button type="button" class="share btn btn-primary btn-share right shareCollection"
+                            aria-label="email collection" title="Email Results"
+                            ng-click="shareMyList($event, col)"> Email
+                    </button>
+                </span>
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_index.inc (cont) -->
+                <button id="saveCollection" type="button" class="btn btn-primary btn-download right"
+                        aria-label="download my list" title="download pdf"
+                        ng-click="downloadMyList()"> Download
+                </button>
+            </div>
 
+            <!-- custom fields button and modal. My List has same prefs as review -->
+            <og-customize-case-fields tab-name="myList"></og-customize-case-fields>
 
+            <div class="reviewTileWrapper">
+                <ng-include src="'js/app/common/review-tiles.html'"></ng-include>
+            </div>
 
+        </div>
+    </div>
 
-
-
-
-  <!-- FILE: /srv/sequoia/main/data/assets/site/ir_papers.inc --><div class="box aag"><h2>At a Glance</h2><p><a href="https://docs.lib.purdue.edu/topdownloads.html" >Top 10 Downloads<span>All time</span></a>
-<a class="recent-additions" href="https://docs.lib.purdue.edu/recent_additions.html" >Recent Additions<span>50 most recent additions</span></a><a class="activity-by-year" href="https://docs.lib.purdue.edu/activity.html" ><span>Activity by year</span></a></p></div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_index.inc (cont) -->
-
-
-
-  <!-- FILE: /srv/sequoia/main/data/assets/site/ir_paper_of_day.inc -->
-<div class="box potd"><h2>Paper of the Day</h2>
-
-
-
-
-<p><a href="https://docs.lib.purdue.edu/roadschool/2011/pres/106" title="Published in Purdue Road School" >NIRPC Complete Streets Guidelines <span>Mitch Barloga</span></a></p>
-
+    <!-- RESOURCES TAB -->
+    <ng-include src="'js/app/resources/resources-tab.html'"></ng-include>
 
 </div>
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_index.inc (cont) -->
-
-
-
-
 </div>
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/index.html (cont) -->
+<!-- CONTENT CONTAINER -->
+<div class="sitewide-search noJsHide">
+
+    <div id="offPage">
+        <div id="grayToolTip">
+            <div class="gtTipArrow">
+                <img src="images/grayToolTipArrow.png" height="16" width="23" alt="Tool Tip"/>
+            </div>
+            <div class="gtTipContent"></div>
+        </div>
+    </div>
+
+    <!-- placeholder space for when the footer snaps back to the bottom -->
+    <div class="clear"></div>
+</div>
 <div class="clear"></div>
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/nw_links.inc --><link href="//assets.bepress.com/20200205/shared/floatbox/floatbox.css" rel="stylesheet" type="text/css" media="screen">
-<script src="/assets/floatbox/floatbox.js"></script>
-<div id="network-icon">
-	<a class="plain fbTooltip" data-fb-tooltip="source:#tooltip1 attachToHost:true" href="https://network.bepress.com" >
-	 		<img width="16" height="16" alt="DC Network" style="vertical-align:bottom;" src="assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> 
-			 This collection is part of the <span class="dcn-footer-link">Digital Commons Network</span>™
-	</a>
-</div>
-<div id="tooltip1" class="hidden" style="width:auto;">
-<div style="float:left;">
-	<a href="https://network.bepress.com" ><img width="80" height="80" alt="DC Network" style="margin:4px 0 0 4px; border-width:0;" src="assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"></a>
-</div>
-<div style="float:right; font-size:12px; font-family: Arial, Helvetica, sans-serif; margin:8px; width:auto;">
-<div id="network">
-	<p>Visit any of the disciplines in the Digital Commons Network™</p>
-	<p class="links">
-		<a href="https://network.bepress.com/architecture" title="Architecture" >Architecture</a> &bull;
-		<a href="https://network.bepress.com/arts-and-humanities" title="Arts and Humanities" >Arts and Humanities</a> &bull;
-		<a href="https://network.bepress.com/business" title="Business" >Business</a> &bull;
-		<a href="https://network.bepress.com/education" title="Education" >Education</a> &bull;
-		<a href="https://network.bepress.com/engineering" title="Engineering" >Engineering</a> &bull;
-		<a href="https://network.bepress.com/law" title="Law" >Law</a> &bull;
-		<a href="https://network.bepress.com/life-sciences" title="Life Sciences" >Life Sciences</a> <br>
-		<a href="https://network.bepress.com/medicine-and-health-sciences" title="Medicine and Health Sciences" >Medicine and Health Sciences</a> &bull;
-		<a href="https://network.bepress.com/physical-sciences-and-mathematics" title="Physical Sciences and Mathematics" >Physical Sciences and Mathematics</a> &bull;
-		<a href="https://network.bepress.com/social-and-behavioral-sciences" title="Social and Behavioral Sciences" >Social and Behavioral Sciences</a>
-	</p>
-</div>
-</div>
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/index.html (cont) -->
-
-
-<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
-	<div class="verticalalign">&nbsp;</div>
-	<div class="clear">&nbsp;</div>
-
-</div>
-
-	<div id="sidebar" role="complementary">
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc --><h2>Search</h2>
-
-
-	
-<form method='get' action='https://docs.lib.purdue.edu/do/search/' id="sidebar-search">
-	<label for="search" accesskey="4">
-		Enter search terms:
-	</label>
-		<div>
-			<span class="border">
-				<input type="text" name='q' class="search" id="search">
-			</span> 
-			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
-		</div>
-	<label for="context" style="display:none;">
-		Select context to search:
-	</label> 
-		<div>
-			<span class="border">
-				<select name="fq" id="context">
-					
-					
-					
-					
-					<option value='virtual_ancestor_link:"https://docs.lib.purdue.edu"'>in this repository</option>
-					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
-				</select>
-			</span>
-		</div>
-</form>
-
-<p class="advanced">
-	
-	
-		<a href="https://docs.lib.purdue.edu/do/search/advanced/?fq=virtual_ancestor_link:%22https://docs.lib.purdue.edu%22" >
-			Advanced Search
-		</a>
-	
-</p>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
-	<ul id="side-notify">
-		<li class="notify">
-			<a href="https://docs.lib.purdue.edu/announcements.html" title="Email or RSS Notifications" >
-				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
-			</a>
-		</li>
-	</ul>
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_sidebar_custom_middle_7_8.inc -->
-
-
-<div id="sb-custom-middle">
-    <h2 class="sb-custom-title">Links</h2>
-    <ul class="sb-custom-ul">
-        <li class="sb-custom-li"><a href="http://www.lib.purdue.edu/" title="Purdue Libraries" >Purdue Libraries</a></li>
-        <li class="sb-custom-li"><a href="http://docs.lib.purdue.edu/thepress" title="Purdue University Press Journals" >Purdue University Press Journals</a></li>
-    </ul>
-</div><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
-
-
-
-
-	<ul id="side-author">
-	
-		
-		<li class="submit">
-			<a href="https://docs.lib.purdue.edu/submit_research.html" title="Submit Research" >
-				Submit Research
-			</a>
-		</li>
-		<li>
-			<a href="https://docs.lib.purdue.edu/addendum.pdf" >
-				Author Addendum
-			</a>
-		</li>
-	
-	</ul>
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc --><h2>Browse</h2>
-<ul id="side-browse">
-
-
-<li class="collections"><a href="https://docs.lib.purdue.edu/communities.html" title="Browse by Collections" >Collections</a></li>
-<li class="discipline-browser"><a href="https://docs.lib.purdue.edu/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
-<li class="author"><a href="https://docs.lib.purdue.edu/authors.html" title="Browse by Author" >Authors</a></li>
-
-
-</ul>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lower_7_8.inc (cont) -->
-	
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
-	
-
-
-
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-	<div class="verticalalign">&nbsp;</div>
-	</div>
-
+<!-- WARNING, DON'T CHANGE - The USPTO standard footer begins with div#footer-site and shouldn't change without the Web Group's approval. -->
+<div id="usptoAppFooter">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="uspto-footer-top col-sm-12">
+                <div class="uspto-footer-logo col-sm-10">
+                    <a class="logo" href="http://www.uspto.gov/"
+                       title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
+                        <span class="sr-only">United States Patent and Trademark Office - An Agency of the Department of Commerce</span>
+                    </a>
+                </div>
+                <div class="uspto-footer-watermark col-sm-2"
+                     title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
+                    <span class="sr-only">United States Patent and Trademark Office - An Agency of the Department of Commerce</span>
+                </div>
+            </div>
+            <div class="uspto-footer-middle col-sm-12">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse-topic"> Browse By Topic <i
+                            class="icon icon-sort-desc icon-inverse"></i></button>
+                </div>
+                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-topic">
+                    <h2>Browse By Topic</h2>
+                    <ul>
+                        <li><a href="http://www.uspto.gov/patent">Patents</a></li>
+                        <li><a href="http://www.uspto.gov/trademark">Trademarks</a></li>
+                        <li><a href="http://www.uspto.gov/learning-resources">Learning &amp; Resources</a></li>
+                        <li><a href="http://www.uspto.gov/about-us">About the USPTO</a></li>
+                        <li><a href="http://www.uspto.gov/learning-and-resources/glossary">Glossary</a></li>
+                        <li><a href="http://www.uspto.gov/careers">Careers</a></li>
+                        <li><a href="http://www.uspto.gov/about-us/contact-us">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse-about"> About This Site <i
+                            class="icon icon-sort-desc icon-inverse"></i></button>
+                </div>
+                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-about">
+                    <h2>About This Site</h2>
+                    <ul>
+                        <li><a href="http://www.uspto.gov/using-usptogov/accessibility-uspto-website">Accessibility</a>
+                        </li>
+                        <li><a href="http://www.uspto.gov/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="http://www.uspto.gov/terms-use-uspto-website">Terms of Use</a></li>
+                        <li><a href="http://www.uspto.gov/about-us/security">Security</a></li>
+                        <li><a href="http://www.uspto.gov/blog/ebiz/ ">Systems Status</a></li>
+                        <li><a href="http://www.uspto.gov/sitemap">Site Map</a></li>
+                    </ul>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse-uspto"> USPTO Background <i
+                            class="icon icon-sort-desc icon-inverse"></i></button>
+                </div>
+                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-uspto">
+                    <h2>USPTO Background</h2>
+                    <ul>
+                        <li>
+                            <a href="http://www.uspto.gov/about-us/performance-and-planning/federal-activities-inventory-reform-fair-act">Federal
+                                Activity Inventory Reform Act (FAIR)</a></li>
+                        <li><a href="http://www.uspto.gov/about-us/performance-and-planning">USPTO Budget and
+                            Performance</a></li>
+                        <li>
+                            <a href="http://www.uspto.gov/learning-and-resources/ip-policy/electronic-freedom-information-act-e-foia">Freedom
+                                of Information Act</a></li>
+                        <li><a href="http://www.uspto.gov/learning-and-resources/information-quality-guidelines">Information
+                            Quality Guidelines</a></li>
+                    </ul>
+                </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse-federal"> Federal Government <i
+                            class="icon icon-sort-desc icon-inverse"></i></button>
+                </div>
+                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-federal">
+                    <h2>Federal Government</h2>
+                    <ul>
+                        <li><a href="http://www.regulations.gov" target="_blank">Regulations.gov<span class="ext"><span
+                                class="sr-only"> (link is external)</span></span></a></li>
+                        <li><a href="http://www.stopfakes.gov" target="_blank">StopFakes.gov<span class="ext"><span
+                                class="sr-only"> (link is external)</span></span></a></li>
+                        <li><a href="http://www.usa.gov" target="_blank">USA.gov<span class="ext"><span class="sr-only"> (link is external)</span></span></a>
+                        </li>
+                        <li><a href="http://www.commerce.gov" target="_blank">Department of Commerce<span
+                                class="ext"><span class="sr-only"> (link is external)</span></span></a></li>
+                        <li>
+                            <a href="http://www.uspto.gov/learning-and-resources/ip-policy/enforcement/strategy-targeting-organized-piracy-stop">Strategy
+                                Targeting Organized Piracy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
-	
-	
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
+<!-- Libraries and Plug-ins -->
+<script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/lib/angular.js"></script>
+<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.ba-bbq.js"></script>
+<script type="text/javascript" src="bower_components/angular-image-zoom/dist/image-zoom.js"></script>
 
-<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
-	<em>Digital Commons</em>
-</a>
+<!-- Angular Module tmog -->
+<script type="text/javascript" src="js/app/tmog-public.js"></script>
 
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
-	<p>
-		<a href="https://docs.lib.purdue.edu" title="Home page" accesskey="1" >Home</a> | 
-		<a href="https://docs.lib.purdue.edu/about.html" title="About" >About</a> | 
-		<a href="https://docs.lib.purdue.edu/faq.html" title="FAQ" >FAQ</a> | 
-		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
-		<a href="https://docs.lib.purdue.edu/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
-	</p>
-	<p>
-	
-	
-		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
-	
-		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
-	</p> 
-	
-</div>
+<!-- Review Module -->
+<script type="text/javascript" src="js/app/review/CaseCtrl.js"></script>
+<script type="text/javascript" src="js/app/review/ReviewCtrl.js"></script>
+<script type="text/javascript" src="js/app/review/reviewCompletedSrvc.js"></script>
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+<!-- MyList Module -->
+<script type="text/javascript" src="js/app/myList/MyListCtrl.js"></script>
+<script type="text/javascript" src="js/app/myList/myListSrvc.js"></script>
 
-</div>
-</div>
+<!-- Resources Module -->
+<script type="text/javascript" src="js/app/resources/ResourcesCtrl.js"></script>
 
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_analytics.inc --><script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
+<!-- Data Module -->
+<script type="text/javascript" src="js/app/data/data.js"></script>
+<script type="text/javascript" src="js/app/data/log.js"></script>
+
+<!-- Angular Controllers -->
+<script type="text/javascript" src="js/app/common/TabsCtrl.js"></script>
+<script type="text/javascript" src="js/app/review/ReviewCtrl.js"></script>
+<script type="text/javascript" src="js/app/common/ReviewTileCtrl.js"></script>
+<script type="text/javascript" src="js/app/review/CaseCtrl.js"></script>
+
+<!-- Sidebar Module -->
+<script type="text/javascript" src="js/app/sidebar/filtersSrvc.js"></script>
+<script type="text/javascript" src="js/app/sidebar/filtersRulesSrvc.js"></script>
+<script type="text/javascript" src="js/app/sidebar/sidebarModelSrvc.js"></script>
+
+<!-- Prefs Module -->
+<script type="text/javascript" src="js/app/preference/customizePrefsSrvc.js"></script>
+
+<!-- Angular Services -->
+<script type="text/javascript" src="js/app/common/viewSrvc.js"></script>
+<script type="text/javascript" src="js/app/common/alertSrvc.js"></script>
+<script type="text/javascript" src="js/app/common/shareEmailSrvc.js"></script>
+<script type="text/javascript" src="js/app/data/Properties.js"></script>
+
+<!-- Angular Filters -->
+<script type="text/javascript" src="js/app/common/Filters.js"></script>
+
+<!-- Angular Directives -->
+<script type="text/javascript" src="js/app/common/Directives.js"></script>
+
+<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript" src="js/analytics/gsa-ga.js"></script>
 <script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-5499681-9");
-pageTracker._trackPageview();
-} catch(err) {}</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+    var _gaq = _gaq || [];
+    var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
 
-<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>
+    _gaq.push( //USPTO.gov:
+            ['_require', 'inpage_linkid', pluginUrl], // Enhanced Link Attribution
+            ['_setAccount', 'UA-21265023-1'],
+            ['_setDomainName', '.uspto.gov'],
+            ['_gat._anonymizeIp'],
+            ['_setVisitorCookieTimeout', 15552000000],
+            ['_trackPageview'],
+            ['_setSiteSpeedSampleRate', 1]
+    );
+
+    _gaq.push( //TMOG:
+            ['t2._setAllowAnchor', true],
+            ['t2._require', 'inpage_linkid', pluginUrl], // Enhanced Link Attribution
+            ['t2._setAccount', 'UA-21265023-2'],
+            ['t2._setDomainName', '.uspto.gov'],
+            ['t2._gat._anonymizeIp'],
+            ['t2._setVisitorCookieTimeout', 15552000000],
+            ['t2._trackPageview'],
+            ['t2._setSiteSpeedSampleRate', 1]
+    );
+
+    (function () { //call Google
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+<script type="text/javascript" src="js/analytics/eog-ga.js"></script>
+
+<!-- Application Domain and Utility Classes -->
+<script type="text/javascript" src="js/app/TmogController.js"></script>
+
+<script>
+    function homePage() {
+        window.location = window.location.href.split('#')[0];
+    }
+    var tmog = new TmogController();
+
+    $(document).ready(function onReady() {
+        tmog.init();
+    });
+</script>
+
+</body>
+</html>

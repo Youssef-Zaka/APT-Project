@@ -1,287 +1,889 @@
 
-  <!doctype html>
-  <!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
-  <!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
-  <!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
-  <!--[if (gte IE 9)|!(IE)]><![endif]-->
-  <html class="no-js" lang="en">
-  <head> 
-    <meta charset="utf-8">
-    <title>SFE: Computers</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="Welcome to the fourth edition of The Encyclopedia of Science Fiction." />
-    <meta name="keywords" content="" />
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- Google Analytics -->
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga("create", "UA-24275979-1", "auto");
-ga("send", "pageview");
+<!DOCTYPE html>
+<html lang="en">
+<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
+
+<!-- def.1 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title> Search</title>
+
+
+
+<meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- sh.1 -->
+<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
+<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
+<link rel="alternate" type="application/rss+xml" title="Site Feed" href="/recent.rss">
+
+
+<!--[if IE]>
+<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
+<![endif]-->
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<!-- end sh.1 -->
+<link rel="stylesheet" href="/assets/cgi/css/search/query.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/assets/cgi/css/global-alert.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/assets/cgi/css/global/utils.css" type="text/css" media="screen">
+
+
+<!-- stripped inline yui3-seed -->
+<script type="text/javascript" src="/assets/scripts/bepress-init.pack.js"></script>
+<script type="text/javascript">
+			Bepress.cgiUrlBase = '';
+		</script>
+<script src="/assets/cgi/js/spinner.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/search/solr.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/search/query-screen.pack.js" type="text/javascript"></script>
+<script src="/assets/cgi/js/statsDispatcher.pack.js" type="text/javascript"></script>
+<script src="/assets/footnoteLinks.js" type="text/javascript"></script>
+<script type="text/javascript">
+YUI({
+}).use('bepress.search.queryscreen', 'node', 'datatype', function(Y){
+	
+	Y.on( 'domready', function () {
+
+		var fieldSelects, rowList, advContextNode, queryScreen, facetTypes, i;
+
+		
+		Y.bepress.search.solr.setAllowedFields( {"document_type":1,"author_lname":1,"publication_title":1,"subject":1,"author":1,"corporate_author":1,"text":1,"author_fname":1,"abstract":1,"title":1,"publication":1,"collected_from_sw":1,"institution":1} );
+		
+		queryScreen = new Y.bepress.search.QueryScreen( {
+			
+			errors: {
+				searchFailure:        "We're sorry, we were unable to process your search request. "
+				                    + "This may have been a temporary problem, please wait a few moments "
+				                    + "and try again.<br/>	(Error: {errmsg})"
+				, nothingEntered:     "Please enter a search term first"
+				, invalidDateEntered: "You entered '{errmsg}', but that doesn't look like a date to me."
+				, parseError:         "The advanced search form does not support this syntax: {errmsg}"
+				, syntaxNotSupported: "The advanced search form does not support this syntax. {errmsg}"
+				, timeout:            "Your search request has timed out. Please wait a moment and try again."
+				, emptyExport:        "No results matched your search."
+				, dateFormat:         "{errmsg} format is MM/DD/YYYY."
+			}
+
+			
+			, templates: {
+				resultsTemplate: {
+						download: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+		<span class="download {downloadFormat}"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Download<\/a><\/span>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+						, metadata: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+						, external: '<div class="result query">\
+	<p class="grid_10">\
+		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
+		<!-- first 5(?) -->\
+		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
+		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
+		<span class="download"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Link to Full Text<\/a><\/span>\
+	<\/p>\
+	<p class="grid_2 fr">\
+		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
+	<\/p>\
+<\/div>\
+'
+					}
+				, resultsHeaderTemplate:         '<div id="results-wrapper">\
+<div class="query">\
+		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
+<\/div>\
+<div id="results-sub-header" class="query">\
+	<span class="grid_6">Showing <strong>{count}<\/strong> out of <strong>{numFound}<\/strong> results. Starting at result <strong>{start}<\/strong>.<\/span>	\
+	<form id="save_search" class="grid_6 alpha omega" method="POST" action="\/do\/search\/save_search" >\
+			<a href="{saveUrl}" id="save-search-submit"><span><i class="icon-save"><\/i> Save this search<\/span><\/a>\
+			<span><a href="\/cgi\/notification.cgi" id="my-searches"><i class="icon-search"><\/i> My saved searches<\/a><\/span>\
+	<\/form>\
+<\/div>\
+<\/div>\
+'
+				, resultsExportedHeaderTemplate: '<div id="results-wrapper">\
+<div class="query">\
+		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
+<\/div>\
+<div id="results-sub-header" class="query">\
+		<span class="grid_6">Exported <strong>{count}<\/strong> results.<\/span>	\
+<\/div>\
+<\/div>\
+'
+				, resultsFooterTemplate:         '<div class="pagination query">\
+	<p class="grid_12">\
+		<span class="fl">\
+			<a id="first-page" class="{firstClass}" href="#query-results" title="First Page">&laquo; First<\/a>\
+			<a id="previous-page" class="{previousClass}" href="#query-results" title="Previous Page">&lt; Prev<\/a>\
+		<\/span>\
+		<span class="fr">\
+			<a id="next-page" class="{nextClass}" href="#query-results" title="Next Page">Next &gt;<\/a>\
+			<a id="last-page" class="{lastClass}" href="#query-results" title="Last Page">Last &raquo;<\/a>\
+		<\/span>\
+	<\/p>\
+<\/div>\
+\
+'
+				, rowTemplate:                   '<div class="row query">\
+  <p id="p{rownum}">\
+    <span class="fr">\
+      <input type="image" value="Delete" alt="Delete row {rownum}" name="del_row_{rownum}" src="\/assets\/query_minus.gif" class="hidden control-delete-row">\
+      <input type="image" value="Add" alt="Add row {rownum}" name="add_row_{rownum}" src="\/assets\/cgi\/images\/global\/add.png" class="control-add-row">	\
+    <\/span>\
+    <span class="grid_2">\
+      <select name="op_{rownum}" class="op-sel">\
+        <option value="AND">AND<\/option>\
+          <option value="OR">OR<\/option>\
+          <option value="NOT">NOT<\/option>\
+      <\/select>\
+    <\/span>\
+	<label for="field_{rownum}">Choose type<\/label>\
+		<span class="grid_3">\
+			<select name="field_{rownum}" id="field_{rownum}" class="field-sel">\
+                \
+                    <option value="text:">All Fields<\/option>\
+                \
+                    <option value="abstract:">Abstract<\/option>\
+                \
+                    <option value="subject:">Subject<\/option>\
+                \
+                    <option value="author:">Author<\/option>\
+                \
+                    <option value="institution:">Institution<\/option>\
+                \
+                    <option value="title:">Title<\/option>\
+                \
+                    <option value="document_type:">Document Type<\/option>\
+                \
+                    <option value="publication_title:">Publication<\/option>\
+                			<\/select>\
+		<\/span>\
+    <label for="value_{rownum}">Search term {rownum}<\/label>\
+		<span class="grid_6"><input type="text" id="value_{rownum}" name="value_{rownum}" value="" class="term">\
+		<\/span>	\
+		<br class="clear" \/>\
+	<\/p>\
+<\/div>\
+'
+				, facetLinkTemplate:             '	<li><a href="#" class="facet-{facetType}">{facetLabel}<\/a> ({facetCount})<\/li>\
+'
+				, facetMoreLink:                 '	<li class="dropdown">\
+		<div id="more-{facetType}" class="more-container"><ul><\/ul><\/div>\
+		<div name="{facetType}" class="collapse" id="{facetType}-links">\
+			<span class="more" name="{facetType}"><a href="#" name="{facetType}">More &darr;<\/a><\/span><span class="fewer hidden" name="{facetType}"><a href="#" name="{facetType}">Fewer &uarr;<\/a><\/span>\
+		<\/div>\
+	<\/li>\
+'
+				, facetSectionTemplate:          '<dl class="facet">\
+  <dt>{label}<\/dt>\
+  <dd>\
+    <ul>\
+    <\/ul>\
+  <\/dd>\
+<\/dl>\
+'
+			}
+
+			
+			, elements: {
+				resultsHeaderEl:  Y.one('#results-header')
+				, resultsListEl:	  Y.one('#results-list')
+				, resultsFooterEl:  Y.one('#results-footer')
+				, errorEl:		  Y.one('#global-alert')
+				, basicSearchEl:	  Y.one('#basic-search')
+				, advancedSearchEl: Y.one('#advanced-search')
+				, facetsEl:         Y.one('#results-facets')
+			}
+
+			
+			, enabledFacets: {
+				
+					"discipline": "Discipline",
+				
+					"download_type": "File Type",
+				
+					"publication_facet": "Publication",
+				
+					"publication_type": "Publication Type",
+				
+					"publication_year": "Publication Year",
+				
+					"subject_facet": "Keyword"
+				
+			}
+
+			, historyAPI:		  !!(window.history && history.pushState)
+
+						, selectedForm: 'advanced-search'
+						
+						, authenticated: false
+						
+		});
+
+		
+			queryScreen.addRow( { showAddCtl: true, showDelCtl: false } );
+		
+		
+		rowList = Y.one('#rows');
+		rowList.delegate( ['change', 'keyup'], queryScreen.updateSearchPreview, '#rows', queryScreen );
+		
+		
+		Y.one( '#simple-search')
+			.on('keypress', queryScreen.behaveOnKeyPress, queryScreen);
+		Y.one( '#advanced-search')
+			.delegate( 'keypress', queryScreen.behaveOnKeyPress, 'input[type=text]', queryScreen);
+
+		        rowList.delegate('click', function(e){
+            queryScreen.addRow();
+            e.preventDefault();
+           }, '.control-add-row', Y
+        );
+		
+		rowList.delegate('click', function(e){
+			queryScreen.deleteRow(e.currentTarget);
+			queryScreen.updateSearchPreview();
+			e.preventDefault();
+		   }, '.control-delete-row', Y
+		);
+
+		
+		Y.one('#switch-to-advanced').on('click', function(e){
+			queryScreen.switchToAdvanced();
+			e.preventDefault();
+		});
+		Y.one('#switch-to-basic').on('click', function(e){
+			queryScreen.switchToBasic();
+			e.preventDefault();
+		});
+
+		
+		advContextNode = Y.one('#advanced-context');
+		if ( advContextNode ) {
+			
+			advContextNode.on( 'change', function(e){
+				queryScreen.updateAvailableFormats();
+			});
+			
+			queryScreen.updateAvailableFormats();
+		}
+
+		
+		Y.one('#do-search').on('click', function(e){
+			queryScreen.submitForm(e.currentTarget.get('form'));
+			e.preventDefault();
+		} );
+		Y.one('#do-search-advanced').on('click', function(e){
+			queryScreen.submitForm(e.currentTarget.get('form'));
+			e.preventDefault();
+		} );
+		
+				Y.one('#show-search').on('click', function() {
+			queryScreen.showSearchForm();
+		});
+		Y.one('#hide-search').on('click', function() {
+			queryScreen.shrinkSearchForm();
+		});
+
+		// is there a more YUIish way to do this?
+		if(queryScreen.historyAPI) {
+			window.onpopstate = function(ev) {
+				// Y.log('popstate -- location: '+document.location+', state: '+JSON.stringify(ev.state));
+				queryScreen.handlePopState(ev.state);
+			};
+		}
+
+		
+		Y.one('#do-search').removeAttribute('disabled');
+		Y.one('#switch-to-advanced').removeAttribute('disabled');
+		Y.all('.add-row').removeAttribute('disabled');
+		
+		
+		queryScreen.setSearchContainerHeights();
+		
+		Y.one('#advanced-search').addClass('query-shrinker');
+		Y.one('#basic-search').addClass('query-shrinker');
+
+		
+		
+				
+		
+
+		
+		
+				
+				
+				
+			Y.one('#clear-discipline-facet').on('click', function() {
+				queryScreen.clearFacet('discipline');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-download_type-facet').on('click', function() {
+				queryScreen.clearFacet('download_type');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_facet-facet').on('click', function() {
+				queryScreen.clearFacet('publication_facet');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_type-facet').on('click', function() {
+				queryScreen.clearFacet('publication_type');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-publication_year-facet').on('click', function() {
+				queryScreen.clearFacet('publication_year');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+			Y.one('#clear-subject_facet-facet').on('click', function() {
+				queryScreen.clearFacet('subject_facet');
+				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
+				queryScreen.submitForm(formEl);
+			});
+		
+
+	} );
+});
 </script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-<!-- End Google Analytics -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="/static/css/style.css?v=1">
-    <link rel="stylesheet" href="/static/css/media-queries.css">
-    <link rel="stylesheet" href="/css/cookie.css">
-    <script src="/static/js/libs/modernizr-2.0.6.min.js"></script>
-
-	<style media="screen" type="text/css">
-
-   ::-moz-selection {
-    background: navy !important;
-   }
+<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"Search:query_screen","businessUnit":"els:rp:st"},"visitor":{}};</script>
 
 
-	html,
-	body {
-		margin:0;
-		padding:0;
-		height:100%;
-	}
-	#container {
-		min-height:100%;
-		position:relative;
-	}
-	#header {
-		background:#ff0;
-		padding:10px;
-	}
-	#body {
-		padding-bottom:15px;	/* Height of the footer */
-	}
-	#footer {
-		position:absolute;
-		bottom:0;
-		width:100%;
-		height:15px;			/* Height of the footer */
-		background:#6cf;
-	}
-	</style>
-	<!--[if lt IE 7]>
-	<style media="screen" type="text/css">
-	#container {
-		height:100%;
-	}
-	</style>
-	<![endif]-->
-   
-  </head>
-  <body style="overflow-x: hidden;">
 
-  <div id="container">
-  <div id="body">
 
-  <div id="minorNavWrapper">
-   <nav id="minornav" class="clearfix">
-    <ul class="clearfix" style="font-weight: bold;">
-     <li><a href="/">Home</a></li>
-     <li><a href="/about-us">About us</a></li>
-     <li><a href="/random.php">Random</a></li>
-     <li><a href="/contact.php">Contact</a></li>
-     <li><a href="/donate.php">Donate</a></li>
-    </ul>
-   </nav>
-  </div>
-  <div id="mainNavWrapper">
-   <nav id="mainnav">
-    <ul class="clearfix">
-     <li class="home"><a title="Home page" href="https://sf-encyclopedia.com/"><img id="sfeLogoSmall" src="/static/img/sfe.png" alt="SFE: The Encyclopedia of Science Fiction"><img id="sfeLogo" src="/static/img/logo.png" alt="SFE: The Encyclopedia of Science Fiction"></a><span class="logoArrow"></span></li>
+</head>
+<body class="legacy search">
+<!-- FILE /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen --><!-- This is the mobile navbar file. Do not delete or move from the top of header.pregen -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
+<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
 
-     <li class="section-all"><a href="https://sf-encyclopedia.com/category/0">All entries</a></li>
-     <li class="section-themes"><a href="https://sf-encyclopedia.com/category/theme">Themes</a></li>
-     <li class="section-authors"><a href="https://sf-encyclopedia.com/category/everyone">People</a></li>
-     <li class="section-media"><a href="https://sf-encyclopedia.com/category/media">Media</a></li>
-     <li class="section-culture"><a href="https://sf-encyclopedia.com/category/culture">Culture</a></li>
-     <li class="section-news"><a href="https://sf-encyclopedia.com/news/">News</a></li>
-    </ul>
-   </nav>
-  </div>
-
-  <div id="main">
-   <div class="colsWrapper clearfix">
-   <div class="column mainCol clearfix" style="background-color:white !important;">
-
-    
- <fieldset id="globalSearch">
-  <form name="srchenter" method="post" action="/search.php">
-   <select name="catfilter" class="searchFilter" style="width: 122px">
-    <option value="">All entries</option>
-  <option value="chk">Checklist titles</option><option value="art">Art</option>
-  <option value="author">Author</option>
-  <option value="award">Award</option>
-  <option value="character">Character</option>
-  <option value="comics">Comics</option>
-  <option value="community">Community</option>
-  <option value="critic">Critic</option>
-  <option value="editor">Editor</option>
-  <option value="fan">Fan</option>
-  <option value="film">Film</option>
-  <option value="game">Game</option>
-  <option value="house name">House Name</option>
-  <option value="international">International</option>
-  <option value="music">Music</option>
-  <option value="people">People (media)</option>
-  <option value="prelim">Prelim</option>
-  <option value="publication">Publication</option>
-  <option value="radio">Radio</option>
-  <option value="theme">Theme</option>
-  <option value="tv">TV</option>
+<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
   
-   </select>
-   <input name="search" type="text" value="" style="margin: 0 0 5px 0; width: 165px !important;" onFocus="this.select()" onClick="this.select()" onHover="this.select()" class="searchText" id="defaultOpen">&nbsp;
-   <input type="submit" value="Headwords" class="button primary" style="margin: 5px 0 0 0;; padding-left: 8px; padding-right: 8px">&nbsp;
-   <input type="submit" name="glob" value="Global search" class="button primary" style="margin: 5px 0 0 0; padding-left: 8px; padding-right: 8px">
-   <input type="text" name="eofmode" value="" hidden>
-<div  style="display:none;">
-  <p style="margin: 0px; float: left;"><input type="radio" name="tomeselect" value="sfe" checked> <i>Search SFE</i>
-   &nbsp;&nbsp;<input type="radio" name="tomeselect" value="eof"> <i>Search EoF</i></p>
-  <p style="margin: 0px; float: right;">
-  <input type="checkbox" Name="noxref">&nbsp; <i>Omit cross-reference entries</i>
- &nbsp;</p>
- <script>
-  document.srchenter.search.focus();
-  document.addEventListener("keydown", function(event) {
-   if (event.code == "PageDown" || event.code == "ArrowDown" || ( !event.getModifierState("NumLock") && (event.code == "Numpad2" || event.code == "Numpad3"))) {
-    document.srchenter.search.blur();
-   }
-  })
- </script>
- </div>
- </form>
- </fieldset>
+  
+  <nav class="nav-collapse">
+    <ul>
+      <li class="menu-item active device-fixed-width"><a href="https://newprairiepress.org" title="Home" data-scroll >Home</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/communities.html" title="Browse" data-scroll >Browse Journals</a></li>
+      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/about.html" title="About" data-scroll >About</a></li>
+      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
+    </ul>
+  </nav>
+</header>
 
-                
-    <article class="entryArticle content STeditorial">
+<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
+<!--<![endif]-->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
+<div id="npp">
+<div id="container"><a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
 
-	<header class="entryHeader icon-theme">
-     <h1 class="entryTitle">Computers
-     </h1>
-    </header><p class='tagLine'>Entry updated 2 April 2021. Tagged: Theme.</p><div class="browsingBtns">
-           <span>
-            <input class="button PNI previous" type="button" onclick="window.location.href='/next.php?id=p&entry=computers'" value="Prev" />
-        </span>
-        <span>
-            <input class="button PNI next" type="button" onclick="window.location.href='/next.php?&entry=computers'" value="Next" />
-        </span>
-        <span>
-            <input class="button PNI incoming" type="button" onclick="window.location.href='/incoming.php?entry=computers'" value="About This Entry" title="What links to the entry; contributor initials explained; how to cite; other information" />
-        </span>
+<div id="header">
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_logo.inc -->
 
-  </div><p style='float:right; margin-bottom:0; margin-left:10px; position: relative; top: 3px;'>
-   <a href='/gallery.php?id=Gresh-Computers.jpg' target='_blank'>
-   <img src='https://x.sf-encyclopedia.com/gal/thumbs/Gresh-Computers.jpg' alt='pic'></a></p>
 
-<p>The computer revolution transformed the real world so rapidly that sf had to struggle hard to keep up with actual developments. Although Charles <a href="/entry/babbage_charles">Babbage</a>'s attempts to develop a mechanical computer have lately attracted attention in such <a href="/entry/steampunk">Steampunk</a> novels as <i>The Difference Engine</i> (<b>1990</b>) by William <a href="/entry/gibson_william">Gibson</a> and Bruce <a href="/entry/sterling_bruce">Sterling</a>, they failed to inspire the nineteenth-century literary imagination. In fiction the notion of "mechanical brains" first evolved as a corollary to that of mechanical men (see <a href="/entry/robots">Robots</a>) &ndash; an early <a href="/entry/cyborgs">Cyborg</a> example is featured in Edward Page <a href="/entry/mitchell_edward_page">Mitchell</a>'s "The Ablest Man in the World" (May 1879 <i>The Sun</i> anon) &ndash; but this tacit acceptance of the notion of powerful skull-sized computers contrasts oddly with the tendency to imagine advanced computers as huge machines the size of buildings, like the Games Machine in A E <a href="/entry/van_vogt_a_e">van Vogt</a>'s <i>The World of &#256;</i> (August-October 1945 <a href="/entry/asf">Astounding</a>; rev <b>1948</b>; rev vt <i>The World of Null-A</i> <b>1970</b>); or <a href="/entry/cities">Cities</a>; or even planets, like the galaxy-governing Supreme in Lloyd <a href="/entry/biggle_lloyd_jr">Biggle</a> Jr's <i>Watchers of the Dark</i> (<b>1966</b>). Sf writers who had been awakened to the advent of computers by the building of ENIAC in the late 1940s mostly failed to foresee the eventual development of the microprocessor. One partial exception is Howard <a href="/entry/fast_howard">Fast</a>'s "The Martian Shop" (November 1959 <a href="/entry/fsf">F&amp;SF</a>), which features a computer that fits into a 6in (15cm) cube; however, the point made is that such tininess (which of course seems far from tiny today) could not be achieved using foreseeable human technology. More notably prophetic &ndash; indeed startlingly so with hindsight &ndash; is the one-off story "A Logic Named Joe" (March 1946 <a href="/entry/asf">Astounding</a>) by Will F Jenkins (Murray <a href="/entry/leinster_murray">Leinster</a>), which envisages not only the desktop PC with screen and keyboard, but its widespread domestic use, the linking of these "logics" via a kind of <a href="/entry/internet">Internet</a>, and even some of the social problems that result when "information wants to be free".</p>
 
-<p>In the early sf <a href="/entry/pulp">Pulp</a> magazines, artificial brains, like <a href="/entry/robots">Robots</a>, showed a distinct tendency to go mad and turn against their creators; examples include <i>The Metal Giants</i> (December 1926 <a href="/entry/weird_tales">Weird Tales</a>; <b>1932</b> chap) by Edmond <a href="/entry/hamilton_edmond">Hamilton</a> and "Paradise and Iron" (Summer 1930 <a href="/entry/amazing_stories_quarterly">Amazing Stories Quarterly</a>) by Miles J <a href="/entry/breuer_miles_j">Breuer</a>. But clever machines featured in more sympathetic roles in several stories by John W <a href="/entry/campbell_john_w_jr">Campbell</a> Jr, who went on from "The Metal Horde" (April 1930 <a href="/entry/amazing">Amazing</a>) to write such stories as the series begun with "The Machine" (February 1935 <a href="/entry/asf">Astounding</a>) as by Don A Stuart, in which a benevolently inclined machine intelligence finally bids farewell to the human race in order to prevent mankind from stagnating through dependence upon its generosity. Revolutions against a mechanical mind which rules society more-or-less benignly have long been commonplace in sf; examples include Francis G <a href="/entry/rayer_francis_g">Rayer</a>'s <i>Tomorrow Sometimes Comes</i> (<b>1951</b>), Philip K <a href="/entry/dick_philip_k">Dick</a>'s <i>Vulcan's Hammer</i> (<b>1960</b> dos) and Ira <a href="/entry/levin_ira">Levin</a>'s <i>This Perfect Day</i> (<b>1970</b>). The <i>New York Times</i> commissioned Isaac <a href="/entry/asimov_isaac">Asimov</a>'s satirical explication of the theme, "The Life and Times of MULTIVAC" (5 January 1975 <i>New York Times</i>), which questions whether such a rebellion would be desirable or necessary; Asimov had been consistently favourable towards the idea of a machine-run society ever since his early advocacy in "The Evitable Conflict" (June 1950 <a href="/entry/asf">Astounding</a>). Another strongly pro-computer story from the 1950s, redolent of the conflict and confrontation typical of the period, is <i>They'd Rather be Right</i> (August-November 1954 <a href="/entry/asf">Astounding</a>; edited version <b>1957</b>; vt <i>The Forever Machine</i> <b>1958</b>; text restored under original title <b>1981</b>) by Mark <a href="/entry/clifton_mark">Clifton</a> and Frank <a href="/entry/riley_frank">Riley</a>. Hysterical fear of computers is satirized in "The Man Who Hated Machines" (1957; trans in <i>Time Out of Mind</i> coll <b>1966</b>) by Pierre <a href="/entry/boulle_pierre">Boulle</a>.</p>
 
-<p>The idea that machine intelligence (see <a href="/entry/ai">AI</a>) might be reckoned the logical end product of <a href="/entry/evolution">Evolution</a> on Earth has a long history in sf, extending from Campbell's "The Last Evolution" (August 1932 <a href="/entry/amazing">Amazing</a>) to <i>Sagan om den stora datamaskinin</i> (<b>1966</b>; trans as <i>The Tale of the Big Computer</i> <b>1968</b>; vt <i>The Great Computer</i>; vt <i>The End of Man?</i>) by Olof <a href="/entry/johannesson_olof">Johannesson</a>. The notion of computers evolving to become literally Godlike is featured in Fredric <a href="/entry/brown_fredric">Brown</a>'s "Answer" (in <i>Angels and Spaceships</i>, coll <b>1954</b>), Isaac Asimov's "The Last Question" (November 1956 <a href="/entry/science_fiction_quarterly">Science Fiction Quarterly</a>), Dino <a href="/entry/buzzati_dino">Buzzati</a>'s <i>Il Grande Ritratto</i> (<b>1960</b>; trans as <i>Larger than Life</i> <b>1962</b>) and Frank <a href="/entry/herbert_frank">Herbert</a>'s <i>Destination: Void</i> (<b>1966</b>). Other accounts of huge computers with delusions of grandeur and the power to back them up include <i>The God Machine</i> (<b>1968</b>) by Martin <a href="/entry/caidin_martin">Caidin</a>, <i>Colossus</i> (<b>1966</b>) and its sequels by D F <a href="/entry/jones_d_f">Jones</a>, <i>Mayflies</i> (<b>1979</b>) by Kevin <a href="/entry/odonnell_kevin_jr">O'Donnell</a> Jr, <i>The Judas Mandala</i> (<b>1982</b>) by Damien <a href="/entry/broderick_damien">Broderick</a> and <i>The Venetian Court</i> (<b>1984</b>) by Charles L <a href="/entry/harness_charles_l">Harness</a>. The computer incarnation of the Father of Lies in Jeremy <a href="/entry/leven_jeremy">Leven</a>'s <i>Satan</i> (<b>1982</b>) is, by contrast, humble and unassuming. The notion that the computer might be the answer to all our problems is ironically encapsulated in Arthur C <a href="/entry/clarke_arthur_c">Clarke</a>'s fantasy "The Nine Billion Names of God" (in <i>Star Science Fiction Stories 1</i>, anth <b>1953</b>, ed Frederik <a href="/entry/pohl_frederik">Pohl</a>), in which a computer rapidly and easily completes the task for which God created mankind.</p>
 
-<p>The idea that computers might one day be endowed with &ndash; or spontaneously evolve &ndash; <a href="/entry/ai">AI</a> self-awareness has generated a whole series of speculative exercises in machine existentialism, which inevitably tend to the anthropocentric. Notable examples include "Mike" in <i>The Moon Is a Harsh Mistress</i> (December 1965-April 1966 <a href="/entry/if">If</a>; <b>1966</b>) by Robert A <a href="/entry/heinlein_robert_a">Heinlein</a> and the central characters of <i>When Harlie Was One</i> (fixup <b>1972</b>; rev vt <i>When H.A.R.L.I.E. Was One (Release 2.0)</i> <b>1988</b>) by David <a href="/entry/gerrold_david">Gerrold</a>, <i>The Adolescence of P-1</i> by Thomas J <a href="/entry/ryan_thomas_j">Ryan</a> (<b>1977</b>), and <i>Valentina: Soul in Sapphire</i> (<b>1984</b>) by Joseph H <a href="/entry/delaney_joseph_h">Delaney</a> and Marc <a href="/entry/stiegler_marc">Stiegler</a>. In recent years the notion has become so commonplace as to be intensively recomplicated in such novels as Rudy <a href="/entry/rucker_rudy">Rucker</a>'s <i>Software</i> (<b>1982</b>) and <i>Wetware</i> (<b>1988</b>), although Rucker earlier treated the notion sceptically in <i>Spacetime Donuts</i> (Summer 1978-Winter 1979 <a href="/entry/unearth">Unearth</a>, 2 of 3 parts only; full text <b>1981</b>). William Gibson's eponymous <i>Neuromancer</i> (<b>1984</b>) kicked off a new trend in sentient software, carried forward by other <a href="/entry/cyberpunk">Cyberpunk</a> writers and fellow-travellers, including Kim <a href="/entry/newman_kim">Newman</a> in <i>The Night Mayor</i> (<b>1989</b>). Autobiographical statements are offered by nascently sentient machines in "Going Down Smooth" (August 1968 <a href="/entry/galaxy">Galaxy</a>) by Robert <a href="/entry/silverberg_robert">Silverberg</a>, <i>Arrive at Easterwine</i> (<b>1971</b>) by R A <a href="/entry/lafferty_r_a">Lafferty</a> and &ndash; most impressively &ndash; <i>Queen of Angels</i> (<b>1990</b>) by Greg <a href="/entry/bear_greg">Bear</a>.</p>
 
-<p>The fear of computers "taking over" our lives remains a powerful influence, manifest across a broad spectrum of story types. These range from straightforward foul-up stories &ndash; e.g., "Computers Don't Argue" (September 1965 <a href="/entry/analog">Analog</a>) by Gordon R <a href="/entry/dickson_gordon_r">Dickson</a> &ndash; to surreal extravaganzas like "I Have No Mouth, and I Must Scream" (March 1967 <a href="/entry/if">If</a>) by Harlan <a href="/entry/ellison_harlan">Ellison</a>. D G <a href="/entry/compton_d_g">Compton</a>'s <i>The Steel Crocodile</i> (<b>1970</b>; vt <i>The Electric Crocodile</i> <b>1970</b>) and John <a href="/entry/brunner_john">Brunner</a>'s <i>The Shockwave Rider</i> (<b>1975</b>) offer striking examples of computers being used, with good intentions but repressively, by <a href="/entry/near_future">Near-Future</a> politico-technocratic elites. On the other hand, <i>Man Plus</i> (<b>1976</b>) by Frederik <a href="/entry/pohl_frederik">Pohl</a> presents a secret computer take-over as not necessarily a bad thing, and <i>Michaelmas</i> (August-September 1976 <a href="/entry/fsf">F&amp;SF</a>; exp <b>1977</b>) by Algis <a href="/entry/budrys_algis">Budrys</a> proposes that the dictatorship of the machine-based system might in the end be benevolent. A metaphysical (see <a href="/entry/metaphysics">Metaphysics</a>) species of take-over is displayed in the increasingly many stories in which computers literally absorb human personalities via one form or another of <a href="/entry/upload">Upload</a>.</p>
 
-<p>Real-world developments in computer <a href="/entry/games">Games</a> have had a considerable influence on sf (see <a href="/entry/games_and_sports">Games and Sports</a>); Rob <a href="/entry/swigart_rob">Swigart</a>'s novel <i>Portal: A Dataspace Retrieval</i> (<b>1988</b>) is eccentrically modelled on such a game. Computer <a href="/entry/scientists">Scientists</a> are nowadays common characters in sf stories and, despite the late start made by sf writers in getting in on the computer boom, it now seems that ideas developed by William Gibson and those who have followed his example were significant inspirations to real computer scientists and interface designers.</p>
 
-<p>Conventional computers are now, of course, thoroughly domesticated and their linkage through the <a href="/entry/internet">Internet</a> taken for granted. Authors may resort to less familiar variants like <a href="/entry/quantum_computers">Quantum Computers</a> when extraordinary performances such as the achievement of true <a href="/entry/ai">AI</a> are required. The eponymous system of Greg <a href="/entry/egan_greg">Egan</a>'s "Luminous" (September 1995 <a href="/entry/asimovs">Asimov's</a>) is an evanescent supercomputer made from light, capable of probing anomalies in the structure of <a href="/entry/mathematics">Mathematics</a> itself. Stephen <a href="/entry/baxter_stephen">Baxter</a>'s <i>Exultant</i> (<b>2004</b>) features a computer using <a href="/entry/time_travel">Time-Travel</a> feedback to solve arbitrarily complex problems in, effectively, zero time. For sheer computational gigantism it is hard to outdo the Solid State Entity in David <a href="/entry/zindell_david">Zindell</a>'s <i>Neverness</i>, a sentient distributed processor comprising some ten thousand moon-sized subunits. A somewhat more modest but still vast construct is the Matrioshka Brain, a system of concentric <a href="/entry/dyson_sphere">Dyson Spheres</a> (which see) devoted solely to data-processing. The universe as a whole becomes a computer of near-infinite power in <a href="/entry/omega_point">Omega Point</a> concept as imagined by Frank Tipler (1947-&nbsp;&nbsp;&nbsp;&nbsp;). At the other end of the scale of magnitude, <a href="/entry/liu_cixin">Liu</a> Cixin's <i>Santi</i> (May-December 2006 <a href="/entry/kehuan_shijie">Kehuan Shijie</a>; <b>2007</b>; trans Ken <a href="/entry/liu_ken">Liu</a> as <i>The Three-Body Problem</i> <b>2014</b>) manipulates <a href="/entry/dimensions">Dimensions</a> to unpack a single proton into a vast 2D surface upon which the circuitry of a supercomputer is inscribed to produce &ndash; after refolding to its original 3D size &ndash; an inimical <a href="/entry/ai">AI</a>-controlled subatomic particle.</p>
 
-<p>Relevant theme anthologies include <i>Science Fiction Thinking Machines</i> (anth <b>1954</b>) edited by Groff <a href="/entry/conklin_groff">Conklin</a>; <i>Computers, Computers, Computers: In Fiction and in Verse</i> (anth <b>1977</b>) edited by D Van Tassel; <i>Machines that Think</i> (anth <b>1984</b>) edited by Isaac <a href="/entry/asimov_isaac">Asimov</a>, Patricia S <a href="/entry/warrick_patricia_s">Warrick</a> and Martin H <a href="/entry/greenberg_martin_h">Greenberg</a>; <i>Computer Crimes and Capers</i> (anth <b>1985</b>) edited by Asimov, Greenberg and Charles G <a href="/entry/waugh_charles_g">Waugh</a>; <i>Microworlds: SF Stories of the Computer Age</i> (anth <b>1984</b>) edited by Thomas F <a href="/entry/monteleone_thomas_f">Monteleone</a>; and <i>Digital Dreams</i> (anth <b>1990</b>) edited by David V <a href="/entry/barrett_david_v">Barrett</a>. [BS/DRL]</p>
 
-<p><b>see also:</b> <a href="/entry/automation">Automation</a>; <a href="/entry/cybernetics">Cybernetics</a>; <a href="/entry/intelligence">Intelligence</a>; <a href="/entry/paranoia_game">Paranoia</a> [game].</p>
 
-<p><b>previous versions of this entry</b></p>
-   <ul><li><a href='https://web.archive.org/web/*/http://www.sf-encyclopedia.com/entry/computers' target='_blank'>Internet Archive</a></li></ul><br /><br /></article></div>
-        <div class="sideBarsWrapper">
-         <div class="sideBarsColsWrapper clearfix">
-          <div class="column sideBar12 clearfix">
-           <div class="columnForm"><aside id="blogFeed" class="widget">
-         <div class="content STeditorial clearfix">
-          <h2>Recently visited entries<span style="background:url(/images/thingSFE2.png) !important"></span></h2><ul style='width: 50%; float: left;'>
-   
-  </ul>
-<p align=center style="float:right; padding-top:20px; padding-bottom:20px;">
-     <a href="/facts.php?id=logo">
-     <img src="/images/VitMan.gif" width=150 height=150 title="Click for larger version of this SFE logo"></a><br />
-    <b><a href="/">Home/Welcome page</a></b></p><div style="margin-bottom:10px;"></div></div>
-         </aside><aside id="blogFeed" class="widget">
-         <div class="content STeditorial clearfix">
-          <h2><i>SFE</i> Special Features<span></span></h2><p style="margin-top: 10px;"><input type="button" value="What's New" style="width: 150px !important;" class="button primary" onclick="window.location.href='/whatsnew.php'">&nbsp; Show the latest entries</p>
-   <p style="line-height:1.6em;"><input type="button" value="In Memoriam" style="width: 150px !important;" class="button primary" onclick="window.location.href='/timeline.php?rip'">&nbsp; Recent deaths</p>
-   <p style="line-height:1.6em;"><input type="button" value="On This Day" style="width: 150px !important;" class="button primary" onclick="window.location.href='/today.php'">&nbsp; Anniversaries; also <a href="/timeline.php">Timeline</a></p>
-   <p style="line-height:1.6em;"><input type="button" value="Gallery" style="width: 150px !important;" class="button primary" onclick="window.location.href='/gallery.php'">&nbsp; <i>SFE</i> Picture Gallery; <a href="/gallery.php?list&new">What's New</a></p>
-   <p style="line-height:1.6em;"><input type="button" value="Shopping" style="width: 150px !important;" class="button primary" onclick="window.location.href='/sfeshop.php'">&nbsp; Affiliate settings</p>
-   <p style="line-height:1.6em;"><input type="button" value="Random" style="width: 150px !important;" class="button primary" onclick="window.location.href='/random.php'">&nbsp; Show a random <i>SFE</i> entry</p>                <p style="line-height:1.6em;"><input type="button" value="SFE Facts" style="width: 150px !important;" class="button primary" onclick="window.location.href='/facts.php'">&nbsp; Editors' home page</p>
-   <p style="line-height:1.6em;"><input type="button" value="Entry Data" style="width: 150px !important;" class="button primary" onclick="window.location.href='https://sf-encyclopedia.com/incoming.php?entry=computers'">&nbsp; Incoming links, who wrote it, etc</p>
-<p style="margin-bottom:15px;"><a href="/searching">Search help</a> | <a href="/rss.php" target="_blank">RSS feed</a> <img src="/static/img/external.gif"> | <a href="/fe/"><i>Encyclopedia of Fantasy</i></a>  <img src="/static/img/external.gif"></p><div style="margin-bottom:10px;"></div></div>
-         </aside><aside id="connect" class="widget">
-	<div class="content STeditorial clearfix">
-		<h2>Connect with <i>SFE</i> <span></span></h2>
-		<ul>
-		 <li>
-           <h3 style="text-align: left !important;"><a href="/donate.php">Donate towards <i>SFE</i> expenses</a></h3>
-		 </li>
-		 <li>
-           <h3 style="text-align: left !important;"><a href="/contact.php">Send email feedback to the <i>SFE</i> editors</a></h3>
-		 </li>
-		 <li>
-		  <h3 style="text-align: left !important;"><a href="https://twitter.com/#!/john_clute" target="_blank">John Clute on Twitter</a></h3>
-	       <a href="https://twitter.com/john_clute" class="twitter-follow-button">Follow @john_clute</a>
-		  <script src="https://platform.twitter.com/widgets.js" type="text/javascript"></script>
-		 </li>
-		 <li>
-		  <h3 style="text-align: left !important;"><a href="https://twitter.com/#!/sfencyclopedia" target="_blank"><i>SFE</i> on Twitter</a></h3>
-				<a href="https://twitter.com/sfencyclopedia" class="twitter-follow-button">Follow @sfencyclopedia</a>
-				<script src="https://platform.twitter.com/widgets.js" type="text/javascript"></script>
-		 </li>
-		 <li>
-		  <h3 style="text-align: left !important;"><a href="https://www.facebook.com/pages/Sf-Encyclopedia/138995776178949" target="_blank"><i>SFE</i> on Facebook</a></h3>
-				<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fsf-encyclopedia.com%2F&amp;send=false&amp;layout=standard&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=arial&amp;height=40" frameBorder="0" style="border:none; overflow:hidden; width:auto; height:40px;"></iframe>
-		 </li>			
-		</ul>
-	</div>
-</aside>
-     </div></div>
-         </div>                  
-        </div>
-       </div>                  
-      </div>
 
-     </div>
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
+<div id="pagetitle">
 
-<div id="cookieConsent">
-    <div id="closeCookieConsent" onclick="hidepopup()">x</div>
-    This website uses cookies. &nbsp;<a href="/cookies" target="_blank">More information here</a>. <a class="cookieConsentOK" onclick="setcookie()">Accept Cookies</a>
+<h1><a href="https://newprairiepress.org" title="New Prairie Press" >New Prairie Press</a></h1>
+</div>
+</div><div id="navigation"><!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://newprairiepress.org" title="home" ><span>home</span></a></li><li id="tabtwo"><a href="https://newprairiepress.org/about.html" title="about" ><span>about</span></a></li><li id="tabthree"><a href="https://newprairiepress.org/cgi/myaccount.cgi?context=" title="my account" ><span>my account</span></a></li><li id="tabfour"><a href="https://newprairiepress.org" title="Home" ><span>Home</span></a></li></ul></div>
+
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) --></div>
+
+
+
+<div id="wrapper">
+<div id="content">
+<div id="main" class="text">
+
+
+<div id="template_query_data" value=""></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="global-alert" class="hidden info">
 </div>
 
-<script type="text/javascript">
- function hidepopup() {
-  document.cookie = "hidecookiepopup=yes; path=/"; // session only
-  document.getElementById("cookieConsent").style.display = "none";
- }
- function setcookie() {
-  document.cookie = "cookiesOK=yes; max-age=31536000; path=/"; // 1 year
-  document.getElementById("cookieConsent").style.display = "none";
- }
- var cookiestring = document.cookie;
-// document.getElementById("connect").innerHTML = cookiestring; // TEST only
- if ( cookiestring.indexOf("cookiesOK=yes") == -1 ) {
-  if ( cookiestring.indexOf("hidecookiepopup=yes") == -1 ) {
-   document.getElementById("cookieConsent").style.display = "block";
-  }
- }
-</script>
+<div id="query-wrapper">
 
-      <div id="footer" style="background:#fff; padding: 5px;">
-       <footer id="globalFooter" class="clearfix">
-        <div id="credit">Website design based on 2011 version by <strong>
-          STEEL</strong>
-        </div>
-        <div id="credit" style="float: left !important; padding-left:20px;">Site and SFE content &copy; 2011-2022 <b>SFE Ltd</b>.</div>
-       </footer>
-      </div>
-     </div>
+	<div id="show-search-container" class="query tr">
+		<a href="#" id="show-search" class="hidden">Show Search</a>
+		<a href="#" id="hide-search" class="hidden">Hide Search</a>
+	</div>
+	<div id="basic-search" class="hidden">
+		<form id="basic-search-form" method="GET" action="/do/search/"> 
+			<fieldset class="query">
+				<legend>Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
+				<label for="simple-search" class="hidden">Search </label>
+				<span class="grid_7"><input name="q" id="simple-search" type="text" value=""></span>
+				<span class="grid_4">
+					<button type="submit" name="query" value="Search" id="do-search" class="white medium">Search</button>
+					<a href="#" id="switch-to-advanced">Advanced</a>
+				</span>
+				<div class="clear"></div>
+				<input type="hidden" name="start" class="start-input" value="0">
+				<input type="hidden" name="context" id="basic-context" value="4521219">
+				
+					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
+				
+							</fieldset>
+		</form>
+	</div>
 
-    </body></html>
+	<div id="advanced-search">
+		<form method="GET" action="/do/search/">
+			<fieldset>
+				<legend>Advanced Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
+				<label for="search-string" class="hidden">Feedback</label>
+				<input type="hidden" name="start" class="start-input" value="0">
+				
+					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
+				
+					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
+				
+				
+				<div class="query">
+					<input type="text" name="q" id="search-string" class="grid_12 alpha omega" onFocus="return" readonly="readonly" value="">
+				</div>
+				<div class="clear"></div>
+					
+				<div class="query">
+					<div id="rows">			
+							
+					</div> <!-- end rows -->
+				</div>		
+			</fieldset>
+			<div class="query">
+				
+					<span class="grid_2 prefix_5"><label for="start-date">Date range:</label></span>
+<span class="grid_2">
+	<input type="text" id="start-date" name="start_date" placeholder="MM/DD/YYYY" value="">
+</span>
+<label for="end-date" class="hidden">End Date:</label> 
+<span class="grid_2">
+	<input type="text" id="end-date" name="end_date" placeholder="MM/DD/YYYY" value="">
+</span>
+
+						
+				<div class="clear"></div>
+<p class="limit-search">
+		<label for="advanced-context" class="grid_2 prefix_5">
+			Limit search to:
+		</label>
+		<span class="grid_4">
+			<select name="context" id="advanced-context">
+				
+										<option value="4521219" selected="selected">New Prairie Press</option>
+									
+										<option value="1">All Repositories</option>
+												</select>
+	</span>
+</p>
+
+				<div class="clear"></div>
+<p class="sort-options">
+	<span class="grid_2 prefix_5">Sort by:</span>
+	<span class="grid_4">
+		<label for="sort-score">
+			<input type="radio" name="sort" id="sort-score" value="score" checked="checked"> Relevance
+		</label> 
+		<label for="sort-date">
+			<input type="radio" name="sort" id="sort-date" value="date_desc"> Publication Date
+		</label>
+	</span>
+</p>
+
+				<div class="clear"></div>
+<p class="pick-format">
+		<label for="results-format" class="grid_2 prefix_5">
+			Format:
+		</label>
+		<span class="grid_4">
+			<select name="format" id="results-format">
+								<option value="json">links</option>
+								<option value="refer">Bibliography Export</option>
+							</select>
+	</span>
+</p>
+
+				<div style="display:none;visibility:hidden;height:1px"><iframe id="export-frame" style="display:none;visibility:hidden;height:1px"></iframe></div>
+				<div class="clear"></div>
+				<span class="grid_12 tr">				
+				<button type="submit" value="Search" name="search" id="do-search-advanced" class="fr white medium">Search</button>
+
+				<a href="#" id="switch-to-basic">Basic</a>
+				</span>
+				<br class="clear" />
+			</div>
+			<div class="clear"></div>
+
+		</form>	
+	</div> <!-- advanced search -->
+</div><!-- query-wrapper -->
+
+<div id="query-results">
+
+<div class="query">
+<div class="grid_12" id="info-pane">
+<div id="results-header">
+		<div class="clear"></div>		
+	</div>
+<br class="clear" />
+</div>
+
+<div class="grid_3" id="facet-pane">
+
+	<p id="selected-facets">
+				<span id="selected-discipline-facet" class="hidden">
+			<a class="close" id="clear-discipline-facet"><i>&times;</i>
+			 <strong id="selected-discipline-facet-label"></strong></a>
+		</span>
+				<span id="selected-download_type-facet" class="hidden">
+			<a class="close" id="clear-download_type-facet"><i>&times;</i>
+			 <strong id="selected-download_type-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_facet-facet" class="hidden">
+			<a class="close" id="clear-publication_facet-facet"><i>&times;</i>
+			 <strong id="selected-publication_facet-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_type-facet" class="hidden">
+			<a class="close" id="clear-publication_type-facet"><i>&times;</i>
+			 <strong id="selected-publication_type-facet-label"></strong></a>
+		</span>
+				<span id="selected-publication_year-facet" class="hidden">
+			<a class="close" id="clear-publication_year-facet"><i>&times;</i>
+			 <strong id="selected-publication_year-facet-label"></strong></a>
+		</span>
+				<span id="selected-subject_facet-facet" class="hidden">
+			<a class="close" id="clear-subject_facet-facet"><i>&times;</i>
+			 <strong id="selected-subject_facet-facet-label"></strong></a>
+		</span>
+		
+	</p>
+<br class="clear" />
+	<div id="results-facets" class="hidden"></div>
+</div>
+<div class="grid_9" id="result-pane">
+	
+	<div id="results-list">
+		<div class="clear"></div>
+	</div>
+	<div id="results-footer"></div>
+</div>
+<br class="clear" />
+</div>
+
+<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
+	<div class="verticalalign">&nbsp;</div>
+	<div class="clear">&nbsp;</div>
+
+</div>
+
+	<div id="sidebar" role="complementary">
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
+
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc -->
+
+
+	
+<form method='get' action='https://newprairiepress.org/do/search/' id="sidebar-search">
+	<label for="search" accesskey="4">
+		Enter search terms:
+	</label>
+		<div>
+			<span class="border">
+				<input type="text" name='q' class="search" id="search">
+			</span> 
+			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
+		</div>
+	<label for="context" style="display:none;">
+		Select context to search:
+	</label> 
+		<div>
+			<span class="border">
+				<select name="fq" id="context">
+					
+					
+					
+					
+					<option value='virtual_ancestor_link:"https://newprairiepress.org"'>in this repository</option>
+					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
+				</select>
+			</span>
+		</div>
+</form>
+
+<p class="advanced">
+	
+	
+		<a href="https://newprairiepress.org/do/search/advanced/?fq=virtual_ancestor_link:%22https://newprairiepress.org%22" >
+			Advanced Search
+		</a>
+	
+</p>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
+	<ul id="side-notify">
+		<li class="notify">
+			<a href="https://newprairiepress.org/announcements.html" title="Email or RSS Notifications" >
+				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
+			</a>
+		</li>
+	</ul>
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
+
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_middle_7_8.inc -->
+
+
+<div id="sb-custom-middle">
+	<h2 class="sb-custom-title">Our Publications</h2>
+		<ul class="sb-custom-ul">
+			<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/journals.html" >
+					Journals
+				</a>
+			</li>
+			<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/conferences" title="Conference Proceedings" >
+					Conferences				</a>
+			</li>
+				<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/monographs" >
+					Monographs</a>
+			</li>
+			<li class="sb-custom-li">
+				<a href="https://newprairiepress.org/specpubs" >Special Publications</a>
+			</li>
+		</ul>
+		<h2>Featured Collections</h2>
+<ul id="links">
+	<li><a href="https://newprairiepress.org/featured.html" title="" >Student Publications</a></li>
+</ul>
+<h2>Links for Editors</h2>
+<ul id="links">
+	<li><a href="https://newprairiepress.org/about.html#scope" title="" >Our Services</a></li>
+	<li><a href="https://newprairiepress.org/about.html#policies" title="" >Policies</a></li>
+	<li><a href="https://newprairiepress.org/about.html#copyright" title="" >Copyright</a></li>
+</div>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc -->
+<ul id="side-browse">
+
+
+<li class="collections"><a href="https://newprairiepress.org/communities.html" title="Browse by Journals" >Journals</a></li>
+<li class="discipline-browser"><a href="https://newprairiepress.org/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
+<li class="author"><a href="https://newprairiepress.org/authors.html" title="Browse by Author" >Authors</a></li>
+
+
+</ul>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
+
+
+
+
+	<ul id="side-author">
+		
+		<li class="submit">
+			<a href="https://newprairiepress.org/submit_research.html" title="Submissions" >
+				Submissions
+			</a>
+		</li>
+		
+<li><a href="https://newprairiepress.org/contact_us.html" title="Contact Us" >Contact Us</a></li>
+
+	</ul>
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
+	
+
+
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/twitter_badge.inc --><div id="twitter-badge">
+<a class="twitter-timeline" href="https://twitter.com/NewPrairiePress" data-widget-id="368524012336316418" data-chrome="transparent" width="220" height="400" >Tweets by @NewPrairiePress</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div><!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
+	
+
+
+
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
+<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+	<div class="verticalalign">&nbsp;</div>
+	</div>
+
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
+	
+	
+	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
+
+<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
+	<em>Digital Commons</em>
+</a>
+
+</div>
+<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
+	<p>
+		<a href="https://newprairiepress.org" title="Home page" accesskey="1" >Home</a> | 
+		<a href="https://newprairiepress.org/about.html" title="About" >About</a> | 
+		<a href="https://newprairiepress.org/faq.html" title="FAQ" >FAQ</a> | 
+		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
+		<a href="https://newprairiepress.org/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
+	</p>
+	<p>
+	
+	
+		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
+	
+		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
+	</p> 
+	
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+
+</div>
+</div>
+
+<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_analytics.inc --><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42891787-24', 'newprairiepress.org');
+  ga('send', 'pageview');
+
+</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+
+<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>

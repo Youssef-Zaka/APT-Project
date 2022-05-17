@@ -1,423 +1,594 @@
 <!DOCTYPE html>
-<html lang="en-US">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GDELT Summary: Television Explorer: (covid OR coronavirus OR pandemic) AND (Station:CNN OR Station:FOXNEWS OR Station:MSNBC OR Station:BBCNEWS) AND PublicationDate>=1/1/2020</title>
-
-<script src="https://api.gdeltproject.org/assets/js/jquery-3.2.1/jquery.min.js"></script>
-<script src="https://api.gdeltproject.org/assets/js/jquery-3.2.1/jquery.sticky.js"></script>
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/jquery-ui-1.11.1-smoothness/jquery-ui.css">
-<script src="https://api.gdeltproject.org/assets/js/jquery-ui-1.11.1/jquery-ui.js"></script>
-
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/fontawesome-4.7.0/css/font-awesome.min.css">
-
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/bootstrap-3.3.7/bootstrap.min.css">
-<script src="https://api.gdeltproject.org/assets/js/bootstrap-3.3.7/bootstrap.min.js"></script>
-
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/bootstrap-multiselect/bootstrap-multiselect.css" type="text/css">
-<script type="text/javascript" src="https://api.gdeltproject.org/assets/js/bootstrap-multiselect-gdeltmodified/bootstrap-multiselect.js"></script>
-
-<STYLE>
-body, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, input, textarea, blockquote {
-	margin: 0; padding: 0; border: 0;
-}
-
-body {
-	background: #fff;
-	font-family: 'Open Sans', serif;
-	font-size: 11pt; 
-	color: #000;
-}
-
-#header {
-	height:60px; padding-top: 10px;
-	position: fixed;
-	width: 100%;
-	z-index: 10;
-	background: #FFFFFF;
-	box-shadow: 0 5px 10px rgba(0,0,0,0.3);	
-}
-.headerlogo {
-	font-family: 'Open Sans', serif;
-	font-size: 21pt;
-	padding-left: 20px;
-	color: #000 !important;
-	text-decoration: none !important;
-	font-weight: 800;
-}
-.headerabout {
-	font-family: 'Open Sans', serif;
-	font-size: 10pt;
-	position: absolute;
-	right: 20px;
-	top: 20px;
-	color: #000;
-	text-decoration: none;
-	font-weight: 500;
-	letter-spacing: 2px;
-}
-#content {
-	width: 100%;
-	position: relative;
-	top: 75px;
-	background: #fff;
-}
-div#content p {
-	padding: 0px 15px 15px 15px;
-	text-align: justify;
-	line-height: 150%
-}
-
-.responsivetimeline { height: 450px; }
-.responsivechart { height: 400px; }
-.responsivewordcloud { height: 650px; }
-
-/* bootstrap customizations... */
-.panel-primary {
-     border-color: #96adc1 !important;
-}
-.panel-primary>.panel-heading {
-     background-color: #96adc1 !important;
-     border-color: #96adc1 !important;
-}
-
-/* override some displays to adjust their heights to better comport with the dimensions on smartphones... */
-@media screen and (min-width : 0px) and (max-width : 767px){
-    .responsivetimeline { height: 250px; }
-    .responsivechart { height: 250px; }
-    .responsivewordcloud { height: 250px; }
-}
-</STYLE>
-
-
-<link href="favicon.ico" type="image/x-icon" rel="icon" /><link href="https://www.gdeltproject.org/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-<link rel="apple-touch-icon" sizes="57x57" href="https://www.gdeltproject.org/images/favicon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="https://www.gdeltproject.org/images/favicon/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="https://www.gdeltproject.org/images/favicon/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="https://www.gdeltproject.org/images/favicon/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="https://www.gdeltproject.org/images/favicon/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="https://www.gdeltproject.org/images/favicon/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="https://www.gdeltproject.org/images/favicon/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="https://www.gdeltproject.org/images/favicon/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://www.gdeltproject.org/images/favicon/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="https://www.gdeltproject.org/images/favicon/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://www.gdeltproject.org/images/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="https://www.gdeltproject.org/images/favicon/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://www.gdeltproject.org/images/favicon/favicon-16x16.png">
-<link rel="manifest" href="https://www.gdeltproject.org/images/favicon/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="https://www.gdeltproject.org/images/favicon/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
-
-<link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat|Audiowide" rel="stylesheet">
-
-<script>
-    window.addEventListener("message", function(e){
-	
-var timelinevolzoom = document.getElementById("timelinevolzoom");
-if (timelinevolzoom.contentWindow === e.source && e.data.action == 'timezoom') {
-    var newurl = window.location.href;
-    newurl = updateurlparam(newurl, 'ts', 'custom');
-    newurl = updateurlparam(newurl, 'sdt', e.data.startdate);
-    newurl = updateurlparam(newurl, 'edt', e.data.enddate);
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-var timelinevolzoomstream = document.getElementById("timelinevolzoomstream");
-if (timelinevolzoomstream.contentWindow === e.source && e.data.action == 'timezoom') {
-    var newurl = window.location.href;
-    newurl = updateurlparam(newurl, 'ts', 'custom');
-    newurl = updateurlparam(newurl, 'sdt', e.data.startdate);
-    newurl = updateurlparam(newurl, 'edt', e.data.enddate);
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-var webtimelinevolzoom = document.getElementById("webtimelinevolzoom");
-if (webtimelinevolzoom.contentWindow === e.source && e.data.action == 'timezoom') {
-    var newurl = window.location.href;
-    newurl = updateurlparam(newurl, 'ts', 'custom');
-    newurl = updateurlparam(newurl, 'sdt', e.data.startdate);
-    newurl = updateurlparam(newurl, 'edt', e.data.enddate);
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-
-
-var showchart = document.getElementById("showchart");
-if (showchart.contentWindow === e.source && e.data.action == 'queryupdate') {
-    var newurl = window.location.href;
-    if (e.data.type == 'add') {
-	//append keyword...
-	var updatedquery = window.location.href.match(/\bk=(.*?)(&|$)/i)[1] + ' ' + e.data.query;
-	newurl = updateurlparam(newurl, 'k', updatedquery);
-    }
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-
-
-    var topclips_gallery = document.getElementById("topclips_gallery");
-    if (topclips_gallery.contentWindow === e.source && e.data.action == 'heightchange') {
-	topclips_gallery.height = e.data.height + "px";
-	topclips_gallery.style.height = e.data.height + "px";
-    }
-
-    });
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-GB" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-GB" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-GB" prefix="og: http://ogp.me/ns#">
+<!--<![endif]-->
+<head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app203.us.archive.org';v.server_ms=538;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
+<script type="text/javascript">
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://chambers.co.uk/app/the-chambers-dictionary/","20190323064914","https://web.archive.org/","web","/_static/",
+	      "1553323754");
 </script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
 
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="pingback" href="https://chambers.co.uk/xmlrpc.php"/>
+<link rel="stylesheet" type="text/css" media="all" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-content/themes/chambers/style.css"/>
+<!--[if lt IE 9]>
+<script src="https://chambers.co.uk/wp-content/themes/chambers/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<!-- This site is optimized with the Yoast SEO plugin v10.0.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<title>Chambers &ndash; The Chambers Dictionary</title>
+<link rel="canonical" href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/the-chambers-dictionary/"/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="Chambers – The Chambers Dictionary"/>
+<meta property="og:description" content="This 11th Edition reflects the changes in our language, with special attention paid to new words that have emerged, new uses of old words and the most up-to-date pronunciation. The 11th Edition includes over 290,000 distinct words, compounds, phrases and derived forms. The intelligent word entry suggests possible correct spellings as you type, as well …"/>
+<meta property="og:url" content="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/the-chambers-dictionary/"/>
+<meta property="og:site_name" content="Chambers"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:description" content="This 11th Edition reflects the changes in our language, with special attention paid to new words that have emerged, new uses of old words and the most up-to-date pronunciation. The 11th Edition includes over 290,000 distinct words, compounds, phrases and derived forms. The intelligent word entry suggests possible correct spellings as you type, as well […]"/>
+<meta name="twitter:title" content="Chambers – The Chambers Dictionary"/>
+<meta name="twitter:image" content="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/apptcd.jpg"/>
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="//web.archive.org/web/20190323064914/https://cdn.jsdelivr.net/"/>
+<link rel="dns-prefetch" href="//web.archive.org/web/20190323064914/https://fonts.googleapis.com/"/>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel="stylesheet" id="wp-block-library-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-includes/css/dist/block-library/style.min.css?ver=5.1.1" type="text/css" media="all"/>
+<link rel="stylesheet" id="prefix-style-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-content/plugins/bookswarm-social-bartender/css/sb-styles.css?ver=5.1.1" type="text/css" media="all"/>
+<link rel="stylesheet" id="bookswarm-support-style-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-content/plugins/bookswarm-support/styles/bookswarm-support-styles.css?ver=5.1.1" type="text/css" media="all"/>
+<link rel="stylesheet" id="fonts-css" href="https://web.archive.org/web/20190323064914cs_/https://fonts.googleapis.com/css?family=Lora%3A400%2C400i%2C700&amp;ver=5.1.1" type="text/css" media="all"/>
+<link rel="stylesheet" id="bootstrap-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-content/themes/chambers/css/bootstrap.css?ver=1.0" type="text/css" media="all"/>
+<link rel="stylesheet" id="flexslider-css" href="https://web.archive.org/web/20190323064914cs_/https://cdn.jsdelivr.net/flexslider/2.6.2/flexslider.css?ver=5.1.1" type="text/css" media="all"/>
+<link rel="stylesheet" id="main-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-content/themes/chambers/css/main.css?ver=1.0" type="text/css" media="all"/>
+<link rel="stylesheet" id="mediaelement-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.6-78496d1" type="text/css" media="all"/>
+<link rel="stylesheet" id="wp-mediaelement-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=5.1.1" type="text/css" media="all"/>
+<link rel="stylesheet" id="views-pagination-style-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-content/plugins/wp-views/embedded/res/css/wpv-pagination.css?ver=2.7.4" type="text/css" media="all"/>
+<style id="views-pagination-style-inline-css" type="text/css">
+.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-default > span.wpv-sort-list,.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-default .wpv-sort-list-item {border-color: #cdcdcd;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-default .wpv-sort-list-item a {color: #444;background-color: #fff;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-default a:hover,.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-default a:focus {color: #000;background-color: #eee;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-default .wpv-sort-list-item.wpv-sort-list-current a {color: #000;background-color: #eee;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-grey > span.wpv-sort-list,.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-grey .wpv-sort-list-item {border-color: #cdcdcd;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-grey .wpv-sort-list-item a {color: #444;background-color: #eeeeee;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-grey a:hover,.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-grey a:focus {color: #000;background-color: #e5e5e5;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-grey .wpv-sort-list-item.wpv-sort-list-current a {color: #000;background-color: #e5e5e5;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-blue > span.wpv-sort-list,.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-blue .wpv-sort-list-item {border-color: #0099cc;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-blue .wpv-sort-list-item a {color: #444;background-color: #cbddeb;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-blue a:hover,.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-blue a:focus {color: #000;background-color: #95bedd;}.wpv-sort-list-dropdown.wpv-sort-list-dropdown-style-blue .wpv-sort-list-item.wpv-sort-list-current a {color: #000;background-color: #95bedd;}
+</style>
+<link rel="stylesheet" id="oikCSS-css" href="https://web.archive.org/web/20190323064914cs_/https://chambers.co.uk/wp-content/plugins/oik/oik.css?ver=5.1.1" type="text/css" media="all"/>
+<script>if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/jquery/jquery.js?ver=1.12.4"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://cdn.jsdelivr.net/classie/1.0.1/classie.js?ver=1"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-content/themes/chambers/js/search.js?ver=1.0"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-content/themes/chambers/includes/sudoku/sudoku.js?ver=1.0"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://cdn.jsdelivr.net/flexslider/2.6.2/jquery.flexslider-min.js?ver=1"></script>
+<script type="text/javascript">
+var mejsL10n = {"language":"en","strings":{"mejs.install-flash":"You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https:\/\/get.adobe.com\/flashplayer\/","mejs.fullscreen-off":"Turn off Fullscreen","mejs.fullscreen-on":"Go Fullscreen","mejs.download-video":"Download Video","mejs.fullscreen":"Fullscreen","mejs.time-jump-forward":["Jump forward 1 second","Jump forward %1 seconds"],"mejs.loop":"Toggle Loop","mejs.play":"Play","mejs.pause":"Pause","mejs.close":"Close","mejs.time-slider":"Time Slider","mejs.time-help-text":"Use Left\/Right Arrow keys to advance one second, Up\/Down arrows to advance ten seconds.","mejs.time-skip-back":["Skip back 1 second","Skip back %1 seconds"],"mejs.captions-subtitles":"Captions\/Subtitles","mejs.captions-chapters":"Chapters","mejs.none":"None","mejs.mute-toggle":"Mute Toggle","mejs.volume-help-text":"Use Up\/Down Arrow keys to increase or decrease volume.","mejs.unmute":"Unmute","mejs.mute":"Mute","mejs.volume-slider":"Volume Slider","mejs.video-player":"Video Player","mejs.audio-player":"Audio Player","mejs.ad-skip":"Skip ad","mejs.ad-skip-info":["Skip in 1 second","Skip in %1 seconds"],"mejs.source-chooser":"Source Chooser","mejs.stop":"Stop","mejs.speed-rate":"Speed Rate","mejs.live-broadcast":"Live Broadcast","mejs.afrikaans":"Afrikaans","mejs.albanian":"Albanian","mejs.arabic":"Arabic","mejs.belarusian":"Belarusian","mejs.bulgarian":"Bulgarian","mejs.catalan":"Catalan","mejs.chinese":"Chinese","mejs.chinese-simplified":"Chinese (Simplified)","mejs.chinese-traditional":"Chinese (Traditional)","mejs.croatian":"Croatian","mejs.czech":"Czech","mejs.danish":"Danish","mejs.dutch":"Dutch","mejs.english":"English","mejs.estonian":"Estonian","mejs.filipino":"Filipino","mejs.finnish":"Finnish","mejs.french":"French","mejs.galician":"Galician","mejs.german":"German","mejs.greek":"Greek","mejs.haitian-creole":"Haitian Creole","mejs.hebrew":"Hebrew","mejs.hindi":"Hindi","mejs.hungarian":"Hungarian","mejs.icelandic":"Icelandic","mejs.indonesian":"Indonesian","mejs.irish":"Irish","mejs.italian":"Italian","mejs.japanese":"Japanese","mejs.korean":"Korean","mejs.latvian":"Latvian","mejs.lithuanian":"Lithuanian","mejs.macedonian":"Macedonian","mejs.malay":"Malay","mejs.maltese":"Maltese","mejs.norwegian":"Norwegian","mejs.persian":"Persian","mejs.polish":"Polish","mejs.portuguese":"Portuguese","mejs.romanian":"Romanian","mejs.russian":"Russian","mejs.serbian":"Serbian","mejs.slovak":"Slovak","mejs.slovenian":"Slovenian","mejs.spanish":"Spanish","mejs.swahili":"Swahili","mejs.swedish":"Swedish","mejs.tagalog":"Tagalog","mejs.thai":"Thai","mejs.turkish":"Turkish","mejs.ukrainian":"Ukrainian","mejs.vietnamese":"Vietnamese","mejs.welsh":"Welsh","mejs.yiddish":"Yiddish"}};
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/mediaelement/mediaelement-and-player.min.js?ver=4.2.6-78496d1"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/mediaelement/mediaelement-migrate.min.js?ver=5.1.1"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var _wpmejsSettings = {"pluginPath":"\/wp-includes\/js\/mediaelement\/","classPrefix":"mejs-","stretching":"responsive"};
+/* ]]> */
+</script>
+<link rel="https://api.w.org/" href="https://chambers.co.uk/wp-json/"/>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://chambers.co.uk/xmlrpc.php?rsd"/>
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://chambers.co.uk/wp-includes/wlwmanifest.xml"/> 
+<meta name="generator" content="WordPress 5.1.1"/>
+<link rel="shortlink" href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/?p=115"/>
+<script type="text/javascript">
+(function(url){
+	if(/(?:Chrome\/26\.0\.1410\.63 Safari\/537\.31|WordfenceTestMonBot)/.test(navigator.userAgent)){ return; }
+	var addEvent = function(evt, handler) {
+		if (window.addEventListener) {
+			document.addEventListener(evt, handler, false);
+		} else if (window.attachEvent) {
+			document.attachEvent('on' + evt, handler);
+		}
+	};
+	var removeEvent = function(evt, handler) {
+		if (window.removeEventListener) {
+			document.removeEventListener(evt, handler, false);
+		} else if (window.detachEvent) {
+			document.detachEvent('on' + evt, handler);
+		}
+	};
+	var evts = 'contextmenu dblclick drag dragend dragenter dragleave dragover dragstart drop keydown keypress keyup mousedown mousemove mouseout mouseover mouseup mousewheel scroll'.split(' ');
+	var logHuman = function() {
+		if (window.wfLogHumanRan) { return; }
+		window.wfLogHumanRan = true;
+		var wfscr = document.createElement('script');
+		wfscr.type = 'text/javascript';
+		wfscr.async = true;
+		wfscr.src = url + '&r=' + Math.random();
+		(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(wfscr);
+		for (var i = 0; i < evts.length; i++) {
+			removeEvent(evts[i], logHuman);
+		}
+	};
+	for (var i = 0; i < evts.length; i++) {
+		addEvent(evts[i], logHuman);
+	}
+})('//web.archive.org/web/20190323064914/https://chambers.co.uk/?wordfence_lh=1&hid=AF27B3B28A815141DFBD6F2BD1A541B6');
+</script><!-- Tracking code easily added by NK Google Analytics -->
+<script type="text/javascript"> 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ 
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), 
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) 
+})(window,document,'script','https://web.archive.org/web/20190323064914/https://www.google-analytics.com/analytics.js','ga'); 
+ga('create', 'UA-2267875-37', 'auto'); 
+ga('send', 'pageview'); 
+</script> 
+<link rel="icon" href="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/cropped-chambers-favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" href="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/cropped-chambers-favicon-192x192.png" sizes="192x192"/>
+<link rel="apple-touch-icon-precomposed" href="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/cropped-chambers-favicon-180x180.png"/>
+<meta name="msapplication-TileImage" content="https://chambers.co.uk/wp-content/uploads/2016/09/cropped-chambers-favicon-270x270.png"/>
+<script>window.cookieconsent_options = {link: '/cookies/'};</script>
+<script src="//web.archive.org/web/20190323064914js_/https://www.hachette.co.uk/assets/js/hachettecookie.js" type="text/javascript"></script>
 </head>
 
-<body>
-
-<script>
-function updateurlparam(url, name, value){
-    if(value == null) value = '';
-    var pattern = new RegExp('\\b('+name+'=).*?(&|$)', 'i');
-    if(url.search(pattern) > -1){ return url.replace(pattern,'$1' + value + '$2'); }
-    return url + (url.indexOf('?') > -1 ? '&' : '?') + name + '=' + value; 
+<body data-rsssl="1" class="app-template-default single single-app postid-115 cbp-spmenu-push views-template-app-template"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
 }
-
-function jumptodate(start, end) {
-    if (start > end) { tmp = end; start = end; end = tmp; }
-    var startdate = new Date(xaxiscats[start]).toJSON(); startdate = startdate.replace(/[\-TZ:]/g, ''); startdate = startdate.replace(/\..*$/, '');
-    var enddate = new Date(xaxiscats[end]).toJSON(); enddate = enddate.replace(/[\-TZ:]/g, ''); enddate = enddate.replace(/\..*$/, '');
-    
-    //if we are in a window by ourself (not embedded on a page), then just reload the page with the new date ranges...
-    //otherwise, post a message to the parent frame about the timeline zoom...
-    if(window.self === window.top) {
-    	var newurl = window.location.href;
-	newurl = updateurlparam(newurl, 'sdt', startdate);
-	newurl = updateurlparam(newurl, 'edt', enddate);
-	//if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-	if (newurl == window.location.href) { location.reload(); }
-    	//and set up our body to let the user know we're doing something and then reload the page to this new date range...
-	document.body.style.opacity = 0.2;
-	document.body.style.cursor = 'progress';
-	document.body.style.pointerEvents = "none";
-	window.location.href = newurl;
-    } else {
-	parent.postMessage({"startdate": startdate, "enddate": enddate, "href": window.location.href }, "*");
-    }
-}
-
-function updatequery(newquery) {
-    
-    //if we are in a window by ourself (not embedded on a page), then just reload the page with the new date ranges...
-    //otherwise, post a message to the parent frame about the timeline zoom...
-    if(window.self === window.top) {
-    	var newurl = window.location.href;
-	newurl = updateurlparam(newurl, 'query', newquery);
-	//if this is the same URL (no change such as user clicked on same show again), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-	if (newurl == window.location.href) { location.reload(); }
-    	//and set up our body to let the user know we're doing something and then reload the page to this new date range...
-	document.body.style.opacity = 0.2;
-	document.body.style.cursor = 'progress';
-	document.body.style.pointerEvents = "none";
-	window.location.href = newurl;
-    } else {
-	parent.postMessage({"query": newquery, "href": window.location.href }, "*");
-    }
-}
-</script>
-
-
-<div id="container">
-
-<div id="header">
-    <a href="https://api.gdeltproject.org/api/v2/summary/summary?d=iatv" title="GDELT" rel="home" CLASS="headerlogo">GDELT Summary</a>
-    <a href="https://blog.gdeltproject.org/the-new-television-explorer-launches/" title="About" rel="home" CLASS="headerabout">About</a>
-</div>
-
-<div id="content">
-
-
-<br>	
-<H2 STYLE="padding-left:15px;"><b>Television Explorer</b></H2>
-<br>
-<p>Below is a visual dashboard summary of broadcast television news coverage of your search using data from the Internet Archive's Television News Archive. While the index is updated every 15 minutes, broadcasts take 24-48 hours to become available for search, so <B>results for the past two days are incomplete</B>. Refresh this page again in 15 minutes to see the most recent updates. Displays work best in Google Chrome.</p>
-
-<p><a href="javascript:if ($('#info-WELCOME').hasClass('hidden') == true) { $('#info-WELCOME').removeClass('hidden'); } else { $('#info-WELCOME').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i> More Info.</a></p>
-
-<p ID="info-WELCOME" class="hidden">All visualizations are powered by the <A HREF="https://www.gdeltproject.org/">GDELT Project</a>'s <a href="https://blog.gdeltproject.org/gdelt-2-0-television-api-debuts/">TV 2.0</a> API using data from the Internet Archive's <a href="https://archive.org/details/tv">Television News Archive</a>. Technical users will find "export" options on each of the visualizations on this page that allows them to download the underlying CSV/JSON/GeoJSON data for further visualization/analysis and to view the HTML code that allows them to embed each individual visualization on their own web page - the embedded visualization will update each time it is viewed/refreshed to display the most recent data as of 15 minutes prior (though broadcasts take 24-48 hours to become available for search).</p>
-
-
-<div style="border: #999 solid 1px; border-radius: 10px; margin: 15px; padding-top: 15px;">
-<H3 STYLE="padding-left:15px;padding-bottom: 15px;">Search Details</H3>
-<p>The displays on this page summarize coverage returned by the following search:</p>
-<p STYLE="padding-left:55px;padding-bottom: 15px;">
-<B>Data Source</B>: Internet Archive Television News Archive
-<br>
-<B>Human Summary</B>: <I>(covid OR coronavirus OR pandemic) AND (Station:CNN OR Station:FOXNEWS OR Station:MSNBC OR Station:BBCNEWS) AND PublicationDate>=1/1/2020</I>
-<br>
-<a href="https://api.gdeltproject.org/api/v2/summary/summary?d=iatv&t=summary&k=%28covid+OR+coronavirus+OR+pandemic%29&ts=custom&sdt=20200101000000&fs=station%3ACNN&fs=station%3AFOXNEWS&fs=station%3AMSNBC&fs=station%3ABBCNEWS&fdn=raw&fdr=day&fts=7&svt=zoom&svts=zoom&swvt=zoom&ssc=yes&sshc=yes&swc=yes&stcl=yes&"><b>[Modify Search]</b></a>
-</p>
-</div>
-<br>
-
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Volume Timeline</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TIMELINEVOLZOOM').hasClass('hidden') == true) { $('.info-TIMELINEVOLZOOM').removeClass('hidden'); } else { $('.info-TIMELINEVOLZOOM').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20190323064914/https%3A//chambers.co.uk/app/the-chambers-dictionary/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
     </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-TIMELINEVOLZOOM hidden" style="padding-top: 10px;">The volume timeline below shows the percent of all news programming airtime on each selected station monitored by the Internet Archive over the selected time period that matched your search. It offers a quick visual gauge of how much news attention your search is receiving on each selected station. Only news programming is monitored (commercials and entertainment programs are excluded, though some commercials may slip in). The total monitored airtime of each station in a given day/hour is broken into 15 second intervals and the timeline reports the percent of those 15 second clips that matched your search. A single mention of your keyword in a given 15 second interval will count as the entire 15 second interval, so keep in mind that the results are counted in terms of 15 second intervals.</p>
-
-<p CLASS="info-TIMELINEVOLZOOM hidden">Move your mouse over the timeline to see the value for a given day/hour. You can also zoom into a particular time period by clicking on the timeline and dragging to the right or left to select that date/time range. The entire Television Explorer display will then refresh to reflect just coverage from that zoomed-in time period. In this way, if you see a large peak in coverage on a particular day, you can zoom in and see what that coverage focused on and where it came from.</p>
-
-<p CLASS="info-TIMELINEVOLZOOM hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page. Advanced users can use the "View Normalization Graph" option under the Export button to view the total airtime per day/hour monitored from the selected stations by the Internet Archive (note that days with less than 100 clips are automatically excluded from results).</p>
-
-<iframe ID="timelinevolzoom" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=timelinevol&timezoom=yes" scrolling="no" width=100% frameborder="0" class="responsivetimeline"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Volume Timeline (Streamgraph)</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TIMELINEVOLZOOMSTREAM').hasClass('hidden') == true) { $('.info-TIMELINEVOLZOOMSTREAM').removeClass('hidden'); } else { $('.info-TIMELINEVOLZOOMSTREAM').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://chambers.co.uk/app/the-chambers-dictionary/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20190323064914" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20190323064914*/https://chambers.co.uk/app/the-chambers-dictionary/" title="See a list of every capture for this URL">60 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">06 Oct 2016 - 27 Mar 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
     </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden" style="padding-top: 10px;">The volume timeline below shows the matching airtime on each selected station monitored by the Internet Archive over the selected time period that matched your search. It offers a quick visual gauge of how much news attention your search is receiving on each selected station.</p>
-
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden" style="padding-top: 10px;">The results below are identical to those displayed in the traditional line-based timeline, but the unique visual characteristics of streamlines can make certain kinds of complex patterns more visible. A streamline displays each data series as a stacked area graph centered around the horizonal graph center. Series are stacked on top or under one another, meaning their relative Y axis sizes are what matter, not their absolute values.</p>
-
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden">Move your mouse over the timeline to see the value for a given day/hour. You can also zoom into a particular time period by clicking on the timeline and dragging to the right or left to select that date/time range. The entire AI Television Explorer display will then refresh to reflect just coverage from that zoomed-in time period. In this way, if you see a large peak in coverage on a particular day, you can zoom in and see what that coverage focused on and where it came from.</p>
-
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page. Advanced users can use the "View Normalization Graph" option under the Export button to view the total airtime per day/hour monitored from the selected stations by the Internet Archive.</p>
-
-<iframe ID="timelinevolzoomstream" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=timelinevolstream&timezoom=yes" scrolling="no" width=100% frameborder="0" class="responsivetimeline"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Online News Volume Timeline</H3>
-<div style="width: 100%; text-align: center;"> <A HREF="https://api.gdeltproject.org/api/v2/summary/summary?d=web&t=summary&k=%28covid+OR+coronavirus+OR+pandemic%29&ts=custom&sdt=20200101000000&fs=station%3ACNN&fs=station%3AFOXNEWS&fs=station%3AMSNBC&fs=station%3ABBCNEWS&fdn=raw&fdr=day&fts=7&svt=zoom&svts=zoom&swvt=zoom&ssc=yes&sshc=yes&swc=yes&stcl=yes&c=1&sta=list&stc=yes&fsl=eng">Switch To Online News Summary</A> </div>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-WEBTIMELINEVOL').hasClass('hidden') == true) { $('.info-WEBTIMELINEVOL').removeClass('hidden'); } else { $('.info-WEBTIMELINEVOL').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20190211051013/http://chambers.co.uk:80/app/the-chambers-dictionary" title="11 Feb 2019"><strong>Feb</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 06:49:14 Mar 23, 2019">MAR</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20190530211519/http://chambers.co.uk:80/app/the-chambers-dictionary" title="30 May 2019"><strong>May</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20190317063306/http://chambers.co.uk:80/app/the-chambers-dictionary" title="06:33:06 Mar 17, 2019"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 06:49:14 Mar 23, 2019">23</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20190418003252/http://chambers.co.uk:80/app/the-chambers-dictionary" title="00:32:52 Apr 18, 2019"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20180310134908/http://chambers.co.uk:80/app/the-chambers-dictionary/" title="10 Mar 2018"><strong>2018</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 06:49:14 Mar 23, 2019">2019</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200511144016/https://chambers.co.uk/app/the-chambers-dictionary/" title="11 May 2020"><strong>2020</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
     </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-WEBTIMELINEVOL hidden" style="padding-top: 10px;">The timeline below allows you to compare television news coverage of your query with online news coverage, searching all global English language online news coverage monitored by GDELT over the same time period that matched your query. This allows you to understand differences in the attention paid to different topics by television versus online news.</p>
-
-<iframe ID="webtimelinevolzoom" src="https://api.gdeltproject.org/api/v2/doc/doc?format=html&startdatetime=20200101000000&timelinesmooth=7&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20sourcelang:eng&mode=timelinevol&timezoom=yes&FILTER_SOURCELANG=eng" scrolling="no" width=100% frameborder="0" class="responsivetimeline"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Station Chart</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TONECHART').hasClass('hidden') == true) { $('.info-TONECHART').removeClass('hidden'); } else { $('.info-TONECHART').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20190323064914/http://web.archive.org/screenshot/https://chambers.co.uk/app/the-chambers-dictionary/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/the-chambers-dictionary/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/the-chambers-dictionary/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
     </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-TONECHART hidden" style="padding-top: 10px;">The station chart below shows what percent of news programming airtime (in 15 second intervals) monitored from each station by the Internet Archive matched your search. This allows you to directly compare how much attention each station is paying to a given topic.</p>
-
-<p CLASS="info-TONECHART hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page.</p>
-
-<iframe ID="tonechart" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=stationchart" scrolling="no" width=100% frameborder="0" class="responsivechart"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Show Chart (Estimated)</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-SHOWCHART').hasClass('hidden') == true) { $('.info-SHOWCHART').removeClass('hidden'); } else { $('.info-SHOWCHART').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/wikipedia-eventstream)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/wikipedia-eventstream" target="_new"><span class="wm-title">Wikipedia Eventstream</span></a></div>
+	      </div>
     </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-SHOWCHART hidden" style="padding-top: 10px;">The show chart below takes the top 500 shows airing coverage that matched your search and returns the top 10 as the percentage their matching airtime made up of the total matching airtime of the top 500 shows. Unlike the other graphs on this page, this yields an approximation rather than exact results, but for most queries should yield results very close to the actual values.</p>
-
-<p CLASS="info-SHOWCHART hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page.</p>
-
-<iframe ID="showchart" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=showchart" scrolling="no" width=100% frameborder="0" class="responsivechart"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">English WordCloud</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-WORDCLOUD').hasClass('hidden') == true) { $('.info-WORDCLOUD').removeClass('hidden'); } else { $('.info-WORDCLOUD').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
     </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-WORDCLOUD hidden" style="padding-top: 10px;">The wordcloud below shows the most common words that appeared in the 200 most relevant matching clips (both the matching clip and the clips immediately before and after it).</p>
-
-<p CLASS="info-WORDCLOUD hidden">Use the links at the bottom right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page.</p>
-
-<iframe ID="wordcloud_english" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=wordcloud" scrolling="no" width=100% frameborder="0" class="responsivewordcloud"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Top Clips</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TOPCLIPSGALLERY').hasClass('hidden') == true) { $('.info-TOPCLIPSGALLERY').removeClass('hidden'); } else { $('.info-TOPCLIPSGALLERY').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
     </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-TOPCLIPSGALLERY hidden" style="padding-top: 10px;">Below is a brief recap of up to the top 50 most relevant clips matching your search. Click on any clip to view it on the Internet Archive's Television News Archive website.</p>
-
-<script>
-function export_embed() {
-    var newurl = "https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100";
-    newurl = newurl.replace('&','&amp;');
-    var win = window.open("", "_blank");
-    win.document.body.innerHTML = "<html><head><title>GDELT API Embed This Visualization</title></head><body>To embed this visualization on your own webpage, add the following HTML where you would like it to appear: <pre>&lt;script&gt;\nwindow.addEventListener(\"message\", function(e){\nvar topclips_gallery = document.getElementById(\"topclips_gallery\");\nif (topclips_gallery.contentWindow === e.source) {\ntopclips_gallery.height = e.data.height + \"px\";\ntopclips_gallery.style.height = e.data.height + \"px\";\n}\n});\n&lt;/script&gt;\n\n&lt;iframe ID=\"topclips_gallery\" src=\"" + newurl + "\" scrolling=\"no\" width=100% frameborder=\"0\"&gt;&lt;/iframe&gt;<br></pre><br></body></html>";
-}
-</script>
-
-<div style="float: right; margin-right: 10px; font-size: 10px; color: #aaa">
-[<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100" style="color: #555;" TARGET=_BLANK>URL</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=csv" style="color: #555;" TARGET=_BLANK>CSV</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=json" style="color: #555" TARGET=_BLANK>JSON</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=rss" style="color: #555" TARGET=_BLANK>RSS</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=jsonfeed" style="color: #555" TARGET=_BLANK>JSONFeed</a>] [<a href="javascript:export_embed()" style="color: #555">EMBED</a>] </div>
-<br>
-
-<iframe ID="topclips_gallery" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100" scrolling="no" width=100% frameborder="0"></iframe>
-<br>
-<br>
-
-
-
-
-
-
-
-
-
-</div> <!-- end of content div -->
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/the-chambers-dictionary/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://chambers.co.uk/app/the-chambers-dictionary/","20190323064914",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//web.archive.org/web/20190323064914/https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.7&appId=715916028498350";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+	<div id="mobile-menu">
+		<div id="menuClose"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/close.png" alt="Close menu"></div>
+		<div class="menu-menu-1-container"><ul id="menu-menu-1" class="nav-menu"><li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-43"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/dictionaries/">Dictionaries</a>
+<ul class="sub-menu">
+	<li id="menu-item-93" class="menu-item menu-item-type-post_type menu-item-object-book menu-item-93"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/book/the-chambers-dictionary/">The Chambers Dictionary</a></li>
+	<li id="menu-item-96" class="menu-item menu-item-type-post_type menu-item-object-book menu-item-96"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/book/chambers-biographical-dictionary/">Chambers Biographical Dictionary</a></li>
+	<li id="menu-item-99" class="menu-item menu-item-type-post_type menu-item-object-book menu-item-99"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/book/chambers-crossword-dictionary/">Chambers Crossword Dictionary</a></li>
+</ul>
+</li>
+<li id="menu-item-309" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-309"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/thesauruses/">Thesauruses</a></li>
+<li id="menu-item-331" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-331"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/reference/">Reference</a></li>
+<li id="menu-item-330" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-330"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/crosswords/">Crosswords</a></li>
+<li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-39"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/apps/">Apps</a>
+<ul class="sub-menu">
+	<li id="menu-item-135" class="menu-item menu-item-type-post_type menu-item-object-app current-menu-item menu-item-135"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/the-chambers-dictionary/" aria-current="page">The Chambers Dictionary</a></li>
+	<li id="menu-item-134" class="menu-item menu-item-type-post_type menu-item-object-app menu-item-134"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/chambers-deluxe-dictionary-thesaurus/">The Chambers Deluxe Dictionary and Thesaurus</a></li>
+	<li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-app menu-item-133"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/200-words-use/">200 Words You Should Use</a></li>
+	<li id="menu-item-143" class="menu-item menu-item-type-post_type menu-item-object-app menu-item-143"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/200-words-not-trust/">200 Words You Should Not Trust</a></li>
+	<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-app menu-item-142"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/200-words-not-use/">200 Words You Should Not Use</a></li>
+</ul>
+</li>
+<li id="menu-item-37" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/competitions/">Competitions</a></li>
+<li id="menu-item-36" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-36"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/">Puzzles</a>
+<ul class="sub-menu">
+	<li id="menu-item-210" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-210"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/search/">Search Chambers</a></li>
+	<li id="menu-item-221" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-221"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/word-wizard/">Word Wizard</a></li>
+	<li id="menu-item-416" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-416"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/general-knowledge-crosswords/">General Knowledge Crosswords</a></li>
+	<li id="menu-item-415" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-415"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/cryptic-crosswords/">Cryptic Crosswords</a></li>
+	<li id="menu-item-205" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-205"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/sudoku/">Sudoku</a></li>
+</ul>
+</li>
+</ul></div>	</div>
+</nav>
+<div id="wrapper">
+<header id="masthead" role="banner">
+	<div id="title" class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4">
+				<h1 class="hidden">Chambers</h1>
+				<a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/Chambers.png" alt="Chambers" width="180" height="50"></a>
+			</div>
+			<div class="col-xs-12 col-sm-8" id="social-search">
+				<div class="social-links">
+					<a class="ww-mobile" href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/word-wizard/"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/ww-icon.png" alt="Word wizard icon" width="28" height="28"></a>
+					<a class="search" href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/search/"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/search.png" alt="search icon" width="23" height="23"></a>
+					<section class="widget-odd widget-last widget-first widget-1 widget sh_sb_widget_class"><div class="social-icons"><a href="https://web.archive.org/web/20190323064914/https://www.facebook.com/wordlovers/" class="sh-sb-link " target="_blank"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/sb-icons/facebook.jpg" alt="Chambers on Facebook" class="sh-sb-icon"/></a><a href="https://web.archive.org/web/20190323064914/https://twitter.com/chamberswords" class="sh-sb-link " target="_blank"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/sb-icons/twitter.jpg" alt="Chambers on Twitter" class="sh-sb-icon"/></a></div></section>				</div>
+				<div class="searchcontain">
+					<div class="search">
+						<form name="search" method="GET" action="https://web.archive.org/web/20190323064914/https://chambers.co.uk/search/" id="headersearchform">
+							<input type="text" name="query" autocomplete="off" autocorrect="off" id="searchquery" placeholder="Search Chambers" value=""/>
+							<a href="#" class="select"><span class="selectname">
+								Dictionary							</span>
+							<ul class="title">
+							<li class="21st">Dictionary</li>
+							<li class="thes">Thesaurus</li>
+							<li class="biog">Biographical</li>
+							</ul></a>
+							<input type="hidden" id="searchtitle" value="21st" name="title"/>
+						<a href="#" class="gosearch"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/arrow-right-white.png" alt="arrow" height="10" width="8"></a>
+						</form>
+					</div>
+					<div id="searchresults">
+						<div class="results">
+							<p>Consult Chambers 21st Century Dictionary, The Chambers Thesaurus (1996) or Chambers Biographical Dictionary (1997 edition with amendments). Enter your search and choose your title from the drop-down menu.</p>
+							<h2>Search Tip</h2>
+							<p>A wildcard is a special character you can use to replace one or more characters in a word.
+							There are two types of wildcard. The first is a question mark ?, which matches a single character. The second is an asterisk *, which matches zero or more characters. The two kinds of wildcard can be mixed in a single search.</p>
+							<p><a href="search-tips.php">View More Search Tips</a></p>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="container">
+				<nav id="site-navigation" role="navigation">
+				<div class="menu-menu-1-container"><ul id="menu-menu-2" class="nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-43"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/dictionaries/">Dictionaries</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-book menu-item-93"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/book/the-chambers-dictionary/">The Chambers Dictionary</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-book menu-item-96"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/book/chambers-biographical-dictionary/">Chambers Biographical Dictionary</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-book menu-item-99"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/book/chambers-crossword-dictionary/">Chambers Crossword Dictionary</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-309"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/thesauruses/">Thesauruses</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-331"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/reference/">Reference</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-330"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/crosswords/">Crosswords</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-39"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/apps/">Apps</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-app current-menu-item menu-item-135"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/the-chambers-dictionary/" aria-current="page">The Chambers Dictionary</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-app menu-item-134"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/chambers-deluxe-dictionary-thesaurus/">The Chambers Deluxe Dictionary and Thesaurus</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-app menu-item-133"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/200-words-use/">200 Words You Should Use</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-app menu-item-143"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/200-words-not-trust/">200 Words You Should Not Trust</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-app menu-item-142"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/app/200-words-not-use/">200 Words You Should Not Use</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/competitions/">Competitions</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-36"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/">Puzzles</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-210"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/search/">Search Chambers</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-221"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/word-wizard/">Word Wizard</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-416"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/general-knowledge-crosswords/">General Knowledge Crosswords</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-415"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/cryptic-crosswords/">Cryptic Crosswords</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-205"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/puzzles/sudoku/">Sudoku</a></li>
+</ul>
+</li>
+</ul></div>				</nav><!-- #site-navigation end -->
+			</div>
+		</div>
+	</div>
 	
+	<div id="mobile-toggle">
+	  <button id="showLeft">Menu</button>
+	</div>
+</header><!-- #masthead end-->
+	<section id="page-intro">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 intro">
+        <div class="left">
+          <img width="223" height="304" src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/splash_apps.png" class="attachment-large" alt="" title="" style="" srcset="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/splash_apps.png 223w, https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/splash_apps-220x300.png 220w" sizes="(max-width: 223px) 100vw, 223px"/>
+        </div>
+        <div class="right">
+          <h1>The Chambers Dictionary</h1>
+          
+          <p class="subtitle">The Chambers Dictionary in your pocket</p>
+          
+          <div class="intro-text">
+          The single-volume British and international English dictionary with the widest coverage of all the riches of the English language. Clear, accurate and occasionally witty definitions, with the latest new words from science, technology and contemporary culture.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="content" class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="row">
+        
+        
+        <div class="col-xs-12 col-sm-9 body_text">
+          <p>This 11th Edition reflects the changes in our language, with special attention paid to new words that have emerged, new uses of old words and the most up-to-date pronunciation. The 11th Edition includes over 290,000 distinct words, compounds, phrases and derived forms.</p>
+<p>The intelligent word entry suggests possible correct spellings as you type, as well as listing words that sound the same or are often confused. Search features include:</p>
+<ul>
+<li>Alphabetical listing</li>
+<li>Spelling suggestions</li>
+<li>Sounds-like and often-confused</li>
+<li>Fast pattern-matching search (*, ?, vowel and consonant)</li>
+<li>Filter search results by noun, verb, adjective, adverbs</li>
+<li>Anagram solver</li>
+<li>Customize search options (case, derived forms, etc)</li>
+<li>Cross-reference to other offline and online references</li>
+</ul>
+<p>There are also standard bookmark, recent word and random word features. No Internet connection is required, and the one app will work on your iPhone, iPod and iPad.</p>
+<p>The Chambers Dictionary is treasured by word-lovers and crossword enthusiasts for its majestic coverage of English and its tradition of sneaking in a sprinkling of light-hearted definitions. Alone among the single-volume dictionaries, it preserves a rich stock of words from our literary heritage as well as covering all the latest developments in contemporary English.</p>
 
-</div>	
+        </div>
+        <aside class="col-xs-12 col-sm-3 body_text" id="sidebar">
+          
+		  
+          <div class="buy-some">
+            
+            <a href="https://web.archive.org/web/20190323064914/https://itunes.apple.com/gb/app/chambers-dictionary/id314269183?mt=8" target="_blank"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/appstore_big.jpg" width="243" height="85" class="size-full"/></a>
+            
+            
+            <a href="https://web.archive.org/web/20190323064914/https://play.google.com/store/apps/details?id=com.wordwebsoftware.android.chambers" target="_blank"><img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/uploads/2016/09/google-play.png" width="250" height="80" class="size-full"/></a>
+            
+          </div>
+          
+        </aside>
+        
+      </div>
+    </div>
+  </div><!-- /.row -->
+</section><!-- /.container -->
 
-<!-- this handles the smooth fluid scrolling -->
-<script src="https://api.gdeltproject.org/assets/js/smoothscroll-1.4.6-gdeltmodified/smoothscroll.gdeltmodified.js"></script>
+<div id="footer-widgets">
+	<div class="container">
+		<div class="row">
+			<section class="widget-odd widget-first widget-1 col-xs-12 col-sm-4 widget widget_text">			<div class="textwidget"><div class="fb-page" data-href="https://www.facebook.com/wordlovers" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/wordlovers" class="fb-xfbml-parse-ignore"><a href="https://web.archive.org/web/20190323064914/https://www.facebook.com/wordlovers">Chambers Word Lovers</a></blockquote></div>
+<div class="twitter"><a class="twitter_button" href="https://web.archive.org/web/20190323064914/http://twitter.com/chamberswords"><div class="follow">Follow us on Twitter</div><div class="tw_user">@ChambersWords</div></a></div></div>
+		</section><section class="widget-even widget-2 col-xs-12 col-sm-4 widget widget_text"><h2>Join the Chambers email newsletter</h2>			<div class="textwidget"><p>The regular update for word lovers.</p>			
+<form action="https://web.archive.org/web/20190323064914/https://hachette-s.neolane.net/webApp/hac_subscription" method="GET" onsubmit="formvalidate()">
+			  <input type="hidden" name="publisherId" value="11007"/>
+			  <input type="hidden" name="serviceName" value="hac_srv_GB_11007_chambers"/>
+			  <label for="firstName">First name</label>
+			  <input class="form-control" name="firstName" type="text" id="firstName" value=""/><br/>
+			  <label for="email">Email address *</label><input class="form-control" type="email" name="email" id="email" value="" required/><br/><br/>			  
+			  <input class="btn btn-lg btn-danger" type="submit" value="Subscribe"/> 
+			</form>
+			<p class="small"><i>By submitting your details you are agreeing to Hachette UK's <a href="https://web.archive.org/web/20190323064914/https://www.hachette.co.uk/Information/Privacy.page" target="_blank">Privacy Policy</a>. You can unsubscribe at any time via the link in any email we send to you.</i></p></div>
+		</section><section class="widget-odd widget-last widget-3 col-xs-12 col-sm-4 widget widget_text"><h2>Praise for The Chambers Dictionary</h2>			<div class="textwidget"><p>“To look up a word in Chambers is to be able to unpack its meaning and also to marvel at its compactness . . . . Chambers is an open door to words at their wittiest, most rooted, most revealing, and most powerful” - <em>Ali Smith</em></p>
+<p>“This fossicking for undiscovered jewels is, of course, one of the chief pleasures of a dictionary . . . A page a day keeps the doddypolls at bay” - <em>Jeremy Paxman</em></p>
+<p>“It is good to see that the latest edition of Chambers Dictionary has lost none of its wit” - <em>Mark Sanderson</em></p>
+</div>
+		</section>		</div>
+	</div>
+</div>
 
+<footer id="footer">
+	<div class="inner container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4">
+				<img src="https://web.archive.org/web/20190323064914im_/https://chambers.co.uk/wp-content/themes/chambers/images/H&amp;S_LOGO-white.png" alt="Hodder &amp; Stoughton" width="90" class="hs-logo">
+			</div>
+			<div class="col-xs-12 col-sm-8">
+				<div class="menu-footer-container"><ul id="menu-footer" class="nav-menu"><li id="menu-item-64" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-64"><a href="https://web.archive.org/web/20190323064914/https://chambers.co.uk/cookies/">Cookies</a></li>
+<li id="menu-item-66" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-66"><a target="_blank" href="https://web.archive.org/web/20190323064914/https://www.hodder.co.uk/Information/Privacy.page">Privacy</a></li>
+<li id="menu-item-419" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-419"><a target="_blank" href="https://web.archive.org/web/20190323064914/https://www.hodder.co.uk/Information/Terms%20and%20Conditions.page">Terms and Conditions</a></li>
+<li id="menu-item-268" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-268"><a href="https://web.archive.org/web/20190323064914/mailto:enquiries@chambers.co.uk">Contact</a></li>
+</ul></div>			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<p>&copy;2019 John Murray Learning, part of Hodder &amp; Stoughton Ltd.<br/>
+				Registered in England and Wales with company number 651692.<br>
+				Registered address: Carmelite House, 50 Victoria Embankment, London EC4Y 0DZ.</p>
+			</div>
+		</div>
+	</div>
+</footer>
+</div><!-- /#wrapper -->
+<script type="text/html" id="tmpl-wp-playlist-current-item">
+	<# if ( data.image ) { #>
+	<img src="{{ data.thumb.src }}" alt="" />
+	<# } #>
+	<div class="wp-playlist-caption">
+		<span class="wp-playlist-item-meta wp-playlist-item-title">
+		&#8220;{{ data.title }}&#8221;		</span>
+		<# if ( data.meta.album ) { #><span class="wp-playlist-item-meta wp-playlist-item-album">{{ data.meta.album }}</span><# } #>
+		<# if ( data.meta.artist ) { #><span class="wp-playlist-item-meta wp-playlist-item-artist">{{ data.meta.artist }}</span><# } #>
+	</div>
+</script>
+<script type="text/html" id="tmpl-wp-playlist-item">
+	<div class="wp-playlist-item">
+		<a class="wp-playlist-caption" href="{{ data.src }}">
+			{{ data.index ? ( data.index + '. ' ) : '' }}
+			<# if ( data.caption ) { #>
+				{{ data.caption }}
+			<# } else { #>
+				<span class="wp-playlist-item-title">
+				&#8220;{{{ data.title }}}&#8221;				</span>
+				<# if ( data.artists && data.meta.artist ) { #>
+				<span class="wp-playlist-item-artist"> &mdash; {{ data.meta.artist }}</span>
+				<# } #>
+			<# } #>
+		</a>
+		<# if ( data.meta.length_formatted ) { #>
+		<div class="wp-playlist-item-length">{{ data.meta.length_formatted }}</div>
+		<# } #>
+	</div>
+</script>
+	
+<div id="views-extra-css-ie7" style="display:none;" aria-hidden="true">
+<!--[if IE 7]><style>
+.wpv-pagination { *zoom: 1; }
+</style><![endif]-->
+</div>
+
+<script type="text/javascript">
+jQuery( document ).ready( function( $ ) {
+	var extra_css = $( "#views-extra-css" ) ? $( "#views-extra-css" ).text() : null;	if( extra_css ) {		$( 'head' ).append( '<style>' + extra_css + '</style>' );
+		$( "#views-extra-css" ).remove();	}
+	$( 'head' ).append( $( "#views-extra-css-ie7" ).html() );
+	$( "#views-extra-css-ie7" ).remove();});
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-content/themes/chambers/js/hoverintent.min.js?ver=1.0"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-content/themes/chambers/js/functions.js?ver=1.0"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"MM d, yy","firstDay":1,"isRTL":false});});
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/mediaelement/wp-mediaelement.min.js?ver=5.1.1"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/underscore.min.js?ver=1.8.3"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/wp-util.min.js?ver=5.1.1"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/backbone.min.js?ver=1.2.3"></script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-includes/js/mediaelement/wp-playlist.min.js?ver=5.1.1"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var wpv_pagination_local = {"front_ajaxurl":"https:\/\/web.archive.org\/web\/20190323064914\/https:\/\/chambers.co.uk\/wp-admin\/admin-ajax.php","calendar_image":"https:\/\/web.archive.org\/web\/20190323064914\/https:\/\/chambers.co.uk\/wp-content\/plugins\/wp-views\/embedded\/res\/img\/calendar.gif","calendar_text":"Select date","datepicker_min_date":null,"datepicker_max_date":null,"resize_debounce_tolerance":"100","datepicker_style_url":"https:\/\/web.archive.org\/web\/20190323064914\/https:\/\/chambers.co.uk\/wp-content\/plugins\/types\/vendor\/toolset\/toolset-common\/toolset-forms\/css\/wpt-jquery-ui\/jquery-ui-1.11.4.custom.css","wpmlLang":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20190323064914js_/https://chambers.co.uk/wp-content/plugins/wp-views/embedded/res/js/wpv-pagination-embedded.js?ver=2.7.4"></script>
 
 </body>
 </html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1553311484 --><!--
+     FILE ARCHIVED ON 06:49:14 Mar 23, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 19:12:08 May 17, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 232.416
+  exclusion.robots: 0.144
+  exclusion.robots.policy: 0.138
+  cdx.remote: 0.045
+  esindex: 0.005
+  LoadShardBlock: 58.815 (3)
+  PetaboxLoader3.datanode: 59.259 (4)
+  CDXLines.iter: 17.835 (3)
+  load_resource: 296.007
+  PetaboxLoader3.resolve: 268.661
+-->
