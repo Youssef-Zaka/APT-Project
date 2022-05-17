@@ -1,8 +1,11 @@
 /*
 TODO: 
-- Highlight snippets of where the search phrase was found (front end)
-- Finish Ranker (backend) > Rank multiple words at the same time not just one, popularity?  
+- ________[Zaka]____________
+- Highlight snippets 
 - make Voice query pretty
 - build for release
-- if timeavailable == true, make it prettier
+- ________[Khaled]____________
+- Phrase Searching
+- ________[ANDREW+EZZ]____________
+- Ranker MultiWord + graph + Updating querys  
 */

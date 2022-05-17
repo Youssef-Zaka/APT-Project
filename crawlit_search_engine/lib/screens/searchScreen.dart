@@ -28,7 +28,10 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final String phrase = ModalRoute.of(context)!.settings.arguments as String;
-
+    final List<String> queryWords = phrase
+        .split(' ')
+        .where((word) => !Strings.stopWords.contains(word))
+        .toList();
     textController.text = phrase;
 
     return Scaffold(
@@ -85,7 +88,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return Results(result: paginatedResults[index]);
+                          return Results(
+                              result: paginatedResults[index],
+                              query: queryWords);
                         },
                         itemCount: paginatedResults.length),
                   ),

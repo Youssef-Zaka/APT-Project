@@ -143,7 +143,7 @@ public class CrawlitServer {
                         suggestions = false;
                         continue;
                     }
-                    
+
                     System.out.println("Received query from client: " + query);
 
                     //add the query to the list of suggestions
