@@ -139,7 +139,8 @@ public class CrawlitServer {
     }
 
     public static class CrawlitServerThread extends Thread {
-        private final Socket socket;
+        private static final Comparator<? super DocInfo> DocComparator = null;
+		private final Socket socket;
 
 
         public CrawlitServerThread(Socket socket) {
@@ -220,9 +221,10 @@ public class CrawlitServer {
 					}
                     
                     System.out.println(commonDocs);
-                    
+                    List<DocInfo> consecList = new ArrayList<DocInfo>();
                     Set<String> consecutive = new HashSet<String>();
                     for (int i = 0; i < stemmedWords.size() - 1; i++) {
+              
                     	for(DocInfo doc : wordsMap.get(stemmedWords.get(i))) {
                     		if(commonDocs.contains(doc.document)) {
                     			List<DocInfo> nextDocs = new ArrayList<DocInfo>(wordsMap.get(stemmedWords.get(i + 1)));
@@ -234,6 +236,9 @@ public class CrawlitServer {
 												   && doc.tags.get(j).unstemmed.equals(queryWords.get(i))
 												   && nextDoc.tags.get(k).unstemmed.equals(queryWords.get(i + 1))
 												   && doc.tags.get(j).index + 1 == nextDoc.tags.get(k).index) {
+													if(!consecutive.contains(doc.document)) {
+														consecList.add(doc);
+													}
 													consecutive.add(doc.document);
 												}
 											}
@@ -242,10 +247,17 @@ public class CrawlitServer {
                     			}
                     		}
                     	}
+                    	break;
                     }
+                    
+                    
                     System.out.println(consecutive.size());
                     System.out.println("Conseccutiv" + consecutive);
-                    
+                    DocComparator dc = new DocComparator();
+                    consecList.sort(dc);
+                    for(DocInfo d : consecList) {
+                    	System.out.print(d.document + " ,");
+                    }
                     writer.println(list + "\n");
                     //for every word in the query
 //                    for(int i = 0; i < queryWords.size(); i++) {
@@ -293,4 +305,11 @@ public class CrawlitServer {
         }
     }
 
+}
+
+class DocComparator implements Comparator<DocInfo>{
+	@Override
+	public int compare(DocInfo d1, DocInfo d2) {
+		return Double.compare(d2.score, d1.score);
+	}
 }
