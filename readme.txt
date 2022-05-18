@@ -17,3 +17,11 @@ __________________________________________________
 Khaled Gamal El-Lethy
 1180264
 ellethykhaled2@gmail.com
+__________________________________________________
+
+WORKLOAD 
+
+Andrew: Indexer + Ranker + Phrase searching
+Mahmoud: Indexer + Ranker + Phrase searching
+Khaled: Crawler + Part of Ranker
+Youssef: UI + Query Processor
