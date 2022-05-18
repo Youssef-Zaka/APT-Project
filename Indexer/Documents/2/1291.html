@@ -1,524 +1,500 @@
-<!doctype html>
-<html lang="en-US" prefix="og: https://ogp.me/ns#">
-<head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="profile" href="https://gmpg.org/xfn/11">
-    
-  
-<!-- Search Engine Optimization by Rank Math PRO - https://s.rankmath.com/home -->
-<title>Hobbies &amp; Skills Buying Guide | Reviews by Merriam-Webster</title>
-<meta name="description" content="Looking for a new hobby? Or to learn a new skill? Our editors have rounded up ideas from sushi making to learning languages and found the best products to help your pursuits."/>
-<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
-<link rel="canonical" href="https://www.merriam-webster.com/reviews/hobbies-skills" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Hobbies &amp; Skills Buying Guide | Reviews by Merriam-Webster" />
-<meta property="og:description" content="Looking for a new hobby? Or to learn a new skill? Our editors have rounded up ideas from sushi making to learning languages and found the best products to help your pursuits." />
-<meta property="og:url" content="https://www.merriam-webster.com/reviews/hobbies-skills" />
-<meta property="og:site_name" content="Reviews by Merriam-Webster" />
-<meta property="og:image" content="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Reviews1200x600-1024x538.png" />
-<meta property="og:image:secure_url" content="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Reviews1200x600-1024x538.png" />
-<meta property="og:image:width" content="640" />
-<meta property="og:image:height" content="336" />
-<meta property="og:image:type" content="image/png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Hobbies &amp; Skills Buying Guide | Reviews by Merriam-Webster" />
-<meta name="twitter:description" content="Looking for a new hobby? Or to learn a new skill? Our editors have rounded up ideas from sushi making to learning languages and found the best products to help your pursuits." />
-<meta name="twitter:image" content="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Reviews1200x600-1024x538.png" />
-<script type="application/ld+json" class="rank-math-schema-pro">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.merriam-webster.com/reviews/#organization","name":"Reviews by Merriam-Webster"},{"@type":"WebSite","@id":"https://www.merriam-webster.com/reviews/#website","url":"https://www.merriam-webster.com/reviews","name":"Reviews by Merriam-Webster","publisher":{"@id":"https://www.merriam-webster.com/reviews/#organization"},"inLanguage":"en-US"},{"@type":"BreadcrumbList","@id":"https://www.merriam-webster.com/reviews/hobbies-skills#breadcrumb","itemListElement":[{"@type":"ListItem","position":"1","item":{"@id":"https://www.merriam-webster.com/reviews","name":"Home"}},{"@type":"ListItem","position":"2","item":{"@id":"https://www.merriam-webster.com/reviews/hobbies-skills","name":"Hobbies &amp; Skills"}}]},{"@type":"CollectionPage","@id":"https://www.merriam-webster.com/reviews/hobbies-skills#webpage","url":"https://www.merriam-webster.com/reviews/hobbies-skills","name":"Hobbies &amp; Skills Buying Guide | Reviews by Merriam-Webster","isPartOf":{"@id":"https://www.merriam-webster.com/reviews/#website"},"inLanguage":"en-US","breadcrumb":{"@id":"https://www.merriam-webster.com/reviews/hobbies-skills#breadcrumb"}}]}</script>
-<!-- /Rank Math WordPress SEO plugin -->
+<!DOCTYPE html>
+<html lang="en" class="pb-page" data-request-id="aaee5dcb-1c36-4190-a111-c2f70c37bd91"><head data-pb-dropzone="head"><meta name="pbContext" content=";wgroup:string:Publication Websites;website:website:TFOPB;page:string:Cookie Absent" />
+<title></title>
+<meta charset="UTF-8">
+<meta name="robots" content="noarchive,noindex,nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="//connect.facebook.net" rel="preconnect" />
+<link href="//go.taylorandfrancis.com" rel="preconnect" />
+<link href="//pi.pardot.com" rel="preconnect" />
+<link href="//static.hotjar.com" rel="preconnect" />
+<link href="//cdn.pbgrd.com" rel="preconnect" />
+<link href="//f1-eu.readspeaker.com" rel="preconnect" />
+<link href="//www.googleadservices.com" rel="preconnect" />
+<link href="https://m.addthis.com" rel="preconnect" />
+<link href="https://wl.figshare.com" rel="preconnect" />
+<link href="https://pagead2.googlesyndication.com" rel="preconnect" />
+<link href="https://www.googletagmanager.com" rel="preconnect" />
+<link href="https://www.google-analytics.com" rel="preconnect" />
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link href="https://fonts.gstatic.com" rel="preconnect" />
+<link rel="preload" as="font" href="/templates/jsp/css/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/icomoon/icomoon.woff?g276mb" type="font/woff" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-300.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-300italic.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-600.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-600italic.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-700.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-700italic.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-italic.woff2" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" as="font" href="/templates/jsp/_style2/_tandf/pb2/fonts/google/opensans/open-sans-v23-latin-regular.woff2" type="font/woff2" crossorigin="anonymous">
+<link type="text/css" rel="stylesheet" href="/wro/l8b8~product.css">
+<link rel="stylesheet" type="text/css" href="/pb/css/t1652802772690-v1652084516000/head_4_698_en.css" id="pb-css" data-pb-css-id="t1652802772690-v1652084516000/head_4_698_en.css" />
+<script>var JQSHIM={$:[]};function $(f){JQSHIM.$.push(f);console.warn("$function added to be executed using the JQUERY shim.\n", f);}</script>
+<script type="text/javascript" src="//cdn.pbgrd.com/core-tandf.js" async></script>
 
-<link rel='dns-prefetch' href='//ajax.googleapis.com' />
-<link rel='dns-prefetch' href='//code.iconify.design' />
-<link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
-<link rel='dns-prefetch' href='//www.merriam-webster.com' />
-
-<link rel="alternate" type="application/rss+xml" title="Reviews by Merriam-Webster &raquo; Feed" href="https://www.merriam-webster.com/reviews/feed" />
-<link rel="alternate" type="application/rss+xml" title="Reviews by Merriam-Webster &raquo; Hobbies &amp; Skills Roundup Category Feed" href="https://www.merriam-webster.com/reviews/hobbies-skills/feed" />
-<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 0.07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.merriam-webster.com/reviews/wp-includes/css/dist/block-library/style.min.css?ver=5.9.3' type='text/css' media='all' />
-<style id='global-styles-inline-css' type='text/css'>
-body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
-</style>
-<link data-minify="1" rel='stylesheet' id='custom-style-css'  href='https://www.merriam-webster.com/reviews/wp-content/cache/min/1/reviews/wp-content/themes/affiliatetheme/css/custom-style.css?ver=1647463585' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='bootstrap-5-css'  href='https://www.merriam-webster.com/reviews/wp-content/cache/min/1/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css?ver=1647463585' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='the-lookup-styles-css'  href='https://www.merriam-webster.com/reviews/wp-content/cache/min/1/reviews/wp-content/themes/affiliatetheme/css/app.min.css?ver=1647463585' type='text/css' media='all' />
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js' defer></script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js' defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-content/cache/min/1/ajax/libs/webfont/1.6.26/webfont.js?ver=1649779788' id='google-webfontloader-js' defer></script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='google-webfontloader-js-after'>
-if("WebFont" in window)WebFont.load({google:{families:['Open Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900','Playfair Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900']}});
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:864760,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-content/cache/min/1/1/1.0.7/iconify.min.js?ver=1649779788' id='iconfiy-js' defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-content/cache/min/1/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js?ver=1649779788' id='bootstrap-5-js' defer></script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-content/themes/affiliatetheme/js/app.min.js?ver=1646260243' id='the-lookupthe-lookup-script-js' defer></script>
-<meta name="generator" content="WordPress 5.9.3" />
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-296234-35"></script>
-<script type="rocketlazyloadscript">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-296234-35');
-</script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-296234-25"></script>
-<script type="rocketlazyloadscript">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-296234-25');
-</script>
-
-
-<!-- Google Tag Manager -->
-<script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NBGTR8W');</script>
-<!-- End Google Tag Manager --><link rel="icon" href="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/07/cropped-site-icon-150x150.png" sizes="32x32" />
-<link rel="icon" href="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/07/cropped-site-icon-300x300.png" sizes="192x192" />
-<link rel="apple-touch-icon" href="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/07/cropped-site-icon-300x300.png" />
-<meta name="msapplication-TileImage" content="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/07/cropped-site-icon-300x300.png" />
-		<style type="text/css" id="wp-custom-css">
-			.pagination {
-    display: none;
-}
-.product-manufacturerBar h4 {font-size:1em;}
-
-#masthead .navbar-nav a{font-size:1rem;line-height:1rem;}
-
-.author-template main {margin-top:2rem;}
-.h2-hr-inline {margin:0 1.25rem 1em 0;}
-
-.block-roundup .g-0 {padding-top:0;}
-
-.product-name.text-center.text-md-start {font-size:1.75rem;line-height:2rem;margin-bottom:1.25rem;}
-
-.product-title.text-center.text-md-start {font-size:2rem; line-height:2.25rem; padding-bottom:.5rem;}
-
-h4{font-size:1.375rem; padding-bottom:.125rem;}
-
-.block-hero-roundup h2{font-size:1.75rem; line-height:2.25rem;}
-
-.block-roundup.h-100 h2 {font-size:1.375rem; line-height:1.75rem;}
-
-.hub-template h1 {
-	font-size:2.25rem; padding:.5rem 2.5rem;}		</style>
-		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>    <meta name="msapplication-TileColor" content="#2b5797">
+<script>var _prum=[['id','54ff88bcabe53dc41d1004a5'],['mark','firstbyte',(new Date()).getTime()]];(function(){var s=document.getElementsByTagName('script')[0],p=document.createElement('script');p.async='async';p.src='//rum-static.pingdom.net/prum.min.js';s.parentNode.insertBefore(p,s);})();</script>
+<script>var tandfData={"search":{},"seamlessAccess":{"apiUrl":"https://service.seamlessaccess.org/ps/","context":"seamlessaccess.org"},"identity":{"isSpv":false,"isAuthenticated":false},"pubCount":{},"actionLog":{"eventGroupKey":"43979ce0-fa60-413e-a9d7-5bd2a9ff0091"}};</script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="canonical" href="https://www.tandfonline.com/action/cookieAbsent">
 </head>
-<body class="archive tax-roundup-category term-hobbies-skills term-3381 wp-custom-logo hfeed no-sidebar">
-  <div id="page" class="site">
-    <header id="masthead" class="site-header">
-      <nav id="nav-main" class="navbar navbar-expand-md fixed-top">
-        <div class="container">
-          
-          <div>
-            <a href="https://www.merriam-webster.com/reviews" class="custom-logo-link-first navbar-brand first" rel="home" aria-current="page" data-wpel-link="internal">
-              <img width="1" height="1" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" class="custom-logo" alt="mw-logo" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/07/mw-logo.svg" /><noscript><img width="1" height="1" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/07/mw-logo.svg" class="custom-logo" alt="mw-logo" /></noscript>            </a>
+<body class="pb-ui">
 
-            <a href="https://www.merriam-webster.com/reviews" class="custom-logo-link navbar-brand" rel="home" data-wpel-link="internal"><img width="1" height="1" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" class="custom-logo" alt="Reviews by Merriam-Webster" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/ReviewsJustText-1.svg" /><noscript><img width="1" height="1" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/ReviewsJustText-1.svg" class="custom-logo" alt="Reviews by Merriam-Webster" /></noscript></a>          </div>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W2RHRDH');</script>
 
-          <ul id="header-navbar" class="d-none d-md-flex navbar-nav ms-auto "><li  id="menu-item-22709" class="menu-item menu-item-type-post_type menu-item-object-post nav-item nav-item-22709"><a href="https://www.merriam-webster.com/reviews/teacher-gifts" class="nav-link ">Teacher Gift Ideas</a></li>
-<li  id="menu-item-10078" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children dropdown nav-item nav-item-10078"><a href="https://www.merriam-webster.com/reviews/learning" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-wpel-link="internal">Learning</a>
-<ul class="dropdown-menu  depth_0">
-	<li  id="menu-item-19321" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category current-menu-item nav-item nav-item-19321"><a href="https://www.merriam-webster.com/reviews/hobbies-skills" class="dropdown-item active" data-wpel-link="internal">Hobbies &amp; Skills</a></li>
-	<li  id="menu-item-12522" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12522"><a href="https://www.merriam-webster.com/reviews/stem" class="dropdown-item ">STEM</a></li>
-	<li  id="menu-item-12521" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12521"><a href="https://www.merriam-webster.com/reviews/toys-games" class="dropdown-item ">Toys &amp; Games</a></li>
-	<li  id="menu-item-12524" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category current-roundup-category-ancestor current-roundup-category-parent nav-item nav-item-12524"><a href="https://www.merriam-webster.com/reviews/learning" class="dropdown-item ">All Learning</a></li>
-</ul>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2RHRDH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<div id="pb-page-content" data-ng-non-bindable>
+<div data-pb-dropzone="main" data-pb-dropzone-name="Main">
+<div class="widget pageHeader none  widget-none  widget-compact-all" id="a4d4fdd3-c594-4d68-9f06-b69b8b37ed56">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><header class="page-header" aria-label="Main Banner">
+<div data-pb-dropzone="main">
+<div class="widget responsive-layout none header-top widget-none  widget-compact-all" id="036fa949-dc25-4ffe-9df0-d7daefee281b">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="container">
+<div class="row row-xs  ">
+<div class="col-xs-1-6 header-index">
+<div class="contents" data-pb-dropzone="contents0">
+
+<div class="widget general-image alignLeft header-logo hidden-xs widget-none  widget-compact-horizontal" id="e817489e-2520-418b-a731-b62e247e74df">
+<div class="wrapped 260">
+<div class="widget-body body body-none  body-compact-horizontal"><a href="/" title="Taylor and Francis Online">
+<img src="/pb-assets/Global/tfo_logo-1444989687640.png" alt="Taylor and Francis Online" height="29" width="260" />
+</a></div>
+</div>
+</div>
+<div class="widget general-image none header-logo hidden-sm hidden-md hidden-lg widget-none  widget-compact-horizontal" id="b3fe8380-8b88-4558-b004-6485d3aea155">
+<div class="wrapped 153">
+<div class="widget-body body body-none  body-compact-horizontal"><a href="/">
+<img src="/pb-assets/Global/tfo_logo_sm-1459688573210.png" height="161" width="153" />
+</a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-5-6 ">
+<div class="contents" data-pb-dropzone="contents1">
+<div class="widget layout-inline-content alignRight  widget-none  widget-compact-all" id="a8a37801-55c7-4566-bdef-e4e738967e38">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="inline-dropzone" data-pb-dropzone="content">
+
+<div class="widget layout-inline-content none customLoginBar widget-none" id="fbe90803-b9c8-4bef-9365-cb53cc4bfa0e">
+<div class="wrapped ">
+<div class="widget-body body body-none "><div class="inline-dropzone" data-pb-dropzone="content">
+<div class="widget literatumInstitutionBanner none bannerWidth widget-none" id="3ff4d9f6-0fd0-44d0-89cd-6b16c5bb33ba">
+<div class="wrapped ">
+<div class="widget-body body body-none "><div class="institution-image hidden-xs logout-institution-image">
+</div></div>
+</div>
+</div>
+
+<div class="widget literatumNavigationLoginBar none  widget-none  widget-compact-all" id="1d69ec8f-0b13-42ca-bc6d-f5a385caf8c4">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="loginBar not-logged-in">
+<span class="icon-user"></span>
+<a href="/action/showLogin?uri=%2Faction%2FcookieAbsent" class="sign-in-link">
+Log in
+</a>
+<span class="loginSeprator">&nbsp;|&nbsp;</span>
+<a href="/action/registration?redirectUri=%2F" class="register-link">
+Register
+</a>
+</div></div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="widget eCommerceCartIndicatorWidget none literatumCartLink widget-none" id="9de10bb5-08af-48bc-b9f6-3f6433229f3e">
+<div class="wrapped ">
+<div class="widget-body body body-none "><a href="/action/showCart?FlowID=1" class="cartLabel">
+<span class="hidden-xs hidden-sm visible-tl-inline-block">Cart</span>
+<span class="cartItems" data-id="cart-size" role="status">
+</span>
+</a></div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="widget responsive-layout none breadcrumbs-container widget-none  widget-compact-all" id="64c16283-4b04-4d90-ac0f-4db85fcd0cf5">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="container">
+<div class="row row-md  ">
+<div class="col-md-1-1 ">
+<div class="contents" data-pb-dropzone="contents0">
+
+<div class="widget literatumBreadcrumbs none breadcrumbs-widget widget-none  widget-compact-all" id="b1c121c1-cbbd-4241-8774-7120f3a783e8">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all">
+<nav id="bc-nav" aria-label="Breadcrumb" data-stick>
+<ol class="breadcrumbs">
+<li class="">
+<a href="/" class="bc-click">
+Home
+</a>
 </li>
-<li  id="menu-item-155" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item nav-item-155"><a href="/reviews/wellness" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wellness</a>
-<ul class="dropdown-menu  depth_0">
-	<li  id="menu-item-10712" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10712"><a href="https://www.merriam-webster.com/reviews/activewear" class="dropdown-item ">Activewear</a></li>
-	<li  id="menu-item-10713" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10713"><a href="https://www.merriam-webster.com/reviews/fitness" class="dropdown-item ">Fitness</a></li>
-	<li  id="menu-item-10714" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10714"><a href="https://www.merriam-webster.com/reviews/health" class="dropdown-item ">Health &amp; Nutrition</a></li>
-	<li  id="menu-item-10715" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10715"><a href="https://www.merriam-webster.com/reviews/sports-outdoors" class="dropdown-item ">Sports &amp; Outdoors</a></li>
-	<li  id="menu-item-10728" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-10728"><a href="https://www.merriam-webster.com/reviews/wellness" class="dropdown-item ">All Wellness</a></li>
+</ol>
+</nav>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement":
+        [{
+            "@type": "ListItem",
+            "position": "1",
+            "name": "Home"
+            
+        }
+        ]
+    }
+</script></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</header></div>
+</div>
+</div>
+<div data-widget-def="pageBody" data-widget-id="35d9ca18-265e-4501-9038-4105e95a4b7d" role="main">
+<div class="widget pageBody none  widget-none  widget-compact-all" id="35d9ca18-265e-4501-9038-4105e95a4b7d">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all">
+<div class="page-body pagefulltext">
+<div data-pb-dropzone="main">
+</div>
+</div></div>
+</div>
+</div>
+</div>
+<div class="widget pageFooter none  widget-none  widget-compact-all" id="d97c173f-d838-4de1-bbd7-ed69f0d36a91">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><footer class="page-footer">
+<div data-pb-dropzone="main">
+<div class="widget responsive-layout none footer-subjects hidden-xs hidden-sm widget-none  widget-compact-all" id="1f15adc0-4a59-4d27-93fe-8cbb14a5108a">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="container">
+<div class="row row-md gutterless ">
+<div class="col-md-1-1 fit-padding">
+<div class="contents" data-pb-dropzone="contents0">
+<div class="widget pbOptimizerWidget none  widget-none  widget-compact-all" id="af788167-0054-4892-bd47-5de7cbd64256">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div data-widget-def="topicalIndex" data-widget-id="9298c7a6-6903-4607-8380-4c83e2b7142f" role="navigation" aria-label="Footer Nav"> <div class="widget topicalIndex none widget-none widget-compact-all" id="9298c7a6-6903-4607-8380-4c83e2b7142f"> <div class="wrapped "> <div class="widget-body body body-none body-compact-all"><h2 class="widget-header header-none">Browse journals by subject</h2> <div class="topicalIndexBrowsingTips" data-pb-dropzone="topicalIndexBrowsingTips"> <div class="widget general-html none widget-none widget-compact-all" id="1ec3bad2-243b-45a9-a59a-5aceb80fc5a1"> <div class="wrapped "> <div class="widget-body body body-none body-compact-all"><a class="nav-top" href="#top">Back to top <span class="fa fa-angle-up"></span></a></div> </div> </div> </div> <div class="container"> <ul> <li> <h3> <a href="/topic/allsubjects/as">Area Studies</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ar">Arts</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/be">Behavioral Sciences</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/bs">Bioscience</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/bu">Built Environment</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/cs">Communication Studies</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/cm">Computer Science</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ea">Earth Sciences</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/eb">Economics, Finance, Business & Industry</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ed">Education</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ec">Engineering & Technology</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ag">Environment & Agriculture</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/es">Environment and Sustainability</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/fs">Food Science & Technology</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ge">Geography</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ds">Global Development</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/hs">Health and Social Care</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/hu">Humanities</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/if">Information Science</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/la">Language & Literature</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/lw">Law</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ma">Mathematics & Statistics</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/me">Medicine, Dentistry, Nursing & Allied Health</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/ah">Museum and Heritage Studies</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/pc">Physical Sciences</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/pi">Politics & International Relations</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/sn">Social Sciences</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/sl">Sports and Leisure</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/sp">Tourism, Hospitality and Events</a> </h3> </li> <li> <h3> <a href="/topic/allsubjects/us">Urban Studies</a> </h3> </li> </ul> </div></div> </div> </div> </div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="widget responsive-layout none footer-links widget-none  widget-compact-horizontal" id="64a44adf-45ed-4da3-be26-ef25beb9dbee">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-horizontal"><div class="container">
+<div class="row row-md  ">
+
+<div class="col-md-1-2 ">
+<div class="contents" data-pb-dropzone="contents0">
+<div class="widget responsive-layout none footer-responsive-container widget-none" id="6918e9df-910a-4206-9bd0-1a02bc17f740">
+<div class="wrapped ">
+<div class="widget-body body body-none "><div class="container-fluid">
+<div class="row row-sm  ">
+<div class="col-sm-1-2 footer_left_col">
+<div class="contents" data-pb-dropzone="contents0">
+<div class="widget general-html none  widget-none  widget-compact-all" id="aa9510dd-52ed-4b74-8211-fb510cd9468e">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="footer-info-list">
+<h3>Information for</h3>
+<ul>
+<li><a href="https://authorservices.taylorandfrancis.com/">Authors</a></li>
+<li><a href="https://taylorandfrancis.com/who-we-serve/industry-government/business/">R&amp;D professionals</a></li>
+<li><a href="https://editorresources.taylorandfrancisgroup.com/">Editors</a></li>
+<li><a href="/page/librarians">Librarians</a></li>
+<li><a href="/societies">Societies</a></li>
 </ul>
-</li>
-<li  id="menu-item-156" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item nav-item-156"><a href="/reviews/tech" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tech</a>
-<ul class="dropdown-menu  depth_0">
-	<li  id="menu-item-10706" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10706"><a href="https://www.merriam-webster.com/reviews/audio" class="dropdown-item ">Audio</a></li>
-	<li  id="menu-item-10707" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10707"><a href="https://www.merriam-webster.com/reviews/computing" class="dropdown-item ">Computing</a></li>
-	<li  id="menu-item-21420" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-21420"><a href="https://www.merriam-webster.com/reviews/roundup-category/entertainment" class="dropdown-item ">Entertainment</a></li>
-	<li  id="menu-item-10708" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10708"><a href="https://www.merriam-webster.com/reviews/gaming" class="dropdown-item ">Gaming</a></li>
-	<li  id="menu-item-10709" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10709"><a href="https://www.merriam-webster.com/reviews/mobile" class="dropdown-item ">Mobile</a></li>
-	<li  id="menu-item-10710" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10710"><a href="https://www.merriam-webster.com/reviews/smart-home" class="dropdown-item ">Smart Home</a></li>
-	<li  id="menu-item-10727" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-10727"><a href="https://www.merriam-webster.com/reviews/tech" class="dropdown-item ">All Tech</a></li>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-1-2 footer_right_col">
+<div class="contents" data-pb-dropzone="contents1">
+<div class="widget general-html none  widget-none  widget-compact-all" id="ac8a1c0f-9427-44dd-96be-4f2a6ff4ffce">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="footer-info-list">
+<h3>Open access</h3>
+<ul>
+<li><a href="/openaccess">Overview</a></li>
+<li><a href="/openaccess/openjournals">Open journals</a></li>
+<li><a href="/openaccess/openselect">Open Select</a></li>
+<li><a href="/openaccess/dove">Dove Medical Press</a></li>
+<li><a href="/openaccess/f1000">F1000Research</a></li>
 </ul>
-</li>
-<li  id="menu-item-16" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item nav-item-16"><a href="/reviews/home" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">At Home</a>
-<ul class="dropdown-menu  depth_0">
-	<li  id="menu-item-10716" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10716"><a href="https://www.merriam-webster.com/reviews/appliances" class="dropdown-item ">Appliances</a></li>
-	<li  id="menu-item-12523" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12523"><a href="https://www.merriam-webster.com/reviews/baby-gear" class="dropdown-item ">Baby Gear</a></li>
-	<li  id="menu-item-10717" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10717"><a href="https://www.merriam-webster.com/reviews/cleaning" class="dropdown-item ">Clean &amp; Declutter</a></li>
-	<li  id="menu-item-10718" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10718"><a href="https://www.merriam-webster.com/reviews/furniture-sleep" class="dropdown-item ">Furniture &amp; Sleep</a></li>
-	<li  id="menu-item-12014" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12014"><a href="https://www.merriam-webster.com/reviews/home-office" class="dropdown-item ">Home Office</a></li>
-	<li  id="menu-item-10721" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10721"><a href="https://www.merriam-webster.com/reviews/kitchen" class="dropdown-item ">Kitchen</a></li>
-	<li  id="menu-item-10722" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10722"><a href="https://www.merriam-webster.com/reviews/pets" class="dropdown-item ">Pets</a></li>
-	<li  id="menu-item-10723" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10723"><a href="https://www.merriam-webster.com/reviews/safety" class="dropdown-item ">Safety &amp; Security</a></li>
-	<li  id="menu-item-10724" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10724"><a href="https://www.merriam-webster.com/reviews/tools" class="dropdown-item ">Tools</a></li>
-	<li  id="menu-item-12997" class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12997"><a href="https://www.merriam-webster.com/reviews/travel" class="dropdown-item ">Travel</a></li>
-	<li  id="menu-item-10726" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-10726"><a href="https://www.merriam-webster.com/reviews/home" class="dropdown-item ">All Home</a></li>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-1-2 ">
+<div class="contents" data-pb-dropzone="contents1">
+<div class="widget responsive-layout none footer-responsive-container widget-none" id="fc564559-f496-499c-87c7-d851f371f061">
+<div class="wrapped ">
+<div class="widget-body body body-none "><div class="container-fluid">
+<div class="row row-sm  ">
+<div class="col-sm-1-2 footer_left_col">
+<div class="contents" data-pb-dropzone="contents0">
+<div class="widget general-html none  widget-none  widget-compact-all" id="cdd1a577-15dc-4271-8941-33a105ec6510">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="footer-info-list">
+<h3>Opportunities</h3>
+<ul>
+<li><a href="https://taylorandfrancis.com/who-we-serve/industry-government/marketing/">Reprints and e-prints</a></li>
+<li><a href="https://taylorandfrancis.com/partnership/commercial/advertising-solutions/" class="footer-ad-click">Advertising solutions</a></li>
+<li><a href="https://taylorandfrancis.com/partnership/commercial/accelerated-publication/">Accelerated publication</a></li>
+<li><a href="https://taylorandfrancis.com/who-we-serve/industry-government/business/purchasing-options/">Corporate access solutions</a></li>
 </ul>
-</li>
-</ul>          <script type="rocketlazyloadscript" data-rocket-type="text/javascript">window.addEventListener('DOMContentLoaded', function() {
-            jQuery(document).ready(function () {
-              jQuery('.menu-item-has-children.dropdown' ).click(function(e){
-                if (jQuery(window).width() > 767){
-                  var link=jQuery(this).find('a.nav-link.dropdown-toggle').attr('href');
-                  jQuery(this).find('ul').hide();
-                  window.location.href=link;
-                }                
-              });
-            });
-          });</script>
-          <button aria-label="Category menu" class="navbar-toggler border-0 focus-0 py-2 pe-0 ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-navbar-container" aria-controls="offcanvas-navbar">
-            <span class="iconify" data-icon="fa-solid:bars" data-inline="false"></span>
-          </button>
-
-          <div class="offcanvas offcanvas-end" tabindex="-1" data-bs-hideresize="true" id="offcanvas-navbar-container">
-            <div class="offcanvas-header justify-content-end" data-bs-dismiss="offcanvas">
-              <span class="iconify close" data-icon="mdi:close" data-inline="false"></span>
-            </div>
-            <div class="offcanvas-body">
-              <ul id="offcanvas-navbar" class="navbar-nav ms-auto "><li  class="menu-item menu-item-type-post_type menu-item-object-post nav-item nav-item-22709"><a href="https://www.merriam-webster.com/reviews/teacher-gifts" class="nav-link ">Teacher Gift Ideas</a></li>
-<li  class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children dropdown nav-item nav-item-10078"><a href="https://www.merriam-webster.com/reviews/learning" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-wpel-link="internal">Learning</a>
-<ul class="dropdown-menu  depth_0">
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category current-menu-item nav-item nav-item-19321"><a href="https://www.merriam-webster.com/reviews/hobbies-skills" class="dropdown-item active" data-wpel-link="internal">Hobbies &amp; Skills</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12522"><a href="https://www.merriam-webster.com/reviews/stem" class="dropdown-item ">STEM</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12521"><a href="https://www.merriam-webster.com/reviews/toys-games" class="dropdown-item ">Toys &amp; Games</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category current-roundup-category-ancestor current-roundup-category-parent nav-item nav-item-12524"><a href="https://www.merriam-webster.com/reviews/learning" class="dropdown-item ">All Learning</a></li>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-1-2 footer_right_col">
+<div class="contents" data-pb-dropzone="contents1">
+<div class="widget general-html none  widget-none  widget-compact-all" id="f3fb3d36-db42-4373-9d0e-432958bf2fbc">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="footer-info-list">
+<h3>Help and information</h3>
+<ul>
+<li><a href="https://help.tandfonline.com">Help and contact</a></li>
+<li><a href="https://newsroom.taylorandfrancisgroup.com/">Newsroom</a></li>
+<li><a href="/action/showPublications?pubType=journal">All journals</a></li>
+<li><a href="https://www.routledge.com/?utm_source=website&amp;utm_medium=banner&amp;utm_campaign=B004808_em1_10p_5ec_d713_footeradspot">Books</a></li>
 </ul>
-</li>
-<li  class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item nav-item-155"><a href="/reviews/wellness" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wellness</a>
-<ul class="dropdown-menu  depth_0">
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10712"><a href="https://www.merriam-webster.com/reviews/activewear" class="dropdown-item ">Activewear</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10713"><a href="https://www.merriam-webster.com/reviews/fitness" class="dropdown-item ">Fitness</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10714"><a href="https://www.merriam-webster.com/reviews/health" class="dropdown-item ">Health &amp; Nutrition</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10715"><a href="https://www.merriam-webster.com/reviews/sports-outdoors" class="dropdown-item ">Sports &amp; Outdoors</a></li>
-	<li  class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-10728"><a href="https://www.merriam-webster.com/reviews/wellness" class="dropdown-item ">All Wellness</a></li>
-</ul>
-</li>
-<li  class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item nav-item-156"><a href="/reviews/tech" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tech</a>
-<ul class="dropdown-menu  depth_0">
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10706"><a href="https://www.merriam-webster.com/reviews/audio" class="dropdown-item ">Audio</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10707"><a href="https://www.merriam-webster.com/reviews/computing" class="dropdown-item ">Computing</a></li>
-	<li  class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-21420"><a href="https://www.merriam-webster.com/reviews/roundup-category/entertainment" class="dropdown-item ">Entertainment</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10708"><a href="https://www.merriam-webster.com/reviews/gaming" class="dropdown-item ">Gaming</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10709"><a href="https://www.merriam-webster.com/reviews/mobile" class="dropdown-item ">Mobile</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10710"><a href="https://www.merriam-webster.com/reviews/smart-home" class="dropdown-item ">Smart Home</a></li>
-	<li  class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-10727"><a href="https://www.merriam-webster.com/reviews/tech" class="dropdown-item ">All Tech</a></li>
-</ul>
-</li>
-<li  class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item nav-item-16"><a href="/reviews/home" class="nav-link  dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">At Home</a>
-<ul class="dropdown-menu  depth_0">
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10716"><a href="https://www.merriam-webster.com/reviews/appliances" class="dropdown-item ">Appliances</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12523"><a href="https://www.merriam-webster.com/reviews/baby-gear" class="dropdown-item ">Baby Gear</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10717"><a href="https://www.merriam-webster.com/reviews/cleaning" class="dropdown-item ">Clean &amp; Declutter</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10718"><a href="https://www.merriam-webster.com/reviews/furniture-sleep" class="dropdown-item ">Furniture &amp; Sleep</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12014"><a href="https://www.merriam-webster.com/reviews/home-office" class="dropdown-item ">Home Office</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10721"><a href="https://www.merriam-webster.com/reviews/kitchen" class="dropdown-item ">Kitchen</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10722"><a href="https://www.merriam-webster.com/reviews/pets" class="dropdown-item ">Pets</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10723"><a href="https://www.merriam-webster.com/reviews/safety" class="dropdown-item ">Safety &amp; Security</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-10724"><a href="https://www.merriam-webster.com/reviews/tools" class="dropdown-item ">Tools</a></li>
-	<li  class="menu-item menu-item-type-taxonomy menu-item-object-roundup-category nav-item nav-item-12997"><a href="https://www.merriam-webster.com/reviews/travel" class="dropdown-item ">Travel</a></li>
-	<li  class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-10726"><a href="https://www.merriam-webster.com/reviews/home" class="dropdown-item ">All Home</a></li>
-</ul>
-</li>
-</ul>            </div>
-          </div>
-        </div>
-      </nav>
-    </header>    <div id="content" class="container hub-template site-content">
-        <div id="primary" class="content-area">
-            <div class="row">
-                <div class="col-12">
-                    <main id="main" class="site-main">
-                        <header class="entry-header">
-                            <h1>Hobbies &amp; Skills</h1>
-                        </header>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
 
-                      <!-- Hero-roundup sectiom start -->
-                                                
-                        <div class="block-hero-roundup">
-                            <div class="row">
-                                <div class="col-12 col-md flex-grow-1 order-md-2 roundup-image">
-                                  <a class="block-hero-roundup-link" href="https://www.merriam-webster.com/reviews/the-best-online-courses-for-learning-to-code-quickly" data-wpel-link="internal">
-                                    <div class="responsive-img-wrap ar-4-3 ar-md-1-1 ar-lg-21-9">
-                                      <img width="2048" height="1314" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201314'%3E%3C/svg%3E" class="has-box-shadow" alt="Udemy" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy.png 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-300x192.png 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-1024x657.png 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-768x493.png 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-1536x985.png 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy.png" /><noscript><img width="2048" height="1314" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy.png" class="has-box-shadow" alt="Udemy" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy.png 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-300x192.png 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-1024x657.png 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-768x493.png 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/udemy-1536x985.png 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                    </div>
-                                  </a>
-                                </div>
+<div class="widget responsive-layout none footer-links widget-none  widget-compact-horizontal" id="b2eecf80-9109-455e-a805-028552718986">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-horizontal"><div class="container">
+<div class="row row-md  ">
+<div class="col-md-1-2 ">
+<div class="contents" data-pb-dropzone="contents0">
+<div class="widget responsive-layout none footer-responsive-container widget-none" id="b997c64c-ce48-41ce-b3d6-9cb2d1c99131">
+<div class="wrapped ">
+<div class="widget-body body body-none "><div class="container-fluid">
+<div class="row row-sm  ">
+<div class="col-sm-1-2 footer_left_col">
+<div class="contents" data-pb-dropzone="contents0">
+<div class="widget general-html none  widget-none  widget-compact-all" id="914433f6-0ea6-4a47-9781-07564061be86">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="footer-social-label">
+<h3>Keep up to date</h3>
+</div>
+<div class="font-size-correction-sml">Register to receive personalised research and resources by email</div>
+<div class="bs">
+<div class="pull-left links font-size-correction">
+<a class="font-size-correction-link" href="https://taylorandfrancis.formstack.com/forms/tfoguest_signup"><i class="fa fa-envelope-square" title="Register to receive personalised research and resources by email"></i>Sign me up</a>
+</div></div></div>
+</div>
+</div>
 
-                                <div class="align-items-center col-12 col-md order-md-1 d-flex">
-                                    <div class="content-wrap">
-                                      <a class="block-hero-roundup-link" href="https://www.merriam-webster.com/reviews/the-best-online-courses-for-learning-to-code-quickly" data-wpel-link="internal">
-                                        <h2 class="text-center text-md-start roundup-title">
-                                          The Best Online Courses for Learning to Code Quickly                                        </h2>
-
-                                        <p class="text-center text-md-start roundup-excerpt">
-                                          Learn to build your own website and app with the best coding courses on the Web
-                                        </p>
-                                      </a>
-                                      <hr/>
-
-                                        
-                                      <div class="author author-inline d-flex">
-                                          <div class="thumbnail w-60">
-                                              <div class="responsive-img-wrap circled">
-                                                <a class="block-hero-roundup-link" href="https://www.merriam-webster.com/reviews/author/noradila-hepburn" data-wpel-link="internal">
-                                                <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2050%2050'%3E%3C/svg%3E" width="50" height="50" alt="Nor’adila Hepburn" class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo circled" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Noradila-Hepburn-Profile-150x150.png" /><noscript><img src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Noradila-Hepburn-Profile-150x150.png" width="50" height="50" alt="Nor’adila Hepburn" class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo circled" /></noscript>                                                </a>
-                                              </div>
-                                          </div>
-
-                                          <div>
-                                              <div class="author-full-name-nolink">
-                                                <a class="block-hero-roundup-link" href="https://www.merriam-webster.com/reviews/author/noradila-hepburn" data-wpel-link="internal">
-                                                  Nor’adila Hepburn                                                    
-                                                </a>
-                                              </div>
-                                              <div class="author-designation">Contributing Writer</div>
-                                          </div>
-                                      </div>
-                                        
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                          
-                                            <!-- Hero-roundup section End -->
-
-                      <!-- featured-roundup section start -->
-                      <div class="featured-roundups"><div class="row">                            <div class="col-6 col-md-3">
-                                <a href="https://www.merriam-webster.com/reviews/online-spanish-courses" class="block-featured-roundup-link" data-wpel-link="internal">
-                                    <div class="block-featured-roundup text-center">
-                                        <div class="responsive-img-wrap ar-4-3">
-                                          <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="has-box-shadow" alt="Rocket Spanish Levels 1, 2, and 3" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-scaled.jpg" class="has-box-shadow" alt="Rocket Spanish Levels 1, 2, and 3" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Rocket-Languages-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                        </div>
-
-                                        <h2>
-                                          Learn Spanish Online With Courses for Beginners                                        </h2>
-                                    </div>
-                                </a>
-                            </div>
-                                                      <div class="col-6 col-md-3">
-                                <a href="https://www.merriam-webster.com/reviews/best-mushroom-growing-kits" class="block-featured-roundup-link" data-wpel-link="internal">
-                                    <div class="block-featured-roundup text-center">
-                                        <div class="responsive-img-wrap ar-4-3">
-                                          <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="has-box-shadow" alt="Back to the Roots: Organic Mushroom Grow Kit" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-scaled.jpg" class="has-box-shadow" alt="Back to the Roots: Organic Mushroom Grow Kit" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/03/Back-to-the-Roots-Organic-Mushroom-Grow-Kit-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                        </div>
-
-                                        <h2>
-                                          Grow Your Own Mushrooms With These Starter Kits                                        </h2>
-                                    </div>
-                                </a>
-                            </div>
-                                                      <div class="col-6 col-md-3">
-                                <a href="https://www.merriam-webster.com/reviews/best-candle-making-kit" class="block-featured-roundup-link" data-wpel-link="internal">
-                                    <div class="block-featured-roundup text-center">
-                                        <div class="responsive-img-wrap ar-4-3">
-                                          <img width="1500" height="1125" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201500%201125'%3E%3C/svg%3E" class="has-box-shadow" alt="DellaBella Candle Making Kit" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit.jpg 1500w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit-768x576.jpg 768w" data-lazy-sizes="(max-width: 1500px) 100vw, 1500px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit.jpg" /><noscript><img width="1500" height="1125" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit.jpg" class="has-box-shadow" alt="DellaBella Candle Making Kit" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit.jpg 1500w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/DellaBella-Candle-Making-Kit-768x576.jpg 768w" sizes="(max-width: 1500px) 100vw, 1500px" /></noscript>                                        </div>
-
-                                        <h2>
-                                          Best Candle Making Kits for Beginner to Advanced Chandlers                                        </h2>
-                                    </div>
-                                </a>
-                            </div>
-                                                      <div class="col-6 col-md-3">
-                                <a href="https://www.merriam-webster.com/reviews/best-sushi-making-kit" class="block-featured-roundup-link" data-wpel-link="internal">
-                                    <div class="block-featured-roundup text-center">
-                                        <div class="responsive-img-wrap ar-4-3">
-                                          <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="has-box-shadow" alt="BambooWorx Sushi Making Kit Deluxe" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-scaled.jpg" class="has-box-shadow" alt="BambooWorx Sushi Making Kit Deluxe" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/BambooWorx-Sushi-Making-Kit-Deluxe-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                        </div>
-
-                                        <h2>
-                                          Best Sushi Making Kits for Beginners                                        </h2>
-                                    </div>
-                                </a>
-                            </div>
-                          </div></div>                      <!-- featured-roundup section End -->
-
-                      <!-- Latest-roundup section start -->
-                      <div class="latest-roundups">                            
-                          <div class="h2-hr-inline">
-                                    <h2 id="latest">Latest</h2>
-                                    <hr>
-                                </div>
-                            <div class="row"></div><div class="row">                                <div class="col-12 col-md-4 mb-4">
-                                    <a href="https://www.merriam-webster.com/reviews/best-jewelry-making-kits" class="block-roundup-link" data-wpel-link="internal">
-                                        <div class="block-roundup h-100 ">
-                                            <div class="wrap">
-                                                <h2 class="text-center">Best Jewelry-Making Kits You&#8217;ll Really Take A Shine To</h2>
-                                                <p class="text-center">Create beautiful and professional-looking jewelry in minutes with these well-equipped kits.
-</p>
-                                                <hr>
-                                            </div>
-
-                                            <div class="g-0 roundup-product-images">
-                                                <div class="row g-0 g-lg-2">
-                                                                                                              <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-0">
-                                                                  <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="circled" alt="Sabrikas Deluxe Jewelry Making Starter Kit Gift Set" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-scaled.jpg" class="circled" alt="Sabrikas Deluxe Jewelry Making Starter Kit Gift Set" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Sabrikas-Deluxe-Jewelry-Making-Starter-Kit-Gift-Set-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-1">
-                                                                  <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="circled" alt="Thrilez 300Pcs Bangle Bracelets Making Kit" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-scaled.jpg" class="circled" alt="Thrilez 300Pcs Bangle Bracelets Making Kit" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Thrilez-300Pcs-Bangle-Bracelets-Making-Kit-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-2">
-                                                                  <img width="2048" height="1572" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201572'%3E%3C/svg%3E" class="circled" alt="Mack and Rex DIY Bracelet Making Kit" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-300x230.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-1024x786.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-768x590.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-1536x1179.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-scaled.jpg" /><noscript><img width="2048" height="1572" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-scaled.jpg" class="circled" alt="Mack and Rex DIY Bracelet Making Kit" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-300x230.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-1024x786.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-768x590.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/04/Mack-and-Rex-DIY-Bracelet-Making-Kit-1536x1179.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                          </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                                              <div class="col-12 col-md-4 mb-4">
-                                    <a href="https://www.merriam-webster.com/reviews/best-paint-by-number-kits" class="block-roundup-link" data-wpel-link="internal">
-                                        <div class="block-roundup h-100 ">
-                                            <div class="wrap">
-                                                <h2 class="text-center">Best Paint By Number Kits for Adults</h2>
-                                                <p class="text-center">Love adult coloring books? Take your artistry to the next level.
-</p>
-                                                <hr>
-                                            </div>
-
-                                            <div class="g-0 roundup-product-images">
-                                                <div class="row g-0 g-lg-2">
-                                                                                                              <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-0">
-                                                                  <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="circled" alt="Canvas By Numbers Roar of the Surf" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-scaled.jpg" class="circled" alt="Canvas By Numbers Roar of the Surf" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Canvas-By-Numbers-roar-of-the-surf-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-1">
-                                                                  <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="circled" alt="Opalberry Paint By Numbers - Lakeshore" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-scaled.jpg" class="circled" alt="Opalberry Paint By Numbers - Lakeshore" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Opalberry-Paint-By-Numbers-Lakeshore-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-2">
-                                                                  <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="circled" alt="Paint Plot Best Sellers Bundle" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-scaled.jpg" class="circled" alt="Paint Plot Best Sellers Bundle" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2022/01/Paint-Plot-Best-Sellers-Bundle_-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                          </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                                              <div class="col-12 col-md-4 mb-4">
-                                    <a href="https://www.merriam-webster.com/reviews/best-language-apps" class="block-roundup-link" data-wpel-link="internal">
-                                        <div class="block-roundup h-100 ">
-                                            <div class="wrap">
-                                                <h2 class="text-center">Best Apps for Learning a New Language</h2>
-                                                <p class="text-center">We compare Rosetta Stone, Babbel, Busuu, Duolingo and Pimsleur</p>
-                                                <hr>
-                                            </div>
-
-                                            <div class="g-0 roundup-product-images">
-                                                <div class="row g-0 g-lg-2">
-                                                                                                              <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-0">
-                                                                  <img width="640" height="480" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20480'%3E%3C/svg%3E" class="circled" alt="Rosetta Stone" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Rosetta-Stone.jpg 640w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Rosetta-Stone-300x225.jpg 300w" data-lazy-sizes="(max-width: 640px) 100vw, 640px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Rosetta-Stone.jpg" /><noscript><img width="640" height="480" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Rosetta-Stone.jpg" class="circled" alt="Rosetta Stone" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Rosetta-Stone.jpg 640w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Rosetta-Stone-300x225.jpg 300w" sizes="(max-width: 640px) 100vw, 640px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-1">
-                                                                  <img width="1000" height="750" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%20750'%3E%3C/svg%3E" class="circled" alt="Babbel" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar.jpg 1000w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar-768x576.jpg 768w" data-lazy-sizes="(max-width: 1000px) 100vw, 1000px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar.jpg" /><noscript><img width="1000" height="750" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar.jpg" class="circled" alt="Babbel" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar.jpg 1000w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Babbel-Logo-Avatar-768x576.jpg 768w" sizes="(max-width: 1000px) 100vw, 1000px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-2">
-                                                                  <img width="667" height="500" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20667%20500'%3E%3C/svg%3E" class="circled" alt="Busuu" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Busuu-New-Logo.jpg 667w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Busuu-New-Logo-300x225.jpg 300w" data-lazy-sizes="(max-width: 667px) 100vw, 667px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Busuu-New-Logo.jpg" /><noscript><img width="667" height="500" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Busuu-New-Logo.jpg" class="circled" alt="Busuu" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Busuu-New-Logo.jpg 667w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/Busuu-New-Logo-300x225.jpg 300w" sizes="(max-width: 667px) 100vw, 667px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                          </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                              </div><div class="row">                                <div class="col-12 col-md-4 mb-4">
-                                    <a href="https://www.merriam-webster.com/reviews/best-online-css-course" class="block-roundup-link" data-wpel-link="internal">
-                                        <div class="block-roundup h-100 ">
-                                            <div class="wrap">
-                                                <h2 class="text-center">Learn CSS Online With These Tutorials, Bootcamps, and Certificate Programs</h2>
-                                                <p class="text-center">We found the best courses for learning Cascading Style Sheets</p>
-                                                <hr>
-                                            </div>
-
-                                            <div class="g-0 roundup-product-images">
-                                                <div class="row g-0 g-lg-2">
-                                                                                                              <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-0">
-                                                                  <img width="740" height="555" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20740%20555'%3E%3C/svg%3E" class="circled" alt="Codecademy" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/codeacademy.jpg 740w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/codeacademy-300x225.jpg 300w" data-lazy-sizes="(max-width: 740px) 100vw, 740px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/codeacademy.jpg" /><noscript><img width="740" height="555" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/codeacademy.jpg" class="circled" alt="Codecademy" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/codeacademy.jpg 740w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/codeacademy-300x225.jpg 300w" sizes="(max-width: 740px) 100vw, 740px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-1">
-                                                                  <img width="1200" height="900" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201200%20900'%3E%3C/svg%3E" class="circled" alt="Coursera" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera.jpg 1200w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera-768x576.jpg 768w" data-lazy-sizes="(max-width: 1200px) 100vw, 1200px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera.jpg" /><noscript><img width="1200" height="900" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera.jpg" class="circled" alt="Coursera" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera.jpg 1200w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/coursera-768x576.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                                      <div class="col-4">
-                                                                <div class="responsive-img-wrap ar-1-1 roundup-product-image-2">
-                                                                  <img width="2048" height="1536" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202048%201536'%3E%3C/svg%3E" class="circled" alt="Skillcrush Coding Camp" data-lazy-srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-1536x1152.jpg 1536w" data-lazy-sizes="(max-width: 2048px) 100vw, 2048px" data-lazy-src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-scaled.jpg" /><noscript><img width="2048" height="1536" src="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-scaled.jpg" class="circled" alt="Skillcrush Coding Camp" srcset="https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-scaled.jpg 2048w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-300x225.jpg 300w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-1024x768.jpg 1024w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-768x576.jpg 768w, https://www.merriam-webster.com/reviews/wp-content/uploads/2021/12/skilllcrush-coding-logo-1536x1152.jpg 1536w" sizes="(max-width: 2048px) 100vw, 2048px" /></noscript>                                                                </div>
-                                                            </div>
-                                                                                                          </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                              </div>                        </div> <!-- Latest-roundup section End -->
-                    </main>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <footer id="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 d-flex justify-content-center">
-            <ul id="footer-menu" class="flex-column flex-md-row nav "><li  id="menu-item-158" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-158"><a href="https://www.merriam-webster.com/reviews/about" class="nav-link ">About</a></li>
-<li  id="menu-item-21" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-21"><a href="https://www.merriam-webster.com/i/privacy-policy" class="nav-link ">Privacy Policy</a></li>
-<li  id="menu-item-22" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-22"><a href="https://www.merriam-webster.com/i/terms-of-use" class="nav-link ">Terms of Use</a></li>
-<li  id="menu-item-20185" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-20185"><a href="https://www.merriam-webster.com/" class="nav-link ">Merriam-Webster</a></li>
-<li  id="menu-item-22355" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-22355"><a href="https://www.britannica.com/reviews" class="nav-link ">Britannica Reviews</a></li>
-<li  id="menu-item-9023" class="menu-item menu-item-type-custom menu-item-object-custom nav-item nav-item-9023"><a href="https://www.merriam-webster.com/reviews/feed" class="nav-link ">RSS</a></li>
-</ul>          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
-  <script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://s.skimresources.com/js/194405X1672009.skimlinks.js" defer></script><script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-includes/js/jquery/ui/core.min.js?ver=1.13.1' id='jquery-ui-core-js' defer></script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-includes/js/jquery/ui/mouse.min.js?ver=1.13.1' id='jquery-ui-mouse-js' defer></script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-includes/js/jquery/ui/draggable.min.js?ver=1.13.1' id='jquery-ui-draggable-js' defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' src='https://www.merriam-webster.com/reviews/wp-content/cache/min/1/reviews/wp-includes/js/jquery/jquery.ui.touch-punch.js?ver=1649779788' id='jquery-touch-punch-js' defer></script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-browser-checker-js-after'>
-"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+<div class="widget literatumSocialLinks none  widget-none  widget-compact-all" id="3b6a5e53-cd62-452f-adc1-92e187a0849d">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="bs">
+<div class="pull-left links">
+<a href="http://facebook.com/TaylorandFrancisGroup">
+<i class="icon-facebook" title="Taylor and Francis Group Facebook page" aria-hidden="true" role="button"></i>
+<span aria-describedby="fb-description">
+<span class="off-screen" id="fb-description">Taylor and Francis Group Facebook page</span>
+</span>
+</a>
+</div>
+<div class="pull-left links">
+<a href="https://twitter.com/tandfonline">
+<i class="fa fa-twitter-square" title="Taylor and Francis Group Twitter page" aria-hidden="true" role="button"></i>
+<span aria-describedby="twitter-description">
+<span class="off-screen" id="twitter-description">Taylor and Francis Group Twitter page</span>
+</span>
+</a>
+</div>
+<div class="pull-left links">
+<a href="http://linkedin.com/company/taylor-&-francis-group">
+<i class="fa fa-linkedin-square" title="Taylor and Francis Group LinkedIn page" aria-hidden="true" role="button"></i>
+<span aria-describedby="linkedin-description">
+<span class="off-screen" id="linkedin-description">Taylor and Francis Group Linkedin page</span>
+</span>
+</a>
+</div>
+<div class="clearfix"></div>
+<div class="pull-left links">
+<a href="https://www.youtube.com/user/TaylorandFrancis">
+<i class="fa fa-youtube-square" title="Taylor and Francis Group YouTube page" aria-hidden="true" role="button"></i>
+<span aria-describedby="youtube-description">
+<span class="off-screen" id="youtube-description">Taylor and Francis Group Youtube page</span>
+</span>
+</a>
+</div>
+<div class="pull-left links">
+<a href="http://www.weibo.com/tandfchina">
+<i class="fa fa-weibo" title="Taylor and Francis Group Weibo page" aria-hidden="true" role="button"></i>
+<span aria-describedby="weibo-description">
+<span class="off-screen" id="weibo-description">Taylor and Francis Group Weibo page</span>
+</span>
+</a>
+</div>
+<div class="clearfix"></div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-1-2 ">
+<div class="contents" data-pb-dropzone="contents1">
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-1-2 ">
+<div class="contents" data-pb-dropzone="contents1">
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="widget responsive-layout none  widget-none  widget-compact-horizontal" id="8d803f96-081d-4768-ab7d-280a77af723b">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-horizontal"><div class="container">
+<div class="row row-sm  ">
+<div class="col-sm-3-4 ">
+<div class="contents" data-pb-dropzone="contents0">
+<div class="widget general-html none footer-info-container widget-none  widget-compact-vertical" id="b247ecb9-84c9-4762-b270-20f8be1f0ae4">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-vertical"><div class="informa-group-info">
+<span>Copyright © 2022 Informa UK Limited</span>
+<span><a href="https://informa.com/privacy-policy/">Privacy policy</a></span>
+<span><a href="/cookies">Cookies</a></span>
+<span><a href="/terms-and-conditions">Terms & conditions</a></span>
+<span><a href="/accessibility">Accessibility</a></span>
+<p>Registered in England & Wales No. 3099067<br />
+5 Howick Place | London | SW1P 1WG</p>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-1-4 footer_tandf_logo">
+<div class="contents" data-pb-dropzone="contents1">
+<div class="widget general-image none  widget-none  widget-compact-vertical" id="b6bde365-079b-454f-94f6-1841291656a1">
+<div class="wrapped 612">
+<div class="widget-body body body-none  body-compact-vertical"><a href="http://taylorandfrancis.com/" title="Taylor and Francis Group">
+<img src="/pb-assets/Global/Group-logo-white-on-transparent-1468512845090.png" alt="Taylor and Francis Group" height="112" width="612" />
+</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="widget cookiePolicy none  widget-none  widget-compact-all" id="cea739ac-da2c-4d77-9cf1-cb3e0da7e31e">
+<div class="wrapped ">
+<div class="widget-body body body-none  body-compact-all"><div class="banner">
+<a href="#" class="btn">Accept</a>
+<p class="message">We use cookies to improve your website experience. To learn about our use of cookies and how you can manage your cookie settings, please see our <a href="/cookies">Cookie Policy.</a> By closing this message, you are consenting to our use of cookies.</p>
+</div></div>
+</div>
+</div>
+</div>
+</footer></div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="/wro/l8b8~jquery-3.5.0.js"></script>
+<script>
+    JQSHIM.$.forEach(function (f){$(f);})
 </script>
-<script type='text/javascript' id='rocket-preload-links-js-extra'>
-/* <![CDATA[ */
-var RocketPreloadLinksConfig = {"excludeUris":"\/reviews(\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$))|\/wp-admin|\/logout|\/wp-login.php|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/www.merriam-webster.com\/reviews","onHoverDelay":"100","rateThrottle":"3"};
-/* ]]> */
+<script type="text/javascript">
+        $(document).ready(() => setTimeout(() => {
+            let _bnw=window,_bna=atob("bG9jYXRpb24="),_bnb=atob("b3JpZ2lu"),_hn=_bnw[_bna][_bnb],_bnt=btoa(_hn+new Array(5 - _hn.length % 4).join(" "));
+            $.get("/resource/lodash?t="+_bnt);
+        },4000));
+    </script>
+<script type="text/javascript" src="/wro/l8b8~product.js"></script>
+<script type="text/javascript" src="/pb-assets/jhp-main-1652802408307.js"></script>
+<script src="https://unpkg.com/@theidentityselector/thiss-ds" type="application/javascript"></script>
+<script>
+loadCSS("/wro/l8b8~lastInBody-css.css");
+loadCSS("https://fonts.googleapis.com/css?family=Droid%20Serif:bold,bolditalic,italic,regular&display=swap");
+$(function (){
+TandfUtils.scriptLoader([
+    {js:'/wro/l8b8~jwplayer.js',selector:'.mediaThumbnailContainer, .preview-video-abstract'},
+    {js:'/wro/l8b8~mathjax.js',enabled:typeof MathJax!=='undefined'},
+    {js:'/wro/l8b8~altmetric.js',enabled:typeof tandfData.altmetric!=='undefined'},
+    {js:'/wro/l8b8~crossmark.js',selector:'.cross_mark--link'},
+    {js:'/wro/l8b8~ajax-widgets.js',css:'/wro/l8b8~ajax-widgets.css',selector:'.ajaxWidget'},
+    {js:'/wro/l8b8~loi-api.js',selector:'.toc-fns,.literatumListOfIssuesResponsiveWidget,.literatumListOfIssuesWidget'},
+    {js: '/wro/l8b8~abstract-preview.js',selector:'.search-article-tools .previewLinks'}
+    ,
+    {js:"/wro/l8b8~seamless-access-fn.js",selector:".seamlessAccess_wrapper,.institutional-login"},
+    {js:'/wro/l8b8~raa-shibboleth.js',selector:".institutional-login"}
+    
+])
+});
 </script>
-<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-preload-links-js-after'>
-(function() {
-"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
-}());
-</script>
-<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
-if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
-images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
-if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.merriam-webster.com/reviews/wp-content/plugins/wp-rocket/assets/js/lazyload/17.5/lazyload.min.js"></script></body>
+<noscript>
+    <link rel="stylesheet" href="/wro/l8b8~lastInBody-css.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid%20Serif:bold,bolditalic,italic,regular&display=swap">
+</noscript>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"70ce7ce37c2a0fd2","token":"b6951d00f50a499ab38e94f58955e14d","version":"2021.12.0","si":100}' crossorigin="anonymous"></script>
+</body>
 </html>
-<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1652533142 -->

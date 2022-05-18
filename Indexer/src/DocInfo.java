@@ -8,15 +8,15 @@ public class DocInfo {
 	String document;
 	int TF;
 	List<WordLocation> tags;
-	int score;
+	Double score;
 	Set<String> headers;
-	public DocInfo(String doc, String tag, String n, int i) {
+	public DocInfo(String doc, String tag, String n, int i, Double pageRank) {
 		// TODO Auto-generated constructor stub
 		document = doc;
 		TF = 1;
 		tags = new ArrayList<WordLocation>();
 		tags.add(new WordLocation(tag, n, i));
-		score = 0;
+		score = pageRank != null ? pageRank * 5 : 0.0;
 		headers = new HashSet<String>(Arrays.asList("h", "h1", "h2", "h3", "h4", "h5","h6","h7", "header"));
 		if(tag.toLowerCase() == "title"){
 			score += 10;
@@ -65,6 +65,5 @@ class WordLocation{
 	public String toString() {
 		return "|" + tag + " " + unstemmed + " " + index;
 	}
-	
 
 }

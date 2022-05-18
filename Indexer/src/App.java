@@ -2,6 +2,8 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +26,68 @@ public class App {
     public static void main(String[] args) throws Exception {
     	File stopWordsFile = new File("stopWords.txt");
     	Scanner myReader = new Scanner(stopWordsFile);
+    	
+    	
+    	HashMap<String, Set<String>> relevanceGraph = new HashMap<String, Set<String>>();
+    	File relevanceGraphFile = new File("RelevanceGraph.txt");
+    	Scanner graphReader = new Scanner(relevanceGraphFile);
+    	Set<String> hasOutBound = new HashSet<String>();
+    	while (graphReader.hasNextLine()) {
+    		String graphString = graphReader.nextLine();
+    		String key = (graphString.split(",")[0]);
+    		Set<String> values = new HashSet<String>(Arrays.asList(graphString.split(",")[1].split("-")));
+    		relevanceGraph.put(key, values);
+    		
+    		hasOutBound.add(key);
+        }
+    	
+    	HashMap<String, Set<String>> tempMap = new HashMap<>(relevanceGraph);
+    	for (Map.Entry<String, Set<String>> entry : tempMap.entrySet()) {
+    		String key = entry.getKey();
+    		Set<String> val = entry.getValue();
+			for(String s: val) {
+				if(!hasOutBound.contains(s)) {
+					Set<String> addSet =  new HashSet<String>();
+					addSet.add(key);
+					relevanceGraph.put(s, addSet);
+					hasOutBound.add(s);
+				}
+			}
+		}
+    	graphReader.close();
+    	
+    	Map<String, Double> pageRankList = new HashMap<String, Double>();
+    	for(String s : hasOutBound) {
+    		pageRankList.put(s, (double)1 / hasOutBound.size());
+    	}
+    	
+    	Integer iterations = 20;
+    	Double dampingFactor = 0.15;
+    	
+    	//new Probability = (1 - d) + d * sum((old Probability of outbound page) / outBound Links of pages linking to this page)
+    	for(int i = 0; i < iterations; i++) {
+    		System.out.println(i);
+    		Map<String, Double> tempPR = new HashMap<String, Double>(pageRankList);
+    		for(String s : hasOutBound) {
+    			Double newPR = 0.0;
+    			for (Map.Entry<String, Set<String>> entry : relevanceGraph.entrySet()) {
+    				String key = entry.getKey();
+    	    		Set<String> val = entry.getValue();
+    	    		if(val.contains(s)) {
+    	    			newPR += (pageRankList.get(key)) / (val.size());
+    	    		}
+				}
+    			newPR *= dampingFactor;
+    			newPR += (1- dampingFactor);
+    			tempPR.put(s, newPR);
+    		}
+    		pageRankList = new HashMap<>(tempPR);
+    	}
+//    	for (Map.Entry<String, Double> entry : pageRankList.entrySet()) {
+//    		String key = entry.getKey();
+//    		Double val = entry.getValue();
+//    		System.out.println(key + ", " + val);
+//		}
     	List<String> stopWordsList = new ArrayList<String>();
     	
     	while (myReader.hasNextLine()) {
@@ -70,13 +134,13 @@ public class App {
 									wordsMap.get(word).put(fileName, wordsMap.get(word).get(fileName).incrementTF(tag, unstemmed, j));
 								}
 								else {//If the current HTML doesn't exist in the list create one and insert it
-									wordsMap.get(word).put(fileName, new DocInfo(fileName, tag, unstemmed, j));
+									wordsMap.get(word).put(fileName, new DocInfo(fileName, tag, unstemmed, j, pageRankList.get(fileName.split("\\.")[0])));
 								}
 								
 							}
 							else { //If a list of HTMLs doesn't already exist Initialize one
 								HashMap<String, DocInfo> docInfo = new HashMap<String, DocInfo>();
-								docInfo.put(fileName, new DocInfo(fileName, tag, unstemmed, j));
+								docInfo.put(fileName, new DocInfo(fileName, tag, unstemmed, j, pageRankList.get(fileName.split("\\.")[0])));
 								wordsMap.put(word, docInfo);
 							}
 						}
@@ -126,7 +190,7 @@ public class App {
 class DocComparator implements Comparator<DocInfo>{
 	@Override
 	public int compare(DocInfo d1, DocInfo d2) {
-		return d1.score > d2.score ? -1 : d1.score == d2.score ? 0 : 1;
+		return Double.compare(d2.score, d1.score);
 	}
 }
 
