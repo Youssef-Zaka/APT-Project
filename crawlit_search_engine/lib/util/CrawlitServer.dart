@@ -6,7 +6,7 @@ import 'dart:io';
 //ServerUtil Class
 class ServerUtil {
   static const port = 6666;
-  static const host = '192.168.1.4';
+  static const host = '192.168.1.2';
   static late Socket socket;
   static bool connected = false;
   //a list of urls returned by the server

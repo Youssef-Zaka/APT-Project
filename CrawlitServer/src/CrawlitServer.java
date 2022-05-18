@@ -18,7 +18,7 @@ public class CrawlitServer {
 
 
     // The port number on which the server will listen for incoming connections.
-    public static final int PORT = 6667;
+    public static final int PORT = 6666;
 
     //create a List of url and stop words entries
     static List<String> urlList = new ArrayList<String>();
