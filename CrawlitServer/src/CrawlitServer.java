@@ -18,7 +18,7 @@ public class CrawlitServer {
 
 
     // The port number on which the server will listen for incoming connections.
-    public static final int PORT = 6666;
+    public static final int PORT = 6667;
 
     //create a List of url and stop words entries
     static List<String> urlList = new ArrayList<String>();
@@ -26,6 +26,8 @@ public class CrawlitServer {
 
     //create a map with a key of string and value of list of strings
     static Map<String, List<String>> invertedIndex = new HashMap<String, List<String>>();
+    static Map<String, List<DocInfo>> wordsMap = new HashMap<String, List<DocInfo>>();
+
 
     //main method
     public static void main(String[] args) {
@@ -35,16 +37,19 @@ public class CrawlitServer {
 
         //get access to Files holding the index and the crawled data
         File indexFile = new File("../Indexer/clean.csv");
+        File mapFile = new File("../indexer/map.csv");
         File UrlListFile = new File("URLSources.txt");
         //file to hold the list of stop words
         File stopWordsFile = new File("stopWords.txt");
 
         //read the index file
         Scanner indexScanner = null;
+        Scanner mapScanner = null;
         Scanner urlScanner = null;
         Scanner stopWordsScanner = null;
         try {
             indexScanner = new Scanner(indexFile);
+            mapScanner = new Scanner(mapFile);
             urlScanner = new Scanner(UrlListFile);
             stopWordsScanner = new Scanner(stopWordsFile);
         }
@@ -72,7 +77,29 @@ public class CrawlitServer {
             }
             invertedIndex.put(key, value);
         }
-
+        
+        Integer wordLine = 0;
+        while(mapScanner.hasNextLine()) {
+        	wordLine += 1;
+        	System.out.println(wordLine);
+        	String line = mapScanner.nextLine();
+        	String key = line.split(",")[0];
+        	List<String> valuesArray = Arrays.asList(line.split(","));
+        	valuesArray = valuesArray.subList(0, Math.min(1500, valuesArray.size()));
+        	for (int i = 1; i < valuesArray.size(); i++) {
+        		List<String> values = Arrays.asList(valuesArray.get(i).split("\\|"));
+				if (!wordsMap.containsKey(key)) {
+					List<DocInfo> newlist = new ArrayList<DocInfo>();
+					newlist.add(new DocInfo(values));
+					wordsMap.put(key, newlist);
+				}
+				else {
+					List<DocInfo> prevList = wordsMap.get(key);
+					prevList.add(new DocInfo(values));
+					wordsMap.put(key, prevList);
+				}
+			}
+        }
         while (urlScanner.hasNextLine()) {
             //add the index entry to the list after removing whitespace
             urlList.add(urlScanner.nextLine().trim());
@@ -97,7 +124,7 @@ public class CrawlitServer {
             serverSocket = new ServerSocket(PORT);
 
         }   catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
 
         // Listen for incoming connections and create a new thread for each one
@@ -156,7 +183,7 @@ public class CrawlitServer {
                     englishStemmer stemmer = new englishStemmer();
                     //trim and remove stop words
                     List<String> queryWords = new ArrayList<String>(Arrays.asList(query.toLowerCase().trim().split("\\s+")));
-
+                    List<String> stemmedWords = new ArrayList<String>(queryWords);
 
                     queryWords.removeIf(word -> stopWordsList.contains(word));
 
@@ -164,53 +191,100 @@ public class CrawlitServer {
                     for(int j = 0; j < queryWords.size();j++) {
                         stemmer.setCurrent(queryWords.get(j));
                         if (stemmer.stem()) { //If the word has been Stemmed update the list
-                            queryWords.set(j, stemmer.getCurrent());
+                            stemmedWords.set(j, stemmer.getCurrent());
                             System.out.println(stemmer.getCurrent());
-
                         }
                     }
+                    
+                    
 
                     //print the query words
                     System.out.println("Query words: " + queryWords);
-
-                    //for every word in the query
-                    for(int i = 0; i < queryWords.size(); i++) {
-                        //if the word is in the inverted index
-                        if(invertedIndex.containsKey(queryWords.get(i))) {
-                            //get the list of urls that contain the word
-                            list.addAll(invertedIndex.get(queryWords.get(i)));
-                        }
-
+                    System.out.println("Stemmed words: " + stemmedWords);
+                    
+                    List<Set<String>> docsList = new ArrayList<Set<String>>();
+                    Set<String> docsSet;
+                    for (int i = 0; i < stemmedWords.size(); i++) {
+                    	docsSet = new HashSet<String>();
+						for(DocInfo doc : wordsMap.get(stemmedWords.get(i))) {
+							docsSet.add(doc.document);
+						}
+						docsList.add(docsSet);
+					}
+                    System.out.println(docsList);
+                    
+                    Set<String> commonDocs = docsList.get(0);
+                    
+                    for (int i = 1; i < docsList.size(); i++) {
+						commonDocs.retainAll(docsList.get(i));
+					}
+                    
+                    System.out.println(commonDocs);
+                    
+                    Set<String> consecutive = new HashSet<String>();
+                    for (int i = 0; i < stemmedWords.size() - 1; i++) {
+                    	for(DocInfo doc : wordsMap.get(stemmedWords.get(i))) {
+                    		if(commonDocs.contains(doc.document)) {
+                    			List<DocInfo> nextDocs = new ArrayList<DocInfo>(wordsMap.get(stemmedWords.get(i + 1)));
+                    			for(DocInfo nextDoc : nextDocs) {
+                    				if(doc.document.equals(nextDoc.document)) {
+                    					for (int j = 0; j < doc.tags.size(); j++) {
+											for (int k = 0; k < nextDoc.tags.size(); k++) {
+												if(doc.tags.get(j).tag.equals(nextDoc.tags.get(k).tag)
+												   && doc.tags.get(j).unstemmed.equals(queryWords.get(i))
+												   && nextDoc.tags.get(k).unstemmed.equals(queryWords.get(i + 1))
+												   && doc.tags.get(j).index + 1 == nextDoc.tags.get(k).index) {
+													consecutive.add(doc.document);
+												}
+											}
+										}
+                    				}
+                    			}
+                    		}
+                    	}
                     }
+                    System.out.println(consecutive.size());
+                    System.out.println("Conseccutiv" + consecutive);
+                    
+                    writer.println(list + "\n");
+                    //for every word in the query
+//                    for(int i = 0; i < queryWords.size(); i++) {
+//                        //if the word is in the inverted index
+//                        if(invertedIndex.containsKey(queryWords.get(i))) {
+//                            //get the list of urls that contain the word
+//                            list.addAll(invertedIndex.get(queryWords.get(i)));
+//                        }
+//
+//                    }
 
                     //remove duplicates
-                    list = list.stream().distinct().collect(Collectors.toList());
+//                    list = list.stream().distinct().collect(Collectors.toList());
+//
+//                    //print the list of first 10 docs
+//                    System.out.println("First 10 docs: " + list.subList(0, Math.min(10, list.size())));
+//
+//                    //if the list is empty
+//                    if(list.isEmpty()) {
+//                        writer.println(list);
+//                    }
+//                    else {
+//                        //replace each list entry with the url of url list (list)
+//                        for(int i = 0; i < list.size(); i++) {
+//                            if (Integer.parseInt(list.get(i)) < urlList.size()) {
+//                                list.set(i, urlList.get(Integer.parseInt(list.get(i))));
+//                            }
+//                            else {
+//                                list.remove(i);
+//                            }
+//                        }
+//                    }
+//                    //print what is to be written to the client, first 10
+//                    System.out.println("List to be written to client: " + list.subList(0, Math.min(10, list.size())));
+//
+//                    //print list size
+//                    System.out.println("List size: " + list.size());
 
-                    //print the list of first 10 docs
-                    System.out.println("First 10 docs: " + list.subList(0, Math.min(10, list.size())));
-
-                    //if the list is empty
-                    if(list.isEmpty()) {
-                        writer.println(list);
-                    }
-                    else {
-                        //replace each list entry with the url of url list (list)
-                        for(int i = 0; i < list.size(); i++) {
-                            if (Integer.parseInt(list.get(i)) < urlList.size()) {
-                                list.set(i, urlList.get(Integer.parseInt(list.get(i))));
-                            }
-                            else {
-                                list.remove(i);
-                            }
-                        }
-                    }
-                    //print what is to be written to the client, first 10
-                    System.out.println("List to be written to client: " + list.subList(0, Math.min(10, list.size())));
-
-                    //print list size
-                    System.out.println("List size: " + list.size());
-
-                    writer.println(list + "\n");
+                    
                 }
             }
             catch (Exception e) {
