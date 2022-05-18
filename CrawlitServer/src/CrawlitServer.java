@@ -259,7 +259,14 @@ public class CrawlitServer {
                     System.out.println("All Consec " + allConsec);
 
                     DocComparator dc = new DocComparator();
-                    Set<String> consecConsec = new HashSet<String>(allConsec.get(0));
+                    Set<String> consecConsec;
+                    if(allConsec.size() > 0) {
+                    	consecConsec = new HashSet<String>(allConsec.get(0));
+                    }
+                    else {
+                    	consecConsec = new HashSet<String>();
+					}
+                     
                     for (int i = 1; i < allConsec.size(); i++) {
 						consecConsec.retainAll(allConsec.get(i));
 					}
