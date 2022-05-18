@@ -164,7 +164,12 @@ public class CrawlitServer {
 
                     //receive search query
                     String query = scanner.nextLine();
-
+                    Boolean quotes = false;
+                    if (query.charAt(0) == '\"') {
+                    	quotes = true;
+                    }
+                    query = query.replaceAll("[^a-zA-Z\\s]", "");
+              
                     if (suggestions) {
                         //send the suggestions to the client
                         writer.println(Suggestions + "\n");
@@ -173,7 +178,7 @@ public class CrawlitServer {
                     }
 
                     System.out.println("Received query from client: " + query);
-
+                    System.out.println(quotes);
                     //add the query to the list of suggestions
                     Suggestions.add(query);
 
@@ -184,9 +189,9 @@ public class CrawlitServer {
                     englishStemmer stemmer = new englishStemmer();
                     //trim and remove stop words
                     List<String> queryWords = new ArrayList<String>(Arrays.asList(query.toLowerCase().trim().split("\\s+")));
-                    List<String> stemmedWords = new ArrayList<String>(queryWords);
 
                     queryWords.removeIf(word -> stopWordsList.contains(word));
+                    List<String> stemmedWords = new ArrayList<String>(queryWords);
 
 
                     for(int j = 0; j < queryWords.size();j++) {
@@ -219,12 +224,14 @@ public class CrawlitServer {
                     for (int i = 1; i < docsList.size(); i++) {
 						commonDocs.retainAll(docsList.get(i));
 					}
-                    
+                   
                     System.out.println(commonDocs);
                     List<DocInfo> consecList = new ArrayList<DocInfo>();
-                    Set<String> consecutive = new HashSet<String>();
+                    Set<String> consecutive;
+                    List<Set<String>> allConsec = new ArrayList<Set<String>>();
+                    
                     for (int i = 0; i < stemmedWords.size() - 1; i++) {
-              
+                    	consecutive = new HashSet<String>();
                     	for(DocInfo doc : wordsMap.get(stemmedWords.get(i))) {
                     		if(commonDocs.contains(doc.document)) {
                     			List<DocInfo> nextDocs = new ArrayList<DocInfo>(wordsMap.get(stemmedWords.get(i + 1)));
@@ -247,18 +254,77 @@ public class CrawlitServer {
                     			}
                     		}
                     	}
-                    	break;
+                    	allConsec.add(consecutive);
                     }
-                    
-                    
-                    System.out.println(consecutive.size());
-                    System.out.println("Conseccutiv" + consecutive);
+                    System.out.println("All Consec " + allConsec);
+
                     DocComparator dc = new DocComparator();
-                    consecList.sort(dc);
-                    for(DocInfo d : consecList) {
-                    	System.out.print(d.document + " ,");
+                    Set<String> consecConsec = new HashSet<String>(allConsec.get(0));
+                    for (int i = 1; i < allConsec.size(); i++) {
+						consecConsec.retainAll(allConsec.get(i));
+					}
+                    System.out.println("ConsecConsec" + consecConsec);
+                    
+                    List<DocInfo> allConsecList = new ArrayList<>();
+                    for (int i = 0; i < consecList.size(); i++) {
+						if (consecConsec.contains(consecList.get(i).document)) {
+							allConsecList.add(consecList.get(i));
+						}
+					}
+                    System.out.println("List Size " + consecList.size());
+                    allConsecList.sort(dc);
+                    for (int i = 0; i < allConsecList.size(); i++) {
+						System.out.print(allConsecList.get(i).document + ", ");
+					}
+                    System.out.println();
+                    
+                    if(!quotes)
+                    {
+                    	consecList.sort(dc);
+                    	allConsecList.addAll(consecList);
                     }
-                    writer.println(list + "\n");
+                    
+                    List<String> docNames = new ArrayList<String>();
+                    
+                    for(DocInfo doc : allConsecList) {
+                    	docNames.add(doc.document.split("\\.")[0]);
+                    }
+                    if(!quotes) {
+                    	for (int i = 0; i < stemmedWords.size(); i++) {
+                    		for(DocInfo doc : wordsMap.get(stemmedWords.get(i))) {
+                    			String [] docName = doc.document.split("\\.");
+                    			if(docName.length > 0)
+                    			{
+                    				docNames.add(doc.document.split("\\.")[0]);								
+                    			}
+                    		}
+                    	}                    	
+                    }
+                    
+                    System.out.println("Before Distinct" + docNames);
+                    docNames = docNames.stream().distinct().collect(Collectors.toList());
+                    System.out.println("After Distinct" + docNames);
+                    
+                    if(docNames.isEmpty()) {
+                      writer.println(docNames);
+	                  }
+				    else {
+				      //replace each list entry with the url of url list (list)
+				      for(int i = 0; i < docNames.size(); i++) {
+				          if (Integer.parseInt(docNames.get(i)) < urlList.size()) {
+				        	  docNames.set(i, urlList.get(Integer.parseInt(docNames.get(i))));
+				          }
+				          else {
+				        	  docNames.remove(i);
+				          }
+				      }
+				    }
+                    System.out.println(quotes + ", " + docNames.size());
+                    System.out.println(docNames);
+                    
+                    writer.println(docNames + "\n");
+                    
+                    
                     //for every word in the query
 //                    for(int i = 0; i < queryWords.size(); i++) {
 //                        //if the word is in the inverted index
