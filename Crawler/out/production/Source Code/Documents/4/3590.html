@@ -1,423 +1,438 @@
 <!DOCTYPE html>
-<html lang="en-US">
-
+<html class="client-nojs" lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GDELT Summary: Television Explorer: (covid OR coronavirus OR pandemic) AND (Station:CNN OR Station:FOXNEWS OR Station:MSNBC OR Station:BBCNEWS) AND PublicationDate>=1/1/2020</title>
-
-<script src="https://api.gdeltproject.org/assets/js/jquery-3.2.1/jquery.min.js"></script>
-<script src="https://api.gdeltproject.org/assets/js/jquery-3.2.1/jquery.sticky.js"></script>
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/jquery-ui-1.11.1-smoothness/jquery-ui.css">
-<script src="https://api.gdeltproject.org/assets/js/jquery-ui-1.11.1/jquery-ui.js"></script>
-
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/fontawesome-4.7.0/css/font-awesome.min.css">
-
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/bootstrap-3.3.7/bootstrap.min.css">
-<script src="https://api.gdeltproject.org/assets/js/bootstrap-3.3.7/bootstrap.min.js"></script>
-
-<link rel="stylesheet" href="https://api.gdeltproject.org/assets/css/bootstrap-multiselect/bootstrap-multiselect.css" type="text/css">
-<script type="text/javascript" src="https://api.gdeltproject.org/assets/js/bootstrap-multiselect-gdeltmodified/bootstrap-multiselect.js"></script>
-
-<STYLE>
-body, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, input, textarea, blockquote {
-	margin: 0; padding: 0; border: 0;
-}
-
-body {
-	background: #fff;
-	font-family: 'Open Sans', serif;
-	font-size: 11pt; 
-	color: #000;
-}
-
-#header {
-	height:60px; padding-top: 10px;
-	position: fixed;
-	width: 100%;
-	z-index: 10;
-	background: #FFFFFF;
-	box-shadow: 0 5px 10px rgba(0,0,0,0.3);	
-}
-.headerlogo {
-	font-family: 'Open Sans', serif;
-	font-size: 21pt;
-	padding-left: 20px;
-	color: #000 !important;
-	text-decoration: none !important;
-	font-weight: 800;
-}
-.headerabout {
-	font-family: 'Open Sans', serif;
-	font-size: 10pt;
-	position: absolute;
-	right: 20px;
-	top: 20px;
-	color: #000;
-	text-decoration: none;
-	font-weight: 500;
-	letter-spacing: 2px;
-}
-#content {
-	width: 100%;
-	position: relative;
-	top: 75px;
-	background: #fff;
-}
-div#content p {
-	padding: 0px 15px 15px 15px;
-	text-align: justify;
-	line-height: 150%
-}
-
-.responsivetimeline { height: 450px; }
-.responsivechart { height: 400px; }
-.responsivewordcloud { height: 650px; }
-
-/* bootstrap customizations... */
-.panel-primary {
-     border-color: #96adc1 !important;
-}
-.panel-primary>.panel-heading {
-     background-color: #96adc1 !important;
-     border-color: #96adc1 !important;
-}
-
-/* override some displays to adjust their heights to better comport with the dimensions on smartphones... */
-@media screen and (min-width : 0px) and (max-width : 767px){
-    .responsivetimeline { height: 250px; }
-    .responsivechart { height: 250px; }
-    .responsivewordcloud { height: 250px; }
-}
-</STYLE>
-
-
-<link href="favicon.ico" type="image/x-icon" rel="icon" /><link href="https://www.gdeltproject.org/favicon.ico" type="image/x-icon" rel="shortcut icon" />
-<link rel="apple-touch-icon" sizes="57x57" href="https://www.gdeltproject.org/images/favicon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="https://www.gdeltproject.org/images/favicon/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="https://www.gdeltproject.org/images/favicon/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="https://www.gdeltproject.org/images/favicon/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="https://www.gdeltproject.org/images/favicon/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="https://www.gdeltproject.org/images/favicon/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="https://www.gdeltproject.org/images/favicon/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="https://www.gdeltproject.org/images/favicon/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://www.gdeltproject.org/images/favicon/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="https://www.gdeltproject.org/images/favicon/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://www.gdeltproject.org/images/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="https://www.gdeltproject.org/images/favicon/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://www.gdeltproject.org/images/favicon/favicon-16x16.png">
-<link rel="manifest" href="https://www.gdeltproject.org/images/favicon/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="https://www.gdeltproject.org/images/favicon/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
-
-<link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat|Audiowide" rel="stylesheet">
-
-<script>
-    window.addEventListener("message", function(e){
-	
-var timelinevolzoom = document.getElementById("timelinevolzoom");
-if (timelinevolzoom.contentWindow === e.source && e.data.action == 'timezoom') {
-    var newurl = window.location.href;
-    newurl = updateurlparam(newurl, 'ts', 'custom');
-    newurl = updateurlparam(newurl, 'sdt', e.data.startdate);
-    newurl = updateurlparam(newurl, 'edt', e.data.enddate);
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-var timelinevolzoomstream = document.getElementById("timelinevolzoomstream");
-if (timelinevolzoomstream.contentWindow === e.source && e.data.action == 'timezoom') {
-    var newurl = window.location.href;
-    newurl = updateurlparam(newurl, 'ts', 'custom');
-    newurl = updateurlparam(newurl, 'sdt', e.data.startdate);
-    newurl = updateurlparam(newurl, 'edt', e.data.enddate);
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-var webtimelinevolzoom = document.getElementById("webtimelinevolzoom");
-if (webtimelinevolzoom.contentWindow === e.source && e.data.action == 'timezoom') {
-    var newurl = window.location.href;
-    newurl = updateurlparam(newurl, 'ts', 'custom');
-    newurl = updateurlparam(newurl, 'sdt', e.data.startdate);
-    newurl = updateurlparam(newurl, 'edt', e.data.enddate);
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-
-
-var showchart = document.getElementById("showchart");
-if (showchart.contentWindow === e.source && e.data.action == 'queryupdate') {
-    var newurl = window.location.href;
-    if (e.data.type == 'add') {
-	//append keyword...
-	var updatedquery = window.location.href.match(/\bk=(.*?)(&|$)/i)[1] + ' ' + e.data.query;
-	newurl = updateurlparam(newurl, 'k', updatedquery);
-    }
-    //if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-    if (newurl == window.location.href) { location.reload(); }
-    //and set up our body to let the user know we're doing something and then reload the page to this new date range...
-    document.body.style.opacity = 0.2;
-    document.body.style.cursor = 'progress';
-    document.body.style.pointerEvents = "none";
-    window.location.href = newurl;
-}
-
-
-
-    var topclips_gallery = document.getElementById("topclips_gallery");
-    if (topclips_gallery.contentWindow === e.source && e.data.action == 'heightchange') {
-	topclips_gallery.height = e.data.height + "px";
-	topclips_gallery.style.height = e.data.height + "px";
-    }
-
-    });
-</script>
-
+<meta charset="UTF-8"/>
+<title>Quantum Mechanics - Wikibooks, open books for an open world</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":false,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"b7a7ea5d-8f57-4ae9-a354-68c0a48ab495","wgCSPNonce":false,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Quantum_Mechanics","wgTitle":"Quantum Mechanics","wgCurRevisionId":3451128,"wgRevisionId":3451128,"wgArticleId":5317,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Subject:Quantum mechanics","Subject:Quantum mechanics/all books","Subject:Physics/all books","Subject:Physical sciences/all books","Subject:Science/all books","Subject:Books by subject/all books","Book:Wikibooks Stacks/Books","Shelf:Quantum mechanics/all books","Shelf:Physical sciences/all books"
+,"Shelf:Physics/all books","Department:Science/all books","Alphabetical/Q","Partly developed books","Books by completion status/all books","Book:Quantum Mechanics","Shelf:Quantum mechanics"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"Quantum_Mechanics","wgRelevantArticleId":5317,"wgIsProbablyEditable":true,"wgRelevantPageIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgFlaggedRevsParams":{"tags":{"value":{"levels":3}}},"wgStableRevisionId":3451128,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","pageVariantFallbacks":"en"},"wgMFDisplayWikibaseDescriptions":{"search":true,"nearby":true,"watchlist":true,"tagline":false},"wgWMESchemaEditAttemptStepOversample":false,"wgWMEPageLength":1000,"wgNoticeProject":"wikibooks","wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgULSCurrentAutonym":"English","wgEditSubmitButtonLabelPublish":true,"wgCentralAuthMobileDomain":false,"wgULSPosition":
+"interlanguage","wgULSisCompactLinksEnabled":true,"wgWikibaseItemId":"Q944","wgSiteNoticeId":"2.24"};RLSTATE={"ext.globalCssJs.user.styles":"ready","site.styles":"ready","user.styles":"ready","ext.globalCssJs.user":"ready","user":"ready","user.options":"loading","mediawiki.action.styles":"ready","mediawiki.interface.helpers.styles":"ready","skins.vector.styles.legacy":"ready","ext.flaggedRevs.basic":"ready","ext.visualEditor.desktopArticleTarget.noscript":"ready","ext.wikimediaBadges":"ready","ext.uls.interlanguage":"ready","wikibase.client.init":"ready","ext.dismissableSiteNotice.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.ready","skins.vector.legacy.js","ext.flaggedRevs.advanced","mmv.head","mmv.bootstrap.autostart","ext.visualEditor.desktopArticleTarget.init","ext.visualEditor.targetLoader","ext.eventLogging","ext.wikimediaEvents","ext.navigationTiming","ext.centralNotice.geoIP","ext.centralNotice.startUp","ext.gadget.wikidialog","ext.gadget.commons-file",
+"ext.centralauth.centralautologin","ext.uls.compactlinks","ext.uls.interface","ext.dismissableSiteNotice"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1i9g4",function($,jQuery,require,module){mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});});});</script>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=ext.dismissableSiteNotice.styles%7Cext.flaggedRevs.basic%7Cext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cext.wikimediaBadges%7Cmediawiki.action.styles%7Cmediawiki.interface.helpers.styles%7Cskins.vector.styles.legacy%7Cwikibase.client.init&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/w/load.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=vector"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/load.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<meta name="generator" content="MediaWiki 1.39.0-wmf.12"/>
+<meta name="referrer" content="origin"/>
+<meta name="referrer" content="origin-when-crossorigin"/>
+<meta name="referrer" content="origin-when-cross-origin"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta property="og:title" content="Quantum Mechanics - Wikibooks, open books for an open world"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="//upload.wikimedia.org"/>
+<link rel="alternate" media="only screen and (max-width: 720px)" href="//en.m.wikibooks.org/wiki/Quantum_Mechanics"/>
+<link rel="alternate" type="application/x-wiki" title="Edit" href="/w/index.php?title=Quantum_Mechanics&amp;action=edit"/>
+<link rel="shortcut icon" href="/static/favicon/wikibooks.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Wikibooks (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="//en.wikibooks.org/w/api.php?action=rsd"/>
+<link rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/"/>
+<link rel="canonical" href="https://en.wikibooks.org/wiki/Quantum_Mechanics"/>
+<link rel="dns-prefetch" href="//meta.wikimedia.org" />
+<link rel="dns-prefetch" href="//login.wikimedia.org"/>
 </head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject mw-editable page-Quantum_Mechanics rootpage-Quantum_Mechanics skin-vector action-view skin-vector-legacy"><div id="mw-page-base" class="noprint"></div>
+<div id="mw-head-base" class="noprint"></div>
+<div id="content" class="mw-body" role="main">
+	<a id="top"></a>
+	<div id="siteNotice"><!-- CentralNotice --><div id="mw-dismissablenotice-anonplace"></div><script>(function(){var node=document.getElementById("mw-dismissablenotice-anonplace");if(node){node.outerHTML="\u003Cdiv class=\"mw-dismissable-notice\"\u003E\u003Cdiv class=\"mw-dismissable-notice-close\"\u003E[\u003Ca tabindex=\"0\" role=\"button\"\u003Edismiss\u003C/a\u003E]\u003C/div\u003E\u003Cdiv class=\"mw-dismissable-notice-body\"\u003E\u003Cdiv id=\"localNotice\"\u003E\u003Cdiv class=\"anonnotice\" lang=\"en\" dir=\"ltr\"\u003E\u003Cdiv style=\"background: #ffffff; border: solid 1px #48b; width: auto; padding-left:2px; padding-right:2px; margin-left:auto; margin-right:auto; vertical-align: top; display:table; color:black;\"\u003E\u003Cdiv class=\"floatleft\"\u003E\u003Ca href=\"/wiki/Shelf:Strategy_guides\" title=\"Shelf:Strategy guides\"\u003E\u003Cimg alt=\"Nuvola apps package games.png\" src=\"//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Nuvola_apps_package_games.png/40px-Nuvola_apps_package_games.png\" decoding=\"async\" width=\"40\" height=\"40\" srcset=\"//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Nuvola_apps_package_games.png/60px-Nuvola_apps_package_games.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/01/Nuvola_apps_package_games.png/80px-Nuvola_apps_package_games.png 2x\" data-file-width=\"128\" data-file-height=\"128\" /\u003E\u003C/a\u003E\u003C/div\u003EThe Wikibooks community has accepted \u003Ca href=\"/wiki/Shelf:Strategy_guides\" title=\"Shelf:Strategy guides\"\u003Evideo game strategy guides\u003C/a\u003E on this wiki! See \u003Ca href=\"/wiki/Wikibooks:Strategy_guides\" title=\"Wikibooks:Strategy guides\"\u003EWikibooks:Strategy guides\u003C/a\u003E for the newly-created policy on strategy games. We're looking forward to your contributions.\n\u003C/div\u003E\u003C/div\u003E\u003C/div\u003E\u003C/div\u003E\u003C/div\u003E";}}());</script></div>
+	<div class="mw-indicators">
+	<div id="mw-indicator-status-icon" class="mw-indicator"><a href="/wiki/Help:Development_stages" title="25% developed"><img alt="25% developed" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/24px-25_percent.svg.png" decoding="async" width="24" height="24" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/36px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/48px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9" /></a></div>
+	</div>
+	<h1 id="firstHeading" class="firstHeading mw-first-heading">Quantum Mechanics</h1>
+	<div id="bodyContent" class="vector-body">
+		<div id="siteSub" class="noprint">From Wikibooks, open books for an open world</div>
+		<div id="contentSub"><div class="mw-message-box-warning mw-revision mw-message-box"><div id="mw-revision-info-current"><table id="revision-info-current" class="plainlinks fmbox fmbox-warning" style="">
+<tbody><tr>
 
-<body>
-
-<script>
-function updateurlparam(url, name, value){
-    if(value == null) value = '';
-    var pattern = new RegExp('\\b('+name+'=).*?(&|$)', 'i');
-    if(url.search(pattern) > -1){ return url.replace(pattern,'$1' + value + '$2'); }
-    return url + (url.indexOf('?') > -1 ? '&' : '?') + name + '=' + value; 
-}
-
-function jumptodate(start, end) {
-    if (start > end) { tmp = end; start = end; end = tmp; }
-    var startdate = new Date(xaxiscats[start]).toJSON(); startdate = startdate.replace(/[\-TZ:]/g, ''); startdate = startdate.replace(/\..*$/, '');
-    var enddate = new Date(xaxiscats[end]).toJSON(); enddate = enddate.replace(/[\-TZ:]/g, ''); enddate = enddate.replace(/\..*$/, '');
-    
-    //if we are in a window by ourself (not embedded on a page), then just reload the page with the new date ranges...
-    //otherwise, post a message to the parent frame about the timeline zoom...
-    if(window.self === window.top) {
-    	var newurl = window.location.href;
-	newurl = updateurlparam(newurl, 'sdt', startdate);
-	newurl = updateurlparam(newurl, 'edt', enddate);
-	//if this is the same URL (person selected the same date range), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-	if (newurl == window.location.href) { location.reload(); }
-    	//and set up our body to let the user know we're doing something and then reload the page to this new date range...
-	document.body.style.opacity = 0.2;
-	document.body.style.cursor = 'progress';
-	document.body.style.pointerEvents = "none";
-	window.location.href = newurl;
-    } else {
-	parent.postMessage({"startdate": startdate, "enddate": enddate, "href": window.location.href }, "*");
-    }
-}
-
-function updatequery(newquery) {
-    
-    //if we are in a window by ourself (not embedded on a page), then just reload the page with the new date ranges...
-    //otherwise, post a message to the parent frame about the timeline zoom...
-    if(window.self === window.top) {
-    	var newurl = window.location.href;
-	newurl = updateurlparam(newurl, 'query', newquery);
-	//if this is the same URL (no change such as user clicked on same show again), do a reload instead of setting href, as otherwise the browser sometimes locks up strangely...
-	if (newurl == window.location.href) { location.reload(); }
-    	//and set up our body to let the user know we're doing something and then reload the page to this new date range...
-	document.body.style.opacity = 0.2;
-	document.body.style.cursor = 'progress';
-	document.body.style.pointerEvents = "none";
-	window.location.href = newurl;
-    } else {
-	parent.postMessage({"query": newquery, "href": window.location.href }, "*");
-    }
-}
-</script>
-
-
-<div id="container">
-
-<div id="header">
-    <a href="https://api.gdeltproject.org/api/v2/summary/summary?d=iatv" title="GDELT" rel="home" CLASS="headerlogo">GDELT Summary</a>
-    <a href="https://blog.gdeltproject.org/the-new-television-explorer-launches/" title="About" rel="home" CLASS="headerabout">About</a>
-</div>
-
-<div id="content">
-
-
-<br>	
-<H2 STYLE="padding-left:15px;"><b>Television Explorer</b></H2>
-<br>
-<p>Below is a visual dashboard summary of broadcast television news coverage of your search using data from the Internet Archive's Television News Archive. While the index is updated every 15 minutes, broadcasts take 24-48 hours to become available for search, so <B>results for the past two days are incomplete</B>. Refresh this page again in 15 minutes to see the most recent updates. Displays work best in Google Chrome.</p>
-
-<p><a href="javascript:if ($('#info-WELCOME').hasClass('hidden') == true) { $('#info-WELCOME').removeClass('hidden'); } else { $('#info-WELCOME').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i> More Info.</a></p>
-
-<p ID="info-WELCOME" class="hidden">All visualizations are powered by the <A HREF="https://www.gdeltproject.org/">GDELT Project</a>'s <a href="https://blog.gdeltproject.org/gdelt-2-0-television-api-debuts/">TV 2.0</a> API using data from the Internet Archive's <a href="https://archive.org/details/tv">Television News Archive</a>. Technical users will find "export" options on each of the visualizations on this page that allows them to download the underlying CSV/JSON/GeoJSON data for further visualization/analysis and to view the HTML code that allows them to embed each individual visualization on their own web page - the embedded visualization will update each time it is viewed/refreshed to display the most recent data as of 15 minutes prior (though broadcasts take 24-48 hours to become available for search).</p>
-
-
-<div style="border: #999 solid 1px; border-radius: 10px; margin: 15px; padding-top: 15px;">
-<H3 STYLE="padding-left:15px;padding-bottom: 15px;">Search Details</H3>
-<p>The displays on this page summarize coverage returned by the following search:</p>
-<p STYLE="padding-left:55px;padding-bottom: 15px;">
-<B>Data Source</B>: Internet Archive Television News Archive
-<br>
-<B>Human Summary</B>: <I>(covid OR coronavirus OR pandemic) AND (Station:CNN OR Station:FOXNEWS OR Station:MSNBC OR Station:BBCNEWS) AND PublicationDate>=1/1/2020</I>
-<br>
-<a href="https://api.gdeltproject.org/api/v2/summary/summary?d=iatv&t=summary&k=%28covid+OR+coronavirus+OR+pandemic%29&ts=custom&sdt=20200101000000&fs=station%3ACNN&fs=station%3AFOXNEWS&fs=station%3AMSNBC&fs=station%3ABBCNEWS&fdn=raw&fdr=day&fts=7&svt=zoom&svts=zoom&swvt=zoom&ssc=yes&sshc=yes&swc=yes&stcl=yes&"><b>[Modify Search]</b></a>
+<td class="mbox-text" style=""> <b>This is the <a href="/wiki/Help:Tracking_changes#Page_history" title="Help:Tracking changes">current revision</a> of this page, as edited by <span id="mw-revision-name"><a href="/wiki/User:Pi_zero" class="mw-userlink" title="User:Pi zero"><bdi>Pi zero</bdi></a> <span class="mw-usertoollinks">(<a href="/wiki/User_talk:Pi_zero" class="mw-usertoollinks-talk" title="User talk:Pi zero">discuss</a> | <a href="/wiki/Special:Contributions/Pi_zero" class="mw-usertoollinks-contribs" title="Special:Contributions/Pi zero">contribs</a>)</span></span> at <span id="mw-revision-date">01:43, 18 August 2018</span>. The present address (<a href="https://en.wikipedia.org/wiki/Uniform_Resource_Locator" class="extiw" title="w:Uniform Resource Locator">URL</a>) is a permanent link to this version. </b></td>
+</tr>
+</tbody></table><div id="revision-info-current-plain" style="display: none;">Revision as of 01:43, 18 August 2018 by <a href="/wiki/User:Pi_zero" class="mw-userlink" title="User:Pi zero"><bdi>Pi zero</bdi></a> <span class="mw-usertoollinks">(<a href="/wiki/User_talk:Pi_zero" class="mw-usertoollinks-talk" title="User talk:Pi zero">discuss</a> | <a href="/wiki/Special:Contributions/Pi_zero" class="mw-usertoollinks-contribs" title="Special:Contributions/Pi zero">contribs</a>)</span></div></div><div id="mw-revision-nav">(<a href="/w/index.php?title=Quantum_Mechanics&amp;diff=prev&amp;oldid=3451128" title="Quantum Mechanics">diff</a>) <a href="/w/index.php?title=Quantum_Mechanics&amp;direction=prev&amp;oldid=3451128" title="Quantum Mechanics">← Older revision</a> | Latest revision (diff) | Newer revision → (diff)</div></div></div>
+		<div id="contentSub2"></div>
+		
+		<div id="jump-to-nav"></div>
+		<a class="mw-jump-link" href="#mw-head">Jump to navigation</a>
+		<a class="mw-jump-link" href="#searchInput">Jump to search</a>
+		<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr"><div id="mw-fr-revisiontag-old" class="flaggedrevs_notice plainlinks noprint">A <a class="external text" href="https://en.wikibooks.org/w/index.php?title=Quantum_Mechanics&amp;stableid=3451128">reviewed version</a> of this page, <a class="external text" href="https://en.wikibooks.org/w/index.php?title=Special:Log&amp;type=review&amp;page=Quantum_Mechanics">approved</a> on <i>10 March 2021</i>, was based off this revision.</div><div class="mw-parser-output"> <div class="PrettyTextBox noprint" style="width: 90%; clear: both; padding: 5px; margin: 5px auto; text-align: center; font-size: large;"><b><a class="mw-selflink selflink">Quantum Mechanics</a></b></div>
+<div class="noprint PrettyTextBox" style="clear: right; margin: 0 0 1em 1em; width: 175px; padding: 10px; text-align: left; float: right;">
+<p>This book is part of a series on <b><a href="/wiki/Modern_Physics" title="Modern Physics">Modern Physics</a>:</b>
 </p>
+<div style="padding-left: 10px;">
+<p><a href="/wiki/Waves" title="Waves">Waves</a><br />
+<a href="/wiki/General_Mechanics" title="General Mechanics">General Mechanics</a><br />
+<a href="/wiki/Special_Relativity" title="Special Relativity">Special Relativity</a><br />
+<a class="mw-selflink selflink">Quantum Mechanics</a><br />
+<a href="/wiki/Electrodynamics" title="Electrodynamics">Electrodynamics</a><br />
+<a href="/wiki/Nuclear_Physics" title="Nuclear Physics">Nuclear Physics</a><br />
+</p>
+</div></div>
+<h2><span class="mw-headline" id="Matter_Waves">Matter Waves</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Quantum_Mechanics&amp;veaction=edit&amp;section=1" class="mw-editsection-visualeditor" title="Edit section: Matter Waves">edit</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Quantum_Mechanics&amp;action=edit&amp;section=1" title="Edit section: Matter Waves">edit source</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ol><li><a href="/wiki/Quantum_Mechanics/Introduction_to_QM" title="Quantum Mechanics/Introduction to QM">Introduction to QM</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Waves_and_Modes" title="Quantum Mechanics/Waves and Modes">Waves and Modes</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Blackbody_Radiation" title="Quantum Mechanics/Blackbody Radiation">Blackbody Radiation</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/Bragg%27s_Law&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Bragg&#39;s Law (does not exist)">Bragg's Law</a></li>
+<li><a href="/wiki/Quantum_Mechanics/X-Ray_Diffraction_Techniques" title="Quantum Mechanics/X-Ray Diffraction Techniques">X-Ray Diffraction Techniques</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Operators_and_Commutators" title="Quantum Mechanics/Operators and Commutators">Operators and Commutators</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Heisenberg_Uncertainty_Principle" title="Quantum Mechanics/Heisenberg Uncertainty Principle">Heisenberg Uncertainty Principle</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Meaning_of_Quantum_Wave_Function" title="Quantum Mechanics/Meaning of Quantum Wave Function">Meaning of Quantum Wave Function</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Time_Independent_Schr%C3%B6dinger" title="Quantum Mechanics/Time Independent Schrödinger">Time Independent Schrödinger</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Mass,_Momentum_and_Energy" title="Quantum Mechanics/Mass, Momentum and Energy">Mass, Momentum and Energy</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Perturbation_Theory" title="Quantum Mechanics/Perturbation Theory">Perturbation Theory</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Quantum_Scattering" title="Quantum Mechanics/Quantum Scattering">Quantum Scattering</a></li></ol>
+<dl><dd><a href="/w/index.php?title=Quantum_Mechanics/Matter_Waves/Problems&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Matter Waves/Problems (does not exist)">Problems</a></dd></dl>
+<h2><span class="mw-headline" id="Symmetry_and_Bound_States">Symmetry and Bound States</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Quantum_Mechanics&amp;veaction=edit&amp;section=2" class="mw-editsection-visualeditor" title="Edit section: Symmetry and Bound States">edit</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Quantum_Mechanics&amp;action=edit&amp;section=2" title="Edit section: Symmetry and Bound States">edit source</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ol><li><a href="/wiki/Quantum_Mechanics/Complex_Waves" title="Quantum Mechanics/Complex Waves">Complex Waves</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Symmetry_and_Quantum_Mechanics" title="Quantum Mechanics/Symmetry and Quantum Mechanics">Symmetry and Quantum Mechanics</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/Confined_Matter_Waves&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Confined Matter Waves (does not exist)">Confined Matter Waves</a></li></ol>
+<dl><dd><a href="/w/index.php?title=Quantum_Mechanics/Symmetry_and_Bound_States/Problems&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Symmetry and Bound States/Problems (does not exist)">Problems</a></dd></dl>
+<h2><span class="mw-headline" id="Measuring_the_Very_Small">Measuring the Very Small</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Quantum_Mechanics&amp;veaction=edit&amp;section=3" class="mw-editsection-visualeditor" title="Edit section: Measuring the Very Small">edit</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Quantum_Mechanics&amp;action=edit&amp;section=3" title="Edit section: Measuring the Very Small">edit source</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ol><li><a href="/w/index.php?title=Quantum_Mechanics/Continuous_Matter_or_Atoms%3F&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Continuous Matter or Atoms? (does not exist)">Continuous Matter or Atoms?</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/The_Ring_Around_the_Moon&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/The Ring Around the Moon (does not exist)">The Ring Around the Moon</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/The_Geiger-Marsden_Experiment&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/The Geiger-Marsden Experiment (does not exist)">The Geiger-Marsden Experiment</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/Cosmic_Rays_and_Accelerator_Experiments&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Cosmic Rays and Accelerator Experiments (does not exist)">Cosmic Rays and Accelerator Experiments</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/Commentary&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Commentary (does not exist)">Commentary</a></li></ol>
+<dl><dd><a href="/w/index.php?title=Quantum_Mechanics/Measuring_the_Very_Small/Problems&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Measuring the Very Small/Problems (does not exist)">Problems</a></dd></dl>
+<h2><span class="mw-headline" id="Atoms">Atoms</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Quantum_Mechanics&amp;veaction=edit&amp;section=4" class="mw-editsection-visualeditor" title="Edit section: Atoms">edit</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Quantum_Mechanics&amp;action=edit&amp;section=4" title="Edit section: Atoms">edit source</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ol><li><a href="/wiki/Quantum_Mechanics/Fermions_and_Boson" title="Quantum Mechanics/Fermions and Boson">Fermions and Boson</a></li>
+<li><a href="/wiki/Quantum_Mechanics/The_Hydrogen_Atom" title="Quantum Mechanics/The Hydrogen Atom">The Hydrogen Atom</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/The_Periodic_Table_of_the_Elements&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/The Periodic Table of the Elements (does not exist)">The Periodic Table of the Elements</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/Atomic_Spectra&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Atomic Spectra (does not exist)">Atomic Spectra</a></li></ol>
+<dl><dd><a href="/w/index.php?title=Quantum_Mechanics/Atoms/Problems&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/Atoms/Problems (does not exist)">Problems</a></dd></dl>
+<h2><span class="mw-headline" id="The_Standard_Model">The Standard Model</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Quantum_Mechanics&amp;veaction=edit&amp;section=5" class="mw-editsection-visualeditor" title="Edit section: The Standard Model">edit</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Quantum_Mechanics&amp;action=edit&amp;section=5" title="Edit section: The Standard Model">edit source</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ol><li><a href="/wiki/Quantum_Mechanics/Quarks_and_Leptons" title="Quantum Mechanics/Quarks and Leptons">Quarks and Leptons</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Quantum_Chromodynamics" title="Quantum Mechanics/Quantum Chromodynamics">Quantum Chromodynamics</a></li>
+<li><a href="/w/index.php?title=Quantum_Mechanics/The_Electroweak_Theory&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/The Electroweak Theory (does not exist)">The Electroweak Theory</a></li>
+<li><a href="/wiki/Quantum_Mechanics/Grand_Unification%3F" title="Quantum Mechanics/Grand Unification?">Grand Unification?</a></li></ol>
+<dl><dd><a href="/w/index.php?title=Quantum_Mechanics/The_Standard_Model/Problems&amp;action=edit&amp;redlink=1" class="new" title="Quantum Mechanics/The Standard Model/Problems (does not exist)">Problems</a></dd></dl>
+<h2><span class="mw-headline" id="Further_Reading_and_Resources">Further Reading and Resources</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=Quantum_Mechanics&amp;veaction=edit&amp;section=6" class="mw-editsection-visualeditor" title="Edit section: Further Reading and Resources">edit</a><span class="mw-editsection-divider"> | </span><a href="/w/index.php?title=Quantum_Mechanics&amp;action=edit&amp;section=6" title="Edit section: Further Reading and Resources">edit source</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul><li><a href="/wiki/This_Quantum_World" title="This Quantum World">This Quantum World</a> - a complete introductory text.</li>
+<li><a href="/wiki/Quantum_theory_of_observation" title="Quantum theory of observation">Quantum theory of observation</a></li></ul>
+<!-- 
+NewPP limit report
+Parsed by mw1330
+Cached time: 20220511174325
+Cache expiry: 1814400
+Reduced expiry: false
+Complications: []
+CPU time usage: 0.270 seconds
+Real time usage: 0.490 seconds
+Preprocessor visited node count: 1593/1000000
+Post‐expand include size: 16680/2097152 bytes
+Template argument size: 3842/2097152 bytes
+Highest expansion depth: 34/100
+Expensive parser function count: 0/500
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 0/5000000 bytes
+Lua time usage: 0.194/10.000 seconds
+Lua memory usage: 1926083/52428800 bytes
+Number of Wikibase entities loaded: 0/400
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  458.518      1 -total
+ 78.22%  358.665      1 Template:Shelves
+ 26.89%  123.277      1 Template:Shelf:Page?
+ 26.26%  120.418      1 Shelf:Quantum_mechanics
+ 18.23%   83.608      1 Template:Subjects/leaf
+ 17.13%   78.536      1 Template:Subjects/0
+ 16.38%   75.083      1 Template:Quantum_Mechanics/Page
+ 13.67%   62.702      1 Template:Bookcat
+ 13.40%   61.428     14 Template:Evalx
+ 13.19%   60.492      1 Template:Shelf:Map
+-->
+
+<!-- Saved in parser cache with key enwikibooks:pcache:idhash:5317-0!canonical and timestamp 20220511174325 and revision id 3451128. Serialized with JSON.
+ -->
+</div><noscript><img src="//en.wikibooks.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /></noscript>
+<div class="printfooter">Retrieved from "<a dir="ltr" href="https://en.wikibooks.org/w/index.php?title=Quantum_Mechanics&amp;oldid=3451128">https://en.wikibooks.org/w/index.php?title=Quantum_Mechanics&amp;oldid=3451128</a>"</div></div>
+		<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/wiki/Category:Book:Quantum_Mechanics" title="Category:Book:Quantum Mechanics">Book:Quantum Mechanics</a></li><li><a href="/wiki/Category:Shelf:Quantum_mechanics" title="Category:Shelf:Quantum mechanics">Shelf:Quantum mechanics</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/wiki/Category:Subject:Quantum_mechanics" title="Category:Subject:Quantum mechanics">Subject:Quantum mechanics</a></li><li><a href="/wiki/Category:Subject:Quantum_mechanics/all_books" title="Category:Subject:Quantum mechanics/all books">Subject:Quantum mechanics/all books</a></li><li><a href="/wiki/Category:Subject:Physics/all_books" title="Category:Subject:Physics/all books">Subject:Physics/all books</a></li><li><a href="/wiki/Category:Subject:Physical_sciences/all_books" title="Category:Subject:Physical sciences/all books">Subject:Physical sciences/all books</a></li><li><a href="/wiki/Category:Subject:Science/all_books" title="Category:Subject:Science/all books">Subject:Science/all books</a></li><li><a href="/wiki/Category:Subject:Books_by_subject/all_books" title="Category:Subject:Books by subject/all books">Subject:Books by subject/all books</a></li><li><a href="/wiki/Category:Book:Wikibooks_Stacks/Books" title="Category:Book:Wikibooks Stacks/Books">Book:Wikibooks Stacks/Books</a></li><li><a href="/wiki/Category:Shelf:Quantum_mechanics/all_books" title="Category:Shelf:Quantum mechanics/all books">Shelf:Quantum mechanics/all books</a></li><li><a href="/wiki/Category:Shelf:Physical_sciences/all_books" title="Category:Shelf:Physical sciences/all books">Shelf:Physical sciences/all books</a></li><li><a href="/wiki/Category:Shelf:Physics/all_books" title="Category:Shelf:Physics/all books">Shelf:Physics/all books</a></li><li><a href="/wiki/Category:Department:Science/all_books" title="Category:Department:Science/all books">Department:Science/all books</a></li><li><a href="/wiki/Category:Alphabetical/Q" title="Category:Alphabetical/Q">Alphabetical/Q</a></li><li><a href="/wiki/Category:Partly_developed_books" title="Category:Partly developed books">Partly developed books</a></li><li><a href="/wiki/Category:Books_by_completion_status/all_books" title="Category:Books by completion status/all books">Books by completion status/all books</a></li></ul></div></div>
+	</div>
 </div>
-<br>
 
+<div id="mw-navigation">
+	<h2>Navigation menu</h2>
+	<div id="mw-head">
+		
 
+<nav id="p-personal" class="mw-portlet mw-portlet-personal vector-user-menu-legacy vector-menu" aria-labelledby="p-personal-label" role="navigation"  >
+	<label
+		id="p-personal-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Personal tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="pt-anonuserpage" class="mw-list-item"><span title="The user page for the IP address you are editing as">Not logged in</span></li><li id="pt-anontalk" class="mw-list-item"><a href="/wiki/Special:MyTalk" title="Discussion about edits from this IP address [n]" accesskey="n"><span>Discussion for this IP address</span></a></li><li id="pt-anoncontribs" class="mw-list-item"><a href="/wiki/Special:MyContributions" title="A list of edits made from this IP address [y]" accesskey="y"><span>Contributions</span></a></li><li id="pt-createaccount" class="mw-list-item"><a href="/w/index.php?title=Special:CreateAccount&amp;returnto=Quantum+Mechanics&amp;returntoquery=oldid%3D3451128" title="You are encouraged to create an account and log in; however, it is not mandatory"><span>Create account</span></a></li><li id="pt-login" class="mw-list-item"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Quantum+Mechanics&amp;returntoquery=oldid%3D3451128" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o"><span>Log in</span></a></li></ul>
+		
+	</div>
+</nav>
 
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Volume Timeline</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TIMELINEVOLZOOM').hasClass('hidden') == true) { $('.info-TIMELINEVOLZOOM').removeClass('hidden'); } else { $('.info-TIMELINEVOLZOOM').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
-    </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
+		<div id="left-navigation">
+			
 
-<p CLASS="info-TIMELINEVOLZOOM hidden" style="padding-top: 10px;">The volume timeline below shows the percent of all news programming airtime on each selected station monitored by the Internet Archive over the selected time period that matched your search. It offers a quick visual gauge of how much news attention your search is receiving on each selected station. Only news programming is monitored (commercials and entertainment programs are excluded, though some commercials may slip in). The total monitored airtime of each station in a given day/hour is broken into 15 second intervals and the timeline reports the percent of those 15 second clips that matched your search. A single mention of your keyword in a given 15 second interval will count as the entire 15 second interval, so keep in mind that the results are counted in terms of 15 second intervals.</p>
+<nav id="p-namespaces" class="mw-portlet mw-portlet-namespaces vector-menu vector-menu-tabs" aria-labelledby="p-namespaces-label" role="navigation"  >
+	<label
+		id="p-namespaces-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Namespaces</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-nstab-main" class="selected mw-list-item"><a href="/wiki/Quantum_Mechanics" title="View the content page [c]" accesskey="c"><span>Book</span></a></li><li id="ca-talk" class="mw-list-item"><a href="/wiki/Talk:Quantum_Mechanics" rel="discussion" title="Discussion about the content page [t]" accesskey="t"><span>Discussion</span></a></li></ul>
+		
+	</div>
+</nav>
 
-<p CLASS="info-TIMELINEVOLZOOM hidden">Move your mouse over the timeline to see the value for a given day/hour. You can also zoom into a particular time period by clicking on the timeline and dragging to the right or left to select that date/time range. The entire Television Explorer display will then refresh to reflect just coverage from that zoomed-in time period. In this way, if you see a large peak in coverage on a particular day, you can zoom in and see what that coverage focused on and where it came from.</p>
+			
 
-<p CLASS="info-TIMELINEVOLZOOM hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page. Advanced users can use the "View Normalization Graph" option under the Export button to view the total airtime per day/hour monitored from the selected stations by the Internet Archive (note that days with less than 100 clips are automatically excluded from results).</p>
+<nav id="p-variants" class="mw-portlet mw-portlet-variants emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-variants-label" role="navigation"  >
+	<input type="checkbox"
+		id="p-variants-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-variants"
+		class="vector-menu-checkbox"
+		aria-labelledby="p-variants-label"
+	/>
+	<label
+		id="p-variants-label"
+		 aria-label="Change language variant"
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">English</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-<iframe ID="timelinevolzoom" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=timelinevol&timezoom=yes" scrolling="no" width=100% frameborder="0" class="responsivetimeline"></iframe>
-<br>
-<br>
+		</div>
+		<div id="right-navigation">
+			
 
+<nav id="p-views" class="mw-portlet mw-portlet-views vector-menu vector-menu-tabs" aria-labelledby="p-views-label" role="navigation"  >
+	<label
+		id="p-views-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Views</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="ca-view" class="mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;stable=1"><span>Read</span></a></li><li id="ca-current" class="collapsible selected mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;stable=0&amp;redirect=no" title="View this page with the pending changes [v]" accesskey="v"><span>Latest draft</span></a></li><li id="ca-ve-edit" class="mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;veaction=edit" title="Edit this page [v]" accesskey="v"><span>Edit</span></a></li><li id="ca-edit" class="collapsible mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;action=edit" title="Edit this page [e]" accesskey="e"><span>Edit source</span></a></li><li id="ca-history" class="mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;action=history" title="Past revisions of this page [h]" accesskey="h"><span>View history</span></a></li></ul>
+		
+	</div>
+</nav>
 
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Volume Timeline (Streamgraph)</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TIMELINEVOLZOOMSTREAM').hasClass('hidden') == true) { $('.info-TIMELINEVOLZOOMSTREAM').removeClass('hidden'); } else { $('.info-TIMELINEVOLZOOMSTREAM').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
-    </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
+			
 
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden" style="padding-top: 10px;">The volume timeline below shows the matching airtime on each selected station monitored by the Internet Archive over the selected time period that matched your search. It offers a quick visual gauge of how much news attention your search is receiving on each selected station.</p>
+<nav id="p-cactions" class="mw-portlet mw-portlet-cactions emptyPortlet vector-menu-dropdown-noicon vector-menu vector-menu-dropdown" aria-labelledby="p-cactions-label" role="navigation"  title="More options" >
+	<input type="checkbox"
+		id="p-cactions-checkbox"
+		role="button"
+		aria-haspopup="true"
+		data-event-name="ui.dropdown-p-cactions"
+		class="vector-menu-checkbox"
+		aria-labelledby="p-cactions-label"
+	/>
+	<label
+		id="p-cactions-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">More</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"></ul>
+		
+	</div>
+</nav>
 
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden" style="padding-top: 10px;">The results below are identical to those displayed in the traditional line-based timeline, but the unique visual characteristics of streamlines can make certain kinds of complex patterns more visible. A streamline displays each data series as a stacked area graph centered around the horizonal graph center. Series are stacked on top or under one another, meaning their relative Y axis sizes are what matter, not their absolute values.</p>
+			
+<div id="p-search" role="search" class="vector-search-box-vue  vector-search-box-show-thumbnail vector-search-box-auto-expand-width vector-search-box">
+	<div>
+			<h3 >
+				<label for="searchInput">Search</label>
+			</h3>
+		<form action="/w/index.php" id="searchform"
+			class="vector-search-box-form">
+			<div id="simpleSearch"
+				class="vector-search-box-inner"
+				 data-search-loc="header-navigation">
+				<input class="vector-search-box-input"
+					 type="search" name="search" placeholder="Search Wikibooks" aria-label="Search Wikibooks" autocapitalize="sentences" title="Search Wikibooks [f]" accesskey="f" id="searchInput"
+				/>
+				<input type="hidden" name="title" value="Special:Search"/>
+				<input id="mw-searchButton"
+					 class="searchButton mw-fallbackSearchButton" type="submit" name="fulltext" title="Search the pages for this text" value="Search" />
+				<input id="searchButton"
+					 class="searchButton" type="submit" name="go" title="Go to a page with this exact name if it exists" value="Go" />
+			</div>
+		</form>
+	</div>
+</div>
 
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden">Move your mouse over the timeline to see the value for a given day/hour. You can also zoom into a particular time period by clicking on the timeline and dragging to the right or left to select that date/time range. The entire AI Television Explorer display will then refresh to reflect just coverage from that zoomed-in time period. In this way, if you see a large peak in coverage on a particular day, you can zoom in and see what that coverage focused on and where it came from.</p>
-
-<p CLASS="info-TIMELINEVOLZOOMSTREAM hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page. Advanced users can use the "View Normalization Graph" option under the Export button to view the total airtime per day/hour monitored from the selected stations by the Internet Archive.</p>
-
-<iframe ID="timelinevolzoomstream" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=timelinevolstream&timezoom=yes" scrolling="no" width=100% frameborder="0" class="responsivetimeline"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Online News Volume Timeline</H3>
-<div style="width: 100%; text-align: center;"> <A HREF="https://api.gdeltproject.org/api/v2/summary/summary?d=web&t=summary&k=%28covid+OR+coronavirus+OR+pandemic%29&ts=custom&sdt=20200101000000&fs=station%3ACNN&fs=station%3AFOXNEWS&fs=station%3AMSNBC&fs=station%3ABBCNEWS&fdn=raw&fdr=day&fts=7&svt=zoom&svts=zoom&swvt=zoom&ssc=yes&sshc=yes&swc=yes&stcl=yes&c=1&sta=list&stc=yes&fsl=eng">Switch To Online News Summary</A> </div>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-WEBTIMELINEVOL').hasClass('hidden') == true) { $('.info-WEBTIMELINEVOL').removeClass('hidden'); } else { $('.info-WEBTIMELINEVOL').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
-    </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-WEBTIMELINEVOL hidden" style="padding-top: 10px;">The timeline below allows you to compare television news coverage of your query with online news coverage, searching all global English language online news coverage monitored by GDELT over the same time period that matched your query. This allows you to understand differences in the attention paid to different topics by television versus online news.</p>
-
-<iframe ID="webtimelinevolzoom" src="https://api.gdeltproject.org/api/v2/doc/doc?format=html&startdatetime=20200101000000&timelinesmooth=7&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20sourcelang:eng&mode=timelinevol&timezoom=yes&FILTER_SOURCELANG=eng" scrolling="no" width=100% frameborder="0" class="responsivetimeline"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Station Chart</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TONECHART').hasClass('hidden') == true) { $('.info-TONECHART').removeClass('hidden'); } else { $('.info-TONECHART').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
-    </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-TONECHART hidden" style="padding-top: 10px;">The station chart below shows what percent of news programming airtime (in 15 second intervals) monitored from each station by the Internet Archive matched your search. This allows you to directly compare how much attention each station is paying to a given topic.</p>
-
-<p CLASS="info-TONECHART hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page.</p>
-
-<iframe ID="tonechart" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=stationchart" scrolling="no" width=100% frameborder="0" class="responsivechart"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Show Chart (Estimated)</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-SHOWCHART').hasClass('hidden') == true) { $('.info-SHOWCHART').removeClass('hidden'); } else { $('.info-SHOWCHART').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
-    </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-SHOWCHART hidden" style="padding-top: 10px;">The show chart below takes the top 500 shows airing coverage that matched your search and returns the top 10 as the percentage their matching airtime made up of the total matching airtime of the top 500 shows. Unlike the other graphs on this page, this yields an approximation rather than exact results, but for most queries should yield results very close to the actual values.</p>
-
-<p CLASS="info-SHOWCHART hidden">Click on the Export button at the top right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page.</p>
-
-<iframe ID="showchart" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=showchart" scrolling="no" width=100% frameborder="0" class="responsivechart"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">English WordCloud</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-WORDCLOUD').hasClass('hidden') == true) { $('.info-WORDCLOUD').removeClass('hidden'); } else { $('.info-WORDCLOUD').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
-    </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-WORDCLOUD hidden" style="padding-top: 10px;">The wordcloud below shows the most common words that appeared in the 200 most relevant matching clips (both the matching clip and the clips immediately before and after it).</p>
-
-<p CLASS="info-WORDCLOUD hidden">Use the links at the bottom right of the visualization to save it as an image, download the underlying data as CSV/JSON for further statistical analysis or get the code to embed it on your own web page.</p>
-
-<iframe ID="wordcloud_english" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=wordcloud" scrolling="no" width=100% frameborder="0" class="responsivewordcloud"></iframe>
-<br>
-<br>
-
-
-<H3 STYLE="padding-left:15px;padding-bottom: 10px;">Top Clips</H3>
-<div style="float: right !important; margin-right: 17px; margin-top: -23px;">
-    <a href="javascript:if ($('.info-TOPCLIPSGALLERY').hasClass('hidden') == true) { $('.info-TOPCLIPSGALLERY').removeClass('hidden'); } else { $('.info-TOPCLIPSGALLERY').addClass('hidden'); }"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
-    </div>
-<hr style="padding-left: 0px;padding-right: 0px;border-bottom: 1px solid#cccccc;margin-left: 15px;margin-right: 15px;margin-top: 0;margin-bottom: 0px;border-top-width: 0px;margin-top: 0px;padding-bottom: 5px;">
-
-<p CLASS="info-TOPCLIPSGALLERY hidden" style="padding-top: 10px;">Below is a brief recap of up to the top 50 most relevant clips matching your search. Click on any clip to view it on the Internet Archive's Television News Archive website.</p>
-
-<script>
-function export_embed() {
-    var newurl = "https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100";
-    newurl = newurl.replace('&','&amp;');
-    var win = window.open("", "_blank");
-    win.document.body.innerHTML = "<html><head><title>GDELT API Embed This Visualization</title></head><body>To embed this visualization on your own webpage, add the following HTML where you would like it to appear: <pre>&lt;script&gt;\nwindow.addEventListener(\"message\", function(e){\nvar topclips_gallery = document.getElementById(\"topclips_gallery\");\nif (topclips_gallery.contentWindow === e.source) {\ntopclips_gallery.height = e.data.height + \"px\";\ntopclips_gallery.style.height = e.data.height + \"px\";\n}\n});\n&lt;/script&gt;\n\n&lt;iframe ID=\"topclips_gallery\" src=\"" + newurl + "\" scrolling=\"no\" width=100% frameborder=\"0\"&gt;&lt;/iframe&gt;<br></pre><br></body></html>";
-}
-</script>
-
-<div style="float: right; margin-right: 10px; font-size: 10px; color: #aaa">
-[<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100" style="color: #555;" TARGET=_BLANK>URL</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=csv" style="color: #555;" TARGET=_BLANK>CSV</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=json" style="color: #555" TARGET=_BLANK>JSON</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=rss" style="color: #555" TARGET=_BLANK>RSS</a>] [<a href="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100&format=jsonfeed" style="color: #555" TARGET=_BLANK>JSONFeed</a>] [<a href="javascript:export_embed()" style="color: #555">EMBED</a>] </div>
-<br>
-
-<iframe ID="topclips_gallery" src="https://api.gdeltproject.org/api/v2/tv/tv?format=html&startdatetime=20200101000000&last24=yes&datanorm=raw&timelinesmooth=7&dateres=DAY&query=(covid%20OR%20coronavirus%20OR%20pandemic)%20(station:CNN%20OR%20station:FOXNEWS%20OR%20station:MSNBC%20OR%20station:BBCNEWS%20)%20&mode=clipgallery&sort=datedesc&maxrecords=100" scrolling="no" width=100% frameborder="0"></iframe>
-<br>
-<br>
-
-
-
-
-
-
-
-
-
-</div> <!-- end of content div -->
+		</div>
+	</div>
 	
 
-</div>	
+<div id="mw-panel">
+	<div id="p-logo" role="banner">
+		<a class="mw-wiki-logo" href="/wiki/Main_Page"
+			title="Visit the main page"></a>
+	</div>
+	
 
-<!-- this handles the smooth fluid scrolling -->
-<script src="https://api.gdeltproject.org/assets/js/smoothscroll-1.4.6-gdeltmodified/smoothscroll.gdeltmodified.js"></script>
+<nav id="p-Navigation" class="mw-portlet mw-portlet-Navigation vector-menu vector-menu-portal portal" aria-labelledby="p-Navigation-label" role="navigation"  >
+	<label
+		id="p-Navigation-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Navigation</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-mainpage" class="mw-list-item"><a href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z"><span>Main Page</span></a></li><li id="n-help" class="mw-list-item"><a href="/wiki/Help:Contents" icon="help" title="Find help on how to use and edit Wikibooks"><span>Help</span></a></li><li id="n-Browse" class="mw-list-item"><a href="/wiki/Wikibooks:Card_Catalog_Office" title="Check out what Wikibooks has to offer"><span>Browse</span></a></li><li id="n-Cookbook" class="mw-list-item"><a href="/wiki/Cookbook:Table_of_Contents" title="Learn recipes from around the world"><span>Cookbook</span></a></li><li id="n-Wikijunior" class="mw-list-item"><a href="/wiki/Wikijunior" title="Books for children"><span>Wikijunior</span></a></li><li id="n-Featured-books" class="mw-list-item"><a href="/wiki/Wikibooks:Featured_books" title="The best of Wikibooks"><span>Featured books</span></a></li><li id="n-recentchanges" class="mw-list-item"><a href="/wiki/Special:RecentChanges" icon="recentChanges" title="A list of recent changes in the wiki [r]" accesskey="r"><span>Recent changes</span></a></li><li id="n-sitesupport" class="mw-list-item"><a href="//donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikibooks.org&amp;uselang=en" title="Support Wikibooks"><span>Donations</span></a></li><li id="n-randomrootpage" class="mw-list-item"><a href="/wiki/Special:RandomInCategory/Book:Wikibooks_Stacks/Books"><span>Random book</span></a></li><li id="n-Using-Wikibooks" class="mw-list-item"><a href="/wiki/Using_Wikibooks"><span>Using Wikibooks</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+
+<nav id="p-Community" class="mw-portlet mw-portlet-Community vector-menu vector-menu-portal portal" aria-labelledby="p-Community-label" role="navigation"  >
+	<label
+		id="p-Community-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Community</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-Reading-room-forum" class="mw-list-item"><a href="/wiki/Wikibooks:Reading_room"><span>Reading room forum</span></a></li><li id="n-portal" class="mw-list-item"><a href="/wiki/Wikibooks:Community_Portal" title="Find your way around the Wikibooks community"><span>Community portal</span></a></li><li id="n-currentevents" class="mw-list-item"><a href="/wiki/Wikibooks:Reading_room/Bulletin_Board" title="Important community news"><span>Bulletin Board</span></a></li><li id="n-maintenance" class="mw-list-item"><a href="/wiki/Wikibooks:Maintenance" title="Frequent tasks that you can help with"><span>Help out!</span></a></li><li id="n-Policies-and-guidelines" class="mw-list-item"><a href="/wiki/Wikibooks:Policies_and_guidelines" title="Pages detailing important rules and procedures"><span>Policies and guidelines</span></a></li><li id="n-contact" class="mw-list-item"><a href="/wiki/Wikibooks:Contact_us" title="Alternative methods of communication"><span>Contact us</span></a></li></ul>
+		
+	</div>
+</nav>
 
 
+<nav id="p-tb" class="mw-portlet mw-portlet-tb vector-menu vector-menu-portal portal" aria-labelledby="p-tb-label" role="navigation"  >
+	<label
+		id="p-tb-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Tools</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="t-whatlinkshere" class="mw-list-item"><a href="/wiki/Special:WhatLinksHere/Quantum_Mechanics" title="A list of all wiki pages that link here [j]" accesskey="j"><span>What links here</span></a></li><li id="t-recentchangeslinked" class="mw-list-item"><a href="/wiki/Special:RecentChangesLinked/Quantum_Mechanics" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k"><span>Related changes</span></a></li><li id="t-upload" class="mw-list-item"><a href="//commons.wikimedia.org/wiki/Special:UploadWizard?uselang=en" title="Upload files [u]" accesskey="u"><span>Upload file</span></a></li><li id="t-specialpages" class="mw-list-item"><a href="/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q"><span>Special pages</span></a></li><li id="t-permalink" class="mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;oldid=3451128" title="Permanent link to this revision of the page"><span>Permanent link</span></a></li><li id="t-info" class="mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;action=info" title="More information about this page"><span>Page information</span></a></li><li id="t-cite" class="mw-list-item"><a href="/w/index.php?title=Special:CiteThisPage&amp;page=Quantum_Mechanics&amp;id=3451128&amp;wpFormIdentifier=titleform" title="Information on how to cite this page"><span>Cite this page</span></a></li><li id="t-wikibase" class="mw-list-item"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q944" title="Link to connected data repository item [g]" accesskey="g"><span>Wikidata item</span></a></li></ul>
+		
+	</div>
+</nav>
+
+
+<nav id="p-Sister_projects" class="mw-portlet mw-portlet-Sister_projects vector-menu vector-menu-portal portal" aria-labelledby="p-Sister_projects-label" role="navigation"  >
+	<label
+		id="p-Sister_projects-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Sister projects</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="n-Wikipedia" class="mw-list-item"><a href="https://en.wikipedia.org/wiki/Main_Page"><span>Wikipedia</span></a></li><li id="n-Wikiversity" class="mw-list-item"><a href="https://en.wikiversity.org/wiki/Wikiversity:Main_Page"><span>Wikiversity</span></a></li><li id="n-Wiktionary" class="mw-list-item"><a href="https://en.wiktionary.org/wiki/Wiktionary:Main_Page"><span>Wiktionary</span></a></li><li id="n-Wikiquote" class="mw-list-item"><a href="https://en.wikiquote.org/wiki/Main_Page"><span>Wikiquote</span></a></li><li id="n-Wikisource" class="mw-list-item"><a href="https://en.wikisource.org/wiki/Main_Page"><span>Wikisource</span></a></li><li id="n-Wikinews" class="mw-list-item"><a href="https://en.wikinews.org/wiki/Main_Page"><span>Wikinews</span></a></li><li id="n-Wikivoyage" class="mw-list-item"><a href="https://en.wikivoyage.org/wiki/Main_Page"><span>Wikivoyage</span></a></li><li id="n-Commons" class="mw-list-item"><a href="https://commons.wikimedia.org/wiki/Main_Page"><span>Commons</span></a></li><li id="n-Wikidata" class="mw-list-item"><a href="https://www.wikidata.org/wiki/Wikidata:Main_Page"><span>Wikidata</span></a></li><li id="n-MediaWiki" class="mw-list-item"><a href="https://www.mediawiki.org/wiki/Main_Page"><span>MediaWiki</span></a></li><li id="n-Meta-Wiki" class="mw-list-item"><a href="https://meta.wikimedia.org/wiki/Main_Page"><span>Meta-Wiki</span></a></li></ul>
+		
+	</div>
+</nav>
+
+
+<nav id="p-coll-print_export" class="mw-portlet mw-portlet-coll-print_export vector-menu vector-menu-portal portal" aria-labelledby="p-coll-print_export-label" role="navigation"  >
+	<label
+		id="p-coll-print_export-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">Print/export</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li id="coll-create_a_book" class="mw-list-item"><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Quantum+Mechanics"><span>Create a collection</span></a></li><li id="coll-download-as-rl" class="mw-list-item"><a href="/w/index.php?title=Special:DownloadAsPdf&amp;page=Quantum_Mechanics&amp;action=show-download-screen"><span>Download as PDF</span></a></li><li id="t-print" class="mw-list-item"><a href="/w/index.php?title=Quantum_Mechanics&amp;printable=yes" title="Printable version of this page [p]" accesskey="p"><span>Printable version</span></a></li></ul>
+		
+	</div>
+</nav>
+
+
+<nav id="p-wikibase-otherprojects" class="mw-portlet mw-portlet-wikibase-otherprojects vector-menu vector-menu-portal portal" aria-labelledby="p-wikibase-otherprojects-label" role="navigation"  >
+	<label
+		id="p-wikibase-otherprojects-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">In other projects</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li class="wb-otherproject-link wb-otherproject-commons mw-list-item"><a href="https://commons.wikimedia.org/wiki/Category:Quantum_mechanics" hreflang="en"><span>Wikimedia Commons</span></a></li><li class="wb-otherproject-link wb-otherproject-wikipedia badge-Q17437798 badge-goodarticle mw-list-item" title="good article badge"><a href="https://en.wikipedia.org/wiki/Quantum_mechanics" hreflang="en"><span>Wikipedia</span></a></li><li class="wb-otherproject-link wb-otherproject-wikiquote mw-list-item"><a href="https://en.wikiquote.org/wiki/Quantum_mechanics" hreflang="en"><span>Wikiquote</span></a></li><li class="wb-otherproject-link wb-otherproject-wikiversity mw-list-item"><a href="https://en.wikiversity.org/wiki/Quantum_mechanics" hreflang="en"><span>Wikiversity</span></a></li></ul>
+		
+	</div>
+</nav>
+
+	
+
+<nav id="p-lang" class="mw-portlet mw-portlet-lang vector-menu vector-menu-portal portal" aria-labelledby="p-lang-label" role="navigation"  >
+	<label
+		id="p-lang-label"
+		
+		class="vector-menu-heading "
+	>
+		<span class="vector-menu-heading-label">In other languages</span>
+	</label>
+	<div class="vector-menu-content">
+		
+		<ul class="vector-menu-content-list"><li class="interlanguage-link interwiki-de mw-list-item"><a href="https://de.wikibooks.org/wiki/Quantenmechanik" title="Quantenmechanik – German" lang="de" hreflang="de" class="interlanguage-link-target"><span>Deutsch</span></a></li><li class="interlanguage-link interwiki-es mw-list-item"><a href="https://es.wikibooks.org/wiki/Mec%C3%A1nica_cu%C3%A1ntica" title="Mecánica cuántica – Spanish" lang="es" hreflang="es" class="interlanguage-link-target"><span>Español</span></a></li><li class="interlanguage-link interwiki-he mw-list-item"><a href="https://he.wikibooks.org/wiki/%D7%A4%D7%99%D7%96%D7%99%D7%A7%D7%94_%D7%A7%D7%95%D7%95%D7%A0%D7%98%D7%99%D7%AA" title="פיזיקה קוונטית – Hebrew" lang="he" hreflang="he" class="interlanguage-link-target"><span>עברית</span></a></li><li class="interlanguage-link interwiki-hy mw-list-item"><a href="https://hy.wikibooks.org/wiki/%D5%94%D5%BE%D5%A1%D5%B6%D5%BF%D5%A1%D5%B5%D5%AB%D5%B6_%D5%B4%D5%A5%D5%AD%D5%A1%D5%B6%D5%AB%D5%AF%D5%A1" title="Քվանտային մեխանիկա – Armenian" lang="hy" hreflang="hy" class="interlanguage-link-target"><span>Հայերեն</span></a></li><li class="interlanguage-link interwiki-it mw-list-item"><a href="https://it.wikibooks.org/wiki/Meccanica_quantistica" title="Meccanica quantistica – Italian" lang="it" hreflang="it" class="interlanguage-link-target"><span>Italiano</span></a></li><li class="interlanguage-link interwiki-ja mw-list-item"><a href="https://ja.wikibooks.org/wiki/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6" title="量子力学 – Japanese" lang="ja" hreflang="ja" class="interlanguage-link-target"><span>日本語</span></a></li><li class="interlanguage-link interwiki-pl mw-list-item"><a href="https://pl.wikibooks.org/wiki/Mechanika_kwantowa" title="Mechanika kwantowa – Polish" lang="pl" hreflang="pl" class="interlanguage-link-target"><span>Polski</span></a></li><li class="interlanguage-link interwiki-zh mw-list-item"><a href="https://zh.wikibooks.org/wiki/%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6" title="量子力学 – Chinese" lang="zh" hreflang="zh" class="interlanguage-link-target"><span>中文</span></a></li></ul>
+		<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Special:EntityPage/Q944#sitelinks-wikibooks" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>
+	</div>
+</nav>
+
+</div>
+
+</div>
+
+<footer id="footer" class="mw-footer" role="contentinfo" >
+	<ul id="footer-info">
+	<li id="footer-info-lastmod"> This page was last edited on 18 August 2018, at 01:43.</li>
+	<li id="footer-info-copyright">Text is available under the <a href="//creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License.</a>; additional terms may apply.  By using this site, you agree to the <a href="//foundation.wikimedia.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="//foundation.wikimedia.org/wiki/Privacy_policy">Privacy Policy.</a></li>
+</ul>
+
+	<ul id="footer-places">
+	<li id="footer-places-privacy"><a href="https://foundation.wikimedia.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+	<li id="footer-places-about"><a href="/wiki/Wikibooks:Welcome" title="Wikibooks:Welcome">About Wikibooks</a></li>
+	<li id="footer-places-disclaimer"><a href="/wiki/Wikibooks:General_disclaimer" title="Wikibooks:General disclaimer">Disclaimers</a></li>
+	<li id="footer-places-mobileview"><a href="//en.m.wikibooks.org/w/index.php?title=Quantum_Mechanics&amp;oldid=3451128&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+	<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+	<li id="footer-places-statslink"><a href="https://stats.wikimedia.org/#/en.wikibooks.org">Statistics</a></li>
+	<li id="footer-places-cookiestatement"><a href="https://foundation.wikimedia.org/wiki/Cookie_statement">Cookie statement</a></li>
+</ul>
+
+	<ul id="footer-icons" class="noprint">
+	<li id="footer-copyrightico"><a href="https://wikimediafoundation.org/"><img src="/static/images/footer/wikimedia-button.png" srcset="/static/images/footer/wikimedia-button-1.5x.png 1.5x, /static/images/footer/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation" loading="lazy" /></a></li>
+	<li id="footer-poweredbyico"><a href="https://www.mediawiki.org/"><img src="/static/images/footer/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/footer/poweredby_mediawiki_132x47.png 1.5x, /static/images/footer/poweredby_mediawiki_176x62.png 2x" width="88" height="31" loading="lazy"/></a></li>
+</ul>
+
+</footer>
+
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.270","walltime":"0.490","ppvisitednodes":{"value":1593,"limit":1000000},"postexpandincludesize":{"value":16680,"limit":2097152},"templateargumentsize":{"value":3842,"limit":2097152},"expansiondepth":{"value":34,"limit":100},"expensivefunctioncount":{"value":0,"limit":500},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":0,"limit":5000000},"entityaccesscount":{"value":0,"limit":400},"timingprofile":["100.00%  458.518      1 -total"," 78.22%  358.665      1 Template:Shelves"," 26.89%  123.277      1 Template:Shelf:Page?"," 26.26%  120.418      1 Shelf:Quantum_mechanics"," 18.23%   83.608      1 Template:Subjects/leaf"," 17.13%   78.536      1 Template:Subjects/0"," 16.38%   75.083      1 Template:Quantum_Mechanics/Page"," 13.67%   62.702      1 Template:Bookcat"," 13.40%   61.428     14 Template:Evalx"," 13.19%   60.492      1 Template:Shelf:Map"]},"scribunto":{"limitreport-timeusage":{"value":"0.194","limit":"10.000"},"limitreport-memusage":{"value":1926083,"limit":52428800}},"cachereport":{"origin":"mw1330","timestamp":"20220511174325","ttl":1814400,"transientcontent":false}}});});</script>
+<script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"Quantum Mechanics","url":"https:\/\/en.wikibooks.org\/wiki\/Quantum_Mechanics","sameAs":"http:\/\/www.wikidata.org\/entity\/Q944","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q944","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"Wikimedia Foundation, Inc.","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2004-03-01T03:13:55Z","dateModified":"2018-08-18T01:43:10Z","headline":"fundamental theory in physics describing the properties of nature on an atomic scale"}</script><script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"Article","name":"Quantum Mechanics","url":"https:\/\/en.wikibooks.org\/wiki\/Quantum_Mechanics","sameAs":"http:\/\/www.wikidata.org\/entity\/Q944","mainEntity":"http:\/\/www.wikidata.org\/entity\/Q944","author":{"@type":"Organization","name":"Contributors to Wikimedia projects"},"publisher":{"@type":"Organization","name":"Wikimedia Foundation, Inc.","logo":{"@type":"ImageObject","url":"https:\/\/www.wikimedia.org\/static\/images\/wmf-hor-googpub.png"}},"datePublished":"2004-03-01T03:13:55Z","dateModified":"2018-08-18T01:43:10Z","headline":"fundamental theory in physics describing the properties of nature on an atomic scale"}</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":149,"wgHostname":"mw1403"});});</script>
 </body>
 </html>

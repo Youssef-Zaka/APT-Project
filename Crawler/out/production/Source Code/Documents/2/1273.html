@@ -1,856 +1,195 @@
-<!DOCTYPE html>
-<html dir='ltr' lang='en'>
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-<title>PetScan</title>
-
-<!--<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PET-image.jpg/32px-PET-image.jpg">-->
-
-<link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap-v4-rtl/4.5.2-1/css/bootstrap.min.css">
-
-<!--<link rel="stylesheet" href="//tools-static.wmflabs.org/cdnjs/ajax/libs/tether/1.1.1/css/tether.min.css">-->
-<link rel="stylesheet" href="https://tools-static.wmflabs.org/magnustools/resources/html/wikimedia.css">
-
-<style>
-.radio-inline {
-	display:inline-block !important;
-}
-textarea, input[type=text], input[type=number], div.input-group-prepend {
-	box-shadow:3px 3px 2px #DDD;
-}
-.smaller {
-	font-size:10pt;
-}
-div.ns-block {
-	display:inline-block;
-	padding:1px;
-	margin-bottom:5px;
-	margin-right:5px;
-	white-space: nowrap;
-}
-#main_form textarea {
-	font-size:9pt;
-}
-div.form-group.row > label:first-child {
-	font-weight:bold;
-}
-.num {
-	font-family:courier;
-	text-align:right;
-}
-#autolist_box {
-	float:right;
-	margin-left:5px;
-	margin-bottom:5px;
-	padding:2px;
-	font-size:10pt;
-}
-div.autolist_subbox {
-	display:inline-block;
-	vertical-align:top;
-	margin-left:5px;
-}
-div.tab-pane {
-	margin-top:15px;
-}
-a.redlink {
-	color:red !important;
-}
-a.pagelink:visited {
-	color:#0056ab
-}
-div.fileusage {
-	white-space: nowrap;
-}
-td.link_container {
-	width:100%;
-}
-div.thumbcard {
-	text-align:center;
-	max-height:120px;
-}
-img.thumbcard-img {
-	max-height:120px;
-	border:0px;
-}
-div.example_psid {
-	padding:5px;
-	text-align:right;
-	font-weight:bold;
-	display:table-cell;
-}
-div.example_desc {
-	padding:5px;
-	display:table-cell;
-}
-#example_list {
-	height:500px;
-	overflow:auto;
-}
-</style>
-
-
-
-<script>
-/*
-var raw_interface_text_object ;
-function receiveRawInterfaceText ( j ) {
-	raw_interface_text_object = j ;
-}
-*/
-var global_namespace_cache = {} ;
-
-function receiveEnglishNamespaceData ( j ) {
-	global_namespace_cache['en.wikipedia.org'] = j ;
-}
-
-</script>
-<!--<script src='https://meta.wikimedia.org/w/api.php?action=parse&prop=wikitext&page=PetScan/Interface&format=json&callback=receiveRawInterfaceText'></script>-->
-<script src='https://en.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=namespaces&format=json&callback=receiveEnglishNamespaceData'></script>
-<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap-v4-rtl/4.5.2-1/js/bootstrap.bundle.min.js"></script>
-<script src="https://tools-static.wmflabs.org/tooltranslate/tt.js"></script>
-<script src='main.js'></script>
-</head>
-<body style='display:none'>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-	<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	<span class="navbar-toggler-icon"></span>
-	</button>
-
-	<div class="collapse navbar-collapse" id="bd-main-nav">
-	<ul class="navbar-nav mr-auto">
-		<li class="nav-item"><a class="nav-item nav-link active" tt="toolname" href="/"></a></li>
-		<li class="nav-item"><a target='_blank' class="nav-item nav-link" tt="manual" href="#"></a></li>
-		<li class="nav-item"><a target='_blank' class="nav-item nav-link" tt="issues" href="https://github.com/magnusmanske/petscan_rs/issues"></a></li>
-		<li class="nav-item"><div class="btn-group nav-item nav-link" id='interface_languages_wrapper'></div></li>
-	</ul>
-
-	<div class="btn-group nav-item nav-link"><a target='_blank' class="btn btn-outline-warning" tt="examples" href="#"></a></div>
-	<div class="btn-group nav-item nav-link"><button class='btn btn-outline-default' tt='toggle_list' id='tab-list'></button></div>
-    <a style="margin:0px;padding:0px;margin-top:4px;margin-left:10px;" href="https://tools.wmflabs.org" target='_blank'><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Toolforge_logo.svg/32px-Toolforge_logo.svg.png" tt_title="wmf_powered" border="0" width="32px"></a>
-
-  </div>
-</nav>
-
-
-<div class="container mt-2">
-<div class="row">
-<div class="col-md-12">
-
-<div id='referrer_box' class="alert alert-primary" role="alert" style="display:none;">
-	<span tt="referrer"></span> <a id='referrer' href=''class='external'></a>
-</div>
-
-<!--<div class="alert alert-primary" role="alert" tt="v2_alert"></div>-->
-
-<form id='main_form' method='post' action='/' class='form'>
-
-<ul class="nav nav-tabs" role="tablist">
-	<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_categories" role="tab"><span tt='categories'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_pageprops" role="tab"><span tt='page_props'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_templates_n_links" role="tab"><span tt='templates_links'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_other_sources" role="tab"><span tt='other_sources'></span></a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_wikidata" role="tab"><span tt='wikidata'></span></a></li>
-<!--	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_wdfist" role="tab"><span>WDFIST</span></a></li>-->
-	<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_output" role="tab"><span tt='output'></span></a></li>
-</ul>
-
-<div class="tab-content">
-
-
-<div class="tab-pane active" id="tab_categories" role="tabpanel">
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="language"></label>
-<div class="col-sm-4"><input type="text" class="form-control" name="language" value='en'></div>
-<div class="col-sm-6">
-<a href='#' style='margin-left:20px;' tabindex="-1" id='quick_commons' tt='site_commons'></a>
-<a href='#' style='margin-left:20px;' tabindex="-1" id='quick_wikispecies' tt='site_wikispecies'></a>
-<a href='#' style='margin-left:20px;' tabindex="-1" id='quick_wikidata' tt='site_wikidata'></a>
-<!--<span class='smaller' tt='projects_note'></span>-->
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="project"></label>
-<div class="col-sm-4"><input type="text" class="form-control" name="project" value='wikipedia'></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="depth"></label>
-<div class="col-sm-2"><input type="number" class="form-control" name="depth" value='0'></div>
-<div class='col-sm-8 smaller' tt='depth_explanation'></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="categories"></label>
-<div class="col-sm-10"><textarea class="form-control" name='categories' rows=3 style='width:100%'></textarea></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="combination"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="combination" value="subset"> <span tt='comb_subset'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="combination" value="union"> <span tt='comb_union'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="negative_categories"></label>
-<div class="col-sm-10"><textarea class="form-control" name='negcats' rows=3 style='width:100%'></textarea></div>
-</div>
-
-
-</div> <!--tab panel-->
-<div class="tab-pane" id="tab_pageprops" role="tabpanel">
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='namespaces'></span><br/><span class='smaller current_wiki'></span></label>
-<div class="col-sm-10" id='namespaces'></div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='size'></span></label>
-<div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="larger"></div></div>
-	<input class="form-control" tt_placeholder="size_explanation" name="larger" value="" type="text"></div>
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="smaller"></div></div>
-	<input class="form-control" tt_placeholder="size_explanation" name="smaller" value="" type="text"></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-7">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="since_rev0"></div></div>
-	<input class="form-control" tt_placeholder="since_rev0_explanation" name="since_rev0" value="" type="text"></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='link_number'></span></label>
-<div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="minlinks"></div></div>
-	<input class="form-control" name="minlinks" placeholder="#" value="" type="text"></div>
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="maxlinks"></div></div>
-	<input class="form-control" name="maxlinks" placeholder="#" value="" type="text"></div>
-</div>
-</div>
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='edits'></span></label>
-<div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="before"></div></div>
-	<input class="form-control" tt_placeholder="date_format" name="before" value="" type="text"></div>
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="after"></div></div>
-	<input class="form-control" tt_placeholder="date_format" name="after" value="" type="text"></div>
-</div></div>
-<div class="form-group row">
-<div class="col-sm-2">
-</div><div class="col-sm-5">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="max_age"></div></div>
-	<input class="form-control" tt_placeholder="max_age_format" name="max_age" value="" type="text"></div>
-</div><div class="col-sm-5">
-<label><input type='checkbox' name='only_new' /> <span tt='only_new'></span></label>
-</div>
-</div>
-
-
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="show_redirects"></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="show_redirects" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_redirects" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_redirects" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-2 form-control-label" tt="show_soft_redirects" style='font-weight: bold'></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="show_soft_redirects" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_soft_redirects" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_soft_redirects" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-2 form-control-label" tt="show_disambiguation_pages" style='font-weight: bold'></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="show_disambiguation_pages" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_disambiguation_pages" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="show_disambiguation_pages" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='edits'></span>: <span tt='edit_bots'></span></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="edits[bots]" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[bots]" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[bots]" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-1 form-control-label" style='font-weight: bold'> <span tt='edit_anons'></span></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="edits[anons]" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[anons]" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[anons]" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-
-<label class="col-sm-1 form-control-label" style='font-weight: bold'><span tt='edit_flagged'></span></label>
-<div class="col-sm-2">
-<div class="radio-inline"><label><input type="radio" name="edits[flagged]" value="both"> <span tt='edits_both'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[flagged]" value="yes"> <span tt='edits_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="edits[flagged]" value="no"> <span tt='edits_no'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"><span tt='page_image'></span></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="page_image" value="any"> <span tt='page_image_any'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="yes"> <span tt='page_image_yes'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="free"> <span tt='page_image_free'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="nonfree"> <span tt='page_image_nonfree'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="page_image" value="no"> <span tt='page_image_no'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row" id='ores_options'>
-<label class="col-sm-2 form-control-label"><span tt='ores'></span></label>
-<div class="col-sm-2" tt_title='ores_caution'>
-	<select name="ores_type" id='ores_model_select'>
-		<option value='any' tt='ores_any'></option>
-		<option value='damaging'>damaging</option>
-		<option value='goodfaith'>goodfaith</option>
-		<option value='reverted'>reverted</option>
-		<option value='draftquality'>draftquality</option>
-		<option value='wp10'>wp10</option>
-	</select>
-</div>
-<div class="col-sm-5">
-	<span tt='ores_probability'></span>
-	<input type='text' name='ores_prob_from' style='width:100px' placeholder='0.00' /> &mdash; <input type='text' name='ores_prob_to' style='width:100px' placeholder='1.00' />
-</div>
-<div class="col-sm-3">
-	<span tt='ores_prediction'></span>
-	<div class="radio-inline"><label><input type="radio" name="ores_prediction" value="any"> <span tt='ores_prediction_any'></span></label></div>
-	<div class="radio-inline"><label><input type="radio" name="ores_prediction" value="yes"> <span tt='ores_yes'></span></label></div>
-	<div class="radio-inline"><label><input type="radio" name="ores_prediction" value="no"> <span tt='ores_no'></span></label></div>
-</div>
-</div>
-
-</div> <!--tab panel-->
-
-<div class="tab-pane" id="tab_templates_n_links" role="tabpanel">
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="templates"></label>
-<div class="col-sm-3"><div tt='templates_yes'></div><textarea class="form-control" name='templates_yes' rows=4 style="width:100%"></textarea><div><label><input type='checkbox' name='templates_use_talk_yes' /> <span tt='templates_use_talk_instead'></span></label></div></div>
-<div class="col-sm-3"><div tt='templates_any'></div><textarea class="form-control" name='templates_any' rows=4 style="width:100%"></textarea><div><label><input type='checkbox' name='templates_use_talk_any' /> <span tt='templates_use_talk_instead'></span></label></div></div>
-<div class="col-sm-3"><div tt='templates_no' ></div><textarea class="form-control" name='templates_no'  rows=4 style="width:100%"></textarea><div><label><input type='checkbox' name='templates_use_talk_no'  /> <span tt='templates_use_talk_instead'></span></label></div></div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="outlinks"></label>
-<div class="col-sm-3"><div tt='outlinks_yes'></div><textarea class="form-control" name='outlinks_yes' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_any'></div><textarea class="form-control" name='outlinks_any' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_no' ></div><textarea class="form-control" name='outlinks_no'  rows=4 style="width:100%"></textarea></div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="links_to"></label>
-<div class="col-sm-3"><div tt='outlinks_yes'></div><textarea class="form-control" name='links_to_all' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_any'></div><textarea class="form-control" name='links_to_any' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='outlinks_no' ></div><textarea class="form-control" name='links_to_no'  rows=4 style="width:100%"></textarea></div>
-</div>
-
-
-</div> <!--tab panel-->
-<div class="tab-pane" id="tab_other_sources" role="tabpanel">
-
-<!--
-<div class="row">
-<div class='col-sm-1'></div>
-<div class='col-sm-11' tt='multi_result_note'></div>
-</div>
--->
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sparql"></label>
-<div class="col-sm-10">
-<textarea class="form-control" tt_placeholder="sparql_note" name='sparql' rows=4 style="width:100%"></textarea>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="manual_list"></label>
-<div class="col-sm-10">
-<textarea class="form-control" tt_placeholder="manual_list_note" name='manual_list' rows=4 style="width:100%"></textarea>
-</div>
-</div>
-<div class="form-group row">
-<div class="col-sm-2"></div>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="manual_list_wiki"></div></div>
-	<input class="form-control" tt_placeholder="manual_list_wiki_note" name="manual_list_wiki" value="" type="text"></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="pagepile"></label>
-<div class="col-sm-4">
-<input type="text" class="form-control" tt_placeholder="pagepile_note" name='pagepile' />
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="search"></label>
-<div class="col-sm-4">
-<input type="text" class="form-control" tt_placeholder="search_note" name='search_query' />
-</div>
-<div class="col-sm-2">
-<input type="text" class="form-control" tt_placeholder="search_wiki_note" name='search_wiki' />
-</div>
-<div class="col-sm-2">
-<span tt='max_results'></span>
-</div>
-<div class="col-sm-2">
-<input type="number" class="form-control" name='search_max_results' value='500' />
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="wikidata"></label>
-<div class="col-sm-5"><input type="text" class="form-control col-sm-4" tt_placeholder="wikidata_source_ph" name='wikidata_source_sites' /></div>
-<div class="col-sm-5"><span tt='wikidata_source'></span></div>
-</div>
-<div class="form-group row">
-<div class="col-sm-2"></div>
-<div class="col-sm-10"><span class='smaller' tt='wikidata_source_note'></span></div>
-</div>
-
-
-
-<div class="form-group row">
-	<label class="col-sm-2 form-control-label" tt="namespaces"></label>
-	<div class="col-sm-10">
-		<div class="radio-inline"><label><input type="radio" name="namespace_conversion" value="keep"> <span tt='namespace_conversion_keep'></span></label></div>
-		<div class="radio-inline"><label><input type="radio" name="namespace_conversion" value="topic"> <span tt='namespace_conversion_topic'></span></label></div>
-		<div class="radio-inline"><label><input type="radio" name="namespace_conversion" value="talk"> <span tt='namespace_conversion_talk'></span></label></div>
-	</div>
-</div>
-
-	
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="subpages"></label>
-<div class="col-sm-3"><div class="radio-inline"><label><input type="checkbox" name="add_subpages" value="1"> <span tt='add_subpages'></span></label></div></div>
-<div class="col-sm-7">
-<span tt='subpage_filter' style='vertical-align:top'></span>&nbsp;
-<div class="radio-inline"><label><input type="radio" name="subpage_filter" value="either"> <span tt='subpages_either'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="subpage_filter" value="subpages"> <span tt='subpages_only'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="subpage_filter" value="no_subpages"> <span tt='subpages_no'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="common_wiki"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="auto"> <span tt='common_wiki_auto'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="cats"> <span tt='common_wiki_cats'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="pagepile"> <span tt='common_wiki_pagepile'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="manual"> <span tt='common_wiki_manual'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="common_wiki" value="wikidata"> <span tt='common_wiki_wikidata'></span></label></div>
-<div class="radio-inline" style="white-space:nowrap">
-	<label><input type="radio" name="common_wiki" value="other"></label>
-	<input class="form-control" type="text" name="common_wiki_other" tt_placeholder="common_wiki_other"  style='display:inline-block;' />
-</div>
-</div>
-</div>
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="source_combination"></label>
-<div class="col-sm-10">
-<div class="input-group" style="width:100%">
-<input type='text' class="form-control" tt_placeholder="source_combination_hint" name='source_combination' />
-</div>
-<div tt='source_combination_description' class='smaller'></div>
-</div>
-</div>
-
-
-</div> <!--tab panel-->
-<div class="tab-pane" id="tab_wikidata" role="tabpanel">
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="pages_with_items"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="no"><span tt='wikidata_no'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="any"><span tt='wikidata_any'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="with"><span tt='wikidata_with'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wikidata_item" value="without"><span tt='wikidata_without'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="wikidata_label_language"></label>
-<div class="col-sm-4">
-<input type='text' name='wikidata_label_language' class='form-control' tt_placeholder='wikidata_label_language_ph' />
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="wikidata_prop_item_use"></label>
-<div class="col-sm-4">
-<input type='text' name='wikidata_prop_item_use' class='form-control' tt_placeholder='wikidata_prop_item_use_ph' style='margin-right:20px;' />
-</div>
-<div class="col-sm-6">
-<div class="radio-inline"><label><input type="radio" name="wpiu" value="any"><span tt='wpiu_uses_any'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wpiu" value="all"><span tt='wpiu_uses_all'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="wpiu" value="none"><span tt='wpiu_uses_none'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="checkbox" name="wpiu_no_statements" value="1"> <span tt='wpiu_no_statements'></span></label></div>
-<div class="radio-inline"><label><input type="checkbox" name="wpiu_no_sitelinks" value="1"> <span tt='wpiu_no_sitelinks'></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sitelinks"></label>
-<div class="col-sm-10">
-<span tt='sitelink_note'></span>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-10">
-<div class="row">
-<div class="col-sm-3"><div tt='sitelinks_yes'></div><textarea class="form-control" name='sitelinks_yes' tt_placeholder='ph_sites' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='sitelinks_any'></div><textarea class="form-control" name='sitelinks_any' tt_placeholder='ph_sites' rows=4 style="width:100%"></textarea></div>
-<div class="col-sm-3"><div tt='sitelinks_no' ></div><textarea class="form-control" name='sitelinks_no'  tt_placeholder='ph_sites' rows=4 style="width:100%"></textarea></div>
-</div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="min_sitelink_count"></div></div>
-	<input class="form-control" name="min_sitelink_count" value="" type="number"></div>
-</div>
-<div class="col-sm-1"></div>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="max_sitelink_count"></div></div>
-	<input class="form-control" name="max_sitelink_count" value="" type="number"></div>
-</div>
-</div>
-
-
-
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="labels_etc"></label>
-<div class="col-sm-10"><span tt='labels_note'></span></div>
-</div>
-<div class="form-group row">
-<div class="col-sm-2"></div>
-<div class="col-sm-3">
-<div tt='labels_yes'></div>
-<textarea class="form-control" name='labels_yes' tt_placeholder='ph_labels' rows=4 style="width:100%"></textarea>
-<div>
-<label><input type='checkbox' name='cb_labels_yes_l' value='1' /> <span tt='labels'></span></label>
-<label><input type='checkbox' name='cb_labels_yes_a' value='1' /> <span tt='aliases'></span></label>
-<label><input type='checkbox' name='cb_labels_yes_d' value='1' /> <span tt='descriptions'></span></label>
-</div>
-<div><input class="form-control" type='text' name='langs_labels_yes' tt_placeholder='ph_langs_labels' /></div>
-</div>
-<div class="col-sm-3">
-<div tt='labels_any'></div>
-<textarea class="form-control" name='labels_any' tt_placeholder='ph_labels' rows=4 style="width:100%"></textarea>
-<div>
-<label><input type='checkbox' name='cb_labels_any_l' value='1' /> <span tt='labels'></span></label>
-<label><input type='checkbox' name='cb_labels_any_a' value='1' /> <span tt='aliases'></span></label>
-<label><input type='checkbox' name='cb_labels_any_d' value='1' /> <span tt='descriptions'></span></label>
-</div>
-<div><input class="form-control" type='text' name='langs_labels_any' tt_placeholder='ph_langs_labels' /></div>
-</div>
-<div class="col-sm-3">
-<div tt='labels_no' ></div>
-<textarea class="form-control" name='labels_no'  tt_placeholder='ph_labels' rows=4 style="width:100%"></textarea>
-<div>
-<label><input type='checkbox' name='cb_labels_no_l' value='1' /> <span tt='labels'></span></label>
-<label><input type='checkbox' name='cb_labels_no_a' value='1' /> <span tt='aliases'></span></label>
-<label><input type='checkbox' name='cb_labels_no_d' value='1' /> <span tt='descriptions'></span></label>
-</div>
-<div><input class="form-control" type='text' name='langs_labels_no' tt_placeholder='ph_langs_labels' /></div>
-</div>
-<div class="col-sm-2"></div>
-</div>
-
-</div> <!--tab panel-->
-
-
-
-<!--
-<div class="tab-pane" id="tab_wdfist" role="tabpanel">
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label"></label>
-<div class="col-sm-10">
-<div>
-	THIS WILL RUN WDFIST AFTER NOTMAL OPERATIONS AND RETURN DIFFERENT OUTPUT
-</div>
-<label><input type='checkbox' name='wdf_main' /> <span>USE WDFIST</span></label>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label">FOLLOW</label>
-<div class="col-sm-10">
-<label><input type='checkbox' name='wdf_langlinks' /> <span>LANGLINKS</span></label>
-<label><input type='checkbox' name='wdf_coords' /> <span>COORDINATES</span></label>
-<label><input type='checkbox' name='wdf_search_commons' /> <span>SEARCH COMMONS</span></label>
-<label><input type='checkbox' name='wdf_commons_cats' /> <span>COMMONS CATEGORIES</span></label>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label">OPTIONS</label>
-<div class="col-sm-10">
-<label><input type='checkbox' name='wdf_only_items_without_p18' /> <span>ONLY WITHOUT P18</span></label>
-<label><input type='checkbox' name='wdf_only_files_not_on_wd' /> <span>ONLY FILES NOT USED ON WIKIDATA</span></label>
-<label><input type='checkbox' name='wdf_only_jpeg' /> <span>ONLY JPEG</span></label>
-<label><input type='checkbox' name='wdf_max_five_results' /> <span>MAX 5 RESULTS</span></label>
-<label><input type='checkbox' name='wdf_only_page_images' /> <span>PAGE IMAGES ONLY</span></label>
-<label><input type='checkbox' name='wdf_allow_svg' /> <span>SHOW SVG</span></label>
-</div>
-</div>
-
-</div>-->
-<!--tab panel-->
-
-
-
-
-<div class="tab-pane" id="tab_output" role="tabpanel">
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="format"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="format" value="html"> HTML</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="csv"> CSV</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="tsv"> TSV</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="wiki"> Wiki</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="json"> JSON</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="pagepile"> PagePile</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="kml"> KML</label></div>
-<div class="radio-inline"><label><input type="radio" name="format" value="plain"> <span tt="plain_text"></span></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="output_compatability"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="output_compatability" value="catscan"> <span tt='catscan'></span></label></div>
-<div class="radio-inline"><label><input type="radio" name="output_compatability" value="quick-intersection"> <span tt='quick_intersection'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='sparse' /> <span tt='sparse'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='json-pretty' /> <span tt='pretty_json'></span></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sort"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="sortby" value="none"> <span tt='sort_by_none'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="title"> <span tt='sort_by_title'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="ns_title"> <span tt='sort_by_ns_title'></label></div><br/>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="size"> <span tt='sort_by_size'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="date"> <span tt='sort_by_date'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="incoming_links"> <span tt='sort_by_incoming_links'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="filesize"> <span tt='sort_by_filesize'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="uploaddate"> <span tt='sort_by_uploaddate'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="sitelinks"> <span tt='sort_by_sitelinks'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="random"> <span tt='sort_by_random'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortby" value="defaultsort"> <span tt='sort_by_defaultsort'></label></div>
-</div>
-</div>
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="sort_order"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type="radio" name="sortorder" value="ascending"><span tt='sort_ascending'></label></div>
-<div class="radio-inline"><label><input type="radio" name="sortorder" value="descending"><span tt='sort_descending'></label></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="files"></label>
-<div class="col-sm-10">
-<label><input type='checkbox' name='ext_image_data' /> <span tt='ext_image_data'></span></label>
-<label><input type='checkbox' name='file_usage_data' /> <span tt='file_usage_data'></span></label>
-<label><input type='checkbox' name='file_usage_data_ns0' /> <span tt='file_usage_data_ns0'></span></label>
-<label><input type='checkbox' name='thumbnails_in_wiki_output' /> <span tt='thumbnails_in_wiki_output'></span></label>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="add_metadata"></label>
-<div class="col-sm-10">
-<label style='margin-right:20px;'><input type='checkbox' name='add_image' /> <span tt='add_image'></span></label>
-<label style='margin-right:20px;'><input type='checkbox' name='add_coordinates' /> <span tt='add_coordinates'></span></label>
-<label style='margin-right:20px;'><input type='checkbox' name='add_defaultsort' /> <span tt='add_defaultsort'></span></label>
-<label style='margin-right:20px;'><input type='checkbox' name='add_disambiguation' /> <span tt='add_disambiguation'></span></label>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="regexp_filter"></label>
-<div class="col-sm-4">
-<input type='text' name='regexp_filter' class='form-control' tt_placeholder='regexp_filter_rules' />
-</div>
-<div class="col-sm-6">
-<span tt='regexp_filter_note'></span>
-</div>
-</div>
-
-
-<div class="form-group row">
-	<label class="col-sm-2 form-control-label" tt="search_filter"></label>
-	<div class="col-sm-4">
-	<input type='text' name='search_filter' class='form-control' tt_placeholder='search_filter_rules' />
-	</div>
-	<div class="col-sm-6">
-	<span tt='search_filter_note'></span>
-	</div>
-</div>
-	
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="redlinks"></label>
-<div class="col-sm-10">
-<div class="radio-inline"><label><input type='checkbox' name='show_redlinks' /> <span tt='show_redlinks'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='remove_template_redlinks' /> <span tt='remove_template_redlinks'></span></label></div>
-<div class="radio-inline"><label><input type='checkbox' name='article_redlinks_only' /> <span tt='article_redlinks_only'></span></label></div>
-</div>
-<div class="col-sm-2"></div>
-<div class="col-sm-4">
-<div class="input-group">
-	<div class="input-group-prepend"><div class="input-group-text" tt="min_redlink_count"></div></div>
-	<input class="form-control" name="min_redlink_count" value="" type="number"></div>
-</div>
-</div>
-
-
-<div class="form-group row">
-<label class="col-sm-2 form-control-label" tt="limit"></label>
-<div class="col-sm-4">
-<input type='number' name='output_limit' class='form-control' tt_placeholder='ph_limit' />
-</div>
-</div>
-
-
-
-</div> <!--tab panel-->
-
-<div class='row' style='padding-top:10px;margin-top:20px;'>
-<div class="col-sm-2">
-<input type='submit' id='doit' name='doit' name='doit' class='btn btn-lg btn-outline-primary' tt_value='doit' accesskey='s' />
-</div>
-<div class="col-sm-10">
-<span id='permalink'></span>
-</div>
-</div>
-
-
-</div>
-
-<input type='hidden' name='referrer_url' value='' />
-<input type='hidden' name='referrer_name' value='' />
-
-
-<input type='hidden' name='interface_language' value='en' />
-<input type='hidden' name='active_tab' value='' />
-<span id='querystring' style='display:none'>project=wikimedia&categories=Electronics&language=commons&ns%5B6%5D=1</span>
-<!--psid-->
-</form>
-
-
-</div>
-
-
-</div><!--row-->
-
-<div class="row"><div class="col-md-12"><!--output--></div></div>
-
-</div><!--container-->
-
-<div class="modal fade" id="example_dialog" tabindex="-1" role="dialog" style='display:none'>
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" tt="example_title"></h4>
-      </div>
-      <div class="modal-body">
-      	<div><input type='text' value='' id='example_search' class='form-control' tt_placeholder='search_examples' /></div>
-      	<div>
-      		<div id='example_list'>
-      		</select>
-      	</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-light" tt="close" data-dismiss="modal"></button>
-        <a type="button" id='edit_examples' class="btn btn-light" tt="edit_examples" href='https://meta.wikimedia.org/w/index.php?title=PetScan/Examples&action=edit' target='_blank'></a>
-      </div>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+<!DOCTYPE html> <!--[if IE 9 ]> <html lang="en-US" class="ie9 loading-site no-js"> <![endif]--> <!--[if IE 8 ]> <html lang="en-US" class="ie8 loading-site no-js"> <![endif]--> <!--[if (gte IE 9)|!(IE)]><!--><html lang="en-US" class="loading-site no-js"> <!--<![endif]--><head><meta charset="UTF-8" /><link rel="profile" href="https://gmpg.org/xfn/11" /><link rel="pingback" href="https://natechnology.in/xmlrpc.php" />  <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' /> <style type="text/css">.WooZone-price-info{font-size:.6em}.woocommerce div.product p.price,.woocommerce div.product span.price{line-height:initial!important}</style><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /><title>Blog Archives : NAtechnology</title><link rel="stylesheet" href="https://natechnology.in/wp-content/cache/min/1/b2592dce12285f9e0cf13284c8f382d4.css" data-minify="1" /><link rel="canonical" href="https://natechnology.in/category/blog/" /><meta property="og:locale" content="en_US" /><meta property="og:type" content="article" /><meta property="og:title" content="Blog Archives : NAtechnology" /><meta property="og:url" content="https://natechnology.in/category/blog/" /><meta property="og:site_name" content="NAtechnology" /><meta name="twitter:card" content="summary_large_image" /> <script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":["Person","Organization"],"@id":"https://natechnology.in/#/schema/person/a7078638b68e291cff0e422c903d2b86","name":"Naved Alam","image":{"@type":"ImageObject","@id":"https://natechnology.in/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/cf54660af58f9503d56dd0e7c2edaee6?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/cf54660af58f9503d56dd0e7c2edaee6?s=96&d=mm&r=g","caption":"Naved Alam"},"logo":{"@id":"https://natechnology.in/#personlogo"},"sameAs":["https://natechnology.in"]},{"@type":"WebSite","@id":"https://natechnology.in/#website","url":"https://natechnology.in/","name":"NaTechnology","description":"products that you wants.","publisher":{"@id":"https://natechnology.in/#/schema/person/a7078638b68e291cff0e422c903d2b86"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://natechnology.in/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"CollectionPage","@id":"https://natechnology.in/category/blog/#webpage","url":"https://natechnology.in/category/blog/","name":"Blog Archives : NAtechnology","isPartOf":{"@id":"https://natechnology.in/#website"},"breadcrumb":{"@id":"https://natechnology.in/category/blog/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://natechnology.in/category/blog/"]}]},{"@type":"BreadcrumbList","@id":"https://natechnology.in/category/blog/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://natechnology.in/"},{"@type":"ListItem","position":2,"name":"Blog"}]}]}</script> <link rel='dns-prefetch' href='//fonts.googleapis.com' /><link rel='dns-prefetch' href='//pagead2.googlesyndication.com' /><link rel="alternate" type="application/rss+xml" title="NAtechnology &raquo; Feed" href="https://natechnology.in/feed/" /><link rel="alternate" type="application/rss+xml" title="NAtechnology &raquo; Comments Feed" href="https://natechnology.in/comments/feed/" /><link rel="alternate" type="application/rss+xml" title="NAtechnology &raquo; Blog Category Feed" href="https://natechnology.in/category/blog/feed/" />  <script src="//www.googletagmanager.com/gtag/js?id=UA-184774759-1"  type="text/javascript" data-cfasync="false" data-wpfc-render="false" async></script> <script type="text/javascript" data-cfasync="false" data-wpfc-render="false">var mi_version = '8.3.0';
+				var mi_track_user = true;
+				var mi_no_track_reason = '';
+				
+								var disableStrs = [
+															'ga-disable-UA-184774759-1',
+									];
+
+				/* Function to detect opted out users */
+				function __gtagTrackerIsOptedOut() {
+					for ( var index = 0; index < disableStrs.length; index++ ) {
+						if ( document.cookie.indexOf( disableStrs[ index ] + '=true' ) > -1 ) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+				/* Disable tracking if the opt-out cookie exists. */
+				if ( __gtagTrackerIsOptedOut() ) {
+					for ( var index = 0; index < disableStrs.length; index++ ) {
+						window[ disableStrs[ index ] ] = true;
+					}
+				}
+
+				/* Opt-out function */
+				function __gtagTrackerOptout() {
+					for ( var index = 0; index < disableStrs.length; index++ ) {
+						document.cookie = disableStrs[ index ] + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+						window[ disableStrs[ index ] ] = true;
+					}
+				}
+
+				if ( 'undefined' === typeof gaOptout ) {
+					function gaOptout() {
+						__gtagTrackerOptout();
+					}
+				}
+								window.dataLayer = window.dataLayer || [];
+
+				window.MonsterInsightsDualTracker = {
+					helpers: {},
+					trackers: {},
+				};
+				if ( mi_track_user ) {
+					function __gtagDataLayer() {
+						dataLayer.push( arguments );
+					}
+
+					function __gtagTracker( type, name, parameters ) {
+						if (!parameters) {
+							parameters = {};
+						}
+
+						if (parameters.send_to) {
+							__gtagDataLayer.apply( null, arguments );
+							return;
+						}
+
+						if ( type === 'event' ) {
+							
+															parameters.send_to = monsterinsights_frontend.ua;
+								__gtagDataLayer( type, name, parameters );
+													} else {
+							__gtagDataLayer.apply( null, arguments );
+						}
+					}
+					__gtagTracker( 'js', new Date() );
+					__gtagTracker( 'set', {
+						'developer_id.dZGIzZG' : true,
+											} );
+															__gtagTracker( 'config', 'UA-184774759-1', {"forceSSL":"true","link_attribution":"true"} );
+										window.gtag = __gtagTracker;											(function () {
+							/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+							/* ga and __gaTracker compatibility shim. */
+							var noopfn = function () {
+								return null;
+							};
+							var newtracker = function () {
+								return new Tracker();
+							};
+							var Tracker = function () {
+								return null;
+							};
+							var p = Tracker.prototype;
+							p.get = noopfn;
+							p.set = noopfn;
+							p.send = function (){
+								var args = Array.prototype.slice.call(arguments);
+								args.unshift( 'send' );
+								__gaTracker.apply(null, args);
+							};
+							var __gaTracker = function () {
+								var len = arguments.length;
+								if ( len === 0 ) {
+									return;
+								}
+								var f = arguments[len - 1];
+								if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+									if ( 'send' === arguments[0] ) {
+										var hitConverted, hitObject = false, action;
+										if ( 'event' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[3] ) {
+												hitObject = {
+													'eventAction': arguments[3],
+													'eventCategory': arguments[2],
+													'eventLabel': arguments[4],
+													'value': arguments[5] ? arguments[5] : 1,
+												}
+											}
+										}
+										if ( 'pageview' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[2] ) {
+												hitObject = {
+													'eventAction': 'page_view',
+													'page_path' : arguments[2],
+												}
+											}
+										}
+										if ( typeof arguments[2] === 'object' ) {
+											hitObject = arguments[2];
+										}
+										if ( typeof arguments[5] === 'object' ) {
+											Object.assign( hitObject, arguments[5] );
+										}
+										if ( 'undefined' !== typeof arguments[1].hitType ) {
+											hitObject = arguments[1];
+											if ( 'pageview' === hitObject.hitType ) {
+												hitObject.eventAction = 'page_view';
+											}
+										}
+										if ( hitObject ) {
+											action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
+											hitConverted = mapArgs( hitObject );
+											__gtagTracker( 'event', action, hitConverted );
+										}
+									}
+									return;
+								}
+
+								function mapArgs( args ) {
+									var arg, hit = {};
+									var gaMap = {
+										'eventCategory': 'event_category',
+										'eventAction': 'event_action',
+										'eventLabel': 'event_label',
+										'eventValue': 'event_value',
+										'nonInteraction': 'non_interaction',
+										'timingCategory': 'event_category',
+										'timingVar': 'name',
+										'timingValue': 'value',
+										'timingLabel': 'event_label',
+										'page' : 'page_path',
+										'location' : 'page_location',
+										'title' : 'page_title',
+									};
+									for ( arg in args ) {
+																				if ( ! ( ! args.hasOwnProperty(arg) || ! gaMap.hasOwnProperty(arg) ) ) {
+											hit[gaMap[arg]] = args[arg];
+										} else {
+											hit[arg] = args[arg];
+										}
+									}
+									return hit;
+								}
+
+								try {
+									f.hitCallback();
+								} catch ( ex ) {
+								}
+							};
+							__gaTracker.create = newtracker;
+							__gaTracker.getByName = newtracker;
+							__gaTracker.getAll = function () {
+								return [];
+							};
+							__gaTracker.remove = noopfn;
+							__gaTracker.loaded = true;
+							window['__gaTracker'] = __gaTracker;
+						})();
+									} else {
+										console.log( "" );
+					( function () {
+							function __gtagTracker() {
+								return null;
+							}
+							window['__gtagTracker'] = __gtagTracker;
+							window['gtag'] = __gtagTracker;
+					} )();
+									}</script> <style type="text/css">img.wp-smiley,img.emoji{display:inline!important;border:none!important;box-shadow:none!important;height:1em!important;width:1em!important;margin:0 0.07em!important;vertical-align:-0.1em!important;background:none!important;padding:0!important}</style><style id='wp-block-library-inline-css' type='text/css'>:root{--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,161;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}.has-text-align-center{text-align:center}.has-text-align-left{text-align:left}.has-text-align-right{text-align:right}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal!important}.screen-reader-text:focus{background-color:#ddd;clip:auto!important;-webkit-clip-path:none;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(img[class*=wp-image-]){height:auto;max-width:100%}</style><style id='woocommerce-inline-inline-css' type='text/css'>.woocommerce form .form-row .required{visibility:visible}</style><style id='flatsome-main-inline-css' type='text/css'>@font-face{font-family:"fl-icons";font-display:block;src:url(https://natechnology.in/wp-content/themes/flatsome/assets/css/icons/fl-icons.eot?v=3.14.2);src:url(https://natechnology.in/wp-content/themes/flatsome/assets/css/icons/fl-icons.eot#iefix?v=3.14.2) format("embedded-opentype"),url(https://natechnology.in/wp-content/themes/flatsome/assets/css/icons/fl-icons.woff2?v=3.14.2) format("woff2"),url(https://natechnology.in/wp-content/themes/flatsome/assets/css/icons/fl-icons.ttf?v=3.14.2) format("truetype"),url(https://natechnology.in/wp-content/themes/flatsome/assets/css/icons/fl-icons.woff?v=3.14.2) format("woff"),url(https://natechnology.in/wp-content/themes/flatsome/assets/css/icons/fl-icons.svg?v=3.14.2#fl-icons) format("svg")}</style><link rel='stylesheet' id='flatsome-googlefonts-css' href='//fonts.googleapis.com/css?family=Lato%3Aregular%2C700%2C400%2C700%7CDancing+Script%3Aregular%2C400&#038;display=swap&#038;ver=3.9' type='text/css' media='all' /> <script   type='text/javascript' src='https://natechnology.in/wp-content/cache/busting/1/wp-includes/js/jquery/jquery.min-3.6.0.js' id='jquery-core-js'></script>  <script type='text/javascript' id='monsterinsights-frontend-script-js-extra'>/* <![CDATA[ */ var monsterinsights_frontend = {"js_events_tracking":"true","download_extensions":"doc,pdf,ppt,zip,xls,docx,pptx,xlsx","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/natechnology.in","hash_tracking":"false","ua":"UA-184774759-1","v4_id":""}; /* ]]> */</script>  <script type='text/javascript' id='WooZone-frontend-script-js-extra'>/* <![CDATA[ */ var woozone_vars = {"ajax_url":"https:\/\/natechnology.in\/wp-admin\/admin-ajax.php","checkout_url":"https:\/\/natechnology.in","lang":{"loading":"Loading...","closing":"Closing...","saving":"Saving...","updating":"Updating...","amzcart_checkout":"checkout done","amzcart_cancel":"canceled","amzcart_checkout_msg":"all good","amzcart_cancel_msg":"You must check or cancel all amazon shops!","available_yes":"available","available_no":"not available","load_cross_sell_box":"Frequently Bought Together Loading..."}}; /* ]]> */</script>  <link rel="https://api.w.org/" href="https://natechnology.in/wp-json/" /><link rel="alternate" type="application/json" href="https://natechnology.in/wp-json/wp/v2/categories/5809" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://natechnology.in/xmlrpc.php?rsd" /><link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://natechnology.in/wp-includes/wlwmanifest.xml" /><meta name="generator" content="WordPress 5.9.3" /><meta name="generator" content="WooCommerce 6.1.0" /><style type="text/css">.aawp .aawp-tb__row--highlight{background-color:#256aaf}.aawp .aawp-tb__row--highlight{color:#fff}.aawp .aawp-tb__row--highlight a{color:#fff}</style><link rel="preconnect" href="https://cdnjs.cloudflare.com"><meta name="generator" content="Site Kit by Google 1.48.1" /><link rel="preload" href="https://natechnology.in/wp-content/themes/flatsome/assets/css/icons/fl-icons.woff2" as="font" crossorigin="anonymous"><meta name="follow.it-verification-code-bGhRZzY1T3N3ZysvMVRjczQ0UTRhZUJqS0RVcXVtcHhsdnVlSCs4RUhhZXNoR1g3TTAyL0V4M1YxTVVYNFdwUGVPVmJrK1NReW43TVFEcXJXc0htTFdZbDZ5eXAwbG1LbnJwUnRhcEFFVWpJdVptR1FDaUlyMkZldUNjU0t3R1h8SVBMeExtUlF5MkhvSGNQTWZLS29yM2JYbDJxVjJQSWtGZDM2TzZLaEhGdz0=" content="h9N9yKWmerDkXZtXEqM7"/><style>.bg{opacity:0;transition:opacity 1s;-webkit-transition:opacity 1s}.bg-loaded{opacity:1}</style><!--[if IE]><link rel="stylesheet" type="text/css" href="https://natechnology.in/wp-content/themes/flatsome/assets/css/ie-fallback.css"><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script><script>var head = document.getElementsByTagName('head')[0],style = document.createElement('style');style.type = 'text/css';style.styleSheet.cssText = ':before,:after{content:none !important';head.appendChild(style);setTimeout(function(){head.removeChild(style);}, 0);</script><script src="https://natechnology.in/wp-content/themes/flatsome/assets/libs/ie-flexibility.js"></script><![endif]--> <noscript><style>.woocommerce-product-gallery{opacity:1!important}</style></noscript><meta name="google-adsense-platform-account" content="ca-host-pub-2644536267352236"><meta name="google-adsense-platform-domain" content="sitekit.withgoogle.com">  <script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3796886140943393" crossorigin="anonymous" type="text/javascript"></script> <link rel="icon" href="https://natechnology.in/wp-content/uploads/2020/12/cropped-favicon-32x32.png" sizes="32x32" /><link rel="icon" href="https://natechnology.in/wp-content/uploads/2020/12/cropped-favicon-192x192.png" sizes="192x192" /><link rel="apple-touch-icon" href="https://natechnology.in/wp-content/uploads/2020/12/cropped-favicon-180x180.png" /><meta name="msapplication-TileImage" content="https://natechnology.in/wp-content/uploads/2020/12/cropped-favicon-270x270.png" /><style id="custom-css" type="text/css">:root{--primary-color:#446084}.header-main{height:102px}#logo img{max-height:102px}#logo{width:175px}.header-bottom{min-height:10px}.header-top{min-height:20px}.transparent .header-main{height:30px}.transparent #logo img{max-height:30px}.has-transparent+.page-title:first-of-type,.has-transparent+#main>.page-title,.has-transparent+#main>div>.page-title,.has-transparent+#main .page-header-wrapper:first-of-type .page-title{padding-top:30px}.header.show-on-scroll,.stuck .header-main{height:70px!important}.stuck #logo img{max-height:70px!important}.search-form{width:41%}.header-bg-color,.header-wrapper{background-color:rgba(255,255,255,.9)}.header-bottom{background-color:#f1f1f1}@media (max-width:549px){.header-main{height:51px}#logo img{max-height:51px}}body{font-family:"Lato",sans-serif}body{font-weight:400}.nav>li>a{font-family:"Lato",sans-serif}.mobile-sidebar-levels-2 .nav>li>ul>li>a{font-family:"Lato",sans-serif}.nav>li>a{font-weight:700}.mobile-sidebar-levels-2 .nav>li>ul>li>a{font-weight:700}h1,h2,h3,h4,h5,h6,.heading-font,.off-canvas-center .nav-sidebar.nav-vertical>li>a{font-family:"Lato",sans-serif}h1,h2,h3,h4,h5,h6,.heading-font,.banner h1,.banner h2{font-weight:700}.alt-font{font-family:"Dancing Script",sans-serif}.alt-font{font-weight:400!important}.shop-page-title.featured-title .title-overlay{background-color:rgba(10,10,10,.3)}@media screen and (min-width:550px){.products .box-vertical .box-image{min-width:247px!important;width:247px!important}}.footer-1{background-color:#273647}.footer-2{background-color:#777}.absolute-footer,html{background-color:#000c28}.label-new.menu-item>a:after{content:"New"}.label-hot.menu-item>a:after{content:"Hot"}.label-sale.menu-item>a:after{content:"Sale"}.label-popular.menu-item>a:after{content:"Popular"}</style><noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player,[data-lazy-src]{display:none!important}</style></noscript></head><body class="archive category category-blog category-5809 theme-flatsome aawp-custom woocommerce-no-js lightbox nav-dropdown-has-arrow nav-dropdown-has-shadow nav-dropdown-has-border elementor-default elementor-kit-21"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-dark-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0.49803921568627" /><feFuncG type="table" tableValues="0 0.49803921568627" /><feFuncB type="table" tableValues="0 0.49803921568627" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-grayscale"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.54901960784314 0.98823529411765" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.71764705882353 0.25490196078431" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-red"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 1" /><feFuncG type="table" tableValues="0 0.27843137254902" /><feFuncB type="table" tableValues="0.5921568627451 0.27843137254902" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-midnight"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0 0" /><feFuncG type="table" tableValues="0 0.64705882352941" /><feFuncB type="table" tableValues="0 1" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-magenta-yellow"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.78039215686275 1" /><feFuncG type="table" tableValues="0 0.94901960784314" /><feFuncB type="table" tableValues="0.35294117647059 0.47058823529412" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-purple-green"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.65098039215686 0.40392156862745" /><feFuncG type="table" tableValues="0 1" /><feFuncB type="table" tableValues="0.44705882352941 0.4" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" ><defs><filter id="wp-duotone-blue-orange"><feColorMatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 " /><feComponentTransfer color-interpolation-filters="sRGB" ><feFuncR type="table" tableValues="0.098039215686275 1" /><feFuncG type="table" tableValues="0 0.66274509803922" /><feFuncB type="table" tableValues="0.84705882352941 0.41960784313725" /><feFuncA type="table" tableValues="1 1" /></feComponentTransfer><feComposite in2="SourceGraphic" operator="in" /></filter></defs></svg> <a class="skip-link screen-reader-text" href="#main">Skip to content</a><div id="wrapper"><header id="header" class="header header-full-width has-sticky sticky-jump"><div class="header-wrapper"><div id="masthead" class="header-main "><div class="header-inner flex-row container logo-left medium-logo-center" role="navigation"><div id="logo" class="flex-col logo"> <a href="https://natechnology.in/" title="NAtechnology - products that you wants." rel="home"> <img width="175" height="102" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20175%20102'%3E%3C/svg%3E" class="header_logo header-logo" alt="NAtechnology" data-lazy-src="https://natechnology.in/wp-content/uploads/2020/12/looo.png"/><noscript><img width="175" height="102" src="https://natechnology.in/wp-content/uploads/2020/12/looo.png" class="header_logo header-logo" alt="NAtechnology"/></noscript><img width="175" height="102" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20175%20102'%3E%3C/svg%3E" class="header-logo-dark" alt="NAtechnology" data-lazy-src="https://natechnology.in/wp-content/uploads/2020/12/looo-2.png"/><noscript><img width="175" height="102" src="https://natechnology.in/wp-content/uploads/2020/12/looo-2.png" class="header-logo-dark" alt="NAtechnology"/></noscript></a></div><div class="flex-col show-for-medium flex-left"><ul class="mobile-nav nav nav-left "><li class="nav-icon has-icon"><div class="header-button"> <a href="#" data-open="#main-menu" data-pos="left" data-bg="main-menu-overlay" data-color="" class="icon button circle is-outline is-small" aria-label="Menu" aria-controls="main-menu" aria-expanded="false"> <i class="icon-menu" ></i> <span class="menu-title uppercase hide-for-small">Menu</span> </a></div></li></ul></div><div class="flex-col hide-for-medium flex-left flex-grow"><ul class="header-nav header-nav-main nav nav-left nav-line-bottom nav-uppercase" ><li class="header-search-form search-form html relative has-icon"><div class="header-search-form-wrapper"><div class="searchform-wrapper ux-search-box relative form-flat is-normal"><form role="search" method="get" class="searchform" action="https://natechnology.in/"><div class="flex-row relative"><div class="flex-col flex-grow"> <label class="screen-reader-text" for="woocommerce-product-search-field-0">Search for:</label> <input type="search" id="woocommerce-product-search-field-0" class="search-field mb-0" placeholder="Search&hellip;" value="" name="s" /> <input type="hidden" name="post_type" value="product" /></div><div class="flex-col"> <button type="submit" value="Search" class="ux-search-submit submit-button secondary button icon mb-0" aria-label="Submit"> <i class="icon-search" ></i> </button></div></div><div class="live-search-results text-left z-top"></div></form></div></div></li><li class="header-divider"></li><li id="menu-item-2071" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2071 menu-item-design-default"><a href="https://natechnology.in/" class="nav-top-link">HOME</a></li><li id="menu-item-3870" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3870 menu-item-design-default has-dropdown"><a href="https://natechnology.in/shop/" class="nav-top-link">Shop<i class="icon-angle-down" ></i></a><ul class="sub-menu nav-dropdown nav-dropdown-default"><li id="menu-item-988" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-988"><a href="https://natechnology.in/product-category/mobile-phones/">MOBILE PHONE</a></li><li id="menu-item-1134" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1134"><a href="https://natechnology.in/product-category/laptops/">LAPTOPS</a></li><li id="menu-item-989" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-989"><a href="https://natechnology.in/product-category/headphones/">HEADPHONES</a></li><li id="menu-item-990" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-990"><a href="https://natechnology.in/product-category/blutooth-speakers/">BLUTOOTH SPEAKER</a></li><li id="menu-item-991" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-991"><a href="https://natechnology.in/product-category/home-audio-theater/">HOME AUDIO &#038; THEATER</a></li><li id="menu-item-992" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-992"><a href="https://natechnology.in/product-category/smart-watch/">SMART WATCH</a></li><li id="menu-item-3024" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3024"><a href="https://natechnology.in/product-category/televisions/">TELEVISIONS</a></li><li id="menu-item-3025" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3025"><a href="https://natechnology.in/product-category/washing-machines/">WASHING MACHINES AND DRYERS</a></li><li id="menu-item-3528" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3528"><a href="https://natechnology.in/product-category/refrigerators/">REFRIGERATORS</a></li><li id="menu-item-3693" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3693"><a href="https://natechnology.in/product-category/air-conditioners/">AIR CONDITIONERS</a></li></ul></li><li id="menu-item-3863" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3863 menu-item-design-default has-dropdown"><a href="https://natechnology.in/news/" class="nav-top-link">News<i class="icon-angle-down" ></i></a><ul class="sub-menu nav-dropdown nav-dropdown-default"><li id="menu-item-3864" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3864"><a href="https://natechnology.in/category/technology-news/">Technology News</a></li><li id="menu-item-3975" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3975"><a href="https://natechnology.in/category/reviews/">Reviews</a></li></ul></li><li id="menu-item-4925" class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-4925 active menu-item-design-default"><a href="https://natechnology.in/category/blog/" aria-current="page" class="nav-top-link">Blog</a></li><li id="menu-item-259" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-259 menu-item-design-default has-dropdown"><a href="https://natechnology.in/about-us/" class="nav-top-link">ABOUT US<i class="icon-angle-down" ></i></a><ul class="sub-menu nav-dropdown nav-dropdown-default"><li id="menu-item-1021" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1021"><a href="https://natechnology.in/terms-and-conditions/">Terms and Conditions</a></li><li id="menu-item-1020" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1020"><a href="https://natechnology.in/privacy-policy/">Privacy Policy</a></li></ul></li></ul></div><div class="flex-col hide-for-medium flex-right"><ul class="header-nav header-nav-main nav nav-right nav-line-bottom nav-uppercase"><li class="html header-social-icons ml-0"><div class="social-icons follow-icons" ><a href="https://www.facebook.com/Natechnology.in/" target="_blank" data-label="Facebook" rel="noopener noreferrer nofollow" class="icon plain facebook tooltip" title="Follow on Facebook" aria-label="Follow on Facebook"><i class="icon-facebook" ></i></a><a href="https://www.instagram.com/natechnology.in/" target="_blank" rel="noopener noreferrer nofollow" data-label="Instagram" class="icon plain instagram tooltip" title="Follow on Instagram" aria-label="Follow on Instagram"><i class="icon-instagram" ></i></a><a href="/cdn-cgi/l/email-protection#f695999882979582b698978293959e98999a99918fd89f98" data-label="E-mail" rel="nofollow" class="icon plain email tooltip" title="Send us an email" aria-label="Send us an email"><i class="icon-envelop" ></i></a></div></li></ul></div><div class="flex-col show-for-medium flex-right"><ul class="mobile-nav nav nav-right "></ul></div></div><div class="container"><div class="top-divider full-width"></div></div></div><div class="header-bg-container fill"><div class="header-bg-image fill"></div><div class="header-bg-color fill"></div></div></div></header><main id="main" class=""><div id="content" class="blog-wrapper blog-archive page-wrapper"><header class="archive-page-header"><div class="row"><div class="large-12 text-center col"><h1 class="page-title is-large uppercase"> Category Archives: <span>Blog</span></h1></div></div></header><div class="row align-center"><div class="large-10 col"><div id="row-625222538" class="row large-columns-3 medium-columns- small-columns-1 row-masonry" data-packery-options='{"itemSelector": ".col", "gutter": 0, "presentageWidth" : true}'><div class="col post-item" ><div class="col-inner"> <a href="https://natechnology.in/how-artificial-intelligence-will-transform-business-in-the-next-5-years/" class="plain"><div class="box box-text-bottom box-blog-post has-hover"><div class="box-image" ><div class="image-cover" style="padding-top:56%;"> <img width="300" height="157" src="//natechnology.in/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-300x157.webp" class="lazy lazy-hidden attachment-medium size-medium wp-post-image" alt="How Artificial Intelligence Will Transform Business in the Next 5 Years" loading="lazy" srcset="" data-srcset="https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-300x157.webp 300w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-1024x536.webp 1024w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-768x402.webp 768w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-510x267.webp 510w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business.webp 1200w" sizes="(max-width: 300px) 100vw, 300px" /><noscript><img width="300" height="157" src="https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-300x157.webp" class="attachment-medium size-medium wp-post-image" alt="How Artificial Intelligence Will Transform Business in the Next 5 Years" loading="lazy" srcset="https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-300x157.webp 300w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-1024x536.webp 1024w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-768x402.webp 768w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business-510x267.webp 510w, https://natechnology.in/wp-content/uploads/2022/02/AI-in-Business.webp 1200w" sizes="(max-width: 300px) 100vw, 300px" /></noscript></div></div><div class="box-text text-center" ><div class="box-text-inner blog-post-inner"><h5 class="post-title is-large ">How Artificial Intelligence Will Transform Business in the Next 5 Years</h5><div class="is-divider"></div><p class="from_the_blog_excerpt ">Introduction: Over the past five years, we&#8217;ve seen Artificial intelligence technology move from science fiction [...]</p></div></div><div class="badge absolute top post-date badge-outline"><div class="badge-inner"> <span class="post-date-day">16</span><br> <span class="post-date-month is-xsmall">Feb</span></div></div></div> </a></div></div></div></div></div></div></main><footer id="footer" class="footer-wrapper"><div class="footer-widgets footer footer-1"><div class="row dark large-columns-2 mb-0"><div id="woocommerce_product_categories-3" class="col pb-0 widget woocommerce widget_product_categories"><span class="widget-title">Product categories</span><div class="is-divider small"></div><ul class="product-categories"><li class="cat-item cat-item-3193"><a href="https://natechnology.in/product-category/air-conditioners/">Air Conditioners</a></li><li class="cat-item cat-item-97"><a href="https://natechnology.in/product-category/blutooth-speakers/">Blutooth Speakers</a></li><li class="cat-item cat-item-95"><a href="https://natechnology.in/product-category/headphones/">Headphones</a></li><li class="cat-item cat-item-99"><a href="https://natechnology.in/product-category/home-audio-theater/">Home Audio &amp; Theater</a></li><li class="cat-item cat-item-96"><a href="https://natechnology.in/product-category/laptops/">Laptops</a></li><li class="cat-item cat-item-15"><a href="https://natechnology.in/product-category/mobile-phones/">Mobile Phones</a></li><li class="cat-item cat-item-2831"><a href="https://natechnology.in/product-category/refrigerators/">Refrigerators</a></li><li class="cat-item cat-item-98"><a href="https://natechnology.in/product-category/smart-watch/">Smart Watch</a></li><li class="cat-item cat-item-2291"><a href="https://natechnology.in/product-category/televisions/">Televisions</a></li><li class="cat-item cat-item-2624"><a href="https://natechnology.in/product-category/washing-machines/">Washing Machines and Dryers</a></li></ul></div><div id="nav_menu-5" class="col pb-0 widget widget_nav_menu"><span class="widget-title">pages</span><div class="is-divider small"></div><div class="menu-main-menus-container"><ul id="menu-main-menus-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2071"><a href="https://natechnology.in/">HOME</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3870"><a href="https://natechnology.in/shop/">Shop</a><ul class="sub-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-988"><a href="https://natechnology.in/product-category/mobile-phones/">MOBILE PHONE</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1134"><a href="https://natechnology.in/product-category/laptops/">LAPTOPS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-989"><a href="https://natechnology.in/product-category/headphones/">HEADPHONES</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-990"><a href="https://natechnology.in/product-category/blutooth-speakers/">BLUTOOTH SPEAKER</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-991"><a href="https://natechnology.in/product-category/home-audio-theater/">HOME AUDIO &#038; THEATER</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-992"><a href="https://natechnology.in/product-category/smart-watch/">SMART WATCH</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3024"><a href="https://natechnology.in/product-category/televisions/">TELEVISIONS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3025"><a href="https://natechnology.in/product-category/washing-machines/">WASHING MACHINES AND DRYERS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3528"><a href="https://natechnology.in/product-category/refrigerators/">REFRIGERATORS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3693"><a href="https://natechnology.in/product-category/air-conditioners/">AIR CONDITIONERS</a></li></ul></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3863"><a href="https://natechnology.in/news/">News</a><ul class="sub-menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3864"><a href="https://natechnology.in/category/technology-news/">Technology News</a></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3975"><a href="https://natechnology.in/category/reviews/">Reviews</a></li></ul></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-4925"><a href="https://natechnology.in/category/blog/" aria-current="page">Blog</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-259"><a href="https://natechnology.in/about-us/">ABOUT US</a><ul class="sub-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1021"><a href="https://natechnology.in/terms-and-conditions/">Terms and Conditions</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1020"><a href="https://natechnology.in/privacy-policy/">Privacy Policy</a></li></ul></li></ul></div></div></div></div><div class="absolute-footer dark medium-text-center text-center"><div class="container clearfix"><div class="footer-primary pull-left"><div class="copyright-footer"> Copyright 2022 © <strong>NAtechnology.in</strong></div></div></div></div> <a href="#top" class="back-to-top button icon invert plain fixed bottom z-1 is-outline circle" id="top-link" aria-label="Go to top"><i class="icon-angle-up" ></i></a></footer></div>    <span id="WooZone_current_aff" class="display: none;" data-current_aff="{&quot;user_country&quot;:{&quot;key&quot;:&quot;ca&quot;,&quot;website&quot;:&quot;.in&quot;,&quot;affID&quot;:&quot;navedalam0a-21&quot;}}"></span><div id="main-menu" class="mobile-sidebar no-scrollbar mfp-hide"><div class="sidebar-menu no-scrollbar "><ul class="nav nav-sidebar nav-vertical nav-uppercase"><li class="header-search-form search-form html relative has-icon"><div class="header-search-form-wrapper"><div class="searchform-wrapper ux-search-box relative form-flat is-normal"><form role="search" method="get" class="searchform" action="https://natechnology.in/"><div class="flex-row relative"><div class="flex-col flex-grow"> <label class="screen-reader-text" for="woocommerce-product-search-field-1">Search for:</label> <input type="search" id="woocommerce-product-search-field-1" class="search-field mb-0" placeholder="Search&hellip;" value="" name="s" /> <input type="hidden" name="post_type" value="product" /></div><div class="flex-col"> <button type="submit" value="Search" class="ux-search-submit submit-button secondary button icon mb-0" aria-label="Submit"> <i class="icon-search" ></i> </button></div></div><div class="live-search-results text-left z-top"></div></form></div></div></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2071"><a href="https://natechnology.in/">HOME</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3870"><a href="https://natechnology.in/shop/">Shop</a><ul class="sub-menu nav-sidebar-ul children"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-988"><a href="https://natechnology.in/product-category/mobile-phones/">MOBILE PHONE</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1134"><a href="https://natechnology.in/product-category/laptops/">LAPTOPS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-989"><a href="https://natechnology.in/product-category/headphones/">HEADPHONES</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-990"><a href="https://natechnology.in/product-category/blutooth-speakers/">BLUTOOTH SPEAKER</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-991"><a href="https://natechnology.in/product-category/home-audio-theater/">HOME AUDIO &#038; THEATER</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-992"><a href="https://natechnology.in/product-category/smart-watch/">SMART WATCH</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3024"><a href="https://natechnology.in/product-category/televisions/">TELEVISIONS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3025"><a href="https://natechnology.in/product-category/washing-machines/">WASHING MACHINES AND DRYERS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3528"><a href="https://natechnology.in/product-category/refrigerators/">REFRIGERATORS</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3693"><a href="https://natechnology.in/product-category/air-conditioners/">AIR CONDITIONERS</a></li></ul></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3863"><a href="https://natechnology.in/news/">News</a><ul class="sub-menu nav-sidebar-ul children"><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3864"><a href="https://natechnology.in/category/technology-news/">Technology News</a></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3975"><a href="https://natechnology.in/category/reviews/">Reviews</a></li></ul></li><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-4925"><a href="https://natechnology.in/category/blog/" aria-current="page">Blog</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-259"><a href="https://natechnology.in/about-us/">ABOUT US</a><ul class="sub-menu nav-sidebar-ul children"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1021"><a href="https://natechnology.in/terms-and-conditions/">Terms and Conditions</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1020"><a href="https://natechnology.in/privacy-policy/">Privacy Policy</a></li></ul></li><li class="account-item has-icon menu-item"> <a href="" class="nav-top-link nav-top-not-logged-in"> <span class="header-account-title"> Login </span> </a></li></ul></div></div><div id="fb-root"></div>    <style type="text/css" aria-selected="true">.sfsi_subscribe_Popinner{width:100%!important;height:auto!important;padding:18px 0px!important;background-color:#ffffff!important}.sfsi_subscribe_Popinner form{margin:0 20px!important}.sfsi_subscribe_Popinner h5{font-family:Helvetica,Arial,sans-serif!important;font-weight:bold!important;color:#000000!important;font-size:16px!important;text-align:center!important;margin:0 0 10px!important;padding:0!important}.sfsi_subscription_form_field{margin:5px 0!important;width:100%!important;display:inline-flex;display:-webkit-inline-flex}.sfsi_subscription_form_field input{width:100%!important;padding:10px 0px!important}.sfsi_subscribe_Popinner input[type=email]{font-family:Helvetica,Arial,sans-serif!important;font-style:normal!important;color:#000000!important;font-size:14px!important;text-align:center!important}.sfsi_subscribe_Popinner input[type=email]::-webkit-input-placeholder{font-family:Helvetica,Arial,sans-serif!important;font-style:normal!important;color:#000000!important;font-size:14px!important;text-align:center!important}.sfsi_subscribe_Popinner input[type=email]:-moz-placeholder{font-family:Helvetica,Arial,sans-serif!important;font-style:normal!important;color:#000000!important;font-size:14px!important;text-align:center!important}.sfsi_subscribe_Popinner input[type=email]::-moz-placeholder{font-family:Helvetica,Arial,sans-serif!important;font-style:normal!important;color:#000000!important;font-size:14px!important;text-align:center!important}.sfsi_subscribe_Popinner input[type=email]:-ms-input-placeholder{font-family:Helvetica,Arial,sans-serif!important;font-style:normal!important;color:#000000!important;font-size:14px!important;text-align:center!important}.sfsi_subscribe_Popinner input[type=submit]{font-family:Helvetica,Arial,sans-serif!important;font-weight:bold!important;color:#000000!important;font-size:16px!important;text-align:center!important;background-color:#dedede!important}.sfsi_shortcode_container{float:left}.sfsi_shortcode_container .norm_row .sfsi_wDiv{position:relative!important}.sfsi_shortcode_container .sfsi_holders{display:none}</style><div id="login-form-popup" class="lightbox-content mfp-hide"><div class="woocommerce-notices-wrapper"></div><div class="account-container lightbox-inner"><div class="account-login-inner"><h3 class="uppercase">Login</h3><form class="woocommerce-form woocommerce-form-login login" method="post"><p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide"> <label for="username">Username or email address&nbsp;<span class="required">*</span></label> <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="" /></p><p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide"> <label for="password">Password&nbsp;<span class="required">*</span></label> <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password" /></p><p class="form-row"> <label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme"> <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span>Remember me</span> </label> <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="c4aaa06ebd" /><input type="hidden" name="_wp_http_referer" value="/category/blog/" /> <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="Log in">Log in</button></p><p class="woocommerce-LostPassword lost_password"> <a href="https://natechnology.in/wp-login.php?action=lostpassword">Lost your password?</a></p></form></div></div></div>  <style id='fifu-woo-inline-css' type='text/css'>img.zoomImg{display:inline!important}</style><style id='wp-block-heading-inline-css' type='text/css'>h1,h2,h3,h4,h5,h6{overflow-wrap:break-word}h1.has-background,h2.has-background,h3.has-background,h4.has-background,h5.has-background,h6.has-background{padding:1.25em 2.375em}</style><style id='wp-block-paragraph-inline-css' type='text/css'>.is-small-text{font-size:.875em}.is-regular-text{font-size:1em}.is-large-text{font-size:2.25em}.is-larger-text{font-size:3em}.has-drop-cap:not(:focus):first-letter{float:left;font-size:8.4em;line-height:.68;font-weight:100;margin:.05em .1em 0 0;text-transform:uppercase;font-style:normal}p{overflow-wrap:break-word}p.has-drop-cap.has-background{overflow:hidden}p.has-background{padding:1.25em 2.375em}:where(p.has-text-color:not(.has-link-color)) a{color:inherit}</style><style id='wp-block-list-inline-css' type='text/css'>ol,ul{overflow-wrap:break-word}ol.has-background,ul.has-background{padding:1.25em 2.375em}</style><style id='global-styles-inline-css' type='text/css'>body{--wp--preset--color--black:#000;--wp--preset--color--cyan-bluish-gray:#abb8c3;--wp--preset--color--white:#fff;--wp--preset--color--pale-pink:#f78da7;--wp--preset--color--vivid-red:#cf2e2e;--wp--preset--color--luminous-vivid-orange:#ff6900;--wp--preset--color--luminous-vivid-amber:#fcb900;--wp--preset--color--light-green-cyan:#7bdcb5;--wp--preset--color--vivid-green-cyan:#00d084;--wp--preset--color--pale-cyan-blue:#8ed1fc;--wp--preset--color--vivid-cyan-blue:#0693e3;--wp--preset--color--vivid-purple:#9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple:linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan:linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange:linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red:linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray:linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum:linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple:linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux:linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk:linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean:linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass:linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight:linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale:url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale:url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow:url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red:url('#wp-duotone-blue-red');--wp--preset--duotone--midnight:url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow:url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green:url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange:url('#wp-duotone-blue-orange');--wp--preset--font-size--small:13px;--wp--preset--font-size--medium:20px;--wp--preset--font-size--large:36px;--wp--preset--font-size--x-large:42px}.has-black-color{color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-color{color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-color{color:var(--wp--preset--color--white)!important}.has-pale-pink-color{color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-color{color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-color{color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-color{color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-color{color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-color{color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-color{color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-color{color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-color{color:var(--wp--preset--color--vivid-purple)!important}.has-black-background-color{background-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-background-color{background-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-background-color{background-color:var(--wp--preset--color--white)!important}.has-pale-pink-background-color{background-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-background-color{background-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-background-color{background-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-background-color{background-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-background-color{background-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-background-color{background-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-background-color{background-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-background-color{background-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-background-color{background-color:var(--wp--preset--color--vivid-purple)!important}.has-black-border-color{border-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-border-color{border-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-border-color{border-color:var(--wp--preset--color--white)!important}.has-pale-pink-border-color{border-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-border-color{border-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-border-color{border-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-border-color{border-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-border-color{border-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-border-color{border-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-border-color{border-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-border-color{border-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-border-color{border-color:var(--wp--preset--color--vivid-purple)!important}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background:var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple)!important}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background:var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan)!important}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange)!important}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red)!important}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background:var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray)!important}.has-cool-to-warm-spectrum-gradient-background{background:var(--wp--preset--gradient--cool-to-warm-spectrum)!important}.has-blush-light-purple-gradient-background{background:var(--wp--preset--gradient--blush-light-purple)!important}.has-blush-bordeaux-gradient-background{background:var(--wp--preset--gradient--blush-bordeaux)!important}.has-luminous-dusk-gradient-background{background:var(--wp--preset--gradient--luminous-dusk)!important}.has-pale-ocean-gradient-background{background:var(--wp--preset--gradient--pale-ocean)!important}.has-electric-grass-gradient-background{background:var(--wp--preset--gradient--electric-grass)!important}.has-midnight-gradient-background{background:var(--wp--preset--gradient--midnight)!important}.has-small-font-size{font-size:var(--wp--preset--font-size--small)!important}.has-medium-font-size{font-size:var(--wp--preset--font-size--medium)!important}.has-large-font-size{font-size:var(--wp--preset--font-size--large)!important}.has-x-large-font-size{font-size:var(--wp--preset--font-size--x-large)!important}</style> <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type='text/javascript' id='thickbox-js-extra'>/* <![CDATA[ */ var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","close":"Close","noiframes":"This feature requires inline frames. You have iframes disabled or your browser does not support them.","loadingAnimation":"https:\/\/natechnology.in\/wp-includes\/js\/thickbox\/loadingAnimation.gif"}; /* ]]> */</script>    <script type='text/javascript' id='contact-form-7-js-extra'>/* <![CDATA[ */ var wpcf7 = {"api":{"root":"https:\/\/natechnology.in\/wp-json\/","namespace":"contact-form-7\/v1"},"cached":"1"}; /* ]]> */</script>       <script type='text/javascript' id='SFSICustomJs-js-extra'>/* <![CDATA[ */ var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/natechnology.in\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/natechnology.in\/wp-content\/plugins\/ultimate-social-media-icons\/"}; /* ]]> */</script>   <script type='text/javascript' id='wc-add-to-cart-js-extra'>/* <![CDATA[ */ var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"https:\/\/natechnology.in","is_cart":"","cart_redirect_after_add":"no"}; /* ]]> */</script>   <script type='text/javascript' id='woocommerce-js-extra'>/* <![CDATA[ */ var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"}; /* ]]> */</script>  <script type='text/javascript' id='wc-cart-fragments-js-extra'>/* <![CDATA[ */ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_5e2ac2c68bf79d32bba82d0b9cef8f57","fragment_name":"wc_fragments_5e2ac2c68bf79d32bba82d0b9cef8f57","request_timeout":"5000"}; /* ]]> */</script>  <script type='text/javascript' id='921ba8a38-js-extra'>/* <![CDATA[ */ var localize = {"ajaxurl":"https:\/\/natechnology.in\/wp-admin\/admin-ajax.php","nonce":"487315ad57","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"ParticleThemesData":{"default":"{\"particles\":{\"number\":{\"value\":160,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":true,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"repulse\"},\"onclick\":{\"enable\":true,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nasa":"{\"particles\":{\"number\":{\"value\":250,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":1,\"random\":true,\"anim\":{\"enable\":true,\"speed\":1,\"opacity_min\":0,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":4,\"size_min\":0.3,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":1,\"direction\":\"none\",\"random\":true,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":600}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":250,\"size\":0,\"duration\":2,\"opacity\":0,\"speed\":3},\"repulse\":{\"distance\":400,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","bubble":"{\"particles\":{\"number\":{\"value\":15,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#1b1e34\"},\"shape\":{\"type\":\"polygon\",\"stroke\":{\"width\":0,\"color\":\"#000\"},\"polygon\":{\"nb_sides\":6},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":50,\"random\":false,\"anim\":{\"enable\":true,\"speed\":10,\"size_min\":40,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":200,\"color\":\"#ffffff\",\"opacity\":1,\"width\":2},\"move\":{\"enable\":true,\"speed\":8,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":false,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","snow":"{\"particles\":{\"number\":{\"value\":450,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#fff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":500,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":2},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"bottom\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":0.5}},\"bubble\":{\"distance\":400,\"size\":4,\"duration\":0.3,\"opacity\":1,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nyan_cat":"{\"particles\":{\"number\":{\"value\":150,\"density\":{\"enable\":false,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"star\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"http:\/\/wiki.lexisnexis.com\/academic\/images\/f\/fb\/Itunes_podcast_icon_300.jpg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":4,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":14,\"direction\":\"left\",\"random\":false,\"straight\":true,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":200,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}"},"eael_translate_text":{"required_text":"is a required field","invalid_text":"Invalid","billing_text":"Billing"},"eael_login_nonce":"4d671395d6","eael_register_nonce":"f5559d0f2c"}; /* ]]> */</script>   <script type='text/javascript' id='flatsome-js-js-extra'>/* <![CDATA[ */ var flatsomeVars = {"ajaxurl":"https:\/\/natechnology.in\/wp-admin\/admin-ajax.php","rtl":"","sticky_height":"70","assets_url":"https:\/\/natechnology.in\/wp-content\/themes\/flatsome\/assets\/js\/","lightbox":{"close_markup":"<button title=\"%title%\" type=\"button\" class=\"mfp-close\"><svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-x\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"><\/line><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"><\/line><\/svg><\/button>","close_btn_inside":false},"user":{"can_edit_pages":false},"i18n":{"mainMenu":"Main Menu"},"options":{"cookie_notice_version":"1","swatches_layout":false,"swatches_box_select_event":false,"swatches_box_behavior_selected":false,"swatches_box_update_urls":"1","swatches_box_reset":false,"swatches_box_reset_extent":false,"swatches_box_reset_time":300,"search_result_latency":"0"},"is_mini_cart_reveal":"1"}; /* ]]> */</script>       <script type='text/javascript' id='jquery-lazyloadxt-extend-js-extra'>/* <![CDATA[ */ var a3_lazyload_extend_params = {"edgeY":"0","horizontal_container_classnames":""}; /* ]]> */</script>    <script type='text/javascript' id='fifu-image-js-js-extra'>/* <![CDATA[ */ var fifuImageVars = {"fifu_lazy":"","fifu_woo_lbox_enabled":"1","fifu_woo_zoom":"inline","fifu_is_product":"","fifu_is_flatsome_active":"1","fifu_rest_url":"https:\/\/natechnology.in\/wp-json\/","fifu_nonce":"6b23c57c1c"}; /* ]]> */</script>    <script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){return}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){return}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://natechnology.in/wp-content/plugins/wprocket/assets/js/lazyload/12.0/lazyload.min.js"></script> <script src="https://natechnology.in/wp-content/cache/min/1/a0d2fe244e7170874aa339aef8b2e1e2.js" data-minify="1" defer></script></body></html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1652899154 -->

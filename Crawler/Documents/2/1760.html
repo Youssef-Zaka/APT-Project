@@ -1,889 +1,797 @@
 
+
+
 <!DOCTYPE html>
-<html lang="en">
-<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
+<html lang="en" class="no-js">
 
-<!-- def.1 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title> Search</title>
+<head>
 
+        <title>View Cart | MITP</title>
 
-
-<meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta  name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- sh.1 -->
-<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
-<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
-<link rel="alternate" type="application/rss+xml" title="Site Feed" href="/recent.rss">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+<script>window.jQuery || document.write('<script src="//mitp.silverchair-cdn.com/Themes/Silver/app/js/jquery.3.4.1.min.js" type="text/javascript">\x3C/script>')</script>
+<script src="//mitp.silverchair-cdn.com/Themes/Silver/app/vendor/v-637859132181811848/jquery-migrate-3.1.0.min.js" type="text/javascript"></script>
 
 
-<!--[if IE]>
-<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
-<![endif]-->
 
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<!-- end sh.1 -->
-<link rel="stylesheet" href="/assets/cgi/css/search/query.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global-alert.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global/utils.css" type="text/css" media="screen">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <!-- Turn off telephone number detection. -->
+    <meta name="format-detection" content="telephone=no" />
+
+<!-- Bookmark Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="//mitp.silverchair-cdn.com/Themes/Client/app/img/favicons/v-637859131808320438/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="//mitp.silverchair-cdn.com/Themes/Client/app/img/favicons/v-637859131808571051/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="//mitp.silverchair-cdn.com/Themes/Client/app/img/favicons/v-637859131808320438/favicon-16x16.png" sizes="16x16">
+  <link rel="mask-icon" href="//mitp.silverchair-cdn.com/Themes/Client/app/img/favicons/v-637859131808571051/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="//mitp.silverchair-cdn.com/Themes/Client/app/img/favicons/v-637859131808571051/favicon.ico">
+  <link rel="manifest" href="//mitp.silverchair-cdn.com/Themes/Client/app/img/favicons/v-637859131808571051/manifest.json">
+  <meta name="msapplication-config" content="//mitp.silverchair-cdn.com/Themes/Client/app/img/favicons/v-637859131808320438/browserconfig.xml">
+  <meta name="theme-color" content="#002f65">
 
 
-<!-- stripped inline yui3-seed -->
-<script type="text/javascript" src="/assets/scripts/bepress-init.pack.js"></script>
-<script type="text/javascript">
-			Bepress.cgiUrlBase = '';
-		</script>
-<script src="/assets/cgi/js/spinner.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/solr.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/query-screen.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/statsDispatcher.pack.js" type="text/javascript"></script>
-<script src="/assets/footnoteLinks.js" type="text/javascript"></script>
-<script type="text/javascript">
-YUI({
-}).use('bepress.search.queryscreen', 'node', 'datatype', function(Y){
-	
-	Y.on( 'domready', function () {
+    
 
-		var fieldSelects, rowList, advContextNode, queryScreen, facetTypes, i;
 
-		
-		Y.bepress.search.solr.setAllowedFields( {"document_type":1,"author_lname":1,"publication_title":1,"subject":1,"author":1,"corporate_author":1,"text":1,"author_fname":1,"abstract":1,"title":1,"publication":1,"collected_from_sw":1,"institution":1} );
-		
-		queryScreen = new Y.bepress.search.QueryScreen( {
-			
-			errors: {
-				searchFailure:        "We're sorry, we were unable to process your search request. "
-				                    + "This may have been a temporary problem, please wait a few moments "
-				                    + "and try again.<br/>	(Error: {errmsg})"
-				, nothingEntered:     "Please enter a search term first"
-				, invalidDateEntered: "You entered '{errmsg}', but that doesn't look like a date to me."
-				, parseError:         "The advanced search form does not support this syntax: {errmsg}"
-				, syntaxNotSupported: "The advanced search form does not support this syntax. {errmsg}"
-				, timeout:            "Your search request has timed out. Please wait a moment and try again."
-				, emptyExport:        "No results matched your search."
-				, dateFormat:         "{errmsg} format is MM/DD/YYYY."
-			}
+  <link rel="stylesheet" type="text/css" href="//mitp.silverchair-cdn.com/Themes/Client/app/css/v-637873030026890468/site.min.css" />
+  <link rel="stylesheet" type="text/css" href="//mitp.silverchair-cdn.com/Themes/Client/app/css/icons/v-637859131808320438/style.css" />
+  <link rel="stylesheet" type="text/css" href="//mitp.silverchair-cdn.com/Themes/Client/app/css/v-637859131808270982/bg_img.css" />
 
-			
-			, templates: {
-				resultsTemplate: {
-						download: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download {downloadFormat}"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Download<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, metadata: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, external: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Link to Full Text<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-					}
-				, resultsHeaderTemplate:         '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-	<span class="grid_6">Showing <strong>{count}<\/strong> out of <strong>{numFound}<\/strong> results. Starting at result <strong>{start}<\/strong>.<\/span>	\
-	<form id="save_search" class="grid_6 alpha omega" method="POST" action="\/do\/search\/save_search" >\
-			<a href="{saveUrl}" id="save-search-submit"><span><i class="icon-save"><\/i> Save this search<\/span><\/a>\
-			<span><a href="\/cgi\/notification.cgi" id="my-searches"><i class="icon-search"><\/i> My saved searches<\/a><\/span>\
-	<\/form>\
-<\/div>\
-<\/div>\
-'
-				, resultsExportedHeaderTemplate: '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-		<span class="grid_6">Exported <strong>{count}<\/strong> results.<\/span>	\
-<\/div>\
-<\/div>\
-'
-				, resultsFooterTemplate:         '<div class="pagination query">\
-	<p class="grid_12">\
-		<span class="fl">\
-			<a id="first-page" class="{firstClass}" href="#query-results" title="First Page">&laquo; First<\/a>\
-			<a id="previous-page" class="{previousClass}" href="#query-results" title="Previous Page">&lt; Prev<\/a>\
-		<\/span>\
-		<span class="fr">\
-			<a id="next-page" class="{nextClass}" href="#query-results" title="Next Page">Next &gt;<\/a>\
-			<a id="last-page" class="{lastClass}" href="#query-results" title="Last Page">Last &raquo;<\/a>\
-		<\/span>\
-	<\/p>\
-<\/div>\
-\
-'
-				, rowTemplate:                   '<div class="row query">\
-  <p id="p{rownum}">\
-    <span class="fr">\
-      <input type="image" value="Delete" alt="Delete row {rownum}" name="del_row_{rownum}" src="\/assets\/query_minus.gif" class="hidden control-delete-row">\
-      <input type="image" value="Add" alt="Add row {rownum}" name="add_row_{rownum}" src="\/assets\/cgi\/images\/global\/add.png" class="control-add-row">	\
-    <\/span>\
-    <span class="grid_2">\
-      <select name="op_{rownum}" class="op-sel">\
-        <option value="AND">AND<\/option>\
-          <option value="OR">OR<\/option>\
-          <option value="NOT">NOT<\/option>\
-      <\/select>\
-    <\/span>\
-	<label for="field_{rownum}">Choose type<\/label>\
-		<span class="grid_3">\
-			<select name="field_{rownum}" id="field_{rownum}" class="field-sel">\
-                \
-                    <option value="text:">All Fields<\/option>\
-                \
-                    <option value="abstract:">Abstract<\/option>\
-                \
-                    <option value="subject:">Subject<\/option>\
-                \
-                    <option value="author:">Author<\/option>\
-                \
-                    <option value="institution:">Institution<\/option>\
-                \
-                    <option value="title:">Title<\/option>\
-                \
-                    <option value="document_type:">Document Type<\/option>\
-                \
-                    <option value="publication_title:">Publication<\/option>\
-                			<\/select>\
-		<\/span>\
-    <label for="value_{rownum}">Search term {rownum}<\/label>\
-		<span class="grid_6"><input type="text" id="value_{rownum}" name="value_{rownum}" value="" class="term">\
-		<\/span>	\
-		<br class="clear" \/>\
-	<\/p>\
-<\/div>\
-'
-				, facetLinkTemplate:             '	<li><a href="#" class="facet-{facetType}">{facetLabel}<\/a> ({facetCount})<\/li>\
-'
-				, facetMoreLink:                 '	<li class="dropdown">\
-		<div id="more-{facetType}" class="more-container"><ul><\/ul><\/div>\
-		<div name="{facetType}" class="collapse" id="{facetType}-links">\
-			<span class="more" name="{facetType}"><a href="#" name="{facetType}">More &darr;<\/a><\/span><span class="fewer hidden" name="{facetType}"><a href="#" name="{facetType}">Fewer &uarr;<\/a><\/span>\
-		<\/div>\
-	<\/li>\
-'
-				, facetSectionTemplate:          '<dl class="facet">\
-  <dt>{label}<\/dt>\
-  <dd>\
-    <ul>\
-    <\/ul>\
-  <\/dd>\
-<\/dl>\
-'
-			}
+<link href="/Themes/Client/app/css/SiteFonts/SiteFonts.css" rel="stylesheet" />
 
-			
-			, elements: {
-				resultsHeaderEl:  Y.one('#results-header')
-				, resultsListEl:	  Y.one('#results-list')
-				, resultsFooterEl:  Y.one('#results-footer')
-				, errorEl:		  Y.one('#global-alert')
-				, basicSearchEl:	  Y.one('#basic-search')
-				, advancedSearchEl: Y.one('#advanced-search')
-				, facetsEl:         Y.one('#results-facets')
-			}
 
-			
-			, enabledFacets: {
-				
-					"discipline": "Discipline",
-				
-					"download_type": "File Type",
-				
-					"publication_facet": "Publication",
-				
-					"publication_type": "Publication Type",
-				
-					"publication_year": "Publication Year",
-				
-					"subject_facet": "Keyword"
-				
-			}
+                <link href=//mitp.silverchair-cdn.com/data/SiteBuilderAssets/Live/CSS/umbrella/site1943631760.css rel="stylesheet" type="text/css" />
 
-			, historyAPI:		  !!(window.history && history.pushState)
+            <script>
+                (function (w, d, s, l, i) {
+                    w[l] = w[l] || []; w[l].push({
+                        'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'
+                    }); var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                })(window, document, 'script', 'dataLayer', 'GTM-5P3FLZ8');
+            </script>
 
-						, selectedForm: 'advanced-search'
-						
-						, authenticated: false
-						
-		});
+    
 
-		
-			queryScreen.addRow( { showAddCtl: true, showDelCtl: false } );
-		
-		
-		rowList = Y.one('#rows');
-		rowList.delegate( ['change', 'keyup'], queryScreen.updateSearchPreview, '#rows', queryScreen );
-		
-		
-		Y.one( '#simple-search')
-			.on('keypress', queryScreen.behaveOnKeyPress, queryScreen);
-		Y.one( '#advanced-search')
-			.delegate( 'keypress', queryScreen.behaveOnKeyPress, 'input[type=text]', queryScreen);
+        <script type="text/javascript">
+            var App = App || {};
+            App.LoginUserInfo = {
+                isInstLoggedIn: 0,
+                isIndividualLoggedIn: 0
+            };
 
-		        rowList.delegate('click', function(e){
-            queryScreen.addRow();
-            e.preventDefault();
-           }, '.control-add-row', Y
-        );
-		
-		rowList.delegate('click', function(e){
-			queryScreen.deleteRow(e.currentTarget);
-			queryScreen.updateSearchPreview();
-			e.preventDefault();
-		   }, '.control-delete-row', Y
-		);
+            App.CurrentSubdomain = '';
+            App.SiteURL = 'direct.mit.edu';
+        </script>
+    
+    
 
-		
-		Y.one('#switch-to-advanced').on('click', function(e){
-			queryScreen.switchToAdvanced();
-			e.preventDefault();
-		});
-		Y.one('#switch-to-basic').on('click', function(e){
-			queryScreen.switchToBasic();
-			e.preventDefault();
-		});
 
-		
-		advContextNode = Y.one('#advanced-context');
-		if ( advContextNode ) {
-			
-			advContextNode.on( 'change', function(e){
-				queryScreen.updateAvailableFormats();
-			});
-			
-			queryScreen.updateAvailableFormats();
-		}
+    
+    
 
-		
-		Y.one('#do-search').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		Y.one('#do-search-advanced').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		
-				Y.one('#show-search').on('click', function() {
-			queryScreen.showSearchForm();
-		});
-		Y.one('#hide-search').on('click', function() {
-			queryScreen.shrinkSearchForm();
-		});
 
-		// is there a more YUIish way to do this?
-		if(queryScreen.historyAPI) {
-			window.onpopstate = function(ev) {
-				// Y.log('popstate -- location: '+document.location+', state: '+JSON.stringify(ev.state));
-				queryScreen.handlePopState(ev.state);
-			};
-		}
+<script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+<script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
 
-		
-		Y.one('#do-search').removeAttribute('disabled');
-		Y.one('#switch-to-advanced').removeAttribute('disabled');
-		Y.all('.add-row').removeAttribute('disabled');
-		
-		
-		queryScreen.setSearchContainerHeights();
-		
-		Y.one('#advanced-search').addClass('query-shrinker');
-		Y.one('#basic-search').addClass('query-shrinker');
+    googletag.cmd.push(function () {
+    googletag.pubads().disableInitialLoad();
 
-		
-		
-				
-		
-
-		
-		
-				
-				
-				
-			Y.one('#clear-discipline-facet').on('click', function() {
-				queryScreen.clearFacet('discipline');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-download_type-facet').on('click', function() {
-				queryScreen.clearFacet('download_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_facet-facet').on('click', function() {
-				queryScreen.clearFacet('publication_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_type-facet').on('click', function() {
-				queryScreen.clearFacet('publication_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_year-facet').on('click', function() {
-				queryScreen.clearFacet('publication_year');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-subject_facet-facet').on('click', function() {
-				queryScreen.clearFacet('subject_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-
-	} );
-});
+    
+    });
 </script>
-<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"Search:query_screen","businessUnit":"els:rp:st"},"visitor":{}};</script>
+
+
+    
+    
+
+
+
+<script src="https://servedbyadbutler.com/app.js" type="text/javascript"></script>
+    
 
 
 
 
 </head>
-<body class="legacy search">
-<!-- FILE /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen --><!-- This is the mobile navbar file. Do not delete or move from the top of header.pregen -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
-<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
 
-<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
-  
-  
-  <nav class="nav-collapse">
-    <ul>
-      <li class="menu-item active device-fixed-width"><a href="https://newprairiepress.org" title="Home" data-scroll >Home</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/communities.html" title="Browse" data-scroll >Browse Journals</a></li>
-      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/about.html" title="About" data-scroll >About</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
+<body data-sitename="mitpress" class="off-canvas pg_CartView pg_cartview   " theme-umbrella data-sitestyletemplate="Journal" >
+            <noscript>
+                <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P3FLZ8"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            </noscript>
+            <a href="#skipNav" class="skipnav">Skip to Main Content</a>
+<input id="hdnSiteID" name="hdnSiteID" type="hidden" value="1" /><input id="hdnAdDelaySeconds" name="hdnAdDelaySeconds" type="hidden" value="3000" /><input id="hdnAdConfigurationTop" name="hdnAdConfigurationTop" type="hidden" value="basic" /><input id="hdnAdConfigurationRightRail" name="hdnAdConfigurationRightRail" type="hidden" value="basic" />
+    
+
+
+
+
+    <section class="master-header row vt-site-header">
+
+    <div class="ad-banner js-ad-banner">
+
+    <div class="widget-AdBlock widget-instance-HeaderAd">
+            
+
+ 
+    </div>
+
+    </div>
+
+    <div class="widget-SitePageHeader widget-instance-SitePageHeader">
+            <div class="site-theme-header">
+        <div class="site-theme-header_contents global-nav-base">
+
+
+
+<div class="global-nav">
+<a href="/" class="global-nav_link-wrap">
+            <picture>
+                <source media="(min-width: 601px)" srcset="//mitp.silverchair-cdn.com/UI/app/svg/umbrella/logo.svg">
+                <img class="logo-MITPress site-theme-header-image" src="//mitp.silverchair-cdn.com/UI/app/svg/umbrella/logo.svg" alt="Umbrella Alt Text" />
+            </picture>
+        </a>
+        
+</div>
+
+
+
+
+        <div class="mobile-menu-trigger_wrap mobile-search_wrap">
+            <a href="javascript:;"
+               class="mobile-search_toggle at-search-toggle"
+               aria-controls="search-dropdown"
+               aria-expanded="false"
+               data-theme-dropdown-trigger="search-dropdown"><i class="icon-menu_search"><span class="screenreader-text">Search Dropdown Menu</span></i></a>
+        </div>
+    <div class="navbar-search-container mobile-dropdown search-dropdown" data-theme-dropdown="search-dropdown">
+        <div class="navbar-search">
+            <form class="microsite-search js-MicrositeSearch">
+                <fieldset class="searchbar-fieldset">
+                    <legend><span class="screenreader-text">header search</span></legend>
+                    <div class="navbar-search-input_wrap">
+                        <label for="MicrositeSearchTerm-SitePageHeader"><span class="screenreader-text">search input</span></label>
+                        
+                        <input class="navbar-search-input microsite-search-term at-microsite-search-term search-term-autosuggest"
+                               data-autosuggest-hint="micrositeSearchTermInputHint-SitePageHeader"
+                               data-autosuggest-results="micrositeAutoCompleteResults-SitePageHeader"
+                               data-autosuggest-id="MicrositeSearchTerm-SitePageHeader"
+                               data-searchfilter="search-filter-SitePageHeader"
+                               placeholder="Search..."
+                               type="text" maxlength="255"
+                               id="MicrositeSearchTerm-SitePageHeader"
+                               title="search input">
+                        
+                        <input type="hidden" name="hfSolrAutoSuggestMinimumCharactersLength" id="hfSolrAutoSuggestMinimumCharactersLength" value="2" />
+                        <input type="hidden" name="hfSolrJournalName" id="hfSolrJournalName" value="" />
+                        <input type="hidden" name="hfSolrJournalID" id="hfSolrJournalID" value="" />
+                        <label for="micrositeSearchTermInputHint-SitePageHeader">
+                            <span class="screenreader-text">Search input auto suggest</span>
+                        </label>
+                        <input type="text"
+                               id="micrositeSearchTermInputHint-SitePageHeader"
+                               data-autosuggest-id="micrositeSearchTermInputHint-SitePageHeader"
+                               class="microsite-search-term-input-hint"
+                               autocomplete="off" />
+                        <ul data-autosuggest-id="micrositeAutoCompleteResults-SitePageHeader" class="term-list hidden"></ul>
+                    </div>
+                        <div class="navbar-search-filter_wrap">
+                            <label for="navbar-search-filter-site-SitePageHeader">
+                                <span class="screenreader-text">filter your search</span>
+                            </label>
+                            <select class="navbar-search-filter navbar-search-filter-site at-navbar-search-filter" id="navbar-search-filter-site-SitePageHeader" data-autosuggest-id="search-filter-SitePageHeader">
+<option class="header-search-bar-filters-item selected" value="/search-results?page=1&q={searchQuery}" data-siteid="0" selected>All Content</option><option class="header-search-bar-filters-item" value="/journals/search-results?page=1&q={searchQuery}&fl_SiteID=1000001&allJournals=1" data-siteid="1000001" >All Journals</option><option class="header-search-bar-filters-item" value="/books/search-results?page=1&q={searchQuery}&fl_SiteID=5&allBooks=1" data-siteid="5" >All Books</option>                            </select>
+                        </div>
+                    <div class="navbar-search-submit_wrap">
+                        <a href="javascript:;" class="microsite-search-icon navbar-search-submit icon-menu_search"><span class="screenreader-text">Search</span></a>
+                    </div>
+                </fieldset>
+            </form><!-- /#MicrositeSearch -->
+        </div><!-- /.navbar-search -->
+<div class="navbar-search-advanced">
+    <a href="/advanced-search" class="advanced-search">Advanced Search</a>
+</div>    </div><!-- /.navbar-search-container -->
+
+    <input type="hidden" name="parentSiteName" id="hfParentSiteName" value="Umbrella" />
+    <input type="hidden" id="hfSolrMaxAllowSearchChar" value="100" />
+    <input type="hidden" id="hfJournalShortName" value="" />
+    <input type="hidden" id="hfSearchPlaceholder" value="" />
+    <input type="hidden" name="hfGlobalSearchSiteURL" id="hfGlobalSearchSiteURL" value="" />
+    <input type="hidden" name="hfSearchSiteURL" id="hfSiteURL" value="direct.mit.edu" />
+    <input type="hidden" id="hfQuickSearchUrl" value="/search-results?page=1&amp;q={searchQuery}" />
+    <script type="text/javascript">
+        (function () {
+            var hfSiteUrl = document.getElementById('hfSiteURL');
+            var siteUrl = hfSiteUrl.value;
+            var subdomainIndex = siteUrl.indexOf('/');
+
+            hfSiteUrl.value = location.host + (subdomainIndex >= 0 ? siteUrl.substring(subdomainIndex) : '');
+        })();
+    </script>
+
+ 
+
+<div class="tablet-menu-trigger_wrap">
+    <!-- MOBILE SHOPPING CART ICON -->
+    <a href="javascript:;"
+       class="tablet-sign-in"
+       data-theme-dropdown-trigger="tablet-user-dropdown"
+       aria-controls="tablet-user-dropdown"
+       aria-expanded="false"><i class="icon-menu_account"><span class="screenreader-text">User Tools Dropdown</span></i></a>
+</div>
+<div class="site-theme-header-menu-item_wrap tablet-menu" id="tablet-user-dropdown" data-theme-dropdown="tablet-user-dropdown">
+    <!-- DESKTOP SHOPPING CART ICON -->
+
+    <!-- DESKTOP REGISTRATION -->
+        <div class="site-theme-header-menu-item"><a href="/my-account/register?siteId=1&amp;returnUrl=%2fstore%2fcart" class="register at-register">Register</a></div>
+
+    <!-- DESKTOP INSTITUTIONS -->
+
+    <!-- DESKTOP SIGN IN -->
+
+
+    <div class="site-theme-header-menu-item not-authenicated">
+        <a href="javascript:;" 
+           class="dropdown-toggle signin at-signin-dropdown at-signin-username"
+           id="header-account-info-user-fullname"
+           data-login-location="/SignIn/LoginForm/LoginFormPopup?returnUrl="
+           data-theme-dropdown-trigger="sign-in-dropdown"
+           aria-controls="sign-in-dropdown"
+           aria-expanded="false">
+            
+Sign In            <i class="icon-general_arrow-down arrow-icon"></i>
+        </a>
+        <div class="dropdown-panel dropdown-panel-signin dropdown-panel-form at-signin-dropdown-panel" id="sign-in-dropdown" data-theme-dropdown="sign-in-dropdown">
+            <div class="spinner"></div>
+        </div><!-- /.dropdown-panel -->
+    </div>
+</div>
+
+        </div><!-- /.site-theme-header_content -->
+    </div><!-- /.site-theme-header- -->
+
+    <div class="journal-header journal-bg">
+        <div class="journal-header_content ">
+
+
+            
+
+
+<div class="navbar-menu_wrap">
+            <a class="mobile-site-menu-toggle" data-theme-dropdown-trigger="microsite-nav-menu" aria-controls="microsite-nav-menu" aria-expanded="false" href="javascript:;"><i class="icon-menu_hamburger"><span class="screenreader-text">Toggle Menu</span></i><span class="tablet-menu-label">Menu</span></a>
+            <nav class="navbar-menu" id="microsite-nav-menu" data-theme-dropdown="microsite-nav-menu">
+                        <ul class="site-menu site-menu-lvl-0 js-theme-dropdown">
+                <li class="site-menu-item site-menu-lvl-0 " id="site-menu-item-13508">
+
+                        <a href="javascript:;" class="nav-link js-theme-dropdown-trigger" aria-expanded="false">Books<i class="nav-arrow icon-general_arrow-down arrow-icon"></i></a>
+
+                            <ul class="site-menu site-menu-lvl-1 js-theme-dropdown">
+                <li class="site-menu-item site-menu-lvl-1 " id="site-menu-item-13510">
+
+                        <a href="/books" class="nav-link">Books Home</a>
+
+                    
+                </li>
+                <li class="site-menu-item site-menu-lvl-1 " id="site-menu-item-13511">
+
+                        <a href="/books/search-results?fl_SiteID=5&amp;page=1&amp;f_ContentType=Book" class="nav-link">Browse Books</a>
+
+                    
+                </li>
+        </ul>
+
+                </li>
+                <li class="site-menu-item site-menu-lvl-0 " id="site-menu-item-13509">
+
+                        <a href="javascript:;" class="nav-link js-theme-dropdown-trigger" aria-expanded="false">Journals<i class="nav-arrow icon-general_arrow-down arrow-icon"></i></a>
+
+                            <ul class="site-menu site-menu-lvl-1 js-theme-dropdown">
+                <li class="site-menu-item site-menu-lvl-1 " id="site-menu-item-13512">
+
+                        <a href="/journals" class="nav-link">Journals Home</a>
+
+                    
+                </li>
+                <li class="site-menu-item site-menu-lvl-1 " id="site-menu-item-13513">
+
+                        <a href="/journals/pages/browse_by_title" class="nav-link">Browse Journals</a>
+
+                    
+                </li>
+        </ul>
+
+                </li>
+                <li class="site-menu-item site-menu-lvl-0 " id="site-menu-item-13514">
+
+                        <a href="/books/pages/about" class="nav-link">About MIT Press Direct</a>
+
+                    
+                </li>
+                <li class="site-menu-item site-menu-lvl-0 " id="site-menu-item-13515">
+
+                        <a href="/pages/customer_support" class="nav-link">Customer Support</a>
+
+                    
+                </li>
+        </ul>
+
+            </nav>
+</div><!-- /.navbar -->
+
+        </div><!-- /.center-inner-row -->
+
+    </div><!-- /.journal-header -->
+
+
+<input id="routename" name="RouteName" type="hidden" value="" /> 
+    </div>
+
+</section>
+
+    <div id="main" class="content-main js-main ui-base">
+        <section class="master-main row">
+            <div class="content-main_content">
+                <a href="#" id="skipNav" class="screenreader-text" tabindex="-1">Skip Nav Destination</a>
+                
+
+
+    <div class="widget-CartProgressBar widget-instance-CartProgressBar">
+        <div class="progressSectionContainer">
+    <ul class="details stepContainer ">
+        <li class="progress-line"></li>
+        <li class="progressSection section1 active">
+            <span class="step-name">
+                Cart
+            </span>
+        </li>
+
+
+        <li class="progressSection section3">
+            <span class="step-name">
+                Order Details
+            </span>
+        </li>
+        <li class="progressSection section4">
+            <span class="step-name">
+                Payment
+            </span>
+        </li>
+        <li class="progressSection section5">
+            <span class="step-name">
+                Order Complete
+            </span>
+        </li>
     </ul>
-  </nav>
-</header>
+</div> 
+    </div>
+    <div class="widget-CartView widget-instance-CartViewDetails">
+            <p class="cart-empty layout" data-cart-id="936ed3dc-bbde-4041-9d67-d6a419ffbe7d">You have no items in your cart.</p>
+ 
+    </div>
+    <div class="widget-CartOrderSummary widget-instance-CartOrderSummary_CartView">
+        <div class="js-order-summary order-summary">
 
-<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
-<!--<![endif]-->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
-<div id="npp">
-<div id="container"><a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
-
-<div id="header">
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_logo.inc -->
-
-
-
-
-
-
+        <div class="continue-shopping">
+            <div class="check-proceed">
+                <input type="checkbox" class="js-agree" id="checkProceedMessage" />
+                <label for="checkProceedMessage">By proceeding I agree that this purchase is for personal use. This subscription will not be used or shared within my institution, company, or group practice.</label>
+            </div>
+        </div>
 
 
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
-<div id="pagetitle">
-
-<h1><a href="https://newprairiepress.org" title="New Prairie Press" >New Prairie Press</a></h1>
-</div>
-</div><div id="navigation"><!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://newprairiepress.org" title="home" ><span>home</span></a></li><li id="tabtwo"><a href="https://newprairiepress.org/about.html" title="about" ><span>about</span></a></li><li id="tabthree"><a href="https://newprairiepress.org/cgi/myaccount.cgi?context=" title="my account" ><span>my account</span></a></li><li id="tabfour"><a href="https://newprairiepress.org" title="Home" ><span>Home</span></a></li></ul></div>
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) --></div>
-
-
-
-<div id="wrapper">
-<div id="content">
-<div id="main" class="text">
-
-
-<div id="template_query_data" value=""></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="global-alert" class="hidden info">
+    <div class="order-summary-content">
+    <div class="widget-DiscountCode widget-instance-">
+        <div class="promo-wrap">
+    <div class="promo-heading-label">Add a Promotion Code:</div>
+        <div class="promo-input"><input class="js-promo-code" id="PromoCode" name="PromoCode" type="text" value="" /></div>
+        <div class="promo-btn-wrap"><button class="js-apply-promo-code cart-btn">Apply Code</button></div>
+    <div class="js-error-message"></div>
 </div>
 
-<div id="query-wrapper">
+ 
+    </div>
+                <div class="summary-wrap">
+            <div class="summary-heading-label">Order Summary</div>
+            <div class="summary-content">
+                <div class="subtotal-calculated">
+                    <span class="subtotal-label">Subtotal:</span>
+                    <span>$<span class="subtotal-amount js-subtotal-amount">0.00</span></span>
+                </div>
 
-	<div id="show-search-container" class="query tr">
-		<a href="#" id="show-search" class="hidden">Show Search</a>
-		<a href="#" id="hide-search" class="hidden">Hide Search</a>
-	</div>
-	<div id="basic-search" class="hidden">
-		<form id="basic-search-form" method="GET" action="/do/search/"> 
-			<fieldset class="query">
-				<legend>Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="simple-search" class="hidden">Search </label>
-				<span class="grid_7"><input name="q" id="simple-search" type="text" value=""></span>
-				<span class="grid_4">
-					<button type="submit" name="query" value="Search" id="do-search" class="white medium">Search</button>
-					<a href="#" id="switch-to-advanced">Advanced</a>
-				</span>
-				<div class="clear"></div>
-				<input type="hidden" name="start" class="start-input" value="0">
-				<input type="hidden" name="context" id="basic-context" value="4521219">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-							</fieldset>
-		</form>
-	</div>
 
-	<div id="advanced-search">
-		<form method="GET" action="/do/search/">
-			<fieldset>
-				<legend>Advanced Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="search-string" class="hidden">Feedback</label>
-				<input type="hidden" name="start" class="start-input" value="0">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-				
-				<div class="query">
-					<input type="text" name="q" id="search-string" class="grid_12 alpha omega" onFocus="return" readonly="readonly" value="">
-				</div>
-				<div class="clear"></div>
-					
-				<div class="query">
-					<div id="rows">			
-							
-					</div> <!-- end rows -->
-				</div>		
-			</fieldset>
-			<div class="query">
-				
-					<span class="grid_2 prefix_5"><label for="start-date">Date range:</label></span>
-<span class="grid_2">
-	<input type="text" id="start-date" name="start_date" placeholder="MM/DD/YYYY" value="">
-</span>
-<label for="end-date" class="hidden">End Date:</label> 
-<span class="grid_2">
-	<input type="text" id="end-date" name="end_date" placeholder="MM/DD/YYYY" value="">
-</span>
+                <div class="subtotal-supplementary"><span>(Taxes calculated at checkout)</span></div>
 
-						
-				<div class="clear"></div>
-<p class="limit-search">
-		<label for="advanced-context" class="grid_2 prefix_5">
-			Limit search to:
-		</label>
-		<span class="grid_4">
-			<select name="context" id="advanced-context">
-				
-										<option value="4521219" selected="selected">New Prairie Press</option>
-									
-										<option value="1">All Repositories</option>
-												</select>
-	</span>
-</p>
 
-				<div class="clear"></div>
-<p class="sort-options">
-	<span class="grid_2 prefix_5">Sort by:</span>
-	<span class="grid_4">
-		<label for="sort-score">
-			<input type="radio" name="sort" id="sort-score" value="score" checked="checked"> Relevance
-		</label> 
-		<label for="sort-date">
-			<input type="radio" name="sort" id="sort-date" value="date_desc"> Publication Date
-		</label>
-	</span>
-</p>
-
-				<div class="clear"></div>
-<p class="pick-format">
-		<label for="results-format" class="grid_2 prefix_5">
-			Format:
-		</label>
-		<span class="grid_4">
-			<select name="format" id="results-format">
-								<option value="json">links</option>
-								<option value="refer">Bibliography Export</option>
-							</select>
-	</span>
-</p>
-
-				<div style="display:none;visibility:hidden;height:1px"><iframe id="export-frame" style="display:none;visibility:hidden;height:1px"></iframe></div>
-				<div class="clear"></div>
-				<span class="grid_12 tr">				
-				<button type="submit" value="Search" name="search" id="do-search-advanced" class="fr white medium">Search</button>
-
-				<a href="#" id="switch-to-basic">Basic</a>
-				</span>
-				<br class="clear" />
-			</div>
-			<div class="clear"></div>
-
-		</form>	
-	</div> <!-- advanced search -->
-</div><!-- query-wrapper -->
-
-<div id="query-results">
-
-<div class="query">
-<div class="grid_12" id="info-pane">
-<div id="results-header">
-		<div class="clear"></div>		
-	</div>
-<br class="clear" />
+            </div>
+            <div class="errorMessage hide">
+                You must accept the Terms and Conditions to proceed.
+            </div>
+            <div class="proceed-btn-wrap">
+                    <a class="js-cart-proceed cart-btn " data-destination="https://direct.mit.edu:443/store/reviewcart?returnUrl=https%3a%2f%2fdirect.mit.edu%2fstore%2freviewcart" href="javascript:;">Review Cart</a>
+            </div>
+        </div>
+    </div>
 </div>
+ 
+    </div>
 
-<div class="grid_3" id="facet-pane">
+            </div><!-- /.content-main_content -->
+        </section>
+    </div>
+    <div class="mobile-mask">
+    </div>
+    <section class="footer_wrap vt-site-footer">
+        
 
-	<p id="selected-facets">
-				<span id="selected-discipline-facet" class="hidden">
-			<a class="close" id="clear-discipline-facet"><i>&times;</i>
-			 <strong id="selected-discipline-facet-label"></strong></a>
-		</span>
-				<span id="selected-download_type-facet" class="hidden">
-			<a class="close" id="clear-download_type-facet"><i>&times;</i>
-			 <strong id="selected-download_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_facet-facet" class="hidden">
-			<a class="close" id="clear-publication_facet-facet"><i>&times;</i>
-			 <strong id="selected-publication_facet-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_type-facet" class="hidden">
-			<a class="close" id="clear-publication_type-facet"><i>&times;</i>
-			 <strong id="selected-publication_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_year-facet" class="hidden">
-			<a class="close" id="clear-publication_year-facet"><i>&times;</i>
-			 <strong id="selected-publication_year-facet-label"></strong></a>
-		</span>
-				<span id="selected-subject_facet-facet" class="hidden">
-			<a class="close" id="clear-subject_facet-facet"><i>&times;</i>
-			 <strong id="selected-subject_facet-facet-label"></strong></a>
-		</span>
-		
-	</p>
-<br class="clear" />
-	<div id="results-facets" class="hidden"></div>
-</div>
-<div class="grid_9" id="result-pane">
-	
-	<div id="results-list">
-		<div class="clear"></div>
-	</div>
-	<div id="results-footer"></div>
-</div>
-<br class="clear" />
-</div>
 
-<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
-	<div class="verticalalign">&nbsp;</div>
-	<div class="clear">&nbsp;</div>
+<div class="ad-banner js-ad-banner ad-banner-footer">
+
+    <div class="widget-AdBlock widget-instance-FooterAd">
+            
+
+ 
+    </div>
 
 </div>
 
-	<div id="sidebar" role="complementary">
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
+<div class="ad-banner js-ad-banner ad-banner-footer">
 
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
+    <div class="widget-AdBlock widget-instance-StickyAd">
+            
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc -->
-
-
-	
-<form method='get' action='https://newprairiepress.org/do/search/' id="sidebar-search">
-	<label for="search" accesskey="4">
-		Enter search terms:
-	</label>
-		<div>
-			<span class="border">
-				<input type="text" name='q' class="search" id="search">
-			</span> 
-			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
-		</div>
-	<label for="context" style="display:none;">
-		Select context to search:
-	</label> 
-		<div>
-			<span class="border">
-				<select name="fq" id="context">
-					
-					
-					
-					
-					<option value='virtual_ancestor_link:"https://newprairiepress.org"'>in this repository</option>
-					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
-				</select>
-			</span>
-		</div>
-</form>
-
-<p class="advanced">
-	
-	
-		<a href="https://newprairiepress.org/do/search/advanced/?fq=virtual_ancestor_link:%22https://newprairiepress.org%22" >
-			Advanced Search
-		</a>
-	
-</p>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
-	<ul id="side-notify">
-		<li class="notify">
-			<a href="https://newprairiepress.org/announcements.html" title="Email or RSS Notifications" >
-				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
-			</a>
-		</li>
-	</ul>
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_middle_7_8.inc -->
-
-
-<div id="sb-custom-middle">
-	<h2 class="sb-custom-title">Our Publications</h2>
-		<ul class="sb-custom-ul">
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/journals.html" >
-					Journals
-				</a>
-			</li>
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/conferences" title="Conference Proceedings" >
-					Conferences				</a>
-			</li>
-				<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/monographs" >
-					Monographs</a>
-			</li>
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/specpubs" >Special Publications</a>
-			</li>
-		</ul>
-		<h2>Featured Collections</h2>
-<ul id="links">
-	<li><a href="https://newprairiepress.org/featured.html" title="" >Student Publications</a></li>
-</ul>
-<h2>Links for Editors</h2>
-<ul id="links">
-	<li><a href="https://newprairiepress.org/about.html#scope" title="" >Our Services</a></li>
-	<li><a href="https://newprairiepress.org/about.html#policies" title="" >Policies</a></li>
-	<li><a href="https://newprairiepress.org/about.html#copyright" title="" >Copyright</a></li>
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc -->
-<ul id="side-browse">
-
-
-<li class="collections"><a href="https://newprairiepress.org/communities.html" title="Browse by Journals" >Journals</a></li>
-<li class="discipline-browser"><a href="https://newprairiepress.org/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
-<li class="author"><a href="https://newprairiepress.org/authors.html" title="Browse by Author" >Authors</a></li>
-
-
-</ul>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
-
-
-
-
-	<ul id="side-author">
-		
-		<li class="submit">
-			<a href="https://newprairiepress.org/submit_research.html" title="Submissions" >
-				Submissions
-			</a>
-		</li>
-		
-<li><a href="https://newprairiepress.org/contact_us.html" title="Contact Us" >Contact Us</a></li>
-
-	</ul>
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
-	
-
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/twitter_badge.inc --><div id="twitter-badge">
-<a class="twitter-timeline" href="https://twitter.com/NewPrairiePress" data-widget-id="368524012336316418" data-chrome="transparent" width="220" height="400" >Tweets by @NewPrairiePress</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</div><!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
-	
-
-
-
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-	<div class="verticalalign">&nbsp;</div>
-	</div>
+ 
+    </div>
 
 </div>
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
-	
-	
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
 
-<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
-	<em>Digital Commons</em>
+    <div class="widget-SitePageFooter widget-instance-SitePageFooter">
+         
+    </div>
+
+
+
+<div class="site-theme-footer">
+        <div class="site-theme-footer_content">
+    <div class="widget-SelfServeContent widget-instance-UmbrellaFooterSelfServe">
+        
+<div class="site-theme-footer">
+<div class="site-theme-footer_content">
+<div class="widget-SelfServeContent widget-instance-UmbrellaFooterSelfServe">
+<div class="site-theme-footer">
+<div class="site-theme-footer_content">
+<div class="widget-SelfServeContent widget-instance-UmbrellaFooterSelfServe">
+<div class="theme-footer">
+<div class="flex-row">
+<div class="col-3 custom footer-branding">
+<div class="footer-logo-wrap">
+<div class="footer-logo">
+<a href="https://direct.mit.edu">
+<img alt="" src="//mitp.silverchair-cdn.com/UI/app/svg/umbrella/logo.svg" />
 </a>
-
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
-	<p>
-		<a href="https://newprairiepress.org" title="Home page" accesskey="1" >Home</a> | 
-		<a href="https://newprairiepress.org/about.html" title="About" >About</a> | 
-		<a href="https://newprairiepress.org/faq.html" title="FAQ" >FAQ</a> | 
-		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
-		<a href="https://newprairiepress.org/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
-	</p>
-	<p>
-	
-	
-		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
-	
-		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
-	</p> 
-	
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-
 </div>
 </div>
+<div class="contact-info-wrap">
+<h5 class="mb-1">A product of <a href="https://mitpress.mit.edu" target="_blank">The MIT Press</a></h5>
+<a href="https://share.hsforms.com/1POg3Y5A9QgKgp8JynSxViQ4ne1r?" class="btn mb-1">Newsletter Sign Up</a>
+</div>
+<div class="social-icons-wrap">
+<ul class="social-icons-list">
+    <li><a class="social-link" href="https://twitter.com/mitpress" target="_blank"><span class="icon-social-twitter"></span><span class="screenreader-text">Twitter</span></a></li>
+    <li><a class="social-link" href="https://www.facebook.com/mitpress/" target="_blank"><span class="icon-social-facebook"></span><span class="screenreader-text">Facebook</span></a></li>
+    <li><a class="social-link" href="https://www.instagram.com/mitpress/" target="_blank"><span class="icon-social-instagram"></span><span class="screenreader-text">Instagram</span></a></li>
+    <li><a class="social-link" href="https://www.youtube.com/channel/UCeH0hmlPjGW2DN0Ntmd0FCQ" target="_blank"><span class="icon-social-youtube"></span><span class="screenreader-text">YouTube</span></a></li>
+    <li><a class="social-link" href="https://www.linkedin.com/company/the-mit-press/" target="_blank"><span class="icon-social-linkedin"></span><span class="screenreader-text">LinkedIn</span></a></li>
+</ul>
+</div>
+</div>
+<div class="col-9 custom footer-nav">
+<div class="flex-row">
+<div class="col-3">
+<div class="footer-links-group with-header">
+<h3 class="footer-links-header">Browse</h3>
+<ul class="list-lvl-0">
+    <li class="list-lvl-0"><a href="/books">Books</a></li>
+    <li class="list-lvl-0"><a href="/journals">Journals</a></li>
+</ul>
+</div>
+</div>
+<div class="col-3">
+<div class="footer-links-group with-header">
+<h3 class="footer-links-header">Resources</h3>
+<ul class="list-lvl-0">
+    <li class="list-lvl-0"><a href="/pages/customer_support">Customer Support</a></li>
+    <li class="list-lvl-0"><a href="/books/pages/direct-to-open">Direct to Open</a></li>
+    <li class="list-lvl-0"><a href="/journals/pages/authors">For Authors</a></li>
+    <li class="list-lvl-0"><a href="/books/pages/For_Librarians">For Librarians</a></li>
+    <li class="list-lvl-0"><a href="https://mitpress.mit.edu/media-inquiries">Media Inquiries</a></li>
+    <li class="list-lvl-0"><a href="/books/pages/User_Guides_and_FAQ">FAQ</a></li>
+</ul>
+</div>
+</div>
+<div class="col-3">
+<div class="footer-links-group with-header">
+<h3 class="footer-links-header">MIT Press Links</h3>
+<ul class="list-lvl-0">
+    <li class="list-lvl-0"><a href="https://mitpress.mit.edu/about" target="_blank">About the MIT Press</a></li>
+    <li class="list-lvl-0"><a href="https://thereader.mitpress.mit.edu/" target="_blank">The MIT Press Reader</a></li>
+    <li class="list-lvl-0"><a href="https://mitpress.mit.edu/blog" target="_blank">MIT Press Blog</a></li>
+    <li class="list-lvl-0"><a href="https://mitpress.mit.edu/catalogs" target="_blank">Seasonal Catalogs</a></li>
+    <li class="list-lvl-0"><a href="https://mitpress.mit.edu" target="_blank">MIT Press Home</a></li>
+    <li class="list-lvl-0"><a href="https://mitpress.mit.edu/give-mit-press" target="_blank">Give to the MIT Press</a></li>
+</ul>
+</div>
+</div>
+<div class="col-3">
+<div class="footer-links-group with-header">
+<h3 class="footer-links-header">Contact Us</h3>
+<ul class="list-lvl-0">
+    <li class="list-lvl-0"><a href="https://mitpress.atlassian.net/servicedesk/customer/portal/3" target="_blank">Direct Service Desk</a></li>
+    <li class="list-lvl-0"><a href="/journals/pages/rights-permissions">Journals Copyright &amp; Permissions</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="legal-links-wrap">
+<div class="copyright-date">
+© 2022 The MIT Press
+</div>
+<ul class="legal-links">
+    <li>
+    <a href="https://mitpress.mit.edu/terms-use">Terms of Use</a>
+    </li>
+    <li>
+    <a href="https://mitpress.mit.edu/privacy" target="_new">Privacy
+    Statement</a>
+    </li>
+    <li>
+    <a href="https://www.crossref.org/" target="_blank">Crossref Member</a>
+    </li>
+    <li>
+    <a href="https://www.projectcounter.org/" target="_blank">COUNTER Member</a>
+    </li>
+    <li>
+    <a href="/DocumentLibrary/MIT-VPAT2.4RevWCAG--January2022.pdf" target="_blank" title="Accessibility, VPAT">Accessibility/VPAT</a>
+    </li>
+    <li class="copyright">The MIT Press colophon is registered in the U.S. Patent and Trademark Office</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- /.center-inner-row -->
+</div>
+<!-- /.site-theme-footer --></div>
+</div>
+</div>
 
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_analytics.inc --><script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-42891787-24', 'newprairiepress.org');
-  ga('send', 'pageview');
+     
+    </div>
 
-</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
+        </div><!-- /.center-inner-row -->
+</div><!-- /.site-theme-footer -->
+<div class="ss-ui-only">
 
-<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>
+    <div class="widget-SelfServeContent widget-instance-SSuiOnlySelfServe">
+        
+<style type="text/css">
+    .jumplink-list .section-jump-link a, .jumplink-list-flyout .section-jump-link a, .list-book-jumplinks .section-jump-link a, .list-issue-jumplinks .section-jump-link a, .section-jump-link__sublist .section-jump-link a {
+    text-transform: none;
+    }
+    .article-list-resources .articleClientType {
+    text-transform: none;
+    }
+    /*DO NOT REMOVE - JL - 8/31/20*/
+    .icon-corresponding_author:before {
+    content: "\f199";
+    }
+    .pg_Book h1.book-info__title {
+    font-size: 2.6rem;
+    }
+    .pg_Book h1.book-info__title i {
+    font-size: 1.5rem;
+    }
+    .widget-SelfServeContent ul.article-list, .widget-SelfServeContent ul.topic-list, .widget-SelfServeContent ul.nb {
+    list-style-type: none;
+    }
+    .pg_Book #divBookToc .book-info__meta .book-info__abstract .abstract p {
+    margin-top: 1rem;
+    }
+    .pg_Book #divBookToc .book-info__meta .book-info__abstract .abstract p:first-of-type {
+    margin-top: 0;
+    }
+    /*homepage layout*/
+    .homepage-panel-wrap {
+    display: block;
+    }
+    body[theme-umbrella] .home-hero-feature .homepage-panel-text {
+    padding: 1.5rem;
+    }
+    body[theme-umbrella] .homepage-panel-wrap{
+    display: flex;
+    border-bottom: 1px solid #ededed;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    }
+    body[theme-umbrella] .homepage-panel-wrap:last-of-type {
+    border-bottom: none;
+    }
+    @include for-size(sm-phone-only) {
+    body[theme-umbrella] .homepage-panel-wrap{
+    flex-direction: column;
+    }
+    }
+    body[theme-umbrella] .homepage-panel-wrap .homepage-panel-image {
+    flex-grow: 1;
+    }
+    body[theme-umbrella] .homepage-panel-wrap .homepage-panel-image img {
+    border: solid 1px #ededed;
+    }
+    body[theme-umbrella] .homepage-panel-wrap .homepage-panel-text {
+    flex-basis: 60%;
+    }
+    @media all and (max-width: $bp_x-small) {
+    body[theme-umbrella] .homepage-panel-wrap .homepage-panel-text {
+    flex-basis: 100%;
+    }
+    }
+    body[theme-umbrella] &.pg_Index .home-row1 .home-hero-feature .widget-instance-_home-hero-feature .homepage-panel-wrap {
+    @include for-size(sm-phone-only) {
+    width: 100% !important;
+    }
+    }
+    /**/
+    .widget-instance-_home-hero-feature .homepage-panel-text {flex-basis: 100% !important;}
+    .home-row1 .home-self-serve-content-new .homepage-panel-text {
+    padding: 0 1rem;
+    }
+    .home-row1 .homepage-panel-wrap img {max-width: 200px;}
+    @media all and (max-width: 899px) {
+    .home-row1 .theme-homepage-layout div[class*=home-row]>.widget-dynamic-inner-wrap {display: block;}
+    }
+    @media all and (max-width: 899px) {
+    .home-row1 .widget-instance-_home-self-serve-content-new {margin-top: 1rem;}
+    }
+    body[theme-umbrella] .home-row1 .homepage-panel-wrap .homepage-panel-image {flex-grow: 0;}
+    /**/
+    .widget-instance-_home-hero-feature .homepage-panel-text {flex-basis: 100% !important;}
+    .home-row1 .home-self-serve-content-new .homepage-panel-text {
+    padding: 0 1rem;
+    }
+    .home-row1 .homepage-panel-wrap img {max-width: 200px;}
+    @media all and (max-width: 899px) {
+    .home-row1 .theme-homepage-layout div[class*=home-row]>.widget-dynamic-inner-wrap {display: block;}
+    }
+    @media all and (max-width: 899px) {
+    .home-row1 .widget-instance-_home-self-serve-content-new {margin-top: 1rem;}
+    }
+    body[theme-umbrella] .home-row1 .homepage-panel-wrap .homepage-panel-image {flex-grow: 0;}
+    /*SCMP-26926*/
+    body.leftRailModalOpen .page-column--center.can-stick {
+    z-index: 1;
+    }
+    /*SCMP-26926*/
+</style>
+
+
+     
+    </div>
+
+</div>
+
+<div class="ad-banner js-ad-interstitial">
+
+    <div class="widget-AdBlock widget-instance-Interstitial">
+            
+
+ 
+    </div>
+
+</div>
+    </section>
+
+
+
+
+
+    
+    
+
+
+    <div class="widget-SiteWideModals widget-instance-SiteWideModals">
+        <div id="revealModal" class="reveal-modal" data-reveal>
+    <div id="revealContent"></div>
+    <a class="close-reveal-modal" href="javascript:;"><i class="icon-general-close"><span class="screenreader-text">Close Modal</span></i></a>
+</div>
+
+<div id="globalModalContainer" class="modal-global-container">
+    <div id="globalModalContent"></div>
+    <a class="close-modal js-close-modal" href="javascript:;"><i class="icon-general-close"><span class="screenreader-text">Close Modal</span></i></a>
+</div>
+<div id="globalModalOverlay" class="modal-overlay js-modal-overlay"></div>
+
+    <div id="NeedSubscription" class="reveal-modal small" data-reveal>
+        <div class="subscription-needed">
+            <h5 class="modal-heading">This Feature Is Available To Subscribers Only</h5>
+            <p><a class="btn modal-sign_in-btn" href="/sign-in?returnUrl=%2fstore%2fcart">Sign In</a> or <a class="modal-register-link" href="/my-account/register?siteId=1&amp;returnUrl=%2fstore%2fcart">Create an Account</a></p>
+        </div>
+        <a class="close-reveal-modal" href="javascript:;"><i class="icon-general-close"><span class="screenreader-text">Close Modal</span></i></a>
+    </div>
+
+<div id="noAccessReveal" class="reveal-modal tiny" data-reveal>
+    <a class="close-reveal-modal" href="javascript:;"><i class="icon-general-close"><span class="screenreader-text">Close Modal</span></i></a>
+    <div id="noAccessForm">
+        <div class="spinner"></div>
+    </div>
+</div>
+ 
+    </div>
+
+    
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+
+    <script type="text/javascript" src="//mitp.silverchair-cdn.com/Themes/Client/app/jsdist/v-637873030187040997/site.min.js"></script>
+    <script async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-531f5e907ce0d5b8&domready=1"></script>
+
+
+    
+  
+
+
+    
+
+    
+    
+
+
+    <div class="widget-GdprCookieBanner widget-instance-GdprCookieBanner">
+        <div class="gdpr-cookie-wrapper at-gdprprompt">
+    <div class="gdpr-cookie-body">
+        This site uses cookies. By continuing to use our website, you are agreeing to <a href="https://direct.mit.edu/DocumentLibrary/MITP%20Direct%20PRIVACY%20POLICY%202019-02-26.pdf">our privacy policy.</a>
+    </div>
+    <div class="gdpr-cookie-links_wrap">
+        <a href="javascript:;" class="js-gdpr-cookie-acceptLink at-acceptgdpr">Accept</a>
+    </div>
+            <input id="hdnDomain" type="hidden" value=".mit.edu" />
+
+    <input id="hdnDomainGdpr" type="hidden" value=".mit.edu" />
+    <input id="hdnClientIdGdpr" type="hidden" value="32" />
+</div> 
+    </div>
+
+
+    
+
+
+
+
+    <div class="ad-banner js-ad-riser ad-banner-riser">
+
+    <div class="widget-AdBlock widget-instance-RiserAd">
+            
+
+ 
+    </div>
+
+    </div>
+
+</body>
+</html>
+

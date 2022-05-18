@@ -1,520 +1,613 @@
-<!DOCTYPE html>
-<html ng-app="tmog" lang="en">
-<head>
-    <title>USPTO | TMOG Search</title>
-
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=1"/>
-    
-    <!--START OF SCRIPTS-->
-    <!-- Bootstrap -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-
-    <!-- TMOG styles-->
-    <link type="text/css" rel="stylesheet" href="css/main.css" media="screen"/>
-    <link type="text/css" rel="stylesheet" href="css/search.css" media="screen"/>
-    <link type="text/css" rel="stylesheet" href="css/review.css" media="screen"/>
-    <link type="text/css" rel="stylesheet" href="css/single.css" media="screen"/>
-    <link type="text/css" rel="stylesheet" href="css/print.css" media="print"/>
-    <link type="text/css" rel="stylesheet" href="js/lib/imageZoom/image-zoom.css" media="screen"/>
-    <link type="text/css" rel="stylesheet" href="bower_components/jquery-ui/themes/ui-lightness/jquery-ui.css"
-          media="screen"/>
-    <!--[if IE 9]>
-    <link rel="stylesheet" type="text/css" href="css/eog-ie.css"/>
-    <![endif]-->
-    <!--HEADER CSS-->
-    <link rel="stylesheet" type="text/css" href="uhf/css/uspto-header-styles.css">
-    <link rel="shortcut icon" type="image/x-icon" href="uhf/images/icons/favicon.ico">
-    <link rel="icon" type="image/png" href="uhf/images/icons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="uhf/images/icons/favicon-16x16.png" sizes="16x16">
-
-    <!--END OF SCRIPTS-->
-
-</head>
-<body>
-
-<!--USPTO STANDARD HEADER-->
-<div id="usptoGlobalHeader">
-    <div class="uspto-header-top">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <a href="http://www.uspto.gov" target="_blank" class="uspto-logo"
-                       title="United States Patent and Trademark Office - An Agency of the Department of Commerce"></a>
-
-                    <div class="pull-right" id="uspto-header-links">
-                        <span><a href="http://www.uspto.gov/about-us" target="_blank">About Us</a></span><span><a
-                            href="http://www.uspto.gov/careers" target="_blank">Careers</a></span><span><a
-                            href="http://www.uspto.gov/about-us/contact-us" target="_blank">Contact Us</a></span>
-                    </div>
-                </div>
+<!DOCTYPE html
+  SYSTEM "html">
+<html xmlns:tsdr="http://tsdr.uspto.gov" lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=8, IE=11, IE=edge">
+      <title>Trademark Status &amp; Document Retrieval</title>
+      <link rel="stylesheet" type="text/css" href="css/uspto-header-styles.css">
+      <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
+      <link rel="stylesheet" href="css/print/print.css" type="text/css" media="print">
+      <link rel="stylesheet" href="css/uspto-style.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/jquery.multiselect.css">
+      <link rel="stylesheet" href="css/multi-search-table.css">
+      <link rel="stylesheet" type="text/css" href="css/ftl-style.css">
+      <link rel="stylesheet" href="css/toggle_container.css">
+      <link rel="stylesheet" href="css/webwidget_tab.css">
+      <link rel="stylesheet" href="css/docs_table.css">
+      <link rel="stylesheet" href="css/themes-redmond-jquery-ui.css">
+      <link id="printPreviewStyleSheet" rel="stylesheet" href="css/print/print.css" media="print"><script type="text/javascript" src="js/lib/jquery-1.7.2.js"></script><script type="text/javascript" src="js/lib/underscore-1.4.2.js"></script><script type="text/javascript" src="js/lib/jquery-ui-1.9.2.min.js"></script><script type="text/javascript" src="js/lib/jquery.tablesorter.js"></script><script language="javascript" src="js/lib/jquery.dataTables.js"></script><script type="text/javascript" src="js/lib/jquery.pngFix.pack.js"></script><script type="text/javascript" src="js/lib/jquery.hotkeys.js"></script><script type="text/javascript" src="js/lib/jquery.multiselect.js"></script><script type="text/javascript" src="js/lib/jquery.ba-bbq.js"></script><script type="text/javascript" src="js/Search.js"></script><script type="text/javascript" src="js/SearchForm.js"></script><script type="text/javascript" src="js/Asynchronous.js"></script><script type="text/javascript" src="js/HotKeys.js"></script><script type="text/javascript" src="js/webwidget_tab.js"></script><script type="text/javascript" src="js/HelpOverlay.js"></script><script type="text/javascript" src="js/AnnouncementOverlay.js"></script><script type="text/javascript" src="js/SearchPage.js"></script><script async="async" type="text/javascript" src="https://components.uspto.gov/js/ais/28-tsdr.js"></script><script src="https://www.recaptcha.net/recaptcha/api.js?render=6LdJocYUAAAAAAUlv2QzIAlPLcQloxx9vt_7PLdI"></script>
+      <!--[if lt IE 9]>
+                <script src="js/lib/html5shiv.js"></script><script src="js/lib/html5shiv-printshiv.js"></script><![endif]
+                --></head>
+   <body>
+      <div id="ApplicationProperties"><input type="hidden" id="errorValidationSn" value="Serial Number(s) {0} is/are not in the proper format. A U.S. Serial Number consists of 8 digits, with no alpha characters."><input type="hidden" id="errorValidationRn" value="Registration Number(s) {0} is/are not in the proper format. A U.S. Registration Number consists of 5, 6, or 7 digits, with no alpha characters. Commas are allowed."><input type="hidden" id="errorValidationRef" value="USPTO Reference Number(s) {0} is/are not in the proper format. A USPTO Reference Number consists of 8 characters, the first being an alpha character and the remaining 7 characters numeric."><input type="hidden" id="errorValidationIr" value="International Registration Number(s) {0} is/are not in the proper format. It must be in the format nnnnnn, nnnnnnn, nnnnnnA, or nnnnnnnA."><input type="hidden" id="errorValidationPn" value="{0} is not in the proper format.&#x9;An expungement or reexamination Petition Number &#xA;&#x9;&#x9;consists of a 4 digit year, hyphen, and a 6 digit number (e.g. 2020-000000). The Proceeding Number &#xA;&#x9;&#x9;consists of a 4 digit year, hyphen, and a 6 digit number followed by an &#34;E&#34; or &#34;R&#34; (e.g. 2020-000000R).&#xA;&#x9;&#x9;"><input type="hidden" id="errorValidationAutoRegnition" value=" {0} is not in the proper US Application format. -&#xA;                 A U.S. Serial Number consists of 8 digits, with no alpha characters. -&#xA;                 A U.S. Registration Number consists of 5, 6, or 7 digits, with no alpha characters. Commas are allowed. -&#xA;                 A USPTO Reference Number consists of 8 characters, the first being an alpha character and the remaining 7 characters numeric.&#xA;        "><input type="hidden" id="errorRangeDelimiter" value="Range searches only processes a single range such as number1-number2. More than one hyphen is not allowed."><input type="hidden" id="errorRangeNumberMissing" value="Range searches require two case identifiers separated by a hyphen. For example, 12345670-12345680."><input type="hidden" id="errorNoEntry" value="No number entered. Please enter a valid number and resubmit your search."><input type="hidden" id="errorNoMultiData" value="No data has been found for the entered numbers.  Please confirm that the entry is correct."><input type="hidden" id="partialResultsPredictable" value="The following {0} number(s) is/are not found in our system: {1}"><input type="hidden" id="partialResultsUnpredictable" value="Results were limited to the first 25 cases entered. The remainder of the range is {0}"><input type="hidden" id="errorOverSized" value="You have entered more than the permitted 25 case identifiers. Please remove {0} and resubmit your search."><input type="hidden" id="ajaxError" value="The server was unreachable, please try again."><input type="hidden" id="noSelectionError" value="No case or document selected to download"><input type="hidden" id="noDownloadContentError" value="No content was selected for download. Please select status, documents, or both."><input type="hidden" id="certNaInOriginal" value="Certificates not available for download in Original format."><input type="hidden" id="searchingDocs" value="retrieving documents ..."><input type="hidden" id="searchingStatus" value="retrieving status ..."><input type="hidden" id="docsFound" value="{0} document(s) found"><input type="hidden" id="statusFound" value="Status results found"><input type="hidden" id="docsSelected" value="{0} of {1} documents selected"><input type="hidden" id="multiMediaFileTypes" value="MP3,WAV,X-MS-WMA,X-MS-WMV,AVI,MPEG,MP4,ZIP,QUICKTIME,AIFF,GIF,X-SHOCKWAVE-FLASH"><input type="hidden" id="error.validation.searchType" value="Invalid Search Type."><input type="hidden" id="error.document.unavailable" value="Selected document is unavailable. Please click on Submit button for other available documents."><input type="hidden" id="msg.noResults" value="No result found for query: \[&#34; {0} &#34;\]."><input type="hidden" id="msg.resultsReturned" value="queryString={0}, returned entities.size()={1}"><input type="hidden" id="msg.allResultsReturned" value="entity={0}, returned count={1}"><input type="hidden" id="caseDownloadPdfURL" value="https://tsdrsec.uspto.gov/ts/cd/casedocs/{prefix}{caseId}/mega-bundle-download?case={case}&amp;docs={udi}&amp;assignments={adi}&amp;prosecutionHistory={pdi}"><input type="hidden" id="caseDownloadZipURL" value="https://tsdrsec.uspto.gov/ts/cd/casedocs/{prefix}{caseId}/zip-bundle-download?case={case}&amp;docs={udi}&amp;assignments={adi}&amp;prosecutionHistory={pdi}"><input type="hidden" id="markImageSrcUrl" value="https://tsdrsec.uspto.gov/ts/cd/standardimages/{sn}/webcontent"><input type="hidden" id="docsDownloadCertsURL" value="https://tsdrsec.uspto.gov/ts/cd/casedocs/bundle-download.pdf?rn={rnAll}&amp;category=RC&amp;doc={rnChecked}"></div>
+      <div id="helpOverlay" class="overlays hide">
+         <div class="dialogBox"><img onclick="page.helpOverlay.close()" src="/img/icn-close32x32.gif" alt="Close" class="floatRight cursorPointer closeHelp"><h1 class="helpTitle">TSDR Help</h1>
+            <div id="helpOverlayLoading"></div>
+            <div id="helpHeader"></div>
+         </div>
+      </div>
+      <div id="announcementOverlay" class="overlays hide">
+         <div class="dialogBox"><img src="/img/icn-close32x32.gif" onclick="page.announcementOverlay.close()" alt="Close" class="floatRight cursorPointer closeAnnouncement"><h1 class="announcementTitle">Edit Announcement</h1><textarea name="announcementTextArea" cols="70" rows="5" id="announcementTextArea"></textarea><div class="buttonHolderHelp"><input type="button" class="page" value="Cancel" id="cancelAnnouncement" onclick="page.announcementOverlay.close()" alt="cancel announcement edit"><input id="saveAnnouncement" type="button" class="page" value="Save" onclick="page.announcementOverlay.save()" alt="save announcement edit"></div>
+         </div>
+      </div>
+      <div class="container">
+         <div id="usptoGlobalHeader">
+            <div class="uspto-header-top printPreviewNoShow">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-sm-12"><a href="http://www.uspto.gov" target="_blank" class="uspto-logo" title="United States Patent and Trademark Office - An Agency of the Department of Commerce"></a><div class="pull-right" id="uspto-header-links"><span><a href="http://www.uspto.gov/about-us" target="_blank">About Us</a></span><span><a href="http://www.uspto.gov/careers" target="_blank">Careers</a></span><span><a href="http://www.uspto.gov/about-us/contact-us" target="_blank">Contact Us</a></span></div>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-    <div class="uspto-header-middle">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <span>Trademark Official Gazette</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<noscript>
-    <style type="text/css">
-        .noJsHide {
-            display: none;
-        }
-    </style>
-    <div class="noscriptmsg">To use the TMOG successfully, please note the following requirements:</br></br>
-        We’re sorry, you must have javascript enabled in your browser. Please be sure javascript is enabled and try
-        again.
-    </div>
-</noscript>
-
-<!-- SUB-HEADER (bread crumbs and horizontal nav) -->
-<div id="header-gray" class="noJsHide">
-    <div class="">
-        <div class="site-crumbs">
-            <a href="http://www.uspto.gov/trademarks" target="_blank"> Trademarks</a> / <a href="#"
-                                                                                            onclick="homePage()">Trademark
-            Official Gazette</a>
-			
-			
-        </div>
-		<div class="site-crumbs pull-right">
-		<span><a href="https://www.uspto.gov/trademark/trademark-updates-and-announcements/proposed-amendments-identifications-goods-and-services" target="_blank" style="color:#ffbd6d" onMouseOver="this.style.color='#f2a952'" onMouseOut="this.style.color='#ffbd6d'"> Technological Evolution </a></span>&nbsp;
-		</div>
-			
-    </div>
-    <div class="clear"></div>
-</div>
-
-<div ng-controller="TabsCtrl" id="tabsetNav" ng-cloak>
-
-<div class="tabHeader">
-    <ul class="nav nav-justified" aria-label="Application Tabs" role="tablist">
-        <!-- SEARCH TAB -->
-        <li ng-click="setView('review', 'tile')" ng-keypress="($event.which === 13)?setView('review', 'tile'):0"
-            ng-class="{active: view.view == 'review'}" class="searchTabHeader" role="tab"
-            aria-label="Search / Review Tab" tabindex="0">
-            <a>Search</a>
-        </li>
-
-        <!-- MY LIST TAB -->
-        <li ng-click="setView('myList', 'list')" ng-keypress="($event.which === 13)?setView('myList', 'list'):0"
-            ng-class="{active: view.view == 'myList'}" role="tab" aria-label="My List Tab" tabindex="0">
-            <a>
-                <span class="badge pull-right collectionCount"> {{ myListCount }} </span> My List
-            </a>
-        </li>
-
-        <!-- RESOURCES TAB -->
-        <li ng-click="setView('resources')" ng-keypress="($event.which === 13)?setView('resources'):0"
-            ng-class="{active: view.view == 'resources'}" role="tab" aria-label="Resources Tab" tabindex="0">
-            <a>Help&nbsp;/&nbsp;Resources</a>
-        </li>
-    </ul>
-</div>
-
-<!-- info and warning messaging -->
-<div ng-cloak class="messageContainer" aria-label="Alert Message Container">
-    <div ng-repeat="success in alertSrvc.alert.success" class="alert alert-success alert-dismissable" role="alert"
-         aria-label="Success Message">
-        <button type="button" class="close" aria-hidden="true"
-                ng-click="alertSrvc.dismiss('success', success)">&times;</button>
-        {{success.text}}
-    </div>
-
-    <div ng-repeat="info in alertSrvc.alert.info" class="alert alert-info alert-dismissable" role="alert"
-         aria-label="Alert Message">
-        <button type="button" class="close" aria-hidden="true"
-                ng-click="alertSrvc.dismiss('info', info)">&times;</button>
-        {{info.text}}
-    </div>
-
-    <div ng-repeat="warn in alertSrvc.alert.warning" class="alert alert-warning alert-dismissable" role="alert"
-         aria-label="Warning Message">
-        <button type="button" class="close" aria-hidden="true"
-                ng-click="alertSrvc.dismiss('warning', warn)">&times;</button>
-        {{warn.text}}
-    </div>
-
-    <div ng-repeat="error in alertSrvc.alert.error" class="alert alert-danger alert-dismissable" role="alert"
-         aria-label="Error Message">
-        <button type="button" class="close" aria-hidden="true"
-                ng-click="alertSrvc.dismiss('error', error)">&times;</button>
-        {{error.text}}
-    </div>
-</div>
-<div class="tabBodyExternal">
-
-    <!-- REVIEW TAB -->
-    <div ng-controller="ReviewCtrl" ng-show="view.view == 'review'" id="reviewTab">
-        <h1 ng-hide="view.subview === 'case'" class="viewTitle">Search Results</h1>
-
-        <h1 ng-show="view.subview === 'case'" class="viewTitle">Case Details</h1>
-
-        <!-- sidebar filter groups -->
-        <!-- todo split it and hit it -->
-        <div ng-hide="view.subview === 'case'">
-            <ng-include src="'js/app/sidebar/sidebar-filters-review.html'"></ng-include>
-        </div>
-
-        <!-- results container for pagination, filter crumbs, action btns, and customize field btn -->
-        <div ng-hide="view.subview === 'case'" class="sitewide-search">
-
-            <!-- CONTROLS (Pagination, Filter Crumbs, Action Buttons, Grid Sort, Custom Columns Link -->
-            <div id="tableControls">
-                <!-- page settings, prev, records count, next, go to record, list/grid icons -->
-                <og-pagination tab-name="review"></og-pagination>
-
-                <!-- FILTER CRUMBS -->
-                <og-filter-crumbs filter-sidebar="review"></og-filter-crumbs>
-
-                <!-- Action Buttons for Share All Results, Reviewed, Add To My List -->
-                <div class="actionButtons">
-
-                    <span>
-                        <button type="button" class="shareResults btn btn-primary btn-share share right"
-                                aria-label="email issue" title="Email Results"
-                                ng-click="shareSearch($event, 'review')">
-                            <span class="glyphicon glyphicon-envelope"></span> Email All Results
-                        </button>
-                    </span>
-
-                    <!-- show add to list and reviewed action buttons once case is selected -->
-                    <div ng-show="isCaseSelected(cases.cases)">
-                        <button type="button" class="btn btn-addToList btn-hidden" aria-label="Add to My List"
-                                title="Add to My List"
-                                ng-click="addToMyList($event)">
-                            <span class="glyphicon glyphicon-plus"></span> Add to My List
-                        </button>
-                    </div>
-                </div>
-
-                <!-- custom fields button and modal -->
-                <og-customize-case-fields tab-name="review"></og-customize-case-fields>
-            </div>
-
-            <!-- Review Tile -->
-            <div class="reviewTileWrapper">
-                <div ng-controller="ReviewTileCtrl" ng-show="view.subview == 'tile'">
-                    <ng-include src="'js/app/common/review-tiles.html'"></ng-include>
-                </div>
-
-                <!-- Action Buttons for Share All Results, Reviewed, Add To My List -->
-                <div class="actionButtons">
-
-                    <span>
-                        <button type="button" class="shareResults btn btn-primary btn-share share right"
-                                aria-label="email issue" title="Email Results"
-                                ng-click="shareSearch($event, 'review')">
-                            <span class="glyphicon glyphicon-envelope"></span> Email All Results
-                        </button>
-                    </span>
-
-                    <!-- show add to list and reviewed action buttons once case is selected -->
-                    <div ng-show="isCaseSelected(cases.cases)">
-                        <button type="button" class="btn btn-addToList btn-hidden" aria-label="Add to My List"
-                                title="Add to My List"
-                                ng-click="addToMyList($event)">
-                            <span class="glyphicon glyphicon-plus"></span> Add to My List
-                        </button>
-                    </div>
-                </div>
-
-                <!-- BOTTOM PAGINATION (Page Length, Next/Prev Page, Go To Record -->
-                <div ng-hide="searching" class="bottomPagination">
-                    <og-pagination tab-name="review" bottom="true"></og-pagination>
-                </div>
-            </div>
-
-            <!-- Searching Indicator -->
-            <div ng-show="searching" id="loadingRecords">
-                <img src="images/loading.gif" height="60" alt="Loading eOG Records">
-
-                <p>Loading eOG Records</p>
-            </div>
-
-        </div>
-
-        <!-- SINGLE CASE VIEW -->
-        <div ng-show="view.subview == 'case'" ng-controller="CaseCtrl">
-            <ng-include src="'js/app/review/single-case.html'"></ng-include>
-        </div>
-
-    </div>
-
-    <!-- MY LIST TAB -->
-    <div ng-controller="MyListCtrl" ng-show="view.view == 'myList'" id="myListTab">
-        <div class="fullWidthLayout">
-            <h1 class="viewTitle"> My List </h1>
-
-            <div class="pagination-wrapper">
-                <span class="totalCountCollection tableInfo">Showing <strong>{{myListCount}}</strong> record(s)</span>
-            </div>
-
-            <!-- action buttons - refresh, share, and save -->
-            <div class="actionButtons">
-                <button type="button" class="refreshCollection btn btn-secondary"
-                        aria-label="remove from my list" title="Remove From My List"
-                        ng-click="refreshMyList()">
-                    <span class="glyphicon glyphicon-remove"></span> Remove
-                </button>
-
-                <span>
-                    <button type="button" class="share btn btn-primary btn-share right shareCollection"
-                            aria-label="email collection" title="Email Results"
-                            ng-click="shareMyList($event, col)"> Email
-                    </button>
-                </span>
-
-                <button id="saveCollection" type="button" class="btn btn-primary btn-download right"
-                        aria-label="download my list" title="download pdf"
-                        ng-click="downloadMyList()"> Download
-                </button>
-            </div>
-
-            <!-- custom fields button and modal. My List has same prefs as review -->
-            <og-customize-case-fields tab-name="myList"></og-customize-case-fields>
-
-            <div class="reviewTileWrapper">
-                <ng-include src="'js/app/common/review-tiles.html'"></ng-include>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- RESOURCES TAB -->
-    <ng-include src="'js/app/resources/resources-tab.html'"></ng-include>
-
-</div>
-
-</div>
-
-<!-- CONTENT CONTAINER -->
-<div class="sitewide-search noJsHide">
-
-    <div id="offPage">
-        <div id="grayToolTip">
-            <div class="gtTipArrow">
-                <img src="images/grayToolTipArrow.png" height="16" width="23" alt="Tool Tip"/>
-            </div>
-            <div class="gtTipContent"></div>
-        </div>
-    </div>
-
-    <!-- placeholder space for when the footer snaps back to the bottom -->
-    <div class="clear"></div>
-</div>
-<div class="clear"></div>
-
-<!-- WARNING, DON'T CHANGE - The USPTO standard footer begins with div#footer-site and shouldn't change without the Web Group's approval. -->
-<div id="usptoAppFooter">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="uspto-footer-top col-sm-12">
-                <div class="uspto-footer-logo col-sm-10">
-                    <a class="logo" href="http://www.uspto.gov/"
-                       title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
-                        <span class="sr-only">United States Patent and Trademark Office - An Agency of the Department of Commerce</span>
-                    </a>
-                </div>
-                <div class="uspto-footer-watermark col-sm-2"
-                     title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
-                    <span class="sr-only">United States Patent and Trademark Office - An Agency of the Department of Commerce</span>
-                </div>
-            </div>
-            <div class="uspto-footer-middle col-sm-12">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse-topic"> Browse By Topic <i
-                            class="icon icon-sort-desc icon-inverse"></i></button>
-                </div>
-                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-topic">
-                    <h2>Browse By Topic</h2>
-                    <ul>
-                        <li><a href="http://www.uspto.gov/patent">Patents</a></li>
-                        <li><a href="http://www.uspto.gov/trademark">Trademarks</a></li>
-                        <li><a href="http://www.uspto.gov/learning-resources">Learning &amp; Resources</a></li>
-                        <li><a href="http://www.uspto.gov/about-us">About the USPTO</a></li>
-                        <li><a href="http://www.uspto.gov/learning-and-resources/glossary">Glossary</a></li>
-                        <li><a href="http://www.uspto.gov/careers">Careers</a></li>
-                        <li><a href="http://www.uspto.gov/about-us/contact-us">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse-about"> About This Site <i
-                            class="icon icon-sort-desc icon-inverse"></i></button>
-                </div>
-                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-about">
-                    <h2>About This Site</h2>
-                    <ul>
-                        <li><a href="http://www.uspto.gov/using-usptogov/accessibility-uspto-website">Accessibility</a>
+            <div class="uspto-header-bottom">
+               <div class="container printPreviewNoShow">
+                  <nav id="uspto_dropdown_nav">
+                     <ul>
+                        <li><a href="http://www.uspto.gov/patent">Patents</a><ul>
+                              <li>
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Getting Started</p><a href="http://www.uspto.gov/patents-getting-started/general-information-concerning-patents">Patent Basics</a><a href="http://www.uspto.gov/patents-getting-started/patent-process-overview">Process Overview</a><a href="http://www.uspto.gov/patents-getting-started/using-legal-services">Using Legal Services</a><a href="http://www.uspto.gov/learning-and-resources/inventors-entrepreneurs-resources">Inventor Resources</a><a href="http://www.uspto.gov/patents-getting-started/international-patent-cooperation">International Cooperation</a><a href="http://www.uspto.gov/help/patent-help#patents">Patent FAQs</a></div>
+                              </li>
+                              <li>
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Application Process</p><a href="http://www.uspto.gov/patents-application-process/search-patents">Patent Search (Search for Patents)</a><a href="http://www.uspto.gov/patents-application-process/patent-search/classification-standards-and-development">Learn about Patent Classification</a><a href="http://www.uspto.gov/patents-application-process/file-online">Filing Online</a><a href="http://www.uspto.gov/patents-application-process/checking-application-status/check-filing-status-your-patent-application">Checking application status</a><a href="http://www.uspto.gov/patents-maintaining-patent/responding-office-actions">Responding to Office actions</a><a href="http://www.uspto.gov/patents-application-process/patent-trial-and-appeal-board-0">Patent Trial and Appeal Board</a><a href="http://www.uspto.gov/patents-application-process/petitions">Petitions</a></div>
+                              </li>
+                              <li class="noborder">
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Maintaining a Patent</p><a href="http://www.uspto.gov/patents-maintaining-patent/maintain-your-patent">Maintenance fees</a><a href="http://www.uspto.gov/patents-maintaining-patent/data-management-services">Correcting your Patent</a><a href="http://www.uspto.gov/patents-maintaining-patent/patents-assignments-change-search-ownership">Transferring Ownership</a><a href="http://www.uspto.gov/patents-application-process/checking-application-status/order-certified-copies">Ordering certified documents</a><a href="http://www.uspto.gov/patents-maintaining-patent/patent-litigation/patent-litigation">Patent Litigation</a></div>
+                              </li>
+                              <li class="tool_and_links">
+                                 <div class="childmenu">
+                                    <div class="tool_and_links_container">
+                                       <p class="childmenu_title tool_and_links_title">Tools &amp; Links</p>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/patents-application-process/applying-online/about-efs-web">About EFS-Web</a><a href="http://www.uspto.gov/patents-application-process/checking-application-status/check-filing-status-your-patent-application">Check Application Status (PAIR)</a></div>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/learning-and-resources/fees-and-payment">Fees and Payment</a><a href="http://www.uspto.gov/about-us/organizational-offices/patent-trial-and-appeal-board">Patent Trial &amp; Appeal Board</a></div>
+                                       <div class="tool_and_links_section"></div>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/patent">More Tools &amp; Links</a></div>
+                                    </div>
+                                 </div>
+                              </li>
+                           </ul>
                         </li>
-                        <li><a href="http://www.uspto.gov/privacy-policy">Privacy Policy</a></li>
-                        <li><a href="http://www.uspto.gov/terms-use-uspto-website">Terms of Use</a></li>
-                        <li><a href="http://www.uspto.gov/about-us/security">Security</a></li>
-                        <li><a href="http://www.uspto.gov/blog/ebiz/ ">Systems Status</a></li>
-                        <li><a href="http://www.uspto.gov/sitemap">Site Map</a></li>
-                    </ul>
-                </div>
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse-uspto"> USPTO Background <i
-                            class="icon icon-sort-desc icon-inverse"></i></button>
-                </div>
-                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-uspto">
-                    <h2>USPTO Background</h2>
-                    <ul>
-                        <li>
-                            <a href="http://www.uspto.gov/about-us/performance-and-planning/federal-activities-inventory-reform-fair-act">Federal
-                                Activity Inventory Reform Act (FAIR)</a></li>
-                        <li><a href="http://www.uspto.gov/about-us/performance-and-planning">USPTO Budget and
-                            Performance</a></li>
-                        <li>
-                            <a href="http://www.uspto.gov/learning-and-resources/ip-policy/electronic-freedom-information-act-e-foia">Freedom
-                                of Information Act</a></li>
-                        <li><a href="http://www.uspto.gov/learning-and-resources/information-quality-guidelines">Information
-                            Quality Guidelines</a></li>
-                    </ul>
-                </div>
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse-federal"> Federal Government <i
-                            class="icon icon-sort-desc icon-inverse"></i></button>
-                </div>
-                <div class="uspto-footer-column col-sm-3 collapse navbar-collapse" id="navbar-collapse-federal">
-                    <h2>Federal Government</h2>
-                    <ul>
-                        <li><a href="http://www.regulations.gov" target="_blank">Regulations.gov<span class="ext"><span
-                                class="sr-only"> (link is external)</span></span></a></li>
-                        <li><a href="http://www.stopfakes.gov" target="_blank">StopFakes.gov<span class="ext"><span
-                                class="sr-only"> (link is external)</span></span></a></li>
-                        <li><a href="http://www.usa.gov" target="_blank">USA.gov<span class="ext"><span class="sr-only"> (link is external)</span></span></a>
+                        <li><a href="http://www.uspto.gov/trademark">Trademarks</a><ul>
+                              <li>
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Getting Started</p><a href="http://www.uspto.gov/trademarks-getting-started/trademark-basics">Trademark Basics</a><a href="http://www.uspto.gov/trademarks-getting-started/trademark-process">Process Overview</a><a href="http://www.uspto.gov/learning-and-resources/trademark-faqs">Trademark FAQs</a><a href="http://www.uspto.gov/trademarks-getting-started/using-private-legal-services">Using Private Legal Services</a><a href="http://www.uspto.gov/trademarks-getting-started/non-uspto-solicitations">Non-USPTO Solicitations</a><a href="http://www.uspto.gov/trademark/laws-regulations/madrid-protocol">Madrid Protocol &amp; international protection</a></div>
+                              </li>
+                              <li>
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Application process</p><a href="http://www.uspto.gov/trademarks-application-process/search-trademark-database">Searching Trademarks</a><a href="http://www.uspto.gov/trademarks-application-process/filing-online">Filing online</a><a href="http://www.uspto.gov/trademarks-application-process/faqs-personal-information-trademark-records">Disclosure of Public Information</a><a href="http://www.uspto.gov/trademarks-application-process/check-status-view-documents">
+                                       Checking application status &amp; viewing documents</a><a href="http://www.uspto.gov/trademarks-maintaining-trademark-registration/responding-office-actions">Responding to Office Actions</a><a href="http://www.uspto.gov/trademarks-application-process/abandoned-applications">Abandoned applications</a><a href="http://www.uspto.gov/trademark/contact-trademarks#OrderDocs">Ordering certified documents</a><a href="http://www.uspto.gov/trademarks-application-process/trademark-trial-and-appeal-board-ttab">Trademark Trial and Appeal Board</a></div>
+                              </li>
+                              <li class="noborder">
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Maintaining a Trademark Registration</p><a href="http://www.uspto.gov/trademarks-maintaining-trademark-registration/keeping-your-registration-alive">Keeping your registration alive</a><a href="http://www.uspto.gov/trademarks-application-process/filing-online/registration-maintenancerenewalcorrection-forms">Forms to file</a><a href="http://www.uspto.gov/trademarks-getting-started/trademark-basics/checking-status-application-or-registration">Checking registration status &amp; viewing documents</a><a href="http://www.uspto.gov/trademark/been-sued-or-received-cease-and-desist-letter-answers-common-questions-about-trademark">Enforcing your trademark rights/trademark litigation</a><a href="http://www.uspto.gov/trademark/trademark-assignments-change-search-ownership">Transferring ownership</a></div>
+                              </li>
+                              <li class="tool_and_links">
+                                 <div class="childmenu">
+                                    <div class="tool_and_links_container">
+                                       <p class="childmenu_title tool_and_links_title">Tools &amp; Links</p>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/trademarks-application-process/filing-online">Apply Online (TEAS)</a><a href="http://www.uspto.gov/trademarks-application-process/check-status-view-documents">Check Application Status (TSDR)</a></div>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/trademark/view-fee-schedule-trademark-fee-information">Trademark Fees</a><a href="http://www.uspto.gov/trademarks-application-process/trademark-trial-and-appeal-board-ttab">Trademark Trial and Appeal Board</a></div>
+                                       <div class="tool_and_links_section"></div>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/trademark">More Tools &amp; Links</a></div>
+                                    </div>
+                                 </div>
+                              </li>
+                           </ul>
                         </li>
-                        <li><a href="http://www.commerce.gov" target="_blank">Department of Commerce<span
-                                class="ext"><span class="sr-only"> (link is external)</span></span></a></li>
-                        <li>
-                            <a href="http://www.uspto.gov/learning-and-resources/ip-policy/enforcement/strategy-targeting-organized-piracy-stop">Strategy
-                                Targeting Organized Piracy</a></li>
-                    </ul>
-                </div>
+                        <li class="learning_resource_menu"><a href="http://www.uspto.gov/learning-resources">Learning and Resources</a><ul>
+                              <li>
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Resources by Audience</p><a href="http://www.uspto.gov/learning-and-resources/attorneys-agents-and-paralegals">Attorneys, agents &amp; paralegals</a><a href="http://www.uspto.gov/learning-and-resources/inventors-entrepreneurs-resources">Inventors &amp; entrepreneurs</a><a href="http://www.uspto.gov/kids/index.html">Kids &amp; educators</a><a href="http://www.uspto.gov/about-us/news-updates">Media</a><a href="http://www.uspto.gov/learning-and-resources/support-centers/patent-and-trademark-resource-centers-ptrcs">Researchers &amp; librarians</a><a href="http://www.uspto.gov/about-us/events">Events</a></div>
+                              </li>
+                              <li>
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Help by Topic</p><a href="http://www.uspto.gov/learning-and-resources/fees-and-payments">Fees and Payment</a><a href="http://www.uspto.gov/learning-and-resources/general-faqs">General FAQs</a><a href="http://www.uspto.gov/help/patent-help">Patents FAQs</a><a href="http://www.uspto.gov/learning-and-resources/trademark-faqs">Trademark FAQs</a><a href="http://www.uspto.gov/learning-and-resources/transferring-ownership-assignments-faqs">Transferring ownership / Assignments Help</a></div>
+                              </li>
+                              <li class="noborder">
+                                 <div class="childmenu">
+                                    <p class="childmenu_title">Services &amp; Publications</p><a href="http://www.uspto.gov/learning-and-resources/electronic-bulk-data-products">Electronic Data Products</a><a href="http://www.uspto.gov/learning-and-resources/federal-register-notices/federal-register-notices-2015">Federal Register Notices</a><a href="http://www.uspto.gov/learning-and-resources/official-gazette">Official Gazette</a><a href="http://www.uspto.gov/learning-and-resources/support-centers">Support Centers</a><a href="http://www.uspto.gov/learning-and-resources/xml-resources">XML Resources</a><a href="http://www.uspto.gov/patents-application-process/patent-search/classification-standards-and-development">Classification</a><a href="http://www.uspto.gov/learning-and-resources/statistics">Statistics</a></div>
+                              </li>
+                              <li class="tool_and_links">
+                                 <div class="childmenu">
+                                    <div class="tool_and_links_container">
+                                       <p class="childmenu_title tool_and_links_title">Tools &amp; Links</p>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/learning-and-resources/operating-status">Operational Status</a></div>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/learning-and-resources/inventors-eye-newsletter">Inventors Eye Newsletter</a><a href="http://www.uspto.gov/learning-and-resources/glossary">Glossary of Terms</a></div>
+                                       <div class="tool_and_links_section"><a href="http://enews.uspto.gov/lists/?p=subscribe&amp;id=1">Subscriptions</a><a href="http://www.uspto.gov/learning-and-resources/how-videos-computer-based-training/how-videos">How-to Videos</a></div>
+                                       <div class="tool_and_links_section"><a href="http://www.uspto.gov/learning-and-resources/ip-programs-and-awards">IP Programs and Awards</a><a href="http://www.uspto.gov/patent/initiatives/uspto-led-executive-actions-high-tech-patent-issues">Executive Actions</a></div>
+                                    </div>
+                                 </div>
+                              </li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </nav>
+               </div>
             </div>
-        </div>
-    </div>
-</div>
+         </div>
+         <div id="breadCrumbs" class="printPreviewNoShow"><span id="trail"><a href="http://www.uspto.gov/">USPTO</a>
+               &gt;
+               <a href="http://www.uspto.gov/trademarks/index.jsp">Trademark</a>
+               &gt;
+               <a class="TSDRCrumb" href="/">TSDR
+                  </a><span id="searchCrumb" class="hide">&gt;
+                  <a href="javascript:;" class="tsdrCrumb">
+                     Trademark Search
+                     </a></span><a class="hide" id="FAQLink" href="/faqview"><img src="img/tsdr_faq_btn.jpg" alt="FAQ"></a></span></div>
+         <div xmlns:xs="http://www.w3.org/2001/XMLSchema" id="columnLeft" class="printPreviewNoShow">
+            <div id="sideNavTop"></div>
+            <ul id="sideNav">
+               <li><span class="sideNavFirst">Trademark eBusiness</span><ul class="subNav1 first">
+                     <li><a href="/faqview" title="Document Retrieval FAQ">TSDR FAQ</a></li>
+                     <li><a href="http://www.uspto.gov/teas/index.html" target="_blank" title="File Online (TEAS)">File
+                           Online (TEAS)
+                           </a></li>
+                     <li><a href="http://tess2.uspto.gov/bin/gate.exe?f=login&amp;p_lang=english&amp;p_d=trmk" target="_blank" title="Search Trademarks (TESS)">Search Trademarks (TESS)
+                           </a></li>
+                     <li><a href="http://www.uspto.gov/news/og/trademark_og/index.jsp" target="_blank" title="Trademark Official Gazette">Trademark Official Gazette
+                           </a></li>
+                     <li><a href="javascript:void(0);" class="subNav2Link"><img src="img/icn-collapseExpPlus.jpg" alt="Expand" class="expandImgs"><img src="img/icn-collapseExpMinus.jpg" alt="Collapse" class="collapseImgs">
+                           Trademark
+                           Ownership
+                           </a><ul class="subNav2">
+                           <li><a href="http://etas.uspto.gov" title="File Assignments Online" target="_blank">
+                                 Change
+                                 Ownership
+                                 </a></li>
+                           <li><a href="https://assignments.uspto.gov/assignments/q?db=tm" target="_blank">
+                                 Search Trademark
+                                 Assignments
+                                 </a></li>
+                           <li><a href="https://assignment.uspto.gov/trademark/index.html#/faq" target="_blank">
+                                 Assignment Help
+                                 </a></li>
+                        </ul>
+                     </li>
+                     <li><a href="javascript:void(0);" class="subNav2Link"><img src="img/icn-collapseExpPlus.jpg" alt="Expand" class="expandImgs"><img src="img/icn-collapseExpMinus.jpg" alt="Collapse" class="collapseImgs">
+                           Copies, Products
+                           &amp; Services
+                           </a><ul class="subNav2">
+                           <li><a href="https://certifiedcopycenter.uspto.gov/" target="_blank">
+                                 Order Copies
+                                 &amp;
+                                 Publications Online
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/products/index.jsp" target="_blank">Other
+                                 Products
+                                 &amp;
+                                 Services
+                                 </a></li>
+                        </ul>
+                     </li>
+                     <li><a href="javascript:void(0);" class="subNav2Link"><img src="img/icn-collapseExpPlus.jpg" alt="Expand" class="expandImgs"><img src="img/icn-collapseExpMinus.jpg" alt="Collapse" class="collapseImgs">
+                           Supplemental
+                           Resources &amp; Support
+                           </a><ul class="subNav2">
+                           <li><a href="http://www.uspto.gov/faq/plugins/index.jsp" title="PDF viewer required to view documents" target="_blank">
+                                 Download PDF
+                                 Viewer
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/faq/other.jsp" target="_blank">
+                                 International
+                                 Trademark
+                                 Offices
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/main/profiles/acadres.htm" target="_blank">Search
+                                 Resources
+                                 &amp; Tips
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/blog/ebiz/" title="Notices of system outages" target="_blank">System
+                                 Alerts
+                                 </a></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </li>
+               <li><span class="sideNavLevel1">Trademark Information</span><ul class="subNav1">
+                     <li><a href="http://www.uspto.gov/trademarks/index.jsp" target="_blank">Trademark
+                           Guidance
+                           </a></li>
+                     <li><a href="javascript:void(0);" class="subNav2Link"><img src="img/icn-collapseExpPlus.jpg" alt="Expand" class="expandImgs"><img src="img/icn-collapseExpMinus.jpg" alt="Collapse" class="collapseImgs">
+                           Codes, Rules &amp;
+                           Manuals
+                           </a><ul class="subNav2">
+                           <li><a href="http://tess2.uspto.gov/netahtml/tidm.html" target="_blank">
+                                 Acceptable
+                                 ID Manual
+                                 </a></li>
+                           <li><a href="http://tess2.uspto.gov/tmdb/tmep/" target="_blank">Trademark
+                                 Manual of
+                                 Examining
+                                 Procedure
+                                 </a></li>
+                           <li><a href="https://tfsr.uspto.gov/" target="_blank">US
+                                 Trademark Law: Rules of Practice &amp; Federal Statutes
+                                 </a></li>
+                           <li><a href="http://tess2.uspto.gov/tmdb/dscm/index.htm" target="_blank">
+                                 Design
+                                 Search Codes
+                                 </a></li>
+                        </ul>
+                     </li>
+                     <li><a href="javascript:void(0);" class="subNav2Link"><img src="img/icn-collapseExpPlus.jpg" alt="Expand" class="expandImgs"><img src="img/icn-collapseExpMinus.jpg" alt="Collapse" class="collapseImgs">
+                           Employee &amp;
+                           Office Directories
+                           </a><ul class="subNav2">
+                           <li><a href="http://portal.uspto.gov/external/portal/emlocator" target="_blank">
+                                 Employee
+                                 Locator
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/about/contacts/phone_directory/index.jsp" target="_blank">Telephone
+                                 Directory
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/about/contacts/organizationalcodes.jsp" target="_blank">Valid
+                                 Location Codes
+                                 </a></li>
+                        </ul>
+                     </li>
+                     <li><a href="javascript:void(0);" class="subNav2Link"><img src="img/icn-collapseExpPlus.jpg" alt="Expand" class="expandImgs"><img src="img/icn-collapseExpMinus.jpg" alt="Collapse" class="collapseImgs">
+                           Fees
+                           </a><ul class="subNav2">
+                           <li><a href="http://www.uspto.gov/main/howtofees.htm" target="_blank">How to
+                                 Pay
+                                 Fees
+                                 </a></li>
+                        </ul>
+                     </li>
+                     <li><a href="javascript:void(0);" class="subNav2Link"><img src="img/icn-collapseExpPlus.jpg" alt="Expand" class="expandImgs"><img src="img/icn-collapseExpMinus.jpg" alt="Collapse" class="collapseImgs">
+                           Resources &amp;
+                           Public Notices
+                           </a><ul class="subNav2">
+                           <li><a href="http://www.uspto.gov/inventors/index.jsp" target="_blank" title="For all novices, visit the Inventor Resources pages">Applicant
+                                 Resources
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/news/index.jsp" target="_blank">News,
+                                 Federal
+                                 Register &amp;
+                                 <abbr title="Official Gazette">OG</abbr>
+                                 Notices
+                                 </a></li>
+                           <li><a href="http://www.uspto.gov/products/library/ptdl/index.jsp" target="_blank" title="Libraries near you"><abbr title="Patent and Trademark Depository Library">PTDL
+                                    </abbr>
+                                 Program
+                                 </a></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </li>
+               <li><span class="sideNavLevel1">Trademark Trial &amp; Appeal Board</span><ul class="subNav1">
+                     <li><a href="https://tbmp.uspto.gov/" target="_blank">TTAB
+                           Manual
+                           of
+                           Procedure
+                           </a></li>
+                     <li><a href="http://estta.uspto.gov" title="File TTAB Documents" target="_blank">
+                           File TTAB
+                           Documents
+                           </a></li>
+                     <li><a href="https://ttabvue.uspto.gov/ttabvue/" target="_blank" title="Search and View TTAB Proceedings">Search &amp; View TTAB Proceedings
+                           </a></li>
+                  </ul>
+               </li>
+               <li><span class="sideNavLevel1">Other</span><ul class="subNav1">
+                     <li><a href="http://www.uspto.gov/main/profiles/copyright.htm" target="_blank">
+                           Copyrights
+                           </a></li>
+                     <li><a href="http://www.uspto.gov/patents/index.jsp" target="_blank">Patents</a></li>
+                     <li><a href="https://www.uspto.gov/ip-policy" target="_blank">Policy &amp; Law
+                           </a></li>
+                     <li><a href="https://www.uspto.gov/learning-resources" target="_blank">Reports</a></li>
+                  </ul>
+               </li>
+            </ul>
+            <div id="sideNavBot"></div>
+         </div>
+         <div id="contentBoxMain">
+            <div class="redBox">
+               <div id="announcementWrapper"><pre>&lt;b&gt;For assistance with TSDR&lt;/b&gt;, email &lt;a href="mailto:teas@uspto.gov"&gt;teas@uspto.gov&lt;/a&gt;  and include your serial number, the document you are looking for, and a screenshot of any error messages you have received.
 
-<!-- Libraries and Plug-ins -->
-<script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/lib/angular.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
-<script type="text/javascript" src="js/lib/jquery.ba-bbq.js"></script>
-<script type="text/javascript" src="bower_components/angular-image-zoom/dist/image-zoom.js"></script>
+&lt;b&gt;Processing Wait Times:&lt;/b&gt; Please note that due to an extraordinary surge in applications, processing times are longer than usual. See &lt;a href="https://www.uspto.gov/dashboard/trademarks/application-timeline.html"&gt; current trademark processing wait times&lt;/a&gt; for more information.</pre></div>
+            </div><textarea id="announcementHtmlTextArea" class="printPreviewNoShow hide" alt="faq text">&lt;b&gt;For assistance with TSDR&lt;/b&gt;, email &lt;a href="mailto:teas@uspto.gov"&gt;teas@uspto.gov&lt;/a&gt;  and include your serial number, the document you are looking for, and a screenshot of any error messages you have received.
 
-<!-- Angular Module tmog -->
-<script type="text/javascript" src="js/app/tmog-public.js"></script>
-
-<!-- Review Module -->
-<script type="text/javascript" src="js/app/review/CaseCtrl.js"></script>
-<script type="text/javascript" src="js/app/review/ReviewCtrl.js"></script>
-<script type="text/javascript" src="js/app/review/reviewCompletedSrvc.js"></script>
-
-<!-- MyList Module -->
-<script type="text/javascript" src="js/app/myList/MyListCtrl.js"></script>
-<script type="text/javascript" src="js/app/myList/myListSrvc.js"></script>
-
-<!-- Resources Module -->
-<script type="text/javascript" src="js/app/resources/ResourcesCtrl.js"></script>
-
-<!-- Data Module -->
-<script type="text/javascript" src="js/app/data/data.js"></script>
-<script type="text/javascript" src="js/app/data/log.js"></script>
-
-<!-- Angular Controllers -->
-<script type="text/javascript" src="js/app/common/TabsCtrl.js"></script>
-<script type="text/javascript" src="js/app/review/ReviewCtrl.js"></script>
-<script type="text/javascript" src="js/app/common/ReviewTileCtrl.js"></script>
-<script type="text/javascript" src="js/app/review/CaseCtrl.js"></script>
-
-<!-- Sidebar Module -->
-<script type="text/javascript" src="js/app/sidebar/filtersSrvc.js"></script>
-<script type="text/javascript" src="js/app/sidebar/filtersRulesSrvc.js"></script>
-<script type="text/javascript" src="js/app/sidebar/sidebarModelSrvc.js"></script>
-
-<!-- Prefs Module -->
-<script type="text/javascript" src="js/app/preference/customizePrefsSrvc.js"></script>
-
-<!-- Angular Services -->
-<script type="text/javascript" src="js/app/common/viewSrvc.js"></script>
-<script type="text/javascript" src="js/app/common/alertSrvc.js"></script>
-<script type="text/javascript" src="js/app/common/shareEmailSrvc.js"></script>
-<script type="text/javascript" src="js/app/data/Properties.js"></script>
-
-<!-- Angular Filters -->
-<script type="text/javascript" src="js/app/common/Filters.js"></script>
-
-<!-- Angular Directives -->
-<script type="text/javascript" src="js/app/common/Directives.js"></script>
-
-<!-- GOOGLE ANALYTICS -->
-<script type="text/javascript" src="js/analytics/gsa-ga.js"></script>
-<script type="text/javascript">
-    var _gaq = _gaq || [];
-    var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
-
-    _gaq.push( //USPTO.gov:
-            ['_require', 'inpage_linkid', pluginUrl], // Enhanced Link Attribution
-            ['_setAccount', 'UA-21265023-1'],
-            ['_setDomainName', '.uspto.gov'],
-            ['_gat._anonymizeIp'],
-            ['_setVisitorCookieTimeout', 15552000000],
-            ['_trackPageview'],
-            ['_setSiteSpeedSampleRate', 1]
-    );
-
-    _gaq.push( //TMOG:
-            ['t2._setAllowAnchor', true],
-            ['t2._require', 'inpage_linkid', pluginUrl], // Enhanced Link Attribution
-            ['t2._setAccount', 'UA-21265023-2'],
-            ['t2._setDomainName', '.uspto.gov'],
-            ['t2._gat._anonymizeIp'],
-            ['t2._setVisitorCookieTimeout', 15552000000],
-            ['t2._trackPageview'],
-            ['t2._setSiteSpeedSampleRate', 1]
-    );
-
-    (function () { //call Google
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-    })();
-</script>
-<script type="text/javascript" src="js/analytics/eog-ga.js"></script>
-
-<!-- Application Domain and Utility Classes -->
-<script type="text/javascript" src="js/app/TmogController.js"></script>
-
-<script>
-    function homePage() {
-        window.location = window.location.href.split('#')[0];
-    }
-    var tmog = new TmogController();
-
-    $(document).ready(function onReady() {
-        tmog.init();
-    });
-</script>
-
-</body>
+&lt;b&gt;Processing Wait Times:&lt;/b&gt; Please note that due to an extraordinary surge in applications, processing times are longer than usual. See &lt;a href="https://www.uspto.gov/dashboard/trademarks/application-timeline.html"&gt; current trademark processing wait times&lt;/a&gt; for more information.</textarea><h2 id="searchTitle" class="printPreviewNoShow"><span class="tdr_search1">Trademark Status &amp; Document Retrieval (TSDR)</span><a class="tdr_search1 helpIconh2" href="javascript:page.helpOverlay.open( 'tdr_search' )" title="Click here for help on case searches (1) Document viewer help"><img class="tdr_search1" src="img/icn-Help16x16.gif" alt="Help"></a></h2>
+            <div aria-label="search input tabs" id="inputTabs" class="webwidget_tab searchForm printPreviewNoShow">
+               <div class="tabContainer">
+                  <ul class="tabHead">
+                     <li id="searchTabBtn" data-error="" class="currentBtn"><a aria-label="Search Tab: in-focus" href="javascript:;">Search</a></li>
+                     <li id="multiSearchTabBtn" data-error=""><a aria-label="Multi-Search Tab: activate to focus" href="javascript:;">Multi-Search</a></li>
+                  </ul><a class="" href="javascript:page.helpOverlay.open( 'cert_search' )" title="Click here for help on reg. certificate searches (2)"><img class="helpIcon certs" src="img/icn-Help16x16.gif" alt="Help"></a></div>
+               <div class="tabBody">
+                  <ul>
+                     <li aria-describedby="searchTabBtn" class="tabCot">
+                        <form id="search_form" name="search_form">
+                           <div class="displayTable">
+                              <div class="displayRow">
+                                 <div class="displayCell width214px"><select aria-label="application type" name="caseSearchType" id="caseSearchType" class="inputPulldown longerinputPulldown">
+                                       <option value="US_APPLICATION">US Serial, Registration, or Reference No.</option>
+                                       <option value="INTL_REGISTRATION">International Registration No.</option>
+                                       <option value="PETITION_PROCEEDING">Expungement/Reexamination Petition or Proceeding No.</option></select></div>
+                                 <div class="displayCell"><select aria-label="case type" name="searchType" id="searchSelect" class="hide">
+                                       <option value="DEFAULT"></option>
+                                       <option value="SERIAL_NO">US Serial No</option>
+                                       <option value="US_REGISTRATION_NO">US Registration No</option>
+                                       <option value="US_REFERENCE_NO">US Reference No</option>
+                                       <option value="INTL_REGISTRATION_NO">International Registration No</option></select></div>
+                                 <div class="displayCell width121px"><input aria-label="case number" type="text" id="searchNumber" tabindex="1" class="inputText shorterinputText"></div>
+                                 <div class="displayCell"><input aria-label="status search submit" id="statusSearch" type="button" class="statusButton" tabindex="2" value="Status" alt="Status" title="Search status for this application (s)"></div>
+                                 <div class="displayCell"><input aria-label="document search submit" id="documentSearch" type="button" class="documentsButton" tabindex="3" value="Documents" alt="Documents" title="Search docs for this application (d)"></div>
+                              </div>
+                           </div>
+                        </form>
+                     </li>
+                     <li aria-describedby="multiSearchTabBtn" class="tabCot">
+                        <form id="searchFormAdvanced">
+                           <div class="displayTable">
+                              <div class="displayRow">
+                                 <div class="displayCell paddingTop15px paddingRight5px alignTop"><select aria-label="multi search case type" id="advancedSelect" class="inputPulldown">
+                                       <option value="SERIAL_NO">US Serial No</option>
+                                       <option value="US_REGISTRATION_NO">US Registration No
+                                          
+                                       </option>
+                                       <option value="US_REFERENCE_NO">US Reference No</option>
+                                       <option value="INTL_REGISTRATION_NO">International
+                                          Registration No
+                                          
+                                       </option></select><input aria-label="multi search registration certificates" type="checkbox" id="certsBox"><label for="certsBox">Registration Certificates</label></div>
+                                 <div class="displayCell paddingTop17px"><textarea aria-label="multi search case numbers" id="advancedTextArea"></textarea></div>
+                              </div>
+                           </div>
+                           <div class="displayTable">
+                              <div class="displayRow">
+                                 <div class="displayCell width597px"><input aria-label="multi search submit" type="button" id="advancedSubmit" value="Multi-Search"></div>
+                              </div>
+                           </div>
+                        </form>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="docSearchLoadingGif hide printPreviewNoShow"></div>
+            <div id="errorBox" class="textBox hide printPreviewNoShow">
+               <p aria-label="result error message" id="errorMsg"></p>
+            </div>
+            <div id="infoBox" class="textBox hide printPreviewNoShow">
+               <p aria-label="result warning message" id="infoMsg"></p>
+            </div>
+            <div class="webwidget_tab resultTabs" id="webwidget_tab">
+               <div id="actions" class="printPreviewNoShow"><span id="searchingDocsDisplay" class="actionText searchingText hide"></span><span id="docsFoundDisplay" class="actionText dynamicActionText hide"></span><span id="docsSelectedDisplay" class="actionText dynamicActionText hide"></span><span id="searchingStatusDisplay" class="actionText searchingText hide"></span><span id="statusFoundDisplay" class="actionText hide"></span></div>
+               <div class="tabContainer">
+                  <ul class="tabHead">
+                     <li id="statusTabBtn" class="currentBtn"><a href="javascript:;">Status</a></li>
+                     <li id="documentsTabBtn"><a href="javascript:;">Documents</a></li>
+                     <li id="maintenanceTabBtn" class="hide"><a href="javascript:;">Maintenance</a></li>
+                  </ul>
+                  <div class="tabHelpIcon"><a class="printPreviewNoShow" href="javascript:page.helpOverlay.open( 'tab_results' )" title="Click here for search results help (3)"><img class="helpIcon tabs" src="img/icn-Help16x16.gif" alt="Help"></a></div>
+                  <div class="tabMoreLink">
+                     <div class="link download expand_wrapper default_hide printPreviewNoShow" title="Download PDF or Original (p or o)"><a class="expand_heading" href="javascript:;"><span>Download</span></a><div class="toggle_container dd printPreviewNoShow">
+                           <div class="content floatBox">
+                              <div class="title">Content</div>
+                              <div class="option"><input type="checkbox" id="status" name="status" class="content"><label for="status">Status</label></div>
+                              <div class="optionRight"><input type="checkbox" id="documents" name="documents" class="content"><label for="documents">Documents</label></div>
+                           </div>
+                           <div class="format floatBox">
+                              <div class="title"></div>
+                              <div class="option"><input type="radio" id="PDF" name="downloadFormat" value="PDF" checked Class="inputRadio"><label for="PDF">PDF</label></div>
+                              <div class="optionRight"><input type="radio" id="ORIGINAL" name="downloadFormat" value="original" Class="inputRadio"><label for="ORIGINAL">Original</label></div>
+                              <div class="button"><input onclick="page.download()" id="downloadSubmit" type="button" class="downloadButton" value="Download" alt="Download"></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="link print printPreviewNoShow"><a onclick="page.printPreview(true);" id="printPreviewLink" href="javascript:;">Print Preview</a></div>
+                     <div class="link hide printPreviewShow"><a onclick="page.printPreview(false)" id="cancelPrintPreview" href="javascript:;">Back to Search</a></div>
+                     <div class="link print hide printPreviewShow"><a onclick="window.print();">Print</a></div>
+                  </div>
+               </div>
+               <div class="tabBody">
+                  <ul id="resultsTabs">
+                     <li class="tabCot" id="statusTab"></li>
+                     <li class="tabCot" id="docsTab"></li>
+                     <li class="tabCot" id="maintenanceTab"></li>
+                  </ul>
+               </div>
+               <div id="ftrMsg" class="floatLeft printPreviewNoShow">
+                  <p id="adobeDL"><a href="http://get.adobe.com/reader/" target="_blank">Download Adobe Reader
+                        </a></p><br><p>If you are the applicant or the applicant's attorney and have questions about this
+                     file, please contact
+                     the
+                     <a href="mailto:TrademarkAssistanceCenter@uspto.gov">Trademark Assistance Center</a></p><br></div>
+            </div>
+            <div class="hide" id="multiSearchContainer" style="padding: 20px 8px;">
+               <table cellpadding="0" cellspacing="0" border="0" class="display" id="multiSerReg">
+                  <colgroup>
+                     <col width="10%">
+                     <col width="10%">
+                     <col width="7%">
+                     <col width="7%">
+                     <col width="7%">
+                     <col width="9%">
+                     <col width="17%">
+                     <col width="10%">
+                     <col width="20%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th>Image</th>
+                        <th>Mark</th>
+                        <th style="text-align: left">Ser No</th>
+                        <th style="text-align: left">Reg No</th>
+                        <th style="text-align: left">Status</th>
+                        <th>Filing</th>
+                        <th>Owner</th>
+                        <th>Class(es)</th>
+                        <th>Goods and Services</th>
+                     </tr>
+                  </thead>
+                  <tfoot>
+                     <tr>
+                        <th>Image</th>
+                        <th>Mark</th>
+                        <th style="text-align: left">Ser No</th>
+                        <th style="text-align: left">Reg No</th>
+                        <th style="text-align: left">Status</th>
+                        <th>Filing</th>
+                        <th>Owner</th>
+                        <th>Class(es)</th>
+                        <th>Goods and Services</th>
+                     </tr>
+                  </tfoot>
+               </table>
+               <table cellpadding="0" cellspacing="0" border="0" class="display" id="multiIntlReg">
+                  <colgroup>
+                     <col width="10%">
+                     <col width="10%">
+                     <col width="7%">
+                     <col width="7%">
+                     <col width="7%">
+                     <col width="9%">
+                     <col width="17%">
+                     <col width="10%">
+                     <col width="20%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th>Image</th>
+                        <th>Mark</th>
+                        <th>IR No</th>
+                        <th style="padding-right: 12px">IR Date</th>
+                        <th style="padding-right: 12px">Ser No</th>
+                        <th>Ref No</th>
+                        <th>Owner</th>
+                        <th>Class(es)</th>
+                        <th>Goods and Services</th>
+                     </tr>
+                  </thead>
+                  <tfoot>
+                     <tr>
+                        <th>Image</th>
+                        <th>Mark</th>
+                        <th>IR No</th>
+                        <th>IR Date</th>
+                        <th>Ser No</th>
+                        <th>Ref No</th>
+                        <th>Owner</th>
+                        <th>Class(es)</th>
+                        <th>Goods and Services</th>
+                     </tr>
+                  </tfoot>
+               </table>
+               <table cellpadding="0" cellspacing="0" border="0" class="display" id="multiRef">
+                  <colgroup>
+                     <col width="15%">
+                     <col width="15%">
+                     <col width="15%">
+                     <col width="15%">
+                     <col width="40%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th>Reference No.</th>
+                        <th>Filing Date</th>
+                        <th>Intl Reg No.</th>
+                        <th>Intl Reg Date</th>
+                        <th>Status</th>
+                     </tr>
+                  </thead>
+                  <tfoot>
+                     <tr>
+                        <th>Reference No.</th>
+                        <th>Filing Date</th>
+                        <th>Intl Reg No.</th>
+                        <th>Intl Reg Date</th>
+                        <th>Status</th>
+                     </tr>
+                  </tfoot>
+               </table>
+               <table cellpadding="0" cellspacing="0" border="0" class="display" id="multiCerts">
+                  <colgroup>
+                     <col width="15%">
+                     <col width="19%">
+                     <col width="19%">
+                     <col width="34%">
+                     <col width="23%">
+                  </colgroup>
+                  <thead>
+                     <tr>
+                        <th class="ch1cert first"><label for="certResultsTbody">Select All
+                              <input type="checkbox" class="marginLeft4px" id="checkAllCerts" alt="select all certificates"></label></th>
+                        <th>Number</th>
+                        <th style="text-align: left">Mail/Create Date</th>
+                        <th style="text-align: left">Description</th>
+                        <th style="text-align: left">Type</th>
+                     </tr>
+                  </thead>
+                  <tfoot>
+                     <tr>
+                        <th>Select All</th>
+                        <th>Number</th>
+                        <th style="text-align: left">Mail/Create Date</th>
+                        <th style="text-align: left">Description</th>
+                        <th style="text-align: left">Type</th>
+                     </tr>
+                  </tfoot>
+               </table>
+            </div>
+         </div>
+      </div>
+      <footer id="ftr" class="printPreviewNoShow">
+         <div id="ft" class="clear-fix">
+            <div class="colLogos"><a class="logo" href="http://www.uspto.gov/" title="United States Patent and Trademark Office - An Agency of the Department of Commerce"><img src="img/logo.png" alt="US Department of Commerce"></a></div>
+            <div class="col">
+               <h2>Browse By Topic</h2>
+               <ul>
+                  <li><a href="http://www.uspto.gov/patent">Patents</a></li>
+                  <li><a href="http://www.uspto.gov/trademark">Trademarks</a></li>
+                  <li><a href="http://www.uspto.gov/learning-resources">Learning &amp; Resources</a></li>
+                  <li><a href="http://www.uspto.gov/about-us">About the USPTO</a></li>
+                  <li><a href="http://www.uspto.gov/learning-and-resources/glossary">Glossary</a></li>
+                  <li><a href="http://www.uspto.gov/careers">Careers</a></li>
+                  <li><a href="http://www.uspto.gov/about-us/contact-us">Contact Us</a></li>
+               </ul>
+            </div>
+            <div class="col">
+               <h2>About This Site</h2>
+               <ul>
+                  <li><a href="http://www.uspto.gov/using-usptogov/accessibility-uspto-website">Accessibility</a></li>
+                  <li><a href="http://www.uspto.gov/privacy-policy">Privacy Policy</a></li>
+                  <li><a href="http://www.uspto.gov/terms-use-uspto-website">Terms of Use</a></li>
+                  <li><a href="http://www.uspto.gov/about-us/security">Security</a></li>
+                  <li><a href="http://www.uspto.gov/blog/ebiz/ ">Systems Status</a></li>
+                  <li><a href="http://www.uspto.gov/sitemap">Site Map</a></li>
+               </ul>
+            </div>
+            <div class="col">
+               <h2>USPTO Background</h2>
+               <ul>
+                  <li><a href="http://www.uspto.gov/about-us/performance-and-planning/federal-activities-inventory-reform-fair-act">Federal Activity Inventory Reform Act (FAIR)</a></li>
+                  <li><a href="http://www.uspto.gov/about-us/performance-and-planning">USPTO Budget and Performance</a></li>
+                  <li><a href="http://www.uspto.gov/learning-and-resources/ip-policy/electronic-freedom-information-act-e-foia">Freedom of Information Act</a></li>
+                  <li><a href="http://www.uspto.gov/learning-and-resources/information-quality-guidelines">Information Quality Guidelines</a></li>
+               </ul>
+            </div>
+            <div class="col">
+               <h2>Federal Government</h2>
+               <ul>
+                  <li><a href="http://www.regulations.gov" target="_blank">Regulations.gov</a></li>
+                  <li><a href="http://www.stopfakes.gov" target="_blank">StopFakes.gov</a></li>
+                  <li><a href="http://www.usa.gov" target="_blank">USA.gov</a></li>
+                  <li><a href="http://www.commerce.gov" target="_blank">Department of Commerce</a></li>
+                  <li><a href="http://www.uspto.gov/learning-and-resources/ip-policy/enforcement/strategy-targeting-organized-piracy-stop">Strategy Targeting Organized Piracy</a></li>
+               </ul>
+            </div>
+            <div class="col"><img src="img/logo-watermark-med.png" alt="US Department of Commerce"></div>
+         </div>
+      </footer><script type="text/javascript">
+                	window.tsdr = {};
+                	window.tsdr.recaptchakey = '6LdJocYUAAAAAAUlv2QzIAlPLcQloxx9vt_7PLdI' ;
+                </script></body>
 </html>

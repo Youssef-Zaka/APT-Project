@@ -777,4 +777,5 @@ public class WebCrawler {
         }
         System.out.print("\nFinished checking");
     }
+
 }

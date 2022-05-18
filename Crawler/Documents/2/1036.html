@@ -1,334 +1,559 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>The New York Times</title>
+<!doctype html><html lang="en"><head>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="sourceApp" content="nyt-lire" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
-    <meta name="et2Host" content="https://a.et.nytimes.com/" />
+<title>MeSH Browser</title>
 
-    <style>
-        @font-face {
-            font-family: nyt-franklin;
-            src: url(//typeface.nyt.com/fonts/nyt-franklin-300-normal.woff)
-            format('woff');
-            font-style: normal;
-            font-weight: 300;
-        }
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
 
-        @font-face {
-            font-family: nyt-franklin;
-            src: url(//typeface.nyt.com/fonts/nyt-franklin-500-normal.woff)
-            format('woff');
-            font-style: normal;
-            font-weight: 500;
-        }
+<script src="https://assets.nlm.nih.gov/jquery/jquery-3.5.1.min.js"></script>
+<script src="/public/js/bootstrap.js"></script>
 
-        html,
-        body {
-            height: 100%;
-        }
+<link rel="stylesheet" href="/public/css/font-awesome.css">
+<link rel="stylesheet" href="/public/css/bootstrap.css">
+<link rel="stylesheet" href="/public/css/mongoMesh.css">
+<link rel="icon" type="image/jpeg" href="/public/img/meshLogo.jpg">
 
-        body {
-            position: relative;
-            margin: 0;
-            font-size: 16px;
-            font-family: 'nyt-franklin', arial, helvetica, sans-serif;
-            -moz-text-size-adjust: 100%;
-            -webkit-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<base href="/">
 
-        body.embedded {
-            height: auto;
-            overflow: hidden;
-        }
-
-        .full-page {
-            display: flex;
-            flex-flow: column nowrap;
-            flex: 0 0 auto;
-            height: 100%;
-        }
-    </style>
-    <script>
-    /* eslint-disable */
-    /**
-     * Provided by Akamai for integration with mPulse.
-     * Original source available from mPulse settings.
-     * See https://developer.akamai.com/akamai-mpulse-real-user-monitoring-solution for more details.
-     */
-    (function() {
-      // Boomerang Loader Snippet version 14
-      if (window.BOOMR && (window.BOOMR.version || window.BOOMR.snippetExecuted)) {
-          return;
-      }
-    
-      window.BOOMR = window.BOOMR || {};
-      window.BOOMR.snippetStart = new Date().getTime();
-      window.BOOMR.snippetExecuted = true;
-      window.BOOMR.snippetVersion = 14;
-    
-      window.BOOMR.url = "https://s.go-mpulse.net/boomerang/" +
-        "ATH8A-MAMN8-XPXCH-N5KAX-8D239";
-    
-      var // document.currentScript is supported in all browsers other than IE
-          where = document.currentScript || document.getElementsByTagName("script")[0],
-          // Parent element of the script we inject
-          parentNode = where.parentNode,
-          // Whether or not Preload method has worked
-          promoted = false,
-          // How long to wait for Preload to work before falling back to iframe method
-          LOADER_TIMEOUT = 3000;
-    
-      // Tells the browser to execute the Preloaded script by adding it to the DOM
-      function promote() {
-          if (promoted) {
-              return;
-          }
-    
-          var script = document.createElement("script");
-          script.id = "boomr-scr-as";
-          script.src = window.BOOMR.url;
-    
-          // Not really needed since dynamic scripts are async by default and the script is already in cache at this point,
-          // but some naive parsers will see a missing async attribute and think we're not async
-          script.async = true;
-    
-          parentNode.appendChild(script);
-    
-          promoted = true;
-      }
-    
-      // Non-blocking iframe loader (fallback for non-Preload scenarios) for all recent browsers.
-      // For IE 6/7, falls back to dynamic script node.
-      function iframeLoader(wasFallback) {
-          promoted = true;
-    
-          var dom, doc = document, bootstrap, iframe, iframeStyle, win = window;
-    
-          window.BOOMR.snippetMethod = wasFallback ? "if" : "i";
-    
-          // Adds Boomerang within the iframe
-          bootstrap = function(parent, scriptId) {
-              var script = doc.createElement("script");
-              script.id = scriptId || "boomr-if-as";
-              script.src = window.BOOMR.url;
-    
-              BOOMR_lstart = new Date().getTime();
-    
-              parent = parent || doc.body;
-              parent.appendChild(script);
-          };
-    
-          // For IE 6/7, we'll just load the script in the current frame, as those browsers don't support 'about:blank'
-          // for an iframe src (it triggers warnings on secure sites).  This means loading on IE 6/7 may cause SPoF.
-          if (!window.addEventListener && window.attachEvent && navigator.userAgent.match(/MSIE [67]\./)) {
-              window.BOOMR.snippetMethod = "s";
-    
-              bootstrap(parentNode, "boomr-async");
-              return;
-          }
-    
-          // The rest of this function is IE8+ and other browsers that don't support Preload hints but will work with CSP & iframes
-          iframe = document.createElement("IFRAME");
-    
-          // An empty frame
-          iframe.src = "about:blank";
-    
-          // We set title and role appropriately to play nicely with screen readers and other assistive technologies
-          iframe.title = "";
-          iframe.role = "presentation";
-    
-          // Ensure we're not loaded lazily
-          iframe.loading = "eager";
-    
-          // Hide the iframe
-          iframeStyle = (iframe.frameElement || iframe).style;
-          iframeStyle.width = 0;
-          iframeStyle.height = 0;
-          iframeStyle.border = 0;
-          iframeStyle.display = "none";
-    
-          // Append to the end of the current block
-          parentNode.appendChild(iframe);
-    
-          // Try to get the iframe's document object
-          try {
-              win = iframe.contentWindow;
-              doc = win.document.open();
-          }
-          catch (e) {
-              // document.domain has been changed and we're on an old version of IE, so we got an access denied.
-              // Note: the only browsers that have this problem also do not have CSP support.
-    
-              // Get document.domain of the parent window
-              dom = document.domain;
-    
-              // Set the src of the iframe to a JavaScript URL that will immediately set its document.domain to match the parent.
-              // This lets us access the iframe document long enough to inject our script.
-              // Our script may need to do more domain massaging later.
-              iframe.src = "javascript:var d=document.open();d.domain='" + dom + "';void 0;";
-              win = iframe.contentWindow;
-    
-              doc = win.document.open();
-          }
-    
-          if (dom) {
-              // Unsafe version for IE8 compatibility. If document.domain has changed, we can't use win, but we can use doc.
-              doc._boomrl = function() {
-                  this.domain = dom;
-                  bootstrap();
-              };
-    
-              // Run our function at load.
-              // Split the string so HTML code injectors don't get confused and add code here.
-              doc.write("<bo" + "dy onload='document._boomrl();'>");
-          }
-          else {
-              // document.domain hasn't changed, regular method should be OK
-              win._boomrl = function() {
-                  bootstrap();
-              };
-    
-              if (win.addEventListener) {
-                  win.addEventListener("load", win._boomrl, false);
-              }
-              else if (win.attachEvent) {
-                  win.attachEvent("onload", win._boomrl);
-              }
-          }
-    
-          // Finish the document
-          doc.close();
-      }
-    
-      // See if Preload is supported or not
-      var link = document.createElement("link");
-    
-      if (link.relList &&
-          typeof link.relList.supports === "function" &&
-          link.relList.supports("preload") &&
-          ("as" in link)) {
-          window.BOOMR.snippetMethod = "p";
-    
-          // Set attributes to trigger a Preload
-          link.href = window.BOOMR.url;
-          link.rel  = "preload";
-          link.as   = "script";
-    
-          // Add our script tag if successful, fallback to iframe if not
-          link.addEventListener("load", promote);
-          link.addEventListener("error", function() {
-              iframeLoader(true);
-          });
-    
-          // Have a fallback in case Preload does nothing or is slow
-          setTimeout(function() {
-              if (!promoted) {
-                  iframeLoader(true);
-              }
-          }, LOADER_TIMEOUT);
-    
-          // Note the timestamp we started trying to Preload
-          BOOMR_lstart = new Date().getTime();
-    
-          // Append our link tag
-          parentNode.appendChild(link);
-      }
-      else {
-          // No Preload support, use iframe loader
-          iframeLoader(false);
-      }
-    
-      // Save when the onload event happened, in case this is a non-NavigationTiming browser
-      function boomerangSaveLoadTime(e) {
-          window.BOOMR_onload = (e && e.timeStamp) || new Date().getTime();
-      }
-    
-      if (window.addEventListener) {
-          window.addEventListener("load", boomerangSaveLoadTime, false);
-      }
-      else if (window.attachEvent) {
-          window.attachEvent("onload", boomerangSaveLoadTime);
-      }
-    })();
-    </script></head>
-<body>
 <script>
-    
-!function(s,e){var c,p,_,d,l,u,f=[],g={pv_id:"",ctx_id:"",intra:!1,force_xhr:!1,
-store_last_response:!1},
-v="object"==typeof s.navigator&&"string"==typeof s.navigator.userAgent&&/iP(ad|hone|od)/.test(
-s.navigator.userAgent),y="object"==typeof s.navigator&&s.navigator.sendBeacon,
-h=y?v?"xhr_ios":"beacon":"xhr";function b(){var e,t,n=s.crypto||s.msCrypto;if(n)t=n.getRandomValues(
-new Uint8Array(18));else for(t=[];t.length<18;)t.push(256*Math.random()^255&(e=e||+new Date)),
-e=Math.floor(e/256);return btoa(String.fromCharCode.apply(String,t)).replace(/\+/g,"-").replace(
-/\//g,"_")}if(s.nyt_et)try{console.warn("et2 snippet should only load once per page")}catch(e
-){}else s.nyt_et=function(){var e,t,n,o,r=arguments;function i(e){f.length&&(function(e,t,n,o,r){if(
-!o&&("beacon"===h||y&&n)){var i=s.navigator.sendBeacon(e,t);return r&&(u=i)}
-var a="undefined"!=typeof XMLHttpRequest?new XMLHttpRequest:new ActiveXObject("Microsoft.XMLHTTP")
-;a.open("POST",e),a.withCredentials=!0,a.setRequestHeader("Accept","*/*"),
-"string"==typeof t?a.setRequestHeader("Content-Type","text/plain;charset=UTF-8"
-):"[object Blob]"==={}.toString.call(t)&&t.type&&a.setRequestHeader("Content-Type",t.type),
-r&&!a.onload&&(a.onload=function(){u=a.response},a.onerror=function(e){u=!1}),a.send(t)}(c+"track",
-JSON.stringify(f),e,g.force_xhr,g.store_last_response),f.length=0,clearTimeout(l),l=null)}if(
-"string"==typeof r[0]&&/init/.test(r[0])&&(g=function(e,t){var n="",o="",r=!1,i=!1,a=!1;if(
-"string"==typeof e&&"init"==e&&"object"==typeof t&&("boolean"==typeof t.intranet&&t.intranet&&(r=!0)
-,"boolean"==typeof t.force_xhr&&t.force_xhr&&(i=!0),
-"boolean"==typeof t.store_last_response&&t.store_last_response&&(a=!0),
-"string"==typeof t.pv_id_override&&"string"==typeof t.ctx_id_override))if(
-24<=t.pv_id_override.length&&24<=t.ctx_id_override.length)n=t.pv_id_override,
-o=t.ctx_id_override;else try{console.warn("override id(s) must be >= 24 chars long")}catch(e){}
-return{pv_id:n,ctx_id:o,intra:r,store_last_response:a,force_xhr:i}}(r[0],r[3]),_=g.pv_id||b(),
-"init"==r[0]&&!p)){if(p=g.ctx_id||b(),"string"!=typeof r[1]||!/^http/.test(r[1]))throw new Error(
-"init must include an et host url");if(c=String(r[1]).replace(/([^\/])$/,"$1/"),
-"string"!=typeof r[2])throw new Error("init must include a source app name");d=r[2]}var a=r.length-1
-;r[a]&&"object"==typeof r[a]&&(e=r[a]),e||/init/.test(r[0])?e&&!e.subject&&console.warn(
-"event data {} must include a subject"):console.warn(
-"when invoked without 'init' or 'pageinit', nyt_et() must include a event data"),c&&e&&e.subject&&(
-t=e.subject,delete e.subject,o="page_exit"==t||"ob_click"==(e.eventData||{}).type,
-n="page"==t||"page_soft"==t?_:b(),f.push({context_id:p,pageview_id:_,event_id:n,client_lib:"v1.2.0",
-sourceApp:d,intranet:g.intra?1:void 0,subject:t,how:o&&v&&y?"beacon_ios":h,client_ts:+new Date,
-data:JSON.parse(JSON.stringify(e))}),"send"==r[0]||n==_||o?i(o):l||(l=setTimeout(i,5500)))},
-s.nyt_et.get_pageview_id=function(){return _},s.nyt_et.get_context_id=function(){return p},
-s.nyt_et.get_host=function(){return c},s.nyt_et.get_last_send_response=function(){var e=u
-;return e&&(u=null),e}}(window);
-
-
-    var referrer = document.referrer || null;
-    var sourceApp = document.querySelector('meta[name=sourceApp]') || {};
-    var sourceAppContent = sourceApp.content || null;
-    var et2Host = document.querySelector('meta[name=et2Host]') || {};
-    var url = et2Host.content || 'https://a.et.nytimes.com/';
-    var isIframe = window !== window.parent;
-
-    nyt_et('init', url, sourceAppContent, {
-        subject: 'page',
-        url: location.href,
-        referrer: referrer,
-        client_tz_offset: (new Date).getTimezoneOffset(),
-        is_iframe: isIframe
-    });
-</script><script>
-  !function(r){var n,t;r="undefined"!=typeof globalThis?globalThis:r||self,n=r.Abra,(t=r.Abra=function(){"use strict";var r=Array.isArray,n=function(r,n,t){var e=r(t,n),u=e[0],o=e[1];if(null==u||""===u)return n;for(var i=String(u).split("."),a=0;a<i.length&&(n=n[i[a]]);a++);return null==n&&(n=o),null!=n?n:null},t=function(r,n,t){return r(t,n).reduce((function(r,n){return parseFloat(r)+parseFloat(n)}),0)},e=function(r,n,t){var e=r(t,n);return e[0]/e[1]},u=function(r,n,t){var e=r(t,n);return e[0]%e[1]},o=function(r,n,t){return r(t,n).reduce((function(r,n){return parseFloat(r)*parseFloat(n)}),1)},i=function(r,n,t){var e=r(t,n),u=e[0],o=e[1];return void 0===o?-u:u-o};function a(n){return!(r(n)&&0===n.length||!n)}var f=function(r,n,t){for(var e,u=0;u<t.length;u++)if(!a(e=r(t[u],n)))return e;return e},c=function(r,n,t){var e;for(e=0;e<t.length-1;e+=2)if(a(r(t[e],n)))return r(t[e+1],n);return t.length===e+1?r(t[e],n):null},l=function(r,n,t){return!a(r(t,n)[0])},v=function(r,n,t){for(var e,u=0;u<t.length;u++)if(a(e=r(t[u],n)))return e;return e},d=function(r,n,t){var e=r(t,n);return e[0]===e[1]},s=function(r,n,t){var e=r(t,n);return e[0]!==e[1]},h=function(r,n,t){var e=r(t,n),u=e[0],o=e[1];return!(!o||void 0===o.indexOf)&&-1!==o.indexOf(u)},g=function(r,n,t){var e=r(t,n);return e[0]>e[1]},p=function(r,n,t){var e=r(t,n);return e[0]>=e[1]},b=function(r,n,t){var e=r(t,n),u=e[0],o=e[1],i=e[2];return void 0===i?u<o:u<o&&o<i},w=function(r,n,t){var e=r(t,n),u=e[0],o=e[1],i=e[2];return void 0===i?u<=o:u<=o&&o<=i},y=function(r,n,t){var e=t[0],u=t[1],o=t.slice(2),i=r(e,n);if(!i)return null;if(0===o.length)return null;if(1===o.length)return r(o[0],n);if(4294967295===o[0])return r(o[1],n);for(var a=function(r){var n,t,e,u,o,i=[],a=[t=1732584193,e=4023233417,~t,~e,3285377520],f=[],c=unescape(encodeURI(r))+"\x80",l=c.length;for(f[r=--l/4+2|15]=8*l;~l;)f[l>>2]|=c.charCodeAt(l)<<8*~l--;for(n=l=0;n<r;n+=16){for(t=a;l<80;t=[t[4]+(i[l]=l<16?~~f[n+l]:2*c|c<0)+1518500249+[e&u|~e&o,c=341275144+(e^u^o),882459459+(e&u|e&o|u&o),c+1535694389][l++/5>>2]+((c=t[0])<<5|c>>>27),c,e<<30|e>>>2,u,o])c=i[l-3]^i[l-8]^i[l-14]^i[l-16],e=t[1],u=t[2],o=t[3];for(l=5;l;)a[--l]+=t[l]}return a[0]>>>0}(i+" "+r(u,n));o.length>1;){var f=o.splice(0,2),c=f[0],l=f[1];if(a<=r(c,n))return r(l,n)}return 0===o.length?null:r(o[0],n)},k=function(r,n,t){var e=t[0],u=t[1],o=r(e,n);return null==o?null:new RegExp(u).test(o)};return function(a,m,O,A){void 0===a&&(a={}),void 0===m&&(m={}),void 0===O&&(O={}),void 0===A&&(A=!1);var j=function(){var r={},n=function(n){if(n)for(var t,e=decodeURIComponent(n[1]),u=/(?:^|,)([^,=]+)=([^,]*)/g;t=u.exec(e);){var o=t,i=o[1],a=o[2];r[i]=a||null}};n(document.cookie.match(/(?:^|;) *abra-overrides=([^;]+)/)),n(window.location.search.match(/(?:\?|&)abra-overrides=([^&]+)/));var t=/(?:^|;) *abra-nuke=true(?:;|$)/.test(document.cookie)||/(?:\?|&)abra-nuke=true(?:&|$)/.test(window.location.search);return[r,t]}(),x=j[0],E=j[1];Object.keys(O).forEach((function(r){x[r]=O[r]}));var F,C=A||E,R=(F={var:n,if:c,"===":d,"!==":s,and:f,or:v,"!":l,">":g,">=":p,"<":b,"<=":w,"+":t,"-":i,"*":o,"/":e,"%":u,in:h,abtest_partition:y,regex_match:k,ref:function(r,n,t){var e=r(t,n)[0];return U(e)}},function n(t,e){if(e||(e={}),r(t))return t.map((function(r){return n(r,e)}));if(!function(n){return"object"==typeof n&&null!==n&&!r(n)&&1===Object.keys(n).length}(t))return t;var u=function(r){return Object.keys(r)[0]}(t),o=t[u];r(o)||(o=[o]);var i=F[u];if(!i)throw new Error("Unrecognized operation "+u);return i(n,e,o)}),U=function(r){if(!r)return null;var n=x[r];if(void 0===n){if(!C){if(Object.prototype.hasOwnProperty.call(x,r))throw new Error("circular logic");x[r]=void 0,n=R(a[r],m)}void 0===n&&(n=null),x[r]=n}return n};return U}}()).noConflict=function(){return r.Abra=n,t}}(this);
-
-</script><script>
-if ('5F35800FA2155BC5833193CFCB9E4D') {
-    !function (a, b, c, d, e, f) {
-        a.ddjskey = e;
-        a.ddoptions = f || null;
-        var m = b.createElement(c), n = b.getElementsByTagName(c)[0];
-        m.async = 1, m.src = d, n.parentNode.insertBefore(m, n);
-    }(window, document, "script", "https://dd.nytimes.com/tags.js", '5F35800FA2155BC5833193CFCB9E4D', {
-       ajaxListenerPath: "nytimes.com/svc/lire_ui/",
-       endpoint: "https://dd.nytimes.com/js/",
-    });
-}
+    if (document.domain != "localhost")
+        document.domain = "nlm.nih.gov";
+    var dcmsLinks = false,
+        dcmsParam = dcmsLinks
+                    ? function (sep) { return sep + "dcmsLinks=true"; }
+                    : function (   ) { return ""                    ; };
 </script>
-<div id="myAccountAuth" class="full-page" data-auth-options="{&quot;abraConfig&quot;:{&quot;.ver&quot;:9377,&quot;LIRE_SSO_Opt_In&quot;:{&quot;if&quot;:[{&quot;and&quot;:[{&quot;&#x3D;&#x3D;&#x3D;&quot;:[{&quot;var&quot;:&quot;geo_country&quot;},&quot;US&quot;]}]},{&quot;abtest_partition&quot;:[{&quot;var&quot;:&quot;agent_id&quot;},&quot;LIRE_SSO_Opt_In&quot;,4294967295,&quot;0_control&quot;]}]},&quot;FREEX_Regi_Auth_Legal&quot;:{&quot;if&quot;:[{&quot;and&quot;:[{&quot;&#x3D;&#x3D;&#x3D;&quot;:[{&quot;var&quot;:&quot;ul_client_id&quot;},&quot;freex&quot;]}]},{&quot;abtest_partition&quot;:[{&quot;var&quot;:&quot;agent_id&quot;},&quot;FREEX_Regi_Auth_Legal&quot;,4294967295,&quot;0_control&quot;]}]}},&quot;asset&quot;:&quot;masthead&quot;,&quot;authToken&quot;:&quot;H4sIAAAAAAAAAx2PzWrDMBCE30XnEEuK5T8IvRWSnkop9BbWq1UsIttCkpOGNO9excf52JnZeTC0VrOOmcW5k4czsQ1DZ2lKK77arLWN3sGddQZcpA2jX28DRdaJSslGyFbUG+avq0GJnZQkGkk1gpQl8RYVIa/6CkuqeY4LBJrC4XW9Kp3DMJ2WYDMZUvKxK4rb7bad7smOFLc4j0Vc+ojB+mTnqRgXl6wPs14wFc43H5/fX9shje4NYfRgz9NB7+vj+/FnLYh+niKd0t1TbsB5vtjXzBQurHswiJFS5iPENOTX2PP5p5URWvEKZU+lRCOAS6MbpU2toamwqqkUmus8llrgVKrdri2hRaOM6kH9Ayec58FXAQAA&quot;,&quot;campaignId&quot;:&quot;&quot;,&quot;captchaSiteKey&quot;:&quot;6Ld2YVIUAAAAAC7yEp9y1m_Cu2PkbZY_lx9pv99F&quot;,&quot;clientId&quot;:&quot;vi&quot;,&quot;currentYear&quot;:&quot;2022&quot;,&quot;displayVariation&quot;:false,&quot;topLevelError&quot;:&quot;&quot;,&quot;userName&quot;:&quot;&quot;,&quot;displayType&quot;:&quot;full-page&quot;,&quot;environment&quot;:&quot;production&quot;,&quot;eventTrackerUrl&quot;:&quot;//et.nytimes.com/&quot;,&quot;hostName&quot;:&quot;https://myaccount.nytimes.com&quot;,&quot;jkiddHost&quot;:&quot;a.nytimes.com&quot;,&quot;mnlConsentRequired&quot;:true,&quot;preferredView&quot;:&quot;enterEmail&quot;}"></div>
-<script type="text/javascript" src="/lire_ui/js/unified-lire.bundle.js?v&#x3D;a7622d9"></script>
-</body>
-</html>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){
+        var _fullPath = window.location.href;
+        var urlParams = _fullPath.slice(_fullPath.indexOf('?') + 1).split('&');
+        var IsOpen = "false";
+        if (urlParams != undefined && urlParams != null && urlParams != "") {
+            IsOpen = urlParams[0].split("=")[1];
+        }
+
+        if (IsOpen == "false" || IsOpen == undefined || IsOpen != "true") {
+            w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        }
+    })(window,document,'script','dataLayer','GTM-5QZ7KJZ');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe sandbox src="https://www.googletagmanager.com/ns.html?id=GTM-5QZ7KJZ"
+                  height="0" width="0" style="display:none;visibility:hidden" title="googletagmanager"></iframe></noscript> 
+<!-- End Google Tag Manager (noscript) -->
+
+<script src="/public/js/elemUtil.js"></script>
+<script src="/public/js/record.js"  ></script>
+<script src="/public/js/treeDom.js" ></script>
+</head><body>
+
+<div>
+    <header class="NLMheader">
+        <a href="https://www.nlm.nih.gov/">
+          <img height="80" alt="NLM Logo"
+               src="https://www.nlm.nih.gov/images/NLM_White.png">
+        </a>
+        <!--<img class="starLogo"src="/public/img/NLM_Star.png" alt="NLM Star">-->
+    </header>
+<nav class="navbar navbar-default">
+
+  <div class="container-fluid">
+
+        <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://www.nlm.nih.gov/mesh/">
+                <img id="meshNavbarLogo" src="/public/img/meshLogo.jpg" alt="MeSH Logo">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                
+                <li><a href="/" id="mainSearchButton">Search</a></li>
+                <li><a href="/treeView">Tree View</a></li>
+                <li><a href="/MeSHonDemand">MeSH on Demand</a> </li> <!--Delete the Span Tags after  a few months, once MeSH on Demand is no longer new-->
+                <li><a href="https://meshb-prev.nlm.nih.gov/" target="_blank">MeSH 2021</a></li>
+                <li><a href="https://www.nlm.nih.gov/mesh/meshsugg.html" target="_blank">MeSH Suggestions</a> </li>
+                <li><a href="https://www.nlm.nih.gov/mesh/mbinfo.html" target="_blank">About MeSH Browser</a></li>
+                <li><a href="https://support.nlm.nih.gov/ics/support/ticketnewwizard.asp?style=classic&deptID=28054" target="_blank">Contact Us</a></li>
+            </ul>
+
+        </div>
+        </div>
+
+</nav>
+
+</div>
+
+<div class="container">
+
+
+
+
+<h1>Mechanics <small>MeSH Descriptor            Data 2022</small></h1>
+
+<ul class="nav nav-tabs">
+    <li id="details" class="active"
+        onclick="switchTab([ 'details', 'detailsTabContent' ])">
+        <a class="fakeLink">Details</a></li>
+    
+        <li id="qualifiers"
+            onclick="switchTab([ 'qualifiers', 'qualifiersTabContent' ])">
+            <a class="fakeLink">Qualifiers</a></li>
+        <li id="trees" onclick="switchTab([ 'trees', 'treesTabContent' ])">
+            <a class="fakeLink">MeSH Tree Structures</a></li>
+    
+    <li id="concepts" onclick="switchTab([ 'concepts', 'conceptsTabContent' ])">
+        <a class="fakeLink">Concepts</a></li>
+</ul>
+
+
+
+<div class="tab-content"><br>
+<div id="detailsTabContent" class="tab-pane active">
+
+    <dl id="descriptorDetails_Mechanics"
+        class="dl-horizontal">
+
+        <dt>MeSH Heading      </dt>
+
+        <dd>Mechanics</dd>
+
+        
+                    <dt>Tree Number(s)</dt>
+                    
+                        <dd><a id="treeNumber_0" onclick=
+                               "switchTab([ 'trees', 'treesTabContent' ])"
+                            >H01.671.515</a></dd>
+                    
+
+        <dt>Unique ID</dt><dd>D019563</dd>
+
+        <dt>RDF Unique Identifier</dt>
+        <dd><a href="https://id.nlm.nih.gov/mesh/D019563.html">
+            http://id.nlm.nih.gov/mesh/D019563
+        </a></dd>
+
+        <span id="annotation">
+            <dt>Annotation</dt><dd>the discipline (education, history, etc) only; use <a href="/record/ui?ui=D055595" class="textLink_MECHANICALPHENOMENA">MECHANICAL PHENOMENA</a> or specifics treed under it for mechanical properties and processes of materials</dd>
+        </span>
+                <span id="scopeNote">
+                    <dt>Scope Note</dt><dd>The branch of physics which deals with the motions of material bodies, including kinematics, dynamics, and statics. When the laws of mechanics are applied to living structures, as to the locomotor system, it is referred to as <a href="/record/ui?ui=D001696" class="textLink_BIOMECHANICALPHENOMENA">BIOMECHANICAL PHENOMENA</a>. (From Dorland, 28th ed)</dd>
+                </span>
+            
+                <dt>Previous Indexing</dt>
+                
+                    <dd>Physics (1966-1996)</dd>
+                
+                <dt>See Also</dt>
+                
+                    <dd><a id="seeAlso_BiomechanicalPhenomena"
+                           href="/record/ui?ui=D001696"
+                        >Biomechanical Phenomena</a></dd>
+                
+            <dt>Public MeSH Note</dt><dd>97</dd>
+        
+            <dt>History Note</dt><dd>97</dd>
+        
+        
+
+
+        
+            <dt>Date Established</dt>
+            <dd>1997/01/01</dd>
+        
+            <dt>Date of Entry</dt>
+            <dd>1996/06/20</dd>
+        
+            <dt>Revision Date</dt>
+            <dd>2013/07/10</dd>
+        
+
+    </dl>
+
+</div>
+
+<div id="qualifiersTabContent" class="tab-pane">
+
+    <dl class="dl-horizontal">
+
+        
+<br>
+
+        
+            <dt>No Qualifiers</dt><dd></dd>
+        
+
+    </dl>
+
+</div><div id="treesTabContent" class="tab-pane">
+
+    <ul class="treeItem">
+
+        <li >
+        <a id="tree_0_node_H01"
+           
+               href="/record/ui?ui=D010811"
+           
+        ><span>Natural Science Disciplines [H01]</span>
+        </a>
+        <ul class="treeItem">
+
+        <li >
+        <a id="tree_0_node_H01_671"
+           
+               href="/record/ui?ui=D010825"
+           
+        ><span>Physics [H01.671]</span>
+        </a>
+        <ul class="treeItem">
+
+        <li >
+        <a id="tree_0_node_H01_671_031"
+           
+               href="/record/ui?ui=D000162"
+           
+        ><span>Acoustics [H01.671.031]</span>
+        </a>
+        
+            <i id="plus_Acoustics" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Acoustics" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_065"
+           
+               href="/record/ui?ui=D001256"
+           
+        ><span>Astronomy [H01.671.065]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_100"
+           
+               href="/record/ui?ui=D001703"
+           
+        ><span>Biophysics [H01.671.100]</span>
+        </a>
+        
+            <i id="plus_Biophysics" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Biophysics" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_293"
+           
+               href="/record/ui?ui=D004581"
+           
+        ><span>Electronics [H01.671.293]</span>
+        </a>
+        
+            <i id="plus_Electronics" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Electronics" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_368"
+           
+               href="/record/ui?ui=D006283"
+           
+        ><span>Health Physics [H01.671.368]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_493"
+           
+               href="/record/ui?ui=D008280"
+           
+        ><span>Magnetics [H01.671.493]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_515"
+           
+               href="/record/ui?ui=D019563"
+           
+        ><strong>Mechanics [H01.671.515]</strong>
+        </a>
+        <ul class="treeItem">
+
+</ul>
+
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_547"
+           
+               href="/record/ui?ui=D055904"
+           
+        ><span>Meteorology [H01.671.547]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_579"
+           
+               href="/record/ui?ui=D009686"
+           
+        ><span>Nuclear Physics [H01.671.579]</span>
+        </a>
+        
+            <i id="plus_Nuclear_Physics" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Nuclear_Physics" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_617"
+           
+               href="/record/ui?ui=D055095"
+           
+        ><span>Optics and Photonics [H01.671.617]</span>
+        </a>
+        
+            <i id="plus_Optics_and_Photonics" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Optics_and_Photonics" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_H01_671_808"
+           
+               href="/record/ui?ui=D012212"
+           
+        ><span>Rheology [H01.671.808]</span>
+        </a>
+        
+            <i id="plus_Rheology" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Rheology" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+</ul>
+
+        </li>
+    
+</ul>
+
+        </li>
+    
+</ul>
+
+
+</div>
+
+<div id="conceptsTabContent" class="tab-pane">
+
+    <button id="ExpandAll" class="btn btn-default btn-sm pull-right"
+            onclick="toggleConcepts()">
+        <span id="expandConcepts"                        >  Expand All</span>
+        <span id="collapseConcepts" style="display: none">Collapse All</span>
+    </button>
+
+    <div>
+
+        <span id="Nightwatch_cp_0_0"
+              onclick="toggleItem('cp_0_0')">
+        <a class="fakeLink"><b>
+            Mechanics
+            <i>Preferred</i>
+        </b></a></span>
+
+        <div id="cp_0_0" class="collapse"
+             style="display: none">
+        <dl class="dl-horizontal">
+
+            <dt>Concept UI</dt><dd>M0029052</dd>
+
+            
+                <dt>Scope Note</dt><dd>The branch of physics which deals with the motions of material bodies, including kinematics, dynamics, and statics. When the laws of mechanics are applied to living structures, as to the locomotor system, it is referred to as <a href="/record/ui?ui=D001696" class="textLink_BIOMECHANICALPHENOMENA">BIOMECHANICAL PHENOMENA</a>. (From Dorland, 28th ed)</dd>
+            
+
+            <dt>Terms</dt>
+
+            <dd>
+
+                <span id="Nightwatch_termName_0_0"
+                      onclick=
+                      "toggleItem('termName_0_0')">
+                    <a class="fakeLink"><b>Mechanics</b></a></span>
+
+                
+                    <i>Preferred Term</i>
+                
+
+                <div id="termName_0_0"
+                     class="collapse" style="display: none">
+
+                    <b class="conceptsTabTermHeading">Term UI</b>
+                    T058235<br>
+
+                    
+                        <b class="conceptsTabTermHeading">Date</b>01/01/1999<br>
+                    
+
+                    <b class="conceptsTabTermHeading">LexicalTag</b>
+                    NON<br>
+
+                    
+                        <b class="conceptsTabTermHeading">ThesaurusID</b>
+                        NLM (1997)<br>
+                    
+
+                    <br>
+
+                </div>
+
+            </dd>
+
+        </dl></div>
+
+    </div>
+
+</div></div>
+
+<small class="pull-right">
+    page delivered in 0.137s
+</small>
+
+</div>
+
+<footer class="footer">
+    <div class="container-fluid"><div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <p><a href="https://www.nlm.nih.gov/socialmedia/index.html">
+                    Connect with NLM
+                </a></p>
+                <ul class="list-inline">
+                    <li>
+                    <a title="External link: please review our privacy policy."
+                       href="https://twitter.com/NLM_NIH">
+                        <img src="https://www.nlm.nih.gov/images/Twitter_W.svg"
+                             alt="Twitter">
+                    </a></li>
+                    <li>
+                    <a title="External link: please review our privacy policy."
+                       href="https://www.facebook.com/nationallibraryofmedicine"
+                    ><img src="https://www.nlm.nih.gov/images/Facebook_W.svg"
+                          alt="Facebook">
+                    </a></li>
+                    <li>
+                    <a title="External link: please review our privacy policy."
+                       href="https://www.youtube.com/user/NLMNIH">
+                        <img src="https://www.nlm.nih.gov/images/YouTube_W.svg"
+                             alt="You Tube">
+                    </a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <p>National Library of Medicine<br>
+                    <a href="https://www.google.com/maps/place/8600+Rockville+Pike,+Bethesda,+MD+20894/@38.9959508,-77.101021,17z/data=!3m1!4b1!4m5!3m4!1s0x89b7c95e25765ddb:0x19156f88b27635b8!8m2!3d38.9959508!4d-77.0988323">
+                        8600 Rockville Pike<br>
+                        Bethesda, MD 20894
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <p><a href="https://www.nlm.nih.gov/web_policies.html">
+                    Web Policies
+                </a><br>
+                <a href="https://www.nih.gov/institutes-nih/nih-office-director/office-communications-public-liaison/freedom-information-act-office">
+                    FOIA
+                </a><br>
+                <a href="https://www.hhs.gov/vulnerability-disclosure-policy/index.html">
+                    HHS Vulnerability Disclosure
+                </a></p>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <p><a href=
+                      "https://support.nlm.nih.gov?from=https://www.nlm.nih.gov/">
+                    NLM Support Center
+                </a><br>
+                <a href="https://www.nlm.nih.gov/accessibility.html">
+                    Accessibility
+                </a><br>
+                <a href="https://www.nlm.nih.gov/careers/careers.html">
+                    Careers
+                </a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+              <p class="text-center"> <a href="https://www.nlm.nih.gov/">NLM</a> | <a href="https://www.nih.gov/">NIH</a> | <a href="https://www.hhs.gov/">HHS</a> | <a href="https://www.usa.gov/">USA.gov</a></p>
+            </div>
+        </div>
+    </div></div>
+<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+<script type='text/javascript'>
+(function(){var g=function(e,h,f,g){
+this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
+this.set=function(a,c){var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "};
+this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"v"==h&&(e=Math.random()>=e/100?0:100),a=[h,e,0],this.set(f,a.join(":"));else return!0;var c=a[1];if(100==c)return!0;switch(a[0]){case "v":return!1;case "r":return c=a[2]%Math.floor(100/c),a[2]++,this.set(f,a.join(":")),!c}return!0};
+this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)}};
+this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
+try{(new g(100,"r","QSI_S_ZN_cwOHfLkxRr4n4W2","https://zncwohflkxrr4n4w2-nlmenterprise.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_cwOHfLkxRr4n4W2")).start()}catch(i){}})();
+</script><div id='ZN_cwOHfLkxRr4n4W2'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+<!--END WEBSITE FEEDBACK SNIPPET-->
+</footer>
+
+</body></html>
+
