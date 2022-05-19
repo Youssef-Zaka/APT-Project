@@ -1,867 +1,365 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Community Webs</title>
+    <!-- Bootstrap --> 
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">  
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-<!-- def.1 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title> Search</title>
-
-
-
-<meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta  name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- sh.1 -->
-<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
-<link rel="alternate" type="application/rss+xml" title="Purdue e-Pubs Feed" href="/recent.rss">
-
-<!--[if IE]>
-<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
-<![endif]-->
-<!-- end sh.1 -->
-<link rel="stylesheet" href="/assets/cgi/css/search/query.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global-alert.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global/utils.css" type="text/css" media="screen">
-
-
-<!-- stripped inline yui3-seed -->
-<script type="text/javascript" src="/assets/scripts/bepress-init.pack.js"></script>
-<script type="text/javascript">
-			Bepress.cgiUrlBase = '';
-		</script>
-<script src="/assets/cgi/js/spinner.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/solr.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/query-screen.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/statsDispatcher.pack.js" type="text/javascript"></script>
-<script src="/assets/footnoteLinks.js" type="text/javascript"></script>
-<script type="text/javascript">
-YUI({
-}).use('bepress.search.queryscreen', 'node', 'datatype', function(Y){
-	
-	Y.on( 'domready', function () {
-
-		var fieldSelects, rowList, advContextNode, queryScreen, facetTypes, i;
-
-		
-		Y.bepress.search.solr.setAllowedFields( {"document_type":1,"author_lname":1,"publication_title":1,"subject":1,"author":1,"corporate_author":1,"text":1,"author_fname":1,"abstract":1,"title":1,"publication":1,"collected_from_sw":1,"institution":1} );
-		
-		queryScreen = new Y.bepress.search.QueryScreen( {
-			
-			errors: {
-				searchFailure:        "We're sorry, we were unable to process your search request. "
-				                    + "This may have been a temporary problem, please wait a few moments "
-				                    + "and try again.<br/>	(Error: {errmsg})"
-				, nothingEntered:     "Please enter a search term first"
-				, invalidDateEntered: "You entered '{errmsg}', but that doesn't look like a date to me."
-				, parseError:         "The advanced search form does not support this syntax: {errmsg}"
-				, syntaxNotSupported: "The advanced search form does not support this syntax. {errmsg}"
-				, timeout:            "Your search request has timed out. Please wait a moment and try again."
-				, emptyExport:        "No results matched your search."
-				, dateFormat:         "{errmsg} format is MM/DD/YYYY."
-			}
-
-			
-			, templates: {
-				resultsTemplate: {
-						download: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download {downloadFormat}"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Download<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, metadata: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, external: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Link to Full Text<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-					}
-				, resultsHeaderTemplate:         '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-	<span class="grid_6">Showing <strong>{count}<\/strong> out of <strong>{numFound}<\/strong> results. Starting at result <strong>{start}<\/strong>.<\/span>	\
-	<form id="save_search" class="grid_6 alpha omega" method="POST" action="\/do\/search\/save_search" >\
-			<a href="{saveUrl}" id="save-search-submit"><span><i class="icon-save"><\/i> Save this search<\/span><\/a>\
-			<span><a href="\/cgi\/notification.cgi" id="my-searches"><i class="icon-search"><\/i> My saved searches<\/a><\/span>\
-	<\/form>\
-<\/div>\
-<\/div>\
-'
-				, resultsExportedHeaderTemplate: '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-		<span class="grid_6">Exported <strong>{count}<\/strong> results.<\/span>	\
-<\/div>\
-<\/div>\
-'
-				, resultsFooterTemplate:         '<div class="pagination query">\
-	<p class="grid_12">\
-		<span class="fl">\
-			<a id="first-page" class="{firstClass}" href="#query-results" title="First Page">&laquo; First<\/a>\
-			<a id="previous-page" class="{previousClass}" href="#query-results" title="Previous Page">&lt; Prev<\/a>\
-		<\/span>\
-		<span class="fr">\
-			<a id="next-page" class="{nextClass}" href="#query-results" title="Next Page">Next &gt;<\/a>\
-			<a id="last-page" class="{lastClass}" href="#query-results" title="Last Page">Last &raquo;<\/a>\
-		<\/span>\
-	<\/p>\
-<\/div>\
-\
-'
-				, rowTemplate:                   '<div class="row query">\
-  <p id="p{rownum}">\
-    <span class="fr">\
-      <input type="image" value="Delete" alt="Delete row {rownum}" name="del_row_{rownum}" src="\/assets\/query_minus.gif" class="hidden control-delete-row">\
-      <input type="image" value="Add" alt="Add row {rownum}" name="add_row_{rownum}" src="\/assets\/cgi\/images\/global\/add.png" class="control-add-row">	\
-    <\/span>\
-    <span class="grid_2">\
-      <select name="op_{rownum}" class="op-sel">\
-        <option value="AND">AND<\/option>\
-          <option value="OR">OR<\/option>\
-          <option value="NOT">NOT<\/option>\
-      <\/select>\
-    <\/span>\
-	<label for="field_{rownum}">Choose type<\/label>\
-		<span class="grid_3">\
-			<select name="field_{rownum}" id="field_{rownum}" class="field-sel">\
-                \
-                    <option value="text:">All Fields<\/option>\
-                \
-                    <option value="abstract:">Abstract<\/option>\
-                \
-                    <option value="subject:">Subject<\/option>\
-                \
-                    <option value="author:">Author<\/option>\
-                \
-                    <option value="institution:">Institution<\/option>\
-                \
-                    <option value="title:">Title<\/option>\
-                \
-                    <option value="document_type:">Document Type<\/option>\
-                \
-                    <option value="publication_title:">Publication<\/option>\
-                			<\/select>\
-		<\/span>\
-    <label for="value_{rownum}">Search term {rownum}<\/label>\
-		<span class="grid_6"><input type="text" id="value_{rownum}" name="value_{rownum}" value="" class="term">\
-		<\/span>	\
-		<br class="clear" \/>\
-	<\/p>\
-<\/div>\
-'
-				, facetLinkTemplate:             '	<li><a href="#" class="facet-{facetType}">{facetLabel}<\/a> ({facetCount})<\/li>\
-'
-				, facetMoreLink:                 '	<li class="dropdown">\
-		<div id="more-{facetType}" class="more-container"><ul><\/ul><\/div>\
-		<div name="{facetType}" class="collapse" id="{facetType}-links">\
-			<span class="more" name="{facetType}"><a href="#" name="{facetType}">More &darr;<\/a><\/span><span class="fewer hidden" name="{facetType}"><a href="#" name="{facetType}">Fewer &uarr;<\/a><\/span>\
-		<\/div>\
-	<\/li>\
-'
-				, facetSectionTemplate:          '<dl class="facet">\
-  <dt>{label}<\/dt>\
-  <dd>\
-    <ul>\
-    <\/ul>\
-  <\/dd>\
-<\/dl>\
-'
-			}
-
-			
-			, elements: {
-				resultsHeaderEl:  Y.one('#results-header')
-				, resultsListEl:	  Y.one('#results-list')
-				, resultsFooterEl:  Y.one('#results-footer')
-				, errorEl:		  Y.one('#global-alert')
-				, basicSearchEl:	  Y.one('#basic-search')
-				, advancedSearchEl: Y.one('#advanced-search')
-				, facetsEl:         Y.one('#results-facets')
-			}
-
-			
-			, enabledFacets: {
-				
-					"discipline": "Discipline",
-				
-					"download_type": "File Type",
-				
-					"publication_facet": "Publication",
-				
-					"publication_type": "Publication Type",
-				
-					"publication_year": "Publication Year",
-				
-					"subject_facet": "Keyword"
-				
-			}
-
-			, historyAPI:		  !!(window.history && history.pushState)
-
-						, selectedForm: 'advanced-search'
-						
-						, authenticated: false
-						
-		});
-
-		
-			queryScreen.addRow( { showAddCtl: true, showDelCtl: false } );
-		
-		
-		rowList = Y.one('#rows');
-		rowList.delegate( ['change', 'keyup'], queryScreen.updateSearchPreview, '#rows', queryScreen );
-		
-		
-		Y.one( '#simple-search')
-			.on('keypress', queryScreen.behaveOnKeyPress, queryScreen);
-		Y.one( '#advanced-search')
-			.delegate( 'keypress', queryScreen.behaveOnKeyPress, 'input[type=text]', queryScreen);
-
-		        rowList.delegate('click', function(e){
-            queryScreen.addRow();
-            e.preventDefault();
-           }, '.control-add-row', Y
-        );
-		
-		rowList.delegate('click', function(e){
-			queryScreen.deleteRow(e.currentTarget);
-			queryScreen.updateSearchPreview();
-			e.preventDefault();
-		   }, '.control-delete-row', Y
-		);
-
-		
-		Y.one('#switch-to-advanced').on('click', function(e){
-			queryScreen.switchToAdvanced();
-			e.preventDefault();
-		});
-		Y.one('#switch-to-basic').on('click', function(e){
-			queryScreen.switchToBasic();
-			e.preventDefault();
-		});
-
-		
-		advContextNode = Y.one('#advanced-context');
-		if ( advContextNode ) {
-			
-			advContextNode.on( 'change', function(e){
-				queryScreen.updateAvailableFormats();
-			});
-			
-			queryScreen.updateAvailableFormats();
-		}
-
-		
-		Y.one('#do-search').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		Y.one('#do-search-advanced').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		
-				Y.one('#show-search').on('click', function() {
-			queryScreen.showSearchForm();
-		});
-		Y.one('#hide-search').on('click', function() {
-			queryScreen.shrinkSearchForm();
-		});
-
-		// is there a more YUIish way to do this?
-		if(queryScreen.historyAPI) {
-			window.onpopstate = function(ev) {
-				// Y.log('popstate -- location: '+document.location+', state: '+JSON.stringify(ev.state));
-				queryScreen.handlePopState(ev.state);
-			};
-		}
-
-		
-		Y.one('#do-search').removeAttribute('disabled');
-		Y.one('#switch-to-advanced').removeAttribute('disabled');
-		Y.all('.add-row').removeAttribute('disabled');
-		
-		
-		queryScreen.setSearchContainerHeights();
-		
-		Y.one('#advanced-search').addClass('query-shrinker');
-		Y.one('#basic-search').addClass('query-shrinker');
-
-		
-		
-				
-		
-
-		
-		
-				
-				
-				
-			Y.one('#clear-discipline-facet').on('click', function() {
-				queryScreen.clearFacet('discipline');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-download_type-facet').on('click', function() {
-				queryScreen.clearFacet('download_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_facet-facet').on('click', function() {
-				queryScreen.clearFacet('publication_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_type-facet').on('click', function() {
-				queryScreen.clearFacet('publication_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_year-facet').on('click', function() {
-				queryScreen.clearFacet('publication_year');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-subject_facet-facet').on('click', function() {
-				queryScreen.clearFacet('subject_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-
-	} );
-});
-</script>
-<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"Search:query_screen","businessUnit":"els:rp:st"},"visitor":{}};</script>
-
-
-
-
-</head>
-<body class="legacy search">
-<!-- FILE /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen --><!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
-<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
-
-<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
+  <body ontouchstart="">
+  <header id="mainHead" class="">
+  	<div class="container">
+        	<div class="row">
+            	<div class="col-lg-10 col-12 m-auto">
+                    <nav class="navbar navbar-expand-md ">
+                      <a class="navbar-brand" href="index.html"><img src="assets/images/logo.svg" alt="Community Webss logo" ></a>
+                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#MainNavBar" aria-controls="MainNavBar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                
+                      <div class="collapse navbar-collapse ml-auto" id="MainNavBar">
+                        <ul class="navbar-nav main-nav ml-auto">
+                          <li class="nav-item active">
+                            <a class="nav-link" href="index.html">Home</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link " href="participants.html">Participants</a>
+                          </li> 
+                           <li class="nav-item">
+                            <a class="nav-link " href="curriculum.html">Curriculum</a>
+                          </li> 
+                           <li class="nav-item">
+                            <a class="nav-link " href="news.html">News</a>
+                          </li> 
+                        </ul> 
+                             
+                      </div>
+                    </nav>
+                    
+                  </div>
+               </div>
+            </div>
+  </header>
+  
+  <section class="section hero  text-center" >
+  	<div class="container  d-flex h-100">
+    	<div class="row justify-content-center align-self-center  w-100">
+        	<div class="col-lg-7 col-md-10 col-12 m-auto">
+            	<h1>Community Webs</h1>
+                <h3>Empowering Cultural Heritage Organizations to Create Community History Web Archives</h3>
+            </div>
+        </div> 
+    </div>
+   	<img src="assets/images/hero.png"   class="w-100 d-block" alt="">
+  </section>
+  
+  <section class="section abt_us sect_head p-tb-100 bg-white">
+  	 <div class="container">
+     	 <article>
+     	      <div class="row">
+                <div class="col-lg-10 col-12 m-auto">
+                    <div class="row">
+                        <div class="col-md-5 col-12 abt_left">
+                            <img class="index-logo" src="assets/images/Mellon-Logo.png" alt="Mellon Logo">
+                            <img class="logo index-logo" src="assets/images/Internet_Archive_logo_and_wordmark_small.png" alt="Internet Archive Logo">    
+                            <img class="index-logo" src="assets/images/Copy of IMLS_Logo-1024x380.png" alt="IMLS logo">
+                        </div>
+                        <div class="col-md-7 col-12 abt_right">                    	
+                            <p>
+                                Local history archives have long served as vital resources for preserving the stories of communities. With many records now published on the web, the ability to preserve collections of online newspapers, local blogs, civic websites, social media, and other platforms is an increasingly important skill for librarians and other cultural heritage professionals in fulfilling their role as information custodians and community anchors. Locally-focused web archiving can also diversify the historical record and preserve the voices of those often excluded from the archive.
+                                <br><br>
+                                Community Webs began in 2017 as an Institute of Museum and Library Services and Internet Archive funded program of continuing education, training, and services to enable public libraries to build collections of historically-valuable, web published materials documenting their local communities. In 2020, with the support of The Andrew W. Mellon Foundation, Community Webs expanded to include more public libraries from across the United States. In 2021, the Internet Archive expanded the program again to welcome Community Webs applicants from public libraries and other cultural heritage organizations from Canada and across the globe. The program now includes over 150 member organizations from around the world and has grown more than ten-fold since its first cohort in 2017.                                <br>
+                            </p>
+                            <a href="about.html" class="btn og-btn-arrow-brd sm-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+        	</div>
+         </article>
+     </div>
+  </section>
   
   
-  <nav class="nav-collapse">
-    <ul>
-      <li class="menu-item active device-fixed-width"><a href="https://docs.lib.purdue.edu" title="Home" data-scroll >Home</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/communities.html" title="Browse" data-scroll >Browse Collections</a></li>
-      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/about.html" title="About" data-scroll >About</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
-    </ul>
-  </nav>
-</header>
-
-<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
-<!--<![endif]-->
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen (cont) -->
-
-
-
-<div id="purdue">
-	<div id="container">
-		<a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
-
-					
-			<div id="header">
-				<a href="https://docs.lib.purdue.edu" id="banner_link" title="Purdue e-Pubs" >
-					<img id="banner_image" alt="Purdue e-Pubs" width='980' height='127' src="/assets/md5images/0ef023a18cb347526fa389886bca42cb.png">
-				</a>	
-				
-					<a href="http://www.lib.purdue.edu/" id="logo_link" title="Purdue University" >
-						<img id="logo_image" alt="Purdue University" width='404' height='127' src="/assets/md5images/256521ebbdbbd9ed12c3870e899829ec.png">
-					</a>	
-				
-			</div>
-					
-			<div id="navigation">
-				<!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://docs.lib.purdue.edu" title="Home" ><span>Home</span></a></li><li id="tabtwo"><a href="https://docs.lib.purdue.edu/about.html" title="About" ><span>About</span></a></li><li id="tabthree"><a href="https://www.lib.purdue.edu/repositories/epubs/about" title="FAQ" ><span>FAQ</span></a></li><li id="tabfour"><a href="https://docs.lib.purdue.edu/cgi/myaccount.cgi?context=" title="My Account" ><span>My Account</span></a></li></ul></div>
-
-
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/header.pregen (cont) -->
-			</div>
-		
-
-		<div id="wrapper">
-			<div id="content">
-				<div id="main" class="text">
-
-
-<div id="template_query_data" value=""></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="global-alert" class="hidden info">
-</div>
-
-<div id="query-wrapper">
-
-	<div id="show-search-container" class="query tr">
-		<a href="#" id="show-search" class="hidden">Show Search</a>
-		<a href="#" id="hide-search" class="hidden">Hide Search</a>
-	</div>
-	<div id="basic-search" class="hidden">
-		<form id="basic-search-form" method="GET" action="/do/search/"> 
-			<fieldset class="query">
-				<legend>Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="simple-search" class="hidden">Search </label>
-				<span class="grid_7"><input name="q" id="simple-search" type="text" value=""></span>
-				<span class="grid_4">
-					<button type="submit" name="query" value="Search" id="do-search" class="white medium">Search</button>
-					<a href="#" id="switch-to-advanced">Advanced</a>
-				</span>
-				<div class="clear"></div>
-				<input type="hidden" name="start" class="start-input" value="0">
-				<input type="hidden" name="context" id="basic-context" value="119483">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-							</fieldset>
-		</form>
-	</div>
-
-	<div id="advanced-search">
-		<form method="GET" action="/do/search/">
-			<fieldset>
-				<legend>Advanced Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="search-string" class="hidden">Feedback</label>
-				<input type="hidden" name="start" class="start-input" value="0">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-				
-				<div class="query">
-					<input type="text" name="q" id="search-string" class="grid_12 alpha omega" onFocus="return" readonly="readonly" value="">
-				</div>
-				<div class="clear"></div>
-					
-				<div class="query">
-					<div id="rows">			
-							
-					</div> <!-- end rows -->
-				</div>		
-			</fieldset>
-			<div class="query">
-				
-					<div id="search-filters">
-<span class="grid_3 prefix_2 alpha tc">
-	<label for="peer-reviewed">
-	<input type="checkbox" name="peer_reviewed" value="1" id="peer-reviewed"> 
-	Peer-reviewed only</label>
-</span>
-</div>
-
-<span class="grid_2">
-	<label for="start-date">Date range:</label>
-</span>
-<span class="grid_2">
-        <input type="text" id="start-date" name="start_date" value="">
-</span>
-<label for="end-date" class="hidden">End Date:</label>
-<span class="grid_2">
-        <input type="text" id="end-date" name="end_date" value="">
-</span>
-
-						
-				<div class="clear"></div>
-<p class="limit-search">
-		<label for="advanced-context" class="grid_2 prefix_5">
-			Limit search to:
-		</label>
-		<span class="grid_4">
-			<select name="context" id="advanced-context">
-				
-										<option value="119483" selected="selected">Purdue e-Pubs</option>
-									
-										<option value="1">All Repositories</option>
-												</select>
-	</span>
-</p>
-
-				<div class="clear"></div>
-<p class="sort-options">
-	<span class="grid_2 prefix_5">Sort by:</span>
-	<span class="grid_4">
-		<label for="sort-score">
-			<input type="radio" name="sort" id="sort-score" value="score" checked="checked"> Relevance
-		</label> 
-		<label for="sort-date">
-			<input type="radio" name="sort" id="sort-date" value="date_desc"> Publication Date
-		</label>
-	</span>
-</p>
-
-				<div class="clear"></div>
-<p class="pick-format">
-		<label for="results-format" class="grid_2 prefix_5">
-			Format:
-		</label>
-		<span class="grid_4">
-			<select name="format" id="results-format">
-								<option value="json">links</option>
-								<option value="refer">Bibliography Export</option>
-							</select>
-	</span>
-</p>
-
-				<div style="display:none;visibility:hidden;height:1px"><iframe id="export-frame" style="display:none;visibility:hidden;height:1px"></iframe></div>
-				<div class="clear"></div>
-				<span class="grid_12 tr">				
-				<button type="submit" value="Search" name="search" id="do-search-advanced" class="fr white medium">Search</button>
-
-				<a href="#" id="switch-to-basic">Basic</a>
-				</span>
-				<br class="clear" />
-			</div>
-			<div class="clear"></div>
-
-		</form>	
-	</div> <!-- advanced search -->
-</div><!-- query-wrapper -->
-
-<div id="query-results">
-
-<div class="query">
-<div class="grid_12" id="info-pane">
-<div id="results-header">
-		<div class="clear"></div>		
-	</div>
-<br class="clear" />
-</div>
-
-<div class="grid_3" id="facet-pane">
-
-	<p id="selected-facets">
-				<span id="selected-discipline-facet" class="hidden">
-			<a class="close" id="clear-discipline-facet"><i>&times;</i>
-			 <strong id="selected-discipline-facet-label"></strong></a>
-		</span>
-				<span id="selected-download_type-facet" class="hidden">
-			<a class="close" id="clear-download_type-facet"><i>&times;</i>
-			 <strong id="selected-download_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_facet-facet" class="hidden">
-			<a class="close" id="clear-publication_facet-facet"><i>&times;</i>
-			 <strong id="selected-publication_facet-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_type-facet" class="hidden">
-			<a class="close" id="clear-publication_type-facet"><i>&times;</i>
-			 <strong id="selected-publication_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_year-facet" class="hidden">
-			<a class="close" id="clear-publication_year-facet"><i>&times;</i>
-			 <strong id="selected-publication_year-facet-label"></strong></a>
-		</span>
-				<span id="selected-subject_facet-facet" class="hidden">
-			<a class="close" id="clear-subject_facet-facet"><i>&times;</i>
-			 <strong id="selected-subject_facet-facet-label"></strong></a>
-		</span>
-		
-	</p>
-<br class="clear" />
-	<div id="results-facets" class="hidden"></div>
-</div>
-<div class="grid_9" id="result-pane">
-	
-	<div id="results-list">
-		<div class="clear"></div>
-	</div>
-	<div id="results-footer"></div>
-</div>
-<br class="clear" />
-</div>
-
-<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
-	<div class="verticalalign">&nbsp;</div>
-	<div class="clear">&nbsp;</div>
-
-</div>
-
-	<div id="sidebar" role="complementary">
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc --><h2>Search</h2>
-
-
-	
-<form method='get' action='https://docs.lib.purdue.edu/do/search/' id="sidebar-search">
-	<label for="search" accesskey="4">
-		Enter search terms:
-	</label>
-		<div>
-			<span class="border">
-				<input type="text" name='q' class="search" id="search">
-			</span> 
-			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
-		</div>
-	<label for="context" style="display:none;">
-		Select context to search:
-	</label> 
-		<div>
-			<span class="border">
-				<select name="fq" id="context">
-					
-					
-					
-					
-					<option value='virtual_ancestor_link:"https://docs.lib.purdue.edu"'>in this repository</option>
-					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
-				</select>
-			</span>
-		</div>
-</form>
-
-<p class="advanced">
-	
-	
-		<a href="https://docs.lib.purdue.edu/do/search/advanced/?fq=virtual_ancestor_link:%22https://docs.lib.purdue.edu%22" >
-			Advanced Search
-		</a>
-	
-</p>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
-	<ul id="side-notify">
-		<li class="notify">
-			<a href="https://docs.lib.purdue.edu/announcements.html" title="Email or RSS Notifications" >
-				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
-			</a>
-		</li>
-	</ul>
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_sidebar_custom_middle_7_8.inc -->
-
-
-<div id="sb-custom-middle">
-    <h2 class="sb-custom-title">Links</h2>
-    <ul class="sb-custom-ul">
-        <li class="sb-custom-li"><a href="http://www.lib.purdue.edu/" title="Purdue Libraries" >Purdue Libraries</a></li>
-        <li class="sb-custom-li"><a href="http://docs.lib.purdue.edu/thepress" title="Purdue University Press Journals" >Purdue University Press Journals</a></li>
-    </ul>
-</div><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
-
-
-
-
-	<ul id="side-author">
-	
-		
-		<li class="submit">
-			<a href="https://docs.lib.purdue.edu/submit_research.html" title="Submit Research" >
-				Submit Research
-			</a>
-		</li>
-		<li>
-			<a href="https://docs.lib.purdue.edu/addendum.pdf" >
-				Author Addendum
-			</a>
-		</li>
-	
-	</ul>
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc --><h2>Browse</h2>
-<ul id="side-browse">
-
-
-<li class="collections"><a href="https://docs.lib.purdue.edu/communities.html" title="Browse by Collections" >Collections</a></li>
-<li class="discipline-browser"><a href="https://docs.lib.purdue.edu/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
-<li class="author"><a href="https://docs.lib.purdue.edu/authors.html" title="Browse by Author" >Authors</a></li>
-
-
-</ul>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lower_7_8.inc (cont) -->
-	
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
-	
-
-
-
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sab.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-	<div class="verticalalign">&nbsp;</div>
-	</div>
-
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
-	
-	
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
-
-<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
-	<em>Digital Commons</em>
-</a>
-
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
-	<p>
-		<a href="https://docs.lib.purdue.edu" title="Home page" accesskey="1" >Home</a> | 
-		<a href="https://docs.lib.purdue.edu/about.html" title="About" >About</a> | 
-		<a href="https://docs.lib.purdue.edu/faq.html" title="FAQ" >FAQ</a> | 
-		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
-		<a href="https://docs.lib.purdue.edu/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
-	</p>
-	<p>
-	
-	
-		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
-	
-		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
-	</p> 
-	
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-
-</div>
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/docs.lib.purdue.edu/assets/ir_analytics.inc --><script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-5499681-9");
-pageTracker._trackPageview();
-} catch(err) {}</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-
-<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>
+  <section class="section curriculam sect_head p-tb-85 bg-light-yellow">
+  		<div class="container">
+        	<div class="row">
+            	<div class="col-lg-8 col-12 m-auto">
+                	<h3>Curriculum</h3>
+                    <div class="row">
+                    
+                    	<div class="col-md-4 col-sm-6 col-12 crr_col">
+                        	<div class="crr_inner" style="background-image:url(assets/images/Servers_IA.png);">
+                            	<article class="h-100">
+                                    <img src="assets/images/icon-archive.svg" alt="icon archive">
+                                    <h4>Web Archiving 101</h4>
+                                    <a href="web-archive.html">View Curriculum</a>
+                                </article>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 col-sm-6 col-12 crr_col">
+                        	<div class="crr_inner" style="background-image:url(assets/images/book-archive.jpg);">
+                            	<article class="h-100">
+                                    <img src="assets/images/icon-collection.svg" alt="icon archive">
+                                    <h4>Collection Development</h4>
+                                    <a href="collection-development.html">View Curriculum</a>
+                                </article>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 col-sm-6 col-12 crr_col">
+                        	<div class="crr_inner" style="background-image:url(assets/images/community-archive.jpg);">
+                            	<article class="h-100">
+                                    <img src="assets/images/icon-engangement.svg" alt="icon archive">
+                                    <h4>Community Engagement</h4>
+                                    <a href="community-engagement.html">View Curriculum</a>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-12 crr_col">
+                        	<div class="crr_inner" style="background-image:url(assets/images/web-archive.jpg);">
+                            	<article class="h-100">
+                                    <img src="assets/images/icons8-synchronize-50.png" alt="icon archive">
+                                    <h4>Sustainability</h4>
+                                    <a href="sustainability.html">View Curriculum</a>
+                                </article>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-12 crr_col">
+                        	<div class="crr_inner" style="background-image:url(assets/images/data_mapping.jpg);">
+                            	<article class="h-100">
+                                    <img src="assets/images/noun_digital_object.png" alt="icon archive">
+                                    <h4>Access and Research in Web Archives</h4>
+                                    <a href="access_research.html">View Curriculum</a>
+                            
+                                </article>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>        
+        </div>  
+  </section>
+  
+  <section class="section chorot_mem sect_head p-t-100">
+  	<div class="container">
+    	<div class="col-lg-11 col-12 ml-auto">
+        	<div class="row">
+           		 <div class="row align-items-center">
+                <div class="col-md-4  ch_mem_left">
+                    <div class="ch_left_iner f-right">
+                        <h2>Cohort Members</h2>
+                        <h3>Participating Libraries</h3>
+                        <div class="row align-content-center text-center">
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/Athens_Regional_Library_System.png" alt="Athens Regional Library logo">
+                            </div>
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/becpl.png" alt="BEC Public Library logo">
+                            </div>                   
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/DenverPubLibraryLogoHorizontalBlue.png" alt="Denver Public Library logo">
+                            </div>
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/birmingham.png" alt="Birmingham Public Library logo">
+                            </div>
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/cleveland.png" alt="Cleveland Public Library logo">
+                            </div>
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/forbes.png" alt="Forbes public library logo">
+                            </div>
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/CML_Logo_Stacked_Color.png" alt="Columbus Metropolitan Library logo">
+                            </div>
+                            <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/dc_public.png" alt="DC Public Library logo">
+                            </div>
+                             <div class="col-6 col-lg-4 ch_logo">
+                                <img src="assets/images/SD-Public-Library-Full-Color.png" alt="SD Public Library logo">
+                            </div>
+                        </div>
+                        <a href="https://communitywebs.archive-it.org/participants.html" class="btn og-btn-arrow-brd sm-btn">See all participants</a>
+                    </div>
+                </div>
+                <div class="col-md-7 offset-md-1  ch_mem_right">
+                    <div class="ch_mm_right_inner">
+                        <img src="assets/images/members.jpg" alt="Cohort members photo">
+                        <div class="ch_rr_desc">
+                            <p>Meet the team managing the program</p>
+                            <a href="program-team.html" class="btn wh-btn-arrow-brd sm-btn">Meet the team</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+  <section class="section sect_head update_wrap p-tb-85">
+    <div class="container">
+    	<div class="row">
+        	<div class="col-lg-10 col-12 m-auto">
+            	<h3>Updates</h3>
+               <div class="row">
+                        <div class="col-md-4 col-12 update_col" id="2021">
+                            <a href="http://blogs.hplct.org/?p=2306" target="_blank">
+                                Hartford History Center Selected As Part of Internet Archive’s Community Webs Program                            
+                            </a>
+                            <span class="date">April 29, 2021</span>
+                            <p>
+                                Hartford Public Library’s Hartford History Center is excited to share that it has been named to the Internet Archive’s Community Webs Program.
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-12 update_col" id="2021">
+                            <a href="https://archive-it.org/blog/post/introducing-new-community-webs/" target="_blank">
+                                Introducing 50+ New Public Library Members of the Internet Archive’s Community Webs Program
+                            </a>
+                            <span class="date">April 26, 2021</span>
+                            <p>
+                                Following our announcement of the Community Web’s expansion, with support from the Andrew W. Mellon Foundation, we are excited to welcome the first class of 50+ new public libraries to the program.
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-12 update_col" id="2021">
+                            <a href="https://archive-it.org/blog/post/archiving-black-diaspora-makiba-foster/" target="_blank">
+                                Archiving the Black Diaspora: Makiba J. Foster talks Community Webs with the Internet Archive
+                            </a>
+                            <span class="date">April 12, 2021</span>
+                            <p>
+                                The Internet Archive presents a discussion with Community Webs partner Makiba J. Foster, manager of the African American Research Library and Cultural Center (AARLCC) for Broward County Libraries.
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-12 update_col" id="2021">
+                            <a href="https://www.nypl.org/blog/2021/03/09/doc-chat-episode-16-teaching-syllabus" target="_blank">
+                                Doc Chat Episode Sixteen: Teaching the #Syllabus
+                            </a>
+                            <span class="date">March 9, 2021</span>
+                            <p>
+                                Hear from Dr. Yarimar Bonilla of Hunter College and CUNY Graduate Center and Zakiya Collier, Community Webs partner from the Schomburg Center for Research in Black Culture, about the Hashtag Syllabus movement.
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-12 update_col" id="2021">
+                            <a href="https://www.bklynlibrary.org/blog/2021/02/23/web-archiving-bpl-saving" target="_blank">
+                                Web Archiving at BPL: Saving web content one URL at a time                            
+                            </a>
+                            <span class="date">February 23, 2021</span>
+                            <p>
+                                Community Webs members from Brooklyn Public Library’s Center for Brooklyn History capture online news, blogs, and other web content vital to documenting life in Brooklyn.
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-12 update_col" id="2020">
+                            <a href="https://blog.archive.org/2020/12/08/community-webs-program-receives-1130000-andrew-w-mellon-foundation-award-for-a-national-network-of-public-libraries-building-local-history-web-archives/" target="_blank">
+                                Community Webs receives funding to scale up the program                            
+                            </a>
+                            <span class="date">December 8, 2020</span>
+                            <p>
+                                The Community Webs program received $1.13 million from The Andrew W. Mellon Foundation to expand the program to 150+ public libraries across the United States.
+                            </p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+  </section>  
+    
+    
+  <footer id="mainFooter" class="bg-light-yellow">
+  	  <div class="container">
+      		<div class="row">
+            	<div class="col-lg-9 col-md-10 col-12 m-auto">
+                	
+                    <div class="more-info row align-items-center m-0">
+                    	<div class="col-md-6 p-0"><h3>Need more information? Contact us.</h3></div>
+                        <div class="col-md-6  p-0 text-right need-btn-grp">
+                        	<a href="mailto:commwebsinfo@archive.org" class="btn og-btn-arrow sm-btn">Contact</a>
+                        </div>
+                    </div>                   
+                    
+                    <div class="foot-nav row  m-0">
+                    	<div class="col-md-3 pl-0">
+                        	<h6>Community Webs</h6>
+                            <ul>
+                            	<li><a href="#">Home</a></li>
+                                <li><a href="https://communitywebs.archive-it.org/about.html">About</a></li>
+                                <li><a href="https://communitywebs.archive-it.org/participants.html">Participants</a></li>
+								<li><a href="https://communitywebs.archive-it.org/news.html">News</a></li>
+                                <li><a href="faqs.html">FAQs</a></li>
+                                <li><a href="about.html">Call for Applications </a></li>
+                            </ul>
+                        </div>                        
+                        <div class="col-md-3 pl-0">
+                        	<h6>Curriculum</h6>
+                            <ul>
+                            	<li><a href="web-archive.html">Web Archiving 101</a></li>
+                                <li><a href="collection-development.html">Collection Development</a></li>
+                                <li><a href="community-engagement.html">Community Engagement</a></li>
+                                <li><a href="sustainability.html">Sustainability</a></li>
+                                 <li><a href="access_research.html">Access and Research</a></li>
+                            </ul>
+                        </div>                        
+                        <div class="col-md-3 pl-0">
+                        	<h6>Web Archiving</h6>
+                            <ul>
+                            	<li><a href="https://archive.org/">Internet Archive</a></li>
+                                <li><a href="https://archive-it.org/">Archive-It</a></li>
+                            </ul>
+                        </div>                        
+                        <div class="col-md-3 pl-0">
+                        	<h6>Connect with Us</h6>
+                            <ul>
+                            	<li><a href="mailto:commwebsinfo@archive.org">Contact Us </a></li>
+                            </ul>
+                            <ul class="social">
+                            	
+                                <li><a href="https://twitter.com/archiveitorg"><img src="assets/images/twitter.svg" alt="Twitter Logo"></a></li>
+                            </ul>
+                        </div>                        
+                    </div>
+                    
+                    <div class="foot-copy row m-0">
+                    	<div class="col-md-6 p-0">
+                        
+                        </div>
+                        <div class="col-md-6 p-0 text-right foot-logo">
+                        	<ul>
+                            	<li><a href="https://archive.org"><img src="assets/images/Internet_Archive_logo_and_wordmark.png" alt="Internet Archvie logo"></a></li>
+                                <li><a href="https://archive-it.org"><img src="assets/images/Archive-It blue raster logo.png" alt="Archive-It logo"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>      
+      </div>  
+  </footer>
+  <a href="#" class="scrollToTop">
+      <span></span>
+  </a>
+
+ 
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="assets/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>

@@ -184,9 +184,6 @@ public class WebCrawler {
                         }
 
                         j++;
-
-                        if (remainingDocCount < MAX_DOC_COUNT - 5000)
-                            break;
                     }
                     synchronized (documentList) {
                         documentList.addFirst(oldDocCount);

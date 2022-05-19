@@ -1,890 +1,894 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
-
-<!-- def.1 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title> Search</title>
-
-
-
-<meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta  name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- sh.1 -->
-<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
-<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
-<link rel="alternate" type="application/rss+xml" title="Site Feed" href="/recent.rss">
-
-
-<!--[if IE]>
-<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
-<![endif]-->
-
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<!-- end sh.1 -->
-<link rel="stylesheet" href="/assets/cgi/css/search/query.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global-alert.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global/utils.css" type="text/css" media="screen">
-
-
-<!-- stripped inline yui3-seed -->
-<script type="text/javascript" src="/assets/scripts/bepress-init.pack.js"></script>
+<html lang="en_US">
+    <head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app201.us.archive.org';v.server_ms=808;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
 <script type="text/javascript">
-			Bepress.cgiUrlBase = '';
-		</script>
-<script src="/assets/cgi/js/spinner.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/solr.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/query-screen.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/statsDispatcher.pack.js" type="text/javascript"></script>
-<script src="/assets/footnoteLinks.js" type="text/javascript"></script>
-<script type="text/javascript">
-YUI({
-}).use('bepress.search.queryscreen', 'node', 'datatype', function(Y){
-	
-	Y.on( 'domready', function () {
-
-		var fieldSelects, rowList, advContextNode, queryScreen, facetTypes, i;
-
-		
-		Y.bepress.search.solr.setAllowedFields( {"document_type":1,"author_lname":1,"publication_title":1,"subject":1,"author":1,"corporate_author":1,"text":1,"author_fname":1,"abstract":1,"title":1,"publication":1,"collected_from_sw":1,"institution":1} );
-		
-		queryScreen = new Y.bepress.search.QueryScreen( {
-			
-			errors: {
-				searchFailure:        "We're sorry, we were unable to process your search request. "
-				                    + "This may have been a temporary problem, please wait a few moments "
-				                    + "and try again.<br/>	(Error: {errmsg})"
-				, nothingEntered:     "Please enter a search term first"
-				, invalidDateEntered: "You entered '{errmsg}', but that doesn't look like a date to me."
-				, parseError:         "The advanced search form does not support this syntax: {errmsg}"
-				, syntaxNotSupported: "The advanced search form does not support this syntax. {errmsg}"
-				, timeout:            "Your search request has timed out. Please wait a moment and try again."
-				, emptyExport:        "No results matched your search."
-				, dateFormat:         "{errmsg} format is MM/DD/YYYY."
-			}
-
-			
-			, templates: {
-				resultsTemplate: {
-						download: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download {downloadFormat}"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Download<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, metadata: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, external: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Link to Full Text<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-					}
-				, resultsHeaderTemplate:         '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-	<span class="grid_6">Showing <strong>{count}<\/strong> out of <strong>{numFound}<\/strong> results. Starting at result <strong>{start}<\/strong>.<\/span>	\
-	<form id="save_search" class="grid_6 alpha omega" method="POST" action="\/do\/search\/save_search" >\
-			<a href="{saveUrl}" id="save-search-submit"><span><i class="icon-save"><\/i> Save this search<\/span><\/a>\
-			<span><a href="\/cgi\/notification.cgi" id="my-searches"><i class="icon-search"><\/i> My saved searches<\/a><\/span>\
-	<\/form>\
-<\/div>\
-<\/div>\
-'
-				, resultsExportedHeaderTemplate: '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-		<span class="grid_6">Exported <strong>{count}<\/strong> results.<\/span>	\
-<\/div>\
-<\/div>\
-'
-				, resultsFooterTemplate:         '<div class="pagination query">\
-	<p class="grid_12">\
-		<span class="fl">\
-			<a id="first-page" class="{firstClass}" href="#query-results" title="First Page">&laquo; First<\/a>\
-			<a id="previous-page" class="{previousClass}" href="#query-results" title="Previous Page">&lt; Prev<\/a>\
-		<\/span>\
-		<span class="fr">\
-			<a id="next-page" class="{nextClass}" href="#query-results" title="Next Page">Next &gt;<\/a>\
-			<a id="last-page" class="{lastClass}" href="#query-results" title="Last Page">Last &raquo;<\/a>\
-		<\/span>\
-	<\/p>\
-<\/div>\
-\
-'
-				, rowTemplate:                   '<div class="row query">\
-  <p id="p{rownum}">\
-    <span class="fr">\
-      <input type="image" value="Delete" alt="Delete row {rownum}" name="del_row_{rownum}" src="\/assets\/query_minus.gif" class="hidden control-delete-row">\
-      <input type="image" value="Add" alt="Add row {rownum}" name="add_row_{rownum}" src="\/assets\/cgi\/images\/global\/add.png" class="control-add-row">	\
-    <\/span>\
-    <span class="grid_2">\
-      <select name="op_{rownum}" class="op-sel">\
-        <option value="AND">AND<\/option>\
-          <option value="OR">OR<\/option>\
-          <option value="NOT">NOT<\/option>\
-      <\/select>\
-    <\/span>\
-	<label for="field_{rownum}">Choose type<\/label>\
-		<span class="grid_3">\
-			<select name="field_{rownum}" id="field_{rownum}" class="field-sel">\
-                \
-                    <option value="text:">All Fields<\/option>\
-                \
-                    <option value="abstract:">Abstract<\/option>\
-                \
-                    <option value="subject:">Subject<\/option>\
-                \
-                    <option value="author:">Author<\/option>\
-                \
-                    <option value="institution:">Institution<\/option>\
-                \
-                    <option value="title:">Title<\/option>\
-                \
-                    <option value="document_type:">Document Type<\/option>\
-                \
-                    <option value="publication_title:">Publication<\/option>\
-                			<\/select>\
-		<\/span>\
-    <label for="value_{rownum}">Search term {rownum}<\/label>\
-		<span class="grid_6"><input type="text" id="value_{rownum}" name="value_{rownum}" value="" class="term">\
-		<\/span>	\
-		<br class="clear" \/>\
-	<\/p>\
-<\/div>\
-'
-				, facetLinkTemplate:             '	<li><a href="#" class="facet-{facetType}">{facetLabel}<\/a> ({facetCount})<\/li>\
-'
-				, facetMoreLink:                 '	<li class="dropdown">\
-		<div id="more-{facetType}" class="more-container"><ul><\/ul><\/div>\
-		<div name="{facetType}" class="collapse" id="{facetType}-links">\
-			<span class="more" name="{facetType}"><a href="#" name="{facetType}">More &darr;<\/a><\/span><span class="fewer hidden" name="{facetType}"><a href="#" name="{facetType}">Fewer &uarr;<\/a><\/span>\
-		<\/div>\
-	<\/li>\
-'
-				, facetSectionTemplate:          '<dl class="facet">\
-  <dt>{label}<\/dt>\
-  <dd>\
-    <ul>\
-    <\/ul>\
-  <\/dd>\
-<\/dl>\
-'
-			}
-
-			
-			, elements: {
-				resultsHeaderEl:  Y.one('#results-header')
-				, resultsListEl:	  Y.one('#results-list')
-				, resultsFooterEl:  Y.one('#results-footer')
-				, errorEl:		  Y.one('#global-alert')
-				, basicSearchEl:	  Y.one('#basic-search')
-				, advancedSearchEl: Y.one('#advanced-search')
-				, facetsEl:         Y.one('#results-facets')
-			}
-
-			
-			, enabledFacets: {
-				
-					"discipline": "Discipline",
-				
-					"download_type": "File Type",
-				
-					"publication_facet": "Publication",
-				
-					"publication_type": "Publication Type",
-				
-					"publication_year": "Publication Year",
-				
-					"subject_facet": "Keyword"
-				
-			}
-
-			, historyAPI:		  !!(window.history && history.pushState)
-
-						, selectedForm: 'basic-search'
-						
-						, authenticated: false
-						
-		});
-
-		
-			queryScreen.addRow( { showAddCtl: true, showDelCtl: false } );
-		
-		
-		rowList = Y.one('#rows');
-		rowList.delegate( ['change', 'keyup'], queryScreen.updateSearchPreview, '#rows', queryScreen );
-		
-		
-		Y.one( '#simple-search')
-			.on('keypress', queryScreen.behaveOnKeyPress, queryScreen);
-		Y.one( '#advanced-search')
-			.delegate( 'keypress', queryScreen.behaveOnKeyPress, 'input[type=text]', queryScreen);
-
-		        rowList.delegate('click', function(e){
-            queryScreen.addRow();
-            e.preventDefault();
-           }, '.control-add-row', Y
-        );
-		
-		rowList.delegate('click', function(e){
-			queryScreen.deleteRow(e.currentTarget);
-			queryScreen.updateSearchPreview();
-			e.preventDefault();
-		   }, '.control-delete-row', Y
-		);
-
-		
-		Y.one('#switch-to-advanced').on('click', function(e){
-			queryScreen.switchToAdvanced();
-			e.preventDefault();
-		});
-		Y.one('#switch-to-basic').on('click', function(e){
-			queryScreen.switchToBasic();
-			e.preventDefault();
-		});
-
-		
-		advContextNode = Y.one('#advanced-context');
-		if ( advContextNode ) {
-			
-			advContextNode.on( 'change', function(e){
-				queryScreen.updateAvailableFormats();
-			});
-			
-			queryScreen.updateAvailableFormats();
-		}
-
-		
-		Y.one('#do-search').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		Y.one('#do-search-advanced').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		
-				Y.one('#show-search').on('click', function() {
-			queryScreen.showSearchForm();
-		});
-		Y.one('#hide-search').on('click', function() {
-			queryScreen.shrinkSearchForm();
-		});
-
-		// is there a more YUIish way to do this?
-		if(queryScreen.historyAPI) {
-			window.onpopstate = function(ev) {
-				// Y.log('popstate -- location: '+document.location+', state: '+JSON.stringify(ev.state));
-				queryScreen.handlePopState(ev.state);
-			};
-		}
-
-		
-		Y.one('#do-search').removeAttribute('disabled');
-		Y.one('#switch-to-advanced').removeAttribute('disabled');
-		Y.all('.add-row').removeAttribute('disabled');
-		
-		
-		queryScreen.setSearchContainerHeights();
-		
-		Y.one('#advanced-search').addClass('query-shrinker');
-		Y.one('#basic-search').addClass('query-shrinker');
-
-		
-		
-				
-		
-
-		
-		
-				queryScreen.submitForm(Y.one('#'+queryScreen.selectedForm).one('form'));
-				
-				
-				
-			Y.one('#clear-discipline-facet').on('click', function() {
-				queryScreen.clearFacet('discipline');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-download_type-facet').on('click', function() {
-				queryScreen.clearFacet('download_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_facet-facet').on('click', function() {
-				queryScreen.clearFacet('publication_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_type-facet').on('click', function() {
-				queryScreen.clearFacet('publication_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_year-facet').on('click', function() {
-				queryScreen.clearFacet('publication_year');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-subject_facet-facet').on('click', function() {
-				queryScreen.clearFacet('subject_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-
-	} );
-});
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU","20190215054805","https://web.archive.org/","web","/_static/",
+	      "1550209685");
 </script>
-<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"Search:query_screen","businessUnit":"els:rp:st"},"visitor":{}};</script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
+
+        <!--SEO-related tags: title, keywords, description-->
+                    <title>Subscriber Registration | Page 1</title>
+                        
+        <!--Static meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="robots" content="noodp, noydir">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- FAVICON -->
+        <link rel="shortcut icon" href="/web/20190215054805im_/https://unabridged.merriam-webster.com/subscriber/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/web/20190215054805im_/https://unabridged.merriam-webster.com/subscriber/favicon.ico" type="image/x-icon">
+
+        <!-- VENDOR CSS -->
+        <link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/vendor/bootstrap-3.2.0-dist/css/bootstrap.min.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+        <link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/vendor/font-awesome-4.0.3/css/font-awesome.min.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+        <link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/vendor/amodal_1.6.5/amodal.min.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+        
+        <!-- SHARED CSS -->
+        <link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/css/shared/utils.0002.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+        <link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/css/shared/reusable.0003.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+
+        <!-- TEMPLATE CSS (both mobile + desktop)-->
+        <link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/css/theme.0002.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+        <link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/css/tb-overrides.0001.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+        <!--MODERNIZR-->
+        <script src="/web/20190215054805js_/https://unabridged.merriam-webster.com/subscriber/vendor/modernizr.2.7.1/modernizr.custom.95871.js"></script>
 
 
+        <!-- JS -->
+        <script src="/web/20190215054805js_/https://unabridged.merriam-webster.com/subscriber/vendor/requirejs.2.1.6/require.min.js"></script>
+        <script type="text/javascript">
+            var vnd = '/subscriber/vendor/';
+            requirejs.config({
+
+                enforceDefine: false,
+                paths: {
+                    //mine AMDs
+
+                    //other AMDs (those I don't merge in - as they're updated independently)
+                    "jquery":            vnd + 'jquery.1.11.2/jquery-1.11.2.min',
+                    "underscore":        vnd + 'lodash_1.2.1/lodash.min',
+                    "jquery.event_drag": vnd + 'amodal_1.6.5/jquery.event.drag.min',
+                    "jquery.amodal":     vnd + 'amodal_1.6.5/amodal.min',
+                    "jquery.blockui":    vnd + 'blockui_2.6.6/jquery.blockUI',
+                    "spin_js":           vnd + 'spin_js_2.0.1/spin.min',
+                    
+                    //non-AMDs
+                    "jquery.twboot":     vnd + 'bootstrap-3.2.0-dist' + '/js/bootstrap.min',
+                    'dfpTagApi':         '//web.archive.org/web/20190215054805/https://www.googletagservices.com/tag/js/gpt',
+                    "twitter":           '//web.archive.org/web/20190215054805/https://platform.twitter.com/widgets'
+                },
+                shim: {
+                    "jquery.twboot":     ['jquery'],
+                    "jquery.event_drag": ['jquery'],
+                    "jquery.amodal":     ['jquery.event_drag']
+                }
+            });
+        </script>
+        
+                    <!-- Tracking-->
+            <!--// Begin Lotame //-->
+            <script type="text/javascript" src="https://web.archive.org/web/20190215054805js_/http://tags.crwdcntrl.net/c/6929/cc.js?ns=_cc6929" id="LOTCC_6929"></script>
+            <script type="text/javascript" language="javascript">_cc6929.bcp();</script>
+            <!--// End Lotame //-->
+        
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//web.archive.org/web/20190215054805/https://www.google-analytics.com/analytics.js','ga');
+        
+          ga('create', 'UA-296234-14', 'mwu.m-w.com');
+          ga('send', 'pageview');
+        </script>
+
+        <!-- OneTrust Cookies Consent Notice start -->
+                    <script type="text/javascript">
+                window.mwdata = {};
+                window.mwdata.assetsDomain2 = 'https://web.archive.org/web/20190215054805/https://assets.merriam-webster.com';
+                var oneTrustScript = 'https://web.archive.org/web/20190215054805/https://cdn.cookielaw.org/consent/f41c7d58-3ebb-40ae-9bd0-766479637155.js';
+                var ourOneTrust = 'https://web.archive.org/web/20190215054805/https://assets.merriam-webster.com/mw/static/shared/mw-shared/js/onetrust/onetrust.min.js';
+            </script>
+                <!-- OneTrust Cookies Consent Notice end -->
+
+        <script type="text/javascript">
+            require(['jquery'], function($) {
+                $.getScript(oneTrustScript)
+                  .done(function(script, textStatus) {
+                    // console.log( textStatus );
+                  })
+                  .fail(function( jqxhr, settings, exception ) {
+                    // console.log('error message');
+                });
+
+                $.getScript(ourOneTrust)
+                  .done(function(script, textStatus) {
+                    // console.log( textStatus );
+                  })
+                  .fail(function( jqxhr, settings, exception ) {
+                    // console.log('error message');
+                });
+              });
+        </script>
 
 
-</head>
-<body class="legacy search">
-<!-- FILE /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen --><!-- This is the mobile navbar file. Do not delete or move from the top of header.pregen -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
-<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
+    </head>
+    <body class="arial_font"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20190215054805/https%3A//unabridged.merriam-webster.com/subscriber/register/p1%3Frefc%3DFOOTER_DEF_MWU"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20190215054805" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20190215054805*/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="See a list of every capture for this URL">113 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">19 Jun 2017 - 05 Apr 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
+	</div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20180927190950/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="27 Sep 2018"><strong>Sep</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 05:48:05 Feb 15, 2019">FEB</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20190318230344/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="18 Mar 2019"><strong>Mar</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20180927190950/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="19:09:50 Sep 27, 2018"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 05:48:05 Feb 15, 2019">15</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20190224045252/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="04:52:52 Feb 24, 2019"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20180128100722/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="28 Jan 2018"><strong>2018</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 05:48:05 Feb 15, 2019">2019</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200316052325/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="16 Mar 2020"><strong>2020</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+	</span>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20190215054805/http://web.archive.org/screenshot/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/webwidecrawl);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/webwidecrawl" target="_new"><span class="wm-title">Internet Archive</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  The Internet Archive discovers and captures web pages through many different web crawls.
 
-<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
-  
-  
-  <nav class="nav-collapse">
+At any given time several distinct crawls are running, some for months, and some every day or longer.
+
+View the web archive through the <a href="http://archive.org/web/web.php">Wayback Machine</a>.
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/liveweb)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/liveweb" target="_new"><span class="wm-title">Live Web Proxy Crawls</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Content crawled via the <a href="http://archive.org/web/web.php">Wayback Machine</a> Live Proxy mostly by the Save Page Now feature on web.archive.org.
+<br><br>
+Liveweb proxy is a component of Internet Archive’s wayback machine project. The liveweb proxy captures the content of a web page in real time, archives it into a ARC or WARC file and returns the ARC/WARC record back to the wayback machine to process. The recorded ARC/WARC file becomes part of the wayback machine in due course of time.
+<br>
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://unabridged.merriam-webster.com/subscriber/register/p1?refc=FOOTER_DEF_MWU","20190215054805",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+        
+        <!--Header-->
+        <div id="main-header" class="container wrapper">
+            <div class="container">
+                <div class="row clearfix">
+                    <div id="header-logo" class="col-md-1 column">
+                        <a href="/web/20190215054805/https://unabridged.merriam-webster.com/">
+                            <img alt="Unabridged" src="/web/20190215054805im_/https://unabridged.merriam-webster.com/subscriber/images/logos/mw_on_dark.svg" class="svg">
+                            <img alt="Unabridged" src="/web/20190215054805im_/https://unabridged.merriam-webster.com/subscriber/images/logos/mw_on_dark.png" class="png" style="display: none;">
+                            <img alt="Unabridged" src="/web/20190215054805im_/https://unabridged.merriam-webster.com/subscriber/images/logos/logo.jpg" class="jpg" style="display: none;">
+                        </a>
+                    </div>
+                    <div id="main-navbar" class="col-md-11 column">
+                        <h3 class="subtitle">Britannica Digital Learning</h3>
+                        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-mwebster-navbar-collapse-1"> <span class="sr-only">Toggle Navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> 
+                                <a class="navbar-brand" href="/web/20190215054805/https://unabridged.merriam-webster.com/">Unabridged</a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="bs-mwebster-navbar-collapse-1">
+                                <ul id="navbar-login" class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <span class="fa fa-arrow-right fa-2" style="color: white;"></span>
+                                        <span style="color: #FFFFFF; font-size: 14px; font-weight: bold;">Welcome to the New Unabridged!</span>
+                                    </li>
+                                    <li>
+                                        <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/about-the-unabridged.html" title="Learn More">Learn More</a>
+                                    </li>
+                                                                            <li>
+                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/register" title="Subscription">Subscription</a>
+                                        </li>
+                                        <li>
+                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/login" title="Log In">Log In</a>
+                                        </li>
+                                                                                                        </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/advanced-search.php" title="Advanced Search">Advanced Search</a></li>
+                                    <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/blog/" title="The Blog">The Blog</a></li>
+                                    <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/games/" title="Word Games">Word Games</a></li>
+                                    <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/word-of-the-day/" title="Word Of The Day">Word Of The Day</a></li>
+                                    <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/style-guide/" title="Style Guide">Style Guide</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--Main content-->
+        <div id="main-content" class="container wrapper">
+            <div class="container">
+                <div class="row clearfix">
+                    <section id="body-content" class="col-md-12 column well well-lg">
+                        <!-- CSS -->
+<link href="/web/20190215054805cs_/https://unabridged.merriam-webster.com/subscriber/css/mwu_subscriber/register.0003.css" type="text/css" rel="Stylesheet" charset="utf-8"/>
+
+     <style>
+    #mwu-p1-new {
+        max-width: 840px;
+        margin:0 auto;
+     }
+    .join-mwu-header {
+        width:100%;
+        height: 150px;
+        background-color: #b8ddd6;
+        position: relative;
+        overflow: hidden;
+    }
+    .join-mwu-header img {
+        height: 150px;
+        width: auto;
+    }
+    .join-mwu-text {
+        font-size: 36px;
+        line-height: 50px;
+        color: #ca0403;
+        position: absolute;
+        top: 50%;
+        line-height: 1.2;
+        transform: translateY(-50%);
+        right: 20px;
+        width: calc(100% - 218px);
+        text-align: center;
+    }
+    .join-mwu-promo-text {
+        font-size: 18px;
+        line-height: 1.33;
+        color: #0544a1;
+        margin: 10px 0;                      
+    }     
+    .promo-text-list {
+        
+    }           
+    .promo-text-list li {
+        margin-bottom: 3px;
+    }
+    .mwu_frmtitle {
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: 0.5px;
+        color: #0544a1;
+    }
+    .gray-info-text {
+        font-family: Arial;
+        font-size: 12px;
+        line-height: 1.67;
+        color: #9b9b9b;
+        display: inline-block;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+    }
+    .mwu_frmwrp {
+        border:0;
+        padding: 15px 0;
+    }
+    #mwu-p1-new .form-group {
+        margin:0 0 10px 0;
+        padding:0;
+    }
+    #mwu-p1-new .mwu_frmtitle {
+        margin-bottom: 15px;
+    }
+    #mwu-p1-new .form-label-text {
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.25;
+        letter-spacing: normal;
+        color: #262626;
+        padding-left: 15px;                        
+    }
+
+     #mwu-p1-new  .radio input[type=radio],  #mwu-p1-new  .checkbox input[type=checkbox] {
+        margin-left: -12px;
+     }
+
+     #mwu-p1-new .form-horizontal .radio, #mwu-p1-new .form-horizontal .checkbox {
+        margin-bottom: 10px;
+        padding:0;
+     }
+     #mwu-p1-new .control-label {
+        color: #757575;
+        text-align: left;
+        display: block;
+        margin: 5px 0;
+        padding: 0;
+        font-weight: 400;
+        font-size: 16px;
+    }
+    .email-checkboxes {
+        border-bottom: 1px solid #dadada;
+    }
+    #mwu-p1-new .tos-text {
+        font-size: 12px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.4;
+        letter-spacing: 0.3px;
+        color: #262626;
+        display: block;                       
+    }
+     #mwu-p1-new .tos_info {
+        color: #626262;
+        padding-top: 5px;
+        display: inline-block;                        
+     }
+     #mwu-p1-new .action-button {
+        text-align: right;
+     }
+      #mwu-p1-new .btn-next {
+        border-radius: 6px;
+        background-color: #ca0403;
+        border-color: #ca0403;
+        font-size: 16px;
+        color:#fff;
+        letter-spacing: 0.8px;
+        font-weight: 600;
+        width: 140px;
+        height: 46px;
+        text-transform: uppercase;  
+        text-align: center;       
+     }
+     #mwu-p1-new .email-info {
+        margin-top: 20px;
+     }
+ #mwu-p1-new .mwus_r_t2 {                     
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    color: #757575;                     
+    }
+ #mwu-p1-new .form-content {
+    border-right: solid 1px #dadada;
+    margin-bottom: 50px;
+    overflow: hidden;    
+ }
+  #mwu-p1-new .right-rail {
+    padding-right: 0;
+  }
+   #mwu-p1-new .subscription-benefits #subscription-benefits-right-col ul li {
+    font-size: 14px;
+    line-height: 1.57;
+    color: #757575;
+}
+ #mwu-p1-new .subscription-benefits {
+    padding-right: 0;
+ }
+
+.footer-info-links {
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.67;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #9b9b9b;
+    padding: 0;
+}
+.footer-info-links a {
+    color: #9b9b9b;
+}
+.footer-info-links li {
+    display: inline-block;
+
+}
+.one-word {
+    display: inline-block;
+}
+#main-content #body-content {
+    margin-bottom:10px;
+} 
+
+    #mwu-p1-new .top-benefits {
+        display: none    
+    }   
+
+ @media (max-width: 991px) {
+    #mwu-p1-new .form-content  {
+        border-right: 0;
+    }
+    #mwu-p1-new .right-rail {
+        border-top: solid 1px #dadada;
+        overflow: hidden;
+        width: 100%;        
+    }
+    .join-mwu-text {
+        font-size: 28px;
+    }
+    #mwu-p1-new .right-rail {
+        display: none    
+    }    
+    #mwu-p1-new .top-benefits {
+        display: block;
+    }
+    #mwu-p1-new .action-button {
+        text-align: center;
+    }
+
+    #main-content .container {
+        width:100%;
+    }
+    #main-content #body-content {
+        margin-top:30px;
+    }  
+ }
+
+ @media (max-width: 767px) {
+    #main-content {
+        padding-left:10px;
+        padding-right: 10px;
+    }
+    #body-content {
+        padding-left:15px;
+        padding-right:15px;
+    }
+   .mwu_subscriber .mwu_wrapper {
+        padding:0;
+    }
+    #mwu-p1-new .form-content {
+        margin-bottom: 20px;
+    }
+    .join-mwu-header img {
+        position: relative;
+        left: -50px;
+    }
+    .join-mwu-text {
+        font-size: 22px;
+        line-height: 1.1;
+        right: 20px;
+        width: calc(100% - 178px);
+        text-align: center;
+    }
+}
+
+</style>
+
+<!-- HTML -->
+<div id="p1" class="mwu_subscriber">    
+    <!--Form wrapper-->
+    <div class="padding_lr_15 mwu_wrapper">
+        <div class="row" id="mwu-p1-new">
+         <div class="col-md-12 no_padding">
+            <div class="join-mwu-header georgia_font">
+                <img src="/web/20190215054805im_/https://unabridged.merriam-webster.com/subscriber/images/mwu_subscriber/imgboy.png">
+                <div class="join-mwu-text">Join us and get ALL the words!</div>
+            </div>
+            <div class="join-mwu-promo-text georgia_font">
+                <p>Become part of Merriam-Webster Unabridged and get over 250,000 words that aren't in our <span class="one-word">free dictionary</span></p>
+                <ul class="promo-text-list">
+                    <li>Expanded definitions, etymologies, and usage notes</li>
+                    <li>Advanced search features, including a "backward" search</li>
+                    <li>Ad free!</li>
+                </ul>
+                <p>Sign up to explore our free trial now!</p>
+            </div>
+             <div class="subscription-benefits top-benefits">
+                <div id="subscription-benefits-right-col">
+    <h2 class="mwus_r_t2">Subscription Benefits</h2>
     <ul>
-      <li class="menu-item active device-fixed-width"><a href="https://newprairiepress.org" title="Home" data-scroll >Home</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/communities.html" title="Browse" data-scroll >Browse Journals</a></li>
-      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/about.html" title="About" data-scroll >About</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
+        <li>No advertising</li>
+        <li>490,000 Entries</li>
+        <li>700,000 definitions</li>
+        <li>123,000 quotations from notable writers</li>
+        <li>158,000 etymologies</li>
+        <li>900 synonym discussions</li>
+        <li>200 usage paragraphs</li>        
+        <li>1,000 pictorial illustrations</li>
+        <li>Advanced Search including exclusive access to the Merriam-Webster Citations database</li>   
     </ul>
-  </nav>
-</header>
+</div><!--subscription-benefits-right-col-->            </div>
+           </div>        
+            <div class="col-md-8 no_padding">
+                <div class="mwu_frmwrp">                    
+                    
+                    <!--Page 1: actual form-->
+                    <form class="form-horizontal mwu_subscriber_p1frm" role="form" method="post" action="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/register/p1">
+                       <div class="form-content"> 
+                        <!--Product selection-->
+                        <div class="form-group mwu_frmtitle sub-info">
+                            Subscription Selection <span class="gray-info-text">(prices are in US dollars)</span>
+                        </div>
+                        <div class="form-group">                    
+                            <div class="col-sm-12">
+                                <div class="checkbox">
+                                    <input type="hidden" name="free_trial" id="free_trial" value="0"/>
+                                        <input type="checkbox" name="free_trial" id="free_trial_cb" value="1"/>
+                                            <label for="free_trial_cb" class="form-label-text">14-Day Free Trial</label>
+                                </div>                            
+                                                                    <div class="radio">
+                                            <input type="radio" name="plan_length" id="plan_length_ann" value="annual" checked/>
+                                            <label for="plan_length_ann" class="form-label-text">Annual $29.95</label> 
+                                    </div>
+                                    <div class="radio">
+                                            <input type="radio" name="plan_length" id="plan_length_mon" value="monthly"/>
+                                            <label for="plan_length_mon" class="form-label-text">Monthly $4.95</label>
+                                    </div>
+                                    
 
-<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
-<!--<![endif]-->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
-<div id="npp">
-<div id="container"><a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
+                                    
+                                                            </div>
+                        </div>
+                        
+                        
+                        <!--Account Name-->
+                        <div class="form-group mwu_frmtitle acct-info">
+                            Account Information <span class="gray-info-text">(all fields are required)</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="full_name" class="col-sm-12 control-label">Full Name</label>
+                            <div class="col-sm-10 no_padding" ">
+                                <input type="text" class="form-control" name="full_name" id="full_name" value=""/>
+                                <ul class="full_name_err mwu_frmerr text-danger"><li></li></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-12 control-label">Email</label>
+                            <div class="col-sm-10 no_padding" ">
+                                    <input type="text" class="form-control" name="email" id="email" value=""/>
+                                <ul class="email_err mwu_frmerr text-danger">
+                                    <li>
+                                                                            </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password1" class="col-sm-12 control-label">Password</label>
+                            <div class="col-sm-10 no_padding" ">
+                                <input type="password" class="form-control" name="password1" id="password1" autocomplete="off" value=""/>
+                                <ul class="password1_err mwu_frmerr text-danger"><li></li></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password2" class="col-sm-12 control-label">Confirm Password</label>
+                            <div class="col-sm-10 no_padding">
+                                <input type="password" class="form-control" name="password2" id="password2" autocomplete="off" value=""/>
+                                <ul class="password2_err mwu_frmerr text-danger"><li></li></ul>
+                            </div>
+                        </div>                                            
+                        <!--Email Subscriptions-->
+                        <div class="form-group mwu_frmtitle email-info">
+                            Email Subscriptions:
+                        </div>
 
-<div id="header">
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_logo.inc -->
+                        <div class="form-group email-checkboxes col-sm-10">
+                            <div class="col-sm-12">
+                                <input type="hidden" name="house_mail" value="0"/>
+                                    <div class="checkbox">
+                                            <input type="checkbox" id="house_mail" name="house_mail" value="1"/>
+                                            <label class="form-label-text">Merriam-Webster products and services emails.</label>
+                                    </div>
+                            </div>
 
+                            <div class="col-sm-12">
+                                <input type="hidden" name="partner_mail" value="0"/>
+                                    <div class="checkbox">
+                                            <input type="checkbox" id="partner_mail" name="partner_mail" value="1"/>
+                                            <label class="form-label-text">Merriam-Webster partner offers.</label>
+                                    </div>
+                            </div>                          
+                        </div>                        
+                        <div class="form-group col-sm-10 no_padding">
+                            <div class="col-sm-12">
+                                    <div class="checkbox">
+                                            <input type="hidden" name="tos" value="0"/> 
+                                            <input type="checkbox" id="tos" name="tos" value="1"/>
+                                            <label class="form-label-text tos-text">I confirm that I am at least 16 years of age, and that I accept all the <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/terms-of-use.html" target="_blank">Terms of Use</a>.<br/><span class="tos_info"><span class="rstar2">*</span>Please note, if you are under 16, you must have your parent or legal guardian's permission to use this subscription service. Please have him or her read our <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/terms-of-use.html" target="_blank">Terms of Use</a> with you prior to checking this box.</span></label>
+                                            <ul class="tos_err mwu_frmerr text-danger"><li></li></ul>
+                                    </div>
+                            </div>  
+                        </div>
+                        </div> <!-- end form content -->
+                        <!--Continue btn-->
+                        <div class="col-md-11 col-sm-12 form-group margin_bottom_0 text_right action-button">
+                            <div class="padding_lr_15">
+                                <button type="submit" class="btn btn-lg btn-primary btn-next">Next</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
+            </div>
+            <div class="col-md-4 f_col_0 right-rail subscription-benefits">
+                <!--Right column-->
+                    <div id="subscription-benefits-right-col">
+    <h2 class="mwus_r_t2">Subscription Benefits</h2>
+    <ul>
+        <li>No advertising</li>
+        <li>490,000 Entries</li>
+        <li>700,000 definitions</li>
+        <li>123,000 quotations from notable writers</li>
+        <li>158,000 etymologies</li>
+        <li>900 synonym discussions</li>
+        <li>200 usage paragraphs</li>        
+        <li>1,000 pictorial illustrations</li>
+        <li>Advanced Search including exclusive access to the Merriam-Webster Citations database</li>   
+    </ul>
+</div><!--subscription-benefits-right-col-->            </div>
+        </div>
+        <div class="col-sm-12">
+            <ul class="footer-info-links">
+                <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/contact-ind">Contact Us</a> |</li>
+                <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/accountFAQ.html">Frequently Asked Questions</a> |</li>
+                <li><a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/contact-inst">License Application for Institutions</a></li>
+            </ul>
+        </div>
 
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
-<div id="pagetitle">
-
-<h1><a href="https://newprairiepress.org" title="New Prairie Press" >New Prairie Press</a></h1>
-</div>
-</div><div id="navigation"><!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://newprairiepress.org" title="home" ><span>home</span></a></li><li id="tabtwo"><a href="https://newprairiepress.org/about.html" title="about" ><span>about</span></a></li><li id="tabthree"><a href="https://newprairiepress.org/cgi/myaccount.cgi?context=" title="my account" ><span>my account</span></a></li><li id="tabfour"><a href="https://newprairiepress.org" title="Home" ><span>Home</span></a></li></ul></div>
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) --></div>
-
-
-
-<div id="wrapper">
-<div id="content">
-<div id="main" class="text">
-
-
-<div id="template_query_data" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;"></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="global-alert" class="hidden info">
-</div>
-
-<div id="query-wrapper">
-
-	<div id="show-search-container" class="query tr">
-		<a href="#" id="show-search" class="hidden">Show Search</a>
-		<a href="#" id="hide-search" class="hidden">Hide Search</a>
-	</div>
-	<div id="basic-search">
-		<form id="basic-search-form" method="GET" action="/do/search/"> 
-			<fieldset class="query">
-				<legend>Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="simple-search" class="hidden">Search </label>
-				<span class="grid_7"><input name="q" id="simple-search" type="text" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;"></span>
-				<span class="grid_4">
-					<button type="submit" name="query" value="Search" id="do-search" class="white medium">Search</button>
-					<a href="#" id="switch-to-advanced">Advanced</a>
-				</span>
-				<div class="clear"></div>
-				<input type="hidden" name="start" class="start-input" value="0">
-				<input type="hidden" name="context" id="basic-context" value="4521219">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-							</fieldset>
-		</form>
-	</div>
-
-	<div id="advanced-search" class="hidden">
-		<form method="GET" action="/do/search/">
-			<fieldset>
-				<legend>Advanced Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="search-string" class="hidden">Feedback</label>
-				<input type="hidden" name="start" class="start-input" value="0">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-				
-				<div class="query">
-					<input type="text" name="q" id="search-string" class="grid_12 alpha omega" onFocus="return" readonly="readonly" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;">
-				</div>
-				<div class="clear"></div>
-					
-				<div class="query">
-					<div id="rows">			
-							
-					</div> <!-- end rows -->
-				</div>		
-			</fieldset>
-			<div class="query">
-				
-					<span class="grid_2 prefix_5"><label for="start-date">Date range:</label></span>
-<span class="grid_2">
-	<input type="text" id="start-date" name="start_date" placeholder="MM/DD/YYYY" value="">
-</span>
-<label for="end-date" class="hidden">End Date:</label> 
-<span class="grid_2">
-	<input type="text" id="end-date" name="end_date" placeholder="MM/DD/YYYY" value="">
-</span>
-
-						
-				<div class="clear"></div>
-<p class="limit-search">
-		<label for="advanced-context" class="grid_2 prefix_5">
-			Limit search to:
-		</label>
-		<span class="grid_4">
-			<select name="context" id="advanced-context">
-				
-										<option value="4521219" selected="selected">New Prairie Press</option>
-									
-										<option value="1">All Repositories</option>
-												</select>
-	</span>
-</p>
-
-				<div class="clear"></div>
-<p class="sort-options">
-	<span class="grid_2 prefix_5">Sort by:</span>
-	<span class="grid_4">
-		<label for="sort-score">
-			<input type="radio" name="sort" id="sort-score" value="score" checked="checked"> Relevance
-		</label> 
-		<label for="sort-date">
-			<input type="radio" name="sort" id="sort-date" value="date_desc"> Publication Date
-		</label>
-	</span>
-</p>
-
-				<div class="clear"></div>
-<p class="pick-format">
-		<label for="results-format" class="grid_2 prefix_5">
-			Format:
-		</label>
-		<span class="grid_4">
-			<select name="format" id="results-format">
-								<option value="json">links</option>
-								<option value="refer">Bibliography Export</option>
-							</select>
-	</span>
-</p>
-
-				<div style="display:none;visibility:hidden;height:1px"><iframe id="export-frame" style="display:none;visibility:hidden;height:1px"></iframe></div>
-				<div class="clear"></div>
-				<span class="grid_12 tr">				
-				<button type="submit" value="Search" name="search" id="do-search-advanced" class="fr white medium">Search</button>
-
-				<a href="#" id="switch-to-basic">Basic</a>
-				</span>
-				<br class="clear" />
-			</div>
-			<div class="clear"></div>
-
-		</form>	
-	</div> <!-- advanced search -->
-</div><!-- query-wrapper -->
-
-<div id="query-results">
-
-<div class="query">
-<div class="grid_12" id="info-pane">
-<div id="results-header">
-		<div class="clear"></div>		
-	</div>
-<br class="clear" />
+    </div>
 </div>
 
-<div class="grid_3" id="facet-pane">
-
-	<p id="selected-facets">
-				<span id="selected-discipline-facet" class="hidden">
-			<a class="close" id="clear-discipline-facet"><i>&times;</i>
-			 <strong id="selected-discipline-facet-label"></strong></a>
-		</span>
-				<span id="selected-download_type-facet" class="hidden">
-			<a class="close" id="clear-download_type-facet"><i>&times;</i>
-			 <strong id="selected-download_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_facet-facet" class="hidden">
-			<a class="close" id="clear-publication_facet-facet"><i>&times;</i>
-			 <strong id="selected-publication_facet-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_type-facet" class="hidden">
-			<a class="close" id="clear-publication_type-facet"><i>&times;</i>
-			 <strong id="selected-publication_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_year-facet" class="hidden">
-			<a class="close" id="clear-publication_year-facet"><i>&times;</i>
-			 <strong id="selected-publication_year-facet-label"></strong></a>
-		</span>
-				<span id="selected-subject_facet-facet" class="hidden">
-			<a class="close" id="clear-subject_facet-facet"><i>&times;</i>
-			 <strong id="selected-subject_facet-facet-label"></strong></a>
-		</span>
-		
-	</p>
-<br class="clear" />
-	<div id="results-facets" class="hidden"></div>
-</div>
-<div class="grid_9" id="result-pane">
-	
-	<div id="results-list">
-		<div class="clear"></div>
-	</div>
-	<div id="results-footer"></div>
-</div>
-<br class="clear" />
-</div>
-
-<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
-	<div class="verticalalign">&nbsp;</div>
-	<div class="clear">&nbsp;</div>
-
-</div>
-
-	<div id="sidebar" role="complementary">
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
-
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc -->
-
-
-	
-<form method='get' action='https://newprairiepress.org/do/search/' id="sidebar-search">
-	<label for="search" accesskey="4">
-		Enter search terms:
-	</label>
-		<div>
-			<span class="border">
-				<input type="text" name='q' class="search" id="search">
-			</span> 
-			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
-		</div>
-	<label for="context" style="display:none;">
-		Select context to search:
-	</label> 
-		<div>
-			<span class="border">
-				<select name="fq" id="context">
-					
-					
-					
-					
-					<option value='virtual_ancestor_link:"https://newprairiepress.org"'>in this repository</option>
-					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
-				</select>
-			</span>
-		</div>
-</form>
-
-<p class="advanced">
-	
-	
-		<a href="https://newprairiepress.org/do/search/advanced/?fq=virtual_ancestor_link:%22https://newprairiepress.org%22" >
-			Advanced Search
-		</a>
-	
-</p>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
-	<ul id="side-notify">
-		<li class="notify">
-			<a href="https://newprairiepress.org/announcements.html" title="Email or RSS Notifications" >
-				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
-			</a>
-		</li>
-	</ul>
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_middle_7_8.inc -->
-
-
-<div id="sb-custom-middle">
-	<h2 class="sb-custom-title">Our Publications</h2>
-		<ul class="sb-custom-ul">
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/journals.html" >
-					Journals
-				</a>
-			</li>
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/conferences" title="Conference Proceedings" >
-					Conferences				</a>
-			</li>
-				<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/monographs" >
-					Monographs</a>
-			</li>
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/specpubs" >Special Publications</a>
-			</li>
-		</ul>
-		<h2>Featured Collections</h2>
-<ul id="links">
-	<li><a href="https://newprairiepress.org/featured.html" title="" >Student Publications</a></li>
-</ul>
-<h2>Links for Editors</h2>
-<ul id="links">
-	<li><a href="https://newprairiepress.org/about.html#scope" title="" >Our Services</a></li>
-	<li><a href="https://newprairiepress.org/about.html#policies" title="" >Policies</a></li>
-	<li><a href="https://newprairiepress.org/about.html#copyright" title="" >Copyright</a></li>
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc -->
-<ul id="side-browse">
-
-
-<li class="collections"><a href="https://newprairiepress.org/communities.html" title="Browse by Journals" >Journals</a></li>
-<li class="discipline-browser"><a href="https://newprairiepress.org/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
-<li class="author"><a href="https://newprairiepress.org/authors.html" title="Browse by Author" >Authors</a></li>
-
-
-</ul>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
-
-
-
-
-	<ul id="side-author">
-		
-		<li class="submit">
-			<a href="https://newprairiepress.org/submit_research.html" title="Submissions" >
-				Submissions
-			</a>
-		</li>
-		
-<li><a href="https://newprairiepress.org/contact_us.html" title="Contact Us" >Contact Us</a></li>
-
-	</ul>
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
-	
-
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/twitter_badge.inc --><div id="twitter-badge">
-<a class="twitter-timeline" href="https://twitter.com/NewPrairiePress" data-widget-id="368524012336316418" data-chrome="transparent" width="220" height="400" >Tweets by @NewPrairiePress</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</div><!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
-	
-
-
-
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-	<div class="verticalalign">&nbsp;</div>
-	</div>
-
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
-	
-	
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
-
-<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
-	<em>Digital Commons</em>
-</a>
-
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
-	<p>
-		<a href="https://newprairiepress.org" title="Home page" accesskey="1" >Home</a> | 
-		<a href="https://newprairiepress.org/about.html" title="About" >About</a> | 
-		<a href="https://newprairiepress.org/faq.html" title="FAQ" >FAQ</a> | 
-		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
-		<a href="https://newprairiepress.org/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
-	</p>
-	<p>
-	
-	
-		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
-	
-		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
-	</p> 
-	
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-
-</div>
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_analytics.inc --><script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-42891787-24', 'newprairiepress.org');
-  ga('send', 'pageview');
-
-</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-
-<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>
+<!-- JAVASCRIPT -->
+<script type="text/javascript">
+    require(['underscore', 'jquery', 'jquery.amodal', 'jquery.blockui'], function(_) {
+    });
+</script>                    </section>
+                </div>
+            </div>
+        </div>
+        
+        <!--Footer-->
+        <div id="main-footer" class="container wrapper footer-oa">
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <section id="navbar-footer" class="row clearfix">
+                            <div class="col-md-3 column">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">About Merriam-Webster</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a href="/web/20190215054805/https://unabridged.merriam-webster.com/" title="Home">Home</a>
+                                            </li>
+                                            <li>
+                                                <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/about-the-unabridged.html" title="About the Unabridged">About the Unabridged</a>
+                                            </li>
+                                            <li>
+                                                <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/site-help.html" title="Help">Help</a>
+                                                </li>
+                                            <li>
+                                                <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/about.html" title="Help">About Us</a>
+                                                </li>
+                                            <li>
+                                                <a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/contact-ind" title="Contact Us">Contact Us</a>
+                                            </li>
+                                            <li>
+                                                <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/privacy-policy.html">Privacy Policy</a>
+                                            </li>
+                                          
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                                                            <div class="col-md-3 column">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Account</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="section">
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/my-account" title="My Account">My Account</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/login" title="Log In">Log In</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/register" title="Subscription">Subscription</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/web/20190215054805/https://unabridged.merriam-webster.com/subscriber/password_reset" title="Password Recovery">Password Recovery</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                        
+                            <div class="col-md-6 column">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Sections</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row clearfix">   
+                                            <div class="col-md-6 column">
+                                                <div class="section">
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/advanced-search.php" title="Advanced Search">Advanced Search</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/blog/" title="The Blog">The Blog</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/games/" title="Word Games">Word Games</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/word-of-the-day/" title="Word of the Day">Word of the Day</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/style-guide/" title="Style Guide">Style Guide</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 column">
+                                                <div class="section">
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/video/" title="Videos">Videos</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/trend-watch/" title="Trend Watch">Trend Watch</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/quizzes/" title="Quizzes">Quizzes</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/web/20190215054805/https://unabridged.merriam-webster.com/popular-words/" title="Most Popular">Most Popular</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="copyright" class="row clearfix">
+                            <div class="col-md-12 column">
+                                <p>
+                                    <a href="/web/20190215054805/https://unabridged.merriam-webster.com/info/copyright.html">© 2019 Merriam-Webster, Incorporated. All rights reserved.</a>
+                                </p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+<!--
+     FILE ARCHIVED ON 05:48:05 Feb 15, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 06:04:07 May 19, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 683.906
+  exclusion.robots: 0.222
+  exclusion.robots.policy: 0.214
+  cdx.remote: 0.067
+  esindex: 0.009
+  LoadShardBlock: 490.68 (3)
+  PetaboxLoader3.datanode: 507.094 (4)
+  CDXLines.iter: 18.136 (3)
+  load_resource: 113.485
+  PetaboxLoader3.resolve: 50.004
+-->

@@ -1,250 +1,311 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-<link rel="shortcut icon" href="http://id.worldcat.org/fast/images/favicon.ico" />
-<title>Quantum theory</title>
-<meta name="description" content="FAST delivered as Linked Data in MARC21 and SKOS formate" />
-<meta name="author" content="OCLC Research" />
-<meta name="Copyright" content="Copyright OCLC 2011-2019. All Rights Reserved." />
-<meta name="DC.title" content="FAST Linked Data" />
-<meta name="DC.subject" content="FAST Subject Headings" />
-<meta name="DC.creator" content="OCLC Research." />
-
-<link xmlns="" href="http://id.worldcat.org/fast/css/fastbaseC.css" rel="stylesheet" type="text/css"/>
-<link href="http://id.worldcat.org/fast/css/fastlinkeddata.css" rel="stylesheet" type="text/css"/>
-
-<script src="http://id.worldcat.org/fast/scripts/jquery-1.5.2.min.js"></script>
-<script src="http://id.worldcat.org/fast/scripts/fastCommonFooter.js"></script>
-<link href="http://id.worldcat.org/fast/css/authorities.css" rel="stylesheet" type="text/css"/>
-<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-17341906-3']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-</script>
+<meta http-equiv="content-type" name="content-type" content="text/html; charset=utf-8" />
+<meta name="verify-v1" content="duayfehGPRqia9ykD3me7iYeNYIvq/odzmZSJVo/5is=" />
+<title>Visual Dictionary Online</title>
+<script type="text/javascript" src="/includes/scripts/js/AC_RunActiveContent.js"></script>
+<script type="text/javascript" src="/includes/scripts/js/rollOver.js"></script>
+<script type="text/javascript" src="/includes/scripts/js/prototype.js"></script>
+<script type="text/javascript" src="/includes/scripts/js/CGDynamicMenu.js"></script>
+<link href="/css/screen.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="/css/print.css" rel="stylesheet" type="text/css" media="print" />
 </head>
 <body>
+
+<div class="frame">
+  <div class="main_logo"> <a href="/index.php"> <img src="/images/merriam-webster-logo.gif" alt="Merriam-Webster Official Logo" /> </a> </div>
+  <div class="h">
+    		
+<h1><a href="http://www.quebec-amerique.com/boutique/en/" class="boutique" onClick="javascript: pageTracker._trackPageview('/outgoing/store_from_header');"></a><a href="/index.php"><span>Visual Dictionary Online</span></a></h1>
+<ul class="menuHeader">
+			<li><a href="/about-visual_overview.php">About the visual</a></li>
+				<li><a href="/tools_blog-tools.php">Tools</a></li>
+					<li><a href="/products_books.php">books</a></li>
+				<li><a href="http://www.ikonet.com/en/thevisualplus/">apps</a></li>
+					<li><a href="/products_software.php">Downloads</a></li>
+				<li class="end"><a href="/about-us_company.php">About us</a></li>
+		
+</ul>
+<div class="merriam"><a href="http://www.m-w.com" onclick="window.open('http://www.m-w.com'); return false;">Merriam-Webster Online &gt;</a></div>  </div>
+  <div class="c">
+    <div class="c1">
+      <div class="searchbox">
+        ﻿<h1><span>Index</span></h1>
+<div class="saisie">
+<!--<input type="text"></input>-->
 <script type="text/javascript">
-    var fastBase = 'fast/';
-    var footerNews = "";
-    var projectTitle = "FAST";
-    var footLearnMore = "MORE";
+
+function demo() {
+	window.open('products_software_demo.php', 'name','status=yes, scrollbars=no, width=320, height=255')
+}
+
+
+
+
+function filterUl(p_sCsvMasterValues, p_sIdTarget, p_sUrl) {
+
+    var postBody = {
+        FilterFrom: p_sCsvMasterValues
+    }
+
+    var retrieveData = {
+        method: 'post',
+        postBody: $H(postBody).toQueryString(),
+        onFailure: function(t) {
+
+        },
+        onSuccess: function(t) {
+
+            var oJson = t.responseText.evalJSON();
+            var oNode;
+            var oTextNode;
+            var oTarget = $(p_sIdTarget);
+
+            oTarget.immediateDescendants().invoke('remove');
+
+            var icpt = 1;
+            oJson.elements.each(
+                function(e) {
+                    oNode = document.createElement("li");
+
+                        oLink = document.createElement("a");
+                       // oLink.id = e[1];
+                      //  oLink.name = e[1];
+                        oLink.innerHTML = e[1];
+                        oLink.href = '#';
+
+                       Event.observe(oLink, 'click', function(e) {
+                            fSelect(this); return false;
+                        }.bindAsEventListener(oLink));
+
+                    oNode.appendChild(oLink);
+
+                                        oTarget.appendChild(oNode);
+                    if( icpt == 1 )
+                    {
+                        oLink.addClassName('highlight');
+                        $('s_search_result').value = e[1];
+                    }
+                    icpt = icpt+1;
+                }
+            )
+        }
+    }
+
+    new Ajax.Request(p_sUrl, retrieveData);
+}
+var iIdEvent = 1;
+function Init() {
+
+       Event.observe('s_search_box', 'keyup',
+            function() {
+                iIdEvent = iIdEvent + 1;
+                var iActual = iIdEvent;
+                setTimeout( "callit('s_search_box',"+iActual+")",500);
+                }
+        );
+    }
+    function callit(s_searchBox, id){
+        if( iIdEvent == id )
+        {
+            filterUl($F(s_searchBox), 'result_list', '/includes/ajax/fill_search_result.php?s_key_word=' + $('s_search_box').value);
+        }
+
+    }
+
+    function fSelect(e) {
+        $$('ul.result_list li a').invoke('removeClassName', 'highlight');
+        e.addClassName('highlight');
+        $('s_search_result').value = e.innerHTML;
+
+        $('search_button').focus();
+    }
+    Event.observe(window, 'load', Init);
 </script>
-<div id="mainbody">
-<div xmlns="" id="masthead">
-<h1 class="linkeddata">
-<a href="http://experimental.worldcat.org/fast/">FAST Linked Data</a>
-</h1>
-<h2 class="linkeddata">FAST Authority File</h2>
-<h2 class="linkeddata"></h2>
+    <form name="search_form" id="search_form" method="get" action="/search-results.php">
+
+                <div><input class="search_box" name="s_search_box" type="text" id="s_search_box" value="Enter a word" onclick="this.select(); this.style.color = 'black';"/></div>
+
+        <h3>IMAGES</h3>
+        <div><input type="hidden" name="s_search_result" id="s_search_result"  value="#"/></div>
+
+        <ul class="result_list" id="result_list"><li></li></ul>
+
+        <div><input class="search_button" type="submit" id="search_button" value="Go To" alt=""/></div>
+    </form>
 </div>
-<div class="recordWrapper">
-    <h3>Quantum theory</h3>
-    <h4 class="sectiontitle">Information about the Resource</h4><dl>
-<dt>
-<a href="http://www.schema.org/name" target="_blank" title="schema:name">Schema.org Name(s):</a>
-</dt>
-<dd>
-<ul></ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://www.w3.org/TR/cooluris/#r303gendocument" target="_blank">Controlled Heading Identifier:</a>
-</dt>
-<dd>
-<ul>
-<li>
-<a href="http://id.worldcat.org/fast/1085128">http://id.worldcat.org/fast/1085128</a>
-</li>
-</ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://dublincore.org/documents/dcmi-terms/#terms-identifier" target="_blank" title="dcmi:identifier">Identifier:</a>
-</dt>
-<dd>
-<ul>
-<li>1085128</li>
-</ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://www.w3.org/TR/rdf-schema/#ch_type" target="_blank" title="rdf:type">Type:</a>
-</dt>
-<dd>
-<ul>
-<li>
-<a href="http://schema.org/Intangible" target="_blank" title="schema:Intangible">Intangible</a>
-</li>
-</ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://www.w3.org/2004/02/skos/core#prefLabel" target="_blank" title="skos:prefLabel">SKOS Preferred Label:</a>
-</dt>
-<dd>
-<ul>
-<li>Quantum theory</li>
-</ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://www.w3.org/2004/02/skos/core#altLabel" target="_blank" title="skos:altLabel">SKOS Alternative Label:</a>
-</dt>
-<dd>
-<ul>
-<li>Quantum dynamics</li>
-<li>Quantum mechanics</li>
-<li>Quantum physics</li>
-</ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://www.w3.org/2004/02/skos/core#inScheme" target="_blank" title="skos:inScheme">Is In SKOS Scheme:</a>
-</dt>
-<dd>
-<ul>
-<li>
-<a href="http://id.worldcat.org/fast/ontology/1.0/#fast">http://id.worldcat.org/fast/ontology/1.0/#fast</a>
-</li>
-<li>
-<a href="http://id.worldcat.org/fast/ontology/1.0/#facet-Topical">http://id.worldcat.org/fast/ontology/1.0/#facet-Topical</a>
-</li>
-</ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://www.w3.org/2004/02/skos/core#broader" target="_blank" title="skos:broader">SKOS Broader:</a>
-</dt>
-<dd>
-<ul>
-<li>
-<a href="http://id.worldcat.org/fast/1063025">
 
-Physics
+        	
+      </div>
+      <div class="themesearch"><span>Theme</span></div>
+      <ul class="menuTheme">
+        <li><a href="/astronomy.php">Astronomy</a></li>
+        <li><a href="/earth.php">Earth</a></li>
+        <li><a href="/plants-gardening.php">Plants &amp; gardening</a></li>
+        <li><a href="/animal-kingdom.php">Animal kingdom</a></li>
+        <li><a href="/human-being.php">Human being</a></li>
+		<li><a href="/food-kitchen.php">Food & kitchen</a></li>
+        <li><a href="/house.php">House</a></li>
+        <li><a href="/clothing-articles.php">Clothing &amp; articles</a></li>
+        <li><a href="/arts-architecture.php">Arts &amp; architecture</a></li>
+        <li><a href="/communications.php">Communications</a></li>
+        <li><a href="/transport-machinery.php">Transport &amp; machinery</a></li>
+        <li><a href="/energy.php">Energy</a></li>
+        <li><a href="/science.php">Science</a></li>
+        <li><a href="/society.php">Society</a></li>
+        <li><a href="/sports-games.php">Sports &amp; games</a></li>
+      </ul>
+      <div class="feedback"> <a href="/feedback.php">Your feedback</a><br/>
+        <a href="/help.php">Help</a></div><p></p><br />
+		<div style="margin: 0; text-align:center; color:#FFFFFF;"><a href="http://twitter.com/TheVisual" target="_blank"><img src="/images/btnTwitter.jpg" alt=""></a><br /><br /><a href="http://www.facebook.com/home.php?#/pages/The-Visual-Dictionary-Online/195359566425?ref=ts" target="_blank"><img src="/images/btnFacebook.jpg" alt=""></a></div>
+		
+    </div>
+    <div class="c2">
+	<div class="advertising"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Merriam-Webster_728X90_leaderboard_TopOfAllPages -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-7156007925185226"
+     data-ad-slot="7040656725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
-</a>
-</li>
-</ul>
-</dd>
-</dl><h4 class="sectiontitle">Information about the Resource Source</h4><dl>
-<dt>
-<a href="http://xmlns.com/foaf/spec/#term_Document" target="_blank" title="foaf:Document">Document:</a>
-</dt>
-<dd>
-<ul>
-<li>
-<span class="label inLineLabel"><a href="http://rdfs.org/ns/void#inDataset" target="_blank" title="void:inDataset">in Dataset:</a></span><a href="http://id.worldcat.org/fast/void/0.1/">FAST</a>
-</li>
-<li>
-<span class="label inLineLabel"><a href="http://xmlns.com/foaf/spec/#term_primaryTopic" target="_blank" title="foaf:primaryTopic">Primary Topic:</a></span><a href="http://id.worldcat.org/fast/1085128">http://id.worldcat.org/fast/1085128</a>
-</li>
-<li>
-<span class="label inLineLabel"><a href="http://purl.org/dc/elements/1.1/format" target="_blank" title="dc:format">Format:</a></span>application/rdf+xml</li>
-<li>
-<span class="label inLineLabel"><a href="http://dublincore.org/documents/dcmi-terms/#terms-created" target="_blank" title="dcmi:created">Date Created:</a></span>2004-10-24T00:00:00.0</li>
-<li>
-<span class="label inLineLabel"><a href="http://dublincore.org/documents/dcmi-terms/#terms-modified" target="_blank" title="dcmi:modified">Date Modified:</a></span>2022-04-07T17:13:16.0</li>
-<li>
-<span class="label inLineLabel"><a href="http://dublincore.org/documents/dcmi-terms/#terms-language" target="_blank" title="dcmi:language">Language:</a></span>  <a href="http://lexvo.org/id/iso639-3/eng">http://lexvo.org/id/iso639-3/eng</a>
-</li>
-<li>Cataloged by agency: OCoLC</li>
-<li>Transcribed by agency: OCoLC</li>
-</ul>
-</dd>
-</dl><dl>
-<dt>
-<a href="http://rdfs.org/ns/void#Dataset" target="_blank" title="void:Dataset">Data Set:</a>
-</dt>
-<dd>
-<ul>
-<li>
-<span class="label inLineLabel"><a href="http://dublincore.org/documents/dcmi-terms/#terms-title" target="_blank" title="dcmi:title">Title:</a></span><a href="http://id.worldcat.org/fast/void/0.1">FAST (Faceted Application of Subject Terminology) Data</a>
-</li>
-<li>
-<span class="label inLineLabel"><a href="http://dublincore.org/documents/dcmi-terms/#terms-license" target="_blank" title="dcmi:license">License:</a></span>
-<ul class="indent">
-<li>
-<span class="label inLineLabel"><a href="http://www.w3.org/TR/1999/REC-rdf-syntax-19990222/#description" target="_blank" title="rdf:Description">Description: </a></span>
-</li>
-<ul class="indent">
-<li>
-<span class="label inLineLabel"><a href="http://dublincore.org/documents/dcmi-terms/#terms-title" target="_blank" title="dcmi:title">Title:</a></span><a href="http://www.oclc.org/research/activities/fast/odcby.htm">Open Data Commons Attribution License (ODC-By) v1.0</a>
-</li>
-<li>
-<span class="label inLineLabel"><a href="http://www.w3.org/TR/rdf-schema/#ch_comment" target="_blank" title="rdfs:comment">Comment:</a></span>This is OCLC's "local copy" of the ODC-By license</li>
-<li>
-<span class="label inLineLabel"><a href="http://www.w3.org/TR/rdf-schema/#ch_seealso" target="_blank" title="rdfs:seealso">See Also: </a></span><a href="http://opendatacommons.org/licenses/by/#toc-anchor-337-3"> Open Data Commons Localization Note</a>
-</li>
-<li>
-<span class="label inLineLabel"><a href="http://www.w3.org/TR/owl-ref/#sameAs-def" target="_blank" title="owl:sameAs">Same As:</a></span><a href="http://opendatacommons.org/licenses/by/1-0/"> Open Data Commons Attribution License (ODC-By) v1.0</a>
-</li>
-</ul>
-</ul>
-</li>
-</ul>
-</dd>
-</dl>
+<div style="text-align:left; margin-left:5px;float:left;">
+<form action="http://visual.merriam-webster.com/search.php" id="cse-search-box">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7156007925185226:26tokrtiooe" />
+    <input type="hidden" name="cof" value="FORID:10" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="75" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+</div>
+<div style="text-align: right;padding-right:2px;">
+		<a href="http://www.ikonet.com/en/"><img src="/images/LogoPoweredByIkonet.png" alt="Powered by ikonet.com" title="Powered by ikonet.com" width="146" height="14"></a>
+</div>
 
-
-    <h4 class="sectiontitle">Different Formats Available</h4>
-    <dl>
-        <dt>Record Views</dt>
-        <dd>
-            <ul>
-                <li>
-                    <a title="Content Negotiable" href="http://id.worldcat.org/fast/1085128/">Generic Document</a>
-                </li>
-                <li>
-                    <a href="http://id.worldcat.org/fast/1085128.mrc">MARC-21 (UTF-8 raw data)</a> <a href="http://id.worldcat.org/fast/1085128.mrc.xml"> (MARC-21 xml raw data)</a>
-                </li>
-                <li>
-                    <a href="http://id.worldcat.org/fast/1085128.rdf.xml">RDF/XML raw data</a>
-                </li>
-            </ul>
-        </dd>
-    </dl>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
 
 </div>
-<div class="clearing"></div>
+      <div class="c3">
+        <div class="conteneurAvantContenu" >
+              <div class="textAvantContenu" >
+                <div class="main_title" >Welcome to the <span class="italic">Visual Dictionary<br /> Online</span>, the dictionary with a new<br/> point of view.</div>
+                <div class="slogant index">A quick glance at the <strong style="color:black;">index</strong> is all it takes to<br />
+                connect words with images.</div>
+                <div class="slogant index">Explore the 15 major <strong style="color:black;">themes</strong> to access<br /> more than 6,000 images and see words<br /> like never before.</div>
+              </div>
+        </div>
+        <!-- fin sBox avant le conentu -->
+                <h2 class="text">News</h2>
+        <div class="hr">&nbsp;</div>
+       	
+        <div class="title"><a href="/news.php?id=35">QA INTERNATIONAL LAUNCHED EL DICCIONARIO VISUAL</a></div>
+		<div class="content"><p>QA International launched <a target="_self" href="http://www.ikonet.com/es/diccionariovisual/"><font color="#000080"><u>El Diccionario Visual</u></font></a>, a new valuable resource to learn Spanish. Includes 17 all-around themes to explore, including the human body, sciences and food.  
+			<a href="/news.php?id=35" class="more">MORE</a>
+						</p>
+		</div>
+				
+		<div class="hr index">&nbsp;</div>
+				
+        <img src="/images/fraise.gif" alt="Strawberry" style="float: left;"/>
+
+        <div class="second_title">The <span class="italic">Visual Dictionary Online</span> is an interactive <strong>dictionary</strong> with an innovative approach.</div>
+        <div class="content sous_contenu">From the image to the word and its definition,
+          the <i>Visual Dictionary Online</i> is an all-in-one reference. Search the themes to quickly locate words, or find the meaning of a word by viewing the image it represents. What’s more, the <i>Visual Dictionary Online</i> helps you learn English in a visual and accessible way. The  <i>Visual Dictionary Online</i> is ideal for teachers, parents, translators and students of all skill levels. Explore the <i>Visual Dictionary Online</i> and enrich your mind. Perfect for home, school or work. Discover a visual world of information!</div>
+      </div>
+      <!-- FIN DU C3-->
+	  
+      <div class="c4">
+	  
+        <div class="pub">
+        	<div class="advertising left">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Merriam-Webster_300x250_BigBox1-TopOfAllPages -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-7156007925185226"
+     data-ad-slot="8729356048"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Merriam-Webster_300X250_BigBox2_TopOfAllPages -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-7156007925185226"
+     data-ad-slot="9280490271"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+	
+
+
+
 </div>
-<div xmlns="" class="clearfix" id="footer">
-<div class="two">
-<div class="col1">
-<div class="foot-sec" id="researchtag">
-<span class="projecttitle">FAST</span> is a project of <a href="http://www.oclc.org/research">OCLC Research.</a>
+
+<div class="box" style="height:250px; background: url(/images/visualplus.jpg) center;cursor:pointer;" onclick="location.href='https://itunes.apple.com/us/app/merriam-webster-the-visual-+/id963177153?l=fr&ls=1&mt=8'"></div>
+
+<div style="margin-top:10px; margin-bottom:10px; color:#000;">
+<a href="http://www.ikonet.com"><span style="color:#000;">English French Visual Dictionary</span></a><br />
+<a href="http://www.snappywords.com"><span style="color:#000;">Free Online Dictionary</span></a>
 </div>
-<div class="foot-news">
-<div id="footer-news"></div>
+
+
+        </div>
+		<div class="promoGames"><div class="gameWeek"><img src="/images/society/politics/flags/europe_4.png" alt=""/><br>Europe</div><div id="gameLiens"><a href="http://visual.merriam-webster.com/society/politics/flags/europe_4.php" class="lien1"></a></div>
+		</div>
+      </div>
+	  <!-- <div class="advertising bottom"></div> -->
+    </div>
+    <!-- FIN DU C2 -->
+    <br style="clear:both"/>
+  </div>
+  <!-- FIN DU C -->
+  <div class="f">
+    <div id="nav_footer">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7156007925185226";
+/* Merriam-Webster_468X15_Homepage_Bottom */
+google_ad_slot = "1454138353";
+google_ad_width = 468;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<br />
+	<a href="/advertising-info.php">ADVERTISING INFO</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="http://www.ikonet.com/en/visualdictionary/static/us/contact">CONTACT US</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="/about-us_privacy-policy.php">PRIVACY POLICY</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="/terms-of-use.php">TERMS OF USE</a>
 </div>
-<div class="foot-sec">
-<div id="footLearn">
-<a href="https://www.oclc.org/research/themes/data-science/fast.html" class="foot-info">Learn more about the FAST project.</a>
-<br/>
+<br /><br style="clear:both" />
+<div class="cyberliens"><a href="http://www.ikonet.com/en/">Powered by ikonet.com</a><br><a href="http://www.qa-international.com/" onclick="window.open(this.href); return false;">&copy; QA INTERNATIONAL 2022</a></div>
+<br style="clear:both" />  </div>
 </div>
-   The FAST properties are described in the <a href="http://experimental.worldcat.org/fast/ontology/1.0/">FAST Ontology.</a>
-<br/>Developer access to FAST is available through the <a href="https://www.oclc.org/developer/develop/web-services/fast-api.en.html">FAST API.</a>
-</div>
-<div class="foot-sec"><br/>The FAST database will be updated periodically.<br/>The FAST Dataset is available for <a href="https://www.oclc.org/research/themes/data-science/fast/download.html">download.</a>
-</div>
-<div class="foot-sec">For comments on FAST as Linked Data contact the <a target="_blank" href="http://www.oclc.org/research/forms/feedback-form.html?project=FAST Linked Data">FAST Team</a>
-</div>
-<div class="foot-sec last" id="corpinfo">
-<div id="footCopyright"></div>
-</div>
-</div>
-<div class="col2">
-<div id="fastsuite"></div>
-</div>
-</div>
-</div>
-<script type="text/javascript">commonFooterSetUp();</script>
+<!-- FIN DU FRAME -->
+
+	<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3846080-2");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+<script type="text/javascript" src="http://s3.amazonaws.com/new.cetrk.com/pages/scripts/0007/9241.js"> </script>
 </body>
 </html>
-

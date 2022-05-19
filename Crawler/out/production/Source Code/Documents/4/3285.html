@@ -1,956 +1,2371 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js ie lt-ie9 lt-ie8 lt-ie7" xml:lang="en-gb" lang="en-gb" dir="ltr"> <![endif]--><!--[if IE 7]>         <html class="no-js ie lt-ie9 lt-ie8" xml:lang="en-gb" lang="en-gb" dir="ltr"> <![endif]--><!--[if IE 8]>         <html class="no-js ie lt-ie9" xml:lang="en-gb" lang="en-gb" dir="ltr"> <![endif]--><!--[if gt IE 8]><!--><html class="no-js" xml:lang="en-gb" lang="en-gb" dir="ltr"> <!--<![endif]-->	<head>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<!-- Global RWD Constant	
-	  
--->
+<!doctype html>
 
-  <base href="http://chm.nonprofitsoapbox.com">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="robots" content="index, follow">
-  <meta name="keywords" content="CHM Donation">
-  <meta name="title" content="Donate Now">
-  <meta name="author" content="Administrator">
-  <meta name="description" content="CHM Donation Page">
-  <title>Donate - Computer History Museum</title>
-  <link href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/favicon.ico" rel="shortcut icon" type="image/x-icon">
-  <link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/media/system/css/modal.css" type="text/css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" type="text/css">
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css">
-  <link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/media/soapbox/css/typeahead.css" type="text/css">
-  <style type="text/css">
-    <!--
-.sbx-extended {display: none !important;}
-    -->
-  </style>
-  <script src="https://browser.sentry-cdn.com/5.15.4/bundle.min.js" integrity="sha384-Nrg+xiw+qRl3grVrxJtWazjeZmUwoSt0FAVsbthlJ5OMpx0G08bqIq3b/v0hPjhB" crossorigin="anonymous"></script>
-  <script>Sentry.init({dsn:"https://cae5d4614a9e46f2b6795a12e141587f@sentry.io/5174925",environment:"production",release:"soapbox-core@2.10.803"});Sentry.configureScope(function(scope){scope.setTag("template","computerhistory");});Sentry.configureScope(function(scope){scope.setTag("sbxapp","donations");});Sentry.configureScope(function(scope){scope.setTag("subdomain","chm");scope.setTag("hostname","pw004");});</script>
-  <script src="https://chm.secure.nonprofitsoapbox.com/media/system/js/mootools.js"></script>
-  <script src="https://chm.secure.nonprofitsoapbox.com/media/system/js/validate.js"></script>
-  <script src="https://chm.secure.nonprofitsoapbox.com/media/system/js/modal.js"></script>
-  <script src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/js/jquery.min.js"></script>
-  <script src="https://chm.secure.nonprofitsoapbox.com/components/com_donations/assets/js/sbx_donations.js"></script>
-  <script>
+<html data-ytrk-page="TOPIC PAGINATED SMALL" lang="en" class="ui-unknown0 ui-unknown">
 
-         (function(){
-             const life = 3540000;
-             function keepAlive() {
-                 var httpRequest = new XMLHttpRequest();
-                 httpRequest.open("GET", "/index.php");
-                 httpRequest.send(null);
-             }
-             setInterval(keepAlive, life);
-         }());
-		
-		window.addEvent('domready', function() {
+<head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb#">
 
-			SqueezeBox.initialize({});
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-			$$('a.modal').each(function(el) {
-				el.addEvent('click', function(e) {
-					new Event(e).stop();
-					SqueezeBox.fromElement(el);
-				});
-			});
-		});jQuery.noConflict();	window.addEvent('domready', function(){
-		SBX_DONATIONS.setObjectProperties(
-			{
-				'form' : document.getElementById('formDonate'),
-				'sandbox' : 0,
-				'gateway' : 'braintree',
-				'minimum' : '0.01',
-				'recurringFrequency' : 'monthly',
-				'captcha' : 1,
-				'addressAutoComplete' : 0,
-				'validationErrorMsg' : 'Please confirm all required information is correct',
-				'validationLogEnabled' : 1,
-				'gaTrackingEnabled' : 0,
-				'sandboxWarningrMsg' : 'This form is in testing mode. Transactions will not be valid',
-				'displayBothOneTimeAndRecurringAmounts' : 0,
-				'us_region_list' : [{"value":"","text":"Select A State"},{"value":"AL","text":"Alabama"},{"value":"AK","text":"Alaska"},{"value":"AZ","text":"Arizona"},{"value":"AR","text":"Arkansas"},{"value":"CA","text":"California"},{"value":"CO","text":"Colorado"},{"value":"CT","text":"Connecticut"},{"value":"DE","text":"Delaware"},{"value":"DC","text":"District of Columbia"},{"value":"FL","text":"Florida"},{"value":"GA","text":"Georgia"},{"value":"HI","text":"Hawaii"},{"value":"ID","text":"Idaho"},{"value":"IL","text":"Illinois"},{"value":"IN","text":"Indiana"},{"value":"IA","text":"Iowa"},{"value":"KS","text":"Kansas"},{"value":"KY","text":"Kentucky"},{"value":"LA","text":"Louisiana"},{"value":"ME","text":"Maine"},{"value":"MD","text":"Maryland"},{"value":"MA","text":"Massachusetts"},{"value":"MI","text":"Michigan"},{"value":"MN","text":"Minnesota"},{"value":"MS","text":"Mississippi"},{"value":"MO","text":"Missouri"},{"value":"MT","text":"Montana"},{"value":"NE","text":"Nebraska"},{"value":"NV","text":"Nevada"},{"value":"NH","text":"New Hampshire"},{"value":"NJ","text":"New Jersey"},{"value":"NM","text":"New Mexico"},{"value":"NY","text":"New York"},{"value":"NC","text":"North Carolina"},{"value":"ND","text":"North Dakota"},{"value":"OH","text":"Ohio"},{"value":"OK","text":"Oklahoma"},{"value":"OR","text":"Oregon"},{"value":"PA","text":"Pennsylvania"},{"value":"PR","text":"Puerto Rico"},{"value":"RI","text":"Rhode Island"},{"value":"SC","text":"South Carolina"},{"value":"SD","text":"South Dakota"},{"value":"TN","text":"Tennessee"},{"value":"TX","text":"Texas"},{"value":"UT","text":"Utah"},{"value":"VT","text":"Vermont"},{"value":"VA","text":"Virginia"},{"value":"WA","text":"Washington"},{"value":"WV","text":"West Virginia"},{"value":"WI","text":"Wisconsin"},{"value":"WY","text":"Wyoming"}],
-				'ca_region_list' : [{"value":"","text":"Select A Province"},{"value":"AB","text":"Alberta"},{"value":"BC","text":"British Columbia"},{"value":"MB","text":"Manitoba"},{"value":"NB","text":"New Brunswick"},{"value":"NL","text":"Newfoundland and Labrador"},{"value":"NT","text":"Northwest Territories"},{"value":"NS","text":"Nova Scotia"},{"value":"NU","text":"Nunavut"},{"value":"ON","text":"Ontario"},{"value":"PE","text":"Prince Edward Island"},{"value":"QC","text":"Quebec"},{"value":"SK","text":"Saskatchewan"},{"value":"YT","text":"Yukon Territory"}],
-				'countries_list' : [{"country_id":"3","country_name":"Afghanistan","iso_alpha_2":"AF","iso_alpha_3":"AFG","iso_numeric":"4","fips":"AF","tld":".af","currency_code":"AFN","currency_name":"Afghani","postal_code_format":"","postal_code_regex":""},{"country_id":"15","country_name":"Aland Islands","iso_alpha_2":"AX","iso_alpha_3":"ALA","iso_numeric":"248","fips":"","tld":".ax","currency_code":"EUR","currency_name":"Euro","postal_code_format":"","postal_code_regex":""},{"country_id":"6","country_name":"Albania","iso_alpha_2":"AL","iso_alpha_3":"ALB","iso_numeric":"8","fips":"AL","tld":".al","currency_code":"ALL","currency_name":"Lek","postal_code_format":"","postal_code_regex":""},{"country_id":"62","country_name":"Algeria","iso_alpha_2":"DZ","iso_alpha_3":"DZA","iso_numeric":"12","fips":"AG","tld":".dz","currency_code":"DZD","currency_name":"Dinar","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"11","country_name":"American Samoa","iso_alpha_2":"AS","iso_alpha_3":"ASM","iso_numeric":"16","fips":"AQ","tld":".as","currency_code":"USD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"1","country_name":"Andorra","iso_alpha_2":"AD","iso_alpha_3":"AND","iso_numeric":"20","fips":"AN","tld":".ad","currency_code":"EUR","currency_name":"Euro","postal_code_format":"AD###","postal_code_regex":"^(?:AD)*(\\d{3})$"},{"country_id":"8","country_name":"Angola","iso_alpha_2":"AO","iso_alpha_3":"AGO","iso_numeric":"24","fips":"AO","tld":".ao","currency_code":"AOA","currency_name":"Kwanza","postal_code_format":"","postal_code_regex":""},{"country_id":"5","country_name":"Anguilla","iso_alpha_2":"AI","iso_alpha_3":"AIA","iso_numeric":"660","fips":"AV","tld":".ai","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"9","country_name":"Antarctica","iso_alpha_2":"AQ","iso_alpha_3":"ATA","iso_numeric":"10","fips":"AY","tld":".aq","currency_code":"","currency_name":"","postal_code_format":"","postal_code_regex":""},{"country_id":"4","country_name":"Antigua and Barbuda","iso_alpha_2":"AG","iso_alpha_3":"ATG","iso_numeric":"28","fips":"AC","tld":".ag","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"10","country_name":"Argentina","iso_alpha_2":"AR","iso_alpha_3":"ARG","iso_numeric":"32","fips":"AR","tld":".ar","currency_code":"ARS","currency_name":"Peso","postal_code_format":"@####@@@","postal_code_regex":"^([A-Z]\\d{4}[A-Z]{3})$"},{"country_id":"7","country_name":"Armenia","iso_alpha_2":"AM","iso_alpha_3":"ARM","iso_numeric":"51","fips":"AM","tld":".am","currency_code":"AMD","currency_name":"Dram","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"14","country_name":"Aruba","iso_alpha_2":"AW","iso_alpha_3":"ABW","iso_numeric":"533","fips":"AA","tld":".aw","currency_code":"AWG","currency_name":"Guilder","postal_code_format":"","postal_code_regex":""},{"country_id":"13","country_name":"Australia","iso_alpha_2":"AU","iso_alpha_3":"AUS","iso_numeric":"36","fips":"AS","tld":".au","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"12","country_name":"Austria","iso_alpha_2":"AT","iso_alpha_3":"AUT","iso_numeric":"40","fips":"AU","tld":".at","currency_code":"EUR","currency_name":"Euro","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"16","country_name":"Azerbaijan","iso_alpha_2":"AZ","iso_alpha_3":"AZE","iso_numeric":"31","fips":"AJ","tld":".az","currency_code":"AZN","currency_name":"Manat","postal_code_format":"AZ ####","postal_code_regex":"^(?:AZ)*(\\d{4})$"},{"country_id":"32","country_name":"Bahamas","iso_alpha_2":"BS","iso_alpha_3":"BHS","iso_numeric":"44","fips":"BF","tld":".bs","currency_code":"BSD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"23","country_name":"Bahrain","iso_alpha_2":"BH","iso_alpha_3":"BHR","iso_numeric":"48","fips":"BA","tld":".bh","currency_code":"BHD","currency_name":"Dinar","postal_code_format":"####|###","postal_code_regex":"^(\\d{3}\\d?)$"},{"country_id":"19","country_name":"Bangladesh","iso_alpha_2":"BD","iso_alpha_3":"BGD","iso_numeric":"50","fips":"BG","tld":".bd","currency_code":"BDT","currency_name":"Taka","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"18","country_name":"Barbados","iso_alpha_2":"BB","iso_alpha_3":"BRB","iso_numeric":"52","fips":"BB","tld":".bb","currency_code":"BBD","currency_name":"Dollar","postal_code_format":"BB#####","postal_code_regex":"^(?:BB)*(\\d{5})$"},{"country_id":"36","country_name":"Belarus","iso_alpha_2":"BY","iso_alpha_3":"BLR","iso_numeric":"112","fips":"BO","tld":".by","currency_code":"BYR","currency_name":"Ruble","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"20","country_name":"Belgium","iso_alpha_2":"BE","iso_alpha_3":"BEL","iso_numeric":"56","fips":"BE","tld":".be","currency_code":"EUR","currency_name":"Euro","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"37","country_name":"Belize","iso_alpha_2":"BZ","iso_alpha_3":"BLZ","iso_numeric":"84","fips":"BH","tld":".bz","currency_code":"BZD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"25","country_name":"Benin","iso_alpha_2":"BJ","iso_alpha_3":"BEN","iso_numeric":"204","fips":"BN","tld":".bj","currency_code":"XOF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"27","country_name":"Bermuda","iso_alpha_2":"BM","iso_alpha_3":"BMU","iso_numeric":"60","fips":"BD","tld":".bm","currency_code":"BMD","currency_name":"Dollar","postal_code_format":"@@ ##","postal_code_regex":"^([A-Z]{2}\\d{2})$"},{"country_id":"33","country_name":"Bhutan","iso_alpha_2":"BT","iso_alpha_3":"BTN","iso_numeric":"64","fips":"BT","tld":".bt","currency_code":"BTN","currency_name":"Ngultrum","postal_code_format":"","postal_code_regex":""},{"country_id":"29","country_name":"Bolivia","iso_alpha_2":"BO","iso_alpha_3":"BOL","iso_numeric":"68","fips":"BL","tld":".bo","currency_code":"BOB","currency_name":"Boliviano","postal_code_format":"","postal_code_regex":""},{"country_id":"30","country_name":"Bonaire","iso_alpha_2":"BQ","iso_alpha_3":"BES","iso_numeric":"535","fips":"","tld":"NA","currency_code":".bq","currency_name":"USD","postal_code_format":"599","postal_code_regex":""},{"country_id":"17","country_name":"Bosnia and Herzegovina","iso_alpha_2":"BA","iso_alpha_3":"BIH","iso_numeric":"70","fips":"BK","tld":".ba","currency_code":"BAM","currency_name":"Marka","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"35","country_name":"Botswana","iso_alpha_2":"BW","iso_alpha_3":"BWA","iso_numeric":"72","fips":"BC","tld":".bw","currency_code":"BWP","currency_name":"Pula","postal_code_format":"","postal_code_regex":""},{"country_id":"34","country_name":"Bouvet Island","iso_alpha_2":"BV","iso_alpha_3":"BVT","iso_numeric":"74","fips":"BV","tld":".bv","currency_code":"NOK","currency_name":"Krone","postal_code_format":"","postal_code_regex":""},{"country_id":"31","country_name":"Brazil","iso_alpha_2":"BR","iso_alpha_3":"BRA","iso_numeric":"76","fips":"BR","tld":".br","currency_code":"BRL","currency_name":"Real","postal_code_format":"#####-###","postal_code_regex":"^(\\d{8})$"},{"country_id":"106","country_name":"British Indian Ocean Territory","iso_alpha_2":"IO","iso_alpha_3":"IOT","iso_numeric":"86","fips":"IO","tld":".io","currency_code":"USD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"240","country_name":"British Virgin Islands","iso_alpha_2":"VG","iso_alpha_3":"VGB","iso_numeric":"92","fips":"VI","tld":".vg","currency_code":"USD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"28","country_name":"Brunei","iso_alpha_2":"BN","iso_alpha_3":"BRN","iso_numeric":"96","fips":"BX","tld":".bn","currency_code":"BND","currency_name":"Dollar","postal_code_format":"@@####","postal_code_regex":"^([A-Z]{2}\\d{4})$"},{"country_id":"22","country_name":"Bulgaria","iso_alpha_2":"BG","iso_alpha_3":"BGR","iso_numeric":"100","fips":"BU","tld":".bg","currency_code":"BGN","currency_name":"Lev","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"21","country_name":"Burkina Faso","iso_alpha_2":"BF","iso_alpha_3":"BFA","iso_numeric":"854","fips":"UV","tld":".bf","currency_code":"XOF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"24","country_name":"Burundi","iso_alpha_2":"BI","iso_alpha_3":"BDI","iso_numeric":"108","fips":"BY","tld":".bi","currency_code":"BIF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"117","country_name":"Cambodia","iso_alpha_2":"KH","iso_alpha_3":"KHM","iso_numeric":"116","fips":"CB","tld":".kh","currency_code":"KHR","currency_name":"Riels","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"47","country_name":"Cameroon","iso_alpha_2":"CM","iso_alpha_3":"CMR","iso_numeric":"120","fips":"CM","tld":".cm","currency_code":"XAF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"38","country_name":"Canada","iso_alpha_2":"CA","iso_alpha_3":"CAN","iso_numeric":"124","fips":"CA","tld":".ca","currency_code":"CAD","currency_name":"Dollar","postal_code_format":"@#@ #@#","postal_code_regex":"^([a-zA-Z]\\d[a-zA-Z]\\d[a-zA-Z]\\d)$"},{"country_id":"52","country_name":"Cape Verde","iso_alpha_2":"CV","iso_alpha_3":"CPV","iso_numeric":"132","fips":"CV","tld":".cv","currency_code":"CVE","currency_name":"Escudo","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"125","country_name":"Cayman Islands","iso_alpha_2":"KY","iso_alpha_3":"CYM","iso_numeric":"136","fips":"CJ","tld":".ky","currency_code":"KYD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"41","country_name":"Central African Republic","iso_alpha_2":"CF","iso_alpha_3":"CAF","iso_numeric":"140","fips":"CT","tld":".cf","currency_code":"XAF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"216","country_name":"Chad","iso_alpha_2":"TD","iso_alpha_3":"TCD","iso_numeric":"148","fips":"CD","tld":".td","currency_code":"XAF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"46","country_name":"Chile","iso_alpha_2":"CL","iso_alpha_3":"CHL","iso_numeric":"152","fips":"CI","tld":".cl","currency_code":"CLP","currency_name":"Peso","postal_code_format":"#######","postal_code_regex":"^(\\d{7})$"},{"country_id":"48","country_name":"China","iso_alpha_2":"CN","iso_alpha_3":"CHN","iso_numeric":"156","fips":"CH","tld":".cn","currency_code":"CNY","currency_name":"Yuan Renminbi","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"54","country_name":"Christmas Island","iso_alpha_2":"CX","iso_alpha_3":"CXR","iso_numeric":"162","fips":"KT","tld":".cx","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"39","country_name":"Cocos Islands","iso_alpha_2":"CC","iso_alpha_3":"CCK","iso_numeric":"166","fips":"CK","tld":".cc","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"49","country_name":"Colombia","iso_alpha_2":"CO","iso_alpha_3":"COL","iso_numeric":"170","fips":"CO","tld":".co","currency_code":"COP","currency_name":"Peso","postal_code_format":"","postal_code_regex":""},{"country_id":"119","country_name":"Comoros","iso_alpha_2":"KM","iso_alpha_3":"COM","iso_numeric":"174","fips":"CN","tld":".km","currency_code":"KMF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"45","country_name":"Cook Islands","iso_alpha_2":"CK","iso_alpha_3":"COK","iso_numeric":"184","fips":"CW","tld":".ck","currency_code":"NZD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"50","country_name":"Costa Rica","iso_alpha_2":"CR","iso_alpha_3":"CRI","iso_numeric":"188","fips":"CS","tld":".cr","currency_code":"CRC","currency_name":"Colon","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"98","country_name":"Croatia","iso_alpha_2":"HR","iso_alpha_3":"HRV","iso_numeric":"191","fips":"HR","tld":".hr","currency_code":"HRK","currency_name":"Kuna","postal_code_format":"HR-#####","postal_code_regex":"^(?:HR)*(\\d{5})$"},{"country_id":"51","country_name":"Cuba","iso_alpha_2":"CU","iso_alpha_3":"CUB","iso_numeric":"192","fips":"CU","tld":".cu","currency_code":"CUP","currency_name":"Peso","postal_code_format":"CP #####","postal_code_regex":"^(?:CP)*(\\d{5})$"},{"country_id":"53","country_name":"Curacao","iso_alpha_2":"CW","iso_alpha_3":"CUW","iso_numeric":"531","fips":"UC","tld":".cw","currency_code":"ANG","currency_name":"Guilder","postal_code_format":"","postal_code_regex":""},{"country_id":"55","country_name":"Cyprus","iso_alpha_2":"CY","iso_alpha_3":"CYP","iso_numeric":"196","fips":"CY","tld":".cy","currency_code":"EUR","currency_name":"Euro","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"56","country_name":"Czech Republic","iso_alpha_2":"CZ","iso_alpha_3":"CZE","iso_numeric":"203","fips":"EZ","tld":".cz","currency_code":"CZK","currency_name":"Koruna","postal_code_format":"### ##","postal_code_regex":"^(\\d{5})$"},{"country_id":"40","country_name":"Democratic Republic of the Congo","iso_alpha_2":"CD","iso_alpha_3":"COD","iso_numeric":"180","fips":"CG","tld":".cd","currency_code":"CDF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"59","country_name":"Denmark","iso_alpha_2":"DK","iso_alpha_3":"DNK","iso_numeric":"208","fips":"DA","tld":".dk","currency_code":"DKK","currency_name":"Krone","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"58","country_name":"Djibouti","iso_alpha_2":"DJ","iso_alpha_3":"DJI","iso_numeric":"262","fips":"DJ","tld":".dj","currency_code":"DJF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"60","country_name":"Dominica","iso_alpha_2":"DM","iso_alpha_3":"DMA","iso_numeric":"212","fips":"DO","tld":".dm","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"61","country_name":"Dominican Republic","iso_alpha_2":"DO","iso_alpha_3":"DOM","iso_numeric":"214","fips":"DR","tld":".do","currency_code":"DOP","currency_name":"Peso","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"222","country_name":"East Timor","iso_alpha_2":"TL","iso_alpha_3":"TLS","iso_numeric":"626","fips":"TT","tld":".tl","currency_code":"USD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"63","country_name":"Ecuador","iso_alpha_2":"EC","iso_alpha_3":"ECU","iso_numeric":"218","fips":"EC","tld":".ec","currency_code":"USD","currency_name":"Dollar","postal_code_format":"@####@","postal_code_regex":"^([a-zA-Z]\\d{4}[a-zA-Z])$"},{"country_id":"65","country_name":"Egypt","iso_alpha_2":"EG","iso_alpha_3":"EGY","iso_numeric":"818","fips":"EG","tld":".eg","currency_code":"EGP","currency_name":"Pound","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"211","country_name":"El Salvador","iso_alpha_2":"SV","iso_alpha_3":"SLV","iso_numeric":"222","fips":"ES","tld":".sv","currency_code":"USD","currency_name":"Dollar","postal_code_format":"CP ####","postal_code_regex":"^(?:CP)*(\\d{4})$"},{"country_id":"88","country_name":"Equatorial Guinea","iso_alpha_2":"GQ","iso_alpha_3":"GNQ","iso_numeric":"226","fips":"EK","tld":".gq","currency_code":"XAF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"67","country_name":"Eritrea","iso_alpha_2":"ER","iso_alpha_3":"ERI","iso_numeric":"232","fips":"ER","tld":".er","currency_code":"ERN","currency_name":"Nakfa","postal_code_format":"","postal_code_regex":""},{"country_id":"64","country_name":"Estonia","iso_alpha_2":"EE","iso_alpha_3":"EST","iso_numeric":"233","fips":"EN","tld":".ee","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"69","country_name":"Ethiopia","iso_alpha_2":"ET","iso_alpha_3":"ETH","iso_numeric":"231","fips":"ET","tld":".et","currency_code":"ETB","currency_name":"Birr","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"72","country_name":"Falkland Islands","iso_alpha_2":"FK","iso_alpha_3":"FLK","iso_numeric":"238","fips":"FK","tld":".fk","currency_code":"FKP","currency_name":"Pound","postal_code_format":"","postal_code_regex":""},{"country_id":"74","country_name":"Faroe Islands","iso_alpha_2":"FO","iso_alpha_3":"FRO","iso_numeric":"234","fips":"FO","tld":".fo","currency_code":"DKK","currency_name":"Krone","postal_code_format":"FO-###","postal_code_regex":"^(?:FO)*(\\d{3})$"},{"country_id":"71","country_name":"Fiji","iso_alpha_2":"FJ","iso_alpha_3":"FJI","iso_numeric":"242","fips":"FJ","tld":".fj","currency_code":"FJD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"70","country_name":"Finland","iso_alpha_2":"FI","iso_alpha_3":"FIN","iso_numeric":"246","fips":"FI","tld":".fi","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(?:FI)*(\\d{5})$"},{"country_id":"75","country_name":"France","iso_alpha_2":"FR","iso_alpha_3":"FRA","iso_numeric":"250","fips":"FR","tld":".fr","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"80","country_name":"French Guiana","iso_alpha_2":"GF","iso_alpha_3":"GUF","iso_numeric":"254","fips":"FG","tld":".gf","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^((97)|(98)3\\d{2})$"},{"country_id":"176","country_name":"French Polynesia","iso_alpha_2":"PF","iso_alpha_3":"PYF","iso_numeric":"258","fips":"FP","tld":".pf","currency_code":"XPF","currency_name":"Franc","postal_code_format":"#####","postal_code_regex":"^((97)|(98)7\\d{2})$"},{"country_id":"217","country_name":"French Southern Territories","iso_alpha_2":"TF","iso_alpha_3":"ATF","iso_numeric":"260","fips":"FS","tld":".tf","currency_code":"EUR","currency_name":"Euro  ","postal_code_format":"","postal_code_regex":""},{"country_id":"76","country_name":"Gabon","iso_alpha_2":"GA","iso_alpha_3":"GAB","iso_numeric":"266","fips":"GB","tld":".ga","currency_code":"XAF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"85","country_name":"Gambia","iso_alpha_2":"GM","iso_alpha_3":"GMB","iso_numeric":"270","fips":"GA","tld":".gm","currency_code":"GMD","currency_name":"Dalasi","postal_code_format":"","postal_code_regex":""},{"country_id":"79","country_name":"Georgia","iso_alpha_2":"GE","iso_alpha_3":"GEO","iso_numeric":"268","fips":"GG","tld":".ge","currency_code":"GEL","currency_name":"Lari","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"57","country_name":"Germany","iso_alpha_2":"DE","iso_alpha_3":"DEU","iso_numeric":"276","fips":"GM","tld":".de","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"82","country_name":"Ghana","iso_alpha_2":"GH","iso_alpha_3":"GHA","iso_numeric":"288","fips":"GH","tld":".gh","currency_code":"GHS","currency_name":"Cedi","postal_code_format":"","postal_code_regex":""},{"country_id":"83","country_name":"Gibraltar","iso_alpha_2":"GI","iso_alpha_3":"GIB","iso_numeric":"292","fips":"GI","tld":".gi","currency_code":"GIP","currency_name":"Pound","postal_code_format":"","postal_code_regex":""},{"country_id":"89","country_name":"Greece","iso_alpha_2":"GR","iso_alpha_3":"GRC","iso_numeric":"300","fips":"GR","tld":".gr","currency_code":"EUR","currency_name":"Euro","postal_code_format":"### ##","postal_code_regex":"^(\\d{5})$"},{"country_id":"84","country_name":"Greenland","iso_alpha_2":"GL","iso_alpha_3":"GRL","iso_numeric":"304","fips":"GL","tld":".gl","currency_code":"DKK","currency_name":"Krone","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"78","country_name":"Grenada","iso_alpha_2":"GD","iso_alpha_3":"GRD","iso_numeric":"308","fips":"GJ","tld":".gd","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"87","country_name":"Guadeloupe","iso_alpha_2":"GP","iso_alpha_3":"GLP","iso_numeric":"312","fips":"GP","tld":".gp","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^((97)|(98)\\d{3})$"},{"country_id":"92","country_name":"Guam","iso_alpha_2":"GU","iso_alpha_3":"GUM","iso_numeric":"316","fips":"GQ","tld":".gu","currency_code":"USD","currency_name":"Dollar","postal_code_format":"969##","postal_code_regex":"^(969\\d{2})$"},{"country_id":"91","country_name":"Guatemala","iso_alpha_2":"GT","iso_alpha_3":"GTM","iso_numeric":"320","fips":"GT","tld":".gt","currency_code":"GTQ","currency_name":"Quetzal","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"81","country_name":"Guernsey","iso_alpha_2":"GG","iso_alpha_3":"GGY","iso_numeric":"831","fips":"GK","tld":".gg","currency_code":"GBP","currency_name":"Pound","postal_code_format":"@# #@@|@## #@@|@@# #@@|@@","postal_code_regex":"^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]"},{"country_id":"86","country_name":"Guinea","iso_alpha_2":"GN","iso_alpha_3":"GIN","iso_numeric":"324","fips":"GV","tld":".gn","currency_code":"GNF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"93","country_name":"Guinea-Bissau","iso_alpha_2":"GW","iso_alpha_3":"GNB","iso_numeric":"624","fips":"PU","tld":".gw","currency_code":"XOF","currency_name":"Franc","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"94","country_name":"Guyana","iso_alpha_2":"GY","iso_alpha_3":"GUY","iso_numeric":"328","fips":"GY","tld":".gy","currency_code":"GYD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"99","country_name":"Haiti","iso_alpha_2":"HT","iso_alpha_3":"HTI","iso_numeric":"332","fips":"HA","tld":".ht","currency_code":"HTG","currency_name":"Gourde","postal_code_format":"HT####","postal_code_regex":"^(?:HT)*(\\d{4})$"},{"country_id":"96","country_name":"Heard Island and McDonald Islands","iso_alpha_2":"HM","iso_alpha_3":"HMD","iso_numeric":"334","fips":"HM","tld":".hm","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"97","country_name":"Honduras","iso_alpha_2":"HN","iso_alpha_3":"HND","iso_numeric":"340","fips":"HO","tld":".hn","currency_code":"HNL","currency_name":"Lempira","postal_code_format":"@@####","postal_code_regex":"^([A-Z]{2}\\d{4})$"},{"country_id":"95","country_name":"Hong Kong","iso_alpha_2":"HK","iso_alpha_3":"HKG","iso_numeric":"344","fips":"HK","tld":".hk","currency_code":"HKD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"100","country_name":"Hungary","iso_alpha_2":"HU","iso_alpha_3":"HUN","iso_numeric":"348","fips":"HU","tld":".hu","currency_code":"HUF","currency_name":"Forint","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"109","country_name":"Iceland","iso_alpha_2":"IS","iso_alpha_3":"ISL","iso_numeric":"352","fips":"IC","tld":".is","currency_code":"ISK","currency_name":"Krona","postal_code_format":"###","postal_code_regex":"^(\\d{3})$"},{"country_id":"105","country_name":"India","iso_alpha_2":"IN","iso_alpha_3":"IND","iso_numeric":"356","fips":"IN","tld":".in","currency_code":"INR","currency_name":"Rupee","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"101","country_name":"Indonesia","iso_alpha_2":"ID","iso_alpha_3":"IDN","iso_numeric":"360","fips":"ID","tld":".id","currency_code":"IDR","currency_name":"Rupiah","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"108","country_name":"Iran","iso_alpha_2":"IR","iso_alpha_3":"IRN","iso_numeric":"364","fips":"IR","tld":".ir","currency_code":"IRR","currency_name":"Rial","postal_code_format":"##########","postal_code_regex":"^(\\d{10})$"},{"country_id":"107","country_name":"Iraq","iso_alpha_2":"IQ","iso_alpha_3":"IRQ","iso_numeric":"368","fips":"IZ","tld":".iq","currency_code":"IQD","currency_name":"Dinar","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"102","country_name":"Ireland","iso_alpha_2":"IE","iso_alpha_3":"IRL","iso_numeric":"372","fips":"EI","tld":".ie","currency_code":"EUR","currency_name":"Euro","postal_code_format":"","postal_code_regex":""},{"country_id":"104","country_name":"Isle of Man","iso_alpha_2":"IM","iso_alpha_3":"IMN","iso_numeric":"833","fips":"IM","tld":"EU","currency_code":".im","currency_name":"GBP","postal_code_format":"+44-1624","postal_code_regex":"@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|G"},{"country_id":"103","country_name":"Israel","iso_alpha_2":"IL","iso_alpha_3":"ISR","iso_numeric":"376","fips":"IS","tld":".il","currency_code":"ILS","currency_name":"Shekel","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"110","country_name":"Italy","iso_alpha_2":"IT","iso_alpha_3":"ITA","iso_numeric":"380","fips":"IT","tld":".it","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"44","country_name":"Ivory Coast","iso_alpha_2":"CI","iso_alpha_3":"CIV","iso_numeric":"384","fips":"IV","tld":".ci","currency_code":"XOF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"112","country_name":"Jamaica","iso_alpha_2":"JM","iso_alpha_3":"JAM","iso_numeric":"388","fips":"JM","tld":".jm","currency_code":"JMD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"114","country_name":"Japan","iso_alpha_2":"JP","iso_alpha_3":"JPN","iso_numeric":"392","fips":"JA","tld":".jp","currency_code":"JPY","currency_name":"Yen","postal_code_format":"###-####","postal_code_regex":"^(\\d{7})$"},{"country_id":"111","country_name":"Jersey","iso_alpha_2":"JE","iso_alpha_3":"JEY","iso_numeric":"832","fips":"JE","tld":".je","currency_code":"GBP","currency_name":"Pound","postal_code_format":"@# #@@|@## #@@|@@# #@@|@@","postal_code_regex":"^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]"},{"country_id":"113","country_name":"Jordan","iso_alpha_2":"JO","iso_alpha_3":"JOR","iso_numeric":"400","fips":"JO","tld":".jo","currency_code":"JOD","currency_name":"Dinar","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"126","country_name":"Kazakhstan","iso_alpha_2":"KZ","iso_alpha_3":"KAZ","iso_numeric":"398","fips":"KZ","tld":".kz","currency_code":"KZT","currency_name":"Tenge","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"115","country_name":"Kenya","iso_alpha_2":"KE","iso_alpha_3":"KEN","iso_numeric":"404","fips":"KE","tld":".ke","currency_code":"KES","currency_name":"Shilling","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"118","country_name":"Kiribati","iso_alpha_2":"KI","iso_alpha_3":"KIR","iso_numeric":"296","fips":"KR","tld":".ki","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"123","country_name":"Kosovo","iso_alpha_2":"XK","iso_alpha_3":"XKX","iso_numeric":"0","fips":"KV","tld":"","currency_code":"EUR","currency_name":"Euro","postal_code_format":"","postal_code_regex":""},{"country_id":"124","country_name":"Kuwait","iso_alpha_2":"KW","iso_alpha_3":"KWT","iso_numeric":"414","fips":"KU","tld":".kw","currency_code":"KWD","currency_name":"Dinar","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"116","country_name":"Kyrgyzstan","iso_alpha_2":"KG","iso_alpha_3":"KGZ","iso_numeric":"417","fips":"KG","tld":".kg","currency_code":"KGS","currency_name":"Som","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"127","country_name":"Laos","iso_alpha_2":"LA","iso_alpha_3":"LAO","iso_numeric":"418","fips":"LA","tld":".la","currency_code":"LAK","currency_name":"Kip","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"136","country_name":"Latvia","iso_alpha_2":"LV","iso_alpha_3":"LVA","iso_numeric":"428","fips":"LG","tld":".lv","currency_code":"LVL","currency_name":"Lat","postal_code_format":"LV-####","postal_code_regex":"^(?:LV)*(\\d{4})$"},{"country_id":"128","country_name":"Lebanon","iso_alpha_2":"LB","iso_alpha_3":"LBN","iso_numeric":"422","fips":"LE","tld":".lb","currency_code":"LBP","currency_name":"Pound","postal_code_format":"#### ####|####","postal_code_regex":"^(\\d{4}(\\d{4})?)$"},{"country_id":"133","country_name":"Lesotho","iso_alpha_2":"LS","iso_alpha_3":"LSO","iso_numeric":"426","fips":"LT","tld":".ls","currency_code":"LSL","currency_name":"Loti","postal_code_format":"###","postal_code_regex":"^(\\d{3})$"},{"country_id":"132","country_name":"Liberia","iso_alpha_2":"LR","iso_alpha_3":"LBR","iso_numeric":"430","fips":"LI","tld":".lr","currency_code":"LRD","currency_name":"Dollar","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"137","country_name":"Libya","iso_alpha_2":"LY","iso_alpha_3":"LBY","iso_numeric":"434","fips":"LY","tld":".ly","currency_code":"LYD","currency_name":"Dinar","postal_code_format":"","postal_code_regex":""},{"country_id":"130","country_name":"Liechtenstein","iso_alpha_2":"LI","iso_alpha_3":"LIE","iso_numeric":"438","fips":"LS","tld":".li","currency_code":"CHF","currency_name":"Franc","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"134","country_name":"Lithuania","iso_alpha_2":"LT","iso_alpha_3":"LTU","iso_numeric":"440","fips":"LH","tld":".lt","currency_code":"LTL","currency_name":"Litas","postal_code_format":"LT-#####","postal_code_regex":"^(?:LT)*(\\d{5})$"},{"country_id":"135","country_name":"Luxembourg","iso_alpha_2":"LU","iso_alpha_3":"LUX","iso_numeric":"442","fips":"LU","tld":".lu","currency_code":"EUR","currency_name":"Euro","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"149","country_name":"Macao","iso_alpha_2":"MO","iso_alpha_3":"MAC","iso_numeric":"446","fips":"MC","tld":".mo","currency_code":"MOP","currency_name":"Pataca","postal_code_format":"","postal_code_regex":""},{"country_id":"145","country_name":"Macedonia","iso_alpha_2":"MK","iso_alpha_3":"MKD","iso_numeric":"807","fips":"MK","tld":".mk","currency_code":"MKD","currency_name":"Denar","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"143","country_name":"Madagascar","iso_alpha_2":"MG","iso_alpha_3":"MDG","iso_numeric":"450","fips":"MA","tld":".mg","currency_code":"MGA","currency_name":"Ariary","postal_code_format":"###","postal_code_regex":"^(\\d{3})$"},{"country_id":"157","country_name":"Malawi","iso_alpha_2":"MW","iso_alpha_3":"MWI","iso_numeric":"454","fips":"MI","tld":".mw","currency_code":"MWK","currency_name":"Kwacha","postal_code_format":"","postal_code_regex":""},{"country_id":"159","country_name":"Malaysia","iso_alpha_2":"MY","iso_alpha_3":"MYS","iso_numeric":"458","fips":"MY","tld":".my","currency_code":"MYR","currency_name":"Ringgit","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"156","country_name":"Maldives","iso_alpha_2":"MV","iso_alpha_3":"MDV","iso_numeric":"462","fips":"MV","tld":".mv","currency_code":"MVR","currency_name":"Rufiyaa","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"146","country_name":"Mali","iso_alpha_2":"ML","iso_alpha_3":"MLI","iso_numeric":"466","fips":"ML","tld":".ml","currency_code":"XOF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"154","country_name":"Malta","iso_alpha_2":"MT","iso_alpha_3":"MLT","iso_numeric":"470","fips":"MT","tld":".mt","currency_code":"EUR","currency_name":"Euro","postal_code_format":"@@@ ###|@@@ ##","postal_code_regex":"^([A-Z]{3}\\d{2}\\d?)$"},{"country_id":"144","country_name":"Marshall Islands","iso_alpha_2":"MH","iso_alpha_3":"MHL","iso_numeric":"584","fips":"RM","tld":".mh","currency_code":"USD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"151","country_name":"Martinique","iso_alpha_2":"MQ","iso_alpha_3":"MTQ","iso_numeric":"474","fips":"MB","tld":".mq","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"152","country_name":"Mauritania","iso_alpha_2":"MR","iso_alpha_3":"MRT","iso_numeric":"478","fips":"MR","tld":".mr","currency_code":"MRO","currency_name":"Ouguiya","postal_code_format":"","postal_code_regex":""},{"country_id":"155","country_name":"Mauritius","iso_alpha_2":"MU","iso_alpha_3":"MUS","iso_numeric":"480","fips":"MP","tld":".mu","currency_code":"MUR","currency_name":"Rupee","postal_code_format":"","postal_code_regex":""},{"country_id":"247","country_name":"Mayotte","iso_alpha_2":"YT","iso_alpha_3":"MYT","iso_numeric":"175","fips":"MF","tld":".yt","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"158","country_name":"Mexico","iso_alpha_2":"MX","iso_alpha_3":"MEX","iso_numeric":"484","fips":"MX","tld":".mx","currency_code":"MXN","currency_name":"Peso","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"73","country_name":"Micronesia","iso_alpha_2":"FM","iso_alpha_3":"FSM","iso_numeric":"583","fips":"FM","tld":".fm","currency_code":"USD","currency_name":"Dollar","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"140","country_name":"Moldova","iso_alpha_2":"MD","iso_alpha_3":"MDA","iso_numeric":"498","fips":"MD","tld":".md","currency_code":"MDL","currency_name":"Leu","postal_code_format":"MD-####","postal_code_regex":"^(?:MD)*(\\d{4})$"},{"country_id":"139","country_name":"Monaco","iso_alpha_2":"MC","iso_alpha_3":"MCO","iso_numeric":"492","fips":"MN","tld":".mc","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"148","country_name":"Mongolia","iso_alpha_2":"MN","iso_alpha_3":"MNG","iso_numeric":"496","fips":"MG","tld":".mn","currency_code":"MNT","currency_name":"Tugrik","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"141","country_name":"Montenegro","iso_alpha_2":"ME","iso_alpha_3":"MNE","iso_numeric":"499","fips":"MJ","tld":".me","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"153","country_name":"Montserrat","iso_alpha_2":"MS","iso_alpha_3":"MSR","iso_numeric":"500","fips":"MH","tld":".ms","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"138","country_name":"Morocco","iso_alpha_2":"MA","iso_alpha_3":"MAR","iso_numeric":"504","fips":"MO","tld":".ma","currency_code":"MAD","currency_name":"Dirham","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"160","country_name":"Mozambique","iso_alpha_2":"MZ","iso_alpha_3":"MOZ","iso_numeric":"508","fips":"MZ","tld":".mz","currency_code":"MZN","currency_name":"Metical","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"147","country_name":"Myanmar","iso_alpha_2":"MM","iso_alpha_3":"MMR","iso_numeric":"104","fips":"BM","tld":".mm","currency_code":"MMK","currency_name":"Kyat","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"161","country_name":"Namibia","iso_alpha_2":"NA","iso_alpha_3":"NAM","iso_numeric":"516","fips":"WA","tld":".na","currency_code":"NAD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"170","country_name":"Nauru","iso_alpha_2":"NR","iso_alpha_3":"NRU","iso_numeric":"520","fips":"NR","tld":".nr","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"169","country_name":"Nepal","iso_alpha_2":"NP","iso_alpha_3":"NPL","iso_numeric":"524","fips":"NP","tld":".np","currency_code":"NPR","currency_name":"Rupee","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"167","country_name":"Netherlands","iso_alpha_2":"NL","iso_alpha_3":"NLD","iso_numeric":"528","fips":"NL","tld":".nl","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#### @@","postal_code_regex":"^(\\d{4}[A-Z]{2})$"},{"country_id":"252","country_name":"Netherlands Antilles","iso_alpha_2":"AN","iso_alpha_3":"ANT","iso_numeric":"530","fips":"NT","tld":".an","currency_code":"ANG","currency_name":"Guilder","postal_code_format":"","postal_code_regex":""},{"country_id":"162","country_name":"New Caledonia","iso_alpha_2":"NC","iso_alpha_3":"NCL","iso_numeric":"540","fips":"NC","tld":".nc","currency_code":"XPF","currency_name":"Franc","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"172","country_name":"New Zealand","iso_alpha_2":"NZ","iso_alpha_3":"NZL","iso_numeric":"554","fips":"NZ","tld":".nz","currency_code":"NZD","currency_name":"Dollar","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"166","country_name":"Nicaragua","iso_alpha_2":"NI","iso_alpha_3":"NIC","iso_numeric":"558","fips":"NU","tld":".ni","currency_code":"NIO","currency_name":"Cordoba","postal_code_format":"###-###-#","postal_code_regex":"^(\\d{7})$"},{"country_id":"163","country_name":"Niger","iso_alpha_2":"NE","iso_alpha_3":"NER","iso_numeric":"562","fips":"NG","tld":".ne","currency_code":"XOF","currency_name":"Franc","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"165","country_name":"Nigeria","iso_alpha_2":"NG","iso_alpha_3":"NGA","iso_numeric":"566","fips":"NI","tld":".ng","currency_code":"NGN","currency_name":"Naira","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"171","country_name":"Niue","iso_alpha_2":"NU","iso_alpha_3":"NIU","iso_numeric":"570","fips":"NE","tld":".nu","currency_code":"NZD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"164","country_name":"Norfolk Island","iso_alpha_2":"NF","iso_alpha_3":"NFK","iso_numeric":"574","fips":"NF","tld":".nf","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"121","country_name":"North Korea","iso_alpha_2":"KP","iso_alpha_3":"PRK","iso_numeric":"408","fips":"KN","tld":".kp","currency_code":"KPW","currency_name":"Won","postal_code_format":"###-###","postal_code_regex":"^(\\d{6})$"},{"country_id":"150","country_name":"Northern Mariana Islands","iso_alpha_2":"MP","iso_alpha_3":"MNP","iso_numeric":"580","fips":"CQ","tld":".mp","currency_code":"USD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"168","country_name":"Norway","iso_alpha_2":"NO","iso_alpha_3":"NOR","iso_numeric":"578","fips":"NO","tld":".no","currency_code":"NOK","currency_name":"Krone","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"173","country_name":"Oman","iso_alpha_2":"OM","iso_alpha_3":"OMN","iso_numeric":"512","fips":"MU","tld":".om","currency_code":"OMR","currency_name":"Rial","postal_code_format":"###","postal_code_regex":"^(\\d{3})$"},{"country_id":"179","country_name":"Pakistan","iso_alpha_2":"PK","iso_alpha_3":"PAK","iso_numeric":"586","fips":"PK","tld":".pk","currency_code":"PKR","currency_name":"Rupee","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"186","country_name":"Palau","iso_alpha_2":"PW","iso_alpha_3":"PLW","iso_numeric":"585","fips":"PS","tld":".pw","currency_code":"USD","currency_name":"Dollar","postal_code_format":"96940","postal_code_regex":"^(96940)$"},{"country_id":"184","country_name":"Palestinian Territory","iso_alpha_2":"PS","iso_alpha_3":"PSE","iso_numeric":"275","fips":"WE","tld":".ps","currency_code":"ILS","currency_name":"Shekel","postal_code_format":"","postal_code_regex":""},{"country_id":"174","country_name":"Panama","iso_alpha_2":"PA","iso_alpha_3":"PAN","iso_numeric":"591","fips":"PM","tld":".pa","currency_code":"PAB","currency_name":"Balboa","postal_code_format":"","postal_code_regex":""},{"country_id":"177","country_name":"Papua New Guinea","iso_alpha_2":"PG","iso_alpha_3":"PNG","iso_numeric":"598","fips":"PP","tld":".pg","currency_code":"PGK","currency_name":"Kina","postal_code_format":"###","postal_code_regex":"^(\\d{3})$"},{"country_id":"187","country_name":"Paraguay","iso_alpha_2":"PY","iso_alpha_3":"PRY","iso_numeric":"600","fips":"PA","tld":".py","currency_code":"PYG","currency_name":"Guarani","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"175","country_name":"Peru","iso_alpha_2":"PE","iso_alpha_3":"PER","iso_numeric":"604","fips":"PE","tld":".pe","currency_code":"PEN","currency_name":"Sol","postal_code_format":"","postal_code_regex":""},{"country_id":"178","country_name":"Philippines","iso_alpha_2":"PH","iso_alpha_3":"PHL","iso_numeric":"608","fips":"RP","tld":".ph","currency_code":"PHP","currency_name":"Peso","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"182","country_name":"Pitcairn","iso_alpha_2":"PN","iso_alpha_3":"PCN","iso_numeric":"612","fips":"PC","tld":".pn","currency_code":"NZD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"180","country_name":"Poland","iso_alpha_2":"PL","iso_alpha_3":"POL","iso_numeric":"616","fips":"PL","tld":".pl","currency_code":"PLN","currency_name":"Zloty","postal_code_format":"##-###","postal_code_regex":"^(\\d{5})$"},{"country_id":"185","country_name":"Portugal","iso_alpha_2":"PT","iso_alpha_3":"PRT","iso_numeric":"620","fips":"PO","tld":".pt","currency_code":"EUR","currency_name":"Euro","postal_code_format":"####-###","postal_code_regex":"^(\\d{7})$"},{"country_id":"183","country_name":"Puerto Rico","iso_alpha_2":"PR","iso_alpha_3":"PRI","iso_numeric":"630","fips":"RQ","tld":".pr","currency_code":"USD","currency_name":"Dollar","postal_code_format":"#####-####","postal_code_regex":"^(\\d{9})$"},{"country_id":"188","country_name":"Qatar","iso_alpha_2":"QA","iso_alpha_3":"QAT","iso_numeric":"634","fips":"QA","tld":".qa","currency_code":"QAR","currency_name":"Rial","postal_code_format":"","postal_code_regex":""},{"country_id":"42","country_name":"Republic of the Congo","iso_alpha_2":"CG","iso_alpha_3":"COG","iso_numeric":"178","fips":"CF","tld":".cg","currency_code":"XAF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"189","country_name":"Reunion","iso_alpha_2":"RE","iso_alpha_3":"REU","iso_numeric":"638","fips":"RE","tld":".re","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^((97)|(98)(4|7|8)\\d{2})$"},{"country_id":"190","country_name":"Romania","iso_alpha_2":"RO","iso_alpha_3":"ROU","iso_numeric":"642","fips":"RO","tld":".ro","currency_code":"RON","currency_name":"Leu","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"192","country_name":"Russia","iso_alpha_2":"RU","iso_alpha_3":"RUS","iso_numeric":"643","fips":"RS","tld":".ru","currency_code":"RUB","currency_name":"Ruble","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"193","country_name":"Rwanda","iso_alpha_2":"RW","iso_alpha_3":"RWA","iso_numeric":"646","fips":"RW","tld":".rw","currency_code":"RWF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"26","country_name":"Saint Barthelemy","iso_alpha_2":"BL","iso_alpha_3":"BLM","iso_numeric":"652","fips":"TB","tld":".gp","currency_code":"EUR","currency_name":"Euro","postal_code_format":"### ###","postal_code_regex":""},{"country_id":"201","country_name":"Saint Helena","iso_alpha_2":"SH","iso_alpha_3":"SHN","iso_numeric":"654","fips":"SH","tld":".sh","currency_code":"SHP","currency_name":"Pound","postal_code_format":"STHL 1ZZ","postal_code_regex":"^(STHL1ZZ)$"},{"country_id":"120","country_name":"Saint Kitts and Nevis","iso_alpha_2":"KN","iso_alpha_3":"KNA","iso_numeric":"659","fips":"SC","tld":".kn","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"129","country_name":"Saint Lucia","iso_alpha_2":"LC","iso_alpha_3":"LCA","iso_numeric":"662","fips":"ST","tld":".lc","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"142","country_name":"Saint Martin","iso_alpha_2":"MF","iso_alpha_3":"MAF","iso_numeric":"663","fips":"RN","tld":".gp","currency_code":"EUR","currency_name":"Euro","postal_code_format":"### ###","postal_code_regex":""},{"country_id":"181","country_name":"Saint Pierre and Miquelon","iso_alpha_2":"PM","iso_alpha_3":"SPM","iso_numeric":"666","fips":"SB","tld":".pm","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(97500)$"},{"country_id":"238","country_name":"Saint Vincent and the Grenadines","iso_alpha_2":"VC","iso_alpha_3":"VCT","iso_numeric":"670","fips":"VC","tld":".vc","currency_code":"XCD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"245","country_name":"Samoa","iso_alpha_2":"WS","iso_alpha_3":"WSM","iso_numeric":"882","fips":"WS","tld":".ws","currency_code":"WST","currency_name":"Tala","postal_code_format":"","postal_code_regex":""},{"country_id":"206","country_name":"San Marino","iso_alpha_2":"SM","iso_alpha_3":"SMR","iso_numeric":"674","fips":"SM","tld":".sm","currency_code":"EUR","currency_name":"Euro","postal_code_format":"4789#","postal_code_regex":"^(4789\\d)$"},{"country_id":"210","country_name":"Sao Tome and Principe","iso_alpha_2":"ST","iso_alpha_3":"STP","iso_numeric":"678","fips":"TP","tld":".st","currency_code":"STD","currency_name":"Dobra","postal_code_format":"","postal_code_regex":""},{"country_id":"194","country_name":"Saudi Arabia","iso_alpha_2":"SA","iso_alpha_3":"SAU","iso_numeric":"682","fips":"SA","tld":".sa","currency_code":"SAR","currency_name":"Rial","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"207","country_name":"Senegal","iso_alpha_2":"SN","iso_alpha_3":"SEN","iso_numeric":"686","fips":"SG","tld":".sn","currency_code":"XOF","currency_name":"Franc","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"191","country_name":"Serbia","iso_alpha_2":"RS","iso_alpha_3":"SRB","iso_numeric":"688","fips":"RI","tld":".rs","currency_code":"RSD","currency_name":"Dinar","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"251","country_name":"Serbia and Montenegro","iso_alpha_2":"CS","iso_alpha_3":"SCG","iso_numeric":"891","fips":"YI","tld":".cs","currency_code":"RSD","currency_name":"Dinar","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"196","country_name":"Seychelles","iso_alpha_2":"SC","iso_alpha_3":"SYC","iso_numeric":"690","fips":"SE","tld":".sc","currency_code":"SCR","currency_name":"Rupee","postal_code_format":"","postal_code_regex":""},{"country_id":"205","country_name":"Sierra Leone","iso_alpha_2":"SL","iso_alpha_3":"SLE","iso_numeric":"694","fips":"SL","tld":".sl","currency_code":"SLL","currency_name":"Leone","postal_code_format":"","postal_code_regex":""},{"country_id":"200","country_name":"Singapore","iso_alpha_2":"SG","iso_alpha_3":"SGP","iso_numeric":"702","fips":"SN","tld":".sg","currency_code":"SGD","currency_name":"Dollar","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"212","country_name":"Sint Maarten","iso_alpha_2":"SX","iso_alpha_3":"SXM","iso_numeric":"534","fips":"NN","tld":".sx","currency_code":"ANG","currency_name":"Guilder","postal_code_format":"","postal_code_regex":""},{"country_id":"204","country_name":"Slovakia","iso_alpha_2":"SK","iso_alpha_3":"SVK","iso_numeric":"703","fips":"LO","tld":".sk","currency_code":"EUR","currency_name":"Euro","postal_code_format":"###  ##","postal_code_regex":"^(\\d{5})$"},{"country_id":"202","country_name":"Slovenia","iso_alpha_2":"SI","iso_alpha_3":"SVN","iso_numeric":"705","fips":"SI","tld":".si","currency_code":"EUR","currency_name":"Euro","postal_code_format":"SI- ####","postal_code_regex":"^(?:SI)*(\\d{4})$"},{"country_id":"195","country_name":"Solomon Islands","iso_alpha_2":"SB","iso_alpha_3":"SLB","iso_numeric":"90","fips":"BP","tld":".sb","currency_code":"SBD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"208","country_name":"Somalia","iso_alpha_2":"SO","iso_alpha_3":"SOM","iso_numeric":"706","fips":"SO","tld":".so","currency_code":"SOS","currency_name":"Shilling","postal_code_format":"@@  #####","postal_code_regex":"^([A-Z]{2}\\d{5})$"},{"country_id":"248","country_name":"South Africa","iso_alpha_2":"ZA","iso_alpha_3":"ZAF","iso_numeric":"710","fips":"SF","tld":".za","currency_code":"ZAR","currency_name":"Rand","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"90","country_name":"South Georgia and the South Sandwich Islands","iso_alpha_2":"GS","iso_alpha_3":"SGS","iso_numeric":"239","fips":"SX","tld":".gs","currency_code":"GBP","currency_name":"Pound","postal_code_format":"","postal_code_regex":""},{"country_id":"122","country_name":"South Korea","iso_alpha_2":"KR","iso_alpha_3":"KOR","iso_numeric":"410","fips":"KS","tld":".kr","currency_code":"KRW","currency_name":"Won","postal_code_format":"SEOUL ###-###","postal_code_regex":"^(?:SEOUL)*(\\d{6})$"},{"country_id":"198","country_name":"South Sudan","iso_alpha_2":"SS","iso_alpha_3":"SSD","iso_numeric":"728","fips":"OD","tld":"","currency_code":"SSP","currency_name":"Pound","postal_code_format":"","postal_code_regex":""},{"country_id":"68","country_name":"Spain","iso_alpha_2":"ES","iso_alpha_3":"ESP","iso_numeric":"724","fips":"SP","tld":".es","currency_code":"EUR","currency_name":"Euro","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"131","country_name":"Sri Lanka","iso_alpha_2":"LK","iso_alpha_3":"LKA","iso_numeric":"144","fips":"CE","tld":".lk","currency_code":"LKR","currency_name":"Rupee","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"197","country_name":"Sudan","iso_alpha_2":"SD","iso_alpha_3":"SDN","iso_numeric":"729","fips":"SU","tld":".sd","currency_code":"SDG","currency_name":"Pound","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"209","country_name":"Suriname","iso_alpha_2":"SR","iso_alpha_3":"SUR","iso_numeric":"740","fips":"NS","tld":".sr","currency_code":"SRD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"203","country_name":"Svalbard and Jan Mayen","iso_alpha_2":"SJ","iso_alpha_3":"SJM","iso_numeric":"744","fips":"SV","tld":".sj","currency_code":"NOK","currency_name":"Krone","postal_code_format":"","postal_code_regex":""},{"country_id":"214","country_name":"Swaziland","iso_alpha_2":"SZ","iso_alpha_3":"SWZ","iso_numeric":"748","fips":"WZ","tld":".sz","currency_code":"SZL","currency_name":"Lilangeni","postal_code_format":"@###","postal_code_regex":"^([A-Z]\\d{3})$"},{"country_id":"199","country_name":"Sweden","iso_alpha_2":"SE","iso_alpha_3":"SWE","iso_numeric":"752","fips":"SW","tld":".se","currency_code":"SEK","currency_name":"Krona","postal_code_format":"SE-### ##","postal_code_regex":"^(?:SE)*(\\d{5})$"},{"country_id":"43","country_name":"Switzerland","iso_alpha_2":"CH","iso_alpha_3":"CHE","iso_numeric":"756","fips":"SZ","tld":".ch","currency_code":"CHF","currency_name":"Franc","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"213","country_name":"Syria","iso_alpha_2":"SY","iso_alpha_3":"SYR","iso_numeric":"760","fips":"SY","tld":".sy","currency_code":"SYP","currency_name":"Pound","postal_code_format":"","postal_code_regex":""},{"country_id":"229","country_name":"Taiwan","iso_alpha_2":"TW","iso_alpha_3":"TWN","iso_numeric":"158","fips":"TW","tld":".tw","currency_code":"TWD","currency_name":"Dollar","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"220","country_name":"Tajikistan","iso_alpha_2":"TJ","iso_alpha_3":"TJK","iso_numeric":"762","fips":"TI","tld":".tj","currency_code":"TJS","currency_name":"Somoni","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"230","country_name":"Tanzania","iso_alpha_2":"TZ","iso_alpha_3":"TZA","iso_numeric":"834","fips":"TZ","tld":".tz","currency_code":"TZS","currency_name":"Shilling","postal_code_format":"","postal_code_regex":""},{"country_id":"219","country_name":"Thailand","iso_alpha_2":"TH","iso_alpha_3":"THA","iso_numeric":"764","fips":"TH","tld":".th","currency_code":"THB","currency_name":"Baht","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"218","country_name":"Togo","iso_alpha_2":"TG","iso_alpha_3":"TGO","iso_numeric":"768","fips":"TO","tld":".tg","currency_code":"XOF","currency_name":"Franc","postal_code_format":"","postal_code_regex":""},{"country_id":"221","country_name":"Tokelau","iso_alpha_2":"TK","iso_alpha_3":"TKL","iso_numeric":"772","fips":"TL","tld":".tk","currency_code":"NZD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"225","country_name":"Tonga","iso_alpha_2":"TO","iso_alpha_3":"TON","iso_numeric":"776","fips":"TN","tld":".to","currency_code":"TOP","currency_name":"Pa'anga","postal_code_format":"","postal_code_regex":""},{"country_id":"227","country_name":"Trinidad and Tobago","iso_alpha_2":"TT","iso_alpha_3":"TTO","iso_numeric":"780","fips":"TD","tld":".tt","currency_code":"TTD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"224","country_name":"Tunisia","iso_alpha_2":"TN","iso_alpha_3":"TUN","iso_numeric":"788","fips":"TS","tld":".tn","currency_code":"TND","currency_name":"Dinar","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"226","country_name":"Turkey","iso_alpha_2":"TR","iso_alpha_3":"TUR","iso_numeric":"792","fips":"TU","tld":".tr","currency_code":"TRY","currency_name":"Lira","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"223","country_name":"Turkmenistan","iso_alpha_2":"TM","iso_alpha_3":"TKM","iso_numeric":"795","fips":"TX","tld":".tm","currency_code":"TMT","currency_name":"Manat","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"215","country_name":"Turks and Caicos Islands","iso_alpha_2":"TC","iso_alpha_3":"TCA","iso_numeric":"796","fips":"TK","tld":".tc","currency_code":"USD","currency_name":"Dollar","postal_code_format":"TKCA 1ZZ","postal_code_regex":"^(TKCA 1ZZ)$"},{"country_id":"228","country_name":"Tuvalu","iso_alpha_2":"TV","iso_alpha_3":"TUV","iso_numeric":"798","fips":"TV","tld":".tv","currency_code":"AUD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"241","country_name":"U.S. Virgin Islands","iso_alpha_2":"VI","iso_alpha_3":"VIR","iso_numeric":"850","fips":"VQ","tld":".vi","currency_code":"USD","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""},{"country_id":"232","country_name":"Uganda","iso_alpha_2":"UG","iso_alpha_3":"UGA","iso_numeric":"800","fips":"UG","tld":".ug","currency_code":"UGX","currency_name":"Shilling","postal_code_format":"","postal_code_regex":""},{"country_id":"231","country_name":"Ukraine","iso_alpha_2":"UA","iso_alpha_3":"UKR","iso_numeric":"804","fips":"UP","tld":".ua","currency_code":"UAH","currency_name":"Hryvnia","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"2","country_name":"United Arab Emirates","iso_alpha_2":"AE","iso_alpha_3":"ARE","iso_numeric":"784","fips":"AE","tld":".ae","currency_code":"AED","currency_name":"Dirham","postal_code_format":"","postal_code_regex":""},{"country_id":"77","country_name":"United Kingdom","iso_alpha_2":"GB","iso_alpha_3":"GBR","iso_numeric":"826","fips":"UK","tld":".uk","currency_code":"GBP","currency_name":"Pound","postal_code_format":"@# #@@|@## #@@|@@# #@@|@@","postal_code_regex":"^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]"},{"country_id":"234","country_name":"United States","iso_alpha_2":"US","iso_alpha_3":"USA","iso_numeric":"840","fips":"US","tld":".us","currency_code":"USD","currency_name":"Dollar","postal_code_format":"#####-####","postal_code_regex":"^(\\d{9})$"},{"country_id":"233","country_name":"United States Minor Outlying Islands","iso_alpha_2":"UM","iso_alpha_3":"UMI","iso_numeric":"581","fips":"","tld":".um","currency_code":"USD","currency_name":"Dollar ","postal_code_format":"","postal_code_regex":""},{"country_id":"235","country_name":"Uruguay","iso_alpha_2":"UY","iso_alpha_3":"URY","iso_numeric":"858","fips":"UY","tld":".uy","currency_code":"UYU","currency_name":"Peso","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"236","country_name":"Uzbekistan","iso_alpha_2":"UZ","iso_alpha_3":"UZB","iso_numeric":"860","fips":"UZ","tld":".uz","currency_code":"UZS","currency_name":"Som","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"243","country_name":"Vanuatu","iso_alpha_2":"VU","iso_alpha_3":"VUT","iso_numeric":"548","fips":"NH","tld":".vu","currency_code":"VUV","currency_name":"Vatu","postal_code_format":"","postal_code_regex":""},{"country_id":"237","country_name":"Vatican","iso_alpha_2":"VA","iso_alpha_3":"VAT","iso_numeric":"336","fips":"VT","tld":".va","currency_code":"EUR","currency_name":"Euro","postal_code_format":"","postal_code_regex":""},{"country_id":"239","country_name":"Venezuela","iso_alpha_2":"VE","iso_alpha_3":"VEN","iso_numeric":"862","fips":"VE","tld":".ve","currency_code":"VEF","currency_name":"Bolivar","postal_code_format":"####","postal_code_regex":"^(\\d{4})$"},{"country_id":"242","country_name":"Vietnam","iso_alpha_2":"VN","iso_alpha_3":"VNM","iso_numeric":"704","fips":"VM","tld":".vn","currency_code":"VND","currency_name":"Dong","postal_code_format":"######","postal_code_regex":"^(\\d{6})$"},{"country_id":"244","country_name":"Wallis and Futuna","iso_alpha_2":"WF","iso_alpha_3":"WLF","iso_numeric":"876","fips":"WF","tld":".wf","currency_code":"XPF","currency_name":"Franc","postal_code_format":"#####","postal_code_regex":"^(986\\d{2})$"},{"country_id":"66","country_name":"Western Sahara","iso_alpha_2":"EH","iso_alpha_3":"ESH","iso_numeric":"732","fips":"WI","tld":".eh","currency_code":"MAD","currency_name":"Dirham","postal_code_format":"","postal_code_regex":""},{"country_id":"246","country_name":"Yemen","iso_alpha_2":"YE","iso_alpha_3":"YEM","iso_numeric":"887","fips":"YM","tld":".ye","currency_code":"YER","currency_name":"Rial","postal_code_format":"","postal_code_regex":""},{"country_id":"249","country_name":"Zambia","iso_alpha_2":"ZM","iso_alpha_3":"ZMB","iso_numeric":"894","fips":"ZA","tld":".zm","currency_code":"ZMK","currency_name":"Kwacha","postal_code_format":"#####","postal_code_regex":"^(\\d{5})$"},{"country_id":"250","country_name":"Zimbabwe","iso_alpha_2":"ZW","iso_alpha_3":"ZWE","iso_numeric":"716","fips":"ZI","tld":".zw","currency_code":"ZWL","currency_name":"Dollar","postal_code_format":"","postal_code_regex":""}],
-			}
-		);
+    <meta property="fb:pages" content="74442380906" />
 
-		SBX_DONATIONS
-		    .setBillingSection($('donate-billing'), 1, 1)
-			.setPaymentMethod()
-			.onLoadPaymentAmount()
-			.toggleDisplayAmounts('onetime')
-			.displaySandboxWarning();
+	<link rel="dns-prefetch" href="https://cdn.britannica.com/mendel-resources/3-66">
+	<link rel="preconnect" href="https://cdn.britannica.com/mendel-resources/3-66">
 
-		if (document.getElementById('dedication_toggle')) {
-			SBX_DONATIONS.toggleDedication(
-				document.getElementById('dedication_toggle').checked,
-				SBX_DONATIONS.form,
-				''
-			);
+    <meta name="description" content="machine learning,  in artificial intelligence (a subject within computer science), discipline concerned with the implementation of computer software that can learn autonomously. Expert systems and data mining programs are the most common applications for improving algorithms through the use of machine learning. Among the most common approaches are the use of artificial neural networks (weighted decision paths) and genetic algorithms (symbols “bred” and culled by algorithms to produce successively fitter programs)." />
+		<meta name="keywords" content="machine learning, encyclopedia, encyclopeadia, britannica, article" />
+
+    <link rel="canonical" href="https://www.britannica.com/technology/machine-learning" />
+    <title>machine learning | artificial intelligence | Britannica</title>
+		<script type="text/javascript" data-type="Init Mendel">
+
+    window.$UI = {};
+
+    window.Constants = {"LICENSE_URL": "/bps/license","DEFAULT_TEST_VERSION": "A","DEFAULT_STATE": "XX","QUIZ_URL": "/quiz","SPOTLIGHT_BROWSE_URL": "/stories/spotlight","CONTENT_TYPE_TEXT": "text/plain;charset=UTF-8","TOPIC_FACTS_DATA_URL": "/facts","TOPIC_MEDIA_PATH": "/images-videos","USER_PROFILE_URL": "/user","DEBUG_URL": "/debug","ONE_GOOD_FACT_URL": "/one-good-fact","ERROR_404_URL": "/error404","TOPIC_QUOTES_PATH": "/quotes","INSTANT_ARTICLES_URL": "/instant-articles","TOPIC_PAGE_CONTENT_AJAX_URL": "/topic-content/page","INFINITE_SCROLL_PREFIX_URL": "/scroll","CC_USD": "USD","SURVEY_URL": "/survey","CATEGORY_BROWSE_URL": "/browse","STORY_BROWSE_URL": "/stories","IN_THIS_WEEK_BROWSE_URL": "/week-in-review","COUNTRY_US": "US","OPEN_MEDIA_OVERLAY_PARAMETER": "/media","GAMES_BROWSE_WORDSEARCH_URL": "/games/Word-Search","NEWSLETTER_SUBSCRIPTION_URL": "/newsletter-subscription","INSIGHTS_LANDING_PAGE_URL_2": "/factsmatter","INSIGHTS_LANDING_PAGE_URL_1": "/insights","MAINTENANCE_ERROR_URL": "https://maintenance.eb.com","IMARS_EDITOR_ID": "12365882","PROFILE_EB_EDITOR_URL": "/editor","WEB_INF_RESOURCES_PATH": "WEB-INF/resources","TOPIC_ADDITIONAL_INFO_PATH": "/additional-info","CC_INR": "INR","ARTICLE_PRINT_URL": "/print/article","FIRST_EDITION_URL": "/subscriber/firstedition","WW1_PORTAL_URL": "/discover/World-War-I","MENDEL_COOKIE": "__mendel","DEMYSTIFIED_BROWSE_URL": "/stories/demystified","LIST_BROWSE_URL": "/list/browse","PROFILE_EXPERT_URL": "/contributor","ASSEMBLY_IMAGE_URL": "/image/assembly","DAY_IN_HISTORY_URL": "/on-this-day","DEFAULT_CURRENCY": "USD","GAMES_HOMEPAGE_URL": "/games","CONTENT_TYPE_XML": "text/xml;charset=UTF-8","AJAX_PREFIX_URL": "/ajax","TOPIC_BROWSE_URL": "/topic-browse","MARKETING_CONTENT": "/marketing-content","ENV_RUNTIME": "runtime","USER_PROFILE_PARTNER_LOGO_URL": "/image/profile-partner","GALLERY_URL": "/gallery","CONTENT_TYPE_HTML": "text/html;charset=UTF-8","ENV_LOCAL": "override","MEDIA_OVERLAY_URL": "/media-overlay","ENV_DEV": "development","MEDIA_URL": "/media","TOPIC_TOP_QUESTION_URL": "/question","PODCASTS_URL": "/podcasts","STAND_ALONE_VIDEO_URL": "/video","MORE_ON_THIS_DAY_URL": "/more-on-this-day","SEARCH_PAGE_URL": "/search","TOPIC_CONTENT_AJAX_URL": "/topic-content/topic","ENV_BRANCH": "branch","ERROR_URL": "/error","MAIN_VERSION": "mainVersion","DEFAULT_S3_REGION": "US_EAST_1","TOPIC_COLLECTION_URL": "/summary","LOGINBOX_URL": "/auth/loginbox","ONE_GOOD_FACT_BROWSE_URL": "/one-good-fact/all-good-facts","QUIZ_BROWSE_URL": "/quiz/browse","BIO_BROWSE_URL": "/biographies","LIST_URL": "/list","ALPHA_BROWSE_URL": "/sitemap","GAME_URL": "/game","CONTENT_TYPE_JSON": "application/json","DICTIONARY_URL": "/dictionary","COBRAND_IMAGE_URL": "/image/cobrand","SUBMISSION_URL": "/submission","EB_LOG_OUT": "/auth2/logout","ENV_PRODUCTION": "production","TOPIC_AJAX_URL": "/ajax/topic","GAMES_BROWSE_CROSSWORD_URL": "/games/Crossword-Puzzle","WTFACT_BROWSE_URL": "/stories/wtfact","VIDEO_CHANNEL_URL": "/videos","GALLERY_BROWSE_URL": "/gallery/browse","CACHE_URL": "/cache","COMPANION_BROWSE_URL": "/stories/companion","MEDIA_FOLDER": "/eb-media","SHOW_ALL_CONTRIBUTORS": "/additional-info#contributors","BRITANNICA_EDITORS_ID": "4419","EXPLORE_BROWSE": "/explore","ENV_CACHE_DISABLED": "mendelCache","STORY_URL": "/story","DEFAULT_COUNTRY": "US","NAVBAR_URL": "/ajax/navbar","EB_LOGIN_URL": "/auth/eb-login","NEW_ARTICLES_URL": "/new-articles",};
+    window.CDN = "https://cdn.britannica.com";
+    window.CAM_LOGIN_URL = "https://cam.britannica.com";
+    window.CAM_SIGN_UP_URL = "https://cam.britannica.com/registration"
+
+    window.Mendel = {
+     	"config" : {
+			"page": "Topic",
+			"videoPlayerId": "UyMCoK2v",
+			"sharedUrl": "https://www.britannica.com/technology/machine-learning",
+	        "resourcesPrefixUrl": "https://cdn.britannica.com/mendel-resources/3-66/[url]?v=3.66.1",
+			"userInfo": { "type": "BOL"
+			             ,"currency": "EMEA"
+			             ,"country": "EG"
+					     ,"state": "C"
+			             ,"bcomId": "1375145162333591898"
+				         ,"hasAds": true
+					     ,"testVersion": "D"
+				         ,"privacyInfo": {"consentLocation":false,"gdpr":false,"ccpa":false,"needConsent":false}
+						 ,"consumerId": ""
+						 ,"instId": "9730071"
+						 ,"consumerUserName": ""
+						 ,"instUserName": "Egyptian Knowledge Bank"
+			},
+			"isLoggedInAsUser": false,
+			"analytics": {  "gaId": "UA-6636134-11" },
+			"isPhone": false,
+			"isDesktop": true,
+			"logoutUrl": "/auth2/logout",
+			"selfServiceUrl": "https://myaccount.britannica.com",
+			"cdnUrl": "https://cdn.britannica.com",
+	        "fetchOffset": 800,
+			
+			"mendelCookieName": "__mendel",
+			"mendelCookie": {"pagesViewed":1,"surveyShown":true,"topicInitialSequence":1},
+			
+
+			"autocompleteToSearchPage": false,"topicUrl": "/technology/machine-learning"
+        ,"freeTopicReason": "PERMANENT_FREE_TOPIC"
+        ,"topicId": 1116194
+	    ,"template": "DESKTOP"
+	    ,"type": "CORE"
+	    ,"hasEditMode": false        
+		,"hasToc": false,"infiniteScrollList": [{"p":1,"t":1116194},{"p":1,"t":752681},{"p":1,"t":410549},{"p":1,"t":752956},{"p":1,"t":1473950},{"p":1,"t":198506},{"p":1,"t":2011991},{"p":1,"t":1473945},{"p":1,"t":333978},{"p":1,"t":752900}]
+        ,"sequence": 1
+        ,"topics": {}
+		},
+		chatbot: {
+			answerService: {
+				url: 'https://chatbot.api.eb.com/api/qna',
+				apiKey: 'YH4dIgRoMX77z56YfLcz24aur7nONAEI6lziQKpX',
+			},
+			feedbackService: {
+				url: 'https://4ltuaewqxb.execute-api.us-east-1.amazonaws.com/production/feedback',
+				apiKey: 'YYFYIE3qaS4i6vGDOj2TE1kPBYpSWkK68Uy2L0ME',
+			},
 		}
+    };
 
-			});
+	</script>
 
-	var credit_card_options_accept_visa = true;
-	var credit_card_options_accept_mastercard = true;
-	var credit_card_options_accept_discover = true;
-	var credit_card_options_accept_amex = true;
 
-	window.addEvent('domready', function () {
-		"use strict";
 
-		var formDonate = $('formDonate'), i;
 
-		document.getElementById('auto_return').value = window.location.href + "?view=confirm&pdt=1&rid=";
 
-		formDonate.getElements('input[class^=contact_]').each(function (element, index) {
-			element.addEvent('change', function (event, el) {
-				var el = this;
-				el.getProperty('class').split(' ').each(function (string) {
-					if (string.indexOf('contact_') === 0) {
-						$('paypal_standard_' + string.slice(8, string.length)).value = el.value;
-					}
-				});
-			});
-		});
-	});
 
-	function trackPayPalStandardDonation()
-	{
-		"use strict";
 
-		var request,
-			response = {'error': false},
-			intervalUnit_paypalActions = {'once' : '_donations', 'monthly' : '_xclick-subscriptions'},
-			url = window.location.href.replace(window.location.search, '');
 
-		if (!SBX_DONATIONS.validation()) {
-			SBX_DONATIONS.validationErrorHandler();
-			return false;
-		}
 
-		$('paypalAction').value = intervalUnit_paypalActions[$('intervalUnit').value];
-		$('formDonate').format.value    = 'raw';
-		$('formDonate').processor.value = 'paypal_standard';
+<script   class="marketing-page-info" type="application/json">
+{"pageType":"Topic","templateName":"DESKTOP","pageNumber":1,"pagesTotal":1,"pageId":1116194,"pageLength":71,"initialLoad":true}
+</script>
 
-		request = new Ajax(
-			url,
-			{
-				method: 'post',
-				data: $('formDonate'),
-				onRequest: function () {
-					$('btn-donatepaypal').setProperty('disabled', 'disabled');
-				},
-				onComplete: function () {
-					$('btn-donatepaypal').removeProperty('disabled');
-					response = Json.evaluate(this.response.text);
-					if (response.error) {
-						displayWarning(response.msg, 'donate-paypalformactions', false);
-					} else {
-						$('notify_url').value += response.id;
-						$('auto_return').value += response.id;
-						$('paypalStandardForm').submit();
-					}
-				}
-			}
-		).request();
 
-		return false;
-	}
-	JXLang={INVALID_NAME_TXT:"Comments_Comment_Name_Invalid",INVALID_EMAIL_TXT:"Comments_Comment_Email_Invalid",INVALID_BODY_TXT:"Comments_Comment_Body_Invalid",BOLD:"Comments_Bold",ITALIC:"Comments_Italic",UNDERLINE:"Comments_Underline",STRIKETHROUGH:"Comments_Strikethrough",QUOTE:"Comments_Quote",IMAGE:"Comments_Image",ENTER_IMAGE:"Comments_Enter_Image",ENTER_LINK:"Comments_Enter_Link",LINK:"Comments_Link",LINK_TEXT:"Comments_Link_Text",ENTER_LANG:"Comments_Enter_Lang",CODE:"Comments_Code"};
-  </script>
 
-			<!-- Load CORE Stylesheets -->
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/css/reset.min.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/bootstrap-2.3.2/css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/css/font-awesome/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/css/soapbox-bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/js/zozo-accordion/css/zozo.soapbox.min.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/css/soapboxTypography.min.css" type="text/css">
 
-	<!-- Load CORE RWD Stylesheets -->
-	<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/bootstrap-2.3.2/css/bootstrap-responsive.min.css" type="text/css">
-	<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/system/css/soapbox-responsive-bootstrap.min.css" type="text/css">
-		<!-- Load TEMPLATE Stylesheets -->
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/css/style-client.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/css/style.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/css/typography.css" type="text/css">
-<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/css/_style.css" type="text/css">
 
-<!-- Load TEMPLATE RWD Stylesheets -->
-	<link rel="stylesheet" href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/css/style-responsive.css" type="text/css">
-		<link href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/favicon.ico" rel="icon">
-<link href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/favicon.ico" rel="shortcut icon">
-<link href="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/favicon.ico" rel="shortcut icon" type="image/x-icon">			<!--Load SBX Scripts -->
-	<script language="javascript" type="text/javascript" src="https://chm.secure.nonprofitsoapbox.com/templates/system/js/modernizr.min.js"></script>
-	<!--FOR IE has to be in HEAD -->
-	<!--[if lte IE 9]>
-		<script language="javascript" type="text/javascript" src="https://chm.secure.nonprofitsoapbox.com/templates/system/js/placeholders/placeholders.min.js"></script>
-	<![endif]-->
-	<!--[if lt IE 9]>
-		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<script language="javascript" type="text/javascript" src="https://chm.secure.nonprofitsoapbox.com/templates/system/js/selectivizr-min.js"></script>
-		<script language="javascript" type="text/javascript" src="https://chm.secure.nonprofitsoapbox.com/templates/system/js/respond/respond.src.min.js"></script>
-		<script language="javascript" type="text/javascript" src="https://chm.secure.nonprofitsoapbox.com/templates/system/js/easypiechart/demo/excanvas.compiled.min.js"></script>
-	<![endif]-->			</head>
 
-	<body id="bd" class=" com_donations">
 
-		<header>
-		  <div class="nav-wrapper">
-			<div class="container">
-			  <div class="nav-section-top">
-				<div class="logo">
-				  <a class="logo" href="https://computerhistory.org">
-					<img class="full-logo" src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/chm-logo-text.svg" alt="">
-					<img class="teaser-logo" src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/chm-logo-short.svg" alt="">
-				  </a>
-				</div>
-				<div class="right-content">
-				  <button class="mobile-search search-icon mobile" aria-role="button">
-					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
-					  <g>
-						<path d="M495,466.2L377.2,348.4c29.2-35.6,46.8-81.2,46.8-130.9C424,103.5,331.5,11,217.5,11C103.4,11,11,103.5,11,217.5   S103.4,424,217.5,424c49.7,0,95.2-17.5,130.8-46.7L466.1,495c8,8,20.9,8,28.9,0C503,487.1,503,474.1,495,466.2z M217.5,382.9   C126.2,382.9,52,308.7,52,217.5S126.2,52,217.5,52C308.7,52,383,126.3,383,217.5S308.7,382.9,217.5,382.9z"></path>
-					  </g>
-					</svg>
-				  </button>
-				  <button class="mobile-menu-toggle" aria-role="button">
-					<span>Menu</span>
-				  </button>
-				</div>
-			  </div>
-			  <div class="nav-section-bottom">
-				<div class="nav-section-bottom-menu">
-				  <ul class="menu vertical large-horizontal bottom-menu" data-responsive-menu="drilldown large-dropdown">
-								<li>
-					  <a href="https://computerhistory.org/explore/">Explore</a>
-									<ul class="nested menu submenu vertical">
-														<li><a href="https://computerhistory.org/explore/">Overview</a></li>
-										<li><a href="https://computerhistory.org/stories/">Stories</a></li>
-										<li><a href="https://computerhistory.org/timelines/">Timelines</a></li>
-										<li><a href="https://computerhistory.org/collections/">Collections</a></li>
-										<li><a href="https://computerhistory.org/playlists/">Playlists</a></li>
-										<li><a href="https://computerhistory.org/blogs/">Blogs</a></li>
-										<li><a href="https://computerhistory.org/publications/">Publications</a></li>
-									  </ul> <!-- /.menu.nested -->
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/connect/">Connect</a>
-									<ul class="nested menu submenu vertical">
-														<li><a href="https://computerhistory.org/connect/">Overview</a></li>
-										<li><a href="https://computerhistory.org/events/">Events</a></li>
-										<li><a href="https://computerhistory.org/k-12-students-educators/">K-12 Students &amp; Educators</a></li>
-										<li><a href="https://computerhistory.org/families-community-groups/">Families &amp; Community Groups</a></li>
-										<li><a href="https://computerhistory.org/colleges-universities/">Colleges &amp; Universities</a></li>
-										<li><a href="https://computerhistory.org/business-government-leaders/">Business &amp; Government Leaders</a></li>
-										<li><a href="https://computerhistory.org/volunteers/">Volunteers</a></li>
-									  </ul> <!-- /.menu.nested -->
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/visit/">Visit</a>
-									<ul class="nested menu submenu vertical">
-														<li><a href="https://computerhistory.org/visit/">Overview</a></li>
-										<li><a href="https://computerhistory.org/make-plan/">Make a Plan</a></li>
-										<li><a href="https://computerhistory.org/exhibits/">Exhibits</a></li>
-										<li><a href="https://computerhistory.org/tours/">Public Tours &amp; Group Reservations</a></li>
-										<li><a href="https://computerhistory.org/customize-it/">Customize It</a></li>
-										<li><a href="https://computerhistory.org/venue/">Venue</a></li>
-									  </ul> <!-- /.menu.nested -->
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/about/">About</a>
-									<ul class="nested menu submenu vertical">
-														<li><a href="https://computerhistory.org/about/">Overview</a></li>
-										<li><a href="https://computerhistory.org/this-is-chm/">This Is CHM</a></li>
-										<li><a href="https://computerhistory.org/centers/">Centers</a></li>
-										<li><a href="https://computerhistory.org/programs/">Programs</a></li>
-										<li><a href="https://computerhistory.org/press-releases">News</a></li>
-										<li><a href="https://computerhistory.org/leadership/">Leadership</a></li>
-									  </ul> <!-- /.menu.nested -->
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/join/">Join &amp; Give</a>
-									<ul class="nested menu submenu vertical">
-														<li><a href="https://computerhistory.org/join/">Overview</a></li>
-										<li><a href="https://computerhistory.org/ways-to-give/">Ways to Give</a></li>
-										<li><a href="https://computerhistory.org/donor-recognition/">Donor Recognition</a></li>
-										<li><a href="https://computerhistory.org/institutional-partnerships/">Institutional Partnerships</a></li>
-									  </ul> <!-- /.menu.nested -->
-								  </li>
-								<li class="search-icon desktop">
-					  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
-						<g>
-						  <path d="M495,466.2L377.2,348.4c29.2-35.6,46.8-81.2,46.8-130.9C424,103.5,331.5,11,217.5,11C103.4,11,11,103.5,11,217.5   S103.4,424,217.5,424c49.7,0,95.2-17.5,130.8-46.7L466.1,495c8,8,20.9,8,28.9,0C503,487.1,503,474.1,495,466.2z M217.5,382.9   C126.2,382.9,52,308.7,52,217.5S126.2,52,217.5,52C308.7,52,383,126.3,383,217.5S308.7,382.9,217.5,382.9z"></path>
-						</g>
-					  </svg>
-					</li>
-				  </ul> <!-- /.menu -->
-				</div>
-				<div class="nav-section-top-menu">
-				  <ul class="menu vertical large-horizontal top-menu" data-responsive-menu="drilldown large-dropdown">
-								<li>
-					  <a href="https://computerhistory.org/events/">Upcoming Events</a>
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/make-plan/">Hours &amp; Directions</a>
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/stories/">Stories</a>
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/donate-now/">Donate</a>
-								  </li>
-							  </ul> <!-- /.menu -->
-				</div>
-			  </div>
-			</div>
-			<div class="search-wrapper">
-			  <div class="container">
-				<form role="search" method="get" id="searchform" class="searchform" action="https://computerhistory.org/">
-						<div>
-							<label class="screen-reader-text" for="s">Search for:</label>
-							<input type="text" value="" name="s" id="s" placeholder="Type here to search">
-							<input type="submit" id="searchsubmit" value="Go">
-						</div>
-					</form>
-				<a href="https://www.computerhistory.org/collections/search/" class="search-text">Or search the collection catalog
-				  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="7" viewbox="0 0 10 7">
-					<defs>
-					  <path id="ehgga" d="M464.07 207.98h8.498v1.042h-8.498z"></path>
-					  <path id="ehggb" d="M470.208 211.99l-.768-.73 2.906-2.76-2.906-2.76.768-.73 3.673 3.49z"></path>
-					</defs>
-					<g>
-					  <g transform="translate(-464 -205)">
-						<g>
-						  <use fill="#175e61" xlink:href="#ehgga"></use>
-						</g>
-						<g>
-						  <use fill="#175e61" xlink:href="#ehggb"></use>
-						</g>
-					  </g>
-					</g>
-				  </svg>
-				</a>
-			  </div>
-			</div>
-		  </div>
-		</header>
 
-		<section class="text-block main-content">
-			<div class="container">
-				<div class="social-share share-widget-icons">
-					<h2>Share</h2>
-					<div class="addtoany_shortcode">
-						<div class="a2a_kit a2a_kit_size_ addtoany_list" data-a2a-url="https://computerhistory.org/donate-now/" data-a2a-title="Donate Now"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fchm.secure.nonprofitsoapbox.com%2Fdonate&amp;linkname=Donate+-+Computer+History+Museum" title="Facebook" rel="nofollow noopener" target="_blank"><img src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/facebook.png" width="32" alt="Facebook"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fchm.secure.nonprofitsoapbox.com%2Fdonate&amp;linkname=Donate+-+Computer+History+Museum" title="Twitter" rel="nofollow noopener" target="_blank"><img src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/twitter.png" width="32" alt="Twitter"></a><a class="a2a_button_copy_link" href="https://www.addtoany.com/add_to/copy_link?linkurl=https%3A%2F%2Fchm.secure.nonprofitsoapbox.com%2Fdonate&amp;linkname=Donate+-+Computer+History+Museum" title="Copy Link" rel="nofollow noopener" target="_blank"><img src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/link.png" width="32" alt="Copy Link"></a>
-						</div>
-					</div>
-				</div>
-				<!-- !BEGIN: Load CORE Display Outputs (*) -->
-				
-				
-				
-<div id="page" class="sbx donations donations-donate donations-donate-now-donate">
 
-     <div class="item">
-
-		<form class="item-form form-donate form-validate" id="formDonate" name="formDonate" autocomplete="on" method="POST" action="https://chm.secure.nonprofitsoapbox.com/donate">
-			<input type="hidden" name="option" id="option" value="com_donations">
-			<input type="hidden" name="task" id="task" value="process">
-			<input type="hidden" name="format" id="format" value="html">
-			<input type="hidden" name="processor" id="processor" value="gateway">
-			<input type="hidden" name="campaign_title" id="campaign_title" value="Donate Now">
-			<input type="hidden" name="campaign_id" id="campaign_id" value="1">
-			<input type="hidden" name="id" id="id" value="1">
-			<input type="hidden" name="description" id="description" value="Donation">
-			<input type="hidden" name="tax_exempt" id="tax_exempt" value="1">
-			<input type="hidden" name="d90f97e9901a25c565584d53675cfbad" value="1">
-			
-			     		<div class="section-header item-header" id="donate-header">
-    			<h1 class="title">Donate</h1>
-    		</div>
-    		
-						<div class="section-intro item-desc item-introdesc" id="donate-intro">
-				<div class="hero hero--with-image">
-<div class="hero__wrapper">
-<div class="hero__img-holder"><img src="https://chm.secure.nonprofitsoapbox.com/storage/images/chm_web_give-20190913_171736-980x552-c-default.jpg" alt="chm web give-20190913 171736-980x552-c-default" width="980" height="552"></div>
-<div class="hero__content">
-<div class="content">
-<h5>Join &amp; Give</h5>
-<h1>Donate Now</h1>
-</div>
-<div class="hero__pattern"><img src="https://computerhistory.org/wp-content/themes/bsdstarter/assets/img/basic-page-core-memory.svg" alt=""></div>
-</div>
-</div>
-</div>			</div>
-			
-			
-
-
-			<div class="section-donation item-section" id="donate-donation">
-				<div class="section-header">
-					<h3 class="title">Choose your donation amount</h3>
-				</div>
-				<div class="section-content">
-					<input type="hidden" name="amountLevelCode" id="amountLevelCode">
-					<ul class="donation-list compList">
-						<input type="hidden" id="intervalUnit" name="intervalUnit" value="once">	    		    				     		<li class="amount-group-notice clearfix notStacked donate-amount-group-onetime block_name" id="donate-amount-form-onetime"><div class="cntr"><span class="span-block"><button type="button" name="amts[]" id="amts-onetime-0-100.00" value="100.00" class="btn btn-amount amts" data-amount-type="predefined" data-amount-interval="once" data-amount-level-code-key="0" onclick="SBX_DONATIONS.changeIntervalUnit('once'); SBX_DONATIONS.toggleSet(this); SBX_DONATIONS.amountSet(this); SBX_DONATIONS.levelCodeSet(this);"><span>$100</span></button></span><span class="span-block"><button type="button" name="amts[]" id="amts-onetime-1-200.00" value="200.00" class="btn btn-amount amts" data-amount-type="predefined" data-amount-interval="once" data-amount-level-code-key="1" onclick="SBX_DONATIONS.changeIntervalUnit('once'); SBX_DONATIONS.toggleSet(this); SBX_DONATIONS.amountSet(this); SBX_DONATIONS.levelCodeSet(this);"><span>$200</span></button></span><span class="span-block"><button type="button" name="amts[]" id="amts-onetime-2-500.00" value="500.00" class="btn btn-amount amts" data-amount-type="predefined" data-amount-interval="once" data-amount-level-code-key="2" onclick="SBX_DONATIONS.changeIntervalUnit('once'); SBX_DONATIONS.toggleSet(this); SBX_DONATIONS.amountSet(this); SBX_DONATIONS.levelCodeSet(this);"><span>$500</span></button></span><span class="span-block"><button type="button" name="amts[]" id="amts_onetime0" value="0.00" class="btn btn-amount amts" data-amount-type="custom" data-amount-interval="once" data-amount-level-code-key="3" onclick="SBX_DONATIONS.changeIntervalUnit('once'); SBX_DONATIONS.toggleSet(this); SBX_DONATIONS.amountSet(this); SBX_DONATIONS.levelCodeSet(this);"><span>Other</span></button></span><div class="input-group"><div class="input-group-addon">$</div><input type="text" name="onetime_other_amt" id="onetime_other_amt" value="" class="form-control custom-input" min="1" max="999999" maxlength="10" size="10" data-amount-interval="once" data-amount-level-code-key="" onchange="SBX_DONATIONS.changeIntervalUnit('once'); SBX_DONATIONS.selectOther('once'); SBX_DONATIONS.levelCodeSet(this); SBX_DONATIONS.amountSet(this);"> <div class="input-group-addon">USD</div></div></div></li>						<input type="hidden" name="amount" id="amount" class="amount-group validate-numeric" value="">
-						
-                        					</ul>
-				</div>
-			</div>
-
-
-
-			
-
-
-     		<div class="section-contactinfo item-section" id="donate-contactinfo">
-				<div class="section-header">
-											<h3 class="title">Your Information</h3>
-														</div>
-				<div class="section-content">
-					<ul class="contactinfo-list compList">
-					     <li class="name-group-notice">
-					     	<label for="firstname" class="desc name-group-notice" id="namemsg">Name: <span class="req">*</span></label>
-					     	<span class="span-block">
-					     		<input value="" tabindex="1" size="20" class="contact_firstname field name-group text core required" name="firstname" id="firstname">
-					     		<label for="firstname">First Name</label>
-					     	</span>
-					     	<span class="span-block span-block-under">
-					     		<input value="" tabindex="2" size="30" class="contact_lastname field name-group text core required" name="lastname" id="lastname">
-					     		<label for="lastname">Last Name</label>
-					     	</span>
-					     </li>
-					     <li class="email-group-notice">
-					     	<label for="email" class="desc email-group-notice" id="emailmsg">Email Address: <span class="req">*</span></label>
-					     	<div class="cntr">
-					     		<input type="text" value="" maxlength="100" tabindex="3" name="email" class="contact_email field email-group text medium core required validate-email" id="email" title="Please enter a valid email address (you@domain.com)">
-					     							     			<label for="email">Your receipt will be sent to this address</label>
-					     							     	</div>
-					     </li>
-					     					     
-					     <!-- BEGIN: Custom Inputs -->
-					     					     					     					     					     <!-- END: Custom Inputs -->
-					     <li id="sbx_Donation_Page_Comment__c_container" class=" "> 	<label for="sbx_Donation_Page_Comment__c" class="desc attendeeTooltip" title="Add additional information about your donation.">Comment (Max length: 500 characters)</label> 	<div class="cntr"><textarea id="sbx_Donation_Page_Comment__c" name="sbx_Donation_Page_Comment__c" class="field textarea medium"></textarea></div> </li>
-					     					     					     
-											</ul>
-				</div>
-			</div>
-
-						<div class="section-billing item-section item-paymentsection" id="donate-billing" style="display:none;">
-
-						    		    		<div class="section-header clearfix">
-    		    			<div class="section-header-secure">
-    		    				    		    												<h3 class="title">Payment Information</h3>
-								    		    			</div>
-    		    		         		    		</div>
-						    		    		<div class="section-content">
-    		    			<ul class="billing-list compList compList-leftLabel compList-payment">
-								<li class="complex notStacked extraPad border-top" id="sectPT">
-									<div class="cntr-label">
-										<label for="paytype" class="desc descLrg" id="paytypemsg">Method <span class="req">*</span></label>
-																				<p class="desc"></p>
-																			</div>
-									<div class="cntr col sbxPayType">
-										<span class="paytype-AmEx span-block">
-	<label for="cctypeAmEx" class="choice"><img src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/img/cc_amex.png" alt="American Express" height="40px" width="60px"></label>
-	<input type="radio" name="CREDITCARDTYPE" id="cctypeAmEx" value="AmEx" onclick="SBX_DONATIONS.togglePayFields(this)" class="radio"></span><span class="paytype-Discover span-block">
-	<label for="cctypeDiscover" class="choice"><img src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/img/cc_discov.png" alt="Discover" height="40px" width="60px"></label>
-	<input type="radio" name="CREDITCARDTYPE" id="cctypeDiscover" value="Discover" onclick="SBX_DONATIONS.togglePayFields(this)" class="radio"></span><span class="paytype-MasterCard span-block">
-	<label for="cctypeMasterCard" class="choice"><img src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/img/cc_mastercard.png" alt="Master Card" height="40px" width="60px"></label>
-	<input type="radio" name="CREDITCARDTYPE" id="cctypeMasterCard" value="MasterCard" onclick="SBX_DONATIONS.togglePayFields(this)" class="radio"></span><span class="paytype-Visa span-block">
-	<label for="cctypeVisa" class="choice"><img src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/img/cc_visa.png" alt="Visa" height="40px" width="60px"></label>
-	<input type="radio" name="CREDITCARDTYPE" id="cctypeVisa" value="Visa" onclick="SBX_DONATIONS.togglePayFields(this)" class="radio"></span>										                                        																			</div>
-								 </li>
-								 								 <li class="creditcard-group cc-group-notice complex extraPad border-top seamless" id="sectCC">
-									<div class="cntr-label">
-										<label for="first_name" class="desc descLrg">Credit Card <span class="req">*</span></label>
-																			</div>
-									<div class="cntr">
-										<span class="el-firstname span-block left" id="cc-firstname">
-											<input type="text" tabindex="12" value="" maxlength="50" class="cc-firstname field cc-group text addr required" name="first_name" id="first_name">
-											<label for="first_name">First Name on Card</label>
-										</span>
-										<span class="el-lastname span-block right" id="cc-lastname">
-											<input type="text" tabindex="13" value="" maxlength="50" class="cc-lastname cc-group text field addr required" name="last_name" id="last_name">
-											<label for="last_name">Last Name on Card</label>
-										</span>
-										<span class="el-number span-block full" id="cc-num">
-											<input type="text" tabindex="14" value="" maxlength="22" size="15" class="cc-number cc-group text field addr required" name="card_num" id="card_num" onkeyup="SBX_DONATIONS.selectCardType(event, this)" onblur="SBX_DONATIONS.validateIsCardAccept(event, this)">
-											<label for="card_num">Credit Card Number</label>
-										</span>
-										<span class="el-expiration span-block left" id="cc-exp">
-											<span class="span-block"><select name="exp_month" id="exp_month" class="select field addr required validate-expiration" tabindex="14"><option value="01">Jan</option><option value="02">Feb</option><option value="03">Mar</option><option value="04">Apr</option><option value="05" selected>May</option><option value="06">Jun</option><option value="07">Jul</option><option value="08">Aug</option><option value="09">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option></select><label for="exp_month">Expiration Month</label></span>
-											<span class="span-block symbol">/</span>
-											<span class="span-block"><select name="exp_year" id="exp_year" tabindex="15" class="select field addr required validate-expiration"><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option></select><label for="exp_year">Expiration Year</label></span>
-										</span>
-										<span class="el-cvc span-block right" id="cc-cvc">
-											<img height="22px" width="65px" title="Your Card Verification Code is a 3-digit number printed on the back of your Visa/Mastercard. It appears after and to the right of your card number. The American Express verification number is a 4-digit number printed on the front of your card. It appears after and to the right of your card number." alt="" src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/img/cvc.png" class="right">
-											<input type="text" min="1" max="999" tabindex="15" value="" maxlength="4" size="4" style="width: 60%;" class="cc-code cc-group text field addr required" name="card_code" id="card_code">
-											<label for="CVV2">Security Code</label>
-										</span>
-									</div>
-								 </li>
-
-                                 
-								 <li class="billaddr-group-notice complex extraPad border-top seamless" id="sectBA">
-									<div class="cntr-label">
-										<label for="address" class="desc descLrg" id="billingaddrmsg">Billing Address <span class="req">*</span></label>
-																			</div>
-									<div class="cntr address">
-										<span class="span-block full">
-											<input id="address" name="address" class="billaddr-group field text full required" type="text" tabindex="16" value="">
-											<label for="address">Street Address</label>
-										</span>
-										<span class="span-block left">
-											<input id="city" name="city" class="billaddr-group field text addr required" type="text" tabindex="17" value="">
-											<label for="city">City</label>
-										</span>
-										<span class="span-block right">
-											<input type="text" name="state" id="bill_mailing_state" value="" class="billaddr-group field text addr region-input required" tabindex="18">
-											<label for="state">State / Province / Region</label>
-										</span>
-										<span id="bill_mailing_postal_code_wrap" class="span-block left postal-code-wrap" style="clear:both;">
-											<input id="bill_mailing_postal_code" name="zip" class="billaddr-group field text addr postal-code-input required" type="text" maxlength="15" tabindex="19" value="" title="(xxxxx) or (xxxxx-xxxx)">
-											<label for="zip">Postal / Zip Code</label>
-										</span>
-										<span class="span-block full">
-											<select name="bill_country" id="bill_country" class="select field addr country-input required" tabindex="19"><option value="AF">Afghanistan</option><option value="AX">Aland Islands</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AS">American Samoa</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AI">Anguilla</option><option value="AQ">Antarctica</option><option value="AG">Antigua and Barbuda</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AW">Aruba</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BM">Bermuda</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BQ">Bonaire</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BV">Bouvet Island</option><option value="BR">Brazil</option><option value="IO">British Indian Ocean Territory</option><option value="VG">British Virgin Islands</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CV">Cape Verde</option><option value="KY">Cayman Islands</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CX">Christmas Island</option><option value="CC">Cocos Islands</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CK">Cook Islands</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CW">Curacao</option><option value="CY">Cyprus</option><option value="CZ">Czech Republic</option><option value="CD">Democratic Republic of the Congo</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="TL">East Timor</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="ET">Ethiopia</option><option value="FK">Falkland Islands</option><option value="FO">Faroe Islands</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GF">French Guiana</option><option value="PF">French Polynesia</option><option value="TF">French Southern Territories</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GI">Gibraltar</option><option value="GR">Greece</option><option value="GL">Greenland</option><option value="GD">Grenada</option><option value="GP">Guadeloupe</option><option value="GU">Guam</option><option value="GT">Guatemala</option><option value="GG">Guernsey</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HM">Heard Island and McDonald Islands</option><option value="HN">Honduras</option><option value="HK">Hong Kong</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IM">Isle of Man</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="CI">Ivory Coast</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JE">Jersey</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="XK">Kosovo</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MO">Macao</option><option value="MK">Macedonia</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MQ">Martinique</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="YT">Mayotte</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MS">Montserrat</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="AN">Netherlands Antilles</option><option value="NC">New Caledonia</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="NU">Niue</option><option value="NF">Norfolk Island</option><option value="KP">North Korea</option><option value="MP">Northern Mariana Islands</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PW">Palau</option><option value="PS">Palestinian Territory</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PN">Pitcairn</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="PR">Puerto Rico</option><option value="QA">Qatar</option><option value="CG">Republic of the Congo</option><option value="RE">Reunion</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="BL">Saint Barthelemy</option><option value="SH">Saint Helena</option><option value="KN">Saint Kitts and Nevis</option><option value="LC">Saint Lucia</option><option value="MF">Saint Martin</option><option value="PM">Saint Pierre and Miquelon</option><option value="VC">Saint Vincent and the Grenadines</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="ST">Sao Tome and Principe</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="CS">Serbia and Montenegro</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SX">Sint Maarten</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="GS">South Georgia and the South Sandwich Islands</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SJ">Svalbard and Jan Mayen</option><option value="SZ">Swaziland</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TG">Togo</option><option value="TK">Tokelau</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TM">Turkmenistan</option><option value="TC">Turks and Caicos Islands</option><option value="TV">Tuvalu</option><option value="VI">U.S. Virgin Islands</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US" selected>United States</option><option value="UM">United States Minor Outlying Islands</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VA">Vatican</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="WF">Wallis and Futuna</option><option value="EH">Western Sahara</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select>											<label for="country">Country</label>
-										</span>
-									</div>
-								 </li>
-								 							</ul>
-						</div>
-					</div>
-
-
-
-<div class="section-outro item-desc item-outrodesc" id="donate-outro">
-    <span style="color: #ff0000;">If you get an error message, please refresh the page before correcting the error.</span></div>
-
-
-			<div id="" class="sbx-extended">
-			<label for="fname" class="desc">First Name<label>
-			<div class="cntr"><input type="text" id="fname" name="fname" class="field text large"></div>
-			</label></label></div>
-			<div id="" class="sbx-extended">
-			<label for="creditnum" class="desc">Credit Card #</label>
-			<div class="cntr"><input type="text" id="creditnum" name="creditnum" class="field text large"></div>
-			</div>
-			<div id="" class="sbx-extended">
-			<label for="lname" class="desc">Last Name<label>
-			<div class="cntr"><input type="text" id="lname" name="lname" class="field text large"></div>
-			</label></label></div>
-			<div id="" class="sbx-extended">
-			<label for="address_line_one" class="desc">Address Line 1<label>
-			<div class="cntr"><input type="text" id="address_line_one" name="address_line_one" class="field text large"></div>
-			</label></label></div>
-			<div id="" class="sbx-extended">
-			<label for="address_line_two" class="desc">Address Line 2<label>
-			<div class="cntr"><input type="text" id="address_line_two" name="address_line_two" class="field text large"></div>
-			</label></label></div>
-						<div class="compCaptcha-wrap contactCaptcha" id="contactCaptcha-wrap">
-				 <div class="compCaptcha-content" id="contactCaptcha-content">
-					<ul class="compList compList-formVert" id="contactCaptcha-formUL">
-						<li>
-							<div class="g-recaptcha" data-sitekey="6Le8wxEUAAAAADLRyobMGIZrRkry10YLP53RPPD7"></div>
-							<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=en"></script>
-						 </li>
-					</ul>
-				 </div>
-			</div>
-		<div class="section-formactions item-formactions" id="donate-formactions">
-    <ul class="compList compList-btns">
-        <li class="buttons buttons-left">
-            <button class="btn btn-primary btn-submit payable-form-btn" id="btnDonate" name="btnDonate" type="submit"><span>Donate Now</span></button>
-        </li>
-                <li class="requiredtext requiredtext-left">
-            <span class="req" id="reqLine">Fields marked with an asterisk (*) are required.</span>
-        </li>
-            </ul>
-</div>
-
-<div id="donate-formfooter" class="section-formfooter"><p style="line-height: .8em;"><span style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; font-size: 12px;">By submitting this form, you are giving consent to have your submitted data added to the Computer History Museum email list. The Museum and all parties involved take privacy very seriously, and we guarantee email addresses and information collected will be kept confidential. If you wish to unsubscribe from the email list, you can do so after you receive the first mailing by clicking on the Unsubscribe link.</span></p></div>
-     	</form>
-
-		 
-		
-		<!-- BEGIN: Paypal Buttons -->
-		
-<div class="section-formactions item-formactions paypal" id="donate-paypalformactions" style="display:none">
-	<form id="paypalStandardForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" onsubmit="return trackPayPalStandardDonation();">
-		<input type="hidden" name="cmd" value="_donations" id="paypalAction">                                                                  <!-- Action -->
-		<input type="hidden" name="business" value="name@example.com">  <!-- PayPal ID or email address -->
-		<input type="hidden" name="currency_code" value="USD">                                                               <!-- The currency of the payment -->
-		<input type="hidden" name="item_name" value="Donation"> <!-- Description of item -->
-		<input type="hidden" name="no_note" value="1">                                                                       <!-- Do not prompt buyers to include a note with their payments -->
-		<input type="hidden" name="amount" id="paypalTransaction" value="">                                                  <!-- Amount of the donation -->
-		<input type="hidden" name="a3" id="paypalSubscription" value="">                                                     <!-- Subscription price -->
-		<input type="hidden" name="src" value="1">                                                                           <!-- Recurring payments (1 – subscription payments recur) -->
-		<input type="hidden" name="p3" value="1">                                                                            <!-- Subscription duration -->
-		<input type="hidden" name="t3" value="M">                                                                            <!-- Subscription units of duration -->
-
-		<input type="hidden" name="first_name" id="paypal_standard_firstname">
-		<input type="hidden" name="last_name" id="paypal_standard_lastname">
-		<input type="hidden" name="email" id="paypal_standard_email">
-		<input type="hidden" name="night_phone_a" id="" value="01">
-		<input type="hidden" name="night_phone_b" id="paypal_standard_phone">
-
-		<input type="hidden" name="cancel_return" value="https://chm.secure.nonprofitsoapbox.com/donate">
-		<input type="hidden" name="notify_url" id="notify_url" value="https://chm.secure.nonprofitsoapbox.com/index.php?option=com_donations&amp;view=donate&amp;task=paypal&amp;id=">
-		<input type="hidden" name="return" id="auto_return" value="">
-
-		<ul class="compList compList-btns">
-			<li class="buttons buttons-left">
-				<button class="btn btn-primary" type="submit" name="btn-donatepaypal" id="btn-donatepaypal"><span>Go To PayPal</span></button>
-			</li>
-			<li class="requiredtext requiredtext-left">
-				<span class="req" id="reqLine">Fields marked with an asterisk (*) are required.</span>
-			</li>
-		</ul>
-	</form>
-</div>
-		<!-- END: Paypal Buttons -->
-
-			</div>
-</div>
-
-				
-			</div>
-		</section>
-
-		<!-- more stories -->
-		<section class="more-stories">
-		  <div class="container container--small">
-			<h2 class="more-stories__title">More Ways to Give</h2>
-			<div class="row">
-														<div class="more-stories__column" style="background: url('https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/MBC-FEL14-MJB-Q-WEB-0720-477x268-c-default.jpg') center center no-repeat;">
-							  <a href="https://computerhistory.org/ways-to-give/#estate">
-							  <div class="more-stories__text">Estate &amp; Gift Planning</div>
-							  </a>
-						  </div>
-														<div class="more-stories__column" style="background: url('https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/Apple-I_book_final-2-477x268-c-default.jpg') center center no-repeat;">
-							  <a href="https://computerhistory.org/stock-donations/">
-							  <div class="more-stories__text">Stock Gift Donations</div>
-							  </a>
-						  </div>
-														<div class="more-stories__column" style="background: url('https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/IMG_9034-477x268-c-default.jpg') center center no-repeat;">
-							  <a href="https://computerhistory.org/institutional-partnerships/">
-							  <div class="more-stories__text">Institutional Partnerships</div>
-							  </a>
-						  </div>
-														<div class="more-stories__column" style="background: url('https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/JOIN_GIVE_HERO-477x268-c-default.jpg') center center no-repeat;">
-							  <a href="https://computerhistory.org/join/#membership">
-							  <div class="more-stories__text">Become a Member</div>
-							  </a>
-						  </div>
-														<div class="more-stories__column" style="background: url('https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/The-Rest-CHM-Software-Wing-009-477x268-c-default.jpg') center center no-repeat;">
-							  <a href="https://computerhistory.org/volunteers/">
-							  <div class="more-stories__text">Volunteer</div>
-							  </a>
-						  </div>
-				  </div>
-		  </div>
-		</section>
-		<!-- more stories -->
-		<div class="social-share__wrapper">
-			<div class="container social-share mobile">
-				<h2>Share</h2>
-						<div class="addtoany_shortcode"><div class="a2a_kit a2a_kit_size_ addtoany_list" data-a2a-url="https://computerhistory.org/donate-now/" data-a2a-title="Donate Now"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fchm.secure.nonprofitsoapbox.com%2Fdonate&amp;linkname=Donate%20Now" title="Facebook" rel="nofollow noopener" target="_blank"><img src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/facebook.png" width="32" alt="Facebook"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fchm.secure.nonprofitsoapbox.com%2Fdonate&amp;linkname=Donate%20Now" title="Twitter" rel="nofollow noopener" target="_blank"><img src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/twitter.png" width="32" alt="Twitter"></a><a class="a2a_button_copy_link" href="https://www.addtoany.com/add_to/copy_link?linkurl=https%3A%2F%2Fchm.secure.nonprofitsoapbox.com%2Fdonate&amp;linkname=Donate%20Now" title="Copy Link" rel="nofollow noopener" target="_blank"><img src="https://chm.secure.nonprofitsoapbox.com/templates/computerhistory/images/link.png" width="32" alt="Copy Link"></a></div></div>
-			</div>
-		</div>
-
-		<footer class="footer">
-		  <div class="footer__top">
-			<div class="container">
-			  <div class="footer-content-5">
-				<h2 class="widgettitle">Hours and Directions</h2>
-					<div class="textwidget"><p><a href="https://computerhistory.org/make-plan/">Hours &amp; Directions</a></p>
-		<p>1401 N. Shoreline Blvd.</p>
-		<p>Mountain View, CA 94043</p>
-		<p><a href="tel:+16508101010">(650) 810-1010</a></p>
-		<p> </p>
-		<p><a href="https://computerhistory.org/contact-us/">More Contact Info</a></p>
-		</div>
-			  </div>
-			  <div class="footer-content-4">
-				<div class="menu_one">
-				  <ul class="menu" data-responsive-menu="drilldown large-dropdown">
-								<li>
-					  <a href="https://computerhistory.org/press-releases/">Press</a>
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/jobs/">Careers</a>
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/venue/">Venue</a>
-								  </li>
-							  </ul>
-				</div>
-				<div class="menu_two">
-				  <ul class="menu" data-responsive-menu="drilldown large-dropdown">
-								<li>
-					  <a href="https://computerhistory.org/events/">Events</a>
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/stories/">Stories</a>
-								  </li>
-								<li>
-					  <a href="https://computerhistory.org/donate-now/">Donate</a>
-								  </li>
-							  </ul> <!-- /.menu -->
-				</div>
-			  </div>
-			  <div class="footer-content-3">
-				<a class="logo" href="https://computerhistory.org"><img src="https://computerhistory.org/wp-content/themes/bsdstarter/assets/img/chm-logo-short.svg" alt=""></a>
-
-				<div class="footer-term-conditions desktop">
-					<ul class="menu">
-								<li class="">
-					  <a href="https://computerhistory.org/terms/">Terms of Use</a>
-								  </li>
-								<li class="">
-					  <a href="https://computerhistory.org/privacy/">Privacy</a>
-								  </li>
-								<li class="no-link">
-					  <a href="#">© 2020 Computer History Museum</a>
-								  </li>
-							  </ul> <!-- /.menu -->
-
-				</div>
-			  </div>
-			</div>
-		  </div>
-
-		  <div class="footer__bottom">
-			<div class="container">
-			  <div class="footer-content-2">
-						<div role="form" class="wpcf7" id="wpcf7-f32-o1" lang="en-US" dir="ltr">
-		<div class="screen-reader-response"></div>
-		<form action="https://computerhistory.org/#wpcf7-f32-o1" method="post" class="wpcf7-form" novalidate="novalidate">
-		<div style="display: none;">
-		<input type="hidden" name="_wpcf7" value="32">
-		<input type="hidden" name="_wpcf7_version" value="5.1.6">
-		<input type="hidden" name="_wpcf7_locale" value="en_US">
-		<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f32-o1">
-		<input type="hidden" name="_wpcf7_container_post" value="0">
-		<input type="hidden" name="g-recaptcha-response" value="">
-		</div>
-		<div class="title">
-		<h2> Don't Miss An Update </h2>
-		</div>
-		<div class="fields">
-		<label>First Name<span class="wpcf7-form-control-wrap FirstName"><input type="text" name="FirstName" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false" placeholder="First Name"></span></label><label>Last Name<span class="wpcf7-form-control-wrap LastName"><input type="text" name="LastName" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false" placeholder="Last Name"></span></label><label>Email Address<span class="wpcf7-form-control-wrap EmailAddress"><input type="email" name="EmailAddress" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email" aria-required="true" aria-invalid="false" placeholder="Email"></span></label><span class="hide" mailchimp for wordpress v4.7.5 https:><input type="hidden" name="_mc4wp_subscribe_contact-form-7" value="0"><span class=" mc4wp-checkbox mc4wp-checkbox-contact-form-7"><label><input type="checkbox" name="_mc4wp_subscribe_contact-form-7" value="1" checked><span>Sign me up for the newsletter!</span></label></span><!-- / Mailchimp for WordPress --> </span>
-		<div class="form-button-wrapper"><input type="submit" value="Subscribe" class="wpcf7-form-control wpcf7-submit"></div>
-		</div>
-		<div class="wpcf7-response-output wpcf7-display-none"></div></form></div>
-					  </div>
-
-			  <div class="footer-content-1">
-				<ul class="social-menu">
-							<li class="medium-icon">
-					<a href="https://medium.com/@thechm">Medium</a>
-							  </li>
-							<li class="facebook-icon">
-					<a href="https://www.facebook.com/computerhistory/">Facebook</a>
-							  </li>
-							<li class="twitter-icon">
-					<a href="https://twitter.com/ComputerHistory">Twitter</a>
-							  </li>
-							<li class="youtube-icon">
-					<a href="https://www.youtube.com/user/ComputerHistory">Youtube</a>
-							  </li>
-							<li class="instagram-icon">
-					<a href="https://www.instagram.com/computerhistory/">Instagram</a>
-							  </li>
-						  </ul> <!-- /.menu -->
-
-				<div class="footer-term-conditions mobile">
-				  <ul class="menu">
-								<li class="">
-					  <a href="https://computerhistory.org/terms/">Terms of Use</a>
-								  </li>
-								<li class="">
-					  <a href="https://computerhistory.org/privacy/">Privacy</a>
-								  </li>
-								<li class="no-link">
-					  <a href="#">© 2020 Computer History Museum</a>
-								  </li>
-							  </ul> <!-- /.menu -->
-
-				</div>
-			  </div>
-			</div>
-		  </div>
-		</footer>
-
-		<!--Load Scripts -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>		
-<script language="javascript" type="text/javascript" src="https://chm.secure.nonprofitsoapbox.com/templates/system/bootstrap/js/bootstrap-collapse.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-<script src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/js/typeahead.js"></script>
-<script src="https://chm.secure.nonprofitsoapbox.com/media/soapbox/js/picklist_typeahead.js"></script>
-<script type="text/javascript">
-	$.noConflict();
-	(function($) {
-		$(document).ready(function(){
-			$('.search-icon').click(function(e){
-				e.stopPropagation();
-				if($('.search-wrapper').hasClass('active')) {
-					$('.search-wrapper').removeClass('active');
-					$(this).removeClass('active');
-				} else {
-					$('.search-wrapper').addClass('active');
-					$(this).addClass('active');
-				}
-				if($('.mobile-menu-toggle').hasClass('active')) {
-					$('.mobile-menu-toggle').removeClass('active');
-					$('.nav-section-bottom').slideUp();
-				}
-			});
-			
-			$('.search-wrapper').on('click',function(e){
-				e.stopPropagation();
-			});
-			
-			$(window).on('click',function(){
-				$('.search-wrapper').removeClass('active');
-				$('.search-icon').removeClass('active');
-			});
-			
-		});
-		
-			var header=$('header');
-			var toggler=$('.mobile-menu-toggle');
-			var mainNav=$('.nav-section-bottom');
-			var homeNavHeader=$('body.home header');
-			var subNav=$('.submenu');
-
-			/*
-											If the window width is less than
-											991px or equal, enable the function
-											for hamburger menu toggle
-										  */
-
-			var winResized=true;
-
-			function onResize(){
-			var winWidth=$(window).width();
-			if(winWidth<=991&&winResized){
-			toggler.click(function(){
-			if(!$(this).hasClass('active')){
-			$(this).addClass('active');
-			$('.mobile-menu-toggle span').text('Close');
-			mainNav.slideDown();
-			homeNavHeader.addClass('active-fill');
-			}else{
-			$(this).removeClass('active');
-			$('.mobile-menu-toggle span').text('Menu');
-			mainNav.slideUp();
-			homeNavHeader.removeClass('active-fill');
-			}
-			});
-
-			$('.nav-section-bottom-menu > ul > li > a').click(function(e){
-			if($(this).next().hasClass('submenu')){
-			e.preventDefault();
-			}
-
-			if(!$(this).next().hasClass('show')){
-			subNav.slideUp();
-			subNav.removeClass('show');
-			$('.nav__main ul > li.dropdown').removeClass('dropdown-active');
-			$(this).parent().addClass('dropdown-active');
-			$(this).next().slideDown().addClass('show');
-			}else{
-			$(this).parent().removeClass('dropdown-active');
-			$(this).next().slideUp().removeClass('show');
-			}
-			});
-
-			winResized=false;
-			}
-			}
-
-			var delay=function(){
-			var timer=0;
-			return function(callback,ms){
-			clearTimeout(timer);
-			timer=setTimeout(callback,ms);
-			};
-			}();
-
-
-			$(document).ready(onResize);
-			$(window).resize(function(){
-			delay(function(){
-			onResize();
-			},1000);
-			});
-
-			/*
-					If the window width is greater than
-					992px shrink and change the colour
-					of the header.
-				  */
-			var lastScrollTop=$('header').offset().top;
-
-			$(window).scroll(function(event){
-			var st=$(this).scrollTop();
-
-			if(st<0){
-			st=0;
-			}
-
-			if(st>lastScrollTop){
-			// Scroll Down
-			if(st>80){
-			header.addClass('sticky');
-			}
-			}
-
-			// Top most of the page
-			if(st<=0){
-			header.removeClass('sticky');
-			}
-
-			lastScrollTop=st;
-			});
-	})(jQuery);
+<script   class="marketing-content-info" type="application/json">
+[]
 </script>
 
 <script>
-jQuery.noConflict();
-	(function($) {
-        $(document).ready(function() {
-            $(window.location.hash).removeClass("hide");
-            $("a[href*='"+window.location.hash+"']").addClass("active");
+	Mendel.BC = {"loggedIn":true,"category":"Computers","lastUpdated":"Nov 25, 2021","contributorName":"William L. Hosch"}</script><meta property="fb:app_id" content="1887621861548296"/>
 
-            if (!window.location.hash) {
-                $("a[href*='#teams']").addClass("active");
-                $("#teams").removeClass("hide");
-            }
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@britannica" />
+	<meta name="twitter:image" content="https://cdn.britannica.com/mendel-resources/3-66/images/social/eb-thistle-social-image.jpg?v=3.66.1" />
+	<meta name="twitter:description" content="machine learning,  in artificial intelligence (a subject within computer science), discipline concerned with the implementation of computer software that can learn autonomously. Expert systems and data mining programs are the most common applications for improving algorithms through the use of machine learning. Among the most common approaches are the use of artificial neural networks (weighted decision paths) and genetic algorithms (symbols “bred” and culled by algorithms to produce successively fitter programs)."/>
 
-            $(".section-tab .bar a").on("click", function(event) {
-                event.preventDefault();
-                history.replaceState(null, '', $(this).attr('href'));
-                $(this).parent().find("a").removeClass("active");
-                $(this).addClass("active");
-                $(".section-tab .tab").addClass("hide");
-                $(window.location.hash).removeClass("hide");
-            });
-        });
-    })(jQuery.noConflict());
+	<meta property="og:type"  content="ARTICLE"/>
+	<meta property="og:title" content="machine learning | artificial intelligence"/>
+	<meta property="og:description" content="machine learning,  in artificial intelligence (a subject within computer science), discipline concerned with the implementation of computer software that can learn autonomously. Expert systems and data mining programs are the most common applications for improving algorithms through the use of machine learning. Among the most common approaches are the use of artificial neural networks (weighted decision paths) and genetic algorithms (symbols “bred” and culled by algorithms to produce successively fitter programs)."/>
+	<meta property="og:site_name" content="Encyclopedia Britannica" />
+	<meta property="og:url" content="https://www.britannica.com/technology/machine-learning"/>
+	<meta property="og:image" content="https://cdn.britannica.com/mendel-resources/3-66/images/social/eb-thistle-social-image.jpg?v=3.66.1" />
+	<meta property="og:image:type" content="" />
 
+	<script type="text/javascript" data-type="init opengraph">
+	Mendel.openGraph = {"type":"ARTICLE","title":"machine learning | artificial intelligence","description":"machine learning,  in artificial intelligence (a subject within computer science), discipline concerned with the implementation of computer software that can learn autonomously. Expert systems and data mining programs are the most common applications for improving algorithms through the use of machine learning. Among the most common approaches are the use of artificial neural networks (weighted decision paths) and genetic algorithms (symbols “bred” and culled by algorithms to produce successively fitter programs).","imageUrl":"https://cdn.britannica.com/mendel-resources/3-66/images/social/eb-thistle-social-image.jpg?v=3.66.1","pageUrl":"https://www.britannica.com/technology/machine-learning"}</script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/" >
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="https://cdn.britannica.com/mendel-resources/3-66/dist/vendor-bundle.css?v=3.66.1" rel="stylesheet" />
+    <link href="https://cdn.britannica.com/mendel-resources/3-66/dist/mendel-css.css?v=3.66.1" rel="stylesheet" />
+	<link href="https://cdn.britannica.com/mendel-resources/3-66/dist/topic-page.css?v=3.66.1" rel="stylesheet" />
+
+    <script type="text/javascript">
+        
+
+        if (self !== top) { top.location = self.location; }
+
+        
+
+        if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+    </script>
+
+    <script
+        src="https://www.googleoptimize.com/optimize.js?id=OPT-TD96PKG"
+        async
+    ></script>
+<script>
+  (function (w, d) {
+    w.adthrive = w.adthrive || {};
+    w.adthrive.cmd = w.adthrive.cmd || [];
+    w.adthrive.plugin = 'adthrive-ads-manual';
+    w.adthrive.host = 'ads.adthrive.com';
+
+    var s = d.createElement('script');
+    s.async = true;
+    s.referrerpolicy = 'no-referrer-when-downgrade';
+    s.src = 'https://' + w.adthrive.host + '/sites/61575e5c934c481d714b3ca9/ads.min.js?referrer=' + w.encodeURIComponent(w.location.href) + '&cb=' + Math.floor(Math.random() * 100 + 1);
+    var n = d.getElementsByTagName('script')[0];
+    n.parentNode.insertBefore(s, n);
+  })(window, document);
 </script>
-		<!-- !BEGIN: Load CORE End Outputs (*) -->
-		
-		
-		<!-- !END: Load CORE End Outputs (*) -->
+<script>
+  window.adthrive.cmd.push(function () {
+    const cam_targeting_values = [
+      ...(document.body.classList || [])
+    ];
+    if (cam_targeting_values.length > 0) {
+      window.adthrive.setTargeting({key: 'at_custom_1', value: cam_targeting_values.map(x => 'eb_' + x.toLowerCase().replace(/\s/g, ''))});
+    }
+  });
+</script>
+<script>
+	            dataLayer = [];
+            </script>
+		   <script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		       '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		   })(window,document,'script','dataLayer','GTM-5W6NC8');
+		   </script>
+		</head>
+<body data-ads-manager="cafeMedia" data-leg="D" class="new-topic topic-desktop first-page-true user-BOL user-ads  md-desktop   leg-d chatbot-enabled">
+
 
 	
 
-</body>
 
+
+
+
+
+
+<script  id="json-navbar-info"  type="application/json">
+{"extraLinks":[{"title":"Dictionary","url":"/dictionary"},{"title":"Quizzes","url":"/quiz/browse"},{"title":"One Good Fact","url":"/one-good-fact"}],"featureLinks":[{"title":"On This Day in History","url":"/on-this-day","description":"What happened today in history?"},{"title":"Quizzes","url":"/quiz/browse","description":"Can you get to the top of the leaderboard?"},{"title":"Podcasts","url":"/podcasts","description":"Stay curious on the go."},{"title":"Games","url":"/games","description":"Cryptic crosswords and more. Happy puzzling!"},{"title":"Dictionary","url":"/dictionary","description":"Clear and simple definitions from language experts."},{"title":"Biographies","url":"/biographies","description":"Explore extraordinary lives."},{"title":"Summaries","url":"/summary","description":"Summaries, quick-facts, and timelines on key topics."},{"title":"Top Questions","url":"/question","description":"Britannica’s Editors answer your top questions."},{"title":"Week In Review","url":"/week-in-review","description":"A weekly recap of key events and fun facts."},{"title":"Infographics","url":"https://www.britannica.com/study/infographics","description":"Explore the world through maps, charts, and graphs.","newTab":true},{"title":"Demystified","url":"/stories/demystified","description":"Insight into some of life's big mysteries."},{"title":"Lists","url":"/list/browse","description":"Find out what tops our Editors’ lists. "},{"title":"#WTFact","url":"/stories/wtfact","description":"Stories so weird you’ll exclaim: “What the Fact!”"},{"title":"Companions","url":"/stories/companion","description":"A more concise complement to our top articles."},{"title":"Image Galleries","url":"/gallery/browse","description":"Browse editorially curated collections."},{"title":"Spotlight","url":"/stories/spotlight","description":"Get more context behind trending news and events."},{"title":"The Forum","url":"/stories/the-forum","description":"Analysis, research, and ideas from leading experts."},{"title":"One Good Fact","url":"/one-good-fact","description":"Your daily source for fascinating facts."}],"featuredFeature":{"title":"What's the Difference Between a Solstice and an Equinox?","url":"/story/whats-the-difference-between-a-solstice-and-an-equinox","description":"Demystified / Science","image":{"id":0,"url":"/90/202690-131-1D29B008/colorful-winter-sunset.jpg","altText":"Colorful winter sunset","credit":"sborisov—iStock/Getty Images","fullUrl":"https://cdn.britannica.com/90/202690-131-1D29B008/colorful-winter-sunset.jpg"}},"categoryLinks":[{"id":10000,"title":"Entertainment & Pop Culture","urlTitle":"Entertainment-Pop-Culture","description":"Entertainment and leisure activities have been a part of culture in one form or another since the ancient times. Dance performances, live music, and storytelling have a long tradition throughout history, even as the styles and available methods of delivery have shifted dramatically.","image":{"id":0,"url":"/04/167104-050-A0D0F726.jpg","altText":"Entertainment & Pop Culture","fullUrl":"https://cdn.britannica.com/04/167104-050-A0D0F726.jpg"}},{"id":5000,"title":"Geography & Travel","urlTitle":"Geography-Travel","description":"Planet Earth contains some extraordinarily diverse environments, some of which are easily habitable and some not so much. In different areas of Earth, one might find sweltering deserts, dense tropical rainforests, or bone-chilling tundras. Each biome and habitat comes with its own selection of flora and fauna, and it may include physical features such as canyons, volcanoes, rivers, or caves. Human beings have built homes in many different environments, settling the area and organizing it into units such as cities, states, regions, and countries, each with its own points of interest. Shifting trends in human migration have resulted in a human geography that is profoundly different from that of centuries ago.","image":{"id":0,"url":"/17/2317-050-758D0E55/World-map-descriptions-Herodotus-Black-Sea.jpg","altText":"Geography & Travel","fullUrl":"https://cdn.britannica.com/17/2317-050-758D0E55/World-map-descriptions-Herodotus-Black-Sea.jpg"}},{"id":3000,"title":"Health & Medicine","urlTitle":"Health-Medicine","description":"The study of the human mind and body, how these function, and how they interact—not only with each other but also with their environment—has been of utmost importance in ensuring human well-being. Research on potential treatments and preventive medicine has expanded greatly with the development of modern medicine, and a network of disciplines, including such fields as genetics, psychology, and nutrition, aims to facilitate the betterment of our health.","image":{"id":0,"url":"/07/192107-050-CE043374/anatomy-charts-human-body-muscle-systems-skeletal.jpg","altText":"Health & Medicine","fullUrl":"https://cdn.britannica.com/07/192107-050-CE043374/anatomy-charts-human-body-muscle-systems-skeletal.jpg"}},{"id":8000,"title":"Lifestyles & Social Issues","urlTitle":"Lifestyles-Social-Issues","description":"It's easy enough to agree that human beings all around the world have certain basic requirements that must be fulfilled in order to ensure their individual and collective well-being. History has shown us, however, that it's not so easy to form societies or communities that fulfill these requirements for all members. The fight for human and civil rights has persisted for hundreds of years and remains alive today, both within the borders of nations and on an international scale. It has led to large-scale social movements and reforms concerning issues such as suffrage, slavery, women's rights, racism, environmentalism, gay rights, and much more.","image":{"id":0,"url":"/11/195611-131-4DFC1336/Belgian-pride-parade-People-streets-flags-Brussels-2017.jpg","altText":"Lifestyles & Social Issues","fullUrl":"https://cdn.britannica.com/11/195611-131-4DFC1336/Belgian-pride-parade-People-streets-flags-Brussels-2017.jpg"}},{"id":12000,"title":"Literature","urlTitle":"Literature","description":"With the development of language, the human imagination has found a way to create and communicate through the written word. A literary work can transport us into a fictional, fantastic new world, describe a fleeting feeling, or simply give us a picture of the past through novels, poems, tragedies, epic works, and other genres. Through literature, communication becomes an art, and it can bridge and bond people and cultures of different languages and backgrounds.","image":{"id":0,"url":"/44/172844-131-9695C31F/word-communication-stress-accent-letters-syllable.jpg","altText":"Literature","fullUrl":"https://cdn.britannica.com/44/172844-131-9695C31F/word-communication-stress-accent-letters-syllable.jpg"}},{"id":7000,"title":"Philosophy & Religion","urlTitle":"Philosophy-Religion","description":"Humans have long pondered not only how we came to be but also why we came to be. The earliest Greek philosophers focused their attention upon the origin and nature of the physical world; later philosophers have theorized about the nature of knowledge, truth, good and evil, love, friendship, and much more. Philosophy involves a methodical assessment of any and all aspects of human existence and experience. The realms of philosophy and religion have sometimes intersected in conducting such inquiries as these. As with philosophy, the study of religion underscores how humankind has long speculated about its origins. The possibility of a higher being (or beings) to which livings things owe their existence has long captived human thought. Many religions also offer their own views on the nature of good and evil, and they may prescribe guidelines and judgment on different kinds of human behavior.","image":{"id":0,"url":"/95/180595-050-EDF2CA3A.jpg","altText":"Philosophy & Religion","fullUrl":"https://cdn.britannica.com/95/180595-050-EDF2CA3A.jpg"}},{"id":9000,"title":"Politics, Law & Government","urlTitle":"Politics-Law-Government","description":"The world today is divided territorially into more than 190 countries, each of which possesses a national government that claims to exercise sovereignty and seeks to compel obedience to its will by its citizens. Governments can be classified in any number of ways. For example, they might be classified by the number of rulers, thus distinguishing government by one (as in a monarchy or a tyranny) from government by the few (in an aristocracy or oligarchy) and from government by the many (as in a democracy). Governments can also be classified by mode of succession; for example, ascension to governmental leadership may follow the rules of hereditary succession, or it may be determined through elections or by force. Governments also vary in terms of the laws and rules of conduct that each political entity follows.","image":{"id":0,"url":"/22/99622-050-E70BCD0A/Parthenon-Athens.jpg","altText":"Politics, Law & Government","fullUrl":"https://cdn.britannica.com/22/99622-050-E70BCD0A/Parthenon-Athens.jpg"}},{"id":1000,"title":"Science","urlTitle":"Science","description":"How can the sky be blue one day and stormy the next? Why do heavy objects tend to fall downwards when dropped? How are birds able to fly (and why can’t I do the same?)? Human beings have long been curious about the world in which we live, striving to identify connections among the phenomenons we witness and to understand how it all works. The field of science has developed over many centuries as a way of studying and understanding the world, beginning with the primitive stage of simply noting important regularities in nature and continuing through the rise of modern science. The modern-day sciences cover a vast range of fields, including biology, chemistry, meteorology, astronomy, physics, and much more.","image":{"id":0,"url":"/86/193986-050-7B2DBB6A/ball-and-stick-model-structure-atoms.jpg","altText":"Science","fullUrl":"https://cdn.britannica.com/86/193986-050-7B2DBB6A/ball-and-stick-model-structure-atoms.jpg"}},{"id":4000,"title":"Sports & Recreation","urlTitle":"Sports-Recreation","description":"Physical contests and recreational games have long played a part in human society. In both team and solo sports, the human body has been pushed to its limits in the name of improving athletic performance and in order to break record upon record. The ancient Olympic Games are an early example of the contests in which humans have engaged to showcase physical prowess. In modern times, sports and games have evolved into a lucrative and competitive industry, while other leisure activities, such as card and video games, can be competitive or just serve as a way to unwind or socialize.","image":{"id":0,"url":"/13/170713-131-8D6B0AF7.jpg","altText":"Sports & Recreation","fullUrl":"https://cdn.britannica.com/13/170713-131-8D6B0AF7.jpg"}},{"id":2000,"title":"Technology","urlTitle":"Technology","description":"Humankind has long striven to improve its living conditions through the development of tools, instruments, and transportation and communications systems, all with the goal of making our lives easier, more productive and—why not?—more fun, too. Thanks to human curiosity and technological research, many significant inventions have been made throughout history that in turn made a difference in our daily lives.","image":{"id":0,"url":"/84/203584-131-357FBE7D/speed-internet-technology-background.jpg","altText":"Technology","fullUrl":"https://cdn.britannica.com/84/203584-131-357FBE7D/speed-internet-technology-background.jpg"}},{"id":11000,"title":"Visual Arts","urlTitle":"Visual-Arts","description":"These are the arts that meet the eye and evoke an emotion through an expression of skill and imagination. They include the most ancient forms, such as painting and drawing, and the arts that were born thanks to the development of technology, like sculpture, printmaking, photography, and installation art. Though beauty is in the eye of the beholder, different eras in art history have had their own principles to define beauty, from the richly ornamented taste of the Baroque to the simple utilitarian style of the Prairie School.","image":{"id":0,"url":"/45/24345-050-78FAA104.jpg","altText":"Visual Arts","fullUrl":"https://cdn.britannica.com/45/24345-050-78FAA104.jpg"}},{"id":6000,"title":"World History","urlTitle":"World-History","description":"Does history really repeat itself, or can we learn from the mistakes of those who came before us? History provides a chronological, statistical, and cultural record of the events, people, and movements that have made an impact on humankind and the world at large throughout the ages.","image":{"id":0,"url":"/05/84505-050-8BB58BE6/cave-art-Ennedi-Plateau-Chad.jpg","altText":"World History","fullUrl":"https://cdn.britannica.com/05/84505-050-8BB58BE6/cave-art-Ennedi-Plateau-Chad.jpg"}}],"featuredTopic":{"title":"dictionary","url":"/topic/dictionary","description":"Article / Literature","image":{"id":117206,"url":"/42/97042-004-E4546EF1/detail-definition-word-oats-Nathan-Bailey.jpg","altText":"Nathan Bailey's definition of “oats”","credit":"Courtesy of the Newberry Library, Chicago","width":550,"height":349,"fullUrl":"https://cdn.britannica.com/42/97042-004-E4546EF1/detail-definition-word-oats-Nathan-Bailey.jpg"}},"videoChannelsLinks":[{"title":"Britannica Classics","url":"/videos/britannica-classics","description":"Check out these retro videos from Encyclopedia Britannica’s archives."},{"title":"Demystified Videos","url":"/videos/demystified","description":"In Demystified, Britannica has all the answers to your burning questions."},{"title":"#WTFact Videos","url":"/videos/wtfact","description":"In #WTFact Britannica shares some of the most bizarre facts we can find."},{"title":"This Time in History","url":"/videos/this-week-in-history","description":"In these videos, find out what happened this month (or any month!) in history."},{"title":"Britannica Explains","url":"/videos/explains","description":"In these videos, Britannica explains a variety of topics and answers frequently asked questions."}],"newLinks":[{"title":"Buying Guide","url":"https://www.britannica.com/reviews","description":"Expert buying advice. From tech to household and wellness products.","newTab":true},{"title":"Student Portal","url":"/study/","description":"Britannica is the ultimate student resource for key school subjects like history, government, literature, and more.","newTab":true},{"title":"COVID-19 Portal","url":"/explore/savingearth/covid-19/","description":"While this global health crisis continues to evolve, it can be useful to look to past pandemics to better understand how to respond today.","newTab":true},{"title":"100 Women","url":"/explore/100women/","description":"Britannica celebrates the centennial of the Nineteenth Amendment, highlighting suffragists and history-making politicians.","newTab":true},{"title":"Britannica Beyond","url":"https://beyond.britannica.com","description":"We’ve created a new place where questions are at the center of learning. Go ahead. Ask. We won’t mind.","newTab":true},{"title":"Saving Earth","url":"/explore/savingearth/","description":"Britannica Presents Earth’s To-Do List for the 21st Century. Learn about the major environmental problems facing our planet and what can be done about them!","newTab":true},{"title":"SpaceNext50","url":"/explore/space/","description":"Britannica presents SpaceNext50,  From the race to the Moon to space stewardship, we explore a wide range of subjects that feed our curiosity about space!","newTab":true}]}
+</script>
+
+<header id="header" class="bg-navy shadow-lg">
+    <div class="grid gx-0 align-items-center">
+        <div class="col-auto order-1 order-sm-0">
+            <a href="/" class="mx-10 mx-sm-20 d-block">
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<img loading="lazy" src="https://cdn.britannica.com/mendel/eb-logo/b-50-pb5.png" alt="Encyclopedia Britannica"  height="30" width="123"/>
+</a></div>
+        <div class="col-auto order-0 order-sm-1">
+            <button class="js-toggle js-toggle-hamburger btn btn-link link-white btn-sm rounded-0 px-15">
+                <em class="material-icons inactive-icon" data-icon="menu"></em>
+	<em class="material-icons active-icon" data-icon="close"></em>
+	<span class="d-none d-sm-inline-block ml-5">Browse</span>
+            </button>
+            <button class="js-toggle js-toggle-search-flyout btn btn-link link-white btn-sm rounded-0 px-15">
+                <em class="material-icons inactive-icon" data-icon="search"></em>
+	<em class="material-icons active-icon" data-icon="close"></em>
+	<span class="d-none d-sm-inline-block ml-5">Search</span>
+            </button>
+        </div>
+        <div class="col d-none d-sm-flex align-items-center justify-content-md-start justify-content-end order-2">
+            <a class="link-white font-14 ml-20 " href="/dictionary">
+                    Dictionary</a>
+            <a class="link-white font-14 ml-20 ml-md-35" href="/quiz/browse">
+                    Quizzes</a>
+            <a class="link-white font-14 ml-20 ml-md-35" href="/one-good-fact">
+                    One Good Fact</a>
+            </div>
+        <div class="col col-sm-auto text-right order-3 mr-lg-15">
+            <button class="js-toggle-user-dropdown js-toggle btn btn-sm btn-link link-white rounded-0 pl-15 pr-10">
+                        <span class="d-inline-block mr-5">Login</span>
+                        <em class="material-icons inactive-icon d-inline-block" data-icon="keyboard_arrow_down"></em>
+	<em class="material-icons active-icon d-inline-block" data-icon="keyboard_arrow_up"></em>
+	</button>
+                </div>
+    </div>
+    <div id="global-nav-react">
+        <ul class="d-none">
+            <li><a href="/browse/Entertainment-Pop-Culture">Entertainment & Pop Culture</a></li>
+            <li><a href="/browse/Geography-Travel">Geography & Travel</a></li>
+            <li><a href="/browse/Health-Medicine">Health & Medicine</a></li>
+            <li><a href="/browse/Lifestyles-Social-Issues">Lifestyles & Social Issues</a></li>
+            <li><a href="/browse/Literature">Literature</a></li>
+            <li><a href="/browse/Philosophy-Religion">Philosophy & Religion</a></li>
+            <li><a href="/browse/Politics-Law-Government">Politics, Law & Government</a></li>
+            <li><a href="/browse/Science">Science</a></li>
+            <li><a href="/browse/Sports-Recreation">Sports & Recreation</a></li>
+            <li><a href="/browse/Technology">Technology</a></li>
+            <li><a href="/browse/Visual-Arts">Visual Arts</a></li>
+            <li><a href="/browse/World-History">World History</a></li>
+            </ul>
+        <ul class="d-none">
+            <li><a href="/on-this-day">On This Day in History</a></li>
+            <li><a href="/quiz/browse">Quizzes</a></li>
+            <li><a href="/podcasts">Podcasts</a></li>
+            <li><a href="/games">Games</a></li>
+            <li><a href="/dictionary">Dictionary</a></li>
+            <li><a href="/biographies">Biographies</a></li>
+            <li><a href="/summary">Summaries</a></li>
+            <li><a href="/question">Top Questions</a></li>
+            <li><a href="/week-in-review">Week In Review</a></li>
+            <li><a href="https://www.britannica.com/study/infographics">Infographics</a></li>
+            <li><a href="/stories/demystified">Demystified</a></li>
+            <li><a href="/list/browse">Lists</a></li>
+            <li><a href="/stories/wtfact">#WTFact</a></li>
+            <li><a href="/stories/companion">Companions</a></li>
+            <li><a href="/gallery/browse">Image Galleries</a></li>
+            <li><a href="/stories/spotlight">Spotlight</a></li>
+            <li><a href="/stories/the-forum">The Forum</a></li>
+            <li><a href="/one-good-fact">One Good Fact</a></li>
+            </ul>
+        <ul class="d-none">
+            <li><a href="/videos/Entertainment-Pop-Culture">Entertainment & Pop Culture</a></li>
+            <li><a href="/videos/Geography-Travel">Geography & Travel</a></li>
+            <li><a href="/videos/Health-Medicine">Health & Medicine</a></li>
+            <li><a href="/videos/Lifestyles-Social-Issues">Lifestyles & Social Issues</a></li>
+            <li><a href="/videos/Literature">Literature</a></li>
+            <li><a href="/videos/Philosophy-Religion">Philosophy & Religion</a></li>
+            <li><a href="/videos/Politics-Law-Government">Politics, Law & Government</a></li>
+            <li><a href="/videos/Science">Science</a></li>
+            <li><a href="/videos/Sports-Recreation">Sports & Recreation</a></li>
+            <li><a href="/videos/Technology">Technology</a></li>
+            <li><a href="/videos/Visual-Arts">Visual Arts</a></li>
+            <li><a href="/videos/World-History">World History</a></li>
+            </ul>
+        <ul class="d-none">
+            <li><a href="/videos/britannica-classics">Britannica Classics<br/>Check out these retro videos from Encyclopedia Britannica’s archives.</a></li>
+            <li><a href="/videos/demystified">Demystified Videos<br/>In Demystified, Britannica has all the answers to your burning questions.</a></li>
+            <li><a href="/videos/wtfact">#WTFact Videos<br/>In #WTFact Britannica shares some of the most bizarre facts we can find.</a></li>
+            <li><a href="/videos/this-week-in-history">This Time in History<br/>In these videos, find out what happened this month (or any month!) in history.</a></li>
+            <li><a href="/videos/explains">Britannica Explains<br/>In these videos, Britannica explains a variety of topics and answers frequently asked questions.</a></li>
+            </ul>
+	    <ul class="d-none">
+		    <li><a href="https://www.britannica.com/reviews">Buying Guide</a><br/>Expert buying advice. From tech to household and wellness products.</li>
+		    <li><a href="/study/">Student Portal</a><br/>Britannica is the ultimate student resource for key school subjects like history, government, literature, and more.</li>
+		    <li><a href="/explore/savingearth/covid-19/">COVID-19 Portal</a><br/>While this global health crisis continues to evolve, it can be useful to look to past pandemics to better understand how to respond today.</li>
+		    <li><a href="/explore/100women/">100 Women</a><br/>Britannica celebrates the centennial of the Nineteenth Amendment, highlighting suffragists and history-making politicians.</li>
+		    <li><a href="https://beyond.britannica.com">Britannica Beyond</a><br/>We’ve created a new place where questions are at the center of learning. Go ahead. Ask. We won’t mind.</li>
+		    <li><a href="/explore/savingearth/">Saving Earth</a><br/>Britannica Presents Earth’s To-Do List for the 21st Century. Learn about the major environmental problems facing our planet and what can be done about them!</li>
+		    <li><a href="/explore/space/">SpaceNext50</a><br/>Britannica presents SpaceNext50,  From the race to the Moon to space stewardship, we explore a wide range of subjects that feed our curiosity about space!</li>
+		    </ul>
+    </div>
+</header>
+
+<DIV class="marketing-UA_BANNER marketing-banner md-universal-access d-flex align-items-center align-self-center text-center" data-marketing-id="UA_BANNER"><a href="http://academic.eb.com" >
+    You have reached Britannica's public website.
+    <small>Click here for ad-free access to your Britannica School or Library account.</small>
+</a>
+<em class="md-close material-icons" data-icon="close"></em></DIV><main>
+
+	    <div class="md-page-wrapper">
+
+	        <div id="content" class="md-content">
+
+		        <div class="md-article-container template-desktop">
+			<div class="infinite-scroll-container article last">
+	        <article class="article-content content " data-topic-id="1116194">
+
+            <div class="grid gx-0">
+
+	            <div class="col-auto">
+	                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="family-panel md-article-drawer position-relative d-flex border-right-sm open">
+    <div class="drawer d-flex flex-column open">
+        
+	
+
+	<div class="family-panel-header d-none d-sm-flex grid gx-0 align-items-center border-bottom bg-white col-auto">
+        <div class="col">
+            <div class="p-15 text-truncate">
+                <a class="font-serif font-weight-bold font-14 text-black link-blue" href="/technology/machine-learning">
+                    machine learning
+                </a>
+            </div>
+        </div>
+        <div class="col-auto d-sm-none">
+     	    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+			<button class="d-flex d-sm-none btn-link btn btn-sm shadow-sm js-sections-button pl-0 pr-10 mr-10">
+				<em class="material-icons mr-5 ml-n10 my-n5 md-icon" data-icon="toc"></em>
+	
+				Table of Contents
+			</button>
+    
+    
+
+
+        </div>
+    </div>
+
+	<div class="family-section-content p-10 p-sm-0 col">
+        
+        <div class="d-sm-none family-panel-close-header grid gx-0 align-items-center border-bottom bg-white rounded-tl-lg rounded-tr-lg shadow">
+            <div class="col">
+                <div class="p-15 text-truncate">
+                    <a class="font-serif font-weight-bold font-14 text-black link-blue" href="/technology/machine-learning">
+                        machine learning
+                    </a>
+                </div>
+            </div>
+            <div class="col-auto">
+                <button class="js-sections-close-button btn-link btn-sm btn py-5 pl-0 pr-10 mr-10">
+                    <em class="material-icons " data-icon="close"></em>
+	
+                </button>
+            </div>
+        </div>
+
+        <div class="section-content pt-10 pr-10 pl-5 h-100 shadow">
+            
+
+            <div class="toc ARTICLE mb-20">
+                
+                    
+                    
+                        <ul class="list-unstyled mb-0 w-100" data-level="h1">
+                            <li data-target="#ref1">
+                                <a class="ml-25 w-100" href="/technology/machine-learning">
+                                    Introduction
+                                </a>
+                            </li>
+                        </ul>
+                    
+                
+            </div>
+
+            
+
+            
+            
+                
+                    <div class="toc FAST_FACTS">
+                        <div class="label pb-5 ml-15">Fast Facts</div>
+                        <ul class="list-unstyled mb-0 pb-20" data-level="h1">
+                            
+                                
+                                    
+                                    
+                                        <li data-target="#facts-machine-learning">
+                                            <a class="w-100 ml-25" href="/facts/machine-learning" >Related Content</a>
+                                        </li>
+                                    
+                                
+                            
+                        </ul>
+                    </div>
+                
+                    <div class="toc MEDIA">
+                        <div class="label pb-5 ml-15">Media</div>
+                        <ul class="list-unstyled mb-0 pb-20" data-level="h1">
+                            
+                                
+                                    
+                                    
+                                        <li data-target="#Videos-machine-learning">
+                                            <a class="w-100 ml-25" href="/technology/machine-learning/images-videos#Videos" >Videos</a>
+                                        </li>
+                                    
+                                
+                            
+                        </ul>
+                    </div>
+                
+                    <div class="toc INFO">
+                        <div class="label pb-5 ml-15">More</div>
+                        <ul class="list-unstyled mb-0 pb-20" data-level="h1">
+                            
+                                
+                                    
+                                    
+                                        <li data-target="#More-Articles">
+                                            <a class="w-100 ml-25" href="/technology/machine-learning/additional-info#More-Articles" rel="nofollow">More Articles On This Topic</a>
+                                        </li>
+                                    
+                                
+                            
+                                
+                                    
+                                    
+                                        <li data-target="#contributors-machine-learning">
+                                            <a class="w-100 ml-25" href="/technology/machine-learning/additional-info#contributors" rel="nofollow">Contributors</a>
+                                        </li>
+                                    
+                                
+                            
+                                
+                                    
+                                    
+                                        <li data-target="#history-machine-learning">
+                                            <a class="w-100 ml-25" href="/technology/machine-learning/additional-info#history" rel="nofollow">Article History</a>
+                                        </li>
+                                    
+                                
+                            
+                        </ul>
+                    </div>
+                
+            
+
+            
+        </div>
+    </div>
+
+    </div>
+    <button class="drawerToggle btn position-sticky border btn-xs btn-white btn-circle rounded d-none d-sm-flex " type="button" aria-label="Toggle Drawer">
+        <em class="material-icons font-18" data-icon="keyboard_arrow_left"></em>
+	
+    </button>
+</div>
+
+</div>
+
+                <div class="col">
+                    <div class="container p-0 p-sm-20 ml-0">
+
+                        <div class="grid gx-0 gx-sm-20">
+                            <div class="col-sm mendel-content-rail">
+
+                                <div class="infinite-pagination-container">
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+		<script type="application/ld+json">
+		{
+			"@context" : "https://schema.org",
+			"@type" : "BreadcrumbList",
+			"itemListElement" :
+			[
+				
+			
+			{
+			"@type" : "ListItem",
+			"position" : 1,
+			"item" :
+			{
+			"@id" : "https://www.britannica.com/browse/Technology",
+			"name": "Technology"
+			}
+			}
+		
+			,
+			{
+			"@type" : "ListItem",
+			"position" : 2,
+			"item" :
+			{
+			"@id" : "https://www.britannica.com/browse/Computers",
+			"name": "Computers"
+			}
+			}
+		
+			]
+		}
+		</script>
+
+	
+
+	<nav class="breadcrumb ml-20 mt-10 ml-sm-0 mt-sm-0">
+		<span class="breadcrumb-item ">
+			<a href="/" class="">Home</a>
+		</span>
+		
+			<span class="breadcrumb-item ">
+				
+					
+					
+						<a class="" href="/browse/Technology">Technology</a>
+					
+				
+			</span>
+		
+			<span class="breadcrumb-item ">
+				
+					
+					
+						<a class="" href="/browse/Computers">Computers</a>
+					
+				
+			</span>
+		
+	</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+		
+	
+
+
+<div class="grey-box pt-20 grey-box-top
+			grey-box-bottom">
+	<div class="topic-header">
+	<div class="d-flex align-items-top justify-content-between">
+		
+		<div class="d-flex flex-column">
+			<h1 class="mb-0">machine learning</h1>
+
+			<div class="topic-identifier font-16 font-md-20">artificial intelligence</div>
+				</div>
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="d-block d-sm-none md-topic-tools-mobile" style="right:20px" data-topic-id="1116194">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+    
+    
+
+
+
+
+
+
+
+    
+    
+        <button class="js-tooltip-actions ml-10 btn btn-xs btn-outline-blue border shadow-sm pr-10" >
+            <em class="material-icons md-icon ml-n10 my-n5 mr-5" data-icon="more_vert"></em>
+	
+    
+        Actions
+        </button>
+    
+
+
+
+    <div class="md-actions-popover popover popover-sm py-5 px-0 z-1">
+        
+
+        
+            <div>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        <button class="js-modal qa-cite-modal-button btn btn-sm btn-link" data-modal="[data-topic-id=1116194] .md-cite-modal-mobile">
+						
+							<em class="material-icons mr-5 ml-n10 my-n5 md-icon" data-icon="verified"></em>
+	
+						
+						Cite
+        </button>
+    
+    
+
+
+<div class="md-cite-modal-mobile size-lg d-none">
+	<div class="md-modal-body">
+		<div class="h2 font-serif d-flex align-items-center pb-15 border-bottom mb-15">
+			<em class="material-icons text-blue mr-10">verified</em>Cite
+		</div>
+		<div class="font-serif">
+			While every effort has been made to follow citation style rules, there may be some discrepancies.
+			Please refer to the appropriate style manual or other sources if you have any questions.
+		</div>
+		<div class="label mt-20 mb-10">Select Citation Style</div>
+		<select class="js-citation-format-select form-select">
+			<option selected value="mla">MLA</option>
+			<option value="apa">APA</option>
+			<option value="chicago">Chicago Manual of Style</option>
+		</select>
+		
+		<div
+			class="citation font-serif border rounded p-15 mt-20"
+			data-authors="William L. Hosch"
+			data-title="machine learning"
+			data-published-date="25 Nov. 2021"
+			data-url="https://www.britannica.com/technology/machine-learning"
+		>
+			<div class="citation-text"></div>
+		</div>
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+
+
+    
+    
+        <button class="js-copy-citation-button mt-20 btn btn-xs btn-outline-blue border shadow-sm pr-10" >
+            <em class="material-icons md-icon ml-n10 my-n5 mr-5" data-icon="file_copy"></em>
+	
+    
+			<span class="js-citation-status-text">Copy Citation</span>
+        </button>
+    
+
+
+	</div>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        <button class="js-share-modal-button js-modal btn btn-sm btn-link" data-modal="[data-topic-id=1116194] .md-share-modal">
+            
+                <em class="material-icons mr-5 ml-n10 my-n5 md-icon" data-icon="share"></em>
+	
+            
+            Share
+        </button>
+    
+    
+
+
+<div class="md-share-modal size-lg d-none">
+    <div class="md-modal-body">
+        <div class="h2 font-serif d-flex align-items-center pb-15 border-bottom">
+            <em class="material-icons text-blue mr-10" data-icon="share"></em>
+	
+            Share
+        </div>
+        <div class="label my-20">Share to social media</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        
+    
+
+
+
+    
+        
+    
+    
+    
+
+
+
+
+
+
+<div class="md-social-toolbar-circle d-flex align-items-start inverted"
+     data-value="share"
+     title="machine learning"
+     data-url="https://www.britannica.com/technology/machine-learning"
+>
+    
+    
+        <a class="social-icon facebook justify-content-center d-flex align-items-center align-self-center" data-provider="facebook" href="https://www.facebook.com/BRITANNICA/" target="_blank" rel="noopener"><span>Facebook</span></a>
+    
+    
+        <a class="social-icon twitter justify-content-center d-flex align-items-center align-self-center" data-provider="twitter" href="https://twitter.com/britannica" target="_blank" rel="noopener"><span>Twitter</span></a>
+    
+    
+    
+    
+    
+</div>
+
+
+
+        <div class="label pt-20 mt-20 mb-5 border-top">URL</div>
+        <a class="font-serif text-truncate d-inline-block" href="https://www.britannica.com/technology/machine-learning">https://www.britannica.com/technology/machine-learning</a>
+    </div>
+</div>
+
+            </div>
+        
+
+        
+        
+        
+            <div>
+                <button class="js-feedback-modal-button js-modal btn btn-sm btn-link" data-modal=".md-feedback-modal">
+                    <em class="material-icons mr-5 ml-n10 my-n5 md-icon" data-icon="message"></em>
+	
+                    Give Feedback
+                </button>
+            </div>
+        
+
+        
+
+        
+            <div>
+                <button class="js-modal btn btn-sm btn-link" data-modal="[data-topic-id=1116194] .md-websites-modal-mobile">
+                    <em class="material-icons mr-5 ml-n10 my-n5 md-icon" data-icon="link"></em>
+	
+                    External Websites
+                </button>
+            </div>
+        
+    </div>
+
+    <div class="md-feedback-modal size-lg d-none">
+	<div class="md-modal-body">
+		<div class="h2 font-serif pb-15 border-bottom">
+			Feedback
+		</div>
+
+		<form method="post" action="/submission/feedback/1116194">
+
+			<div class="my-20">
+				Corrections? Updates? Omissions? Let us know if you have suggestions to improve this article (requires login).
+			</div>
+
+			<div class="type-menu">
+				<label for="feedback-type" class="label mb-10">Feedback Type</label>
+				<select id="feedback-type" class="form-select mb-30" name="feedbackTypeId" required>
+					<option value="" selected="selected">Select a type (Required)</option>
+					<option value="1">Factual Correction</option>
+					<option value="2">Spelling/Grammar Correction</option>
+					<option value="3">Link Correction</option>
+					<option value="4">Additional Information</option>
+					<option value="5">Other</option>
+				</select>
+			</div>
+
+			<label for="feedback" class="label mb-10">Your Feedback</label>
+			<textarea id="feedback" class="form-control mb-30" name="feedback" maxlength="3000" rows="7" required></textarea>
+
+			<button class="btn btn-blue" type="submit">Submit Feedback</button>
+		</form>
+
+		<div class="success-messaging d-none mt-30">
+			<div class="title">Thank you for your feedback</div>
+			<p>Our editors will review what you’ve submitted and determine whether to revise the article.</p>
+			<a class="promo" href="http://corporate.britannica.com/publishing-partner-program/" target="_blank" rel="noopener">
+				Join <strong>Britannica's Publishing Partner Program</strong> and our community of experts to gain a global audience for your work!
+			</a>
+		</div>
+	</div>
+</div>
+
+
+    <div class="md-websites-modal-mobile size-lg d-none">
+        <div class="md-modal-body">
+            <div class="h2 font-serif pb-15 border-bottom">
+                External Websites
+            </div>
+            <div class="pb-20">
+            <ul class="list-unstyled mt-20 lh-lg">
+            <li><a class="external" href="https://www.brookings.edu/research/what-is-machine-learning" target="_blank" rel="noopener ">Brookings Institution - What is machine learning?</a></li>
+            </ul>
+        </div>
+
+    
+        </div>
+    </div>
+</div>
+</div>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="d-none d-sm-block md-topic-tools mt-10 mb-10 qa-action-buttons" data-topic-id="1116194">
+
+    
+
+    
+
+    
+
+    
+        
+            
+            
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+
+
+    
+        <a href="/print/article/1116194" class=" btn btn-xs btn-outline-blue border shadow-sm pr-10"  target="_blank">
+            <em class="material-icons md-icon ml-n10 my-n5 mr-5" data-icon="print"></em>
+	
+    
+                    Print
+        </a>
+    
+    
+
+
+            
+        
+    
+
+    
+
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+
+
+    
+    
+        <button class="js-modal qa-cite-modal-button btn btn-xs btn-outline-blue border shadow-sm pr-10" data-modal="[data-topic-id=1116194]  .md-cite-modal">
+            <em class="material-icons md-icon ml-n10 my-n5 mr-5" data-icon="verified"></em>
+	
+    
+            Cite
+        </button>
+    
+
+
+    
+
+
+<div class="md-cite-modal size-lg d-none">
+	<div class="md-modal-body">
+		<div class="h2 font-serif d-flex align-items-center pb-15 border-bottom mb-15">
+			<em class="material-icons text-blue mr-10">verified</em>Cite
+		</div>
+		<div class="font-serif">
+			While every effort has been made to follow citation style rules, there may be some discrepancies.
+			Please refer to the appropriate style manual or other sources if you have any questions.
+		</div>
+		<div class="label mt-20 mb-10">Select Citation Style</div>
+		<select class="js-citation-format-select form-select">
+			<option selected value="mla">MLA</option>
+			<option value="apa">APA</option>
+			<option value="chicago">Chicago Manual of Style</option>
+		</select>
+		
+		<div
+			class="citation font-serif border rounded p-15 mt-20"
+			data-authors="William L. Hosch"
+			data-title="machine learning"
+			data-published-date="25 Nov. 2021"
+			data-url="https://www.britannica.com/technology/machine-learning"
+		>
+			<div class="citation-text"></div>
+		</div>
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+
+
+    
+    
+        <button class="js-copy-citation-button mt-20 btn btn-xs btn-outline-blue border shadow-sm pr-10" >
+            <em class="material-icons md-icon ml-n10 my-n5 mr-5" data-icon="file_copy"></em>
+	
+    
+			<span class="js-citation-status-text">Copy Citation</span>
+        </button>
+    
+
+
+	</div>
+</div>
+
+    
+
+    
+
+    
+	    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+
+
+    
+    
+        <button class="js-share-modal-button js-modal  btn btn-xs btn-outline-blue border shadow-sm pr-10" data-modal=" .md-share-modal">
+            <em class="material-icons md-icon ml-n10 my-n5 mr-5" data-icon="share"></em>
+	
+    
+            Share
+        </button>
+    
+
+
+    
+
+
+<div class="md-share-modal size-lg d-none">
+    <div class="md-modal-body">
+        <div class="h2 font-serif d-flex align-items-center pb-15 border-bottom">
+            <em class="material-icons text-blue mr-10" data-icon="share"></em>
+	
+            Share
+        </div>
+        <div class="label my-20">Share to social media</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        
+    
+
+
+
+    
+        
+    
+    
+    
+
+
+
+
+
+
+<div class="md-social-toolbar-circle d-flex align-items-start inverted"
+     data-value="share"
+     title="machine learning"
+     data-url="https://www.britannica.com/technology/machine-learning"
+>
+    
+    
+        <a class="social-icon facebook justify-content-center d-flex align-items-center align-self-center" data-provider="facebook" href="https://www.facebook.com/BRITANNICA/" target="_blank" rel="noopener"><span>Facebook</span></a>
+    
+    
+        <a class="social-icon twitter justify-content-center d-flex align-items-center align-self-center" data-provider="twitter" href="https://twitter.com/britannica" target="_blank" rel="noopener"><span>Twitter</span></a>
+    
+    
+    
+    
+    
+</div>
+
+
+
+        <div class="label pt-20 mt-20 mb-5 border-top">URL</div>
+        <a class="font-serif text-truncate d-inline-block" href="https://www.britannica.com/technology/machine-learning">https://www.britannica.com/technology/machine-learning</a>
+    </div>
+</div>
+
+    
+
+    
+
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+
+
+    
+    
+        <button class="js-feedback js-modal btn btn-xs btn-outline-blue border shadow-sm pr-10" data-modal=".md-feedback-modal">
+            <em class="material-icons md-icon ml-n10 my-n5 mr-5" data-icon="message"></em>
+	
+    
+            Feedback
+        </button>
+    
+
+
+    
+
+    
+
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+
+
+
+
+
+    
+    
+        <button class="js-tooltip btn btn-xs btn-outline-blue border shadow-sm pr-10" >
+            <em class="material-icons md-icon ml-n5" data-icon="more_vert"></em>
+        </button>
+    
+
+
+        <div class="md-more-popover popover popover-sm p-0 font-14 z-1">
+            
+                <button class="js-modal btn btn-sm btn-link" data-modal="[data-topic-id=1116194] .md-websites-modal">
+                    <em class="material-icons md-icon ml-n5 mr-5" data-icon="link"></em>
+	
+                    External Websites
+                </button>
+            
+        </div>
+
+        <div class="md-feedback-modal size-lg d-none">
+	<div class="md-modal-body">
+		<div class="h2 font-serif pb-15 border-bottom">
+			Feedback
+		</div>
+
+		<form method="post" action="/submission/feedback/1116194">
+
+			<div class="my-20">
+				Corrections? Updates? Omissions? Let us know if you have suggestions to improve this article (requires login).
+			</div>
+
+			<div class="type-menu">
+				<label for="feedback-type" class="label mb-10">Feedback Type</label>
+				<select id="feedback-type" class="form-select mb-30" name="feedbackTypeId" required>
+					<option value="" selected="selected">Select a type (Required)</option>
+					<option value="1">Factual Correction</option>
+					<option value="2">Spelling/Grammar Correction</option>
+					<option value="3">Link Correction</option>
+					<option value="4">Additional Information</option>
+					<option value="5">Other</option>
+				</select>
+			</div>
+
+			<label for="feedback" class="label mb-10">Your Feedback</label>
+			<textarea id="feedback" class="form-control mb-30" name="feedback" maxlength="3000" rows="7" required></textarea>
+
+			<button class="btn btn-blue" type="submit">Submit Feedback</button>
+		</form>
+
+		<div class="success-messaging d-none mt-30">
+			<div class="title">Thank you for your feedback</div>
+			<p>Our editors will review what you’ve submitted and determine whether to revise the article.</p>
+			<a class="promo" href="http://corporate.britannica.com/publishing-partner-program/" target="_blank" rel="noopener">
+				Join <strong>Britannica's Publishing Partner Program</strong> and our community of experts to gain a global audience for your work!
+			</a>
+		</div>
+	</div>
+</div>
+
+
+        <div class="md-websites-modal size-lg d-none">
+            <div class="md-modal-body">
+                <div class="h2 font-serif pb-15 border-bottom">
+                    External Websites
+                </div>
+                <div class="pb-20">
+            <ul class="list-unstyled mt-20 lh-lg">
+            <li><a class="external" href="https://www.brookings.edu/research/what-is-machine-learning" target="_blank" rel="noopener ">Brookings Institution - What is machine learning?</a></li>
+            </ul>
+        </div>
+
+    
+            </div>
+        </div>
+    
+</div>
+<div class="eb-remixd-player"></div>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="md-byline mb-sm-10 font-14 ">
+		<span class="written-by font-12">By</span>
+		<span class="font-12"><a class="" href="/editor/William-L-Hosch/6481" >
+			William L. Hosch</a>
+	</span>
+		
+	
+
+	
+
+		<span class="last-updated mt-5">
+			
+			
+				&#8226;
+				<a class="font-12" href="/technology/machine-learning/additional-info#history" rel="nofollow">Edit History</a>
+			
+		</span>
+	</div>
+	<hr class="grey-box-line my-0 d-none d-sm-block"/>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+			<button class="d-flex d-sm-none btn btn-outline-blue border w-100 rounded-sm shadow-sm js-sections-inline-button my-20">
+				<em class="material-icons mr-5 ml-n10 my-n5 md-icon" data-icon="toc"></em>
+	
+				Table of Contents
+			</button>
+    
+
+<div class="topic-content pt-sm-15">
+
+		
+
+
+
+
+
+
+
+<script   class="topic-json" type="application/json">
+{
+       "1116194": {
+            "url": "/technology/machine-learning",
+            "shareUrl": "https://www.britannica.com/technology/machine-learning",
+            "title": "machine learning | artificial intelligence",
+            "documentGroup": "TOPIC PAGINATED SMALL",
+            "template": "DESKTOP" 
+       }
+   }
+</script>
+
+
+
+
+
+
+
+
+
+<div class="js-qf-module qf-module border p-20 ml-lg-20 mx-auto mb-20 font-14 float-lg-right bg-white">
+
+	<div class="facts-list ">
+		<dl class="js-fact mb-0 position-relative ">
+				<dt class="d-inline">Related Topics:</dt>
+				<dd class="d-inline">
+					<span class="fact-item"><a href="/technology/artificial-intelligence" topicid="37146">artificial intelligence</a></span>
+							<span class="fact-item"><a href="/science/learning" topicid="333978">learning</a></span>
+							</dd>
+				<button class="js-more-btn d-none btn btn-unstyled font-12 position-absolute pr-20 bottom-0 right-0 bg-white" aria-label="Toggle more/less fact data">
+					...<em class="js-content link-blue">(Show more)</em>
+				</button>
+			</dl>
+		</div>
+	<div class="text-center mt-20">
+			<a class="btn btn-sm btn-outline-blue border" href="/facts/machine-learning">
+				See all related content &rarr;</a>
+		</div>
+	</div><!--[BEFORE-ARTICLE]--><span class="marker before-article"></span><section id="ref1" data-level="1"><div class="assemblies inline-video"><div class="w-100"><figure class="md-assembly card print-false" data-assembly-id="246870"><div class="md-assembly-wrapper card-media" data-type="video"><a data-id="216540" class="d-flex justify-content-center" style="--aspect-ratio: 16/9" href="/video/216540/How-machine-learning-is-predicting-synthetic-products"><img src="https://cdn.britannica.com/40/216540-138-14385CFE/How-machine-learning-is-predicting-synthetic-products.jpg?w=800&amp;h=450&amp;c=crop" alt="machine learning" loading="lazy"><script type="application/json">
+								{
+								"sources": [ { "file" : "//content.jwplatform.com/manifests/DWSmN1Pz.m3u8" } ],
+								"image": "https://cdn.britannica.com/40/216540-138-14385CFE/How-machine-learning-is-predicting-synthetic-products.jpg",
+								
+									"tracks": [ { "file" : "//assets-jpcust.jwpsrv.com/tracks/PCWOB4A8", "label": "English" } ]
+								
+								}
+							</script><div class="btn btn-xl btn-white btn-circle position-absolute shadow" style="top: 50%; transform: translateY(-50%)"><em class="material-icons" data-icon="play_arrow"></em></div></a></div><figcaption class="card-body"><div class="md-assembly-title font-weight-bold mb-5 d-inline-block font-16 font-sans-serif">machine learning</div><div class="md-assembly-caption text-muted font-14 font-serif">How machine learning is predicting synthetic products.</div><cite class="credit d-block mt-5">© American Chemical Society (<a class="external" target="_blank" rel="noopener" href="http://corporate.britannica.com/american-chemical-society/">A Britannica Publishing Partner</a>)</cite><a class="font-14 mt-10 d-inline-block" href="/technology/machine-learning/images-videos">See all videos for this article</a></figcaption></figure></div></div><p class="topic-paragraph"><strong><span id="ref1025359"></span>machine learning</strong>,  in <a href="https://www.britannica.com/technology/artificial-intelligence" class="md-crosslink">artificial intelligence</a> (a subject within <a href="https://www.britannica.com/science/computer-science" class="md-crosslink">computer science</a>), <a class="md-dictionary-link md-dictionary-tt-off mw" data-term="discipline" href="https://www.merriam-webster.com/dictionary/discipline" data-type="MW">discipline</a> concerned with the implementation of computer <a href="https://www.britannica.com/technology/software" class="md-crosslink">software</a> that can learn autonomously.</p><!--[P1]--><span class="marker p1"></span><!--[AM1]--><span class="marker AM1 am-inline"></span><!--[MOD1]--><span class="marker MOD1 mod-inline"></span><p class="topic-paragraph"><a href="https://www.britannica.com/technology/expert-system" class="md-crosslink">Expert systems</a> and <a href="https://www.britannica.com/technology/data-mining" class="md-crosslink">data mining</a> programs are the most common applications for improving <a href="https://www.britannica.com/science/algorithm" class="md-crosslink">algorithms</a> through the use of <a href="https://www.britannica.com/technology/machine" class="md-crosslink autoxref">machine</a> <a href="https://www.britannica.com/science/learning" class="md-crosslink autoxref">learning</a>. Among the most common approaches are the use of artificial <a href="https://www.britannica.com/technology/neural-network" class="md-crosslink">neural networks</a> (weighted decision paths) and genetic <a class="md-dictionary-link md-dictionary-tt-off mw" data-term="algorithms" href="https://www.merriam-webster.com/dictionary/algorithms" data-type="MW">algorithms</a> (symbols “bred” and culled by algorithms to produce successively fitter programs).</p><!--[P2]--><span class="marker p2"></span><!--[AM2]--><span class="marker AM2 am-inline"></span><a href="/quiz/computers-and-technology" class="info-module quiz-module p-5 d-block border m-sm-50 mb-30">
+    <div class="wrapper p-30">
+        <div class="grid">
+            <div class="col-md-auto col-100 mb-15 mb-sm-0">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+        <img loading="lazy" src="https://cdn.britannica.com/63/166063-131-0E023062/computer-chip-processing-unit-history-society-science.jpg" alt="computer chip. computer. Hand holding computer chip. Central processing unit (CPU). history and society, science and technology, microchip, microprocessor motherboard computer Circuit Board"    />
+    
+
+</div>
+            <div class="col-md col-100">
+                <div class="label text-black font-13 font-weight-bold text-uppercase">Britannica Quiz</div>
+                <div class="title font-18 font-weight-bold lh-base mb-5" href="/quiz/computers-and-technology">Computers and Technology Quiz</div>
+                <div class="font-14 text-muted lh-base">Computers host websites composed of HTML and send text messages as simple as...LOL. Hack into this quiz and let some technology tally your score and reveal the contents to you.</div>
+            </div>
+        </div>
+    </div>
+</a><!--[MOD2]--><span class="marker MOD2 mod-inline"></span></section>   <span class="md-signature"><a href="/editor/William-L-Hosch/6481">William L. Hosch</a></span><!--[END-OF-CONTENT]--><span class="marker end-of-content"></span><!--[AFTER-ARTICLE]--><span class="marker after-article"></span></div>
+
+	
+</div>
+</div>
+
+                                </div>
+
+                            <aside class="col-md-da-300"></aside>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </article></div>
+        </div></div>
+	    </div>
+	</main>
+
+    <div id="chatbot-container"></div>
+    <div id="md-footer"></div> <iframe name="__uspapiLocator" style="display:none;height:0;opacity:0;visibility:hidden;border:0;width:0;"></iframe>
+	<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5W6NC8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<script type="text/javascript" id="_informizely_script_tag">
+var IzWidget = IzWidget || {};
+(function (d)
+{ var scriptElement = d.createElement('script'); scriptElement.type = 'text/javascript'; scriptElement.async = true; scriptElement.src = "https://insitez.blob.core.windows.net/site/f780f33e-a610-4ac2-af81-3eb184037547.js"; var node = d.getElementById('_informizely_script_tag'); node.parentNode.insertBefore(scriptElement, node); }
+)(document);
+</script>
+
+<script type="text/javascript">
+        (function(e,t,n,s)
+            {var c,o,i;e.SMCX=e.SMCX||[],t.getElementById(s)||(c=t.getElementsByTagName(n),o=c[c.length-1],i=t.createElement(n),i.type="text/javascript",i.async=!0,i.id=s,i.src=["https:"===location.protocol?"https://":"http://","widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd6XrXh8NoMbj5tpolI2BLFRL3fIg8yoLf_2BrxxssRnzBG.js"].join(""),o.parentNode.insertBefore(i,o))}
+        )(window,document,"script","smcx-sdk");
+    </script>
+
+<script src="https://cdn.britannica.com/mendel-resources/3-66/js/libs/jquery-3.5.0.min.js?v=3.66.1"></script>
+<script src="//content.jwplatform.com/libraries/UyMCoK2v.js"></script><script type="text/javascript" data-type="Init Mendel Code Splitting">
+              (function() {
+                $.ajax({
+                  dataType: 'script',
+                  cache: true,
+                  url: 'https://cdn.britannica.com/mendel-resources/3-66/dist/topic-page.js?v=3.66.1'
+                });
+              })();
+            </script>
+		<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-6636134-11" async="async"></script>
+    <script type="text/javascript">
+        function gaPageLoad(pathname, documentLocation) {
+            pathname = pathname || location.pathname;
+            documentLocation = documentLocation || document.querySelector('html').getAttribute('data-ytrk-page');
+
+            if (documentLocation) {
+                documentLocation = documentLocation.replace(/ /g, '/');
+
+                if (documentLocation.charAt(0) !== '/') {
+                    documentLocation = '/' + documentLocation;
+                }
+
+                window.dataLayer = window.dataLayer || [];
+
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+
+                gtag('js', new Date());
+
+                gtag('set', {
+                    'dimension1': 'BOL',
+                    'dimension2': 'D',
+                });
+
+                gtag('config', 'UA-6636134-11', {
+                    'page_path': documentLocation + pathname + decodeURI(location.search),
+                    'link_attribution': true,
+                });
+            }
+        }
+
+        gaPageLoad();
+    </script>
+<script type="text/javascript">
+    EBStat={accountId:9730071,hostnameOverride:'webstats.eb.com',domain:'www.britannica.com', json:''};
+    </script>
+
+    <script type="text/javascript">
+            ( function() {
+                $.ajax( { dataType: 'script', cache: true, url: '//www.britannica.com/webstats/mendelstats.js?v=1' } )
+                 .done( function() {
+                     try {writeStat(null,EBStat);}
+                     catch(err){}
+                 } );
+            })();
+            </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"70da69facb306f3b","token":"5cc7d7124de641b181da990fc8c9a0b6","version":"2021.12.0","si":100}' crossorigin="anonymous"></script>
+</body>
 </html>
