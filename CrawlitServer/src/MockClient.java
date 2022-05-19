@@ -5,7 +5,7 @@ public class MockClient {
 
 	public static void main(String[] args) throws IOException {
 		try (// TODO Auto-generated method stub
-		Socket mockSocket = new Socket("localhost", 6667)) {
+		Socket mockSocket = new Socket("localhost", 6666)) {
 			PrintWriter mockOut = new PrintWriter(mockSocket.getOutputStream(), true);
 
 			BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));

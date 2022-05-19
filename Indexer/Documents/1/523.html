@@ -1,762 +1,1794 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    <title></title>
+    <script>
+    /*
+    @licstart  The following is the entire license notice for the JavaScript code in this page.
+
+    Copyright (C) 2020 Internet Archive
+
+    The JavaScript code in this page is free software: you can
+    redistribute it and/or modify it under the terms of the GNU Affero
+    General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option)
+    any later version.  The code is distributed WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS
+    FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+    As additional permission under GNU AGPL version 3 section 7, you
+    may distribute non-source (e.g., minimized or compacted) forms of
+    that code without the copy of the GNU AGPL normally required by
+    section 4, provided you include this license notice and a URL
+    through which recipients can access the Corresponding Source.
+
+    @licend  The above is the entire license notice for the JavaScript code in this page.
+    */
+    </script>
+    <script type="text/javascript">
+      window.webComponentLoaderConfig = {
+      baseUrl: 'https://archive.org',
+      version: '29e56e87'
+      }
+    </script>
+    <script src="https://polyfill.archive.org/v3/polyfill.min.js?features=fetch%2CIntersectionObserver%2CResizeObserver%2CglobalThis%2CElement.prototype.getAttributeNames%2CString.prototype.startsWith%2CArray.prototype.flat"></script>
+    <script src="//archive.org/includes/build/npm/jquery/dist/jquery.min.js?v1.12.4" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/jquery-ui-dist/jquery-ui.min.js?v1.12.1" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/bootstrap/dist/js/bootstrap.min.js?v3.0.0" type="text/javascript"></script>
+    <script src="//archive.org/components/npm/clipboard/dist/clipboard.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/regenerator-runtime-polyfill.min.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/ie-dom-node-remove-polyfill.min.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/npm/lit/polyfill-support.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/polyfill.min.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/analytics.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/donation-banner.min.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/components/npm/@webcomponents/webcomponentsjs/webcomponents-bundle.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/more-facets.min.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/ia-topnav.min.js?v=88bfb453" type="text/javascript"></script>
+    <script src="//archive.org/includes/build/js/archive.min.js?v=88bfb453" type="text/javascript"></script>
+    <link href="//archive.org/includes/build/css/archive.min.css?v=88bfb453" rel="stylesheet" type="text/css"/>
+    <meta property="mediatype" content="">
+    <meta property="primary_collection" content="">
+    <script type="text/javascript">if('archive_analytics' in window){var v=archive_analytics.values;v.path='';v.service='wb';v.server_name='wwwb-app223.us.archive.org';v.server_ms=511;archive_analytics.send_pageview_on_load()}</script>
+    <link href="/_static/images/archive.ico" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/_static/css/styles.css?v=TN3GQxFf" />
+    <script type="text/javascript" src="/_static/js/ui.js?v=NTAW0JFh" charset="utf-8"></script>
+    <base target="_top">  </head>
+  <body class="navia">
     
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MZML9TL');</script>
-<!-- End Google Tag Manager -->
+                    <div class="ia-banners">
+              <div
+        class="ia-banner hidden outage-2022-01-14"
+        data-campaign="outage-2022-01-14">
+        <p>Due to a planned power outage on Friday, 1/14, between 8am-1pm PST, some services may be impacted.</p>
+        <form class="banner-close" action="" method="get" data-action="ia-banner-close">
+          <fieldset>
+            <button aria-label="Close Banner" type="submit"></button>
+          </fieldset>
+        </form>
+      </div>
+          </div>
+                <script src="//archive.org/includes/build/npm/js-cookie/src/js.cookie.js?v=88bfb453" type="text/javascript"></script>
+    <link href="//archive.org/components/donation-banner/banner.css?v=88bfb453" rel="stylesheet" type="text/css"/>
+    <link href="//archive.org/components/donation-banner/banner-template-styles/chevron.css?v=88bfb453" rel="stylesheet" type="text/css"/>
 
-    <meta charset="UTF-8">
-<script type="text/javascript">
-var gform;gform||(document.addEventListener("gform_main_scripts_loaded",function(){gform.scriptsLoaded=!0}),window.addEventListener("DOMContentLoaded",function(){gform.domLoaded=!0}),gform={domLoaded:!1,scriptsLoaded:!1,initializeOnLoaded:function(o){gform.domLoaded&&gform.scriptsLoaded?o():!gform.domLoaded&&gform.scriptsLoaded?window.addEventListener("DOMContentLoaded",o):document.addEventListener("gform_main_scripts_loaded",o)},hooks:{action:{},filter:{}},addAction:function(o,n,r,t){gform.addHook("action",o,n,r,t)},addFilter:function(o,n,r,t){gform.addHook("filter",o,n,r,t)},doAction:function(o){gform.doHook("action",o,arguments)},applyFilters:function(o){return gform.doHook("filter",o,arguments)},removeAction:function(o,n){gform.removeHook("action",o,n)},removeFilter:function(o,n,r){gform.removeHook("filter",o,n,r)},addHook:function(o,n,r,t,i){null==gform.hooks[o][n]&&(gform.hooks[o][n]=[]);var e=gform.hooks[o][n];null==i&&(i=n+"_"+e.length),gform.hooks[o][n].push({tag:i,callable:r,priority:t=null==t?10:t})},doHook:function(n,o,r){var t;if(r=Array.prototype.slice.call(r,1),null!=gform.hooks[n][o]&&((o=gform.hooks[n][o]).sort(function(o,n){return o.priority-n.priority}),o.forEach(function(o){"function"!=typeof(t=o.callable)&&(t=window[t]),"action"==n?t.apply(null,r):r[0]=t.apply(null,r)})),"filter"==n)return r[0]},removeHook:function(o,n,t,i){var r;null!=gform.hooks[o][n]&&(r=(r=gform.hooks[o][n]).filter(function(o,n,r){return!!(null!=i&&i!=o.tag||null!=t&&t!=o.priority)}),gform.hooks[o][n]=r)}});
-</script>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/ico" href="https://partnerships.nature.com/wp-content/themes/nature/nr_favicon-01.ico">
-    <title>Branded Content - Nature Research Partnerships</title>
-<meta name='robots' content='max-image-preview:large' />
-<link rel="alternate" hreflang="en" href="https://partnerships.nature.com/product/branded-content-native-advertising/" />
-
-<!-- This site is optimized with the Yoast SEO Premium plugin v7.0.2 - https://yoast.com/wordpress/plugins/seo/ -->
-<meta name="description" content="Create content your readers will love to read and share, designed in a format familiar to our audiences. Whether in industry or academia, we can work with you in a variety of ways to tell stories that spark conversation in the scientific community."/>
-<link rel="canonical" href="https://partnerships.nature.com/product/branded-content-native-advertising/" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Branded Content - Nature Research Partnerships" />
-<meta property="og:description" content="Create content your readers will love to read and share, designed in a format familiar to our audiences. Whether in industry or academia, we can work with you in a variety of ways to tell stories that spark conversation in the scientific community." />
-<meta property="og:url" content="https://partnerships.nature.com/product/branded-content-native-advertising/" />
-<meta property="og:site_name" content="Nature Research Partnerships" />
-<meta property="article:publisher" content="https://www.facebook.com/nature/" />
-<meta property="og:image" content="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Image_v2_300x300.jpg" />
-<meta property="og:image:secure_url" content="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Image_v2_300x300.jpg" />
-<meta property="og:image:width" content="300" />
-<meta property="og:image:height" content="300" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:description" content="Create content your readers will love to read and share, designed in a format familiar to our audiences. Whether in industry or academia, we can work with you in a variety of ways to tell stories that spark conversation in the scientific community." />
-<meta name="twitter:title" content="Branded Content - Nature Research Partnerships" />
-<meta name="twitter:site" content="@nature" />
-<meta name="twitter:image" content="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Image_v2_300x300.jpg" />
-<meta name="twitter:creator" content="@nature" />
-<script type='application/ld+json'>{"@context":"https:\/\/schema.org","@type":"Organization","url":"https:\/\/partnerships.nature.com\/","sameAs":["https:\/\/www.facebook.com\/nature\/","https:\/\/www.instagram.com\/nature.research\/?hl=en","https:\/\/www.linkedin.com\/company\/nature-publishing-group\/","https:\/\/www.youtube.com\/user\/NatureVideoChannel\/featured","https:\/\/twitter.com\/nature"],"@id":"#organization","name":"Nature Research","logo":"http:\/\/partnerships.nature.com\/wp-content\/uploads\/2017\/08\/NatureResearch_INLINE.png"}</script>
-<!-- / Yoast SEO Premium plugin. -->
-
-<link rel='dns-prefetch' href='//my.hellobar.com' />
-<link rel='dns-prefetch' href='//fonts.googleapis.com' />
-<link rel='dns-prefetch' href='//s.w.org' />
-<script type="text/javascript">
-window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/partnerships.nature.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.9.2"}};
-/*! This file is auto-generated */
-!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
-</script>
-<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 0.07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-	<link rel='stylesheet' id='wp-block-library-css'  href='https://partnerships.nature.com/wp-includes/css/dist/block-library/style.min.css?ver=5.9.2' type='text/css' media='all' />
-<style id='global-styles-inline-css' type='text/css'>
-body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
-</style>
-<link rel='stylesheet' id='cms-navigation-style-base-css'  href='https://partnerships.nature.com/wp-content/plugins/wpml-cms-nav-1.5.5/res/css/cms-navigation-base.css?ver=1.5.5' type='text/css' media='screen' />
-<link rel='stylesheet' id='cms-navigation-style-css'  href='https://partnerships.nature.com/wp-content/plugins/wpml-cms-nav-1.5.5/res/css/cms-navigation.css?ver=1.5.5' type='text/css' media='screen' />
-<link rel='stylesheet' id='fonts-css'  href='https://fonts.googleapis.com/css?family=Lora%7CSource+Sans+Pro%3A400%2C600%2C700&#038;ver=5.9.2' type='text/css' media='all' />
-<link rel='stylesheet' id='main-css'  href='https://partnerships.nature.com/wp-content/themes/nature/assets/css/main.min.css?ver=1649949302' type='text/css' media='all' />
-<link rel='stylesheet' id='tablepress-default-css'  href='https://partnerships.nature.com/wp-content/plugins/tablepress/css/default.min.css?ver=1.12' type='text/css' media='all' />
-<script type='text/javascript' src='https://partnerships.nature.com/wp-content/themes/nature/assets/js/lib/jquery-2.2.4.min.js?ver=5.9.2' id='jquery-js'></script>
-<script type='text/javascript' src='https://my.hellobar.com/88acd353fbbc0d5bb42d9d83b1d41f1088146bad.js?ver=1' id='survey-js'></script>
-<link rel="https://api.w.org/" href="https://partnerships.nature.com/wp-json/" /><link rel="alternate" type="application/json+oembed" href="https://partnerships.nature.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpartnerships.nature.com%2Fproduct%2Fbranded-content-native-advertising%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://partnerships.nature.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpartnerships.nature.com%2Fproduct%2Fbranded-content-native-advertising%2F&#038;format=xml" />
-<meta name="generator" content="WPML ver:4.4.5 stt:1,28;" />
-                <!-- OneTrust Cookies Consent Notice start -->
-        <script src="https://cdn.cookielaw.org/consent/d7dfeb7b-7ecf-403a-8c95-f1a36b2edf88.js" type="text/javascript" charset="UTF-8"></script>
-        <script type="text/javascript">
-            function OptanonWrapper() { }
-        </script>
-        <!-- OneTrust Cookies Consent Notice end -->
-
-            </head>
-<body class="product-template-default single single-product">
-    
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZML9TL"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-    <div class="brand-bar brand-bar--top">
-        <div class="brand-bar__interior page-container">
-            <a class="brand-bar__link" href="https://partnerships.nature.com">
-                <div class="brand-bar__link-image">
-                    <img width="297"  src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/nr_partnerships.svg" alt="Nature Research Partnerships" />
-                </div>
-                <div class="brand-bar__link-image brand-bar__link-image--last">
-                    <img width="186" src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/part_of_SN_header_2020.svg" alt="Custom marketing solutions and professional development services for the scientific community" />
-                </div>
-            </a>
-        </div>
-    </div>
-    
-    <header class="site-header page-container page-container--full-bleed">
-        <div class="site-header__interior">
-            <div
-    class="mega-nav"
-    data-js-component="mobileMenu"
-    data-toggle-class="mobile-menu-toggle">
-        <div
-        class="mega-nav__section"
-        data-js-component="contentDrawer"
-        data-trigger-class="mega-nav__section-title-arrow"
-        data-drawer-class="mega-nav__section-interior"
-        data-drawer-open-class="drawer-open">
-        <div class="mega-nav__section-title-wrap ">
-                        <div class="mega-nav__section-title">Products & Services</div>
-                        <div class="mega-nav__section-title-arrow"></div>
-        </div>
-        <div class="mega-nav__section-interior">
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Advertising & Promotion</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/digital-advertising/" target="_self">Digital</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/print-ads/" target="_self">Print</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/email-marketing/" target="_self">Email</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/event-promotion/" target="_self">Event Promotion</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Editorial Partnerships</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/branded-content-native-advertising/" target="_self">Branded Content</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/sponsored-content/" target="_self">Sponsored Content</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/nature-research-custom-media/" target="_self">Custom Media</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/clinical-custom-content/" target="_self">Clinical Custom Content</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Conferences & Events</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/conferences-events/" target="_self">Conferences & Events</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/awards/" target="_self">Awards</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/nature-webcasts/" target="_self">Webcasts</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Researcher Services</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/researcher-training/" target="_self">Researcher Training</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/editing/" target="_self">Editing</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/nature-index-enhanced-profiles-and-research-highlights/" target="_self">Nature Index</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Recruiting</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/recruitment-advertising/" target="_self">Recruitment Advertising</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/product/naturecareers-employer-branding/" target="_self">Employer Branding</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Our Newsletter</div>                            <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Subscribe to our newsletter</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/our-newsletters/" target="_self">Sign up to hear more about our products & services</a>
-
-                </div>
-                                            </div>
-                    </div>
-    </div>
-        <div
-        class="mega-nav__section"
-        data-js-component="contentDrawer"
-        data-trigger-class="mega-nav__section-title-arrow"
-        data-drawer-class="mega-nav__section-interior"
-        data-drawer-open-class="drawer-open">
-        <div class="mega-nav__section-title-wrap ">
-                        <div class="mega-nav__section-title">Media Kits</div>
-                        <div class="mega-nav__section-title-arrow"></div>
-        </div>
-        <div class="mega-nav__section-interior">
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Media Kits</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label mega-nav__link--pdf-icon" href="https://partnerships.nature.com/wp-content/uploads/2019/02/Springer-Nature-Media-Kit-2022.pdf" target="_blank">Springer Nature</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label mega-nav__link--pdf-icon" href="https://partnerships.nature.com/wp-content/uploads/2018/05/Branded-Content-2019.pdf" target="_blank">Branded Content</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set--no-heading mega-nav__link-set">                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label mega-nav__link--pdf-icon" href="https://partnerships.nature.com/wp-content/uploads/2017/12/Scientific-American-Media-Kit-2022.pdf" target="_blank">Scientific American</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label mega-nav__link--pdf-icon" href="https://partnerships.nature.com/wp-content/uploads/2017/12/BDJ-Portfolio-Media-Kit-2022.pdf" target="_blank">BDJ Portfolio</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set--no-heading mega-nav__link-set">                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label mega-nav__link--pdf-icon" href="https://partnerships.nature.com/media_kit/biopharma-dealmakers-media-kit/" target="_self">BioPharma Dealmakers</a>
-
-                </div>
-                                                <a class="mega-nav__link-set-more" href="https://partnerships.nature.com/media-kits/">More</a>
-                            </div>
-                    </div>
-    </div>
-        <div
-        class="mega-nav__section"
-        data-js-component="contentDrawer"
-        data-trigger-class="mega-nav__section-title-arrow"
-        data-drawer-class="mega-nav__section-interior"
-        data-drawer-open-class="drawer-open">
-        <div class="mega-nav__section-title-wrap ">
-                        <div class="mega-nav__section-title">Case Studies</div>
-                        <div class="mega-nav__section-title-arrow"></div>
-        </div>
-        <div class="mega-nav__section-interior">
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Case Studies</div>                            <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">The Estée Lauder Companies</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/estee-lauder/" target="_self">Launching global awards to support inclusivity and celebrate the achievements of women in science</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Duke University Biomedical Engineering</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/duke-university-biomedical-engineering/" target="_self">A research collection becomes a versatile and evergreen promotional tool</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">PAcMEN at DTU BioSustain</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/pacmen-dtu-biosustain-masterclass/" target="_self">Training PhD students in the scientific publishing process</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set--no-heading mega-nav__link-set">                            <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Immunomic Therapeutics</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/immunomic-therapeutics/" target="_self">Designing an event series and branded content to showcase groundbreaking immunotherapy technology</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">AstraZeneca</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/astrazeneca/" target="_self">Driving an already successful recruitment campaign to the next level</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Indiana University School of Medicine</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/indiana-university-school-of-medicine/" target="_self">How to drive awareness for an ambitious scientific challenge</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set--no-heading mega-nav__link-set">                            <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Jackson ImmunoResearch</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/jackson-immunoresearch/" target="_self">See how branded content delivered a dynamic brand story to an engaged audience</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Science Foundation Ireland</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/science-foundation-ireland/" target="_self">Bringing visibility to Ireland’s scientific research to attract international talent</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">University of Copenhagen</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/case-studies/university-of-copenhagen-nature-research-academies/" target="_self">See how the University of Copenhagen helped their graduate students navigate the publishing process</a>
-
-                </div>
-                                                <a class="mega-nav__link-set-more" href="https://partnerships.nature.com/case-studies/">More</a>
-                            </div>
-                    </div>
-    </div>
-        <div
-        class="mega-nav__section"
-        data-js-component="contentDrawer"
-        data-trigger-class="mega-nav__section-title-arrow"
-        data-drawer-class="mega-nav__section-interior"
-        data-drawer-open-class="drawer-open">
-        <div class="mega-nav__section-title-wrap ">
-                        <a class="mega-nav__section-title" href="https://partnerships.nature.com/blog/">
-                Insights            </a>
-                        <div class="mega-nav__section-title-arrow"></div>
-        </div>
-        <div class="mega-nav__section-interior">
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Insights & Opportunities</div>                            <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Oncology Survey</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/report-the-what-how-and-when-of-creating-content-for-oncologists/" target="_self">We surveyed 100 US oncologists to uncover the what, how, and when of creating content for oncologists</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set--no-heading mega-nav__link-set">                            <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">Research Leaders White Paper</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/future-proof-your-institution-growth-in-4-strategic-steps/" target="_self">How to future proof your institution growth in 4 strategic steps</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set--no-heading mega-nav__link-set">                            <div class="mega-nav__link">
-                    <div class="mega-nav__link-sublabel">What Can A Branded Content Specialist Do For You?</div>                    <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/what-can-a-branded-content-specialist-do-for-you/" target="_self">Ensuring branded content marketing amplifies the brand's values with science and healthcare audiences</a>
-
-                </div>
-                                                <a class="mega-nav__link-set-more" href="https://partnerships.nature.com/blog/">More</a>
-                            </div>
-                    </div>
-    </div>
-        <div
-        class="mega-nav__section"
-        data-js-component="contentDrawer"
-        data-trigger-class="mega-nav__section-title-arrow"
-        data-drawer-class="mega-nav__section-interior"
-        data-drawer-open-class="drawer-open">
-        <div class="mega-nav__section-title-wrap ">
-                        <div class="mega-nav__section-title">About Us</div>
-                        <div class="mega-nav__section-title-arrow"></div>
-        </div>
-        <div class="mega-nav__section-interior">
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">About Nature Research Partnerships</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/about-nature-research-partnerships/#section-2" target="_self">Who we are</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/about-nature-research-partnerships/#section-3" target="_self">Brand portfolio</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/about-nature-research-partnerships/#section-4" target="_self">Annual performance</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label mega-nav__link--pdf-icon" href="https://partnerships.nature.com/wp-content/uploads/2022/03/Guidelines-For-Coronavirus-Related-Partner-Content.pdf " target="_blank">Covid Guidelines</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/our-newsletters/" target="_self">Our newsletter</a>
-
-                </div>
-                                            </div>
-                        <div class="mega-nav__link-set"> <div class="mega-nav__link-set-heading">Our Audiences</div>                            <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/life-sciences-audience/" target="_self">Life Sciences</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/clinical-sciences-audience/" target="_self">Clinical Sciences</a>
-
-                </div>
-                                <div class="mega-nav__link">
-                                        <a class="mega-nav__link-label" href="https://partnerships.nature.com/blog/physical-sciences-audience/" target="_self">Physical Sciences</a>
-
-                </div>
-                                            </div>
-                    </div>
-    </div>
-    </div>
-        </div>
-                <a class="site-header__contact" href="https://partnerships.nature.com/contact-us/">Contact</a>
-                <div class="site-header__searchform">
+    <header
+      id="donate_banner"
+      class="row js-donate-banner template-chevron background-default chevron-image-white  chevron-color-#194880"
+      itemscope
+      itemtype="http://schema.org/WPAdBlock"
+      data-donationSourceData="ctx=wb;uid=bcc2260c6121af6402dc32462c406f2a"
+      data-exp="May Test"
+      data-variant="May182022WBTestBlueChevGreenButton"
+      data-platform="wb"
+      data-baseUrl="https://archive.org"
+      data-platform="wb"
+      data-bannerTemplate="chevron"
+      data-bannerBackground="default"
+      data-snowfall="off"
+      data-selectedTextColor=""
+      data-selectedFillColor="#194880"
+      data-variantDollarAmounts='[5, 50, 100]'      data-variantAmountLayout='multi-line'      data-variantFrequencyMode='checkbox'      data-debugMode="false"
+    >
+      <button id="donate-close-button" class="donate-close" type="button" aria-label="Close banner">
+        <span class="sr-only">Close banner</span>
+        <img src="/components/donation-banner/images/close-circle-dark.svg" id="banner-close-image-dark"></img>
+        <img src="/components/donation-banner/images/close-circle-white.svg" id="banner-close-image-white"></img>
+      </button>
+      <div id="banner-body-container">
+        <div id="banner-body-left-container" class="show-separator" style="--donationBannerChevronBG: #194880;">
+                    <div class="donate-body">
+                                      <div id="chevron-image-container"></div>
             
-<div class="header-searchform">
-    <form role="search" method="get" class="search-form" action="https://partnerships.nature.com/">
-        <label>
-            <input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+            <div class="main-content">
+              <div class="appeal-text" style="">
+                <b><u>Can You Chip In?</u></b><br><br>They’re trying to change history—don’t let them. The Wayback Machine is a crucial resource in the fight against disinformation, and now more than ever we need your help. Right now we’re preserving history as it unfolds, keeping track of who’s saying what and when—all without charging for access, selling user data, or running ads.<br><br>Instead, the Internet Archive (which runs this project) relies on the generosity of individuals to help us keep the record straight. If you find all these bits and bytes useful, <b>please pitch in.</b>              </div>
+
+                          </div>
+            <div id="donate-body-background-layer2" class="supplemental-background-layer"></div>
+            <div id="donate-body-background-layer1" class="supplemental-background-layer"></div>
+          </div>
+        </div>
+
+        <div class="donate-form js-donate-form" itemscope itemtype="http://schema.org/DonateAction">
+          <meta itemprop="recipient" content="Internet Archive">
+          <meta itemprop="actionStatus" content="PotentialActionStatus">
+          <div class="white-box">
+                                <div class="donation-form-container">
+        <donation-form-edit-donation
+          amountOptions='[5, 50, 100]'          defaultSelectedAmount='5'          amountSelectionLayout='multi-line'          frequencySelectionMode='checkbox'          stepNumberMode="hidenumbers"
+          style="--paymentButtonSelectedColor: #194880;"
+        >
+        </donation-form-edit-donation>
+
+        <div class="cta">
+          <button class="cta-button" id="continue-button" style="background-color: #23765d;">
+            Continue
+          </button>
+                <div class="donate-later-container">
+        <a
+          id="donate_later"
+          href="#donate_dropdown"
+          data-source-context="WB"
+          data-event-click-tracking="DonateBannerWB|MaybeLaterLink"
+          data-event-tracking-options='{ "service": "ao_no_sampling" }'
+        >Remind Me</a>
+        <div class="donate-later-wrap">
+          <div class="donate-later-dropdown js-donate-later-dropdown" id="donate_dropdown">
+            <button id="close_donate_dropdown" class="donate-close" type="button" aria-label="Close banner"><span class="iconochive-remove-circle"></span>
+            </button>
+            <form id="donate_reminder_form" data-base-url="https://archive.org">
+              <h5>Send me an email reminder</h5>
+              <label for="email">Email address (required)</label>
+              <input type="email" id="email" name="email" value=""/>
+              <div class="error-email">Please enter a valid email address.</div>
+              <label for="first-name">First name</label>
+              <input type="text" id="first-name"
+                name="first_name" value=""/>
+              <label for="last-name">Last name</label>
+              <input type="text" id="last-name"
+                name="last_name" value=""/>
+              <button type="submit">Submit</button>
+              <p>
+                By submitting, you agree to receive donor-related emails from the Internet Archive.
+                Your privacy is important to us. We do not sell or trade your information with anyone.
+              </p>
+            </form>
+            <div class="reminder-success hidden" id="donate_reminder_success" aria-live="polite">
+            </div>
+          </div>
+        </div>
+      </div>
+            </div>
+      </div>
+                          </div> <!--/.white-box -->
+          <div class="donate-form-chevrons" style="--donationBannerChevronBG: #194880;"></div>
+        </div> <!-- .donate-form -->
+      </div>
+    </header>
+            <div id="topnav">
+                    <ia-topnav
+            baseHost="https://archive.org"
+            mediaBaseHost="https://archive.org"
+            username=""
+            userProfileLastModified=""
+            screenName=""
+                        searchQuery=""
+            config="eyJ1cGxvYWRVUkwiOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL2NyZWF0ZSIsImV2ZW50Q2F0ZWdvcnkiOiJUb3BOYXYiLCJ3YXliYWNrUGFnZXNBcmNoaXZlZCI6IjY4MiBiaWxsaW9uIn0="
+            menus="eyJhdWRpbyI6eyJoZWFkaW5nIjoiSW50ZXJuZXQgQXJjaGl2ZSBBdWRpbyIsImljb25MaW5rcyI6W3siaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvc2VydmljZXNcL2ltZ1wvZXRyZWUiLCJ0aXRsZSI6IkxpdmUgTXVzaWMgQXJjaGl2ZSIsInVybCI6IlwvZGV0YWlsc1wvZXRyZWUifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2xpYnJpdm94YXVkaW8iLCJ0aXRsZSI6IkxpYnJpdm94IEZyZWUgQXVkaW8iLCJ1cmwiOiJcL2RldGFpbHNcL2xpYnJpdm94YXVkaW8ifV0sImZlYXR1cmVkTGlua3MiOlt7InRpdGxlIjoiQWxsIEF1ZGlvIiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpbyJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOmF1ZGlvJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiR3JhdGVmdWwgRGVhZCIsInVybCI6IlwvZGV0YWlsc1wvR3JhdGVmdWxEZWFkIn0seyJ0aXRsZSI6Ik5ldGxhYmVscyIsInVybCI6IlwvZGV0YWlsc1wvbmV0bGFiZWxzIn0seyJ0aXRsZSI6Ik9sZCBUaW1lIFJhZGlvIiwidXJsIjoiXC9kZXRhaWxzXC9vbGR0aW1lcmFkaW8ifSx7InRpdGxlIjoiNzggUlBNcyBhbmQgQ3lsaW5kZXIgUmVjb3JkaW5ncyIsInVybCI6IlwvZGV0YWlsc1wvNzhycG0ifV0sImxpbmtzIjpbeyJ0aXRsZSI6IkF1ZGlvIEJvb2tzICYgUG9ldHJ5IiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpb19ib29rc3BvZXRyeSJ9LHsidGl0bGUiOiJDb21wdXRlcnMsIFRlY2hub2xvZ3kgYW5kIFNjaWVuY2UiLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX3RlY2gifSx7InRpdGxlIjoiTXVzaWMsIEFydHMgJiBDdWx0dXJlIiwidXJsIjoiXC9kZXRhaWxzXC9hdWRpb19tdXNpYyJ9LHsidGl0bGUiOiJOZXdzICYgUHVibGljIEFmZmFpcnMiLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX25ld3MifSx7InRpdGxlIjoiU3Bpcml0dWFsaXR5ICYgUmVsaWdpb24iLCJ1cmwiOiJcL2RldGFpbHNcL2F1ZGlvX3JlbGlnaW9uIn0seyJ0aXRsZSI6IlBvZGNhc3RzIiwidXJsIjoiXC9kZXRhaWxzXC9wb2RjYXN0cyJ9LHsidGl0bGUiOiJSYWRpbyBOZXdzIEFyY2hpdmUiLCJ1cmwiOiJcL2RldGFpbHNcL3JhZGlvIn1dfSwiaW1hZ2VzIjp7ImhlYWRpbmciOiJJbWFnZXMiLCJpY29uTGlua3MiOlt7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL21ldHJvcG9saXRhbm11c2V1bW9mYXJ0LWdhbGxlcnkiLCJ0aXRsZSI6Ik1ldHJvcG9saXRhbiBNdXNldW0iLCJ1cmwiOiJcL2RldGFpbHNcL21ldHJvcG9saXRhbm11c2V1bW9mYXJ0LWdhbGxlcnkifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2NsZXZlbGFuZGFydCIsInRpdGxlIjoiQ2xldmVsYW5kIE11c2V1bSBvZiBBcnQiLCJ1cmwiOiJcL2RldGFpbHNcL2NsZXZlbGFuZGFydCJ9XSwiZmVhdHVyZWRMaW5rcyI6W3sidGl0bGUiOiJBbGwgSW1hZ2VzIiwidXJsIjoiXC9kZXRhaWxzXC9pbWFnZSJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOmltYWdlJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiRmxpY2tyIENvbW1vbnMiLCJ1cmwiOiJcL2RldGFpbHNcL2ZsaWNrcmNvbW1vbnMifSx7InRpdGxlIjoiT2NjdXB5IFdhbGwgU3RyZWV0IEZsaWNrciIsInVybCI6IlwvZGV0YWlsc1wvZmxpY2tyLW93cyJ9LHsidGl0bGUiOiJDb3ZlciBBcnQiLCJ1cmwiOiJcL2RldGFpbHNcL2NvdmVyYXJ0YXJjaGl2ZSJ9LHsidGl0bGUiOiJVU0dTIE1hcHMiLCJ1cmwiOiJcL2RldGFpbHNcL21hcHNfdXNncyJ9XSwibGlua3MiOlt7InRpdGxlIjoiTkFTQSBJbWFnZXMiLCJ1cmwiOiJcL2RldGFpbHNcL25hc2EifSx7InRpdGxlIjoiU29sYXIgU3lzdGVtIENvbGxlY3Rpb24iLCJ1cmwiOiJcL2RldGFpbHNcL3NvbGFyc3lzdGVtY29sbGVjdGlvbiJ9LHsidGl0bGUiOiJBbWVzIFJlc2VhcmNoIENlbnRlciIsInVybCI6IlwvZGV0YWlsc1wvYW1lc3Jlc2VhcmNoY2VudGVyaW1hZ2VsaWJyYXJ5In1dfSwibW9yZSI6W3sidGl0bGUiOiJBYm91dCIsInVybCI6IlwvYWJvdXRcLyJ9LHsidGl0bGUiOiJCbG9nIiwidXJsIjoiaHR0cHM6XC9cL2Jsb2cuYXJjaGl2ZS5vcmcifSx7InRpdGxlIjoiUHJvamVjdHMiLCJ1cmwiOiJcL3Byb2plY3RzXC8ifSx7InRpdGxlIjoiSGVscCIsInVybCI6IlwvYWJvdXRcL2ZhcXMucGhwIn0seyJ0aXRsZSI6IkRvbmF0ZSIsInVybCI6IlwvZG9uYXRlP29yaWdpbj13Ynd3dy1Ub3BOYXZEb25hdGVCdXR0b24ifSx7InRpdGxlIjoiQ29udGFjdCIsInVybCI6IlwvYWJvdXRcL2NvbnRhY3QucGhwIn0seyJ0aXRsZSI6IkpvYnMiLCJ1cmwiOiJcL2Fib3V0XC9qb2JzLnBocCJ9LHsidGl0bGUiOiJWb2x1bnRlZXIiLCJ1cmwiOiJcL2Fib3V0XC92b2x1bnRlZXJwb3NpdGlvbnMucGhwIn0seyJ0aXRsZSI6IlBlb3BsZSIsInVybCI6IlwvYWJvdXRcL2Jpb3MucGhwIn1dLCJzb2Z0d2FyZSI6eyJoZWFkaW5nIjoiU29mdHdhcmUiLCJpY29uTGlua3MiOlt7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcL2ludGVybmV0YXJjYWRlIiwidGl0bGUiOiJJbnRlcm5ldCBBcmNhZGUiLCJ1cmwiOiJcL2RldGFpbHNcL2ludGVybmV0YXJjYWRlIn0seyJpY29uIjoiaHR0cHM6XC9cL2FyY2hpdmUub3JnXC9zZXJ2aWNlc1wvaW1nXC9jb25zb2xlbGl2aW5ncm9vbSIsInRpdGxlIjoiQ29uc29sZSBMaXZpbmcgUm9vbSIsInVybCI6IlwvZGV0YWlsc1wvY29uc29sZWxpdmluZ3Jvb20ifV0sImZlYXR1cmVkTGlua3MiOlt7InRpdGxlIjoiQWxsIFNvZnR3YXJlIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZSJ9LHsidGl0bGUiOiJUaGlzIEp1c3QgSW4iLCJ1cmwiOiJcL3NlYXJjaC5waHA/cXVlcnk9bWVkaWF0eXBlOnNvZnR3YXJlJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiT2xkIFNjaG9vbCBFbXVsYXRpb24iLCJ1cmwiOiJcL2RldGFpbHNcL3Rvc2VjIn0seyJ0aXRsZSI6Ik1TLURPUyBHYW1lcyIsInVybCI6IlwvZGV0YWlsc1wvc29mdHdhcmVsaWJyYXJ5X21zZG9zX2dhbWVzIn0seyJ0aXRsZSI6Ikhpc3RvcmljYWwgU29mdHdhcmUiLCJ1cmwiOiJcL2RldGFpbHNcL2hpc3RvcmljYWxzb2Z0d2FyZSJ9LHsidGl0bGUiOiJDbGFzc2ljIFBDIEdhbWVzIiwidXJsIjoiXC9kZXRhaWxzXC9jbGFzc2ljcGNnYW1lcyJ9LHsidGl0bGUiOiJTb2Z0d2FyZSBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZWxpYnJhcnkifV0sImxpbmtzIjpbeyJ0aXRsZSI6IktvZGkgQXJjaGl2ZSBhbmQgU3VwcG9ydCBGaWxlIiwidXJsIjoiXC9kZXRhaWxzXC9rb2RpX2FyY2hpdmUifSx7InRpdGxlIjoiVmludGFnZSBTb2Z0d2FyZSIsInVybCI6IlwvZGV0YWlsc1wvdmludGFnZXNvZnR3YXJlIn0seyJ0aXRsZSI6IkFQSyIsInVybCI6IlwvZGV0YWlsc1wvYXBrYXJjaGl2ZSJ9LHsidGl0bGUiOiJNUy1ET1MiLCJ1cmwiOiJcL2RldGFpbHNcL3NvZnR3YXJlbGlicmFyeV9tc2RvcyJ9LHsidGl0bGUiOiJDRC1ST00gU29mdHdhcmUiLCJ1cmwiOiJcL2RldGFpbHNcL2NkLXJvbXMifSx7InRpdGxlIjoiQ0QtUk9NIFNvZnR3YXJlIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL2Nkcm9tc29mdHdhcmUifSx7InRpdGxlIjoiU29mdHdhcmUgU2l0ZXMiLCJ1cmwiOiJcL2RldGFpbHNcL3NvZnR3YXJlc2l0ZXMifSx7InRpdGxlIjoiVHVjb3dzIFNvZnR3YXJlIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL3R1Y293cyJ9LHsidGl0bGUiOiJTaGFyZXdhcmUgQ0QtUk9NcyIsInVybCI6IlwvZGV0YWlsc1wvY2RiYnNhcmNoaXZlIn0seyJ0aXRsZSI6IlNvZnR3YXJlIENhcHN1bGVzIENvbXBpbGF0aW9uIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZWNhcHN1bGVzIn0seyJ0aXRsZSI6IkNELVJPTSBJbWFnZXMiLCJ1cmwiOiJcL2RldGFpbHNcL2Nkcm9taW1hZ2VzIn0seyJ0aXRsZSI6IlpYIFNwZWN0cnVtIiwidXJsIjoiXC9kZXRhaWxzXC9zb2Z0d2FyZWxpYnJhcnlfenhfc3BlY3RydW0ifSx7InRpdGxlIjoiRE9PTSBMZXZlbCBDRCIsInVybCI6IlwvZGV0YWlsc1wvZG9vbS1jZHMifV19LCJ0ZXh0cyI6eyJoZWFkaW5nIjoiQm9va3MiLCJpY29uTGlua3MiOlt7InRpdGxlIjoiQm9va3MgdG8gQm9ycm93IiwiaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvc2VydmljZXNcL2ltZ1wvaW5saWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9pbmxpYnJhcnkifSx7InRpdGxlIjoiT3BlbiBMaWJyYXJ5IiwiaWNvbiI6Imh0dHBzOlwvXC9hcmNoaXZlLm9yZ1wvaW1hZ2VzXC93aWRnZXRPTC5wbmciLCJ1cmwiOiJodHRwczpcL1wvb3BlbmxpYnJhcnkub3JnXC8ifV0sImZlYXR1cmVkTGlua3MiOlt7InRpdGxlIjoiQWxsIEJvb2tzIiwidXJsIjoiXC9kZXRhaWxzXC9ib29rcyJ9LHsidGl0bGUiOiJBbGwgVGV4dHMiLCJ1cmwiOiJcL2RldGFpbHNcL3RleHRzIn0seyJ0aXRsZSI6IlRoaXMgSnVzdCBJbiIsInVybCI6Ilwvc2VhcmNoLnBocD9xdWVyeT1tZWRpYXR5cGU6dGV4dHMmc29ydD0tcHVibGljZGF0ZSJ9LHsidGl0bGUiOiJTbWl0aHNvbmlhbiBMaWJyYXJpZXMiLCJ1cmwiOiJcL2RldGFpbHNcL3NtaXRoc29uaWFuIn0seyJ0aXRsZSI6IkZFRExJTksgKFVTKSIsInVybCI6IlwvZGV0YWlsc1wvZmVkbGluayJ9LHsidGl0bGUiOiJHZW5lYWxvZ3kiLCJ1cmwiOiJcL2RldGFpbHNcL2dlbmVhbG9neSJ9LHsidGl0bGUiOiJMaW5jb2xuIENvbGxlY3Rpb24iLCJ1cmwiOiJcL2RldGFpbHNcL2xpbmNvbG5jb2xsZWN0aW9uIn1dLCJsaW5rcyI6W3sidGl0bGUiOiJBbWVyaWNhbiBMaWJyYXJpZXMiLCJ1cmwiOiJcL2RldGFpbHNcL2FtZXJpY2FuYSJ9LHsidGl0bGUiOiJDYW5hZGlhbiBMaWJyYXJpZXMiLCJ1cmwiOiJcL2RldGFpbHNcL3Rvcm9udG8ifSx7InRpdGxlIjoiVW5pdmVyc2FsIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL3VuaXZlcnNhbGxpYnJhcnkifSx7InRpdGxlIjoiUHJvamVjdCBHdXRlbmJlcmciLCJ1cmwiOiJcL2RldGFpbHNcL2d1dGVuYmVyZyJ9LHsidGl0bGUiOiJDaGlsZHJlbidzIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL2lhY2wifSx7InRpdGxlIjoiQmlvZGl2ZXJzaXR5IEhlcml0YWdlIExpYnJhcnkiLCJ1cmwiOiJcL2RldGFpbHNcL2Jpb2RpdmVyc2l0eSJ9LHsidGl0bGUiOiJCb29rcyBieSBMYW5ndWFnZSIsInVybCI6IlwvZGV0YWlsc1wvYm9va3NieWxhbmd1YWdlIn0seyJ0aXRsZSI6IkJvb2tzIGJ5IExhbmd1YWdlIiwidXJsIjoiXC9kZXRhaWxzXC9ib29rc2J5bGFuZ3VhZ2UifSx7InRpdGxlIjoiQWRkaXRpb25hbCBDb2xsZWN0aW9ucyIsInVybCI6IlwvZGV0YWlsc1wvYWRkaXRpb25hbF9jb2xsZWN0aW9ucyJ9XX0sIndlYiI6eyJtb2JpbGVBcHBzTGlua3MiOlt7InVybCI6Imh0dHBzOlwvXC9hcHBzLmFwcGxlLmNvbVwvdXNcL2FwcFwvd2F5YmFjay1tYWNoaW5lXC9pZDEyMDE4ODgzMTMiLCJ0aXRsZSI6IldheWJhY2sgTWFjaGluZSAoaU9TKSIsImV4dGVybmFsIjp0cnVlfSx7InVybCI6Imh0dHBzOlwvXC9wbGF5Lmdvb2dsZS5jb21cL3N0b3JlXC9hcHBzXC9kZXRhaWxzP2lkPWNvbS5hcmNoaXZlLndheWJhY2ttYWNoaW5lJmhsPWVuX1VTIiwidGl0bGUiOiJXYXliYWNrIE1hY2hpbmUgKEFuZHJvaWQpIiwiZXh0ZXJuYWwiOnRydWV9XSwiYnJvd3NlckV4dGVuc2lvbnNMaW5rcyI6W3sidXJsIjoiaHR0cHM6XC9cL2Nocm9tZS5nb29nbGUuY29tXC93ZWJzdG9yZVwvZGV0YWlsXC93YXliYWNrLW1hY2hpbmVcL2Zwbm1nZGthYmttbmFkY2pwZWhtbGxsa25kcGttaWFrIiwidGl0bGUiOiJDaHJvbWUiLCJleHRlcm5hbCI6dHJ1ZX0seyJ1cmwiOiJodHRwczpcL1wvYWRkb25zLm1vemlsbGEub3JnXC9lbi1VU1wvZmlyZWZveFwvYWRkb25cL3dheWJhY2stbWFjaGluZV9uZXdcLyIsInRpdGxlIjoiRmlyZWZveCIsImV4dGVybmFsIjp0cnVlfSx7InVybCI6Imh0dHBzOlwvXC9hcHBzLmFwcGxlLmNvbVwvdXNcL2FwcFwvd2F5YmFjay1tYWNoaW5lXC9pZDE0NzI0MzI0MjI/bXQ9MTIiLCJ0aXRsZSI6IlNhZmFyaSIsImV4dGVybmFsIjp0cnVlfSx7InVybCI6Imh0dHBzOlwvXC9taWNyb3NvZnRlZGdlLm1pY3Jvc29mdC5jb21cL2FkZG9uc1wvZGV0YWlsXC93YXliYWNrLW1hY2hpbmVcL2tqbWlja2Vvb2dnaGFpbW1vbWFnYWdobm9nZWxwY3BuP2hsPWVuLVVTIiwidGl0bGUiOiJFZGdlIiwiZXh0ZXJuYWwiOnRydWV9XSwiYXJjaGl2ZUl0TGlua3MiOlt7InVybCI6Imh0dHBzOlwvXC93d3cuYXJjaGl2ZS1pdC5vcmdcL2V4cGxvcmUiLCJ0aXRsZSI6IkV4cGxvcmUgdGhlIENvbGxlY3Rpb25zIn0seyJ1cmwiOiJodHRwczpcL1wvd3d3LmFyY2hpdmUtaXQub3JnXC9ibG9nXC9sZWFybi1tb3JlXC8iLCJ0aXRsZSI6IkxlYXJuIE1vcmUifSx7InVybCI6Imh0dHBzOlwvXC93d3cuYXJjaGl2ZS1pdC5vcmdcL2NvbnRhY3QtdXMiLCJ0aXRsZSI6IkJ1aWxkIENvbGxlY3Rpb25zIn1dfSwidmlkZW8iOnsiaGVhZGluZyI6IlZpZGVvIiwiaWNvbkxpbmtzIjpbeyJpY29uIjoiaHR0cHM6XC9cL2FyY2hpdmUub3JnXC9zZXJ2aWNlc1wvaW1nXC90diIsInRpdGxlIjoiVFYgTmV3cyIsInVybCI6IlwvZGV0YWlsc1wvdHYifSx7Imljb24iOiJodHRwczpcL1wvYXJjaGl2ZS5vcmdcL3NlcnZpY2VzXC9pbWdcLzkxMSIsInRpdGxlIjoiVW5kZXJzdGFuZGluZyA5XC8xMSIsInVybCI6IlwvZGV0YWlsc1wvOTExIn1dLCJmZWF0dXJlZExpbmtzIjpbeyJ0aXRsZSI6IkFsbCBWaWRlbyIsInVybCI6IlwvZGV0YWlsc1wvbW92aWVzIn0seyJ0aXRsZSI6IlRoaXMgSnVzdCBJbiIsInVybCI6Ilwvc2VhcmNoLnBocD9xdWVyeT1tZWRpYXR5cGU6bW92aWVzJnNvcnQ9LXB1YmxpY2RhdGUifSx7InRpdGxlIjoiUHJlbGluZ2VyIEFyY2hpdmVzIiwidXJsIjoiXC9kZXRhaWxzXC9wcmVsaW5nZXIifSx7InRpdGxlIjoiRGVtb2NyYWN5IE5vdyEiLCJ1cmwiOiJcL2RldGFpbHNcL2RlbW9jcmFjeV9ub3dfdmlkIn0seyJ0aXRsZSI6Ik9jY3VweSBXYWxsIFN0cmVldCIsInVybCI6IlwvZGV0YWlsc1wvb2NjdXB5d2FsbHN0cmVldCJ9LHsidGl0bGUiOiJUViBOU0EgQ2xpcCBMaWJyYXJ5IiwidXJsIjoiXC9kZXRhaWxzXC9uc2EifV0sImxpbmtzIjpbeyJ0aXRsZSI6IkFuaW1hdGlvbiAmIENhcnRvb25zIiwidXJsIjoiXC9kZXRhaWxzXC9hbmltYXRpb25hbmRjYXJ0b29ucyJ9LHsidGl0bGUiOiJBcnRzICYgTXVzaWMiLCJ1cmwiOiJcL2RldGFpbHNcL2FydHNhbmRtdXNpY3ZpZGVvcyJ9LHsidGl0bGUiOiJDb21wdXRlcnMgJiBUZWNobm9sb2d5IiwidXJsIjoiXC9kZXRhaWxzXC9jb21wdXRlcnNhbmR0ZWNodmlkZW9zIn0seyJ0aXRsZSI6IkN1bHR1cmFsICYgQWNhZGVtaWMgRmlsbXMiLCJ1cmwiOiJcL2RldGFpbHNcL2N1bHR1cmFsYW5kYWNhZGVtaWNmaWxtcyJ9LHsidGl0bGUiOiJFcGhlbWVyYWwgRmlsbXMiLCJ1cmwiOiJcL2RldGFpbHNcL2VwaGVtZXJhIn0seyJ0aXRsZSI6Ik1vdmllcyIsInVybCI6IlwvZGV0YWlsc1wvbW92aWVzYW5kZmlsbXMifSx7InRpdGxlIjoiTmV3cyAmIFB1YmxpYyBBZmZhaXJzIiwidXJsIjoiXC9kZXRhaWxzXC9uZXdzYW5kcHVibGljYWZmYWlycyJ9LHsidGl0bGUiOiJTcGlyaXR1YWxpdHkgJiBSZWxpZ2lvbiIsInVybCI6IlwvZGV0YWlsc1wvc3Bpcml0dWFsaXR5YW5kcmVsaWdpb24ifSx7InRpdGxlIjoiU3BvcnRzIFZpZGVvcyIsInVybCI6IlwvZGV0YWlsc1wvc3BvcnRzIn0seyJ0aXRsZSI6IlRlbGV2aXNpb24iLCJ1cmwiOiJcL2RldGFpbHNcL3RlbGV2aXNpb24ifSx7InRpdGxlIjoiVmlkZW9nYW1lIFZpZGVvcyIsInVybCI6IlwvZGV0YWlsc1wvZ2FtZXZpZGVvcyJ9LHsidGl0bGUiOiJWbG9ncyIsInVybCI6IlwvZGV0YWlsc1wvdmxvZ3MifSx7InRpdGxlIjoiWW91dGggTWVkaWEiLCJ1cmwiOiJcL2RldGFpbHNcL3lvdXRoX21lZGlhIn1dfSwidXNlciI6W10sInNpZ25lZE91dCI6W3sidXJsIjoiXC9hY2NvdW50XC9zaWdudXAiLCJ0aXRsZSI6IlNpZ24gdXAgZm9yIGZyZWUiLCJhbmFseXRpY3NFdmVudCI6IkF2YXRhck1lbnUtU2lnbnVwIn0seyJ1cmwiOiJcL2FjY291bnRcL2xvZ2luIiwidGl0bGUiOiJMb2cgaW4iLCJhbmFseXRpY3NFdmVudCI6IkF2YXRhck1lbnUtTG9naW4ifV19">
+                                      <noscript class='static-content'>      <style scope="icon-hamburger-1">.icon-hamburger-1 svg.icon-hamburger {
+        display: block;
+      }
+
+      .icon-hamburger-1 .fill-color.icon-hamburger {
+        fill: #fff;
+      }</style><!-- Shady DOM styles for login-button --><style scope="login-button-1">.login-button-1 .dropdown-toggle.login-button {
+        display: block;
+          height: 4rem;
+          font-size: 1.6rem;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: #ccc;
+          cursor: pointer;
+      }
+
+      .login-button-1 .dropdown-toggle.login-button .fill-color.login-button {
+        fill: #999;
+      }
+
+      .login-button-1 .dropdown-toggle.login-button:active .fill-color.login-button,.login-button-1 .dropdown-toggle.login-button:focus .fill-color.login-button,.login-button-1 .dropdown-toggle.login-button:hover .fill-color.login-button {
+        fill: #fff;
+      }
+
+      .login-button-1 .active.login-button {
+        border-radius: 1rem 1rem 0 0;
+          background: #333;
+      }
+
+      .login-button-1 .active.login-button .fill-color.login-button {
+        fill: #fff;
+      }
+
+      .login-button-1 span.login-button {
+        display: none;
+          font-size: 1.4rem;
+          text-transform: uppercase;
+          color: #999;
+      }
+
+      .login-button-1 span.login-button a.login-button {
+        color: inherit;
+          text-decoration: none;
+      }
+
+      .login-button-1 a.login-button:hover,.login-button-1 a.login-button:active,.login-button-1 a.login-button:focus {
+        color: #fff;
+      }
+
+      @media (min-width: 890px) {
+      .login-button-1 .logged-out-toolbar.login-button {
+        transform: translateY(-.5rem);
+      }
+
+      .login-button-1 .active.login-button {
+        background: transparent;
+      }
+
+      .login-button-1 .dropdown-toggle.login-button {
+        display: inline-block;
+            vertical-align: middle;
+      }
+
+      .login-button-1 span.login-button {
+        display: inline;
+            vertical-align: middle;
+      }
+
+      }</style><!-- Shady DOM styles for nav-search --><style scope="nav-search-1">.nav-search-1 input.nav-search:focus {
+        outline: none;
+      }
+
+      .nav-search-1 button.nav-search {
+        background: none;
+          color: inherit;
+          border: none;
+          font: inherit;
+          cursor: pointer;
+      }
+
+      .nav-search-1 button.nav-search:focus {
+        outline: none;
+      }
+
+      .nav-search-1 .search.nav-search {
+        padding-top: 0;
+          margin-right: .5rem;
+      }
+
+      .nav-search-1 .search.nav-search svg.nav-search {
+        position: relative;
+          top: -5px;
+          right: -3px;
+          fill:;
+      }
+
+      .nav-search-1 .search-activated.nav-search {
+        display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          position: absolute;
+          top: 0;
+          right: 5rem;
+          bottom: 0;
+          left: 5rem;
+          z-index: 3;
+          padding: 0.5rem 0.2rem;
+          border-radius: 1rem 1rem 0 0;
+          background: #333;
+      }
+
+      .nav-search-1 .search-inactive.nav-search {
+        display: none;
+      }
+
+      .nav-search-1 .search-activated.nav-search .highlight.nav-search,.nav-search-1 .search-activated.nav-search .search.nav-search {
+        background: #fff;
+          border-radius: 0.5rem;
+      }
+
+      .nav-search-1 .search-activated.nav-search .highlight.nav-search {
+        display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          width: 100%;
+          margin: 0 .5rem;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search.nav-search {
+        height: 100%;
+          padding: 0;
+          margin-right: 0;
+          -ms-flex-item-align: center;
+          -ms-grid-row-align: center;
+          align-self: center;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search-field.nav-search {
+        width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          padding-left: 1rem;
+          border-radius: 0.5rem;
+          border: none;
+          font-size: 1.6rem;
+          text-align: center;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search-field.nav-search:focus {
+        outline: none;
+      }
+
+      @keyframes fade-in-nav-search-1 {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+
+      }
+
+      .nav-search-1 .fade-in.nav-search {
+        animation: fade-in-nav-search-1 .2s forwards;
+      }
+
+      @media (min-width: 890px) {
+      .nav-search-1 .search.nav-search svg.nav-search {
+        display: inline;
+            width: 28px;
+            height: 28px;
+            vertical-align: -14px;
+      }
+
+      .nav-search-1 .search.nav-search path.nav-search {
+        fill: #333;
+      }
+
+      .nav-search-1 .search-inactive.nav-search,.nav-search-1 .search-activated.nav-search {
+        display: block;
+            position: static;
+            padding: 1.2rem .2rem;
+            background: transparent;
+      }
+
+      .nav-search-1 .search-activated.nav-search .highlight.nav-search {
+        width: 13rem;
+            height: 2.8rem;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: reverse;
+            -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search-field.nav-search {
+        width: calc(100% - 28px);
+            height: 100%;
+            padding-left: 0;
+            font-size: 1.4rem;
+            text-align: left;
+      }
+
+      .nav-search-1 .search-activated.nav-search .search.nav-search svg.nav-search {
+        width: 28px;
+            height: 28px;
+      }
+
+      }</style><!-- Shady DOM styles for media-button --><style scope="media-button-1">.media-button-1 a.media-button {
+        display: inline-block;
+          text-decoration: none;
+      }
+
+      .media-button-1 .menu-item.media-button {
+        display: inline-flex;
+          width: 100%;
+          padding: 0;
+          font-size: 1.6rem;
+          text-align: left;
+          background: transparent;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+      }
+
+      .media-button-1 .menu-item.media-button:focus {
+        outline: none;
+      }
+
+      .media-button-1 .label.media-button {
+        display: inline-block;
+          padding: 0;
+          font-weight: 400;
+          color: #fff;
+          text-align: left;
+          vertical-align: middle;
+      }
+
+      .media-button-1 .menu-item.media-button > .icon.media-button {
+        display: inline-flex;
+          width: 42px;
+          height: 42px;
+          vertical-align: middle;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+      }
+
+      .media-button-1 .menu-item.selected.media-button .icon.media-button {
+        background-color: #333;
+          border-radius: 1rem 0 0 1rem;
+      }
+
+      .media-button-1 .icon.media-button .fill-color.media-button {
+        fill: #999;
+      }
+
+      .media-button-1 .icon.active.media-button .fill-color.media-button {
+        fill: #fff;
+      }
+
+      .media-button-1 .donate.media-button .fill-color.media-button {
+        fill: #f00;
+      }
+
+      @media (min-width: 890px) {
+      .media-button-1 .menu-item.media-button {
+        width: auto;
+            height: 5rem;
+            color: #999;
+      }
+
+      .media-button-1 .menu-item.media-button:hover,.media-button-1 .menu-item.media-button:active,.media-button-1 .menu-item.media-button:focus {
+        color: #fff;
+      }
+
+      .media-button-1 .menu-item.media-button:hover .fill-color.media-button,.media-button-1 .menu-item.media-button:active .fill-color.media-button,.media-button-1 .menu-item.media-button:focus .fill-color.media-button {
+        fill: #fff;
+      }
+
+      .media-button-1 .label.media-button {
+        display: none;
+      }
+
+      .media-button-1 .label.media-button,.media-button-1 .web.media-button:after {
+        padding-right: 1rem;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            color: inherit;
+      }
+
+      .media-button-1 .web.media-button:after {
+        display: none;
+            content: "web";
+      }
+
+      .media-button-1 .donate.media-button,.media-button-1 .more.media-button {
+        display: none;
+      }
+
+      .media-button-1 .menu-item.selected.media-button {
+        background: #474747;
+      }
+
+      .media-button-1 .menu-item.selected.media-button .label.media-button,.media-button-1 .menu-item.selected.web.media-button:after {
+        color: #fff;
+      }
+
+      .media-button-1 .menu-item.selected.media-button .icon.media-button {
+        background: transparent;
+      }
+
+      .media-button-1 .web.selected.media-button .fill-color.media-button {
+        fill: #ffcd27;
+      }
+
+      .media-button-1 .texts.selected.media-button .fill-color.media-button {
+        fill: #faab3c;
+      }
+
+      .media-button-1 .video.selected.media-button .fill-color.media-button {
+        fill: #f1644b;
+      }
+
+      .media-button-1 .audio.selected.media-button .fill-color.media-button {
+        fill: #00adef;
+      }
+
+      .media-button-1 .software.selected.media-button .fill-color.media-button {
+        fill: #9ecc4f;
+      }
+
+      .media-button-1 .images.selected.media-button .fill-color.media-button {
+        fill: #aa99c9;
+      }
+
+      }
+
+      @media (min-width: 1300px) {
+      .media-button-1 .label.media-button,.media-button-1 .web.media-button:after {
+        display: inline;
+      }
+
+      .media-button-1 .web.media-button .label.media-button {
+        display: none;
+      }
+
+      }</style><!-- Shady DOM styles for media-menu --><style scope="media-menu-1">.media-menu-1 {
+        outline: none;
+      }
+
+      .media-menu-1 .media-menu.media-menu {
+        position: absolute;
+          z-index: -1;
+          top: -100vh;
+          width: 100%;
+          background-color: #222;
+          margin: 0;
+          overflow: hidden;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.media-menu {
+        transition-property: top;
+          transition-duration: 0.2s;
+          transition-timing-function: ease;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.open.media-menu {
+        top: 100%;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.closed.media-menu {
+        top: -100vh;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.closed.media-menu {
+        transition-duration: 0.2s;
+      }
+
+      .media-menu-1 .menu-group.media-menu {
+        position: relative;
+          line-height: normal;
+      }
+
+      @media (min-width: 890px) {
+      .media-menu-1 .media-menu.media-menu {
+        display: inline-block;
+            position: static;
+            width: auto;
+            height: 5rem;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.media-menu {
+        transition-property: none;
+      }
+
+      .media-menu-1 .media-menu.tx-slide.open.media-menu,.media-menu-1 .media-menu.tx-slide.closed.media-menu {
+        top: 0;
+      }
+
+      .media-menu-1 .menu-group.media-menu {
+        font-size: 0;
+      }
+
+      }</style><!-- Shady DOM styles for primary-nav --><style scope="primary-nav-1">.primary-nav-1 button.primary-nav:focus,.primary-nav-1 a.primary-nav:focus,.primary-nav-1 input.primary-nav:focus {
+        outline: none;
+      }
+
+      .primary-nav-1 nav.primary-nav {
+        position: relative;
+          display: -ms-grid;
+          display: grid;
+          height: 4rem;
+          grid-template-areas: "hamburger empty search user";
+          -ms-grid-columns: 4rem minmax(1rem, 100%) 4.3rem 5rem;
+          grid-template-columns: 4rem auto 4.3rem 5rem;
+          -ms-grid-rows: 100%;
+          grid-template-rows: 100%;
+          background: #222;
+          border-bottom: 1px solid #333;
+      }
+
+      .primary-nav-1 button.primary-nav {
+        background: none;
+          color: inherit;
+          border: none;
+          font: inherit;
+          cursor: pointer;
+      }
+
+      .primary-nav-1 .link-home.primary-nav {
+        position: absolute;
+          top: 50%;
+          left: 50%;
+          z-index: 2;
+          text-decoration: none;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+      }
+
+      .primary-nav-1 media-menu.primary-nav {
+        grid-column-start: hamburger-start;
+          grid-column-end: user-end;
+      }
+
+      .primary-nav-1 .ia-logo.primary-nav {
+        display: block;
+      }
+
+      .primary-nav-1 .ia-wordmark.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .hamburger.primary-nav {
+        -ms-grid-row: 1;
+          -ms-grid-column: 1;
+          grid-area: hamburger;
+          padding: 0;
+      }
+
+      .primary-nav-1 .search-trigger.primary-nav {
+        -ms-grid-row: 1;
+          -ms-grid-column: 3;
+          grid-area: search;
+          position: relative;
+          padding: 0;
+          z-index: 1;
+          width: 100%;
+          text-align: right;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+      }
+
+      .primary-nav-1 .search-trigger.primary-nav .fill-color.primary-nav {
+        fill: #999;
+      }
+
+      .primary-nav-1 .search-activated.primary-nav {
+        position: relative;
+          z-index: 3;
+      }
+
+      .primary-nav-1 .upload.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .upload.primary-nav span.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .user-info.primary-nav {
+        -ms-grid-row: 1;
+          -ms-grid-column: 4;
+          grid-area: user;
+          -ms-grid-row-align: stretch;
+          align-self: stretch;
+          -ms-grid-column-align: end;
+          justify-self: end;
+      }
+
+      .primary-nav-1 .username.primary-nav {
+        display: none;
+          font-size: 1.3rem;
+          vertical-align: middle;
+          text-transform: uppercase;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav {
+        height: 100%;
+          padding: .5rem 1rem;
+          color: #999;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav:hover {
+        color: #fff;
+      }
+
+      .primary-nav-1 .user-menu.active.primary-nav {
+        border-radius: 1rem 1rem 0 0;
+          background: #333;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav img.primary-nav {
+        display: block;
+          width: 30px;
+          height: 30px;
+      }
+
+      @media (min-width: 890px) {
+      .primary-nav-1 {
+        ;
+      }
+
+      .primary-nav-1 nav.primary-nav {
+        display: block;
+            z-index: 2;
+            height: 5rem;
+            padding-right: 1.5rem;
+      }
+
+      .primary-nav-1 .link-home.primary-nav {
+        position: static;
+            float: left;
+            margin-top: 1rem;
+            padding: 0 10px 0 13px;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+      }
+
+      .primary-nav-1 .ia-logo.primary-nav,.primary-nav-1 .ia-wordmark.primary-nav {
+        display: inline-block;
+            vertical-align: middle;
+      }
+
+      .primary-nav-1 .ia-wordmark.primary-nav {
+        margin-left: 1rem;
+      }
+
+      .primary-nav-1 .hamburger.primary-nav,.primary-nav-1 .search-trigger.primary-nav {
+        display: none;
+      }
+
+      .primary-nav-1 .user-info.primary-nav {
+        float: right;
+            padding-top: 1rem;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav {
+        padding-top: 0;
+      }
+
+      .primary-nav-1 .user-menu.active.primary-nav {
+        background: transparent;
+      }
+
+      .primary-nav-1 .user-menu.primary-nav img.primary-nav {
+        display: inline-block;
+            vertical-align: middle;
+      }
+
+      .primary-nav-1 .upload.primary-nav {
+        display: block;
+            float: right;
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #999;
+      }
+
+      .primary-nav-1 .upload.primary-nav:active,.primary-nav-1 .upload.primary-nav:focus,.primary-nav-1 .upload.primary-nav:hover {
+        color: #fff;
+      }
+
+      .primary-nav-1 .upload.primary-nav svg.primary-nav {
+        width: 32px;
+            height: 32px;
+            vertical-align: middle;
+            fill: #999;
+      }
+
+      .primary-nav-1 .upload.primary-nav:hover svg.primary-nav,.primary-nav-1 .upload.primary-nav:focus svg.primary-nav,.primary-nav-1 .upload.primary-nav:active svg.primary-nav {
+        fill: #fff;
+      }
+
+      .primary-nav-1 nav-search.primary-nav {
+        float: right;
+            margin-left: 1rem;
+      }
+
+      .primary-nav-1 login-button.primary-nav {
+        display: block;
+            margin-right: 1rem;
+      }
+
+      }
+
+      @media (min-width: 990px) {
+      .primary-nav-1 .username.primary-nav {
+        display: inline-block;
+      }
+
+      .primary-nav-1 .upload.primary-nav span.primary-nav {
+        display: inline;
+      }
+
+      }</style><!-- Shady DOM styles for user-menu --><!-- Shady DOM styles for search-menu --><style scope="search-menu-1">.search-menu-1 {
+        ;
+      }
+
+      .search-menu-1 button.search-menu:focus,.search-menu-1 input.search-menu:focus {
+        outline-color: #428bca;
+          outline-width: 0.16rem;
+          outline-style: auto;
+      }
+
+      .search-menu-1 .search-menu.search-menu {
+        position: absolute;
+          top: -800px;
+          right: 0;
+          left: 0;
+          z-index: 1;
+          padding: 0 4.5rem;
+          font-size: 1.6rem;
+          background-color: #333;
+      }
+
+      .search-menu-1 .tx-slide.search-menu {
+        overflow: hidden;
+          transition-property: top;
+          transition-duration: 0.2s;
+          transition-timing-function: ease;
+      }
+
+      .search-menu-1 .initial.search-menu,.search-menu-1 .closed.search-menu {
+        top: -800px;
+      }
+
+      .search-menu-1 .closed.search-menu {
+        transition-duration: 0.2s;
+      }
+
+      .search-menu-1 .open.search-menu {
+        top: 4rem;
+      }
+
+      .search-menu-1 label.search-menu,.search-menu-1 a.search-menu {
+        padding: 1rem;
+          display: block;
+      }
+
+      .search-menu-1 .advanced-search.search-menu {
+        text-decoration: none;
+          color: #428bca;
+      }
+
+      @media (min-width: 890px) {
+      .search-menu-1 .search-menu.search-menu {
+        overflow: visible;
+            top: -400px;
+            right: 2rem;
+            left: auto;
+            z-index: 5;
+            padding: 1rem 2rem;
+            transition: opacity .2s ease-in-out;
+            font-size: 1.4rem;
+            color: #333;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .15);
+      }
+
+      .search-menu-1 .search-menu.search-menu:after {
+        position: absolute;
+            right: 7px;
+            top: -7px;
+            width: 12px;
+            height: 7px;
+            box-sizing: border-box;
+            color: #fff;
+            content: "";
+            border-bottom: 7px solid currentColor;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+      }
+
+      .search-menu-1 .initial.search-menu,.search-menu-1 .closed.search-menu {
+        opacity: 0;
+            transition-duration: .2s;
+      }
+
+      .search-menu-1 .open.search-menu {
+        top: 5.1rem;
+            opacity: 1;
+      }
+
+      .search-menu-1 label.search-menu {
+        padding: 0;
+      }
+
+      .search-menu-1 label.search-menu + label.search-menu {
+        padding-top: 7px;
+      }
+
+      .search-menu-1 a.search-menu {
+        padding: 1rem 0 0 0;
+      }
+
+      }</style><!-- Shady DOM styles for wayback-search --><!-- Shady DOM styles for more-slider --><!-- Shady DOM styles for media-subnav --><style scope="media-subnav-1">.media-subnav-1 a.media-subnav {
+        text-decoration: none;
+          color: #fff;
+      }
+
+      .media-subnav-1 img.media-subnav {
+        display: block;
+          width: 90px;
+          height: 90px;
+          margin: 0 auto 1rem auto;
+          border-radius: 45px;
+      }
+
+      .media-subnav-1 h3.media-subnav {
+        margin-top: 0;
+          font-size: 1.8rem;
+      }
+
+      .media-subnav-1 h4.media-subnav {
+        font-size: 1.6rem;
+      }
+
+      .media-subnav-1 ul.media-subnav {
+        padding: 0;
+          margin: 0;
+          list-style: none;
+      }
+
+      .media-subnav-1 li.media-subnav + li.media-subnav {
+        padding-top: 1.5rem;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav {
+        display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: space-evenly;
+          -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+          text-align: center;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav a.media-subnav {
+        display: inline-block;
+          width: 120px;
+          margin-bottom: 1.5rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-align: center;
+          text-overflow: ellipsis;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav a.media-subnav + a.media-subnav {
+        margin-left: 2rem;
+      }
+
+      .media-subnav-1 .featured.media-subnav h4.media-subnav {
+        display: none;
+      }
+
+      @media (min-width: 890px) {
+      .media-subnav-1 {
+        display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 40% 20% 40%;
+            grid-template-columns: 40% 20% 40%;
+      }
+
+      .media-subnav-1 .wayback-search.media-subnav {
+        -ms-grid-column: 1;
+            -ms-grid-column-span: 3;
+            grid-column: 1 / 4;
+      }
+
+      .media-subnav-1 h3.media-subnav {
+        display: none;
+      }
+
+      .media-subnav-1 h4.media-subnav {
+        margin: 0 0 1rem 0;
+            font-weight: 100;
+      }
+
+      .media-subnav-1 ul.media-subnav {
+        font-size: 1.3rem;
+      }
+
+      .media-subnav-1 li.media-subnav {
+        padding-bottom: .5rem;
+      }
+
+      .media-subnav-1 li.media-subnav + li.media-subnav {
+        padding-top: 0;
+      }
+
+      .media-subnav-1 li.media-subnav a.media-subnav {
+        display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav {
+        -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .icon-links.media-subnav a.media-subnav {
+        padding-top: 3.5rem;
+            max-width: 160px;
+      }
+
+      .media-subnav-1 .links.media-subnav {
+        padding: 0 1.5rem;
+      }
+
+      .media-subnav-1 .featured.media-subnav {
+        -ms-grid-column: 2;
+      }
+
+      .media-subnav-1 .featured.media-subnav h4.media-subnav {
+        display: block;
+      }
+
+      .media-subnav-1 .top.media-subnav {
+        -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav {
+        display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 50% 3rem 50%;
+            grid-template-columns: 50% 50%;
+            -ms-grid-rows: (auto)[7];
+            grid-template-rows: repeat(7, auto);
+            grid-column-gap: 3rem;
+            grid-auto-flow: column;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(1) {
+        -ms-grid-row: 1;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(2) {
+        -ms-grid-row: 2;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(3) {
+        -ms-grid-row: 3;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(4) {
+        -ms-grid-row: 4;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(5) {
+        -ms-grid-row: 5;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(6) {
+        -ms-grid-row: 6;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(7) {
+        -ms-grid-row: 7;
+            -ms-grid-column: 1;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(8) {
+        -ms-grid-row: 1;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(9) {
+        -ms-grid-row: 2;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(10) {
+        -ms-grid-row: 3;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(11) {
+        -ms-grid-row: 4;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(12) {
+        -ms-grid-row: 5;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(13) {
+        -ms-grid-row: 6;
+            -ms-grid-column: 3;
+      }
+
+      .media-subnav-1 .top.media-subnav ul.media-subnav > *.media-subnav:nth-child(14) {
+        -ms-grid-row: 7;
+            -ms-grid-column: 3;
+      }
+
+      }</style><!-- Shady DOM styles for media-slider --><style scope="media-slider-1">.media-slider-1 .overflow-clip.media-slider {
+        display: none;
+          position: absolute;
+          top: 4rem;
+          right: 0;
+          left: 4rem;
+          height: 368px;
+          overflow-x: hidden;
+      }
+
+      .media-slider-1 .information-menu.media-slider {
+        position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          padding: 0;
+          height: 368px;
+          overflow-x: hidden;
+          font-size: 1.4rem;
+          background: #333;
+      }
+
+      .media-slider-1 .open.media-slider {
+        display: block;
+      }
+
+      .media-slider-1 .info-box.media-slider {
+        padding: 1rem;
+      }
+
+      @media (min-width: 890px) {
+      .media-slider-1 .overflow-clip.media-slider {
+        display: block;
+            top: 0;
+            left: 0;
+            height: auto;
+            overflow-x: visible;
+            transform: translate(0, -100%);
+            transition: transform .2s ease;
+      }
+
+      .media-slider-1 .information-menu.media-slider {
+        left: 0;
+            z-index: 1;
+            height: auto;
+            min-height: 21rem;
+            background: #474747;
+            transform: translate(0, -100%);
+            transition: transform .2s ease;
+      }
+
+      .media-slider-1 .overflow-clip.open.media-slider {
+        transform: translate(0, 8rem);
+      }
+
+      .media-slider-1 .information-menu.open.media-slider {
+        transform: translate(0, 0);
+      }
+
+      .media-slider-1 .info-box.media-slider {
+        max-width: 1000px;
+            padding: 1.5rem 0;
+            margin: 0 auto;
+      }
+
+      }</style><!-- Shady DOM styles for desktop-subnav --><style scope="desktop-subnav-1">.desktop-subnav-1 ul.desktop-subnav {
+        position: relative;
+          z-index: 3;
+          padding: .8rem 0;
+          margin: 0;
+          font-size: 1.2rem;
+          text-transform: uppercase;
+          text-align: center;
+          background: #333;
+      }
+
+      .desktop-subnav-1 li.desktop-subnav {
+        display: inline-block;
+          padding: 0 15px;
+      }
+
+      .desktop-subnav-1 a.desktop-subnav {
+        text-decoration: none;
+          color: #aaa;
+      }
+
+      .desktop-subnav-1 a.desktop-subnav:hover,.desktop-subnav-1 a.desktop-subnav:active,.desktop-subnav-1 a.desktop-subnav:focus {
+        color: #fff;
+      }
+
+      .desktop-subnav-1 .donate.desktop-subnav svg.desktop-subnav {
+        width: 16px;
+          height: 16px;
+          vertical-align: -4px;
+          fill: #f00;
+      }</style><!-- Shady DOM styles for signed-out-dropdown --><style scope="signed-out-dropdown-1">.signed-out-dropdown-1 {
+        ;
+      }
+
+      .signed-out-dropdown-1 nav.signed-out-dropdown {
+        position: absolute;
+          top: -1500px;
+          right: 0;
+          z-index: 1;
+          overflow: hidden;
+          font-size: 1.6rem;
+          background-color: #333;
+          transition-property: top;
+          transition-duration: 0.2s;
+          transition-timing-function: ease;
+      }
+
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown {
+        top: -1500px;
+      }
+
+      .signed-out-dropdown-1 .closed.signed-out-dropdown {
+        transition-duration: 0.5s;
+      }
+
+      .signed-out-dropdown-1 .open.signed-out-dropdown {
+        top: 4rem;
+          max-width: 100vw;
+          overflow: auto;
+      }
+
+      .signed-out-dropdown-1 h3.signed-out-dropdown {
+        padding: 0.6rem 2rem;
+          margin: 0;
+          font-size: inherit;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+
+      .signed-out-dropdown-1 ul.signed-out-dropdown {
+        padding: 0.4rem 0 0.7rem 0;
+          margin: 0;
+          list-style: none;
+
+          max-height: calc(100vh - 7.2rem + 1px);
+          overflow: auto;
+          box-sizing: border-box;
+      }
+
+      .signed-out-dropdown-1 .divider.signed-out-dropdown {
+        margin: .5rem 0;
+          border-bottom: 1px solid #666;
+      }
+
+      .signed-out-dropdown-1 a.signed-out-dropdown,.signed-out-dropdown-1 .info-item.signed-out-dropdown {
+        display: block;
+          color: #fff;
+          text-decoration: none;
+          padding: 1rem 2rem;
+      }
+
+      .signed-out-dropdown-1 .info-item.signed-out-dropdown {
+        font-size: .8em;
+          color: #999;
+      }
+
+      @media (min-width: 890px) {
+      .signed-out-dropdown-1 nav.signed-out-dropdown {
+        overflow: visible;
+            top: calc(100% + 7px);
+            left: auto;
+            z-index: 5;
+            transition: opacity .2s ease-in-out;
+            font-size: 1.4rem;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .15);
+      }
+
+      .signed-out-dropdown-1 nav.signed-out-dropdown:after {
+        position: absolute;
+            right: 7px;
+            top: -7px;
+            width: 12px;
+            height: 7px;
+            box-sizing: border-box;
+            color: #fff;
+            content: "";
+            border-bottom: 7px solid currentColor;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+      }
+
+      .signed-out-dropdown-1 h3.signed-out-dropdown {
+        display: none;
+      }
+
+      .signed-out-dropdown-1 ul.signed-out-dropdown {
+        max-height: calc(100vh - 8.5rem + 1px);
+      }
+
+      .signed-out-dropdown-1 .divider.signed-out-dropdown {
+        border-bottom-color: #666;
+      }
+
+      .signed-out-dropdown-1 a.signed-out-dropdown {
+        padding: .5rem 2rem;
+            color: #333;
+            transition: background .1s ease-out, color .1s ease-out;
+      }
+
+      .signed-out-dropdown-1 .info-item.signed-out-dropdown {
+        padding: .5rem 2rem;
+            font-size: .8em;
+      }
+
+      .signed-out-dropdown-1 a.signed-out-dropdown:hover,.signed-out-dropdown-1 a.signed-out-dropdown:active,.signed-out-dropdown-1 a.signed-out-dropdown:focus {
+        color: #fff;
+            background: #428bca;
+      }
+
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown {
+        opacity: 0;
+            transition-duration: .2s;
+      }
+
+      .signed-out-dropdown-1 .open.signed-out-dropdown {
+        top: 5.1rem;
+            opacity: 1;
+            overflow: visible;
+      }
+
+      }
+
+      @media (min-width: 890px) {
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown,.signed-out-dropdown-1 .open.signed-out-dropdown {
+        right: 33.7rem;
+      }
+
+      .signed-out-dropdown-1 .search-hidden.initial.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.closed.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.open.signed-out-dropdown {
+        right: 18.3rem;
+      }
+
+      }
+
+      @media (min-width: 990px) {
+      .signed-out-dropdown-1 .initial.signed-out-dropdown,.signed-out-dropdown-1 .closed.signed-out-dropdown,.signed-out-dropdown-1 .open.signed-out-dropdown {
+        right: 39.7rem;
+      }
+
+      .signed-out-dropdown-1 .search-hidden.initial.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.closed.signed-out-dropdown,.signed-out-dropdown-1 .search-hidden.open.signed-out-dropdown {
+        right: 23.5rem;
+      }
+
+      }</style><!-- Shady DOM styles for ia-topnav --><style scope="ia-topnav-1">.ia-topnav-1 {
+        ;
+
+          color: #fff;
+          font-size: 2rem;
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+
+      .ia-topnav-1 #close-layer.ia-topnav {
+        display: none;
+          position: fixed;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 0;
+      }
+
+      .ia-topnav-1 #close-layer.visible.ia-topnav {
+        display: block;
+      }
+
+      .ia-topnav-1 .topnav.ia-topnav {
+        position: relative;
+          z-index: 3;
+      }
+
+      @media (max-width: 889px) {
+      .ia-topnav-1 desktop-subnav.ia-topnav {
+        display: none;
+      }
+
+      }</style><style>body {transition: opacity ease-in 0.2s; }
+      body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; }
+      </style>
+          <div class="topnav style-scope ia-topnav">
+        <primary-nav class="style-scope ia-topnav x-scope primary-nav-1"><!---->
+      <nav class="style-scope primary-nav">
+        <a class="link-home style-scope primary-nav" href="https://archive.org" data-event-click-tracking="BetaTopNav|NavHome"><!---->
+  <svg class="ia-logo style-scope primary-nav" width="27" height="30" viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg" aria-labelledby="logoTitleID logoDescID">
+    <title id="logoTitleID" class="style-scope primary-nav">Internet Archive logo</title>
+    <desc id="logoDescID" class="style-scope primary-nav">A line drawing of the Internet Archive headquarters building façade.</desc>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="style-scope primary-nav">
+      <mask id="mask-2" fill="white" class="style-scope primary-nav">
+        <path d="M26.6666667,28.6046512 L26.6666667,30 L0,30 L0.000283687943,28.6046512 L26.6666667,28.6046512 Z M25.6140351,26.5116279 L25.6140351,28.255814 L1.05263158,28.255814 L1.05263158,26.5116279 L25.6140351,26.5116279 Z M3.62469203,7.6744186 L3.91746909,7.82153285 L4.0639977,10.1739544 L4.21052632,13.9963932 L4.21052632,17.6725617 L4.0639977,22.255044 L4.03962296,25.3421929 L3.62469203,25.4651163 L2.16024641,25.4651163 L1.72094074,25.3421929 L1.55031755,22.255044 L1.40350877,17.6970339 L1.40350877,14.0211467 L1.55031755,10.1739544 L1.68423854,7.80887484 L1.98962322,7.6744186 L3.62469203,7.6744186 Z M24.6774869,7.6744186 L24.9706026,7.82153285 L25.1168803,10.1739544 L25.2631579,13.9963932 L25.2631579,17.6725617 L25.1168803,22.255044 L25.0927809,25.3421929 L24.6774869,25.4651163 L23.2130291,25.4651163 L22.7736357,25.3421929 L22.602418,22.255044 L22.4561404,17.6970339 L22.4561404,14.0211467 L22.602418,10.1739544 L22.7369262,7.80887484 L23.0420916,7.6744186 L24.6774869,7.6744186 Z M9.94042303,7.6744186 L10.2332293,7.82153285 L10.3797725,10.1739544 L10.5263158,13.9963932 L10.5263158,17.6725617 L10.3797725,22.255044 L10.3556756,25.3421929 L9.94042303,25.4651163 L8.47583122,25.4651163 L8.0362015,25.3421929 L7.86556129,22.255044 L7.71929825,17.6970339 L7.71929825,14.0211467 L7.86556129,10.1739544 L8.00005604,7.80887484 L8.30491081,7.6744186 L9.94042303,7.6744186 Z M18.0105985,7.6744186 L18.3034047,7.82153285 L18.449948,10.1739544 L18.5964912,13.9963932 L18.5964912,17.6725617 L18.449948,22.255044 L18.425851,25.3421929 L18.0105985,25.4651163 L16.5460067,25.4651163 L16.1066571,25.3421929 L15.9357367,22.255044 L15.7894737,17.6970339 L15.7894737,14.0211467 L15.9357367,10.1739544 L16.0702315,7.80887484 L16.3753664,7.6744186 L18.0105985,7.6744186 Z M25.6140351,4.53488372 L25.6140351,6.97674419 L1.05263158,6.97674419 L1.05263158,4.53488372 L25.6140351,4.53488372 Z M13.0806755,0 L25.9649123,2.93331338 L25.4484139,3.8372093 L0.771925248,3.8372093 L0,3.1041615 L13.0806755,0 Z" id="path-1" class="style-scope primary-nav"></path>
+      </mask>
+      <use fill="#FFFFFF" xlink:href="#path-1" class="style-scope primary-nav"></use>
+      <g mask="url(#mask-2)" fill="#FFFFFF" class="style-scope primary-nav">
+        <path d="M0,0 L26.6666667,0 L26.6666667,30 L0,30 L0,0 Z" id="swatch" class="style-scope primary-nav"></path>
+      </g>
+    </g>
+  </svg>
+<!---->
+  <svg class="ia-wordmark style-scope primary-nav" height="14" viewBox="0 0 183 14" width="183" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" fill-rule="evenodd" class="style-scope primary-nav"><g transform="translate(107.24177)" class="style-scope primary-nav"><path d="m3.46567087 2.73592273c.09358964-.31350476.26547063-.95793121.26547063-1.08718317 0-.73655285-.57818604-.75488647-1.20271694-.86488814v-.40471447h2.93682509l3.81107838 12.38893815h-1.62387035l-1.17212033-3.82897484h-3.98340931l-1.17167038 3.82897484h-.96784292zm-.7032722 5.33783106h3.4520181l-1.78045302-5.37541496z" class="style-scope primary-nav"></path><path d="m13.7607138 2.88304997c0-1.82281935-.0319465-1.82281935-1.4843858-2.09919855v-.40471447h3.8425749c1.1721204 0 4.4050127 0 4.4050127 3.2954667 0 2.09828187-1.1554722 2.79816749-2.3896856 3.03696279l2.874282 6.05650866h-1.7957513l-2.7649442-5.72512863h-.9687428v5.72512863h-1.7183599zm1.7183599 3.29500836h.8909015c1.0146377 0 2.4364804-.33092169 2.4364804-2.39299467 0-1.98873853-.9687428-2.54103858-2.2812476-2.54103858-1.0461343 0-1.0461343.33138003-1.0461343 1.6573585z" class="style-scope primary-nav"></path><path d="m31.6158204 12.2524422c-.5304913.2768376-1.3903462.6998857-2.9989182.6998857-3.389925 0-4.6083902-2.4113283-4.6083902-6.55334954 0-3.35000921.8742533-6.07530059 4.3582178-6.07530059 1.3903462 0 2.4058839.27592086 3.1240044.55230005l.0940396 3.07500503h-.4530999c-.062543-.9395976-.921948-2.743625-2.6088113-2.743625-2.296096 0-2.6713545 2.88983555-2.6713545 5.19162051 0 2.90816916.8598549 5.52254214 3.0304147 5.52254214 1.4843858 0 2.2497511-.5523 2.7338976-.9386809z" class="style-scope primary-nav"></path><path d="m36.1784975 2.80971552c0-1.45568877-.0935896-1.62114962-1.5626771-1.80448573v-.40563116l3.2805871-.42258975v5.70633665h4.2484299v-5.50420858h1.7183599v12.38893815h-1.7183599v-6.01984144h-4.2484299v6.01984144h-1.71791z" class="style-scope primary-nav"></path><path d="m46.8631973 12.3083598c1.1086774 0 1.3273532-.2759209 1.3273532-1.711901v-7.91645358c0-1.43598014-.2186758-1.71144266-1.3273532-1.71144266v-.46109033h4.3735162v.46109033c-1.093829 0-1.3273532.27546252-1.3273532 1.71144266v7.91645358c0 1.4359801.2335242 1.711901 1.3273532 1.711901v.4597153h-4.3735162z" class="style-scope primary-nav"></path><path d="m56.1269544 2.73592273c-.4998947-1.67569211-.6407291-1.67569211-1.8902409-1.95207131v-.40471447h3.0304147l3.0614614 10.08806985h.0310465l2.9840699-10.08806985h1.0146377l-3.8106284 12.38893815h-1.3588497z" class="style-scope primary-nav"></path><path d="m68.8422796 2.88304997c0-1.82281935-.0467948-1.82281935-1.4839359-2.09919855v-.40471447h7.4826722l.0467949 2.7243747h-.4378016c0-1.47264736-.6555775-1.85948657-1.6868634-1.85948657h-1.2184652c-.7806636 0-.9835912.07333445-.9835912.95747287v3.66351396h1.8902409c1.0767309 0 1.1865187-.80942895 1.2805583-1.41672984h.4369017v3.86518369h-.4369017c0-.9941401-.3437619-1.58356571-1.2805583-1.58356571h-1.8902409v4.10535405c0 1.0308073.2029276 1.0679328.9835912 1.0679328h1.7345581c.8895516 0 1.311155-.3685056 1.4051946-1.8040274h.4378015l-.0476947 2.6689156h-6.2322605z" class="style-scope primary-nav"></path></g><g transform="translate(.24177 .277385)" class="style-scope primary-nav"><path d="m1.57302598 10.3699491v-8.03470531c0-1.45706379-.25962128-1.73802639-1.57302598-1.73802639v-.46659042h5.18252665v.46659042c-1.29540668 0-1.57302597.2809626-1.57302597 1.73802639v8.03470531c0 1.4575222.27761929 1.7366514 1.57302597 1.7366514v.4675071h-5.18252665v-.4675071c1.3134047 0 1.57302598-.2791292 1.57302598-1.7366514z" class="style-scope primary-nav"></path><path d="m10.0331719 2.39116131c0-1.73756805-.25872136-1.66240024-1.85064525-1.98003007v-.41113124h3.90556795l5.830455 10.1641543h.0368959v-10.1641543h1.1662709v12.5741076h-1.7773033l-6.1076243-10.63028642h-.0373459v10.63028642h-1.166271z" class="style-scope primary-nav"></path><path d="m25.9161467.87818h-1.2774087c-1.4618883 0-1.8875412.46704876-1.9991288 1.83198615h-.5178928l.0737919-2.71016615h9.4768516l.0742417 2.76562533h-.5183426c0-1.43873018-.5925845-1.88744533-2.0175768-1.88744533h-1.2580608v11.6959276h-2.0364747z" class="style-scope primary-nav"></path><path d="m36.505907 2.54103859c0-1.84986143-.0562438-1.84986143-1.7593054-2.12990735v-.41113124h8.8658192l.0557938 2.76562533h-.5183426c0-1.49510604-.777064-1.88744533-1.9982289-1.88744533h-1.4443403c-.9255476 0-1.1662709.07516781-1.1662709.97213976v3.71805646h2.2398522c1.2769587 0 1.4060944-.82272082 1.5176821-1.43964686h.5187926v3.92430959h-.5187926c0-1.00880698-.406755-1.60648273-1.5176821-1.60648273h-2.2398522v4.16631328c0 1.0463909.2407233 1.0830581 1.1662709 1.0830581h2.0544728c1.0555832 0 1.554578-.3735473 1.6652657-1.83061113h.5192426l-.0557938 2.70879113h-7.3845831z" class="style-scope primary-nav"></path><path d="m48.7037894 2.54103859c0-1.84986143-.0368959-1.84986143-1.7575055-2.12990735v-.41113124h4.5525963c1.3885464 0 5.2194226 0 5.2194226 3.34450912 0 2.13036568-1.3687486 2.8403348-2.8315368 3.08325515l3.4056733 6.14634333h-2.1287145l-3.2756376-5.81083823h-1.1478231v5.81083823h-2.0364747zm2.0364747 3.34405077h1.0555833c1.202267 0 2.8873305-.33550509 2.8873305-2.42782853 0-2.01898899-1.147823-2.57908083-2.7028509-2.57908083-1.2400629 0-1.2400629.33596344-1.2400629 1.68256722z" class="style-scope primary-nav"></path><path d="m62.1435345 2.39116131c0-1.73756805-.2596213-1.66240024-1.8510952-1.98003007v-.41113124h3.905118l5.830005 10.1641543h.0373458v-10.1641543h1.166271v12.5741076h-1.7764035l-6.1085242-10.63028642h-.0368959v10.63028642h-1.165821z" class="style-scope primary-nav"></path><path d="m75.9895846 2.54103859c0-1.84986143-.0553439-1.84986143-1.7584055-2.12990735v-.41113124h8.8658192l.0557938 2.76562533h-.5183426c0-1.49510604-.777964-1.88744533-1.9991289-1.88744533h-1.4438902c-.9250977 0-1.1658211.07516781-1.1658211.97213976v3.71805646h2.2394023c1.2774087 0 1.4060944-.82272082 1.5176821-1.43964686h.5187926v3.92430959h-.5187926c0-1.00880698-.406755-1.60648273-1.5176821-1.60648273h-2.2394023v4.16631328c0 1.0463909.2407234 1.0830581 1.1658211 1.0830581h2.0544727c1.0555832 0 1.5550279-.3735473 1.6661657-1.83061113h.5183426l-.0557938 2.70879113h-7.385033z" class="style-scope primary-nav"></path><path d="m90.2243917.87818h-1.2765088c-1.4623382 0-1.8879911.46704876-1.9995788 1.83198615h-.5178927l.0742418-2.71016615h9.4759517l.0742418 2.76562533h-.5178928c0-1.43873018-.5921344-1.88744533-2.0180267-1.88744533h-1.2585108v11.6959276h-2.0360247z" class="style-scope primary-nav"></path></g></g></svg>
+<!----></a>
+
+      <button class="search-trigger style-scope primary-nav" data-event-click-tracking="BetaTopNav|NavSearchOpen">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="searchTitleID searchDescID" class="style-scope primary-nav">
+    <title id="searchTitleID" class="style-scope primary-nav">Search icon</title>
+    <desc id="searchDescID" class="style-scope primary-nav">An illustration of a magnifying glass.</desc>
+    <path class="fill-color style-scope primary-nav" d="m32.4526364 29.8875889-8.1719472-7.9751279c1.1046135-1.4876138 1.7652549-3.3102407 1.7652549-5.2846451 0-.101185-.0142895-.1981539-.030573-.2944743.0166158-.0976175.0309053-.196208.0309053-.2990145 0-4.9814145-4.152935-9.0343271-9.2572866-9.0343271-.0907218 0-.1781206.01394537-.2655193.02594487-.0880633-.0119995-.1747974-.02594487-.2655193-.02594487-5.1046839 0-9.25761889 4.0529126-9.25761889 9.0343271 0 .1011849.01395722.1981539.03057294.2947985-.01694804.0976176-.03090525.1958838-.03090525.2986903 0 4.9814145 4.1526027 9.0346514 9.2572866 9.0346514.0907218 0 .1777882-.0139454.2658516-.0262692.0873987.0123238.1741328.0262692.265187.0262692 1.7306942 0 3.3467399-.4747911 4.7338208-1.2852439l8.2882574 8.0886366c.3652137.3564177.843082.53414 1.3212826.53414.4782007 0 .9567336-.1780467 1.3212827-.53414.7294304-.7118622.7294304-1.8660845-.0003323-2.5782711zm-15.9526364-7.8875889c-.0832667-.0118703-.1652765-.0253024-.2513711-.0253024-2.8781993 0-5.2197212-2.3278242-5.2197212-5.1891862 0-.0974612-.013197-.1908615-.0289077-.2836371.0160249-.0940251.0292219-.1889874.0292219-.2880105 0-2.861362 2.3418361-5.1891861 5.2200354-5.1891861.0854662 0 .1677902-.0131198.2510569-.0246777.0826383.0115579.1649623.0246777.2510569.0246777 2.8781993 0 5.2197212 2.3278241 5.2197212 5.1891861 0 .0974612.0135112.1908616.0289077.2839496-.0157107.0940251-.0295361.1886749-.0295361.287698 0 2.861362-2.3415219 5.1891862-5.2197212 5.1891862-.0860946 0-.1684187.0134321-.2507427.0253024z" fill-rule="evenodd"></path>
+  </svg>
+
+      </button>
+      <nav-search class="style-scope primary-nav x-scope nav-search-1"><!----><div class="search-activated fade-in search-inactive style-scope nav-search">
+      <form id="nav-search" class="highlight style-scope nav-search" method="get" action="https://archive.org/search.php" data-event-submit-tracking="BetaTopNav|NavSearchSubmit">
+        <input type="text" name="query" class="search-field style-scope nav-search" placeholder="Search" autocomplete="off">
+        <input type="hidden" name="sin" class="style-scope nav-search" value="">
+        <button type="submit" class="search style-scope nav-search" data-event-click-tracking="BetaTopNav|NavSearchClose">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="searchTitleID searchDescID" class="style-scope nav-search">
+    <title id="searchTitleID" class="style-scope nav-search">Search icon</title>
+    <desc id="searchDescID" class="style-scope nav-search">An illustration of a magnifying glass.</desc>
+    <path class="fill-color style-scope nav-search" d="m32.4526364 29.8875889-8.1719472-7.9751279c1.1046135-1.4876138 1.7652549-3.3102407 1.7652549-5.2846451 0-.101185-.0142895-.1981539-.030573-.2944743.0166158-.0976175.0309053-.196208.0309053-.2990145 0-4.9814145-4.152935-9.0343271-9.2572866-9.0343271-.0907218 0-.1781206.01394537-.2655193.02594487-.0880633-.0119995-.1747974-.02594487-.2655193-.02594487-5.1046839 0-9.25761889 4.0529126-9.25761889 9.0343271 0 .1011849.01395722.1981539.03057294.2947985-.01694804.0976176-.03090525.1958838-.03090525.2986903 0 4.9814145 4.1526027 9.0346514 9.2572866 9.0346514.0907218 0 .1777882-.0139454.2658516-.0262692.0873987.0123238.1741328.0262692.265187.0262692 1.7306942 0 3.3467399-.4747911 4.7338208-1.2852439l8.2882574 8.0886366c.3652137.3564177.843082.53414 1.3212826.53414.4782007 0 .9567336-.1780467 1.3212827-.53414.7294304-.7118622.7294304-1.8660845-.0003323-2.5782711zm-15.9526364-7.8875889c-.0832667-.0118703-.1652765-.0253024-.2513711-.0253024-2.8781993 0-5.2197212-2.3278242-5.2197212-5.1891862 0-.0974612-.013197-.1908615-.0289077-.2836371.0160249-.0940251.0292219-.1889874.0292219-.2880105 0-2.861362 2.3418361-5.1891861 5.2200354-5.1891861.0854662 0 .1677902-.0131198.2510569-.0246777.0826383.0115579.1649623.0246777.2510569.0246777 2.8781993 0 5.2197212 2.3278241 5.2197212 5.1891861 0 .0974612.0135112.1908616.0289077.2839496-.0157107.0940251-.0295361.1886749-.0295361.287698 0 2.861362-2.3415219 5.1891862-5.2197212 5.1891862-.0860946 0-.1684187.0134321-.2507427.0253024z" fill-rule="evenodd"></path>
+  </svg>
+
+        </button>
+      </form>
+    </div><!----></nav-search>
+
+        <a class="upload style-scope primary-nav" href="https://archive.org/create/">
+
+  <svg width="40" height="41" viewBox="0 0 40 41" xmlns="http://www.w3.org/2000/svg" aria-labelledby="uploadTitleID uploadDescID" class="style-scope primary-nav">
+    <title id="uploadTitleID" class="style-scope primary-nav">Upload icon</title>
+    <desc id="uploadDescID" class="style-scope primary-nav">An illustration of a horizontal line over an up pointing arrow.</desc>
+    <path class="fill-color style-scope primary-nav" d="m20 12.8 8 10.4h-4.8v8.8h-6.4v-8.8h-4.8zm12-4.8v3.2h-24v-3.2z" fill-rule="evenodd"></path>
+  </svg>
+
+          <span class="style-scope primary-nav">Upload</span>
+        </a>
+        <div class="user-info style-scope primary-nav">
+
+      <login-button class="style-scope primary-nav x-scope login-button-1"><!---->
+      <div class="logged-out-toolbar style-scope login-button">
+        <a class="dropdown-toggle style-scope login-button" data-event-click-tracking="BetaTopNav|NavLoginIcon">
+
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="userTitleID userDescID" class="style-scope login-button">
+    <title id="userTitleID" class="style-scope login-button">User icon</title>
+    <desc id="userDescID" class="style-scope login-button">An illustration of a person's head and chest.</desc>
+    <path class="fill-color style-scope login-button" d="m20.7130435 18.0434783c-3.5658385 0-6.4565218-2.9198821-6.4565218-6.5217392 0-3.60185703 2.8906833-6.5217391 6.4565218-6.5217391s6.4565217 2.91988207 6.4565217 6.5217391c0 3.6018571-2.8906832 6.5217392-6.4565217 6.5217392zm-12.9130435 16.9565217c0-7.9240855 5.7813665-14.3478261 12.9130435-14.3478261s12.9130435 6.4237406 12.9130435 14.3478261z" fill-rule="evenodd"></path>
+  </svg>
+
+        </a>
+        <span class="style-scope login-button">
+          <a class="style-scope login-button" href="https://archive.org/account/signup">Sign up</a>
+          |
+          <a class="style-scope login-button" href="https://archive.org/account/login">Log in</a>
+        </span>
+      </div>
+    <!----></login-button>
+
+        </div>
+        <media-menu class="style-scope primary-nav x-scope media-menu-1" tabindex="-1"><!---->
+      <nav class="media-menu tx-slide closed style-scope media-menu" aria-hidden="true" aria-expanded="false">
+        <div class="menu-group style-scope media-menu">
+          <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="web"><!---->
+      <a class="menu-item web  style-scope media-button" href="https://archive.org/web/" data-event-click-tracking="BetaTopNav|NavMenuWeb">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="webTitleID webDescID" class="style-scope media-button">
+    <title id="webTitleID" class="style-scope media-button">Web icon</title>
+    <desc id="webDescID" class="style-scope media-button">An illustration of a computer application window</desc>
+    <path class="fill-color style-scope media-button" d="m8 28.7585405v-8.1608108-9.3577297h24v9.3577297 8.1608108zm14.2702703-15.8863783h-12.43243246v2.6114594h12.43243246zm7.7837838 14.0365946v-7.0727027-1.8497838h-20.21621626v1.8497838 7.0727027zm-3.7837838-14.0365946h-2.7027027v2.6114594h2.7027027zm4 0h-2.7027027v2.6114594h2.7027027z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Wayback Machine<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="texts"><!---->
+      <a class="menu-item texts  style-scope media-button" href="https://archive.org/details/texts" data-event-click-tracking="BetaTopNav|NavMenuTexts">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="textsTitleID textsDescID" class="style-scope media-button">
+    <title id="textsTitleID" class="style-scope media-button">Texts icon</title>
+    <desc id="textsDescID" class="style-scope media-button">An illustration of an open book.</desc>
+    <path class="fill-color style-scope media-button" d="m10.3323235 11.0007023h6.9060825c.8851083 0 1.5847122.3064258 2.0988114.9192774v14.4324451h-.6460032c-.1435563-.120323-.3528315-.2434552-.6278257-.3693964-.2749942-.1259413-.5201585-.2191097-.7354929-.2795053l-.3048241-.1081503h-5.7042647c-.3108832 0-.5621067-.0601615-.7536705-.1804846-.0717781-.0599274-.1256117-.1439663-.1615008-.2521166-.0358891-.1081502-.0598928-.2043619-.0720112-.2886348v-13.8741368zm19.1752505 0v13.603761c-.0717781.3361555-.2211606.5943584-.4481473.7746089-.0717781.0599274-.1733862.1079162-.304824.1439663-.1314379.0360501-.2451643.0601615-.3411793.0723343h-5.5965975c-.9568865.2640552-1.5068748.5164059-1.649965.757052h-.6634817v-14.4324451c.5140992-.6128516 1.2076439-.9192774 2.0806339-.9192774h6.92426zm1.3814961.6489017-.1796783 15.2976474c-.0955489 0-1.0342578.0119386-2.8161268.035816-1.7818691.0238773-3.3006293.0898911-4.5562806.1980414-1.2556514.1081503-1.9613144.2884008-2.1169891.5407514-.0955488.1924233-.5439291.273419-1.345141.2429871-.8012118-.0304319-1.3155441-.1776755-1.5429969-.4417308-.334654-.3843783-3.4558378-.5765674-9.36355164-.5765674v-15.3875385l-.96830576.3960828v16.2702977c6.4096947-.2041278 9.7760429-.0840388 10.0990445.3602669.2391051.276228.9864833.414342 2.2421347.414342.1915638 0 .4187835-.0210682.6816593-.0632047s.4810068-.0870821.6543929-.1348367c.1733862-.0477547.2719646-.0838048.2957353-.1081503.0838965-.1563732.9599161-.2675666 2.6280587-.3335805 1.6681426-.0660138 3.3213703-.0931684 4.9596831-.0814638l2.4392915.0182591v-16.2344816z"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Books<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="video"><!---->
+      <a class="menu-item video  style-scope media-button" href="https://archive.org/details/movies" data-event-click-tracking="BetaTopNav|NavMenuVideo">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="videoTitleID videoDescID" class="style-scope media-button">
+    <title id="videoTitleID" class="style-scope media-button">Video icon</title>
+    <desc id="videoDescID" class="style-scope media-button">An illustration of two cells of a film strip.</desc>
+    <path class="fill-color style-scope media-button" d="m31.0117647 12.0677966c0 .4067797-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711864-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067797-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711864-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711865-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.3898305c0 .4067797-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711864-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711865-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.2711865-.7058823-.6779661v-.6779661c0-.4067797.2823529-.6779661.7058823-.6779661h1.2705883c.4235294 0 .7058823.2711864.7058823.6779661zm-4.0941176-10.440678c0 .5423729-.4235295.9491525-.9882353.9491525h-11.5764706c-.5647059 0-.9882353-.4067796-.9882353-.9491525v-6.9152542c0-.5423729.4235294-.9491526.9882353-.9491526h11.5764706c.5647058 0 .9882353.4067797.9882353.9491526zm-.1411765 11.2542373c0 .5423729-.4235294.9491525-.9882353.9491525h-11.5764706c-.5647059 0-.9882353-.4067796-.9882353-.9491525v-6.9152542c0-.5423729.4235294-.9491526.9882353-.9491526h11.5764706c.5647059 0 .9882353.4067797.9882353.9491526zm-14.9647059-17.220339c0 .4067797-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711864-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067797-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711864-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711865-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.3898305c0 .4067797-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711864-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711865-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm0 3.2542373c0 .4067796-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.2711865-.70588236-.6779661v-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661zm20.0470588-20.4745763h-.8470588v.27118644.6779661c0 .40677966-.2823529.6779661-.7058823.6779661h-1.2705883c-.4235294 0-.7058823-.27118644-.7058823-.6779661v-.6779661-.27118644h-16.5176471v.27118644.6779661c0 .40677966-.2823529.6779661-.7058823.6779661h-1.27058828c-.42352941 0-.70588236-.27118644-.70588236-.6779661v-.6779661-.27118644h-1.12941176v24h1.12941176v-.2711864-.6779661c0-.4067797.28235295-.6779661.70588236-.6779661h1.27058828c.4235294 0 .7058823.2711864.7058823.6779661v.6779661.2711864h16.6588235v-.2711864-.6779661c0-.4067797.282353-.6779661.7058824-.6779661h1.2705882c.4235294 0 .7058824.2711864.7058824.6779661v.6779661.2711864h.8470588v-24z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Video<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="audio"><!---->
+      <a class="menu-item audio  style-scope media-button" href="https://archive.org/details/audio" data-event-click-tracking="BetaTopNav|NavMenuAudio">
+
+      <span class="icon  style-scope media-button">
+
+  <svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-labelledby="audioTitleID audioDescID" class="style-scope media-button">
+    <title id="audioTitleID" class="style-scope media-button">Audio icon</title>
+    <desc id="audioDescID" class="style-scope media-button">An illustration of an audio speaker.</desc>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="style-scope media-button">
+      <g transform="translate(10, 8)" class="fill-color style-scope media-button">
+        <path d="M19.4264564,11.8585048 L19.4264564,20.7200433 C19.4264564,22.3657576 18.8838179,23.2519114 16.8489237,23.2519114 C12.2364969,23.125318 7.75972977,23.125318 3.14730298,23.2519114 C1.24806842,23.2519114 0.569770368,22.492351 0.569770368,20.7200433 L0.569770368,2.74377955 C0.569770368,1.09806526 1.11240881,0.211911416 3.14730298,0.211911416 C7.75972977,0.338504822 12.2364969,0.338504822 16.8489237,0.211911416 C18.7481583,0.211911416 19.4264564,0.971471855 19.4264564,2.74377955 C19.2907967,5.78202131 19.4264564,8.82026306 19.4264564,11.8585048 L19.4264564,11.8585048 Z M10.0659432,2.74377955 C8.16670861,2.74377955 6.67445288,4.13630702 6.67445288,5.90861471 C6.67445288,7.6809224 8.16670861,9.07344988 10.0659432,9.07344988 C11.9651777,9.07344988 13.4574335,7.6809224 13.4574335,5.90861471 C13.4574335,4.13630702 11.8295181,2.74377955 10.0659432,2.74377955 L10.0659432,2.74377955 Z M10.0659432,11.4787246 C7.21709133,11.4787246 5.04653754,13.6308125 5.04653754,16.1626806 C5.04653754,18.8211422 7.35275094,20.8466367 10.0659432,20.8466367 C12.914795,20.8466367 15.0853488,18.6945488 15.0853488,16.1626806 C15.0853488,13.6308125 12.7791354,11.4787246 10.0659432,11.4787246 L10.0659432,11.4787246 Z" class="style-scope media-button"></path>
+        <ellipse cx="10.2016028" cy="16.5690777" rx="1.35659611" ry="1.34075134" class="style-scope media-button"></ellipse>
+      </g>
+    </g>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Audio<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="software"><!---->
+      <a class="menu-item software  style-scope media-button" href="https://archive.org/details/software" data-event-click-tracking="BetaTopNav|NavMenuSoftware">
+
+      <span class="icon  style-scope media-button">
+
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="softwareTitleID softwareDescID" class="style-scope media-button">
+    <title id="softwareTitleID" class="style-scope media-button">Software icon</title>
+    <desc id="softwareDescID" class="style-scope media-button">An illustration of a 3.5" floppy disk.</desc>
+    <path class="fill-color style-scope media-button" d="m32 30.6900373v-21.44521088c0-.82988428-.4156786-1.24482642-1.2470357-1.24482642h-21.50592858c-.83135715 0-1.24703572.4221795-1.24703572 1.26653851v21.44521089c0 .8588337.41567857 1.2882506 1.24703572 1.2882506h21.48327168c.8458575 0 1.2687863-.4366542 1.2687863-1.3099627zm-5.9950155-20.4410268v6.114667c0 .6694561-.3428744 1.0041841-1.0286232 1.0041841h-10.1294464c-.2622159 0-.4773054-.0802141-.6452685-.2406423s-.2519447-.3642806-.2519447-.6115572v-6.1363791l.0217506-.1311772h12.0326259zm-4.9437353.8295827v5.0010178h3.0405558v-5.0010178zm-9.7134658 18.8035735v-7.753025c0-.5241057.1604108-.9025595.4812325-1.1353613.1897138-.1453504.4011782-.2180256.6343932-.2180256h14.7451099c.3208217 0 .5905898.1091636.8093044.3274907s.3280719.5023936.3280719.8521995v7.8181612l-.0217506.1094652h-16.9772676z"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Software<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="images"><!---->
+      <a class="menu-item images  style-scope media-button" href="https://archive.org/details/image" data-event-click-tracking="BetaTopNav|NavMenuImages">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="imagesTitleID imagesDescID" class="style-scope media-button">
+    <title id="imagesTitleID" class="style-scope media-button">Images icon</title>
+    <desc id="imagesDescID" class="style-scope media-button">An illustration of two photographs.</desc>
+    <path class="fill-color style-scope media-button" d="m20.8219178 15.3769871c0 1.1136708-.8767123 1.8932404-1.8630137 1.8932404s-1.9726027-.8909367-1.9726027-1.8932404c0-1.0023038.8767123-1.8932404 1.9726027-1.8932404.9863014 0 1.8630137.8909366 1.8630137 1.8932404zm-5.9178082-3.7864808h15.4520548v6.0138225l-1.9726028-3.3410125-2.6301369 6.3479237-2.1917809-2.67281-6.1369863 5.1228859h-2.5205479zm-1.7534247-1.6705063v14.9231892h18.8493151v-14.9231892zm-2.9589041 7.2388604c.2191781 0 1.9726028-.3341012 1.9726028-.3341012v-2.0046075l-4.1643836.5568354c.43835616 4.7887846.87671233 9.9116704 1.31506849 14.700455 6.02739731-.5568354 13.26027401-1.5591391 19.39726031-2.1159746-.1095891-.5568354-.1095891-2.0046075-.2191781-2.67281-.4383562.1113671-1.4246575 0-1.8630137.1113671v.8909367c-5.1506849.4454683-10.3013699 1.1136708-15.4520548 1.6705062.109589-.111367-.5479452-7.0161262-.9863014-10.8026071z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Images<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="donate"><!---->
+      <a class="menu-item donate  style-scope media-button" href="https://archive.org/donate/" data-event-click-tracking="BetaTopNav|NavMenuDonate">
+
+      <span class="icon  style-scope media-button">
+
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="donateTitleID donateDescID" class="style-scope media-button">
+    <title id="donateTitleID" class="style-scope media-button">Donate icon</title>
+    <desc id="donateDescID" class="style-scope media-button">An illustration of a heart shape</desc>
+    <path class="fill-color style-scope media-button" d="m30.0120362 11.0857287c-1.2990268-1.12627221-2.8599641-1.65258786-4.682812-1.57894699-.8253588.02475323-1.7674318.3849128-2.8262192 1.08047869-1.0587873.6955659-1.89622 1.5724492-2.512298 2.63065-.591311-1.0588196-1.4194561-1.9357029-2.4844351-2.63065-1.0649791-.69494706-2.0039563-1.05510663-2.8169316-1.08047869-1.2067699-.04950647-2.318187.17203498-3.3342513.66462439-1.0160643.4925893-1.82594378 1.2002224-2.42963831 2.1228992-.60369453.9226769-.91173353 1.9629315-.92411701 3.1207641-.03715043 1.9202322.70183359 3.7665141 2.21695202 5.5388457 1.2067699 1.4035084 2.912594 3.1606786 5.1174721 5.2715107 2.2048782 2.1108321 3.7565279 3.5356901 4.6549492 4.2745742.8253588-.6646243 2.355647-2.0647292 4.5908647-4.2003145s3.9747867-3.9171994 5.218707-5.3448422c1.502735-1.7723316 2.2355273-3.6186135 2.1983769-5.5388457-.0256957-1.7608832-.6875926-3.2039968-1.9866194-4.3302689z"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->Donate<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        <media-button class="style-scope media-menu x-scope media-button-1" data-mediatype="more"><!---->
+      <a class="menu-item more  style-scope media-button" href="https://archive.org/about/" data-event-click-tracking="BetaTopNav|NavMenuMore">
+
+      <span class="icon  style-scope media-button">
+
+  <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="ellipsesTitleID ellipsesDescID" class="style-scope media-button">
+    <title id="ellipsesTitleID" class="style-scope media-button">Ellipses icon</title>
+    <desc id="ellipsesDescID" class="style-scope media-button">An illustration of text ellipses.</desc>
+    <path class="fill-color style-scope media-button" d="m10.5 17.5c1.3807119 0 2.5 1.1192881 2.5 2.5s-1.1192881 2.5-2.5 2.5c-1.38071187 0-2.5-1.1192881-2.5-2.5s1.11928813-2.5 2.5-2.5zm9.5 0c1.3807119 0 2.5 1.1192881 2.5 2.5s-1.1192881 2.5-2.5 2.5-2.5-1.1192881-2.5-2.5 1.1192881-2.5 2.5-2.5zm9.5 0c1.3807119 0 2.5 1.1192881 2.5 2.5s-1.1192881 2.5-2.5 2.5-2.5-1.1192881-2.5-2.5 1.1192881-2.5 2.5-2.5z" fill-rule="evenodd"></path>
+  </svg>
+
+      </span>
+      <span class="label style-scope media-button"><!---->More<!----></span>
+
+      </a>
+    <!----></media-button>
+      <!---->
+        </div>
+      </nav>
+    <!----></media-menu>
+        <button class="hamburger style-scope primary-nav" tabindex="1" data-event-click-tracking="BetaTopNav|NavHamburger">
+          <icon-hamburger class="style-scope primary-nav x-scope icon-hamburger-1"><!---->
+      <svg height="40" viewBox="0 0 40 40" width="40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="hamburgerTitleID hamburgerDescID" class="style-scope icon-hamburger">
+        <title id="hamburgerTitleID" class="style-scope icon-hamburger">Hamburger icon</title>
+        <desc id="hamburgerDescID" class="style-scope icon-hamburger">An icon used to represent a menu that can be toggled by interacting with this icon.</desc>
+        <path d="m30.5 26.5c.8284271 0 1.5.6715729 1.5 1.5s-.6715729 1.5-1.5 1.5h-21c-.82842712 0-1.5-.6715729-1.5-1.5s.67157288-1.5 1.5-1.5zm0-8c.8284271 0 1.5.6715729 1.5 1.5s-.6715729 1.5-1.5 1.5h-21c-.82842712 0-1.5-.6715729-1.5-1.5s.67157288-1.5 1.5-1.5zm0-8c.8284271 0 1.5.6715729 1.5 1.5s-.6715729 1.5-1.5 1.5h-21c-.82842712 0-1.5-.6715729-1.5-1.5s.67157288-1.5 1.5-1.5z" fill="#999" fill-rule="evenodd" class="style-scope icon-hamburger"></path>
+      </svg>
+    <!----></icon-hamburger>
+        </button>
+      </nav>
+    <!----></primary-nav>
+        <media-slider class="style-scope ia-topnav x-scope media-slider-1"><!---->
+      <div class="overflow-clip closed style-scope media-slider">
+        <div class="information-menu closed style-scope media-slider">
+          <div class="info-box style-scope media-slider">
+            <media-subnav class="style-scope media-slider x-scope media-subnav-1"><!----><!----></media-subnav>
+          </div>
+        </div>
+      </div>
+    <!----></media-slider>
+      </div>
+      <desktop-subnav class="style-scope ia-topnav x-scope desktop-subnav-1"><!---->
+      <ul class="style-scope desktop-subnav">
+        <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="about style-scope desktop-subnav" href="https://archive.org/about/"><!---->About<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="blog style-scope desktop-subnav" href="https://blog.archive.org/"><!---->Blog<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="projects style-scope desktop-subnav" href="https://archive.org/projects/"><!---->Projects<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="help style-scope desktop-subnav" href="https://archive.org/about/faqs.php"><!---->Help<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="donate style-scope desktop-subnav" href="https://archive.org/donate/"><!---->Donate<!---->
+  <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-labelledby="donateTitleID donateDescID" class="style-scope desktop-subnav">
+    <title id="donateTitleID" class="style-scope desktop-subnav">Donate icon</title>
+    <desc id="donateDescID" class="style-scope desktop-subnav">An illustration of a heart shape</desc>
+    <path class="fill-color style-scope desktop-subnav" d="m30.0120362 11.0857287c-1.2990268-1.12627221-2.8599641-1.65258786-4.682812-1.57894699-.8253588.02475323-1.7674318.3849128-2.8262192 1.08047869-1.0587873.6955659-1.89622 1.5724492-2.512298 2.63065-.591311-1.0588196-1.4194561-1.9357029-2.4844351-2.63065-1.0649791-.69494706-2.0039563-1.05510663-2.8169316-1.08047869-1.2067699-.04950647-2.318187.17203498-3.3342513.66462439-1.0160643.4925893-1.82594378 1.2002224-2.42963831 2.1228992-.60369453.9226769-.91173353 1.9629315-.92411701 3.1207641-.03715043 1.9202322.70183359 3.7665141 2.21695202 5.5388457 1.2067699 1.4035084 2.912594 3.1606786 5.1174721 5.2715107 2.2048782 2.1108321 3.7565279 3.5356901 4.6549492 4.2745742.8253588-.6646243 2.355647-2.0647292 4.5908647-4.2003145s3.9747867-3.9171994 5.218707-5.3448422c1.502735-1.7723316 2.2355273-3.6186135 2.1983769-5.5388457-.0256957-1.7608832-.6875926-3.2039968-1.9866194-4.3302689z"></path>
+  </svg>
+<!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="contact style-scope desktop-subnav" href="https://archive.org/about/contact.php"><!---->Contact<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="jobs style-scope desktop-subnav" href="https://archive.org/about/jobs.php"><!---->Jobs<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="volunteer style-scope desktop-subnav" href="https://archive.org/about/volunteerpositions.php"><!---->Volunteer<!----><!----></a>
+        </li>
+      <!---->
+        <li class="style-scope desktop-subnav">
+          <a class="people style-scope desktop-subnav" href="https://archive.org/about/bios.php"><!---->People<!----><!----></a>
+        </li>
+      <!---->
+      </ul>
+    <!----></desktop-subnav>
+      <search-menu class="style-scope ia-topnav x-scope search-menu-1" tabindex="-1"><!---->
+      <div class="search-menu tx-slide closed style-scope search-menu" aria-hidden="true" aria-expanded="false">
+        <!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="" checked="">
+          Search Metadata
         </label>
-    </form>
-</div>
-        </div>
-        <div
-            class="site-header__searchform-trigger"
-            data-js-component="searchformToggle"
-            data-form-el="site-header__searchform"></div>
-                    <div class="site-header__menu-toggle">
-                <div class="mobile-menu-toggle">
-    <span class="mobile-menu-toggle__text mobile-menu-toggle__open">Menu</span>
-    <img class="mobile-menu-toggle__close" src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/close-x.svg" alt="Close" />
-</div>
-            </div>
-            </header>
+      <!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="TXT">
+          Search text contents
+        </label>
+      <!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="TV">
+          Search TV news captions
+        </label>
+      <!----><!---->
+        <label class="style-scope search-menu">
+          <input form="nav-search" type="radio" name="sin" class="style-scope search-menu" value="WEB">
+          Search archived websites
+        </label>
+      <!---->
+        <a class="advanced-search style-scope search-menu" href="https://archive.org/advancedsearch.php" data-event-click-tracking="BetaTopNav|NavAdvancedSearch">Advanced Search</a>
+      </div>
+    <!----></search-menu>
 
-    <div class="persistent-bar" data-js-component="persistentBar">
-    <div class="persistent-bar__interior page-container">
-        <div class="persistent-bar__utilities">
-            <a class="persistent-bar__utilities-link" href="https://partnerships.nature.com">
-                <div class="persistent-bar__utilities-link-text">Home</div>
-            </a>
-            <a class="persistent-bar__utilities-link"  href="https://partnerships.nature.com/contact-us/">
-                <div class="persistent-bar__utilities-link-text">Contact Us</div>
-            </a>
-        </div>
-        <div class="persistent-bar__logo">
-            <a class="brand-bar__link" href="https://partnerships.nature.com">
-                <div class="brand-bar__link-image">
-                    <img width="297"  src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/nr_partnerships.svg" alt="Nature Research Partnerships" />
-                </div>
-                <div class="brand-bar__link-image brand-bar__link-image--last">
-                    <img width="186" src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/part_of_SN_header_2020.svg" alt="Custom marketing solutions and professional development services for the scientific community" />
-                </div>
-            </a>
-        </div>
-        <a class="persistent-bar__button" href="https://partnerships.nature.com/contact-us/">Contact Us</a>
-    </div>
-</div>
+      <signed-out-dropdown class="style-scope ia-topnav x-scope signed-out-dropdown-1" tabindex="-1"><!---->
+      <nav class="initial style-scope signed-out-dropdown" aria-hidden="true" aria-expanded="false">
+        <ul class="style-scope signed-out-dropdown">
+          <!---->
+        <li class="style-scope signed-out-dropdown"><!----><a class="style-scope signed-out-dropdown" href="https://archive.org/account/signup" data-event-click-tracking="BetaTopNav|NavSignUpDropdown"><!---->Sign up for free<!----></a><!----></li>
+      <!---->
+        <li class="style-scope signed-out-dropdown"><!----><a class="style-scope signed-out-dropdown" href="https://archive.org/account/login" data-event-click-tracking="BetaTopNav|NavLogInDropdown"><!---->Log in<!----></a><!----></li>
+      <!---->
+        </ul>
+      </nav>
+    <!----></signed-out-dropdown>
 
-<div class="section-container single-product">
-<section class="page-section page-container page-container--full-bleed">
-        <div class="mantel__wrap mantel__wrap--product">
-            <div class="mantel">
-                <img class="mantel__image" src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/geometry.png" alt="Branded Content">
-            </div>
-            <div class="mantel__detail">
-                <div class="mantel__interior">
-                    <div class="mantel__detail-image">
-                    <img src="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Image_v2_300x300.jpg" alt="Branded Content" />
-                    </div>
-                    <div class="mantel__content">
-                        <h1 class="mantel__detail-title">Branded Content</h1>
-                        <div class="mantel__detail-image">
-                            <img src="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Image_v2_300x300.jpg" alt="" />
-                        </div>
-                        <div class="mantel__detail-desc">
-                            <p><p>Create content your readers will love to read and share, designed in a format familiar to our audiences. Whether in industry or academia, we can work with you in a variety of ways to tell stories that spark conversation in the scientific and healthcare community.</p>
-</p>
-                        </div>
-                        <a href="https://partnerships.nature.com/contact-us/" class="mantel__link">Contact Us</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="page-section page-container page-container--slim">
-        <div class="single-product__content">
-            <p>Branded content enables your organization to build awareness with influential audiences. It focuses on engagement with your content; placing an emphasis on quality of views. Our custom media team work with you to adapt your message into an immersive article, prominently featuring your organization as a trusted partner. Depending on your target audience, your branded content is hosted on nature.com or scientificamerican.com, alongside our own news and research content. <strong><a href="https://partnerships.nature.com/contact-us/">Contact us</a> for more information — please quote ‘branded content’ in your message.</strong></p>
-<p><em>New! In addition to offering branded content on Nature and Scientific American, <a href="https://partnerships.nature.com/product/clinical-custom-content/" target="_blank" rel="noopener">clinical custom content</a> designed for approved drugs and medical devices is now available on SpringerLink.</em></p>
-<h2>Live examples of branded content</h2>
-<div id="attachment_1651" style="width: 781px" class="wp-caption alignnone"><a href="https://www.nature.com/articles/d42473-018-00082-4" target="_blank" rel="noopener noreferrer"><img aria-describedby="caption-attachment-1651" class="wp-image-1651" src="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Example-1024x796.png" alt="Branded Content" width="771" height="599" srcset="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Example-1024x796.png 1024w, https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Example-300x233.png 300w, https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Example-768x597.png 768w" sizes="(max-width: 771px) 100vw, 771px" /></a><p id="caption-attachment-1651" class="wp-caption-text"><a href="https://www.nature.com/articles/d42473-018-00082-4" target="_blank" rel="noopener noreferrer"><em>View the article on nature.com</em></a></p></div>
-<div id="attachment_995" style="width: 552px" class="wp-caption alignnone"><a href="https://www.scientificamerican.com/custom-media/the-fight-against-cancer-is-increasingly-personal/" target="_blank" rel="noopener noreferrer"><img aria-describedby="caption-attachment-995" loading="lazy" class="wp-image-995 size-large" src="https://partnerships.nature.com/wp-content/uploads/2018/07/SciAm-ITI-542x1024.png" alt="Scientific American branded content with Immunomic Therapies" width="542" height="1024" srcset="https://partnerships.nature.com/wp-content/uploads/2018/07/SciAm-ITI-542x1024.png 542w, https://partnerships.nature.com/wp-content/uploads/2018/07/SciAm-ITI-159x300.png 159w, https://partnerships.nature.com/wp-content/uploads/2018/07/SciAm-ITI-768x1450.png 768w" sizes="(max-width: 542px) 100vw, 542px" /></a><p id="caption-attachment-995" class="wp-caption-text"><a href="https://www.scientificamerican.com/custom-media/the-fight-against-cancer-is-increasingly-personal/" target="_blank" rel="noopener noreferrer">View the article on scientificamerican.com</a></p></div>
-<h2>Why partner with Springer Nature?</h2>
-<p>Your target audience trusts Springer Nature and working with our team gives your content immediate authority. Gain peace of mind knowing that the content we create will be of the highest quality and of value to you and your audience. Investment in digital technology has enabled us to gain a thorough understanding of our healthcare and scientific audiences’ consumption patterns and online behavior.</p>
-<h2>Reaching your target audience</h2>
-<p>We use a variety of marketing tactics to ensure your branded content reaches your desired audience, including:</p>
-<ul>
-<li>Behavioural-targeted banners, running across Springer Nature’s entire journal portfolio (Nature Research, Springer, BMC, and Scientific American).</li>
-<li>Dynamic contextual advertising with banners placed alongside keywords of your choice, or native advertising promoting your branded content on the homepage and current issue page of Nature Research’s journals.</li>
-<li>Paid promotion through our social media channels.</li>
-</ul>
-<p>All promotion can be tailored to specific regions and subject areas to ensure it aligns with your campaign.</p>
-<div id="attachment_1650" style="width: 650px" class="wp-caption aligncenter"><img aria-describedby="caption-attachment-1650" loading="lazy" class="wp-image-1650 " src="https://partnerships.nature.com/wp-content/uploads/2017/12/Native-Advertising-example-1024x559.png" alt="Native Advertising" width="640" height="349" srcset="https://partnerships.nature.com/wp-content/uploads/2017/12/Native-Advertising-example-1024x559.png 1024w, https://partnerships.nature.com/wp-content/uploads/2017/12/Native-Advertising-example-300x164.png 300w, https://partnerships.nature.com/wp-content/uploads/2017/12/Native-Advertising-example-768x419.png 768w" sizes="(max-width: 640px) 100vw, 640px" /><p id="caption-attachment-1650" class="wp-caption-text"><em>Native advertising example</em></p></div>
-<p>&nbsp;</p>
-<p style="text-align: center;"><strong><a href="https://partnerships.nature.com/contact-us/">Contact us</a> for more information — please quote ‘branded content’ in your message.</strong></p>
-        </div>
-    </section>
-        <section class="page-section page-container">
+    </noscript>                      </ia-topnav>
+
+                  </div>
+            <input class="js-tvsearch" type="hidden" value='{"ands":[],"minday":"06/04/2009","maxday":"05/19/2022"}'/>
+    
         
-<div class="content-insert">
-    <div class="content-insert__wrap">
-                <div class="content-insert__title">View Media Kit for more information</div>
-                <div class="content-insert__interior">
-                        <div class="content-insert__image">
-                <img src="https://partnerships.nature.com/wp-content/uploads/2018/05/Branded-Content-1.jpg" alt="View Media Kit for more information" />
-            </div>
-                        <div class="content-insert__copy">
-                <div class="content-insert__copy-title">Branded Content</div>
-                <div class="content-insert__copy-desc"?>Download our brochure about branded content on nature.com. For branded content on Scientific American or SpringerLink, please contact us for more information.</div>
-                <a class="content-insert__copy-button" href="https://partnerships.nature.com/wp-content/uploads/2018/05/Branded-Content-2019.pdf">View PDF</a>
-            </div>
-        </div>
-    </div>
-</div>
-    </section>
-            <section class="page-section" id="additional-info">
-        <div class="additional-info page-container page-container--slim page-container--no-margin" data-js-component="additionalInfo">
-            <div class="content-deck__header title-bar__wrap">
-                <div class="content-deck__title title-bar__text">Additional Info</div>
-
-                <img src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/plus.svg" alt="Plus Symbol" class="additional-info__plus"></img>
-
-                <img src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/minus.svg" alt="Minus Symbol" class="additional-info__minus hidden"></img>
-            </div>
-            
-<div class="link-column ">
-            <ul class="link-column__list">
-                <li class="link-column__list-item link-column__list-item--dot"><a target="_blank" href="https://partnerships.nature.com/commercial-content-at-nature-research/">Commercial Content at Nature Research</a></li>
-                <li class="link-column__list-item link-column__list-item--dot"><a target="_blank" href="https://partnerships.nature.com/branded-content-guidelines/">Branded Content Guidelines</a></li>
-                <li class="link-column__list-item link-column__list-item--dot"><a target="_blank" href="https://partnerships.nature.com/guidelines-for-branded-content-drugs-and-devices/">Branded Content: Drugs & Devices Guidelines</a></li>
-                <li class="link-column__list-item link-column__list-item--dot"><a target="_blank" href="https://partnerships.nature.com/wp-content/uploads/2021/09/Springer-Nature-Branded-Content-Terms-and-Conditions-July-2021.pdf">Branded Content Terms & Conditions</a></li>
-                <li class="link-column__list-item link-column__list-item--dot"><a target="_blank" href="https://partnerships.nature.com/inside-view/">Inside View</a></li>
-                <li class="link-column__list-item link-column__list-item--pdf"><a target="_blank" href="https://partnerships.nature.com/wp-content/uploads/2017/12/Application-Note-Categories.pdf">Application Notes Categories</a></li>
-                <li class="link-column__list-item link-column__list-item--pdf"><a target="_blank" href="https://partnerships.nature.com/wp-content/uploads/2017/12/Application-Notes-Online-Guidelines.pdf">Application Notes Online Guidelines</a></li>
-                <li class="link-column__list-item link-column__list-item--pdf"><a target="_blank" href="https://partnerships.nature.com/wp-content/uploads/2017/12/Application-Notes-Print-Guidelines.pdf">Application Notes Print Guidelines</a></li>
-            </ul>
-    </div>
-        </div>
-    </section>
-            <section class="page-section">
-        <div class="page-container page-section--bg-grey page-container--no-margin page-container--full-bleed related-products">
-                        <div class="related-product__heading">
-                <div class="related-products__title">There are more ways to work with our editorial team</div>
-                                <div class="related-products__subtitle">Create content that positions your organization as a leader in science & research</div>
-                            </div>
-                        <div>
-<div class="content-insert">
-    <div class="content-insert__wrap">
-                <div class="content-insert__interior">
-                        <div class="content-insert__image">
-                <img src="https://partnerships.nature.com/wp-content/uploads/2017/12/Branded-Content-Image_v2_300x300.jpg" alt="" />
-            </div>
-                        <div class="content-insert__copy">
-                <div class="content-insert__copy-title">Clinical Custom Content</div>
-                <div class="content-insert__copy-desc"?>Clinical Custom Content is content created for approved branded drugs and medical devices.  It is designed for the unique demands of marketing to healthcare professionals.</div>
-                <a class="content-insert__copy-button" href="https://partnerships.nature.com/product/clinical-custom-content/">Learn More</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-<div class="content-insert">
-    <div class="content-insert__wrap">
-                <div class="content-insert__interior">
-                        <div class="content-insert__image">
-                <img src="https://partnerships.nature.com/wp-content/uploads/2017/09/webcasts_300x300.jpg" alt="" />
-            </div>
-                        <div class="content-insert__copy">
-                <div class="content-insert__copy-title">Webcasts</div>
-                <div class="content-insert__copy-desc"?>Webcasts allow you to directly engage with our global audience of researchers and policy makers. We offer two different options—editorial and custom webcasts—and marketing campaigns to support participation. </div>
-                <a class="content-insert__copy-button" href="https://partnerships.nature.com/product/nature-webcasts/">Learn More</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-<div class="content-insert">
-    <div class="content-insert__wrap">
-                <div class="content-insert__interior">
-                        <div class="content-insert__image">
-                <img src="https://partnerships.nature.com/wp-content/uploads/2017/12/Custom-Media.jpg" alt="" />
-            </div>
-                        <div class="content-insert__copy">
-                <div class="content-insert__copy-title">Custom Media at Springer Nature</div>
-                <div class="content-insert__copy-desc"?>We offer a range of custom content publishing and communication packages for promoting research and scientific advancements, accomplishments, and products to targeted audiences.
-</div>
-                <a class="content-insert__copy-button" href="https://partnerships.nature.com/product/nature-research-custom-media/">Learn More</a>
-            </div>
-        </div>
-    </div>
-</div>
-                        <div class="related-products__page-link">
-                <a href="https://partnerships.nature.com/contact-us/">
-                    <div class="related-products__page-link-text">Contact us for pricing and other opportunities</div>
-                    <div class="related-products__page-link-arrow"><svg viewBox="0 0 13 21" width="100%" xmlns="http://www.w3.org/2000/svg"><path d="M12.236 10.278l-1.002-1.029L2.18 0 0 2.058l8.051 8.22L0 18.498l2.18 2.058 9.054-9.249z" fill-rule="nonzero"/></svg>
-</div>
-                </a>
-            </div>
-                    </div>
-    </section>
-        <section class="page-section page-container page-container--full-width page-container--full-bleed">
-        
-<div class="hero-banner__wrap inline">
-    <div class="hero-banner hero-banner--with-bg hero-banner--short" style="background-image: url(https://partnerships.nature.com/wp-content/uploads/2017/08/Home-Mantel.jpg);">
-        <div class="hero-banner__interior">
-                        <div class="hero-banner__image">
-                <img src="https://partnerships.nature.com/wp-content/uploads/2019/04/A71254_Brandedcontent_case_studies_SFIlogo_White.png" alt="Science Foundation Ireland" />
-            </div>
-                                    
-                        <div class="hero-banner__title ">Science Foundation Ireland</div>
-            
-                        <div class="hero-banner__subtitle">A small country with big funding opportunities</div>
-                                    <a href="https://partnerships.nature.com/case-studies/science-foundation-ireland/" id="hero-banner__link" class="hero-banner__link">View Case Study</a>
-                    </div>
-    </div>
-    </div>
-    </section>
-</div>
-<script>
-    window.bookmarksToAdd = [{"id":168,"title":"Branded Content","category":null}];
-</script>
-
-<footer class="site-footer ">
-    <div class="page-container">    <div class="site-footer__interior">
-                <div class="site-footer__logo">
-            <img src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/nr_partnerships.svg" alt="Nature Research Partnerships" />
-        </div>
-                <div class="site-footer__column-set">
-            <div class="site-footer__column">
-                <div class="site-footer__column-menu">
-                    <div class="site-footer__column-menu-title">Follow Us</div>
-                    <div class="menu-footer-about-container"><ul id="menu-footer-about" class="menu"><li id="menu-item-399" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-399"><a target="_blank" rel="noopener" href="https://www.facebook.com/nature/">Facebook</a></li>
-<li id="menu-item-400" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-400"><a target="_blank" rel="noopener" href="https://www.instagram.com/nature.portfolio">Instagram</a></li>
-<li id="menu-item-401" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-401"><a target="_blank" rel="noopener" href="https://twitter.com/nresearchnews">Twitter</a></li>
-<li id="menu-item-402" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-402"><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCvCLdSgYdSTpWcOgEJgi-ng">YouTube</a></li>
-<li id="menu-item-403" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-403"><a target="_blank" rel="noopener" href="https://www.linkedin.com/company/nature-publishing-group/">LinkedIn</a></li>
-</ul></div>                </div>
-                <div class="site-footer__column-menu">
-                    <div class="site-footer__column-menu-title">Help &amp; Support</div>
-                    <div class="menu-footer-help-support-container"><ul id="menu-footer-help-support" class="menu"><li id="menu-item-58" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a target="_blank" rel="noopener" href="https://partnerships.nature.com/contact-us/">Contact Us</a></li>
-</ul></div>                </div>
-            </div>
-            <div class="site-footer__column">
-                <div class="site-footer__column-menu">
-                    <div class="site-footer__column-menu-title">Partnerships &amp; Services</div>
-                    <div class="menu-footer-featured-solutions-container"><ul id="menu-footer-featured-solutions" class="menu"><li id="menu-item-774" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-774"><a href="https://partnerships.nature.com/product/digital-advertising/">Digital Advertising</a></li>
-<li id="menu-item-780" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-780"><a href="https://partnerships.nature.com/product/recruitment-advertising/">Recruitment Advertising</a></li>
-<li id="menu-item-775" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-775"><a href="https://partnerships.nature.com/product/branded-content-native-advertising/" aria-current="page">Branded Content</a></li>
-<li id="menu-item-776" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-776"><a href="https://partnerships.nature.com/product/nature-research-custom-media/">Custom Media</a></li>
-<li id="menu-item-777" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-777"><a href="https://partnerships.nature.com/product/researcher-training/">Researcher Training</a></li>
-<li id="menu-item-778" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-778"><a href="https://partnerships.nature.com/product/research-data-services-from-springer-nature/">Research Data Services</a></li>
-<li id="menu-item-1765" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1765"><a href="https://partnerships.nature.com/product/conferences-events/">Conferences &#038; Events</a></li>
-</ul></div>                </div>
-            </div>
-            <div class="site-footer__column">
-                <div class="site-footer__column-menu">
-                    <div class="site-footer__column-menu-title">Resources</div>
-                    <div class="menu-footer-resources-container"><ul id="menu-footer-resources" class="menu"><li id="menu-item-1736" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1736"><a href="https://authorservices.springernature.com/">Author Services</a></li>
-<li id="menu-item-1737" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1737"><a href="https://masterclasses.nature.com/">Nature Masterclasses</a></li>
-<li id="menu-item-1738" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1738"><a href="https://www.nature.com/naturecareers">Nature Careers</a></li>
-<li id="menu-item-3665" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3665"><a href="https://solutions.springernature.com/">Research Solutions store</a></li>
-</ul></div>                </div>
-            </div>
-            <div class="site-footer__column">
-                <div class="site-footer__column-menu">
-                    <div class="site-footer__column-menu-title">Discover Springer Nature</div>
-                    <div class="menu-footer-discover-container"><ul id="menu-footer-discover" class="menu"><li id="menu-item-548" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-548"><a target="_blank" rel="noopener" href="https://www.springernature.com/">Springer Nature</a></li>
-<li id="menu-item-1732" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1732"><a href="http://nature.com">Nature</a></li>
-<li id="menu-item-1733" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1733"><a href="https://www.scientificamerican.com/">Scientific American</a></li>
-<li id="menu-item-1734" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1734"><a href="https://www.biomedcentral.com/">BMC</a></li>
-<li id="menu-item-1735" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1735"><a href="https://www.springer.com/us">Springer</a></li>
-</ul></div>                </div>
-            </div>
-                        <div class="site-footer__column site-footer__column--fixed-width">
-                <div class="site-footer__column-menu">
-                    <div class="site-footer__column-menu-title">Subscribe To Our Newsletter</div>
-                    <script type="text/javascript"></script>
-                <div class='gf_browser_ie gf_browser_ie8 gform_wrapper newsletter-signup__wrap_wrapper gform_legacy_markup_wrapper' id='gform_wrapper_2' ><div id='gf_2' class='gform_anchor' tabindex='-1'></div>
-                        <div class='gform_heading'>
-                            <span class='gform_description'>Sign up to receive alerts about upcoming advertising opportunities. </span>
-                        </div><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_2' id='gform_2' class='newsletter-signup__wrap gform_legacy_markup' action='/product/branded-content-native-advertising/#gf_2' >
-                        <div class='gform_body gform-body'><ul id='gform_fields_2' class='gform_fields top_label form_sublabel_below description_below'><li id="field_2_1" class="gfield newsletter-signup__input field_sublabel_below field_description_above gfield_visibility_visible" ><label class='gfield_label' for='input_2_1' >Email</label><div class='ginput_container ginput_container_email'>
-                            <input name='input_1' id='input_2_1' type='text' value='' class='large' tabindex='1'  placeholder='Enter your email address'  aria-invalid="false"  />
-                        </div></li><li id="field_2_2" class="gfield gform_validation_container field_sublabel_below field_description_below gfield_visibility_visible" ><label class='gfield_label' for='input_2_2' >Email</label><div class='ginput_container'><input name='input_2' id='input_2_2' type='text' value='' /></div><div class='gfield_description' id='gfield_description_2_2'>This field is for validation purposes and should be left unchanged.</div></li></ul></div>
-        <div class='gform_footer top_label'> <input type='submit' id='gform_submit_button_2' class='gform_button button' value='Sign Up' tabindex='1' onclick='if(window["gf_submitting_2"]){return false;}  window["gf_submitting_2"]=true;  ' onkeypress='if( event.keyCode == 13 ){ if(window["gf_submitting_2"]){return false;} window["gf_submitting_2"]=true;  jQuery("#gform_2").trigger("submit",[true]); }' /> <input type='hidden' name='gform_ajax' value='form_id=2&amp;title=&amp;description=1&amp;tabindex=1' />
-            <input type='hidden' class='gform_hidden' name='is_submit_2' value='1' />
-            <input type='hidden' class='gform_hidden' name='gform_submit' value='2' />
-            
-            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
-            <input type='hidden' class='gform_hidden' name='state_2' value='WyJbXSIsIjBkZWIzMzM3MzBhZTQxZjlkNDVkZmVkNTY0Nzk1ODlhIl0=' />
-            <input type='hidden' class='gform_hidden' name='gform_target_page_number_2' id='gform_target_page_number_2' value='0' />
-            <input type='hidden' class='gform_hidden' name='gform_source_page_number_2' id='gform_source_page_number_2' value='1' />
-            <input type='hidden' name='gform_field_values' value='' />
-            
-        </div>
-                        </form>
-                        </div>
-                <iframe style='display:none;width:0px;height:0px;' src='about:blank' name='gform_ajax_frame_2' id='gform_ajax_frame_2' title='This iframe contains the logic required to handle Ajax powered Gravity Forms.'></iframe>
-                <script type="text/javascript">
-gform.initializeOnLoaded( function() {gformInitSpinner( 2, 'https://partnerships.nature.com/wp-content/plugins/gravityforms/images/spinner.svg' );jQuery('#gform_ajax_frame_2').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_2');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_2').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_2').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_2').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_2').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ jQuery(document).scrollTop(jQuery('#gform_wrapper_2').offset().top - mt); }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_2').val();gformInitSpinner( 2, 'https://partnerships.nature.com/wp-content/plugins/gravityforms/images/spinner.svg' );jQuery(document).trigger('gform_page_loaded', [2, current_page]);window['gf_submitting_2'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}setTimeout(function(){jQuery('#gform_wrapper_2').replaceWith(confirmation_content);jQuery(document).scrollTop(jQuery('#gf_2').offset().top - mt);jQuery(document).trigger('gform_confirmation_loaded', [2]);window['gf_submitting_2'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_2').text());}, 50);}else{jQuery('#gform_2').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger('gform_post_render', [2, current_page]);} );} );
-</script>
-                </div>
-            </div>
-                    </div>
-    </div>
-    <div class="page-container page-container--ultra-wide site-footer__legal-links">
-        <div class="menu-footer-legal-container"><ul id="menu-footer-legal" class="menu"><li id="menu-item-53" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-53"><a target="_blank" rel="noopener" href="https://mse.secure.force.com/nature/">Help</a></li>
-<li id="menu-item-54" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-54"><a target="_blank" rel="noopener" href="http://www.nature.com/info/privacy.html?foxtrotcallback=true">Privacy Policy</a></li>
-<li id="menu-item-55" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-55"><a target="_blank" rel="noopener" href="http://www.nature.com/info/cookies.html">Use of Cookies</a></li>
-<li id="menu-item-56" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-56"><a target="_blank" rel="noopener" href="http://www.nature.com/info/legal_notice.html">Legal Notice</a></li>
-<li id="menu-item-57" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-57"><a target="_blank" rel="noopener" href="http://www.nature.com/info/tandc.html">Terms</a></li>
-</ul></div>    </div>
-    </div>    <div class="site-footer__copyright">
-        <div class="page-container page-container--full-bleed">
-            <div class="site-footer__copyright-interior">
-                <div class="site-footer__copyright-image">
-                    <img src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/part_of_SN_header_2020--simple.svg" alt="Custom marketing solutions and professional development services for the scientific community" />
-                </div>
-                <div class="site-footer__copyright-text">
-                    &copy; 2017 Springer Nature. All Rights Reserved.
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-</div>
-
-
-<div class="bookmark-pane__wrap" data-js-component="bookmark" v-cloak v-bind:class="{ active: isDrawerOpen }">
-    <div class="bookmark-pane__interior" v-show="bookmarkCount">
-        <div class="bookmark-pane__heading" @click="toggleDrawer">
-            <span class="bookmark-pane__heading-text" >{{ bookmarkCount }} {{ productText }} Saved</span>
-            <span class="bookmark-pane__heading-arrow"><img src="https://partnerships.nature.com/wp-content/themes/nature/assets/img/white-angle.svg" alt="Bookmarks"></span>
-        </div>
-        <div class="bookmark-pane">
-            <div class="bookmark-pane__item" v-for="bookmark in bookmarks">
-                <div class="bookmark-pane__item-interior">
-                    <div class="bookmark-pane__item-type" v-html="bookmark.category"></div>
-                    <div class="bookmark-pane__item-title" v-html="bookmark.title"></div>
-                </div>
-                <div class="bookmark-pane__item-remove" @click="removeBookmark(bookmark)"></div>
-            </div>
-        </div>
-        <div class="bookmark-pane__footer">
-    <div class="bookmark-pane__footer-title">Contact us about these products</div>
-            <div class="bookmark-pane__footer-desc">As you browse our site and save products, they will be shared when you decide to contact us.</div>
-            <a class="bookmark-pane__footer-link" href="https://partnerships.nature.com/contact-us/">Contact Us</a>
-        </div>
-    </div>
-</div>
-<link rel='stylesheet' id='gforms_reset_css-css'  href='https://partnerships.nature.com/wp-content/plugins/gravityforms/legacy/css/formreset.min.css?ver=2.5.16' type='text/css' media='all' />
-<link rel='stylesheet' id='gforms_formsmain_css-css'  href='https://partnerships.nature.com/wp-content/plugins/gravityforms/legacy/css/formsmain.min.css?ver=2.5.16' type='text/css' media='all' />
-<link rel='stylesheet' id='gforms_ready_class_css-css'  href='https://partnerships.nature.com/wp-content/plugins/gravityforms/legacy/css/readyclass.min.css?ver=2.5.16' type='text/css' media='all' />
-<link rel='stylesheet' id='gforms_browsers_css-css'  href='https://partnerships.nature.com/wp-content/plugins/gravityforms/legacy/css/browsers.min.css?ver=2.5.16' type='text/css' media='all' />
-<script type='text/javascript' src='https://partnerships.nature.com/wp-content/themes/nature/assets/js/dist/vendor.bundle.js?ver=5.9.2' id='vendor-js'></script>
-<script type='text/javascript' src='https://partnerships.nature.com/wp-content/themes/nature/assets/js/dist/main.bundle.js?ver=5.9.2' id='main-js'></script>
-<script type='text/javascript' src='https://partnerships.nature.com/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.9' id='regenerator-runtime-js'></script>
-<script type='text/javascript' src='https://partnerships.nature.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
-<script type='text/javascript' src='https://partnerships.nature.com/wp-includes/js/dist/dom-ready.min.js?ver=ecda74de0221e1c2ce5c57cbb5af09d5' id='wp-dom-ready-js'></script>
-<script type='text/javascript' src='https://partnerships.nature.com/wp-includes/js/dist/hooks.min.js?ver=1e58c8c5a32b2e97491080c5b10dc71c' id='wp-hooks-js'></script>
-<script type='text/javascript' src='https://partnerships.nature.com/wp-includes/js/dist/i18n.min.js?ver=30fcecb428a0e8383d3776bcdd3a7834' id='wp-i18n-js'></script>
-<script type='text/javascript' id='wp-i18n-js-after'>
-wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
-</script>
-<script type='text/javascript' id='wp-a11y-js-translations'>
-( function( domain, translations ) {
-	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
-	localeData[""].domain = domain;
-	wp.i18n.setLocaleData( localeData, domain );
-} )( "default", { "locale_data": { "messages": { "": {} } } } );
-</script>
-<script type='text/javascript' src='https://partnerships.nature.com/wp-includes/js/dist/a11y.min.js?ver=68e470cf840f69530e9db3be229ad4b6' id='wp-a11y-js'></script>
-<script type='text/javascript' defer='defer' src='https://partnerships.nature.com/wp-content/plugins/gravityforms/js/jquery.json.min.js?ver=2.5.16' id='gform_json-js'></script>
-<script type='text/javascript' id='gform_gravityforms-js-extra'>
-/* <![CDATA[ */
-var gform_i18n = {"datepicker":{"days":{"monday":"Mon","tuesday":"Tue","wednesday":"Wed","thursday":"Thu","friday":"Fri","saturday":"Sat","sunday":"Sun"},"months":{"january":"January","february":"February","march":"March","april":"April","may":"May","june":"June","july":"July","august":"August","september":"September","october":"October","november":"November","december":"December"},"firstDay":1,"iconText":"Select date"}};
-var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2,"code":"USD"},"base_url":"https:\/\/partnerships.nature.com\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/partnerships.nature.com\/wp-content\/plugins\/gravityforms\/images\/spinner.svg","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
-var gf_legacy_multi = {"2":"1"};
-/* ]]> */
-</script>
-<script type='text/javascript' defer='defer' src='https://partnerships.nature.com/wp-content/plugins/gravityforms/js/gravityforms.min.js?ver=2.5.16' id='gform_gravityforms-js'></script>
-<script type='text/javascript' defer='defer' src='https://partnerships.nature.com/wp-content/plugins/gravityforms/js/placeholders.jquery.min.js?ver=2.5.16' id='gform_placeholder-js'></script>
-<script type="text/javascript">
-gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 2) {if(typeof Placeholders != 'undefined'){
-                        Placeholders.enable();
-                    }} } );jQuery(document).bind('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } );
-</script>
-<script type="text/javascript">
-gform.initializeOnLoaded( function() { jQuery(document).trigger('gform_post_render', [2, 1]) } );
-</script>
-
-</body>
+    <script>update_aoheader();</script>
+        <div id="positionHome">
+      <section>
+	<div class="search-toolbar-logo-container">
+	  <a href="/"><div class="search-toolbar-logo" alt="logo: Internet Archive's Wayback Machine"></div></a>
+	</div>
+      </section>
+      <section>
+	<div id="error">
+	  <script type="text/javascript">
+	    function go() {
+	      document.location.href = "https://web.archive.org/web/20210215041456/https://www.instagram.com/accounts/login/";
+	    }
+	    window.setTimeout(go,  5000);
+	  </script>
+	  <p class="code">Loading...</p>
+	  	  <p class="code shift target">https://www.instagram.com/cambridgewords/ |
+	    04:14:56 February 15, 2021</p>
+	  <p class="code shift red">Got an HTTP 302 response at crawl time</p>
+	  <p class="code">Redirecting to...</p>
+	  <p class="code shift target">https://www.instagram.com/accounts/login/</p>
+	  	  <p class="impatient"><a href="https://web.archive.org/web/20210215041456/https://www.instagram.com/accounts/login/">Impatient?</a></p>
+	</div>
+      </section>
+      <div id="errorBorder"></div>
+    <noscript>
+      <div class="no-script-message">
+        The Wayback Machine requires your browser to support JavaScript, please email <a href="mailto:info@archive.org">info@archive.org</a><br/>if you have any questions about this.
+      </div>
+    </noscript>
+    <footer>
+      <div id="footerHome">
+        <p>
+          The Wayback Machine is an initiative of the
+          <a href="//archive.org/">Internet Archive</a>,
+          a 501(c)(3) non-profit, building a digital library of
+          Internet sites and other cultural artifacts in digital form.
+          <br/>Other <a href="//archive.org/projects/">projects</a> include
+          <a href="https://openlibrary.org/">Open Library</a> &amp;
+          <a href="https://archive-it.org">archive-it.org</a>.
+        </p>
+        <p>
+          Your use of the Wayback Machine is subject to the Internet Archive's
+          <a href="//archive.org/about/terms.php">Terms of Use</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
