@@ -1,890 +1,405 @@
 
-<!DOCTYPE html>
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
-
-<!-- def.1 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title> Search</title>
-
-
-
-<meta  http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta  name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- sh.1 -->
-<link rel="stylesheet" href="/ir-style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-custom.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
-<link rel="stylesheet" href="/ir-local.css" type="text/css" media="screen">
-<link rel="alternate" type="application/rss+xml" title="Site Feed" href="/recent.rss">
-
-
-<!--[if IE]>
-<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
-<![endif]-->
-
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<!-- end sh.1 -->
-<link rel="stylesheet" href="/assets/cgi/css/search/query.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global-alert.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/assets/cgi/css/global/utils.css" type="text/css" media="screen">
-
-
-<!-- stripped inline yui3-seed -->
-<script type="text/javascript" src="/assets/scripts/bepress-init.pack.js"></script>
+<head><script src="//archive.org/includes/analytics.js?v=cf34f82" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app226.us.archive.org';v.server_ms=320;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=36gO9Ebf" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=UHAOicsW" charset="utf-8"></script>
 <script type="text/javascript">
-			Bepress.cgiUrlBase = '';
-		</script>
-<script src="/assets/cgi/js/spinner.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/solr.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/search/query-screen.pack.js" type="text/javascript"></script>
-<script src="/assets/cgi/js/statsDispatcher.pack.js" type="text/javascript"></script>
-<script src="/assets/footnoteLinks.js" type="text/javascript"></script>
-<script type="text/javascript">
-YUI({
-}).use('bepress.search.queryscreen', 'node', 'datatype', function(Y){
-	
-	Y.on( 'domready', function () {
-
-		var fieldSelects, rowList, advContextNode, queryScreen, facetTypes, i;
-
-		
-		Y.bepress.search.solr.setAllowedFields( {"document_type":1,"author_lname":1,"publication_title":1,"subject":1,"author":1,"corporate_author":1,"text":1,"author_fname":1,"abstract":1,"title":1,"publication":1,"collected_from_sw":1,"institution":1} );
-		
-		queryScreen = new Y.bepress.search.QueryScreen( {
-			
-			errors: {
-				searchFailure:        "We're sorry, we were unable to process your search request. "
-				                    + "This may have been a temporary problem, please wait a few moments "
-				                    + "and try again.<br/>	(Error: {errmsg})"
-				, nothingEntered:     "Please enter a search term first"
-				, invalidDateEntered: "You entered '{errmsg}', but that doesn't look like a date to me."
-				, parseError:         "The advanced search form does not support this syntax: {errmsg}"
-				, syntaxNotSupported: "The advanced search form does not support this syntax. {errmsg}"
-				, timeout:            "Your search request has timed out. Please wait a moment and try again."
-				, emptyExport:        "No results matched your search."
-				, dateFormat:         "{errmsg} format is MM/DD/YYYY."
-			}
-
-			
-			, templates: {
-				resultsTemplate: {
-						download: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download {downloadFormat}"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Download<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, metadata: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-						, external: '<div class="result query">\
-	<p class="grid_10">\
-		<span class="title"><a href="{articleUrl}">{articleTitle}<\/a><\/span><br>\
-		<!-- first 5(?) -->\
-		<span class="author"><i>{authorsLabel Author~Authors}:<\/i> <strong>{firstAuthorNames}<\/strong><\/span><br>\
-		<span class="pub"><i>Publication:<\/i> <a href="{publicationUrl}">{publicationTitle}<\/a><\/span><br>\
-		<span class="download"><a class="{downloadFormat}" href="{downloadLink}" target="_blank" title="Opens in new window">Link to Full Text<\/a><\/span>\
-	<\/p>\
-	<p class="grid_2 fr">\
-		<span class="year"><i>Date:<\/i> <strong>{publicationDate}<\/strong><\/span>\
-	<\/p>\
-<\/div>\
-'
-					}
-				, resultsHeaderTemplate:         '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-	<span class="grid_6">Showing <strong>{count}<\/strong> out of <strong>{numFound}<\/strong> results. Starting at result <strong>{start}<\/strong>.<\/span>	\
-	<form id="save_search" class="grid_6 alpha omega" method="POST" action="\/do\/search\/save_search" >\
-			<a href="{saveUrl}" id="save-search-submit"><span><i class="icon-save"><\/i> Save this search<\/span><\/a>\
-			<span><a href="\/cgi\/notification.cgi" id="my-searches"><i class="icon-search"><\/i> My saved searches<\/a><\/span>\
-	<\/form>\
-<\/div>\
-<\/div>\
-'
-				, resultsExportedHeaderTemplate: '<div id="results-wrapper">\
-<div class="query">\
-		<h2 class="grid_12">Searching <em>{contextTitle}<\/em><\/h2>\
-<\/div>\
-<div id="results-sub-header" class="query">\
-		<span class="grid_6">Exported <strong>{count}<\/strong> results.<\/span>	\
-<\/div>\
-<\/div>\
-'
-				, resultsFooterTemplate:         '<div class="pagination query">\
-	<p class="grid_12">\
-		<span class="fl">\
-			<a id="first-page" class="{firstClass}" href="#query-results" title="First Page">&laquo; First<\/a>\
-			<a id="previous-page" class="{previousClass}" href="#query-results" title="Previous Page">&lt; Prev<\/a>\
-		<\/span>\
-		<span class="fr">\
-			<a id="next-page" class="{nextClass}" href="#query-results" title="Next Page">Next &gt;<\/a>\
-			<a id="last-page" class="{lastClass}" href="#query-results" title="Last Page">Last &raquo;<\/a>\
-		<\/span>\
-	<\/p>\
-<\/div>\
-\
-'
-				, rowTemplate:                   '<div class="row query">\
-  <p id="p{rownum}">\
-    <span class="fr">\
-      <input type="image" value="Delete" alt="Delete row {rownum}" name="del_row_{rownum}" src="\/assets\/query_minus.gif" class="hidden control-delete-row">\
-      <input type="image" value="Add" alt="Add row {rownum}" name="add_row_{rownum}" src="\/assets\/cgi\/images\/global\/add.png" class="control-add-row">	\
-    <\/span>\
-    <span class="grid_2">\
-      <select name="op_{rownum}" class="op-sel">\
-        <option value="AND">AND<\/option>\
-          <option value="OR">OR<\/option>\
-          <option value="NOT">NOT<\/option>\
-      <\/select>\
-    <\/span>\
-	<label for="field_{rownum}">Choose type<\/label>\
-		<span class="grid_3">\
-			<select name="field_{rownum}" id="field_{rownum}" class="field-sel">\
-                \
-                    <option value="text:">All Fields<\/option>\
-                \
-                    <option value="abstract:">Abstract<\/option>\
-                \
-                    <option value="subject:">Subject<\/option>\
-                \
-                    <option value="author:">Author<\/option>\
-                \
-                    <option value="institution:">Institution<\/option>\
-                \
-                    <option value="title:">Title<\/option>\
-                \
-                    <option value="document_type:">Document Type<\/option>\
-                \
-                    <option value="publication_title:">Publication<\/option>\
-                			<\/select>\
-		<\/span>\
-    <label for="value_{rownum}">Search term {rownum}<\/label>\
-		<span class="grid_6"><input type="text" id="value_{rownum}" name="value_{rownum}" value="" class="term">\
-		<\/span>	\
-		<br class="clear" \/>\
-	<\/p>\
-<\/div>\
-'
-				, facetLinkTemplate:             '	<li><a href="#" class="facet-{facetType}">{facetLabel}<\/a> ({facetCount})<\/li>\
-'
-				, facetMoreLink:                 '	<li class="dropdown">\
-		<div id="more-{facetType}" class="more-container"><ul><\/ul><\/div>\
-		<div name="{facetType}" class="collapse" id="{facetType}-links">\
-			<span class="more" name="{facetType}"><a href="#" name="{facetType}">More &darr;<\/a><\/span><span class="fewer hidden" name="{facetType}"><a href="#" name="{facetType}">Fewer &uarr;<\/a><\/span>\
-		<\/div>\
-	<\/li>\
-'
-				, facetSectionTemplate:          '<dl class="facet">\
-  <dt>{label}<\/dt>\
-  <dd>\
-    <ul>\
-    <\/ul>\
-  <\/dd>\
-<\/dl>\
-'
-			}
-
-			
-			, elements: {
-				resultsHeaderEl:  Y.one('#results-header')
-				, resultsListEl:	  Y.one('#results-list')
-				, resultsFooterEl:  Y.one('#results-footer')
-				, errorEl:		  Y.one('#global-alert')
-				, basicSearchEl:	  Y.one('#basic-search')
-				, advancedSearchEl: Y.one('#advanced-search')
-				, facetsEl:         Y.one('#results-facets')
-			}
-
-			
-			, enabledFacets: {
-				
-					"discipline": "Discipline",
-				
-					"download_type": "File Type",
-				
-					"publication_facet": "Publication",
-				
-					"publication_type": "Publication Type",
-				
-					"publication_year": "Publication Year",
-				
-					"subject_facet": "Keyword"
-				
-			}
-
-			, historyAPI:		  !!(window.history && history.pushState)
-
-						, selectedForm: 'basic-search'
-						
-						, authenticated: false
-						
-		});
-
-		
-			queryScreen.addRow( { showAddCtl: true, showDelCtl: false } );
-		
-		
-		rowList = Y.one('#rows');
-		rowList.delegate( ['change', 'keyup'], queryScreen.updateSearchPreview, '#rows', queryScreen );
-		
-		
-		Y.one( '#simple-search')
-			.on('keypress', queryScreen.behaveOnKeyPress, queryScreen);
-		Y.one( '#advanced-search')
-			.delegate( 'keypress', queryScreen.behaveOnKeyPress, 'input[type=text]', queryScreen);
-
-		        rowList.delegate('click', function(e){
-            queryScreen.addRow();
-            e.preventDefault();
-           }, '.control-add-row', Y
-        );
-		
-		rowList.delegate('click', function(e){
-			queryScreen.deleteRow(e.currentTarget);
-			queryScreen.updateSearchPreview();
-			e.preventDefault();
-		   }, '.control-delete-row', Y
-		);
-
-		
-		Y.one('#switch-to-advanced').on('click', function(e){
-			queryScreen.switchToAdvanced();
-			e.preventDefault();
-		});
-		Y.one('#switch-to-basic').on('click', function(e){
-			queryScreen.switchToBasic();
-			e.preventDefault();
-		});
-
-		
-		advContextNode = Y.one('#advanced-context');
-		if ( advContextNode ) {
-			
-			advContextNode.on( 'change', function(e){
-				queryScreen.updateAvailableFormats();
-			});
-			
-			queryScreen.updateAvailableFormats();
-		}
-
-		
-		Y.one('#do-search').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		Y.one('#do-search-advanced').on('click', function(e){
-			queryScreen.submitForm(e.currentTarget.get('form'));
-			e.preventDefault();
-		} );
-		
-				Y.one('#show-search').on('click', function() {
-			queryScreen.showSearchForm();
-		});
-		Y.one('#hide-search').on('click', function() {
-			queryScreen.shrinkSearchForm();
-		});
-
-		// is there a more YUIish way to do this?
-		if(queryScreen.historyAPI) {
-			window.onpopstate = function(ev) {
-				// Y.log('popstate -- location: '+document.location+', state: '+JSON.stringify(ev.state));
-				queryScreen.handlePopState(ev.state);
-			};
-		}
-
-		
-		Y.one('#do-search').removeAttribute('disabled');
-		Y.one('#switch-to-advanced').removeAttribute('disabled');
-		Y.all('.add-row').removeAttribute('disabled');
-		
-		
-		queryScreen.setSearchContainerHeights();
-		
-		Y.one('#advanced-search').addClass('query-shrinker');
-		Y.one('#basic-search').addClass('query-shrinker');
-
-		
-		
-				
-		
-
-		
-		
-				queryScreen.submitForm(Y.one('#'+queryScreen.selectedForm).one('form'));
-				
-				
-				
-			Y.one('#clear-discipline-facet').on('click', function() {
-				queryScreen.clearFacet('discipline');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-download_type-facet').on('click', function() {
-				queryScreen.clearFacet('download_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_facet-facet').on('click', function() {
-				queryScreen.clearFacet('publication_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_type-facet').on('click', function() {
-				queryScreen.clearFacet('publication_type');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-publication_year-facet').on('click', function() {
-				queryScreen.clearFacet('publication_year');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-			Y.one('#clear-subject_facet-facet').on('click', function() {
-				queryScreen.clearFacet('subject_facet');
-				var formEl = Y.one('#'+queryScreen.selectedForm).one('form');
-				queryScreen.submitForm(formEl);
-			});
-		
-
-	} );
-});
+  __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://epas.uspto.gov/","20191130104718","https://web.archive.org/","web","/_static/",
+	      "1575110838");
 </script>
-<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"Search:query_screen","businessUnit":"els:rp:st"},"visitor":{}};</script>
+<link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css?v=fantwOh2" />
+<link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css?v=qtvMKcIJ" />
+<!-- End Wayback Rewrite JS Include -->
 
-
-
-
+<title>USPTO. EPAS. </title>
+<link rel="stylesheet" href="https://web.archive.org/web/20191130104718cs_/https://epas.uspto.gov/com/qi.css" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<base href="https://web.archive.org/web/20191130104718/https://epas.uspto.gov/epas/index.jsp"/>
+	<script src="https://web.archive.org/web/20191130104718js_/https://components.uspto.gov/js/ais/29-epas.js" type="text/javascript"></script>
 </head>
-<body class="legacy search">
-<!-- FILE /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen --><!-- This is the mobile navbar file. Do not delete or move from the top of header.pregen -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
-<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
-
-<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
-  
-  
-  <nav class="nav-collapse">
-    <ul>
-      <li class="menu-item active device-fixed-width"><a href="https://newprairiepress.org" title="Home" data-scroll >Home</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/communities.html" title="Browse" data-scroll >Browse Journals</a></li>
-      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=" title="My Account" data-scroll >My Account</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://newprairiepress.org/about.html" title="About" data-scroll >About</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
-    </ul>
-  </nav>
-</header>
-
-<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
-<!--<![endif]-->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
-<div id="npp">
-<div id="container"><a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
-
-<div id="header">
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_logo.inc -->
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) -->
-<div id="pagetitle">
-
-<h1><a href="https://newprairiepress.org" title="New Prairie Press" >New Prairie Press</a></h1>
-</div>
-</div><div id="navigation"><!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://newprairiepress.org" title="home" ><span>home</span></a></li><li id="tabtwo"><a href="https://newprairiepress.org/about.html" title="about" ><span>about</span></a></li><li id="tabthree"><a href="https://newprairiepress.org/cgi/myaccount.cgi?context=" title="my account" ><span>my account</span></a></li><li id="tabfour"><a href="https://newprairiepress.org" title="Home" ><span>Home</span></a></li></ul></div>
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/header.pregen (cont) --></div>
-
-
-
-<div id="wrapper">
-<div id="content">
-<div id="main" class="text">
-
-
-<div id="template_query_data" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;"></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="global-alert" class="hidden info">
-</div>
-
-<div id="query-wrapper">
-
-	<div id="show-search-container" class="query tr">
-		<a href="#" id="show-search" class="hidden">Show Search</a>
-		<a href="#" id="hide-search" class="hidden">Hide Search</a>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+</style>
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20191130104718/https%3A//epas.uspto.gov/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="/_static/images/toolbar/wayback-toolbar-logo-100.png, /_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, /_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://epas.uspto.gov/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20191130104718" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+		<div class="s" id="wm-nav-captures">
+	  	  <a class="t" href="/web/20191130104718*/https://epas.uspto.gov/" title="See a list of every capture for this URL">660 captures</a>
+	  <div class="r" title="Timespan for captures of this URL">25 May 2004 - 18 May 2022</div>
+	  </div>
+	<div class="k" style="flex:1;">
+	  <a href="" id="wm-graph-anchor">
+	    <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+	      <canvas id="wm-sparkline-canvas" width="675" height="27" border="0"></canvas>
+	    </div>
+	  </a>
 	</div>
-	<div id="basic-search">
-		<form id="basic-search-form" method="GET" action="/do/search/"> 
-			<fieldset class="query">
-				<legend>Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="simple-search" class="hidden">Search </label>
-				<span class="grid_7"><input name="q" id="simple-search" type="text" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;"></span>
-				<span class="grid_4">
-					<button type="submit" name="query" value="Search" id="do-search" class="white medium">Search</button>
-					<a href="#" id="switch-to-advanced">Advanced</a>
-				</span>
-				<div class="clear"></div>
-				<input type="hidden" name="start" class="start-input" value="0">
-				<input type="hidden" name="context" id="basic-context" value="4521219">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-							</fieldset>
-		</form>
-	</div>
-
-	<div id="advanced-search" class="hidden">
-		<form method="GET" action="/do/search/">
-			<fieldset>
-				<legend>Advanced Search <a class="helplink" title="Help with Search" href="/help-search.html" aria-label="Help with Search"><span aria-hidden="true" class="icon-question-sign"></span></a></legend>
-				<label for="search-string" class="hidden">Feedback</label>
-				<input type="hidden" name="start" class="start-input" value="0">
-				
-					<input type="hidden" name="facet" class="discipline-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="download_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_facet-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_type-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="publication_year-facet facet-hidden" value="">
-				
-					<input type="hidden" name="facet" class="subject_facet-facet facet-hidden" value="">
-				
-				
-				<div class="query">
-					<input type="text" name="q" id="search-string" class="grid_12 alpha omega" onFocus="return" readonly="readonly" value="author_lname:&quot;Dean&quot; author_fname:&quot;Tim&quot;">
-				</div>
-				<div class="clear"></div>
-					
-				<div class="query">
-					<div id="rows">			
-							
-					</div> <!-- end rows -->
-				</div>		
-			</fieldset>
-			<div class="query">
-				
-					<span class="grid_2 prefix_5"><label for="start-date">Date range:</label></span>
-<span class="grid_2">
-	<input type="text" id="start-date" name="start_date" placeholder="MM/DD/YYYY" value="">
-</span>
-<label for="end-date" class="hidden">End Date:</label> 
-<span class="grid_2">
-	<input type="text" id="end-date" name="end_date" placeholder="MM/DD/YYYY" value="">
-</span>
-
-						
-				<div class="clear"></div>
-<p class="limit-search">
-		<label for="advanced-context" class="grid_2 prefix_5">
-			Limit search to:
-		</label>
-		<span class="grid_4">
-			<select name="context" id="advanced-context">
-				
-										<option value="4521219" selected="selected">New Prairie Press</option>
-									
-										<option value="1">All Repositories</option>
-												</select>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+	<tbody>
+	  <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+	  <tr class="m">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20191022075602/http://epas.uspto.gov:80/" title="22 Oct 2019"><strong>Oct</strong></a></td>
+	    <td class="c" id="displayMonthEl" title="You are here: 10:47:18 Nov 30, 2019">NOV</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20200213051841/https://epas.uspto.gov/" title="13 Feb 2020"><strong>Feb</strong></a></td>
+	  </tr>
+	  <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+	  <tr class="d">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20191022075602/http://epas.uspto.gov:80/" title="07:56:02 Oct 22, 2019"><img src="/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a></td>
+	    <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 10:47:18 Nov 30, 2019">30</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20191221152101/http://epas.uspto.gov:80/" title="15:21:01 Dec 21, 2019"><img src="/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0" /></a></td>
+	  </tr>
+	  <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+	  <tr class="y">
+	    <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20181114220541/http://epas.uspto.gov:80/" title="14 Nov 2018"><strong>2018</strong></a></td>
+	    <td class="c" id="displayYearEl" title="You are here: 10:47:18 Nov 30, 2019">2019</td>
+	    <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20201201215006/https://epas.uspto.gov/" title="01 Dec 2020"><strong>2020</strong></a></td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+        	<span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#"
+	     title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
 	</span>
-</p>
+        	<a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20191130104718/http://web.archive.org/screenshot/https://epas.uspto.gov/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+	<a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20191130104718/https://epas.uspto.gov/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20191130104718/https://epas.uspto.gov/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+	<a id="wm-expand" class="wm-btn wm-closed" href="#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+                    <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/webwidecrawl);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/webwidecrawl" target="_new"><span class="wm-title">Internet Archive</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  The Internet Archive discovers and captures web pages through many different web crawls.
 
-				<div class="clear"></div>
-<p class="sort-options">
-	<span class="grid_2 prefix_5">Sort by:</span>
-	<span class="grid_4">
-		<label for="sort-score">
-			<input type="radio" name="sort" id="sort-score" value="score" checked="checked"> Relevance
-		</label> 
-		<label for="sort-date">
-			<input type="radio" name="sort" id="sort-date" value="date_desc"> Publication Date
-		</label>
-	</span>
-</p>
+At any given time several distinct crawls are running, some for months, and some every day or longer.
 
-				<div class="clear"></div>
-<p class="pick-format">
-		<label for="results-format" class="grid_2 prefix_5">
-			Format:
-		</label>
-		<span class="grid_4">
-			<select name="format" id="results-format">
-								<option value="json">links</option>
-								<option value="refer">Bibliography Export</option>
-							</select>
-	</span>
-</p>
-
-				<div style="display:none;visibility:hidden;height:1px"><iframe id="export-frame" style="display:none;visibility:hidden;height:1px"></iframe></div>
-				<div class="clear"></div>
-				<span class="grid_12 tr">				
-				<button type="submit" value="Search" name="search" id="do-search-advanced" class="fr white medium">Search</button>
-
-				<a href="#" id="switch-to-basic">Basic</a>
-				</span>
-				<br class="clear" />
-			</div>
-			<div class="clear"></div>
-
-		</form>	
-	</div> <!-- advanced search -->
-</div><!-- query-wrapper -->
-
-<div id="query-results">
-
-<div class="query">
-<div class="grid_12" id="info-pane">
-<div id="results-header">
-		<div class="clear"></div>		
+View the web archive through the <a href="http://archive.org/web/web.php">Wayback Machine</a>.
 	</div>
-<br class="clear" />
-</div>
-
-<div class="grid_3" id="facet-pane">
-
-	<p id="selected-facets">
-				<span id="selected-discipline-facet" class="hidden">
-			<a class="close" id="clear-discipline-facet"><i>&times;</i>
-			 <strong id="selected-discipline-facet-label"></strong></a>
-		</span>
-				<span id="selected-download_type-facet" class="hidden">
-			<a class="close" id="clear-download_type-facet"><i>&times;</i>
-			 <strong id="selected-download_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_facet-facet" class="hidden">
-			<a class="close" id="clear-publication_facet-facet"><i>&times;</i>
-			 <strong id="selected-publication_facet-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_type-facet" class="hidden">
-			<a class="close" id="clear-publication_type-facet"><i>&times;</i>
-			 <strong id="selected-publication_type-facet-label"></strong></a>
-		</span>
-				<span id="selected-publication_year-facet" class="hidden">
-			<a class="close" id="clear-publication_year-facet"><i>&times;</i>
-			 <strong id="selected-publication_year-facet-label"></strong></a>
-		</span>
-				<span id="selected-subject_facet-facet" class="hidden">
-			<a class="close" id="clear-subject_facet-facet"><i>&times;</i>
-			 <strong id="selected-subject_facet-facet-label"></strong></a>
-		</span>
-		
-	</p>
-<br class="clear" />
-	<div id="results-facets" class="hidden"></div>
-</div>
-<div class="grid_9" id="result-pane">
-	
-	<div id="results-list">
-		<div class="clear"></div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/liveweb)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/liveweb" target="_new"><span class="wm-title">Live Web Proxy Crawls</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Content crawled via the <a href="http://archive.org/web/web.php">Wayback Machine</a> Live Proxy mostly by the Save Page Now feature on web.archive.org.
+<br><br>
+Liveweb proxy is a component of Internet Archive?s wayback machine project. The liveweb proxy captures the content of a web page in real time, archives it into a ARC or WARC file and returns the ARC/WARC record back to the wayback machine to process. The recorded ARC/WARC file becomes part of the wayback machine in due course of time.
+<br>
 	</div>
-	<div id="results-footer"></div>
-</div>
-<br class="clear" />
-</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20191130104718/https://epas.uspto.gov/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(675,27,25,2,"web","https://epas.uspto.gov/","20191130104718",1996,"/_static/",["/_static/css/banner-styles.css?v=fantwOh2","/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
 
-<!-- FILE /srv/sequoia/main/data/assets/site/footer.pregen --></div>
-	<div class="verticalalign">&nbsp;</div>
-	<div class="clear">&nbsp;</div>
+    <!-- NAVIGATION START -->
+    <table summary="layout" class="uspto" width="100%" border="0" cellpadding="3" cellspacing="0" bgcolor="#001d2d">
+      <tbody>
+        <tr class="uspto" valign="middle">
+          <td class="uspto" width="59" rowspan="2" align="left" valign="middle">
+            <a href="#skipnav"><img src="https://web.archive.org/web/20191130104718im_/https://epas.uspto.gov/images/uspto/blank.gif" alt="skip navigation" width="1" height="10" border="0" align="middle"/></a>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/index.html" target="_blank"><img src="https://web.archive.org/web/20191130104718im_/https://epas.uspto.gov/images/uspto/uspto_seal_50.gif" alt="U S P T O Seal" width="50" height="50" border="0" align="middle"/></a>
+          </td>
+          <td align="left" valign="bottom" class="darkbg">United States Patent and Trademark Office
+      </td>
+          <td class="uspto" rowspan="2" align="right" valign="middle">
+<img src="https://web.archive.org/web/20191130104718im_/https://epas.uspto.gov/images/eas-2004.gif" alt="EAS logo" width="102" height="50" border="0"/>
 
-</div>
+          </td>
+        </tr>
+        <tr class="uspto" bgcolor="#002032" valign="middle">
+          <td class="uspto" align="left" valign="bottom" bgcolor="#001d2d">
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/index.html" class="darkbg" target="_blank">Home</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/web/navaids/siteindx.htm" class="darkbg" target="_blank">Site Index</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/main/sitesearch.htm" class="darkbg" target="_blank">Search</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/main/definitions.htm" class="darkbg" target="_blank">Guides</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/main/contacts.htm" class="darkbg" target="_blank">Contacts</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/ebc/indexebc.html" class="darkbg" target="_blank">
+              <em><strong>e</strong></em>Business</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/helpdesk/status/status.htm" class="darkbg" target="_blank">eBiz alerts</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/main/newsandnotices.htm" class="darkbg" target="_blank">News</a>
+            <span class="vertbar">|</span>
+            <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/web/menu/feedback.html" class="darkbg" target="_blank">Help</a>
+          </td>
+        </tr>
+        <tr class="uspto">
+          <td class="uspto" colspan="3" bgcolor="#ac0911"><img src="https://web.archive.org/web/20191130104718im_/https://epas.uspto.gov/images/uspto/blank.gif" alt="" width="15" height="1" border="0"/></td>
+        </tr>
+      </tbody>
+    </table>
+    <a name="skipnav"></a>
+    <!-- NAVIGATION END -->
 
-	<div id="sidebar" role="complementary">
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc -->
+    <!-- TRAIL START -->
+    <table summary="layout" width="100%" cellpadding="3" cellspacing="0" bgcolor="#f0f0f0"><tbody><tr><td>
+    <table summary="layout" width="640" border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f0f0">
+      <tbody>
+        <tr>
+           <td class="aiscaption" colspan="2" align="center">
+             Electronic Patent Assignment System
+           </td>
+        </tr>
+      </tbody>
+    </table>
+    </td></tr></tbody></table>
+    <table summary="layout" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f0f0"><tbody>
+        <tr>
+          <td height="8" bgcolor="#71819b" class="vertbarsmall" colspan="2"><img src="https://web.archive.org/web/20191130104718im_/https://epas.uspto.gov/images/uspto/blank.gif" alt="" width="15" height="1" border="0"/></td>
+        </tr>
+    </tbody></table>
+    <!-- TRAIL END -->
 
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_upper_7_8.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" summary="layout"><tbody><tr><td>
+<table width="640" cellpadding="3" bgcolor="#ffffff" summary="layout"><tbody><tr><td>
 
 
-	
-<form method='get' action='https://newprairiepress.org/do/search/' id="sidebar-search">
-	<label for="search" accesskey="4">
-		Enter search terms:
-	</label>
-		<div>
-			<span class="border">
-				<input type="text" name='q' class="search" id="search">
-			</span> 
-			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
-		</div>
-	<label for="context" style="display:none;">
-		Select context to search:
-	</label> 
-		<div>
-			<span class="border">
-				<select name="fq" id="context">
-					
-					
-					
-					
-					<option value='virtual_ancestor_link:"https://newprairiepress.org"'>in this repository</option>
-					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
-				</select>
-			</span>
-		</div>
-</form>
 
-<p class="advanced">
-	
-	
-		<a href="https://newprairiepress.org/do/search/advanced/?fq=virtual_ancestor_link:%22https://newprairiepress.org%22" >
-			Advanced Search
-		</a>
-	
+
+<h1 class="title" align="center">Electronic Patent Assignment
+	System (EPAS)</h1>
+
+<p class="guideline2">The Assignment Recordation Branch (ARB) of the
+	Public Records Division presents the Electronic Patent Assignment
+	System (EPAS).</p>
+<p class="guideline2">
+
+	Using EPAS, you create and submit a Patent Assignment Recordation
+	Coversheet by completing on-line web forms and attaching the supporting
+	legal documentation as TIFF or PDF (no color please) for submission via
+	the Internet.
 </p>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc -->
-	<ul id="side-notify">
-		<li class="notify">
-			<a href="https://newprairiepress.org/announcements.html" title="Email or RSS Notifications" >
-				Notify me via email or <acronym title="Really Simple Syndication">RSS</acronym>
-			</a>
-		</li>
-	</ul>
+<p class="guideline2">Assignment information provided by the user
+	will be recorded as provided and will not be verified or modified by
+	the USPTO.</p>
+
+<p class="guideline2b">SPECIAL NOTES</p>
+
+<p class="guideline2">All forms filed via EPAS will be marked with
+	a U.S. Eastern Time timestamp when received on the USPTO server.</p>
+
+<p class="guideline2b">TECHNICAL REQUIREMENTS</p>
+<p class="guideline2">EPAS works with Microsoft Internet Explorer, Google Chrome and Mozilla Firefox.
+Supporting documentation attached to the Patent Assignment Recordation Coversheet must be in PDF or 
+TIFF image format, letter size (8.5"x11"), 300 dpi, portrait orientation and black and white.</p>
+<noscript>
+	<p class="guideline2">Javascript is disabled in your browser. This
+		may require additional steps in completing the data elements. Review
+		each screen carefully.</p>
+</noscript>
+
+<p class="guideline2b">CONTACT INFORMATION</p>
+<p class="guideline2">For general information about electronic
+	filing, please telephone the Assignment Recordation Branch Customer
+	Service Desk at, 571-272-3350 during regular business hours or e-mail
+	your question(s) to EPAS&#64;uspto.gov. If you need help in resolving
+	technical problems, you may e-mail us at EPAS&#64;uspto.gov. We
+	will respond to your e-mail inquiry within 2 business days. Please
+	include a telephone number in your e-mail.</p>
+<p class="guideline2b" align="center">
+	<a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/web/doc/privact.htm">PRIVACY POLICY
+		STATEMENT</a>
+</p>
+
+<p class="guideline2">The information collected on these forms
+	allows the ARB to officially record an assignment. Responses to the
+	requests for information are required to obtain the requested action.
+	Recorded assignment information will be made public for assignments
+	related to issued or published patents.</p>
+<p class="guideline2">This collection of information is required by
+	36 USC &sect;&sect; 261 and 263 and is used by the public to submit
+	(and by the USPTO to process) patent assignment recordation requests
+	using the Electronic Patent Assignment System (EPAS). This collection
+	is estimated to take 30 minutes to complete, including gathering the
+	necessary information, filling out the online forms, and submitting the
+	completed request to the USPTO. Any comments on the amount of time you
+	require to complete this request and/or suggestions for reducing this
+	burden should be sent to the Manager of the Assignment Recordation Branch, USPTO,
+	P.O. Box 1450, Alexandria, VA 22313-1450.</p>
+<p class="guideline2">The Privacy Act of 1974 (P.L. 93-579) requires
+	that you be given certain information in connection with this request
+	for information. This collection of information is authorized by 35
+	U.S.C. &sect;&sect; 1, 2, 261 and E.O. 9424. This information will
+	primarily be used by the USPTO for the recordation of assignments
+	related to parents and patent applications. Submission of this
+	information is voluntary but is required in order for the USPTO to
+	record the requested assignment. If you do not provide the information
+	required on the assignment forms, the assignment will not be recorded.
+</p>
+<p class="guideline2">After the information is recorded, the records
+	and associated documents can be inspected by the public and are not
+	confidential, except for documents that are sealed under secrecy orders
+	or related to unpublished patent applications. Assignment records
+	relating to unpublished patent applications are maintained in
+	confidence in accordance with 35 U.S.C. &sect; 122. Records open to the
+	public are searched by users for the purpose of determining ownership
+	for other property rights with respect to patents and trademarks.</p>
+<p class="guideline2">Routine uses of the information you provide
+	may also include disclosure to appropriate Federal, state, local, or
+	foreign agencies in support of their enforcement duties and statutory
+	of regulatory missions, including investigating potential of law or
+	contract and awarding contracts or other benefits; to a court, a
+	magistrate, of administrative tribunal in the course of presenting
+	evidence; to members of Congress responding to requests for assistance
+	from their constituents; to the Office of management and Budget in
+	connection with the review of private relief legislation; to the
+	Department of Justice in connection with a Freedom Information Act
+	request; and to general Service Administration (GSA) as part of their
+	records management responsibilities under the authority of 44 U.S.C.
+	&sect;&sect; 2904 and 2906. Such disclosure to GSA shall not be used to
+	make determinations about individuals.</p>
+
+<h2 class="title">
+	<a href="guidelines.jsp">Please click
+		here to access EPAS forms</a>
+</h2>
 
 
+</td></tr></tbody></table>
+</td></tr></tbody></table>
 
+<table width="100%" border="0" cellpadding="3" cellspacing="0" summary="layout">
+  <tbody>
+    <tr class="uspto">
+      <td bgcolor="#71819b" class="vertbarsmall">
+        <img src="https://web.archive.org/web/20191130104718im_/https://epas.uspto.gov/images/uspto/blank.gif" alt="" width="15" height="1" border="0"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_notify_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_middle_7_8.inc -->
-
-
-<div id="sb-custom-middle">
-	<h2 class="sb-custom-title">Our Publications</h2>
-		<ul class="sb-custom-ul">
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/journals.html" >
-					Journals
-				</a>
-			</li>
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/conferences" title="Conference Proceedings" >
-					Conferences				</a>
-			</li>
-				<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/monographs" >
-					Monographs</a>
-			</li>
-			<li class="sb-custom-li">
-				<a href="https://newprairiepress.org/specpubs" >Special Publications</a>
-			</li>
-		</ul>
-		<h2>Featured Collections</h2>
-<ul id="links">
-	<li><a href="https://newprairiepress.org/featured.html" title="" >Student Publications</a></li>
-</ul>
-<h2>Links for Editors</h2>
-<ul id="links">
-	<li><a href="https://newprairiepress.org/about.html#scope" title="" >Our Services</a></li>
-	<li><a href="https://newprairiepress.org/about.html#policies" title="" >Policies</a></li>
-	<li><a href="https://newprairiepress.org/about.html#copyright" title="" >Copyright</a></li>
+<!-- height="100%" is eliminated, as it creates extra blank page at the end of printout -->
+<table summary="layout" cellspacing="0" cellpadding="3" border="0" width="100%">
+<tbody>
+<tr bgcolor="#ffffff" class="uspto">
+<td bgcolor="#f0f0f0" width="640" valign="top" align="right" height="16" class="uspto">
+<div align="center">
+<span class="vertbarsmall">|
+             <a class="darkbg" href="#skipnav2">.</a><a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/index.html" class="uspto" target="_blank">HOME</a> |
+             <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/web/navaids/siteindx.htm" class="uspto" target="_blank">INDEX</a>|
+             <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/main/sitesearch.htm" class="uspto" target="_blank">SEARCH</a> |
+             <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/ebc/indexebc.html" class="uspto" target="_blank"><em>e</em>BUSINESS</a> |
+             <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/web/menu/feedback.html" class="uspto" target="_blank">CONTACT US</a> |
+             <a href="https://web.archive.org/web/20191130104718/http://www.uspto.gov/web/doc/privact.htm" class="uspto" target="_blank">PRIVACY STATEMENT</a></span><a name="skipnav2"></a>
 </div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_browse.inc -->
-<ul id="side-browse">
+</td>
+<td bgcolor="#f0f0f0" valign="top" align="right" height="16" class="uspto">
+<span class="vertbarsmall">&nbsp;</span>
+</td>
+</tr>
+<tr class="uspto">
+<td class="uspto" colspan="2" bgcolor="#f0f0f0"><img border="0" height="1" width="15" alt="" src="https://web.archive.org/web/20191130104718im_/https://epas.uspto.gov/images/uspto/blank.gif"></td>
+</tr>
+</tbody>
+</table>
+<!-- FOOTER END -->
+<!--content uspto.OFFICE.AUTHOR-->
 
 
-<li class="collections"><a href="https://newprairiepress.org/communities.html" title="Browse by Journals" >Journals</a></li>
-<li class="discipline-browser"><a href="https://newprairiepress.org/do/discipline_browser/disciplines" title="Browse by Disciplines" >Disciplines</a></li>
-<li class="author"><a href="https://newprairiepress.org/authors.html" title="Browse by Author" >Authors</a></li>
-
-
-</ul>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_author_7_8.inc --><h2>Links for Authors</h2>
-
-
-
-
-	<ul id="side-author">
-		
-		<li class="submit">
-			<a href="https://newprairiepress.org/submit_research.html" title="Submissions" >
-				Submissions
-			</a>
-		</li>
-		
-<li><a href="https://newprairiepress.org/contact_us.html" title="Contact Us" >Contact Us</a></li>
-
-	</ul>
+</body>
+</html>
 
 
 
 
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_homepage_links_7_8.inc -->
+<!--
+     FILE ARCHIVED ON 10:47:18 Nov 30, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:30:04 May 19, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
-	
-
-
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/twitter_badge.inc --><div id="twitter-badge">
-<a class="twitter-timeline" href="https://twitter.com/NewPrairiePress" data-widget-id="368524012336316418" data-chrome="transparent" width="220" height="400" >Tweets by @NewPrairiePress</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-</div><!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_sidebar_custom_lower_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sw_links_7_8.inc -->
-	
-
-
-
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_custom_lowest_7_8.inc -->
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_sort_sba.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/portal_badge.inc -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_7_8.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-	<div class="verticalalign">&nbsp;</div>
-	</div>
-
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc --><div id="footer" role="contentinfo">
-	
-	
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
-
-<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
-	<em>Digital Commons</em>
-</a>
-
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_footer_content.inc (cont) -->
-	<p>
-		<a href="https://newprairiepress.org" title="Home page" accesskey="1" >Home</a> | 
-		<a href="https://newprairiepress.org/about.html" title="About" >About</a> | 
-		<a href="https://newprairiepress.org/faq.html" title="FAQ" >FAQ</a> | 
-		<a href="/cgi/myaccount.cgi?context=" title="My Account Page" accesskey="3" >My Account</a> | 
-		<a href="https://newprairiepress.org/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
-	</p>
-	<p>
-	
-	
-		<a class="secondary-link" href="https://www.bepress.com/privacy" title="Privacy Policy" >Privacy</a>
-	
-		<a class="secondary-link" href="https://www.bepress.com/copyright" title="Copyright Policy" >Copyright</a>	
-	</p> 
-	
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-
-</div>
-</div>
-
-<!-- FILE: /srv/sequoia/main/data/newprairiepress.org/assets/ir_analytics.inc --><script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-42891787-24', 'newprairiepress.org');
-  ga('send', 'pageview');
-
-</script><!-- FILE: /srv/sequoia/main/data/assets/site/footer.pregen (cont) -->
-
-<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 139.331
+  exclusion.robots: 0.243
+  exclusion.robots.policy: 0.232
+  RedisCDXSource: 1.376
+  esindex: 0.01
+  LoadShardBlock: 100.911 (3)
+  PetaboxLoader3.datanode: 97.597 (4)
+  CDXLines.iter: 22.707 (3)
+  load_resource: 171.073
+  PetaboxLoader3.resolve: 107.252
+-->

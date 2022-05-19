@@ -219,9 +219,6 @@ public class WebCrawler {
         PrintWriter fileClearer = new PrintWriter(checkerFilePath);
         fileClearer.print("");
         fileClearer.close();
-        fileClearer = new PrintWriter(URLFilePath);
-        fileClearer.print("");
-        fileClearer.close();
         fileClearer = new PrintWriter(documentNumber);
         fileClearer.print("");
         fileClearer.close();
@@ -639,20 +636,35 @@ public class WebCrawler {
     public static void saveURLs() {
         // File Objects
         File urlFile = new File(URLSources);
+        File urlFile2 = new File("URLSources2.txt");
 
         BufferedWriter bfU = null;
         HashMap<Integer, String> ReverseMap;
+        String [] reverseList = new String[6000];
         synchronized (URLMap) {
             ReverseMap = new HashMap<>(URLMap.size());
         }
+        Arrays.fill(reverseList, "\n");
         try {
             synchronized (URLMap) {
-                for (Map.Entry<String, Integer> entry : URLMap.entrySet())
+                for (Map.Entry<String, Integer> entry : URLMap.entrySet()) {
                     ReverseMap.put(entry.getValue(), entry.getKey());
+
+                    reverseList[entry.getValue()] = entry.getKey();
+                }
             }
             bfU = new BufferedWriter(new FileWriter(urlFile));
             for (Map.Entry<Integer, String> entry : ReverseMap.entrySet())
                 bfU.write(entry.getValue() + "\n");
+            bfU.flush();
+
+            bfU = new BufferedWriter(new FileWriter(urlFile2));
+            for (String url : reverseList) {
+                if (!url.equals("\n"))
+                    bfU.write(url + "\n");
+                else
+                    bfU.write("\n");
+            }
             bfU.flush();
         } catch (IOException e) {
             return;

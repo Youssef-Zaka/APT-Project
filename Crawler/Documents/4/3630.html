@@ -1,821 +1,1194 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head><!-- inj yui3-seed: --><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/yui/3.6.0/yui/yui-min.js'></script><script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><!-- Adobe Analytics SiteCatalyst --><script type='text/javascript' src='https://assets.adobedtm.com/376c5346e33126fdb6b2dbac81e307cbacfd7935/satelliteLib-fac053ad0cbd6e703a1df9a51f69fde523024cef.js'></script><!-- Cookies --><link rel='stylesheet' type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css' /><script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js'></script><script type='text/javascript' src=/assets/nr_browser_production.js></script>
+<head>
+    <title>Vocabulary of Interlinked Datasets (VoID)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -60px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
 
-<!-- def.1 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title>CLCWeb: Comparative Literature and Culture: Recent Volumes</title>
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
 
 
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 3px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
 
 
-<!-- sh.1 -->
-<link rel="stylesheet" href="/clcweb/ir-style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/clcweb/ir-custom.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/clcweb/ir-local.css" type="text/css" media="screen">
-<link type="text/css" rel="stylesheet" href="/assets/floatbox/floatbox.css">
-<link rel="alternate" type="application/rss+xml" title="CLCWeb: Comparative Literature and Culture Newsfeed" href="/clcweb/recent.rss">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<script type="text/javascript" src="/assets/jsUtilities.js"></script>
-<script type="text/javascript" src="/assets/footnoteLinks.js"></script>
-<link rel="stylesheet" href="/ir-print.css" type="text/css" media="print">
-<!--[if IE]>
-<link rel="stylesheet" href="/ir-ie.css" type="text/css" media="screen">
-<![endif]-->
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
 
-<!-- end sh.1 -->
+        section {
+            max-width: 1500px;
+        }
 
+        .figure {
+            margin-bottom: 20px;
+        }
 
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
 
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-cp,
+        .sup-cl {
+            cursor:help;
+            margin-left: 3px;
+        }
 
-<script type="text/javascript">var pageData = {"page":{"environment":"prod","productName":"bpdg","language":"en","name":"ir_journal","businessUnit":"els:rp:st"},"visitor":{}};</script>
+        .sup-c {
+            color:orange;
+        }
 
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-cp {
+            color:orange;
+        }
+
+        .sup-cl {
+            color:darkred;
+        }
+
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+    </style>
+    
+    <script type="application/ld+json">
+      [
+  {
+    "@id": "http://vocab.deri.ie/void",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/description": [
+      {
+        "@value": "<p>The Vocabulary of Interlinked Datasets (VoID) is an RDF Schema vocabulary for expressing metadata about RDF datasets. It is intended as a bridge between the publishers and users of RDF data, with applications ranging from data discovery to cataloging and archiving of datasets. This document provides a formal definition of the new RDF classes and properties introduced for VoID. It is a companion to the main specification document for VoID, <em><a href=\"http://www.w3.org/TR/void/\">Describing Linked Datasets with the VoID Vocabulary</a></em>.</p>"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "Vocabulary of Interlinked Datasets (VoID)"
+      }
+    ]
+  }
+]
+    </script>
 </head>
-<body >
-<!-- FILE /srv/sequoia/main/data/assets/site/ir_journal/header.pregen -->
-
-	<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/header_custom.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/mobile_nav.inc --><!--[if !IE]>-->
-<script src="/assets/scripts/dc-mobile/dc-responsive-nav.js"></script>
-
-<header id="mobile-nav" class="nav-down device-fixed-height" style="visibility: hidden;">
-  
-  
-  <nav class="nav-collapse">
-    <ul>
-      <li class="menu-item active device-fixed-width"><a href="https://docs.lib.purdue.edu" title="Home" data-scroll >Home</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/do/search/advanced/" title="Search" data-scroll ><i class="icon-search"></i> Search</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/communities.html" title="Browse" data-scroll >Browse Collections</a></li>
-      <li class="menu-item device-fixed-width"><a href="/cgi/myaccount.cgi?context=clcweb" title="My Account" data-scroll >My Account</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://docs.lib.purdue.edu/about.html" title="About" data-scroll >About</a></li>
-      <li class="menu-item device-fixed-width"><a href="https://network.bepress.com" title="Digital Commons Network" data-scroll ><img width="16" height="16" alt="DC Network" style="vertical-align:top;" src="/assets/md5images/8e240588cf8cd3a028768d4294acd7d3.png"> Digital Commons Network™</a></li>
+<body>
+  <div id="pylode">made by <a href="http://github.com/rdflib/pyLODE">
+    <span style="color:#329545;">p</span><span style="color:#f9cb33;">y</span>LODE</a>
+    <span style="font-size:smaller;">2.8.3</span>
+  </div>
+  <h1>Vocabulary of Interlinked Datasets (VoID)</h1>
+<section id="metadata">
+    <h2 style="display:none;">Metadata</h2>
+    <dl>
+        <dt>URI</dt>
+        <dd><code>http://vocab.deri.ie/void</code></dd>
+        <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/publisher">Publisher</a>(s)</dt>
+        <dd>
+            
+    <a href="http://vocab.deri.ie/void#Digital%20Enterprise%20Research%20Institute%2C%20NUI%20Galway">Digital Enterprise Research Institute, NUI Galway</a><br/>
+        </dd>
+        <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/creator">Creator</a>(s)</dt>
+        <dd>
+            
+    Jun Zhao
+    (<a href="mailto:jun.zhao@zoo.ox.ac.uk">jun.zhao@zoo.ox.ac.uk</a>) of 
+    <a href="http://www.zoo.ox.ac.uk/">Department of Zoology, University of Oxford</a><br/>
+            
+    Keith Alexander
+    (<a href="mailto:Keith.Alexander@talis.com">Keith.Alexander@talis.com</a>) of 
+    <a href="http://www.talis.com/">Talis</a><br/>
+            
+    Michael Hausenblas
+    (<a href="mailto:michael.hausenblas@deri.org">michael.hausenblas@deri.org</a>) of 
+    <a href="http://linkeddata.deri.ie/">LiDRC</a><br/>
+            
+    Richard Cyganiak
+    (<a href="mailto:richard.cyganiak@deri.org">richard.cyganiak@deri.org</a>) of 
+    <a href="http://www.deri.ie/">Digital Enterprise Research Institute, NUI Galway</a><br/>
+        </dd>
+        <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/created">Created</a></dt>
+        <dd>2010-01-26</dd>
+        <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/modified">Modified</a></dt>
+        <dd>2011-03-06</dd>
+        <dt>Ontology RDF</dt>
+        <dd><a href="data_file.ttl">RDF (turtle)</a></dd>
+    </dl>
+    <h2>Description</h2>
+    <div id="description">
+        <p>The Vocabulary of Interlinked Datasets (VoID) is an RDF Schema vocabulary for expressing metadata about RDF datasets. It is intended as a bridge between the publishers and users of RDF data, with applications ranging from data discovery to cataloging and archiving of datasets. This document provides a formal definition of the new RDF classes and properties introduced for VoID. It is a companion to the main specification document for VoID, <em><a href="http://www.w3.org/TR/void/">Describing Linked Datasets with the VoID Vocabulary</a></em>.</p>
+    </div>
+</section>
+<section id="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#objectproperties">Object Properties</a></li>
+        <li><a href="#functionalproperties">Functional Properties</a></li>
+        <li><a href="#datatypeproperties">Datatype Properties</a></li>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#legend">Legend</a></li>
+    </ol>
+</section>
+<!--
+<section id="overview">
+    <h2>Overview</h2>
+    <div class="figure">
+        <div style="width:500px; height:50px; background-color: lightgrey; border:solid 2px grey; padding:10px;margin-bottom:5px; text-align:center;">Pictures say 1,000 words</div>
+        <div class="caption"><strong>Figure 1:</strong> Ontology overview</div>
+    </div>
+</section>
+-->
+  <section id="classes">
+    <div class="figure">
+        <img src="images/class-hierarchy.png" alt="Class Hierarchy" style="width: 300px;" />
+        <div class="caption" style="margin-top:10px;"><strong>Figure 1:</strong> Ontology class hierarchy</div>
+    </div>
+    <h2>Classes <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#dataset">dataset</a></li>
+        <li><a href="#datasetdescription">dataset description</a></li>
+        <li><a href="#linkset">linkset</a></li>
+        <li><a href="#technicalfeature">technical feature</a></li>
     </ul>
-  </nav>
-</header>
+    <div class="entity class" id="dataset">
+        <h3>dataset<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#Dataset</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>A set of RDF triples that are published, maintained or aggregated by a single provider.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Linkset">void:Linkset</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#properties">void:properties</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#vocabulary">void:vocabulary</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#uriRegexPattern">void:uriRegexPattern</a><br/>
+                    <a href="http://rdfs.org/ns/void#feature">void:feature</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#classes">void:classes</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#distinctSubjects">void:distinctSubjects</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#entities">void:entities</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#subset">void:subset</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#uriSpace">void:uriSpace</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#classPartition">void:classPartition</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#uriLookupEndpoint">void:uriLookupEndpoint</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#property">void:property</a><sup class="sup-fp" title="functional property">fp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#dataDump">void:dataDump</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#distinctObjects">void:distinctObjects</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#exampleResource">void:exampleResource</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#class">void:class</a><sup class="sup-fp" title="functional property">fp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#rootResource">void:rootResource</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#sparqlEndpoint">void:sparqlEndpoint</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#openSearchDescription">void:openSearchDescription</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#propertyPartition">void:propertyPartition</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#documents">void:documents</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#triples">void:triples</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#subjectsTarget">void:subjectsTarget</a><sup class="sup-fp" title="functional property">fp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#propertyPartition">void:propertyPartition</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#inDataset">void:inDataset</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#target">void:target</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#objectsTarget">void:objectsTarget</a><sup class="sup-fp" title="functional property">fp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#subset">void:subset</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#classPartition">void:classPartition</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="datasetdescription">
+        <h3>dataset description<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#DatasetDescription</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>A web resource whose foaf:primaryTopic or foaf:topics include void:Datasets.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://xmlns.com/foaf/0.1/Document">foaf:Document</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="linkset">
+        <h3>linkset<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#Linkset</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>A collection of RDF links between two void:Datasets.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#target">void:target</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#objectsTarget">void:objectsTarget</a><sup class="sup-fp" title="functional property">fp</sup><br/>
+                    <a href="http://rdfs.org/ns/void#linkPredicate">void:linkPredicate</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://rdfs.org/ns/void#subjectsTarget">void:subjectsTarget</a><sup class="sup-fp" title="functional property">fp</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="technicalfeature">
+        <h3>technical feature<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#TechnicalFeature</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>A technical feature of a void:Dataset, such as a supported RDF serialization format.</p>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#feature">void:feature</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+<section id="objectproperties">
+    <div class="figure">
+        <img src="images/property-hierarchy-1.png" alt="Property Hierarchy" style="width: 300px;" /><br />
+        <img src="images/property-hierarchy-2.png" alt="Property Hierarchy" style="width: 260px;" />
+        <div class="caption" style="margin-top:10px;"><strong>Figure 2:</strong> Ontology onject property hierarchy</div>
+    </div>
+    <h2>Object Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#classpartition">class partition</a></li>
+        <li><a href="#DataDump">Data Dump</a></li>
+        <li><a href="#exampleresourceofdataset">example resource of dataset</a></li>
+        <li><a href="#feature">feature</a></li>
+        <li><a href="#indataset">in dataset</a></li>
+        <li><a href="#alinkpredicate">a link predicate</a></li>
+        <li><a href="#opensearchdescription">open search description</a></li>
+        <li><a href="#propertypartition">property partition</a></li>
+        <li><a href="#rootresource">root resource</a></li>
+        <li><a href="#hasaSPARQLendpointat">has a SPARQL endpoint at</a></li>
+        <li><a href="#hassubset">has subset</a></li>
+        <li><a href="#Target">Target</a></li>
+        <li><a href="#hasanURIlook-upendpointat">has an URI look-up endpoint at</a></li>
+        <li><a href="#vocabulary">vocabulary</a></li>
+    </ul>
+    <div class="entity property" id="classpartition">
+        <h3>class partition<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#classPartition</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    A subset of a void:Dataset that contains only the entities of a certain rdfs:Class.
+                </td>
+            </tr>
+            <tr>
+                <th>Super-properties</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#subset">void:subset</a><sup class="sup-op" title="object property">op</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="DataDump">
+        <h3>Data Dump<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#dataDump</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    An RDF dump, partial or complete, of a void:Dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2000/01/rdf-schema#Resource">rdfs:Resource</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="exampleresourceofdataset">
+        <h3>example resource of dataset<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#exampleResource</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2000/01/rdf-schema#Resource">rdfs:Resource</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="feature">
+        <h3>feature<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#feature</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#TechnicalFeature">void:TechnicalFeature</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="indataset">
+        <h3>in dataset<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#inDataset</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    Points to the void:Dataset that a document is a part of.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://xmlns.com/foaf/0.1/Document">foaf:Document</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="alinkpredicate">
+        <h3>a link predicate<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#linkPredicate</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Linkset">void:Linkset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property">rdf:Property</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="opensearchdescription">
+        <h3>open search description<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#openSearchDescription</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    An OpenSearch description document for a free-text search service over a void:Dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://xmlns.com/foaf/0.1/Document">foaf:Document</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="propertypartition">
+        <h3>property partition<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#propertyPartition</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    A subset of a void:Dataset that contains only the triples of a certain rdf:Property.
+                </td>
+            </tr>
+            <tr>
+                <th>Super-properties</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#subset">void:subset</a><sup class="sup-op" title="object property">op</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="rootresource">
+        <h3>root resource<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#rootResource</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasaSPARQLendpointat">
+        <h3>has a SPARQL endpoint at<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#sparqlEndpoint</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hassubset">
+        <h3>has subset<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#subset</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="Target">
+        <h3>Target<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#target</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    One of the two datasets linked by the Linkset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Linkset">void:Linkset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasanURIlook-upendpointat">
+        <h3>has an URI look-up endpoint at<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#uriLookupEndpoint</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    Defines a simple URI look-up protocol for accessing a dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="vocabulary">
+        <h3>vocabulary<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#vocabulary</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    A vocabulary that is used in the dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
 
-<script src="/assets/scripts/dc-mobile/dc-mobile-nav.js"></script>
-<!--<![endif]-->
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/header_custom.inc (cont) -->
+<section id="functionalproperties">
+    <h2>Functional Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#class">class</a></li>
+        <li><a href="#ObjectsTarget">Objects Target</a></li>
+        <li><a href="#property">property</a></li>
+        <li><a href="#SubjectsTarget">Subjects Target</a></li>
+    </ul>
+    <div class="entity property" id="class">
+        <h3>class<sup title="functional property" class="sup-fp">fp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#class</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The rdfs:Class that is the rdf:type of all entities in a class-based partition.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2000/01/rdf-schema#Class">rdfs:Class</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="ObjectsTarget">
+        <h3>Objects Target<sup title="functional property" class="sup-fp">fp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#objectsTarget</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The dataset describing the objects of the triples contained in the Linkset.
+                </td>
+            </tr>
+            <tr>
+                <th>Super-properties</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#target">void:target</a><sup class="sup-op" title="object property">op</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Linkset">void:Linkset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="property">
+        <h3>property<sup title="functional property" class="sup-fp">fp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#property</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The rdf:Property that is the predicate of all triples in a property-based partition.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property">rdf:Property</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="SubjectsTarget">
+        <h3>Subjects Target<sup title="functional property" class="sup-fp">fp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#subjectsTarget</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The dataset describing the subjects of triples contained in the Linkset.
+                </td>
+            </tr>
+            <tr>
+                <th>Super-properties</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#target">void:target</a><sup class="sup-op" title="object property">op</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Linkset">void:Linkset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
 
+<section id="datatypeproperties">
+    <h2>Datatype Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#classes">classes</a></li>
+        <li><a href="#distinctobjects">distinct objects</a></li>
+        <li><a href="#distinctsubjects">distinct subjects</a></li>
+        <li><a href="#numberofdocuments">number of documents</a></li>
+        <li><a href="#numberofentities">number of entities</a></li>
+        <li><a href="#numberofproperties">number of properties</a></li>
+        <li><a href="#numberoftriples">number of triples</a></li>
+        <li><a href="#URIspace">URI space</a></li>
+    </ul>
+    <div class="entity property" id="classes">
+        <h3>classes<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#classes</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#integer">xsd:integer</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="distinctobjects">
+        <h3>distinct objects<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#distinctObjects</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#integer">xsd:integer</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="distinctsubjects">
+        <h3>distinct subjects<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#distinctSubjects</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#integer">xsd:integer</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberofdocuments">
+        <h3>number of documents<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#documents</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#integer">xsd:integer</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberofentities">
+        <h3>number of entities<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#entities</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The total number of entities that are described in a void:Dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#integer">xsd:integer</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberofproperties">
+        <h3>number of properties<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#properties</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#integer">xsd:integer</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberoftriples">
+        <h3>number of triples<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#triples</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The total number of triples contained in a void:Dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#integer">xsd:integer</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="URIspace">
+        <h3>URI space<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://rdfs.org/ns/void#uriSpace</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    A URI that is a common string prefix of all the entity URIs in a void:Dataset.
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://rdfs.org/ns/void#Dataset">void:Dataset</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
 
-
-<div id="clcweb">
-	<div id="container">
-		<a href="#main" class="skiplink" accesskey="2" >Skip to main content</a>
-
-					
-			<div id="header">
-				<a href="https://docs.lib.purdue.edu/clcweb" id="banner_link" title="CLCWeb: Comparative Literature and Culture" >
-					<img id="banner_image" alt="CLCWeb: Comparative Literature and Culture" width='980' height='125' src="/assets/md5images/cb4aaa8d1bc5fc38b2970f3c23938ce6.png">
-				</a>	
-				
-					<a href="https://docs.lib.purdue.edu/clcweb" id="logo_link" title="CLCWeb: Comparative Literature and Culture" >
-						<img id="logo_image" alt="CLCWeb: Comparative Literature and Culture" width='404' height='127' src="/assets/md5images/256521ebbdbbd9ed12c3870e899829ec.png">
-					</a>	
-				
-			</div>
-					
-			<div id="navigation">
-				<!-- FILE: /srv/sequoia/main/data/assets/site/ir_navigation.inc --><div id="tabs" role="navigation" aria-label="Main"><ul><li id="tabone"><a href="https://docs.lib.purdue.edu" title="Home" ><span>Home</span></a></li><li id="tabtwo"><a href="https://docs.lib.purdue.edu/clcweb/about.html" title="About" ><span>About</span></a></li><li id="tabthree"><a href="http://www.thepress.purdue.edu/series/comparative-cultural-studies" title="Comparative Cultural Studies" ><span>Comparative Cultural Studies</span></a></li><li id="tabfour"><a href="https://docs.lib.purdue.edu/cgi/myaccount.cgi?context=clcweb" title="My <em>CLCWeb</em> Account" ><span>My <em>CLCWeb</em> Account</span></a></li></ul></div>
-
-
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/header_custom.inc (cont) -->
-			</div>
-			
-			
-		<div id="wrapper">
-			<div id="content">
-				<div id="main" class="text">					
-					<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_breadcrumb.inc -->
-	<ul id="pager">
-		<li>&nbsp;</li>
-		 
-		<li>&nbsp;</li> 
-		
-	</ul>
-
-<div class="crumbs" role="navigation" aria-label="Breadcrumb">
-	<p>
-		
-
-		
-		
-		
-			<a href="https://docs.lib.purdue.edu" class="ignore" >Home</a>
-		
-		
-		
-		
-		
-		
-		
-		
-		 <span aria-hidden="true">&gt;</span> 
-			<a href="https://docs.lib.purdue.edu/libraries" class="ignore" >Libraries</a>
-		
-		
-		
-		
-		
-		 <span aria-hidden="true">&gt;</span> 
-			<a href="https://docs.lib.purdue.edu/librariespublishing" class="ignore" >LIBRARIESPUBLISHING</a>
-		
-		
-		
-		
-		
-		 <span aria-hidden="true">&gt;</span> 
-			<a href="https://docs.lib.purdue.edu/thepress" class="ignore" >The Press</a>
-		
-		
-		
-		
-		
-		 <span aria-hidden="true">&gt;</span> 
-			<a href="https://docs.lib.purdue.edu/pupoaj" class="ignore" >PUPOAJ</a>
-		
-		
-		
-		
-		
-		 <span aria-hidden="true">&gt;</span> 
-			<a href="https://docs.lib.purdue.edu/clcweb" class="ignore" >CLCWeb</a>
-		
-		
-		
-	</p>
-</div>
-
-<div class="clear">&nbsp;</div>
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/header_custom.inc (cont) -->
-					
-						<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_logo.inc -->
-
-
-
- 
-
-
-
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/header_custom.inc (cont) -->
-					
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/header.pregen (cont) -->
- 
-<script type="text/javascript" src="/assets/floatbox/floatbox.js"></script>
-<div id="toc">
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/recent_volumes.inc -->
-<h1>Recent Volumes</h1>
-		<div class="item">
-		<h2 class="vol">Volume 23 (2021)</h2>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol23/iss4/" >Issue 23.4 (December 2021)</a>
-				</h3>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol23/iss3/" >Issue 23.3 (September 2021)</a>
-				</h3>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol23/iss2/" >Issue 23.1 (June 2021)<br>Special Issue: A Return to the Bad Old Times<br>Ed. Fabio Akcelrud Durão and Fernando Urueta<br></a>
-				</h3>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol23/iss1/" >Issue 23.1 (March 2021)<br>Special Issue: New Faces of Authoritarianism<br>Ed. Massimiliano Tomba<br></a>
-				</h3>
-		</div>
-		<div class="item">
-		<h2 class="vol">Volume 22 (2020)</h2>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol22/iss5/" >Issue 22.5 (December 2020)<br>Special Issue: The China Question in Western Theory. <br>Ed. Kang Liu<br></a>
-				</h3>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol22/iss4/" >Issue 22.4 (December 2020)</a>
-				</h3>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol22/iss3/" >Issue 22.3 (September 2020)<br>Special Issue: A Symposium on Nicholas Brown's <em>Autonomy</em><br>Ed. Mathias Nilges<br></a>
-				</h3>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol22/iss2/" >Issue 22.2 (June 2020)<br>Special Issue: The Politics of Social Reproduction<br>Ed. Kelly Gawel and Cinzia Arruzza<br></a>
-				</h3>
-				<h3 class="issue">
-						<a href="https://docs.lib.purdue.edu/clcweb/vol22/iss1/" >Issue 22.1 (March 2020)<br>Special Issue: Poetry in Israel: Forging Identity<br>Ed. Chanita Goodblatt<br></a>
-				</h3>
-		</div>
-	<h2 class="vol"><a href="https://docs.lib.purdue.edu/clcweb/all_issues.html" >All Volumes 1999-</a></h2>
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/recent_volumes.html (cont) -->
-</div> 
-<!-- FILE /srv/sequoia/main/data/assets/site/ir_journal/footer.pregen -->
-
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/footer_custom_7_8.inc -->				</div>
-
-<div class="verticalalign">&nbsp;</div>
-<div class="clear">&nbsp;</div>
-
-			</div>
-
-				<div id="sidebar">
-					<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc -->
-
-	<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/ir_journal_sidebar_links_7_8.inc --><ul class="sb-custom-journal">
-<li><a href="https://docs.lib.purdue.edu/clcweb/recent_volumes.html" title="CLCWeb Volumes" ><em>CLCWeb</em> Volumes</a></li>
-		<li class="sb-about">
-			<a href="https://docs.lib.purdue.edu/clcweb/about.html" title="About this Journal" >
-					About the Journal
-			</a>
-		</li>
-<li class="sb-about">
-			<a href="https://docs.lib.purdue.edu/clcweb/styleguide.html" title="Submission Guideilnes" >
-					Submission Guidelines
-			</a>
-		</li>
-		<li class="sb-policies">
-			<a href="https://docs.lib.purdue.edu/clcweb/policies.html" title="CLCWeb: Comparative Literature and Culture Policies" >
-					Information for Authors
-			</a>
-		</li>
-		<li class="sb-ed-board">
-			<a href="https://docs.lib.purdue.edu/clcweb/editorialboard.html" title="Editorial Board" >
-					Board & Editors
-			</a>
-		</li>
-		<li>
-			<a href="https://docs.lib.purdue.edu/clcweb/callsforpapers.html" title="Calls for Papers" >
-					Calls for Papers
-			</a>
-		</li>
-</ul>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-		<!-- FILE: /srv/sequoia/main/data/assets/site/urc_badge.inc -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_navcontainer_7_8.inc --><div id="navcontainer">
-	<ul id="navlist">
-			<li class="sb-submit">
-				<a href="https://docs.lib.purdue.edu/cgi/submit.cgi?context=clcweb" title="Submit Article to CLCWeb: Comparative Literature and Culture" >
-					Submit Article
-				</a>
-			</li>
-			<li class="sb-popular">
-				<a href="https://docs.lib.purdue.edu/clcweb/topdownloads.html" title="View the top downloaded papers" >
-						Most Popular Papers
-				</a>
-			</li>
-			<li class="sb-rss">
-				<a href="https://docs.lib.purdue.edu/clcweb/announcements.html" title="Receive notifications of new content" >
-					Receive Custom Email Notices or RSS
-				</a>
-			</li>
-	</ul>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_special_issue_7_8.inc -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_navcontainer_7_8.inc (cont) -->
-</div><!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_search_7_8.inc --><div class="sidebar-search">
-	<form method="post" action="https://docs.lib.purdue.edu/cgi/redirect.cgi" id="browse">
-		<label for="url">
-			Select an issue:
-		</label>
-			<br>
-		<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_volume_issue_popup_7_8.inc --><div>
-	<span class="border">
-								<select name="url" id="url">
-							<option value="https://docs.lib.purdue.edu/clcweb/all_issues.html">
-								All Issues
-							</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol23/iss4">
-											Vol. 23, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol23/iss3">
-											Vol. 23, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol23/iss2">
-											Vol. 23, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol23/iss1">
-											Vol. 23, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol22/iss5">
-											Vol. 22, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol22/iss4">
-											Vol. 22, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol22/iss3">
-											Vol. 22, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol22/iss2">
-											Vol. 22, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol22/iss1">
-											Vol. 22, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol21/iss7">
-											Vol. 21, 
-											Iss. 7
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol21/iss6">
-											Vol. 21, 
-											Iss. 6
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol21/iss5">
-											Vol. 21, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol21/iss4">
-											Vol. 21, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol21/iss3">
-											Vol. 21, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol21/iss2">
-											Vol. 21, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol21/iss1">
-											Vol. 21, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol20/iss7">
-											Vol. 20, 
-											Iss. 7
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol20/iss6">
-											Vol. 20, 
-											Iss. 6
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol20/iss5">
-											Vol. 20, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol20/iss4">
-											Vol. 20, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol20/iss3">
-											Vol. 20, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol20/iss2">
-											Vol. 20, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol20/iss1">
-											Vol. 20, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol19/iss5">
-											Vol. 19, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol19/iss4">
-											Vol. 19, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol19/iss3">
-											Vol. 19, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol19/iss2">
-											Vol. 19, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol19/iss1">
-											Vol. 19, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol18/iss5">
-											Vol. 18, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol18/iss4">
-											Vol. 18, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol18/iss3">
-											Vol. 18, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol18/iss2">
-											Vol. 18, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol18/iss1">
-											Vol. 18, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol17/iss5">
-											Vol. 17, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol17/iss4">
-											Vol. 17, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol17/iss3">
-											Vol. 17, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol17/iss2">
-											Vol. 17, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol17/iss1">
-											Vol. 17, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol16/iss6">
-											Vol. 16, 
-											Iss. 6
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol16/iss5">
-											Vol. 16, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol16/iss4">
-											Vol. 16, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol16/iss3">
-											Vol. 16, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol16/iss2">
-											Vol. 16, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol16/iss1">
-											Vol. 16, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol15/iss7">
-											Vol. 15, 
-											Iss. 7
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol15/iss6">
-											Vol. 15, 
-											Iss. 6
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol15/iss5">
-											Vol. 15, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol15/iss4">
-											Vol. 15, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol15/iss3">
-											Vol. 15, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol15/iss2">
-											Vol. 15, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol15/iss1">
-											Vol. 15, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol14/iss5">
-											Vol. 14, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol14/iss4">
-											Vol. 14, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol14/iss3">
-											Vol. 14, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol14/iss2">
-											Vol. 14, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol14/iss1">
-											Vol. 14, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol13/iss5">
-											Vol. 13, 
-											Iss. 5
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol13/iss4">
-											Vol. 13, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol13/iss3">
-											Vol. 13, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol13/iss2">
-											Vol. 13, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol13/iss1">
-											Vol. 13, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol12/iss4">
-											Vol. 12, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol12/iss3">
-											Vol. 12, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol12/iss2">
-											Vol. 12, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol12/iss1">
-											Vol. 12, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol11/iss4">
-											Vol. 11, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol11/iss3">
-											Vol. 11, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol11/iss2">
-											Vol. 11, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol11/iss1">
-											Vol. 11, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol10/iss4">
-											Vol. 10, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol10/iss3">
-											Vol. 10, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol10/iss2">
-											Vol. 10, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol10/iss1">
-											Vol. 10, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol9/iss4">
-											Vol. 9, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol9/iss3">
-											Vol. 9, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol9/iss2">
-											Vol. 9, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol9/iss1">
-											Vol. 9, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol8/iss4">
-											Vol. 8, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol8/iss3">
-											Vol. 8, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol8/iss2">
-											Vol. 8, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol8/iss1">
-											Vol. 8, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol7/iss4">
-											Vol. 7, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol7/iss3">
-											Vol. 7, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol7/iss2">
-											Vol. 7, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol7/iss1">
-											Vol. 7, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol6/iss4">
-											Vol. 6, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol6/iss3">
-											Vol. 6, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol6/iss2">
-											Vol. 6, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol6/iss1">
-											Vol. 6, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol5/iss4">
-											Vol. 5, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol5/iss3">
-											Vol. 5, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol5/iss2">
-											Vol. 5, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol5/iss1">
-											Vol. 5, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol4/iss4">
-											Vol. 4, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol4/iss3">
-											Vol. 4, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol4/iss2">
-											Vol. 4, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol4/iss1">
-											Vol. 4, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol3/iss4">
-											Vol. 3, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol3/iss3">
-											Vol. 3, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol3/iss2">
-											Vol. 3, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol3/iss1">
-											Vol. 3, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol2/iss4">
-											Vol. 2, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol2/iss3">
-											Vol. 2, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol2/iss2">
-											Vol. 2, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol2/iss1">
-											Vol. 2, 
-											Iss. 1
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol1/iss4">
-											Vol. 1, 
-											Iss. 4
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol1/iss3">
-											Vol. 1, 
-											Iss. 3
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol1/iss2">
-											Vol. 1, 
-											Iss. 2
-										</option>
-										<option value="https://docs.lib.purdue.edu/clcweb/vol1/iss1">
-											Vol. 1, 
-											Iss. 1
-										</option>
-						</select>
-		<input type="submit" value="Browse" class="searchbutton" style="font-size:11px;">
-	</span>
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_search_7_8.inc (cont) -->
-			<div style="clear:left;">&nbsp;</div>
-	</form>
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_search_7_8.inc -->
-<form method='get' action='https://docs.lib.purdue.edu/do/search/' id="sidebar-search">
-	<label for="search" accesskey="4">
-		Enter search terms:
-	</label>
-		<div>
-			<span class="border">
-				<input type="text" name='q' class="search" id="search">
-			</span> 
-			<input type="submit" value="Search" class="searchbutton" style="font-size:11px;">
-		</div>
-	<label for="context" style="display:none;">
-		Select context to search:
-	</label> 
-		<div>
-			<span class="border">
-				<select name="fq" id="context">
-						<option value='virtual_ancestor_link:"https://docs.lib.purdue.edu/clcweb"'>in this journal</option>
-					<option value='virtual_ancestor_link:"https://docs.lib.purdue.edu"'>in this repository</option>
-					<option value='virtual_ancestor_link:"http:/"'>across all repositories</option>
-				</select>
-			</span>
-		</div>
-</form>
-<p class="advanced">
-		<a href="https://docs.lib.purdue.edu/do/search/advanced/?fq=virtual_ancestor_link:%22https://docs.lib.purdue.edu/clcweb%22" >
-			Advanced Search
-		</a>
-</p>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_search_7_8.inc (cont) -->
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_issn_7_8.inc -->
-	<div id="issn">
-		<p class="sb-issn">ISSN: 1481-4374</p>
-	</div>
-	<div class="clear">&nbsp;</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_custom_lower_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_custom_sidebar_images.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_geolocate_enabled_and_displayed.inc -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_sidebar_geolocate.inc (cont) -->
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_custom_lowest_7_8.inc --><!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/ir_journal_sidebar_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/footer_custom_7_8.inc (cont) -->
-						<div class="verticalalign">&nbsp;</div>
-				</div>
-
-		</div>
-
-			<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/ir_journal_footer_content.inc --><div id="footer">
-	<!-- FILE: /srv/sequoia/main/data/assets/site/ir_bepress_logo.inc --><div id="bepress">
-
-<a href="https://www.bepress.com/products/digital-commons" title="Digital Commons: Powered by bepress" >
-	<em>Digital Commons</em>
-</a>
-
-</div>
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/ir_journal_footer_content.inc (cont) -->
-		<p>
-		    <a href="http://www.thepress.purdue.edu/series/comparative-cultural-studies" title="Comparative Cultural Studies" >Comparative Cultural Studies</a> |
-                    <a href="/cgi/myaccount.cgi?context=clcweb" title="My CLCWeb Account" accesskey="3" >My <em>CLCWeb</em> Account</a> | 
-                    <a href="https://docs.lib.purdue.edu/accessibility.html" title="Accessibility Statement" accesskey="0" >Accessibility Statement</a>
-                </p>
-		<p>
-    			<a class="secondary-link" href="http://www.bepress.com/privacy.html" title="Privacy Policy" >
-                                        Privacy
-    			</a>
-    			<a class="secondary-link" href="http://www.bepress.com/copyright_infringement.html" title="Copyright Policy" >
-                                        Copyright
-    			</a>	
-		</p> 
-</div>
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/footer_custom_7_8.inc (cont) -->
-
-	</div>
-</div>
-
-
-<!-- FILE: /srv/sequoia/main/data/journals/docs.lib.purdue.edu/clcweb/assets/ir_analytics.inc --><script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var firstTracker = _gat._getTracker("UA-17349629-1");
-firstTracker._initData();
-firstTracker._trackPageview();
-var secondTracker = _gat._getTracker("UA-5499681-9");
-secondTracker._setDomainName("none");
-secondTracker._setAllowLinker(true);
-secondTracker._initData();
-secondTracker._trackPageview();
-</script><!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/footer_custom_7_8.inc (cont) -->
-
-<!-- FILE: /srv/sequoia/main/data/assets/site/ir_journal/footer.pregen (cont) -->
-<script type='text/javascript' src='/assets/scripts/bpbootstrap-20160726.pack.js'></script><script type='text/javascript'>BPBootstrap.init({appendCookie:''})</script></body></html>
+  
+  <section id="namedindividuals">
+    <h2>Named Individuals <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+    </ul>
+</section>
+  
+  <section id="namespaces">
+    <h2>Namespaces <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <dl>
+        <dt>adms</dt>
+        <dd><code>http://www.w3.org/ns/adms#</code></dd>
+        <dt>dc</dt>
+        <dd><code>http://purl.org/dc/elements/1.1/</code></dd>
+        <dt>dct</dt>
+        <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>foaf</dt>
+        <dd><code>http://xmlns.com/foaf/0.1/</code></dd>
+        <dt>owl</dt>
+        <dd><code>http://www.w3.org/2002/07/owl#</code></dd>
+        <dt>prov</dt>
+        <dd><code>http://www.w3.org/ns/prov#</code></dd>
+        <dt>rdf</dt>
+        <dd><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></dd>
+        <dt>rdfs</dt>
+        <dd><code>http://www.w3.org/2000/01/rdf-schema#</code></dd>
+        <dt>sdo</dt>
+        <dd><code>https://schema.org/</code></dd>
+        <dt>skos</dt>
+        <dd><code>http://www.w3.org/2004/02/skos/core#</code></dd>
+        <dt>vann</dt>
+        <dd><code>http://purl.org/vocab/vann/</code></dd>
+        <dt>void</dt>
+        <dd><code>http://rdfs.org/ns/void#</code></dd>
+        <dt>xsd</dt>
+        <dd><code>http://www.w3.org/2001/XMLSchema#</code></dd>
+    </dl>
+</section>
+  <section id="legend">
+      <h2>Legend</h2>
+      <table class="entity">
+          <tr><td><sup class="sup-c" title="Classes">c</sup></td><td>Classes</td></tr>
+          <tr><td><sup class="sup-op" title="Object Properties">op</sup></td><td>Object Properties</td></tr>
+          <tr><td><sup class="sup-fp" title="Functional Properties">fp</sup></td><td>Functional Properties</td></tr>
+          <tr><td><sup class="sup-dp" title="Data Properties">dp</sup></td><td>Data Properties</td></tr>
+          <tr><td><sup class="sup-ap" title="Annotation Properties">dp</sup></td><td>Annotation Properties</td></tr>
+          <tr><td><sup class="sup-p" title="Properties">p</sup></td><td>Properties</td></tr>
+          <tr><td><sup class="sup-ni" title="Named Individuals">ni</sup></td><td>Named Individuals</td></tr>
+      </table>
+  </section>
+</body>
+</html>

@@ -1,278 +1,896 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:srw="http://www.loc.gov/zing/srw/" xmlns:mx="http://www.loc.gov/MARC21/slim" xml:lang="en" lang="en"><head profile="http://a9.com/-/spec/opensearch/1.1/"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><link href="/fast/images/favicon.ico" rel="shortcut icon"></link><title>
-VOID Document for 
-                    FAST (Faceted Application of Subject Terminology) Data</title><meta content="FAST delivered as Linked Data in MARC21 and SKOS formate" name="description"></meta><meta content="OCLC Research" name="author"></meta><meta content="Copyright OCLC 2011-2021. All Rights Reserved." name="Copyright"></meta><meta content="FAST Linked Data" name="DC.title"></meta><meta content="FAST Subject Headings" name="DC.subject"></meta><meta content="OCLC Research." name="DC.creator"></meta><link xmlns="" type="text/css" rel="stylesheet" href="https://fast.oclc.org/searchfast/css/fastbaseC.css">
-<link xmlns="" type="text/css" rel="stylesheet" href="/fast/css/jquery-ui.css">
-<link xmlns="" type="text/css" rel="stylesheet" href="/fast/css/fastlinkeddata.css">
-<script xmlns="" src="/fast/scripts/jquery-1.5.2.min.js"></script><script xmlns="" src="/fast/scripts/jquery.dump.js" type="text/javascript"></script><script xmlns="" src="/fast/scripts/jquery-ui.min.js" type="text/javascript"></script><script xmlns="" src="/fast/scripts/fastapisearch.js"></script><script xmlns="" src="/fast/scripts/fastAutocompleteLD.js"></script><script xmlns="" src="http://fast.oclc.org/searchfast/js/fastCommonFooter.js"></script><script type="text/javascript">
+<!doctype html><html lang="en"><head>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-17341906-3']);
-  _gaq.push(['_trackPageview']);
+<title>MeSH Browser</title>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
- 	function toggle( id) {
-	  jQuery(id).toggle();
-	  if(jQuery(id).is(':visible')) {
-	    jQuery('[href="' + id + 'P"]').text("- " + id.substring(1));
-	  } else {
-	    jQuery('[href="' + id + 'P"]').text("+ " + id.substring(1));
-	  
-	  }
-	 }
-     </script><script src="https://www.googletagmanager.com/gtag/js?id=G-PT591Y28L9"></script><script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-		
-		  gtag('config', 'G-PT591Y28L9');
-		</script></head><body><script type="text/javascript">
-        var fastBase = '/fast/';
-//        var viafBase = 'DELETE';
-      </script><div id="mainbody"><div xmlns="" id="masthead">
-<h1 class="linkeddata"><a href="http://experimental.worldcat.org/fast/">FAST Linked Data</a></h1>
-<h2 class="linkeddata">FAST Authority File</h2>
-<h2 class="linkeddata"></h2>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+
+<script src="https://assets.nlm.nih.gov/jquery/jquery-3.5.1.min.js"></script>
+<script src="/public/js/bootstrap.js"></script>
+
+<link rel="stylesheet" href="/public/css/font-awesome.css">
+<link rel="stylesheet" href="/public/css/bootstrap.css">
+<link rel="stylesheet" href="/public/css/mongoMesh.css">
+<link rel="icon" type="image/jpeg" href="/public/img/meshLogo.jpg">
+
+<base href="/">
+
+<script>
+    if (document.domain != "localhost")
+        document.domain = "nlm.nih.gov";
+    var dcmsLinks = false,
+        dcmsParam = dcmsLinks
+                    ? function (sep) { return sep + "dcmsLinks=true"; }
+                    : function (   ) { return ""                    ; };
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){
+        var _fullPath = window.location.href;
+        var urlParams = _fullPath.slice(_fullPath.indexOf('?') + 1).split('&');
+        var IsOpen = "false";
+        if (urlParams != undefined && urlParams != null && urlParams != "") {
+            IsOpen = urlParams[0].split("=")[1];
+        }
+
+        if (IsOpen == "false" || IsOpen == undefined || IsOpen != "true") {
+            w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        }
+    })(window,document,'script','dataLayer','GTM-5QZ7KJZ');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe sandbox src="https://www.googletagmanager.com/ns.html?id=GTM-5QZ7KJZ"
+                  height="0" width="0" style="display:none;visibility:hidden" title="googletagmanager"></iframe></noscript> 
+<!-- End Google Tag Manager (noscript) -->
+
+<script src="/public/js/elemUtil.js"></script>
+<script src="/public/js/record.js"  ></script>
+<script src="/public/js/treeDom.js" ></script>
+</head><body>
+
+<div>
+    <header class="NLMheader">
+        <a href="https://www.nlm.nih.gov/">
+          <img height="80" alt="NLM Logo"
+               src="https://www.nlm.nih.gov/images/NLM_White.png">
+        </a>
+        <!--<img class="starLogo"src="/public/img/NLM_Star.png" alt="NLM Star">-->
+    </header>
+<nav class="navbar navbar-default">
+
+  <div class="container-fluid">
+
+        <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://www.nlm.nih.gov/mesh/">
+                <img id="meshNavbarLogo" src="/public/img/meshLogo.jpg" alt="MeSH Logo">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                
+                <li><a href="/" id="mainSearchButton">Search</a></li>
+                <li><a href="/treeView">Tree View</a></li>
+                <li><a href="/MeSHonDemand">MeSH on Demand</a> </li> <!--Delete the Span Tags after  a few months, once MeSH on Demand is no longer new-->
+                <li><a href="https://meshb-prev.nlm.nih.gov/" target="_blank">MeSH 2021</a></li>
+                <li><a href="https://www.nlm.nih.gov/mesh/meshsugg.html" target="_blank">MeSH Suggestions</a> </li>
+                <li><a href="https://www.nlm.nih.gov/mesh/mbinfo.html" target="_blank">About MeSH Browser</a></li>
+                <li><a href="https://support.nlm.nih.gov/ics/support/ticketnewwizard.asp?style=classic&deptID=28054" target="_blank">Contact Us</a></li>
+            </ul>
+
+        </div>
+        </div>
+
+</nav>
+
 </div>
-<div id="maincontentwrapper"><h1 xmlns="" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:fast="http://id.worldcat.org/fast/ontology/1.0/#" xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:void="http://rdfs.org/ns/void#" xmlns:dcterms="http://purl.org/dc/terms/">
-VOID Document for 
-                    FAST (Faceted Application of Subject Terminology) Data</h1>
-<div xmlns="" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:fast="http://id.worldcat.org/fast/ontology/1.0/#" xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:void="http://rdfs.org/ns/void#" xmlns:dcterms="http://purl.org/dc/terms/" id="ontologycite"><dl>
-<dt>This version:</dt>
-<dd><a href="http://experimental.worldcat.org/fast/void/0.1/">http://experimental.worldcat.org/fast/void/0.1
-                                    </a></dd>
-<dt>Authors:</dt>
-<dd>
-<a href="mailto:Rick_Bennett@oclc.org">Rick Bennett</a>,
-                                <a href="mailto:jyoung@oclc.org">Jeff Young</a>
-</dd>
-</dl></div>
-<div xmlns="" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:fast="http://id.worldcat.org/fast/ontology/1.0/#" xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:void="http://rdfs.org/ns/void#" xmlns:dcterms="http://purl.org/dc/terms/" class="rdf"><dl>
-<dd>
-	</dd>
-<dt>void:Dataset <span class="rdfAttName">rdf:about</span>=<span class="rdfAttVal"><a href="http://id.worldcat.org/fast/void/0.1">"http://id.worldcat.org/fast/void/0.1</a></span>"
-          </dt>
-<dl>
-<dd>
-		</dd>
-<dt>foaf:homepage <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://id.worldcat.org/fast/">"http://id.worldcat.org/fast/</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>foaf:page <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://www.oclc.org/research/activities/fast/default.htm">"http://www.oclc.org/research/activities/fast/default.htm</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>foaf:page <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://www.oclc.org/research/activities/fast/download.htm">"http://www.oclc.org/research/activities/fast/download.htm</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>dcterms:title </dt>
-<dl><dd>FAST (Faceted Application of Subject Terminology) Data</dd></dl>
-<dd>
-		</dd>
-<dt>dcterms:description </dt>
-<dl><dd>Faceted Application of Subject Terminology Authority File</dd></dl>
-<dd>
-		</dd>
-<dt>dcterms:publisher <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://viaf.org/viaf/156508705">"http://viaf.org/viaf/156508705</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>dcterms:source <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://id.loc.gov/authorities/subjects">"http://id.loc.gov/authorities/subjects</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>dcterms:license </dt>
-<dl>
-<dd>
-          </dd>
-<dt>rdf:Description <span class="rdfAttName">rdf:about</span>=<span class="rdfAttVal"><a href="http://www.oclc.org/research/activities/fast/odcby.htm">"http://www.oclc.org/research/activities/fast/odcby.htm</a></span>"
-          </dt>
-<dl>
-<dd>
-              </dd>
-<dt>dcterms:title </dt>
-<dl><dd>Open Data Commons Attribution License (ODC-By) v1.0</dd></dl>
-<dd>
-              </dd>
-<dt>rdfs:comment </dt>
-<dl><dd>This is OCLC's "local copy" of the ODC-By license</dd></dl>
-<dd>
-              </dd>
-<dt>rdfs:seeAlso <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://opendatacommons.org/licenses/by/#toc-anchor-337-3">"http://opendatacommons.org/licenses/by/#toc-anchor-337-3</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-              </dd>
-<dt>owl:sameAs <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://opendatacommons.org/licenses/by/1-0/">"http://opendatacommons.org/licenses/by/1-0/</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-          </dd>
-</dl>
-<dd>
-		</dd>
-</dl>
-<dd>
-		</dd>
-<dt>void:openSearchDescription <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/xsl/FastOpenSearch.xml">"http://experimental.worldcat.org/fast/xsl/FastOpenSearch.xml</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:vocabulary <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://xmlns.com/foaf/0.1/">"http://xmlns.com/foaf/0.1/</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:vocabulary <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://www.w3.org/2004/02/skos/core">"http://www.w3.org/2004/02/skos/core</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:vocabulary <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://www.w3.org/2000/01/rdf-schema">"http://www.w3.org/2000/01/rdf-schema</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:vocabulary <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://www.w3.org/2002/07/owl">"http://www.w3.org/2002/07/owl</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:vocabulary <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://purl.org/dc/terms/">"http://purl.org/dc/terms/</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:exampleResource <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://id.worldcat.org/fast/1750224">"http://id.worldcat.org/fast/1750224</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTChronological.nt.zip">"http://experimental.worldcat.org/fast/download/FASTChronological.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTCorporate.nt.zip">"http://experimental.worldcat.org/fast/download/FASTCorporate.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTEvent.nt.zip">"http://experimental.worldcat.org/fast/download/FASTEvent.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTFormGenre.nt.zip">"http://experimental.worldcat.org/fast/download/FASTFormGenre.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTGeographic.nt.zip">"http://experimental.worldcat.org/fast/download/FASTGeographic.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTPersonal.nt.zip">"http://experimental.worldcat.org/fast/download/FASTPersonal.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTTitle.nt.zip">"http://experimental.worldcat.org/fast/download/FASTTitle.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTTopical.nt.zip">"http://experimental.worldcat.org/fast/download/FASTTopical.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTAll.nt.zip">"http://experimental.worldcat.org/fast/download/FASTAll.nt.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTChronological.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTChronological.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTCorporate.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTCorporate.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTEvent.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTEvent.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTFormGenre.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTFormGenre.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTGeographic.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTGeographic.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTPersonal.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTPersonal.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTTitle.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTTitle.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTTopical.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTTopical.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-		</dd>
-<dt>void:dataDump <span class="rdfAttName">rdf:resource</span>=<span class="rdfAttVal"><a href="http://experimental.worldcat.org/fast/download/FASTAll.marcxml.zip">"http://experimental.worldcat.org/fast/download/FASTAll.marcxml.zip</a></span>"
-          </dt>
-<dd></dd>
-<dd>
-	</dd>
-</dl>
-<dd>
-</dd>
-</dl></div>
-<div xmlns="" class="clearing"></div></div><div xmlns="" id="footer" class="clearfix"><div class="two">
-<div class="col1">
-<div id="researchtag" class="foot-sec">
-<span class="projecttitle">FAST</span> is a project of <a href="http://www.oclc.org/research">OCLC Research.</a>
+
+<div class="container">
+
+
+
+
+<h1>Algorithms <small>MeSH Descriptor            Data 2022</small></h1>
+
+<ul class="nav nav-tabs">
+    <li id="details" class="active"
+        onclick="switchTab([ 'details', 'detailsTabContent' ])">
+        <a class="fakeLink">Details</a></li>
+    
+        <li id="qualifiers"
+            onclick="switchTab([ 'qualifiers', 'qualifiersTabContent' ])">
+            <a class="fakeLink">Qualifiers</a></li>
+        <li id="trees" onclick="switchTab([ 'trees', 'treesTabContent' ])">
+            <a class="fakeLink">MeSH Tree Structures</a></li>
+    
+    <li id="concepts" onclick="switchTab([ 'concepts', 'conceptsTabContent' ])">
+        <a class="fakeLink">Concepts</a></li>
+</ul>
+
+
+
+<div class="tab-content"><br>
+<div id="detailsTabContent" class="tab-pane active">
+
+    <dl id="descriptorDetails_Algorithms"
+        class="dl-horizontal">
+
+        <dt>MeSH Heading      </dt>
+
+        <dd>Algorithms</dd>
+
+        
+                    <dt>Tree Number(s)</dt>
+                    
+                        <dd><a id="treeNumber_0" onclick=
+                               "switchTab([ 'trees', 'treesTabContent' ])"
+                            >G17.035</a></dd>
+                    
+                        <dd><a id="treeNumber_1" onclick=
+                               "switchTab([ 'trees', 'treesTabContent' ])"
+                            >L01.224.050</a></dd>
+                    
+
+        <dt>Unique ID</dt><dd>D000465</dd>
+
+        <dt>RDF Unique Identifier</dt>
+        <dd><a href="https://id.nlm.nih.gov/mesh/D000465.html">
+            http://id.nlm.nih.gov/mesh/D000465
+        </a></dd>
+
+        
+                <span id="scopeNote">
+                    <dt>Scope Note</dt><dd>A procedure consisting of a sequence of algebraic formulas and/or logical steps to calculate or determine a given task.</dd>
+                </span>
+            
+            <dt>Public MeSH Note</dt><dd>87</dd>
+        
+            <dt>History Note</dt><dd>87</dd>
+        
+        
+
+
+        
+            <dt>Date Established</dt>
+            <dd>1987/01/01</dd>
+        
+            <dt>Date of Entry</dt>
+            <dd>1986/06/18</dd>
+        
+            <dt>Revision Date</dt>
+            <dd>2017/07/03</dd>
+        
+
+    </dl>
+
 </div>
-<div class="foot-news"><div id="footer-news"></div></div>
-<div class="foot-sec">
-<div id="footLearn">
-<a class="foot-info" href="https://www.oclc.org/research/themes/data-science/fast.html">Learn more about the FAST project.</a><br>
+
+<div id="qualifiersTabContent" class="tab-pane">
+
+    <dl class="dl-horizontal">
+
+        
+<br>
+
+        
+            <dt>No Qualifiers</dt><dd></dd>
+        
+
+    </dl>
+
+</div><div id="treesTabContent" class="tab-pane">
+
+    <ul class="treeItem">
+
+        <li >
+        <a id="tree_0_node_G17"
+           
+               href="/record/ui?ui=D055641"
+           
+        ><span>Mathematical Concepts [G17]</span>
+        </a>
+        <ul class="treeItem">
+
+        <li >
+        <a id="tree_0_node_G17_035"
+           
+               href="/record/ui?ui=D000465"
+           
+        ><strong>Algorithms [G17.035]</strong>
+        </a>
+        
+            <i id="plus_Algorithms" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+            <i id="minus_Algorithms" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+        <ul class="treeItem">
+
+        <li >
+        <a id="tree_0_node_G17_035_250"
+           
+               href="/record/ui?ui=D001185"
+           
+        ><span>Artificial Intelligence [G17.035.250]</span>
+        </a>
+        
+            <i id="plus_Artificial_Intelligence" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Artificial_Intelligence" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_035_625"
+           
+               href="/record/ui?ui=D000077272"
+           
+        ><span>Latent Class Analysis [G17.035.625]</span>
+        </a>
+        
+        </li>
+    
+</ul>
+
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_162"
+           
+               href="/record/ui?ui=D003662"
+           
+        ><span>Decision Theory [G17.162]</span>
+        </a>
+        
+            <i id="plus_Decision_Theory" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Decision_Theory" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_226"
+           
+               href="/record/ui?ui=D005583"
+           
+        ><span>Fourier Analysis [G17.226]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_290"
+           
+               href="/record/ui?ui=D017709"
+           
+        ><span>Fractals [G17.290]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_388"
+           
+               href="/record/ui?ui=D005716"
+           
+        ><span>Game Theory [G17.388]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_485"
+           
+               href="/record/ui?ui=D016571"
+           
+        ><span>Neural Networks, Computer [G17.485]</span>
+        </a>
+        
+            <i id="plus_Neural_Networks_Computer" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Neural_Networks_Computer" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_582"
+           
+               href="/record/ui?ui=D049451"
+           
+        ><span>Nomograms [G17.582]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_680"
+           
+               href="/record/ui?ui=D011336"
+           
+        ><span>Probability [G17.680]</span>
+        </a>
+        
+            <i id="plus_Probability" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Probability" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_800"
+           
+               href="/record/ui?ui=D012680"
+           
+        ><span>Sensitivity and Specificity [G17.800]</span>
+        </a>
+        
+            <i id="plus_Sensitivity_and_Specificity" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Sensitivity_and_Specificity" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_820"
+           
+               href="/record/ui?ui=D016008"
+           
+        ><span>Statistical Distributions [G17.820]</span>
+        </a>
+        
+            <i id="plus_Statistical_Distributions" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Statistical_Distributions" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_830"
+           
+               href="/record/ui?ui=D013269"
+           
+        ><span>Stochastic Processes [G17.830]</span>
+        </a>
+        
+            <i id="plus_Stochastic_Processes" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Stochastic_Processes" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_0_node_G17_915"
+           
+               href="/record/ui?ui=D058067"
+           
+        ><span>Wavelet Analysis [G17.915]</span>
+        </a>
+        
+        </li>
+    
+</ul>
+
+        </li>
+    
+</ul>
+<ul class="treeItem">
+
+        <li >
+        <a id="tree_1_node_L01"
+           
+               href="/record/ui?ui=D007254"
+           
+        ><span>Information Science [L01]</span>
+        </a>
+        <ul class="treeItem">
+
+        <li >
+        <a id="tree_1_node_L01_224"
+           
+               href="/record/ui?ui=D003205"
+           
+        ><span>Computing Methodologies [L01.224]</span>
+        </a>
+        <ul class="treeItem">
+
+        <li >
+        <a id="tree_1_node_L01_224_050"
+           
+               href="/record/ui?ui=D000465"
+           
+        ><strong>Algorithms [L01.224.050]</strong>
+        </a>
+        
+            <i id="plus_Algorithms" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+            <i id="minus_Algorithms" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+        <ul class="treeItem">
+
+        <li >
+        <a id="tree_1_node_L01_224_050_375"
+           
+               href="/record/ui?ui=D001185"
+           
+        ><span>Artificial Intelligence [L01.224.050.375]</span>
+        </a>
+        
+            <i id="plus_Artificial_Intelligence" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Artificial_Intelligence" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_050_531"
+           
+               href="/record/ui?ui=D000089682"
+           
+        ><span>Cellular Automata [L01.224.050.531]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_050_687"
+           
+               href="/record/ui?ui=D000077272"
+           
+        ><span>Latent Class Analysis [L01.224.050.687]</span>
+        </a>
+        
+        </li>
+    
+</ul>
+
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_068"
+           
+               href="/record/ui?ui=D003628"
+           
+        ><span>Database Management Systems [L01.224.068]</span>
+        </a>
+        
+            <i id="plus_Database_Management_Systems" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Database_Management_Systems" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_085"
+           
+               href="/record/ui?ui=D001330"
+           
+        ><span>Electronic Data Processing [L01.224.085]</span>
+        </a>
+        
+            <i id="plus_Electronic_Data_Processing" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Electronic_Data_Processing" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_097"
+           
+               href="/record/ui?ui=D000067917"
+           
+        ><span>Cloud Computing [L01.224.097]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_108"
+           
+               href="/record/ui?ui=D003196"
+           
+        ><span>Computer Graphics [L01.224.108]</span>
+        </a>
+        
+            <i id="plus_Computer_Graphics" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Computer_Graphics" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_134"
+           
+               href="/record/ui?ui=D016494"
+           
+        ><span>Computer Security [L01.224.134]</span>
+        </a>
+        
+            <i id="plus_Computer_Security" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Computer_Security" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_160"
+           
+               href="/record/ui?ui=D003198"
+           
+        ><span>Computer Simulation [L01.224.160]</span>
+        </a>
+        
+            <i id="plus_Computer_Simulation" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Computer_Simulation" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_230"
+           
+               href="/record/ui?ui=D003199"
+           
+        ><span>Computer Systems [L01.224.230]</span>
+        </a>
+        
+            <i id="plus_Computer_Systems" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Computer_Systems" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_300"
+           
+               href="/record/ui?ui=D039301"
+           
+        ><span>Computers, Molecular [L01.224.300]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_308"
+           
+               href="/record/ui?ui=D007091"
+           
+        ><span>Image Processing, Computer-Assisted [L01.224.308]</span>
+        </a>
+        
+            <i id="plus_Image_Processing_Computer-Assisted" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Image_Processing_Computer-Assisted" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_680"
+           
+               href="/record/ui?ui=D008432"
+           
+        ><span>Mathematical Computing [L01.224.680]</span>
+        </a>
+        
+            <i id="plus_Mathematical_Computing" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Mathematical_Computing" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_740"
+           
+               href="/record/ui?ui=D000075403"
+           
+        ><span>Semantic Web [L01.224.740]</span>
+        </a>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_800"
+           
+               href="/record/ui?ui=D012815"
+           
+        ><span>Signal Processing, Computer-Assisted [L01.224.800]</span>
+        </a>
+        
+            <i id="plus_Signal_Processing_Computer-Assisted" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Signal_Processing_Computer-Assisted" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+        <li >
+        <a id="tree_1_node_L01_224_900"
+           
+               href="/record/ui?ui=D012984"
+           
+        ><span>Software [L01.224.900]</span>
+        </a>
+        
+            <i id="plus_Software" onclick="openTree(this)"
+               class="fa fa-plus-circle treeCollapseExpand fakeLink"
+               >
+            </i>
+            <i id="minus_Software" onclick="closeTree(this)"
+               class="fa fa-minus-circle treeCollapseExpand fakeLink"
+               style="display: none">
+            </i>
+        
+        </li>
+    
+</ul>
+
+        </li>
+    
+</ul>
+
+        </li>
+    
+</ul>
+
+
 </div>
-   The FAST properties are described in the <a href="/fast/ontology/1.0/">FAST Ontology.</a><br>Developer access to FAST is available through the <a href="https://www.oclc.org/developer/develop/web-services/fast-api.en.html">FAST API.</a>
+
+<div id="conceptsTabContent" class="tab-pane">
+
+    <button id="ExpandAll" class="btn btn-default btn-sm pull-right"
+            onclick="toggleConcepts()">
+        <span id="expandConcepts"                        >  Expand All</span>
+        <span id="collapseConcepts" style="display: none">Collapse All</span>
+    </button>
+
+    <div>
+
+        <span id="Nightwatch_cp_0_0"
+              onclick="toggleItem('cp_0_0')">
+        <a class="fakeLink"><b>
+            Algorithms
+            <i>Preferred</i>
+        </b></a></span>
+
+        <div id="cp_0_0" class="collapse"
+             style="display: none">
+        <dl class="dl-horizontal">
+
+            <dt>Concept UI</dt><dd>M0000708</dd>
+
+            
+                <dt>Scope Note</dt><dd>A procedure consisting of a sequence of algebraic formulas and/or logical steps to calculate or determine a given task.</dd>
+            
+
+            <dt>Terms</dt>
+
+            <dd>
+
+                <span id="Nightwatch_termName_0_0"
+                      onclick=
+                      "toggleItem('termName_0_0')">
+                    <a class="fakeLink"><b>Algorithms</b></a></span>
+
+                
+                    <i>Preferred Term</i>
+                
+
+                <div id="termName_0_0"
+                     class="collapse" style="display: none">
+
+                    <b class="conceptsTabTermHeading">Term UI</b>
+                    T001397<br>
+
+                    
+                        <b class="conceptsTabTermHeading">Date</b>01/01/1999<br>
+                    
+
+                    <b class="conceptsTabTermHeading">LexicalTag</b>
+                    NON<br>
+
+                    
+                        <b class="conceptsTabTermHeading">ThesaurusID</b>
+                        NLM (1987)<br>
+                    
+
+                    <br>
+
+                </div>
+
+            </dd>
+
+        </dl></div>
+
+    </div>
+
+</div></div>
+
+<small class="pull-right">
+    page delivered in 0.149s
+</small>
+
 </div>
-<div class="foot-sec">Updated:  4/21/2022. <br>The FAST Dataset is available for <a href="https://www.oclc.org/research/themes/data-science/fast/download.html">download.</a>
-</div>
-<div class="foot-sec">For comments on FAST as Linked Data contact the <a href="https://www.oclc.org/research/forms/fast-contact.html" target="_blank">FAST Team</a>
-</div>
-<div id="corpinfo" class="foot-sec last"><div id="footCopyright"></div></div>
-</div>
-<div class="col2"><div id="fastsuite"></div></div>
-</div></div></div><script type="text/javascript">
-            setUp();
-        </script></body></html>
+
+<footer class="footer">
+    <div class="container-fluid"><div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <p><a href="https://www.nlm.nih.gov/socialmedia/index.html">
+                    Connect with NLM
+                </a></p>
+                <ul class="list-inline">
+                    <li>
+                    <a title="External link: please review our privacy policy."
+                       href="https://twitter.com/NLM_NIH">
+                        <img src="https://www.nlm.nih.gov/images/Twitter_W.svg"
+                             alt="Twitter">
+                    </a></li>
+                    <li>
+                    <a title="External link: please review our privacy policy."
+                       href="https://www.facebook.com/nationallibraryofmedicine"
+                    ><img src="https://www.nlm.nih.gov/images/Facebook_W.svg"
+                          alt="Facebook">
+                    </a></li>
+                    <li>
+                    <a title="External link: please review our privacy policy."
+                       href="https://www.youtube.com/user/NLMNIH">
+                        <img src="https://www.nlm.nih.gov/images/YouTube_W.svg"
+                             alt="You Tube">
+                    </a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <p>National Library of Medicine<br>
+                    <a href="https://www.google.com/maps/place/8600+Rockville+Pike,+Bethesda,+MD+20894/@38.9959508,-77.101021,17z/data=!3m1!4b1!4m5!3m4!1s0x89b7c95e25765ddb:0x19156f88b27635b8!8m2!3d38.9959508!4d-77.0988323">
+                        8600 Rockville Pike<br>
+                        Bethesda, MD 20894
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <p><a href="https://www.nlm.nih.gov/web_policies.html">
+                    Web Policies
+                </a><br>
+                <a href="https://www.nih.gov/institutes-nih/nih-office-director/office-communications-public-liaison/freedom-information-act-office">
+                    FOIA
+                </a><br>
+                <a href="https://www.hhs.gov/vulnerability-disclosure-policy/index.html">
+                    HHS Vulnerability Disclosure
+                </a></p>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <p><a href=
+                      "https://support.nlm.nih.gov?from=https://www.nlm.nih.gov/">
+                    NLM Support Center
+                </a><br>
+                <a href="https://www.nlm.nih.gov/accessibility.html">
+                    Accessibility
+                </a><br>
+                <a href="https://www.nlm.nih.gov/careers/careers.html">
+                    Careers
+                </a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+              <p class="text-center"> <a href="https://www.nlm.nih.gov/">NLM</a> | <a href="https://www.nih.gov/">NIH</a> | <a href="https://www.hhs.gov/">HHS</a> | <a href="https://www.usa.gov/">USA.gov</a></p>
+            </div>
+        </div>
+    </div></div>
+<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+<script type='text/javascript'>
+(function(){var g=function(e,h,f,g){
+this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
+this.set=function(a,c){var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "};
+this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"v"==h&&(e=Math.random()>=e/100?0:100),a=[h,e,0],this.set(f,a.join(":"));else return!0;var c=a[1];if(100==c)return!0;switch(a[0]){case "v":return!1;case "r":return c=a[2]%Math.floor(100/c),a[2]++,this.set(f,a.join(":")),!c}return!0};
+this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)}};
+this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
+try{(new g(100,"r","QSI_S_ZN_cwOHfLkxRr4n4W2","https://zncwohflkxrr4n4w2-nlmenterprise.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_cwOHfLkxRr4n4W2")).start()}catch(i){}})();
+</script><div id='ZN_cwOHfLkxRr4n4W2'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+<!--END WEBSITE FEEDBACK SNIPPET-->
+</footer>
+
+</body></html>
+
